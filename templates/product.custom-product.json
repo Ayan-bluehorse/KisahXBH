@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "main-product-custom",
+      "type": "main-product",
       "blocks": {
         "text_with_icon_tags_kp1": {
           "type": "text-with-icon-tags",
@@ -36,8 +36,8 @@
           "type": "brand-rating",
           "settings": {
             "fallback_handles": "",
-            "background_color": "#FFF3DA",
-            "text_color": "#1F1F1F"
+            "background_color": "#fff3da",
+            "text_color": "#1f1f1f"
           }
         },
         "vendor": {
@@ -112,12 +112,6 @@
             "help_link_text": "Chat with us",
             "help_whatsapp_number": "916289902520",
             "help_whatsapp_message": "Hi"
-          }
-        },
-        "recommendation_PrFffR": {
-          "type": "recommendation",
-          "settings": {
-            "recommendation_title": "More ways to style"
           }
         },
         "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt": {
@@ -208,6 +202,12 @@
             "text4": ""
           }
         },
+        "recommendation_PrFffR": {
+          "type": "recommendation",
+          "settings": {
+            "recommendation_title": "More ways to style"
+          }
+        },
         "trust_icons_LymzYd": {
           "type": "trust-icons",
           "settings": {
@@ -227,15 +227,26 @@
             "text": "<p>Click here to see our <a href=\"https://kisah.in/pages/shipping-returns\" target=\"_blank\" title=\"https://kisah.in/pages/shipping-returns\">return policy</a> and <a href=\"https://kisah.in/pages/shipping-and-delivery\" target=\"_blank\" title=\"https://kisah.in/pages/shipping-and-delivery\">shipping policy</a></p>"
           }
         },
-        "description": {
-          "type": "description",
+        "custom_liquid_NxjNCm": {
+          "type": "custom-liquid",
           "settings": {
+            "custom_liquid": "{%- assign m = product.metafields.custom -%}\n\n{%- assign has_specs = false -%}\n{%- if m.product_type != blank\n   or m.product_specification_ocassion != blank\n   or m.fabric != blank\n   or m.length != blank\n   or m.colour != blank\n   or m.pattern != blank\n   or m.fit != blank\n   or m.work_details != blank\n   or m.sleeve_length != blank -%}\n  {%- assign has_specs = true -%}\n{%- endif -%}\n\n{%- assign has_desc = false -%}\n{%- if product.description != blank -%}\n  {%- assign has_desc = true -%}\n{%- endif -%}\n\n{%- comment -%} decide which tab should be active first {%- endcomment -%}\n{%- assign first_active = '' -%}\n{%- if has_specs -%}\n  {%- assign first_active = 'specs' -%}\n{%- elsif has_desc -%}\n  {%- assign first_active = 'desc' -%}\n{%- else -%}\n  {%- assign first_active = 'ship' -%}\n{%- endif -%}\n\n<div class=\"pdp-details-tabs\" id=\"pdp-details-tabs\">\n  <div class=\"pdp-tabs__nav\">\n    {%- if has_specs -%}\n      <button class=\"pdp-tab {% if first_active == 'specs' %}is-active{% endif %}\" data-tab=\"specs\">Specifications</button>\n    {%- endif -%}\n    {%- if has_desc -%}\n      <button class=\"pdp-tab {% if first_active == 'desc' %}is-active{% endif %}\" data-tab=\"desc\">Description</button>\n    {%- endif -%}\n    <button class=\"pdp-tab {% if first_active == 'ship' %}is-active{% endif %}\" data-tab=\"ship\">Shipping</button>\n  </div>\n\n  {%- if has_specs -%}\n  <div class=\"pdp-tabpanel {% if first_active == 'specs' %}is-active{% endif %}\" id=\"tab-specs\">\n    <div class=\"pdp-specs\">\n      {%- if m.product_type != blank -%}<p><span class=\"pdp-spec__key\">Product Type</span><span class=\"pdp-spec__val\">{{ m.product_type }}</span></p>{%- endif -%}\n      {%- if m.product_specification_ocassion != blank -%}<p><span class=\"pdp-spec__key\">Occasion</span><span class=\"pdp-spec__val\">{{ m.product_specification_ocassion }}</span></p>{%- endif -%}\n      {%- if m.fabric != blank -%}<p><span class=\"pdp-spec__key\">Fabric</span><span class=\"pdp-spec__val\">{{ m.fabric }}</span></p>{%- endif -%}\n      {%- if m.length != blank -%}<p><span class=\"pdp-spec__key\">Length</span><span class=\"pdp-spec__val\">{{ m.length }}</span></p>{%- endif -%}\n      {%- if m.colour != blank -%}<p><span class=\"pdp-spec__key\">Colour</span><span class=\"pdp-spec__val\">{{ m.colour }}</span></p>{%- endif -%}\n      {%- if m.pattern != blank -%}<p><span class=\"pdp-spec__key\">Pattern</span><span class=\"pdp-spec__val\">{{ m.pattern }}</span></p>{%- endif -%}\n      {%- if m.fit != blank -%}<p><span class=\"pdp-spec__key\">Fit</span><span class=\"pdp-spec__val\">{{ m.fit }}</span></p>{%- endif -%}\n      {%- if m.work_details != blank -%}<p><span class=\"pdp-spec__key\">Work Details</span><span class=\"pdp-spec__val\">{{ m.work_details }}</span></p>{%- endif -%}\n      {%- if m.sleeve_length != blank -%}<p><span class=\"pdp-spec__key\">Sleeve Length</span><span class=\"pdp-spec__val\">{{ m.sleeve_length }}</span></p>{%- endif -%}\n    </div>\n  </div>\n  {%- endif -%}\n\n  {%- if has_desc -%}\n  <div class=\"pdp-tabpanel {% if first_active == 'desc' %}is-active{% endif %}\" id=\"tab-desc\">\n    <div class=\"pdp-desc rte cf\">{{ product.description }}</div>\n  </div>\n  {%- endif -%}\n\n  <!-- SHIPPING always visible -->\n  <div class=\"pdp-tabpanel {% if first_active == 'ship' %}is-active{% endif %}\" id=\"tab-ship\">\n    <div class=\"pdp-ship rte cf\">\n      {%- if m._shipping_return_details != blank -%}\n        {{ m._shipping_return_details }}\n      {%- else -%}\n        <b>Express delivery</b> is available for your convenience.<br>\n        <b>Cash on delivery</b> is available for hassle-free shopping.<br>\n        This item is eligible for return or exchange <b>within 7 days</b> of delivery.<br><br>\n        For more information, review our <b>return policy</b> and <b>shipping policy</b>\n        <p><br>\n          <strong>Manufacturer Detail:<br></strong>\n          <strong>KISAH APPAREL PRIVATE LIMITED<br></strong>\n          P62,3rd Lane, Sector B, Metropolitan Housing Society, Kolkata 700105\n        </p>\n      {%- endif -%}\n    </div>\n  </div>\n</div>\n\n<style>\n.pdp-tabs__nav {\n    display: flex;\n    gap: 24px;\n    border-bottom: 1px solid #d9d9d9;\n    margin-top: 8px;\n    justify-content: flex-start;\n}\n\n  .pdp-tab {\n      background: none;\n      border: 0;\n      padding: 8px 0;\n      font-weight: 600;\n      color: #000;\n      cursor: pointer;\n      border-bottom: 1px solid transparent\n  }\n\n  .pdp-tab.is-active {\n      border-bottom-color: #201747\n  }\n\n  .pdp-tabpanel {\n      display: none;\n      padding: 10px 0\n  }\n\n  .pdp-tabpanel.is-active {\n      display: block\n  }\n\n  .pdp-specs p {\n      display: flex;\n      margin: 0;\n      padding: 6px 0;\n      border-bottom: 1px solid #efefef\n  }\n\n  .pdp-spec__key {\n      flex: 1;\n      color: #9f9f9f;\n      font-size: 12px\n  }\n\n  .pdp-spec__val {\n      width: 70%;\n      color: #000;\n      font-size: 14px\n  }\n</style>\n\n<script>\n  document.addEventListener('DOMContentLoaded', function(){\n    var root = document.getElementById('pdp-details-tabs');\n    if(!root) return;\n    var tabs = root.querySelectorAll('.pdp-tab');\n    var panels = root.querySelectorAll('.pdp-tabpanel');\n    tabs.forEach(function(tab){\n      tab.addEventListener('click', function(){\n        var key = tab.getAttribute('data-tab');\n        tabs.forEach(t=>t.classList.remove('is-active'));\n        panels.forEach(p=>p.classList.remove('is-active'));\n        tab.classList.add('is-active');\n        root.querySelector('#tab-' + key).classList.add('is-active');\n      });\n    });\n  });\n</script>",
             "show_in_quickbuy": false
           }
         },
         "helium_analytics_ai_agent_helium_embed_product_bottom_wHFUQb": {
           "type": "shopify://apps/helium-analytics-ai-agent/blocks/helium-embed_product-bottom/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
           "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "show_in_tab": true,
+            "open_tab": false,
+            "icon": "",
+            "show_in_quickbuy": false
+          }
         },
         "judge_me_reviews_preview_badge_REUDXR": {
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -255,7 +266,6 @@
         "offer_box_YYqAET",
         "custom_liquid_b4f6NA",
         "buy-buttons",
-        "recommendation_PrFffR",
         "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt",
         "preorderoffer_box_Rht83D",
         "preorderoffer_box_1_hkthjE",
@@ -263,10 +273,12 @@
         "preorderoffer_box_3_7UbWN6",
         "estimated_delivery_date_cp_clickpost_edd_AJ3qJt",
         "trust_icons_mobile_kp1",
+        "recommendation_PrFffR",
         "trust_icons_LymzYd",
         "links_Ch9pzh",
-        "description",
+        "custom_liquid_NxjNCm",
         "helium_analytics_ai_agent_helium_embed_product_bottom_wHFUQb",
+        "description",
         "judge_me_reviews_preview_badge_REUDXR"
       ],
       "settings": {
@@ -285,7 +297,7 @@
         "gallery_size": "medium",
         "gallery_layout": "carousel-beside",
         "enable_zoom": true,
-        "show_alt_text": true,
+        "show_alt_text": false,
         "alt_text_icon": "",
         "enable_video_autoplay": false,
         "enable_video_looping": false,

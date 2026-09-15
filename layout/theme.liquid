@@ -50,6 +50,7 @@
 
   gtag('config', 'AW-16459568302');
 </script>
+
 {% render 'ga-order-link' %}
   <!-- Gokwik theme code start -->
   <link rel="dns-prefetch" href="https://pdp.gokwik.co/">
@@ -63,7 +64,11 @@
   {%- render 'doc-head-core' -%}
   {%- render 'doc-head-social' -%}
 
-  
+<!--  Prefetch Start-->
+  <script>
+    var lazy_css=[],lazy_js=[];function _debounce(e,t=300){let a;return(...n)=>{clearTimeout(a),a=setTimeout(()=>e.apply(this,n),t)}}window.___mnag="userA"+(window.___mnag1||"")+"gent",window.___plt="plat"+(window.___mnag1||"")+"form";try{var e=navigator[window.___mnag],t=navigator[window.___plt];function a(e){return Object.keys(r[e]).sort().reduce(function(t,a){return t+r[e][a]},"")}window.__isPSA=t.indexOf("Linux x86")>-1&&0>e.indexOf("CrOS"),window.___mnag="!1",r=null}catch(n){window.__isPSA=!1;var r=null;window.___mnag="!1"}if(window.__isPSA=__isPSA,__isPSA)var uLTS=new MutationObserver(e=>{e.forEach(({addedNodes:e})=>{e.forEach(e=>{1===e.nodeType&&"FRAME"===e.tagName&&(e.setAttribute("loading","lazy"),e.setAttribute("data-src",e.src),e.removeAttribute("src")),1===e.nodeType&&"IMG"===e.tagName&&++imageCount>lazyImages&&e.setAttribute("loading","lazy"),1===e.nodeType&&"LINK"===e.tagName&&lazy_css.length&&lazy_css.forEach(t=>{e.href.includes(t)&&(e.setAttribute("data-href",e.href),e.removeAttribute("href"))}),1===e.nodeType&&"SCRIPT"===e.tagName&&(e.setAttribute("data-src",e.src),e.removeAttribute("src"),e.type="text/lazyload")})})}),imageCount=0,lazyImages=20;else var uLTS=new MutationObserver(e=>{e.forEach(({addedNodes:e})=>{e.forEach(e=>{1===e.nodeType&&"FRAME"===e.tagName&&(e.setAttribute("loading","lazy"),e.setAttribute("data-src",e.src),e.removeAttribute("src")),1===e.nodeType&&"IMG"===e.tagName&&++imageCount>lazyImages&&e.setAttribute("loading","lazy"),1===e.nodeType&&"LINK"===e.tagName&&lazy_css.length&&lazy_css.forEach(t=>{e.href.includes(t)&&(e.setAttribute("data-href",e.href),e.removeAttribute("href"))}),1===e.nodeType&&"SCRIPTS"===e.tagName&&(lazy_js.length&&lazy_js.forEach(t=>{e.src.includes(t)&&(e.setAttribute("data-src",e.src),e.removeAttribute("src"))}),e.innerHTML.includes("asyncLoad")&&(e.innerHTML=e.innerHTML.replace("if(window.attachEvent)","document.addEventListener('asyncLazyLoad',function(event){asyncLoad();});if(window.attachEvent)").replaceAll(", asyncLoad",", function(){}")),(e.innerHTML.includes("PreviewBarInjector")||e.innerHTML.includes("adminBarInjector"))&&(e.innerHTML=e.innerHTML.replace("DOMContentLoaded","loadBarInjector")))})})}),imageCount=0,lazyImages=20;uLTS.observe(document.documentElement,{childList:!0,subtree:!0});
+  </script>
+  <!--  Prefetch End-->  
 
   
 
@@ -71,6 +76,8 @@
     assign base_font = settings.type_base_font
     assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
     assign base_font_medium = base_font | font_modify: 'weight', '500'
+    assign base_font_800 = base_font | font_modify: 'weight', '800'
+    assign base_font_200 = base_font | font_modify: 'weight', '200'
     assign base_font_italic = base_font | font_modify: 'style', 'italic'
     assign base_font_bold_italic = base_font_bold | font_modify: 'style', 'italic'
     assign heading_font = settings.type_heading_font
@@ -83,6 +90,8 @@
     {{- base_font | font_face: font_display: 'swap' -}}
     {{- base_font_bold | font_face: font_display: 'swap' -}}
     {{- base_font_medium | font_face: font_display: 'swap' -}}
+    {%- if base_font_800 -%}{{- base_font_800 | font_face: font_display: 'swap' -}}{%- endif -%}
+    {%- if base_font_200 -%}{{- base_font_200 | font_face: font_display: 'swap' -}}{%- endif -%}
     {{- base_font_italic | font_face: font_display: 'swap' -}}
     {{- base_font_bold_italic | font_face: font_display: 'swap' -}}
     {{- heading_font | font_face: font_display: 'swap' -}}
@@ -92,7 +101,7 @@
     {%- render 'doc-head-styles' -%}
     html, body {
       overflow-x: hidden;
-      max-width: 100vw;
+      max-width: 100%;
     }
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
@@ -223,7 +232,7 @@
 
   {{ content_for_header }}
 
-  <!-- Non-critical Third-party App (Zotify Push Notification) Interaction Delay Optimizer -->
+ <!-- Non-critical Third-party App (Zotify Push Notification) Interaction Delay Optimizer -->
   <script>
     (function() {
       var loaded = false;
@@ -321,7 +330,13 @@
     })(window, document, "clarity", "script", "n0xavgansy");
 </script> 
 
-
+  <!-- Varify.io® code for Kisah
+<script>
+  window.varify = window.varify || {};
+  window.varify.iid = 4160;
+</script>
+<script src="https://app.varify.io/varify.js"></script>
+  -->
 
     <style>
 
@@ -438,6 +453,44 @@
   {% render 'utm-collection-sort' %}
   <script src="{{ 'size-inclusive-collection.js' | asset_url }}" defer></script>
 {%- endif -%}
+
+
+
+   <style>
+       #sy-whatshelp {
+           right: 25px;
+           bottom: 30px;
+           position: fixed;
+           z-index: 9999;
+       }
+ 
+       #sy-whatshelp a.sywh-open-services {
+           background-color: #25d366;
+           color: #fff;
+           line-height: 55px;
+           margin-top: 10px;
+           border: none;
+           cursor: pointer;
+           {% comment %} font-size: 45px; {% endcomment %}
+           font-size: 40px;
+           {% comment %} width: 65px; {% endcomment %}
+           width: 50px;
+           {% comment %} height: 65px; {% endcomment %}
+           height: 50px;
+           text-align: center;
+           box-shadow: 2px 2px 8px -3px #000;
+           border-radius: 100%;
+           -webkit-border-radius: 100%;
+           -moz-border-radius: 100%;
+           -ms-border-radius: 100%;
+           display: inline-block;
+       }
+ 
+       #sy-whatshelp a.sywh-open-services i {
+           {% comment %} line-height: 65px; {% endcomment %}
+           line-height: 50px;
+       }
+   </style>
       
 </head>
 
@@ -582,6 +635,7 @@
 <script src="https://checkout-merchant.snapmint.com/js/v1/6148" defer></script>
 {% endif %}
 <!-- End Shopify-payment JavaScript -->
+<!-- End Shopify-payment JavaScript -->
 {% if request.page_type == 'product' %}
   <script defer src="{{ 'sticky-add-to-cart.js' | asset_url }}"></script>
 {% endif %}
@@ -589,12 +643,12 @@
   <script defer src="{{ 'collection-revamp.js' | asset_url }}"></script> {% comment %} {% endcomment %}
 {%- endif -%}
   {% if template.name == 'index' %}
-    {% render 'cart-chiplet' %}
+  {% render 'cart-chiplet' %}
   {% endif %}
-  {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' %}
-    <script defer src="{{ 'pdp-variant-size.js' | asset_url }}"></script>
-  {% endif %}
-  <script defer src="{{ 'custom-menu.js' | asset_url }}"></script>
+{% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' %}
+  <script defer src="{{ 'pdp-variant-size.js' | asset_url }}"></script>
+{% endif %}
+<script defer src="{{ 'custom-menu.js' | asset_url }}"></script>
 
 {%- if request.page_type == 'collection' -%}
 {% render 'size-selector' %}
@@ -722,9 +776,9 @@ document.addEventListener("click", function (e) {
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+
   // If collection has infinite scroll manager, let infinite scroll manage the collection grid
   if (document.querySelector('[data-infinite-scroll]')) return;
-
   const grid = document.querySelector('.product-grid');
   if(!grid) return;
 
@@ -798,9 +852,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(dnb);
   });
 </script>
-
-
-
 
 </body>
 </html>

@@ -28,7 +28,7 @@
    Selectors are prefixed with .media-gallery so they still win if the stray
    brace is ever fixed and the original 60px filmstrip rules come back to life.
    ========================================================================== */
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px) {
   .media-gallery .media-gallery__inner {
     /* .main-image bottom margin (20px) + gap (10px). The social-proof bar used
        to sit in here too (+36px); on mobile it now renders above Add to Cart.
@@ -56,19 +56,13 @@
     overflow: visible;
   }
 
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .slider__grid {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .slider__grid {
     justify-content: center;
     align-items: center;
     gap: 0;
   }
 
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .slider__item {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .slider__item {
     flex: 0 0 auto;
     width: auto;
     padding-inline-end: 0;
@@ -85,44 +79,29 @@
 
   /* Hide the thumbnail image and media badges, leaving only the dot */
   .media-gallery .media-gallery__inner .carousel.block.thumbnails .img-ar,
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .thumbnail__badge {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .thumbnail__badge {
     display: none;
   }
 
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .thumbnail::after {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .thumbnail::after {
     height: 0;
   }
 
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .slider__grid
-    .border-dots {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .slider__grid .border-dots {
     display: block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.55);
-    transition:
-      background 0.2s,
-      transform 0.2s;
+    transition: background 0.2s, transform 0.2s;
   }
 
-  .media-gallery
-    .media-gallery__inner
-    .carousel.block.thumbnails
-    .slider__item.is-active
-    .border-dots {
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .slider__item.is-active .border-dots {
     background: #fff;
     transform: scale(1.3);
   }
 }
+
 
 /* ==========================================================================
    PDP gallery actions: wishlist + share, overlaid top-right of the image.
@@ -130,7 +109,7 @@
    the max-width:768px block earlier in this file is dead (stray closing brace
    above it swallows the whole block).
    ========================================================================== */
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px) {
   .main-image .kpdp-gallery-actions {
     display: flex;
     position: absolute;
@@ -151,7 +130,7 @@
     padding: 0;
     border: 0;
     border-radius: 10px;
-    background: #ffffff66;
+    background: #FFFFFF66;
     color: #ffffff;
     cursor: pointer;
     /* Wishlist Hero positions its own button absolutely; keep it in flow here */
@@ -234,14 +213,16 @@
     width: 26px;
     height: 26px;
   }
+
 }
+
 
 /* ==========================================================================
    Desktop guard: the gallery action buttons are a mobile-only feature.
    Their layout lives in the max-width:768px block below, so without this the
    markup would render unstyled and in-flow on desktop.
    ========================================================================== */
-@media screen and (min-width: 768.02px) {
+@media screen and (min-width:768.02px) {
   .main-image .kpdp-gallery-actions {
     display: none;
   }
@@ -268,17 +249,18 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px) {
   /* Product title - mobile spec (desktop keeps 27px / rgba(52,52,52,.83)).
      GenerisSansW01-Heavy has no @font-face in this theme, so it falls back to
      the declared Bold face until the Heavy file is added. */
   .section-main-product .product-column-right .title-row .product-title {
-    font-family: "GenerisSansW01-Heavy", "Generis Sans W01 Bold", sans-serif;
+    font-family: 'GenerisSansW01-Heavy', 'Generis Sans W01 Bold', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
     color: #000000;
+    margin-bottom:8px;
   }
 
   /* Sharing moved to the gallery overlay, so drop the one beside the title.
@@ -290,7 +272,7 @@
 
   .kpdp-title-description {
     margin: 0;
-    color: #6b6b6b;
+    color: #6B6B6B;
   }
 
   /* main.css:28 sets a global "p { font-family: ... !important }", so the rich
@@ -305,12 +287,8 @@
     line-height: 20px;
   }
 
-  .kpdp-title-description > *:first-child {
-    margin-top: 0;
-  }
-  .kpdp-title-description > *:last-child {
-    margin-bottom: 0;
-  }
+  .kpdp-title-description > *:first-child { margin-top: 0; }
+  .kpdp-title-description > *:last-child { margin-bottom: 0; }
 
   /* Price row: MRP, price and tax note on one line. main.css only makes
      .product-price a flex row above 768px, so without this the tax note
@@ -321,7 +299,7 @@
     align-items: baseline;
     flex-wrap: wrap;
     column-gap: 10px;
-    margin-top: 12px;
+    margin-top: 28px;
   }
 
   .kpdp-price-row .inclusive-tax__full {
@@ -335,14 +313,8 @@
   /* Compare-at price - mobile spec. GenerisSansW01-Medium has no @font-face in
      this theme, so it falls back to the declared Regular face. The base rule
      uses font-size !important, so this one has to as well. */
-  .section-main-product
-    .product-column-right
-    .price-container
-    .kpdp-price-row
-    .price__default
-    .price__was {
-    font-family:
-      "GenerisSansW01-Medium", "Generis Sans W01 Regular", sans-serif;
+  .section-main-product .product-column-right .price-container .kpdp-price-row .price__default .price__was {
+    font-family: 'GenerisSansW01-Medium', 'Generis Sans W01 Regular', sans-serif;
     font-size: 16px !important;
     font-weight: 400;
     line-height: 20px;
@@ -350,12 +322,7 @@
   }
 
   /* Price value - mobile spec. Desktop keeps 20px / 600 / Generis. */
-  .section-main-product
-    .product-column-right
-    .price-container
-    .kpdp-price-row
-    .price__default
-    .price__current {
+  .section-main-product .product-column-right .price-container .kpdp-price-row .price__default .price__current {
     font-family: "Nunito Sans", sans-serif;
     font-size: 24px;
     font-weight: 800;
@@ -379,12 +346,8 @@
   }
 
   /* ---- Size selector ---- */
-  .opt-legend__name {
-    display: none;
-  }
-  .opt-legend__prompt {
-    display: inline;
-  }
+  .opt-legend__name { display: none; }
+  .opt-legend__prompt { display: inline; }
 
   /* main.css:3717 hides every .product-form .label, and .flex-container is a
      space-between row - so the legend has to be un-hidden AND the container
@@ -396,10 +359,7 @@
     width: 100%;
   }
 
-  .section-main-product
-    .product-form
-    [data-selector-type="listed"].option-selector
-    legend.label {
+  .section-main-product .product-form [data-selector-type=listed].option-selector legend.label {
     display: block;
     float: none;
     margin: 0;
@@ -417,7 +377,7 @@
     position: relative;
     flex-direction: column !important;
     align-items: stretch !important;
-    margin: 16px 0 5px !important;
+    margin: 28px 0 5px !important;
   }
 
   .product-form .input-row.variant-size-chart > a.trigger-pop-up {
@@ -434,14 +394,8 @@
     text-underline-offset: 2px;
   }
 
-  .product-form
-    .input-row.variant-size-chart
-    > a.trigger-pop-up
-    .size-chart-trigger__text,
-  .product-form
-    .input-row.variant-size-chart
-    > a.trigger-pop-up
-    .size-chart-trigger__icon {
+  .product-form .input-row.variant-size-chart > a.trigger-pop-up .size-chart-trigger__text,
+  .product-form .input-row.variant-size-chart > a.trigger-pop-up .size-chart-trigger__icon {
     color: #000000 !important;
   }
 
@@ -451,80 +405,30 @@
 
   /* main.css:6887 pulls this row up with margin-top:-10px, leaving no gap
      under the "Select Size:" legend. */
-  .section-main-product .product-column-right .input-row .flex-container,
-  fieldset.option-selector .flex-container {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    width: 100% !important;
-    max-width: 100% !important;
+  .section-main-product .product-form .option-selector .option-selector__btns {
+    margin-top: 8px;
   }
 
-  .section-main-product .product-form .option-selector .option-selector__btns,
-  .option-selector__btns {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 8px !important;
-    margin: 8px 0 0 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-right: 0 !important;
-    overflow: visible !important;
+  /* Colours only - sizing and layout stay as the theme ships them. */
+  .section-main-product .product-form .option-selector .opt-label {
+    border: 1px solid #D0D0D0 !important;
+    background-color: #EAEAEA !important;
   }
 
-  .opt-label,
-  .opt-label.btn,
-  .opt-label--btn,
-  .option-selector .opt-label {
-    display: inline-flex !important;
-    position: relative !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    min-width: 44px !important;
-    height: 40px !important;
-    margin: 0 !important;
-    padding: 6px 10px !important;
-    border: 1.5px solid #1E1E1E !important;
-    border-radius: 0 !important;
-    background-color: #FFFFFF !important;
-    color: rgb(var(--input-text-color)) !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    box-sizing: border-box !important;
-    flex-shrink: 0 !important;
-    white-space: nowrap !important;
-    transition: all 0.15s ease-in-out;
-  }
-
-  .opt-btn:checked + .opt-label {
+  .section-main-product .product-form .option-selector .opt-btn:checked + .opt-label {
+    border: 1px solid #201747 !important;
     background-color: #201747 !important;
-    border-color: #201747 !important;
-    border-radius: 0 !important;
-    color: #FFFFFF !important;
   }
 
-  .opt-btn.is-unavailable + .opt-label {
-    background-color: #F2F2F4 !important;
-    border-color: #D8D8DC !important;
-    border-radius: 0 !important;
-    color: #98989E !important;
-    opacity: 0.65 !important;
+  .section-main-product .product-form .option-selector .opt-label span.js-value {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
   }
 
-  .opt-btn.is-unavailable:checked + .opt-label {
-    background-color: #D5D5DA !important;
-    border-color: #8E8E96 !important;
-    border-radius: 0 !important;
-    color: #333333 !important;
-    opacity: 0.85 !important;
-  }
-
-  .opt-btn.is-unavailable + .opt-label::after {
-    content: none !important;
-    display: none !important;
+  .section-main-product .product-form .option-selector .opt-btn:checked + .opt-label span.js-value {
+    color: #ffffff;
   }
 
   .product-form .input-row.variant-size-chart > a.trigger-pop-up {
@@ -567,16 +471,11 @@
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.02em;
-    color: #b78a2e;
+    color: #B78A2E;
   }
 
   /* Gradient label chip is not in the mobile design */
-  .section-main-product
-    .product-column-right
-    .price-container
-    .kpdp-price-row
-    .price__default
-    variant-content.product-label-list {
+  .section-main-product .product-column-right .price-container .kpdp-price-row .price__default variant-content.product-label-list {
     display: none;
   }
 }
@@ -587,10 +486,7 @@
    ========================================================================== */
 @media screen and (max-width: 768px) {
   /* Wishlist Hero mounts into .product-form__item in the buy-buttons row */
-  .section-main-product
-    .buy-buttons-row
-    .quantity-submit-row__submit
-    .product-form__item {
+  .section-main-product .buy-buttons-row .quantity-submit-row__submit .product-form__item {
     display: none !important;
   }
 
@@ -601,10 +497,7 @@
     padding-bottom: 14px;
   }
 
-  .section-main-product
-    .buy-buttons-row
-    .quantity-submit-row__submit
-    button[type="submit"].add-to-cart {
+  .section-main-product .buy-buttons-row .quantity-submit-row__submit button[type="submit"].add-to-cart {
     /* row-reverse puts the trailing bag icon in front of the label without
        needing a wrapper class - the preorder branch has no span around its svg */
     display: flex;
@@ -622,7 +515,7 @@
     border-radius: 50px;
     /* GenerisSansW01-Bold is the Figma layer name for the face declared in
        main.css as "Generis Sans W01 Bold" - same typeface, different spelling. */
-    font-family: "GenerisSansW01-Bold", "Generis Sans W01 Bold", sans-serif;
+    font-family: 'GenerisSansW01-Bold', 'Generis Sans W01 Bold', sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 21.45px;
@@ -641,13 +534,12 @@
   }
 }
 
+
 /* ==========================================================================
    Help / WhatsApp chat line under Add To Cart (mobile only)
    ========================================================================== */
 @media screen and (min-width: 768.02px) {
-  .kpdp-help-chat {
-    display: none;
-  }
+  .kpdp-help-chat { display: none; }
 }
 
 @media screen and (max-width: 768px) {
@@ -667,11 +559,11 @@
   }
 
   .kpdp-help-chat {
-    color: #5c5c5c;
+    color: #5C5C5C;
   }
 
   .kpdp-help-chat .kpdp-help-chat__link {
-    color: #b78a2e;
+    color: #B78A2E;
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -679,14 +571,16 @@
   }
 }
 
+
+
+
+
 /* ==========================================================================
    Trust icons: separate desktop and mobile blocks.
    .tim-block  = "Trust icons (mobile)" block, mobile only
    .trust-icons_container = original Trust icons block, desktop only
    ========================================================================== */
-.tim-block {
-  display: none;
-}
+.tim-block { display: none; }
 
 @media screen and (max-width: 768px) {
   .section-main-product .product-column-right .trust-icons_container {
@@ -731,9 +625,9 @@
     height: 62px;
     max-width: none;
     padding: 13px;
-    border: 1px solid #f1e0be;
+    border: 1px solid #F1E0BE;
     border-radius: 50%;
-    background: #fcefd6;
+    background: #FCEFD6;
     object-fit: contain;
   }
 
@@ -742,7 +636,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #b78a2e;
+    color: #B78A2E;
   }
 
   .tim-icon--svg svg {
@@ -760,6 +654,7 @@
     text-align: center;
   }
 }
+
 
 /* ==========================================================================
    ClickPost estimated delivery - mobile.
@@ -791,7 +686,7 @@
     margin-top: 12px;
     padding: 14px 16px !important;
     border-radius: 8px;
-    background: #fcf0da;
+    background: #FCF0DA;
     font-family: "Nunito Sans", sans-serif;
     font-size: 14px;
     font-weight: 500;
@@ -800,19 +695,18 @@
   }
 }
 
+
 /* ==========================================================================
    Text-with-icon tags above the product title (metaobject driven)
    ========================================================================== */
-.ptwi-row {
-  display: none;
-}
+.ptwi-row { display: none; }
 
 @media screen and (max-width: 768px) {
   .ptwi-row {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 14px 0;
+    margin: 20px 0 18px;
   }
 
   .ptwi-tag {
@@ -821,7 +715,7 @@
     gap: 6px;
     padding: 6px 10px;
     border-radius: 6px;
-    background: #fcefd6;
+    background: #FCEFD6;
   }
 
   .ptwi-icon {
@@ -837,10 +731,11 @@
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
-    color: #b78a2e;
+    color: #B78A2E;
     white-space: nowrap;
   }
 }
+
 
 /* ==========================================================================
    Mobile: inset the whole product info column from the left.
@@ -853,13 +748,12 @@
   }
 }
 
+
 /* ==========================================================================
    "Contains" button, bottom-right of the gallery image (mobile only).
    Sits clear of the dot carousel and the social-proof bar.
    ========================================================================== */
-.kpdp-contains {
-  display: none;
-}
+.kpdp-contains { display: none; }
 
 @media screen and (max-width: 768px) {
   .main-image .kpdp-contains {
@@ -888,7 +782,7 @@
     /* Translucent white tile: enough to lift the icon off the photo without
        reading as a solid chip. Raise the alpha (80 -> B3) for more presence,
        lower it (-> 4D) for less. */
-    background: #ffffff80;
+    background: #FFFFFF80;
   }
 
   .main-image .kpdp-contains__icon {
@@ -919,7 +813,7 @@
     box-sizing: border-box;
     padding: 5px 11px;
     border-radius: 8px;
-    background: #ffffff;
+    background: #FFFFFF;
     font-family: "Nunito Sans", sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -929,16 +823,13 @@
   }
 }
 
+
 /* ==========================================================================
    "Contains" drawer: bottom sheet with tab switching
    ========================================================================== */
-body.kpdp-contains-open {
-  overflow: hidden;
-}
+body.kpdp-contains-open { overflow: hidden; }
 
-.kpdp-contains-drawer[hidden] {
-  display: none;
-}
+.kpdp-contains-drawer[hidden] { display: none; }
 
 .kpdp-contains-drawer {
   position: fixed;
@@ -962,7 +853,7 @@ body.kpdp-contains-open {
   overflow-y: auto;
   padding: 16px 20px 20px;
   border-radius: 16px 16px 0 0;
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 .kpdp-contains-drawer__close {
@@ -978,10 +869,7 @@ body.kpdp-contains-open {
   cursor: pointer;
 }
 
-.kpdp-contains-drawer__close svg {
-  width: 100%;
-  height: 100%;
-}
+.kpdp-contains-drawer__close svg { width: 100%; height: 100%; }
 
 .kpdp-contains-drawer__title {
   margin: 0 34px 6px 0;
@@ -1006,7 +894,7 @@ body.kpdp-contains-open {
   gap: 6px;
   margin-bottom: 14px;
   /* the strip line the active tab breaks through */
-  border-bottom: 1px solid #b78a2e99;
+  border-bottom: 1px solid #B78A2E99;
 }
 
 .kpdp-tab {
@@ -1016,9 +904,9 @@ body.kpdp-contains-open {
   padding: 11px 8px;
   border-width: 1px 1px 0 1px;
   border-style: solid;
-  border-color: #b78a2e99;
+  border-color: #B78A2E99;
   border-radius: 8px 8px 0 0;
-  background: #fdefd5;
+  background: #FDEFD5;
   font-family: "Nunito Sans", sans-serif !important;
   font-size: 14px !important;
   font-weight: 700 !important;
@@ -1028,7 +916,7 @@ body.kpdp-contains-open {
 }
 
 .kpdp-tab.is-active {
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
 /* cover the strip line under the active tab so it joins the panel below */
@@ -1039,15 +927,11 @@ body.kpdp-contains-open {
   bottom: -1px;
   left: 0;
   height: 1px;
-  background: #ffffff;
+  background: #FFFFFF;
 }
 
-.kpdp-panel {
-  display: none;
-}
-.kpdp-panel.is-active {
-  display: block;
-}
+.kpdp-panel { display: none; }
+.kpdp-panel.is-active { display: block; }
 
 .kpdp-spec {
   display: grid;
@@ -1076,28 +960,18 @@ body.kpdp-contains-open {
 }
 
 /* rich-text panel body: the JS rewrites each line into a .kpdp-spec row */
-.kpdp-rte > * {
-  margin: 0;
-}
+.kpdp-rte > * { margin: 0; }
 .kpdp-rte ul,
-.kpdp-rte ol {
-  padding: 0;
-  list-style: none;
-}
-.kpdp-spec__v--wide {
-  grid-column: 1 / -1;
-}
+.kpdp-rte ol { padding: 0; list-style: none; }
+.kpdp-spec__v--wide { grid-column: 1 / -1; }
 
 /* the theme centres text inside the gallery column; the sheet must not inherit it */
-.kpdp-contains-drawer__sheet {
-  text-align: left;
-}
+.kpdp-contains-drawer__sheet { text-align: left; }
 .kpdp-contains-drawer__title,
 .kpdp-contains-drawer__note,
 .kpdp-spec__k,
-.kpdp-spec__v {
-  text-align: left;
-}
+.kpdp-spec__v { text-align: left; }
+
 
 /* ==========================================================================
    Brand rating pill under the price.
@@ -1106,9 +980,7 @@ body.kpdp-contains-open {
    ========================================================================== */
 /* hidden on the PDP at every breakpoint — see the mobile block below, which
    keeps the layout rules but stays display: none */
-.brand-rating {
-  display: none;
-}
+.brand-rating { display: none; }
 
 .brand-rating__pill {
   display: inline-flex;
@@ -1117,8 +989,8 @@ body.kpdp-contains-open {
   max-width: 100%;
   padding: 13px 20px;
   border-radius: 12px;
-  background: var(--brand-rating-bg, #fff3da);
-  color: var(--brand-rating-text, #1f1f1f);
+  background: var(--brand-rating-bg, #FFF3DA);
+  color: var(--brand-rating-text, #1F1F1F);
   font-family: "Nunito Sans", sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -1165,7 +1037,7 @@ body.kpdp-contains-open {
 
 /* only used when the metaobject entry has no `svg` image */
 .brand-rating__symbol--fallback {
-  color: #f5b301;
+  color: #F5B301;
 }
 
 .brand-rating__value {
@@ -1176,7 +1048,7 @@ body.kpdp-contains-open {
 }
 
 .brand-rating__subtext {
-  color: #8a8a8a;
+  color: #8A8A8A;
   font-size: 12px;
   font-weight: 600;
   line-height: 15px;
@@ -1248,7 +1120,7 @@ body.kpdp-contains-open {
   overflow: hidden;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width:768px) {
   .media-gallery .main-image {
     /* Flush to the image bottom. The social-proof bar that used to occupy this
        35px now renders above the Add to Cart button. Full width — the dots and
@@ -1299,7 +1171,39 @@ body.kpdp-contains-open {
 
    Mobile only, per the design brief - above 768px the template keeps the
    theme's strike-through treatment.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable + .opt-label::after {
+    content: none;
+  }
 
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable + .opt-label,
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable + .opt-label:hover {
+    border: 1px solid #E3E3E3 !important;
+    background-color: #F2F2F2 !important;
+    box-shadow: none;
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable + .opt-label span.js-value {
+    color: #8A8A8A !important;
+  }
+
+  /* Selected + sold out. Same grey family, one step darker with a firmer border,
+     so the shopper can still tell which size they are looking at. */
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable:checked + .opt-label,
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable:checked + .opt-label:hover {
+    border: 1px solid #C4C4C4 !important;
+    background-color: #E2E2E2 !important;
+    box-shadow: none;
+    opacity: 0.75;
+  }
+
+  .section-main-product .product-form .option-selector .opt-btn.is-unavailable:checked + .opt-label span.js-value {
+    color: #6E6E6E !important;
+  }
+}
 
 /* ==========================================================================
    Social-proof bar - "N people bought this product in last 30 days"
@@ -1382,7 +1286,7 @@ body.kpdp-contains-open {
     margin: 25px 0 0;
     padding: 9px 16px;
     border-radius: 10px;
-    background: #f1edfd;
+    background: #F1EDFD;
   }
 
   .kpdp20-proof__text {
@@ -1396,7 +1300,7 @@ body.kpdp-contains-open {
      Scoped to --atc so the desktop bar, still navy, keeps its white-on-dark. */
   .kpdp20-proof--atc .kpdp20-proof__text,
   .kpdp20-proof--atc .kpdp20-proof__icon--svg {
-    color: #5e3bb3;
+    color: #5E3BB3;
   }
 
   /* 12px/15px was sized for the dark strip. The base rule carries !important on
@@ -1428,26 +1332,10 @@ body.kpdp-contains-open {
      every wrapper between the row and the button is flattened, which leaves the
      margin above as the only gap in play. Scoped to the custom PDP, to mobile,
      and to rows that actually follow the proof card. */
-  .section-main-product
-    .product-form
-    .kpdp20-proof--atc
-    + .buy-buttons-row
-    .form,
-  .section-main-product
-    .product-form
-    .kpdp20-proof--atc
-    + .buy-buttons-row
-    .no-stock-delivery,
-  .section-main-product
-    .product-form
-    .kpdp20-proof--atc
-    + .buy-buttons-row
-    .quantity-submit-row,
-  .section-main-product
-    .product-form
-    .kpdp20-proof--atc
-    + .buy-buttons-row
-    .quantity-submit-row__submit {
+  .section-main-product .product-form .kpdp20-proof--atc + .buy-buttons-row .form,
+  .section-main-product .product-form .kpdp20-proof--atc + .buy-buttons-row .no-stock-delivery,
+  .section-main-product .product-form .kpdp20-proof--atc + .buy-buttons-row .quantity-submit-row,
+  .section-main-product .product-form .kpdp20-proof--atc + .buy-buttons-row .quantity-submit-row__submit {
     margin-top: 0;
     padding-top: 0;
   }
@@ -1483,8 +1371,8 @@ body.kpdp-contains-open {
     align-items: center;
     padding: 11px 14px;
     border-radius: 10px;
-    background: #f1edfd;
-    color: #5e3bb3;
+    background: #F1EDFD;
+    color: #5E3BB3;
     font-family: "Nunito Sans", sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -1513,96 +1401,6 @@ body.kpdp-contains-open {
     display: none !important;
   }
 }
-
-/* ==========================================================================
-   PDP Details Accordion (Specifications, Description, Shipping)
-   ========================================================================== */
-.pdp-accordion-group {
-  margin-top: 15px;
-  border-top: 1px solid #E8E8E8;
-}
-.pdp-accordion-item {
-  border-bottom: 1px solid #E8E8E8;
-}
-details.pdp-accordion-item > summary.pdp-accordion-summary {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 14px 0 !important;
-  cursor: pointer !important;
-  list-style: none !important;
-  user-select: none !important;
-}
-details.pdp-accordion-item > summary.pdp-accordion-summary::-webkit-details-marker,
-details.pdp-accordion-item > summary.pdp-accordion-summary::marker {
-  display: none !important;
-  content: "" !important;
-}
-.pdp-accordion-title {
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1E1E1E;
-}
-.pdp-accordion-icon {
-  position: relative;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pdp-accordion-icon::before,
-.pdp-accordion-icon::after {
-  content: '';
-  position: absolute;
-  background-color: #333333;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.pdp-accordion-icon::before {
-  width: 12px;
-  height: 1.5px;
-}
-.pdp-accordion-icon::after {
-  width: 1.5px;
-  height: 12px;
-}
-.pdp-accordion-item[open] .pdp-accordion-icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-.pdp-accordion-content {
-  padding: 0 0 16px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #4A4A4A;
-}
-.pdp-specs-table {
-  display: flex;
-  flex-direction: column;
-}
-.pdp-spec-row {
-  display: flex;
-  padding: 6px 0;
-  border-bottom: 1px solid #F2F2F4;
-  font-size: 13px;
-}
-.pdp-spec-row:last-child {
-  border-bottom: none;
-}
-.pdp-spec-key {
-  width: 35%;
-  min-width: 110px;
-  color: #888888;
-}
-.pdp-spec-val {
-  width: 65%;
-  color: #1E1E1E;
-  font-weight: 500;
-}
-.pdp-desc-body,
-.pdp-ship-body {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #4A4A4A;
+.price-container .price-descriptors #wishlisthero-product-page-button-container{
+  display:none !important;
 }

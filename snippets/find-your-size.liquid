@@ -21,9 +21,13 @@
   assign is_kids_product = false
   assign vendor_down = product.vendor | downcase
   assign type_down = product.type | downcase
-  
   if vendor_down contains 'kids' or type_down contains 'kids'
     assign is_kids_product = true
+  endif
+
+  assign is_gift_product = false
+  if type_down contains 'gift' or product.handle contains 'gift-box' or product.handle == 'rakhi-gift-box-rakhigb-26'
+    assign is_gift_product = true
   endif
 
   for tag in product.tags
@@ -35,7 +39,7 @@
   endfor
 -%}
 
-{%- if has_size_option and is_kids_product == false -%}
+{%- if has_size_option and is_kids_product == false and is_gift_product == false -%}
 
 {%- comment -%} Build list of available size values from product variants {%- endcomment -%}
 {%- liquid
@@ -101,11 +105,12 @@
   <div class="fys" id="fys-{{ product.id }}">
 
     <button class="fys-trigger" id="fysTrigger-{{ product.id }}" aria-expanded="false" aria-controls="fysPanel-{{ product.id }}">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+      <svg class="fys-cube" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
         <path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>
       </svg>
-      <span>Not sure of your size?&nbsp;→</span>
+      <span class="fys-trigger__legacy">Not sure of your size? Find it in 15 seconds&nbsp;→</span>
+      <span class="fys-trigger__new"><strong>Find Your Fit</strong> In 15 Seconds</span>
       <svg class="fys-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
     </button>
 
@@ -200,48 +205,61 @@
             <!-- STEP 4 · RESULT -->
             <section class="fys-screen fys-result" data-screen="3">
               <div class="fys-badge" data-fys-badge>40</div>
-              <h3 class="fys-result-h">Your recommended size is <span data-fys-size-label>M — 40</span></h3>
 
               <div class="fys-answers" data-fys-answers></div>
 
+              <h3 class="fys-result-h">Your recommended size is <span data-fys-size-label>M — 40</span></h3>
+
+              {%- comment -%} Size note under the result heading. Content comes from the
+                 product metafield custom.find_your_fit_size - a list of
+                 find_your_fit_size_text metaobjects (icon, text). Products with no
+                 entries keep the JS-rendered garment breakdown. {%- endcomment -%}
+              {%- assign fys_notes = product.metafields.custom.find_your_fit_size.value -%}
+              {%- if fys_notes != blank -%}
+                <div class="fys-fitnote">
+                  {%- for fys_note in fys_notes -%}
+                    {%- assign note_icon = fys_note.icon.value -%}
+                    {%- assign note_text = fys_note.text.value -%}
+                    {%- comment -%} The design breaks this note after the lead-in, and the
+                       copy carries no line break of its own, so insert one. A real line
+                       break typed into the metaobject text field takes precedence: the
+                       matched phrase no longer appears once it is there, so this is a
+                       no-op then and for any other note in the list. {%- endcomment -%}
+                    {%- assign note_text = note_text | replace: "size is applicable", "size is
+applicable" -%}
+                    {%- if note_icon != blank or note_text != blank -%}
+                      <p class="fys-fitnote__row">
+                        {%- if note_icon != blank -%}
+                          {%- comment -%} File-type fields hand back a generic file, not an image drop {%- endcomment -%}
+                          <img
+                            class="fys-fitnote__icon"
+                            src="{% if note_icon.width %}{{ note_icon | image_url: width: 72 }}{% else %}{{ note_icon.url }}{% endif %}"
+                            width="18"
+                            height="18"
+                            alt=""
+                            loading="lazy"
+                          >
+                        {%- endif -%}
+                        {%- if note_text != blank -%}
+                          <span class="fys-fitnote__text">{{ note_text | escape }}</span>
+                        {%- endif -%}
+                      </p>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <ul class="fys-breakdown" data-fys-breakdown></ul>
+              {%- endif -%}
+
               <div class="fys-slim-note" data-fys-slim-note hidden>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                <span>Prefer a closer fit? Size <b data-fys-slim-size></b> will sit slimmer on you.</span>
+                <span><span class="fys-slim-l">Prefer a closer fit?</span><span class="fys-slim-l">Size <b data-fys-slim-size></b> will sit slimmer on you.</span></span>
               </div>
 
-              <!-- Crosswalk refiner (optional) -->
-              <div class="fys-crosswalk" data-fys-crosswalk>
-                <button type="button" class="fys-crosswalk-toggle" data-fys-crosswalk-toggle>
-                  Not sure of his measurements?
-                  <svg class="fys-crosswalk-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div class="fys-crosswalk-body" data-fys-crosswalk-body hidden>
-                  <div class="fys-crosswalk-group">
-                    <span class="fys-crosswalk-lbl">Your usual kurta size</span>
-                    <div class="fys-pills" data-fys-kurta-pills>
-                      <button type="button" class="fys-pill" data-kurta="S">S</button>
-                      <button type="button" class="fys-pill" data-kurta="M">M</button>
-                      <button type="button" class="fys-pill" data-kurta="L">L</button>
-                      <button type="button" class="fys-pill" data-kurta="XL">XL</button>
-                      <button type="button" class="fys-pill" data-kurta="XXL">XXL</button>
-                    </div>
-                  </div>
-                  <div class="fys-crosswalk-group">
-                    <span class="fys-crosswalk-lbl">Your slim-fit formal shirt size</span>
-                    <div class="fys-pills" data-fys-shirt-pills>
-                      <button type="button" class="fys-pill" data-shirt="39">39</button>
-                      <button type="button" class="fys-pill" data-shirt="40">40</button>
-                      <button type="button" class="fys-pill" data-shirt="42">42</button>
-                      <button type="button" class="fys-pill" data-shirt="44">44</button>
-                    </div>
-                  </div>
-                  <p class="fys-crosswalk-note" data-fys-crosswalk-note hidden></p>
-                </div>
-              </div>
 
               <div class="fys-result-actions">
-                <button class="fys-continue" data-fys-use-size>Select this size</button>
-                <button class="fys-startover" data-fys-start-over>Start over</button>
+                <button class="fys-continue" data-fys-use-size>Select Size <span data-fys-btn-size>38</span></button>
+                <button class="fys-startover" data-fys-start-over>Select Different Size</button>
               </div>
 
               <p class="fys-exchange">Free size exchange within 7 days if it's not right.</p>

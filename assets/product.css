@@ -70,6 +70,9 @@ p.child_kurta_title_custom_bs {
   margin: 0;
   color: rgb(147, 149, 158);
   font-size: 16px !important;
+} 
+.section-main-product .product-column-right .price-container .price__default .price__was:empty{
+  display:none !important;
 }
 
 .product-column-right .price-container .inclusive-tax {
@@ -273,6 +276,14 @@ p.child_kurta_title_custom_bs {
 .section-main-product .product-column-right .no-stock-delivery .quantity-submit-row.input-row {
   width: 45%;
   margin: unset;
+}
+
+/* Mobile: the wishlist button is hidden (main.css), so the Sold Out button is
+   the row's only child and takes the full width. Desktop keeps the 45% split. */
+@media only screen and (max-width: 768px) {
+  .section-main-product .product-column-right .no-stock-delivery .quantity-submit-row.input-row {
+    width: 100%;
+  }
 }
 
 .section-main-product .product-column-right .payment-img {
@@ -781,6 +792,8 @@ display: block !important;
   display: none;
 }
 
+/* Desktop pill — unchanged. Hidden below 768px, where the tag-driven gold
+   ribbons (.cp-product-badges) take over. */
 .cp-trending-badge {
   border-radius: 18px;
   background: var(--Trending-Badge, linear-gradient(90deg, #201747 0%, #3D2A8F 100%));
@@ -800,6 +813,61 @@ display: block !important;
   z-index: 5;
 }
 
+/* Mobile-only: Bestseller / Trending gold ribbons, one per matching product
+   tag. The wrapper owns the position so a product carrying both tags stacks
+   them instead of overlapping. */
+.cp-product-badges {
+  display: none;
+}
+
+@media screen and (max-width:768px) {
+  .cp-trending-badge {
+    display: none;
+  }
+
+  .cp-product-badges {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cp-badge-ribbon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 6px 30px 6px 14px;
+    background: var(--Trending-Badge, linear-gradient(90deg, #B78A2E 0%, #F2CE85 94.12%));
+    clip-path: polygon(0 0, 100% 0, calc(100% - 13px) 50%, 100% 100%, 0 100%);
+    color: #201747;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+  }
+
+  /* The thumb is drawn on a square 24x24 grid and the flame on a tall 10x13
+     one, so they need different boxes to read at the same optical size. */
+  .cp-badge-ribbon__icon {
+    flex-shrink: 0;
+  }
+
+  .cp-badge-ribbon__icon--thumb {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cp-badge-ribbon__icon--flame {
+    width: 12px;
+    height: 15px;
+  }
+}
+
 .delivery_timeli_custom {
     max-width: 90%;
     margin-top: -1.5rem;
@@ -814,173 +882,4 @@ display: block !important;
 }
 }
 
-/* ==========================================================================
-   PDP Details Accordion (Specifications, Description, Shipping)
-   ========================================================================== */
-.pdp-accordion-group {
-  margin-top: 15px;
-  border-top: 1px solid #E8E8E8;
-}
-.pdp-accordion-item {
-  border-bottom: 1px solid #E8E8E8;
-}
-details.pdp-accordion-item > summary.pdp-accordion-summary {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  padding: 14px 0 !important;
-  cursor: pointer !important;
-  list-style: none !important;
-  user-select: none !important;
-}
-details.pdp-accordion-item > summary.pdp-accordion-summary::-webkit-details-marker,
-details.pdp-accordion-item > summary.pdp-accordion-summary::marker {
-  display: none !important;
-  content: "" !important;
-}
-.pdp-accordion-title {
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1E1E1E;
-}
-.pdp-accordion-icon {
-  position: relative;
-  width: 14px;
-  height: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pdp-accordion-icon::before,
-.pdp-accordion-icon::after {
-  content: '';
-  position: absolute;
-  background-color: #333333;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-.pdp-accordion-icon::before {
-  width: 12px;
-  height: 1.5px;
-}
-.pdp-accordion-icon::after {
-  width: 1.5px;
-  height: 12px;
-}
-.pdp-accordion-item[open] .pdp-accordion-icon::after {
-  transform: rotate(90deg);
-  opacity: 0;
-}
-.pdp-accordion-content {
-  padding: 0 0 16px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #4A4A4A;
-}
-.pdp-specs-table {
-  display: flex;
-  flex-direction: column;
-}
-.pdp-spec-row {
-  display: flex;
-  padding: 6px 0;
-  border-bottom: 1px solid #F2F2F4;
-  font-size: 13px;
-}
-.pdp-spec-row:last-child {
-  border-bottom: none;
-}
-.pdp-spec-key {
-  width: 35%;
-  min-width: 110px;
-  color: #888888;
-}
-.pdp-spec-val {
-  width: 65%;
-  color: #1E1E1E;
-  font-weight: 500;
-}
-.pdp-desc-body,
-.pdp-ship-body {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #4A4A4A;
-}
 
-/* ==========================================================================
-   PDP Variant Selector Pills (Clean Square Grid with Wrapping)
-   ========================================================================== */
-.section-main-product .product-column-right .input-row .flex-container,
-fieldset.option-selector .flex-container {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: flex-start !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-.option-selector__btns {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  gap: 8px !important;
-  margin: 8px 0 0 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  padding-right: 0 !important;
-  overflow: visible !important;
-}
-
-.opt-label,
-.opt-label.btn,
-.opt-label--btn,
-.option-selector .opt-label {
-  display: inline-flex !important;
-  position: relative !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  min-width: 44px !important;
-  height: 40px !important;
-  margin: 0 !important;
-  padding: 6px 10px !important;
-  border: 1.5px solid #1E1E1E !important;
-  border-radius: 0 !important;
-  background-color: #FFFFFF !important;
-  color: rgb(var(--input-text-color)) !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
-  transition: all 0.15s ease-in-out;
-}
-
-.opt-btn:checked + .opt-label {
-  background-color: #201747 !important;
-  border-color: #201747 !important;
-  border-radius: 0 !important;
-  color: #FFFFFF !important;
-}
-
-.opt-btn.is-unavailable + .opt-label {
-  background-color: #F2F2F4 !important;
-  border-color: #D8D8DC !important;
-  border-radius: 0 !important;
-  color: #98989E !important;
-  opacity: 0.65 !important;
-}
-
-.opt-btn.is-unavailable:checked + .opt-label {
-  background-color: #D5D5DA !important;
-  border-color: #8E8E96 !important;
-  border-radius: 0 !important;
-  color: #333333 !important;
-  opacity: 0.85 !important;
-}
-
-.opt-btn.is-unavailable + .opt-label::after {
-  content: none !important;
-  display: none !important;
-}

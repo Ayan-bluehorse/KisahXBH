@@ -310,9 +310,10 @@
 }
 @media (prefers-reduced-motion: reduce) { .fys-badge { animation: none; } }
 .fys-result-h {
-  font-family: var(--fys-font);
-  font-size: 19px;
-  font-weight: 600;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+  line-height: 22.8px !important;
 }
 .fys-result-h span { color: var(--navy); }
 
@@ -321,7 +322,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 14px;
+  margin: 18px 0;
   flex-wrap: wrap;
 }
 .fys-answer {
@@ -339,20 +340,81 @@
 .fys-answer:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .fys-answer svg { vertical-align: -2px; margin-left: 6px; }
 
+/* garment breakdown */
+.fys-breakdown {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  text-align: left;
+  list-style: disc;
+}
+.fys-breakdown li {
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 27px !important;
+  color: var(--body);
+  margin-bottom: 6px;
+}
+.fys-breakdown li::marker { color: var(--body); }
+.fys-breakdown li:last-child { margin-bottom: 0; }
+
+/* fit note under the result heading (metaobject driven) --------------------
+   The icon is inline so it sits on the first line and the whole note stays
+   centred as the text wraps, matching the design. */
+.fys-fitnote {
+  /* pulled past the card padding so the second line has room to stay on one
+     line in a narrow column; the note is centred text with no box, so the
+     negative inset is not visible */
+  margin: 10px -8px 0;
+  /* padding, not margin: the next sibling carries its own top margin and the
+     two would collapse, leaving the gap unchanged */
+  padding-bottom: 14px;
+  text-align: center;
+}
+.fys-fitnote__row {
+  margin: 0 0 6px;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 20px !important;
+  color: var(--body);
+}
+.fys-fitnote__row:last-child { margin-bottom: 0; }
+.fys-fitnote__icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  max-width: none;
+  margin-right: 6px;
+  object-fit: contain;
+  vertical-align: -4px;
+}
+.fys-fitnote__text {
+  color: inherit;
+  /* honour real line breaks typed into the metaobject text field, while still
+     wrapping normally within each line */
+  white-space: pre-line;
+}
+
 /* slim fit note */
 .fys-slim-note {
-  display: inline-flex;
-  align-items: center;
+  /* full card width, not hugging the text */
+  display: flex;
+  align-items: flex-start;
   gap: 9px;
   margin-top: 18px;
   text-align: left;
   background: #F4F4FB;
   border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 13.5px;
+  padding: 10px 8px;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 21.6px !important;
   color: var(--navy);
 }
-.fys-slim-note svg { flex: none; }
+.fys-slim-note svg { flex: none; align-self: flex-start; margin-top: 2px; }
+.fys-slim-note .fys-slim-l { display: block; }
 
 /* result actions */
 .fys-result-actions {
@@ -363,14 +425,34 @@
   margin-top: 22px;
   flex-wrap: wrap;
 }
-.fys-exchange { font-size: 13px; color: var(--muted); margin-top: 16px; }
-.fys-support { font-size: 13px; color: var(--muted); margin-top: 5px; }
-.fys-support a { color: var(--body); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+/* GenerisSansW01-Medium has no @font-face in this theme; Regular is the
+   nearest declared face, so it carries the fallback. */
+.fys-exchange {
+  font-family: 'GenerisSansW01-Medium', 'Generis Sans W01 Regular', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 20.8px !important;
+  color: #000000;
+  margin-top: 16px;
+}
+/* the declared face is "Generis Sans W01 Regular"; the hyphenated name has no
+   @font-face, so it sits first and the declared one resolves. */
+.fys-support {
+  font-family: 'GenerisSansW01-Regular', 'Generis Sans W01 Regular', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 20.8px !important;
+  color: #000000;
+  margin-top: 5px;
+}
+.fys-support a { color: #2B2B6E !important; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 .fys-support a:hover { color: var(--navy); }
 .fys-startover {
-  font-family: var(--fys-font);
-  font-size: 14.5px;
-  color: var(--body);
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 400 !important;
+  line-height: 23.2px !important;
+  color: #000000;
   background: none;
   border: none;
   cursor: pointer;
@@ -495,3 +577,57 @@
   .fys-pill { padding: 6px 13px; font-size: 12.5px; }
 }
 
+
+
+/* ==========================================================================
+   Mobile: gradient "Find Your Fit" trigger.
+   Desktop keeps the original soft-navy strip and its longer wording.
+   ========================================================================== */
+.fys-trigger__new { display: none; }
+
+@media screen and (max-width: 768px) {
+  .fys-trigger__legacy,
+  .fys-trigger .fys-cube {
+    display: none;
+  }
+
+  .fys-trigger__new {
+    display: inline;
+  }
+
+  .fys-trigger__new strong {
+    font-weight: 700;
+  }
+
+  .fys-trigger__new {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0;
+  }
+
+  .fys-trigger {
+    /* same gold-to-brown ramp the theme uses on product label chips */
+    background: linear-gradient(90deg, #B78A2E 0%, #554845 100%);
+    border: 0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    color: #FFFFFF;
+    font-weight: 500;
+    /* inset comes from .product-column-right padding on mobile */
+  }
+
+  .fys-trigger:hover {
+    background: linear-gradient(90deg, #A67C26 0%, #4A3F3C 100%);
+    border: 0;
+  }
+
+  .fys-trigger:focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: -4px;
+  }
+
+  .fys-trigger .fys-caret {
+    stroke: #FFFFFF;
+  }
+}

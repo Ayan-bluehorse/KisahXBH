@@ -233,6 +233,7 @@
         <script>
           (function () {
             var root = document.getElementById("kpdpContains-{{ section.id }}");
+            console.log('root',root);
             if (!root) return;
             var opener = document.querySelector(".js-kpdp-contains-open");
             var titleEl = root.querySelector(".js-kpdp-contains-title");
@@ -354,6 +355,7 @@
 
             if (opener) opener.addEventListener("click", function (e) { e.preventDefault(); setOpen(true); });
             root.addEventListener("click", function (e) {
+              console.log('clicked')
               if (e.target.closest(".js-kpdp-contains-close")) { e.preventDefault(); setOpen(false); return; }
               var tab = e.target.closest(".kpdp-tab");
               if (tab) selectTab(tab.getAttribute("data-kpdp-tab"));
@@ -1027,12 +1029,235 @@
           {% when 'brand-rating' %}
 
           {% when 'description' %}
-            <div
-              class="{% unless block.settings.show_in_quickbuy %}not-in-quickbuy{% endunless %}"
-              {{ block.shopify_attributes }}
-            >
-              {% render 'pdp-details-accordion', product: product, block: block %}
-            </div>
+            {%- if product.description != blank -%}
+              <div
+                class="{% unless block.settings.show_in_quickbuy %}not-in-quickbuy{% endunless %}{% if block.settings.show_in_tab %} product-info-accordion{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.show_in_tab %}
+                  <details-disclosure>
+                    <details
+                      class="disclosure"
+                      {% if block.settings.open_tab %}
+                        open
+                      {% endif %}
+                    >
+                      <summary class="disclosure__title">
+                        {%- if block.settings.icon == blank -%}
+                          {%- comment -%}{{- 'products.product.description' | t -}}{%- endcomment -%}
+                          <span>Product description {% render 'dropdown-svg' %} </span>
+                        {%- else -%}
+                          <div class="with-icon">
+                            {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                            <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                          </div>
+                        {%- endif -%}
+                      </summary>
+                      <div class="disclosure__panel has-motion">
+                        <div class="disclosure__content rte cf">
+                          {{- product.description -}}
+                        </div>
+                      </div>
+                    </details>
+                  </details-disclosure>
+
+                  
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                              Product Specification
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {% if product.metafields.custom.product_type != blank %}
+                            <p>Product Type: {{ product.metafields.custom.product_type }}</p>
+                          {% endif %}
+                            {% if product.metafields.custom.product_specification_ocassion != blank %}
+                            <p>Occasion: {{ product.metafields.custom.product_specification_ocassion }}</p>
+                          {% endif %} 
+                            {% if product.metafields.custom.fabric != blank %}
+                            <p>Fabric : {{ product.metafields.custom.fabric }}</p>
+                          {% endif %}
+                            {% if product.metafields.custom.length != blank %}
+                            <p>Length : {{ product.metafields.custom.length }}</p>
+                          {% endif %}
+                            {% if product.metafields.custom.colour != blank %}
+                            <p>Colour : {{ product.metafields.custom.colour }}</p>
+                          {% endif %}
+                            {% if product.metafields.custom.pattern != blank %}
+                            <p>Pattern : {{ product.metafields.custom.pattern }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.fit != blank %}
+                            <p>Fit : {{ product.metafields.custom.fit }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.work_details != blank %}
+                          <p> Work Details:{{ product.metafields.custom.work_details }}</p>
+                        {% endif %}
+                          {% if product.metafields.custom.sleeve_length != blank %}
+                           <p> Sleeve Length: {{ product.metafields.custom.sleeve_length }}</p>
+                          {% endif %}
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                  
+
+                {% if product.metafields.custom.product_highlights != blank %}
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                             ⁠Product Highlights
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom.product_highlights }}
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                 {% endif %}
+                  
+                 {% if product.metafields.custom.wash_care_instructions != blank %}
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                             ⁠Wash & Care Instructions
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom.wash_care_instructions }}
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                   {% endif %}
+                  
+                  {% if product.metafields.custom._shipping_return_details != blank  %}
+                  <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                             Know More
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom._shipping_return_details }}
+                            <p><br>
+                              <strong>Manufacturer Detail:<br></strong>
+                              <strong>KISAH APPAREL PRIVATE LIMITED<br></strong>
+                              P62,3rd Lane, Sector B,Metropolitan Housing Society, Kolkata 700105</p>
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                  {% endif %}
+                  
+                  {% assign metaobject_list = product.metafields.custom.product_seller_information.value %}
+                  {% for metaobject_item in metaobject_list %}
+                    {% if metaobject_item.title != blank %}
+                      <details-disclosure class="cp_seller_info">
+                        <details
+                          class="disclosure last-diclosuer"
+                          {% if block.settings.open_tab %}
+                            open
+                          {% endif %}
+                        >
+                          <summary class="disclosure__title">
+                            {%- if block.settings.icon == blank -%}
+                              <span>
+                                {{ metaobject_item.title -}}
+                                {%- render 'dropdown-svg' %}
+                              </span>
+                            {%- else -%}
+                              <div class="with-icon">
+                                {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                                <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                              </div>
+                            {%- endif -%}
+                          </summary>
+                          <div class="disclosure__panel has-motion">
+                            <div class="disclosure__content rte cf">
+                              {{ metaobject_item.seller_information }}
+                            </div>
+                          </div>
+                        </details>
+                      </details-disclosure>
+                    {% endif %}
+                  {% endfor %}
+
+                {% else %}
+                  <div class="product-description rte cf">
+                    {%- if block.settings.icon == blank -%}
+                      {{- product.description -}}
+                    {%- else -%}
+                      <div class="with-icon">
+                        {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                        <span class="with-icon__beside">{{ product.description }}</span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {% endif %}
+              </div>
+            {%- endif -%}
 
           {% when 'vendor' %}
             {%- liquid
@@ -1336,16 +1561,19 @@
                     </div>
                     {% endif %}
                     <div class="product-share-icons">
-                      {% render 'mobile-soical-share',
-                        sharefacebook: block.settings.show_fb,
-                        shareinstagram: block.settings.show_insta,
-                        shareprintrest: block.settings.show_print,
-                        sharewhatsapp: block.settings.show_whatsapp,
-                        sharetitle: product.title,
-                        shareurl: product.url,
-                        shareimage: product,
-                        unique_id: 'mob-share'
-                      %}
+                  {% assign share_url = product.url
+  | append: '?utm_source=pdp-share&utm_medium=social&utm_campaign=web-pdp-share' %}
+
+{% render 'mobile-soical-share',
+  sharefacebook: block.settings.show_fb,
+  shareinstagram: block.settings.show_insta,
+  shareprintrest: block.settings.show_print,
+  sharewhatsapp: block.settings.show_whatsapp,
+  sharetitle: product.title,
+  shareurl: share_url,
+  shareimage: product,
+  unique_id: 'mob-share'
+%}
                     </div>
 
                     {% if enable_dynamic_payment_button %}
@@ -1378,7 +1606,7 @@
                   <div class="no-stock-delivery">
                     {%- comment -%} Desktop only — main.css hides this mount below 768px,
                        where the Sold Out button takes the full row. {%- endcomment -%}
-                    {% render 'wishlisthero-custom-button' %}
+                    {% comment %} {% render 'wishlisthero-custom-button' %} {% endcomment %}
                     <div class="quantity-submit-row input-row">
                       <div class="quantity-submit-row__submit">
                         <button class="btn btn--large" name="add" type="submit" disabled>
@@ -1412,13 +1640,15 @@
                     </div>
                   {% endcomment %}
                   <div class="product-share-icons">
+                    {% assign share_url = product.url
+  | append: '?utm_source=pdp-share&utm_medium=social&utm_campaign=web-pdp-share' %}
                     {% render 'mobile-soical-share',
                       sharefacebook: block.settings.show_fb,
                       shareinstagram: block.settings.show_insta,
                       shareprintrest: block.settings.show_print,
                       sharewhatsapp: block.settings.show_whatsapp,
                       sharetitle: product.title,
-                      shareurl: product.url,
+                      shareurl: share_url,
                       shareimage: product,
                       unique_id: 'mob-share'
                     %}

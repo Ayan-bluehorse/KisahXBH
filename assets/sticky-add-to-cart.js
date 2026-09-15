@@ -442,7 +442,7 @@
     stickyButton.type = 'submit';
     stickyButton.name = 'add';
     stickyButton.innerHTML = `
-      Add To Bag
+      Add To Cart
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white" class="add-to-cart-bag" style="margin-left:10px">
         <path d="M21 6H18C18 4.4 17.4 2.9 16.2 1.8S13.6 0 12 0s-3.1.6-4.2 1.8S6 4.4 6 6H3C2.2 6 1.4 6.3.9 6.9.3 7.4 0 8.2 0 9v10c0 1.3.5 2.6 1.5 3.5S3.7 24 5 24h14c1.3 0 2.6-.5 3.5-1.5S24 20.3 24 19V9c0-.8-.3-1.6-.9-2.1S21.8 6 21 6zM8 6c0-1.1.4-2.1 1.2-2.8S10.9 2 12 2s2.1.4 2.8 1.2S16 4.9 16 6H8zm14 13c0 .5-.2 1-.6 1.4-.4.4-.9.6-1.4.6H5c-.5 0-1-.2-1.4-.6C3.2 20 3 19.5 3 19V9c0-.3.1-.5.3-.7S3.7 8 4 8h2v2c0 .3.1.5.3.7S6.7 11 7 11s.5-.1.7-.3S8 10.3 8 10V8h8v2c0 .3.1.5.3.7s.4.3.7.3.5-.1.7-.3S18 10.3 18 10V8h3c.3 0 .5.1.7.3s.3.4.3.7v10z" fill="#ffffff"></path>
       </svg>
@@ -470,7 +470,7 @@
         max-width: 600px;
         margin: 0 auto;
         background: #201847;
-        height: 40px !important;
+        height: 51px !important;
         border-radius: 50px !important;
         background-color: #201747 !important;
         box-shadow: 0px 4px 8px 3px #00000026 !important;
@@ -478,10 +478,11 @@
         display: flex !important;
         padding: 0 31px !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         cursor: pointer;
       }
       .sticky-add-to-cart-price {
+        display: none !important;
         color: #ffffff !important;
         font-weight: 400 !important;
         font-size: 18px !important;
@@ -491,20 +492,24 @@
         background: transparent;
         border: none;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        /* markup is "label then svg"; reverse puts the bag on the left */
+        flex-direction: row-reverse !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important;
         gap: 10px;
         color: #ffffff !important;
         text-transform: capitalize !important;
         font-weight: 400 !important;
-        font-size: 18px !important;
-        font-family: "Generis Sans W01 Bold" !important;
-        padding: 0;
+        font-size: 16px !important;
+        line-height: 21.45px !important;
+        font-family: 'GenerisSansW01-Bold', 'Generis Sans W01 Bold', sans-serif !important;
+        padding: 1px 0 0 !important;
         letter-spacing: normal;
       }
       .sticky-add-to-cart .add-to-cart-bag {
-        width: 20px !important;
-        height: 21px !important;
+        width: 16px !important;
+        height: 17px !important;
         margin-left: 0 !important;
       }
     `;

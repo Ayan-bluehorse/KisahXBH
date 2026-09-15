@@ -88,7 +88,7 @@
   },
   "products": {
     "product": {
-      "add_to_cart": "Add to Bag",
+      "add_to_cart": "Add To Cart",
       "added_to_cart_with_link_html": "Added to your <a href=\"{{ cart_url }}\">Cart</a>",
       "backorder": "is backordered and will ship as soon as it is back in stock.",
       "barcode": "Barcode:",

@@ -1,79 +1,82 @@
-<!-- key highlight css start -->
-  .main-image {
-    position: relative;
-  }
+/* Key highlights overlay — shown on the third gallery image.
+   NOTE: this file previously opened with an HTML-style comment, which
+   made the first rule's selector invalid and silently dropped it. Kept as real
+   CSS comments so every rule parses. */
 
- .slider__item .key-highlights-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 35%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
-    padding: 60px 10px;
-    box-sizing: border-box;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: inherit;
-  }
-
- .slider__item .key-highlights-overlay h2 {
-    text-align: start;
-    color: #FFF;
-    font-family: 'Generis Sans W01 Bold';
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-
- .slider__item .key-highlights-overlay .highlight-block {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    padding-bottom: 12px;
-    text-align: start;
-    margin-bottom: 12px;
-  }
-
- .slider__item .key-highlights-overlay .highlight-block strong {
-    color: #FFF;
-    font-family: 'Generis Sans W01 Regular';
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-align: start;
-  }
-
- .slider__item .key-highlights-overlay .highlight-block span {
-    display: block;
-    word-wrap: break-word;
-    color: #FFF;
-    font-family: 'Generis Sans W01 Bold';
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-
-  .slider__item {
-    position: relative;
-    overflow: hidden; 
-  }
-  .slider__item .key-highlights-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 5;
-        pointer-events: none;
-        width: 180px;
-        opacity: 90%;
-        background: rgba(0, 0, 0, 0.6);
-        padding-top: 20px;
-        padding-left: 8px;
-        padding-bottom: 4px;
+.slider__item {
+  position: relative;
+  overflow: hidden;
 }
-<!-- key highlight end -->
+
+.slider__item .key-highlights-overlay {
+  position: absolute;
+  right: 34px;
+  bottom: 26%;
+  margin-bottom: 22px;
+  left: 0;
+  z-index: 5;
+  box-sizing: border-box;
+  padding: 14px 10px 16px 26px;
+  border-radius: 0 10px 10px 0;
+  background: rgba(226, 218, 210, 0.60);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: #111111;
+  pointer-events: none;
+}
+
+.slider__item .key-highlights-overlay h2 {
+  margin: 0 0 12px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  color: #111111;
+  text-align: start;
+}
+
+.slider__item .key-highlights-overlay .kh-cols {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 8px;
+  align-items: start;
+}
+
+.slider__item .key-highlights-overlay .kh-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.slider__item .key-highlights-overlay .highlight-block {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: start;
+}
+
+.slider__item .key-highlights-overlay .highlight-block strong {
+  display: block;
+  margin-bottom: 0;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 27px;
+  color: #111111;
+}
+
+.slider__item .key-highlights-overlay .highlight-block span {
+  display: block;
+  word-wrap: break-word;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 27px;
+  color: #000000;
+}
+
+.slider__item .key-highlights-overlay .highlight-block .kh-line {
+  display: block;
+  white-space: nowrap;
+}

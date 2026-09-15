@@ -1,173 +1,58 @@
 {%- comment -%}
   Parameters:
-  - sharetitle / share_title {String} - Title of the shared page.
-  - shareurl / share_url {String} - Permalink of the shared page.
-  - shareimage / share_image {Object} - Image for the shared page (optional).
+  - share_title {String} - Title of the shared page.
+  - shareurl {String} - Permalink of the shared page (relative).
+  - shareimage {Object} - Image for the shared page (optional).
   - sharefacebook, shareinstagram, shareprintrest, sharewhatsapp {Boolean}
   - unique_id {String}
 
   Usage:
-  {% render 'mobile-soical-share',
-    sharetitle: product.title,
-    shareurl: product.url,
-    shareimage: product,
-    unique_id: 'mob-share'
-  %}
+  {% capture pdp_share_url %}{% render 'pdp-share-url', product: product %}{% endcapture %}
+  {% render 'mobile-soical-share', shareurl: pdp_share_url, ... %}
 {%- endcomment -%}
 {% assign unique_id = unique_id | default: '' %}
 {%- liquid
-  assign raw_url = shareurl | default: share_url | default: product.url | default: request.path
-
-  # Remove any pre-existing utm query params from raw_url
-  assign cleaned_path = raw_url
-  if cleaned_path contains 'utm_source='
-    assign split_q = cleaned_path | split: '?'
-    assign base_p = split_q[0]
-    assign q_part = split_q[1]
-    if q_part != blank
-      assign q_params = q_part | split: '&'
-      assign kept_params = ''
-      for q in q_params
-        unless q contains 'utm_'
-          if kept_params == ''
-            assign kept_params = q
-          else
-            assign kept_params = kept_params | append: '&' | append: q
-          endif
-        endunless
-      endfor
-      if kept_params != ''
-        assign cleaned_path = base_p | append: '?' | append: kept_params
-      else
-        assign cleaned_path = base_p
-      endif
-    else
-      assign cleaned_path = base_p
-    endif
-  endif
-
-  if cleaned_path contains 'http://' or cleaned_path contains 'https://'
-    assign base_full_url = cleaned_path
-  else
-    assign base_full_url = shop.url | append: cleaned_path
-  endif
-
-  if base_full_url contains '?'
-    assign q_sep = '&'
-  else
-    assign q_sep = '?'
-  endif
-
-  assign share_title_val = sharetitle | default: share_title | default: product.title | default: page_title | strip_html | strip
-  assign share_title_encoded = share_title_val | url_param_escape
-  assign share_image_obj = shareimage | default: share_image | default: product.featured_media.preview_image
-
-  # Channel specific URLs with UTM tracking
-  assign whatsapp_url = base_full_url | append: q_sep | append: 'utm_source=whatsapp&utm_medium=social_share&utm_campaign=share'
-  assign whatsapp_text = share_title_val | append: ' - ' | append: whatsapp_url
-  assign whatsapp_text_encoded = whatsapp_text | url_encode
-
-  assign pinterest_url = base_full_url | append: q_sep | append: 'utm_source=pinterest&utm_medium=social_share&utm_campaign=share'
-  assign pinterest_url_encoded = pinterest_url | url_encode
-
-  assign facebook_url = base_full_url | append: q_sep | append: 'utm_source=facebook&utm_medium=social_share&utm_campaign=share'
-  assign facebook_url_encoded = facebook_url | url_encode
-
-  assign instagram_url = base_full_url | append: q_sep | append: 'utm_source=instagram&utm_medium=social_share&utm_campaign=share'
-  assign native_url = base_full_url | append: q_sep | append: 'utm_source=share&utm_medium=social_share&utm_campaign=share'
+  assign share_full_url = shop.url | append: shareurl
+  assign share_full_url_encoded = share_full_url | url_encode
+  assign share_title_encoded = sharetitle | url_param_escape
 -%}
 
 <ul class="{{ unique_id }}">
   {%- unless shareprintrest == false -%}
     <li>
-      <a class="{{ unique_id }}-links share-link-pinterest" href="//pinterest.com/pin/create/button/?url={{ pinterest_url_encoded }}&amp;media={{ share_image_obj | image_url: width: 1000 | url_encode }}&amp;description={{ share_title_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_pinterest' | t }}">
-        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/pinterest_2.png?v=1721279231" width="auto" height="auto" alt="Pinterest">
+      <a class="{{ unique_id }}-links" href="//pinterest.com/pin/create/button/?url={{ share_full_url_encoded }}&amp;media={{ shareimage | image_url: width: 1000 | url_encode }}&amp;description={{ share_title_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_pinterest' | t }}">
+        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/pinterest_2.png?v=1721279231" width="auto" height="auto">
       </a>
     </li>
   {% endunless %}
 
   {%- unless sharefacebook == false -%}
     <li>
-      <a class="{{ unique_id }}-links share-link-facebook" href="https://www.facebook.com/sharer.php?u={{ facebook_url_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_facebook' | t }}">
-        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/facebook.png?v=1721279232" width="auto" height="auto" alt="Facebook">
+      <a class="{{ unique_id }}-links" href="//www.facebook.com/sharer.php?u={{ share_full_url_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_facebook' | t }}">
+        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/facebook.png?v=1721279232" width="auto" height="auto">
       </a>
     </li>
   {%- endunless -%}
 
   {%- unless shareinstagram == false -%}
     <li>
-      <a class="{{ unique_id }}-links share-link-instagram js-share-instagram" href="https://www.instagram.com/direct/inbox/" data-share-url="{{ instagram_url | escape }}" data-share-title="{{ share_title_val | escape }}" target="_blank" rel="noopener" aria-label="Instagram Direct" title="Send message on Instagram">
-        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/instagram_1.png?v=1721279232" width="auto" height="auto" alt="Instagram">
+      <a class="{{ unique_id }}-links" href="https://www.instagram.com/kisah_apparels/?url={{ share_full_url_encoded }}" target="_blank" rel="noopener" aria-label="Instagram">
+        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/instagram_1.png?v=1721279232" width="auto" height="auto">
       </a>
     </li>
   {%- endunless -%}
 
   {% unless sharewhatsapp == false %}
     <li>
-      <a class="{{ unique_id }}-links share-link-whatsapp" href="https://api.whatsapp.com/send?text={{ whatsapp_text_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_whatsapp' | t }}">
-        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/whatsapp_2_1.png?v=1721279232" width="auto" height="auto" alt="WhatsApp">
+      <a class="{{ unique_id }}-links" href="//wa.me/?text={{ share_full_url_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_whatsapp' | t }}">
+        <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/whatsapp_2_1.png?v=1721279232" width="auto" height="auto">
       </a>
     </li>
   {% endunless %}
 
   <li class="svg-container-class">
-    <a href="#" class="js-native-share" data-share-url="{{ native_url | escape }}" data-share-title="{{ share_title_val | escape }}" title="Share" aria-label="Share">
-      <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-share_1.png?v=1727065246" width="auto" height="auto" class="native-share-img" alt="Share">
+    <a href="#" data-share-url="{{ share_full_url | escape }}">
+      <img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-share_1.png?v=1727065246" width="auto" height="auto" class="native-share-img">
     </a>
   </li>
 </ul>
-
-<script>
-  (function () {
-    if (window.__KISAH_SHARE_HANDLER_BOUND__) return;
-    window.__KISAH_SHARE_HANDLER_BOUND__ = true;
-
-    function copyText(txt) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        return navigator.clipboard.writeText(txt);
-      }
-      var ta = document.createElement('textarea');
-      ta.value = txt;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); } catch(e){}
-      document.body.removeChild(ta);
-      return Promise.resolve();
-    }
-
-    document.addEventListener('click', function (e) {
-      var nativeLink = e.target.closest('.js-native-share');
-      if (nativeLink) {
-        e.preventDefault();
-        e.stopPropagation();
-        var url = nativeLink.getAttribute('data-share-url') || window.location.href;
-        var title = nativeLink.getAttribute('data-share-title') || document.title;
-        if (navigator.share) {
-          navigator.share({ title: title, text: title, url: url }).catch(function (err) {
-            if (err && err.name !== 'AbortError') {
-              copyText(url);
-            }
-          });
-        } else {
-          copyText(url);
-        }
-        return;
-      }
-
-      var instaLink = e.target.closest('.js-share-instagram');
-      if (instaLink) {
-        var iUrl = instaLink.getAttribute('data-share-url') || window.location.href;
-        copyText(iUrl);
-
-        var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        if (isMobile) {
-          e.preventDefault();
-          // Deep link directly to the native Instagram App Direct Inbox
-          window.location.href = 'instagram://direct-inbox';
-        }
-      }
-    });
-  })();
-</script>

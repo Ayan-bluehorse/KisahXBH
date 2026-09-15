@@ -2,6 +2,23 @@
 
 {{ 'product.css' | asset_url | stylesheet_tag: preload: true }}
 {{ 'key-highlight.css' | asset_url | stylesheet_tag: preload: true }}
+
+{%- comment -%}
+  The redesigned mobile PDP ("kpdp") belongs to the custom product template only.
+  templates/product.custom-product.json -> template.suffix == 'custom-product'.
+  Every piece of that redesign — markup below and assets/product-custom-pdp.css —
+  hangs off kp_custom_pdp, so templates/product.json and product.preorder keep the
+  theme's original PDP.
+{%- endcomment -%}
+{%- assign kp_custom_pdp = false -%}
+{%- if template.suffix == 'custom-product' -%}
+  {%- assign kp_custom_pdp = true -%}
+{%- endif -%}
+
+{%- if kp_custom_pdp -%}
+  {{ 'product-custom-pdp.css' | asset_url | stylesheet_tag: preload: true }}
+{%- endif -%}
+
 {%- liquid
   assign zoom_size = 5000
   assign min_aspect_ratio = 0.6
@@ -35,6 +52,11 @@
   .template-product{
      background:#F3F3F3;
    }
+  @media only screen and (max-width: 768px) {
+    .template-product{
+      background:#ffffff;
+    }
+  }
 </style>
 
 {%- if product.media.size > 1 -%}
@@ -68,49 +90,50 @@
   >
     <div class="media-gallery__inner{% if section.settings.enable_sticky_columns %} sticky-content-container{% endif %}">
       <div class="main-image">
-        
-{% comment %} <!-- key highlight start -->
-{% assign show_highlight = false %}
-{% if product.metafields.custom.product_specification_ocassion or product.metafields.custom.fabric or product.metafields.custom.colour or product.metafields.custom.pattern %}
-  {% assign show_highlight = true %}
-{% endif %}
-{% if show_highlight %}
- <div class="key-highlights-overlay">
-  <h2>Key Highlights</h2>
-  {% comment %} {% assign o = product.metafields.custom.product_specification_ocassion %} {% endcomment %}
-  {% assign f = product.metafields.custom.fabric %}
-  {% assign c = product.metafields.custom.colour %}
-  {% assign p = product.metafields.custom.set_includes %}
-  {% comment %} {% if o %}
-    <div class="highlight-block">
-      <strong>Occasion:</strong>
-      <span>{{ o }}</span>
-    </div>
-  {% endif %} {% endcomment %}
+        {% comment %}
+          <!-- key highlight start -->
+          {% assign show_highlight = false %}
+          {% if product.metafields.custom.product_specification_ocassion or product.metafields.custom.fabric or product.metafields.custom.colour or product.metafields.custom.pattern %}
+            {% assign show_highlight = true %}
+          {% endif %}
+          {% if show_highlight %}
+           <div class="key-highlights-overlay">
+            <h2>Key Highlights</h2>
+            {% comment %} {% assign o = product.metafields.custom.product_specification_ocassion %} {% endcomment %}
+            {% assign f = product.metafields.custom.fabric %}
+            {% assign c = product.metafields.custom.colour %}
+            {% assign p = product.metafields.custom.set_includes %}
+            {% comment %} {% if o %}
+              <div class="highlight-block">
+                <strong>Occasion:</strong>
+                <span>{{ o }}</span>
+              </div>
+            {% endif %} {% endcomment %}
 
-  {% if c %}
-    <div class="highlight-block">
-      <strong>Colour:</strong>
-      <span>{{ c }}</span>
-    </div>
-  {% endif %}
+            {% if c %}
+              <div class="highlight-block">
+                <strong>Colour:</strong>
+                <span>{{ c }}</span>
+              </div>
+            {% endif %}
 
-  {% if f %}
-    <div class="highlight-block">
-      <strong>Fabric:</strong>
-      <span>{{ f }}</span>
-    </div>
-  {% endif %}
+            {% if f %}
+              <div class="highlight-block">
+                <strong>Fabric:</strong>
+                <span>{{ f }}</span>
+              </div>
+            {% endif %}
 
-  {% if p %}
-    <div class="highlight-block">
-      <strong>Product Contains:</strong>
-      <span>{{ p }}</span>
-    </div>
-  {% endif %}
-</div>
-{% endif %}
-<!-- End Key highlight --> {% endcomment %}
+            {% if p %}
+              <div class="highlight-block">
+                <strong>Product Contains:</strong>
+                <span>{{ p }}</span>
+              </div>
+            {% endif %}
+          </div>
+          {% endif %}
+          <!-- End Key highlight -->
+        {% endcomment %}
 
         {%- liquid
           for media in product.media
@@ -120,33 +143,438 @@
             endif
           endfor
         -%}
-{%- comment -%} SOCIAL PROOF BAR {%- endcomment -%}
-        {%- assign kp_count = product.id | modulo: 31 | plus: 20 -%}
-        {%- assign kp_icon  = "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/43e1b7df863296c28a18465848ec0ec0.png?v=1751030942" -%}
-        <div class="kpdp20-proof">
-          <p class="kpdp20-proof__text">
-            <img class="kpdp20-proof__icon" width="{{ kp_icon.width }}" height="{{ kp_icon.height }}" loading="lazy" src="{{ kp_icon | escape }}" alt="">
-            <span class="kpdp20-proof__count">{{ kp_count }}</span>
-            people bought this product in last 30 days
-          </p>
-        </div>
-        <style>
-          .media-gallery .main-image{position:relative}
-          .kpdp20-proof{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;background:#201747;padding:6px 12px}
-          .kpdp20-proof__text{margin:0;display:flex;align-items:center;gap:5px;font-size:12px;line-height:1.25;color:#fff;font-weight:400;font-family: "Nunito Sans" !important;}
-          .kpdp20-proof__icon{width:16px;height:16px;display:inline-block}
-          .kpdp20-proof__count{font-weight:700}
-        </style>
-{%- comment -%} END SOCIAL PROOF BAR {%- endcomment -%}
- {% comment %} Key Highlights Setup {% endcomment %}
-{% assign show_highlight = false %}
-{% if product.metafields.custom.product_specification_ocassion or product.metafields.custom.fabric or product.metafields.custom.colour or product.metafields.custom.pattern %}
-  {% assign show_highlight = true %}
-{% endif %}
-{% assign f = product.metafields.custom.fabric %}
-{% assign c = product.metafields.custom.colour %}
-{% assign p = product.metafields.custom.set_includes %}
-{% comment %} Key Highlights Setup End {% endcomment %}
+        {%- comment -%} SOCIAL PROOF BAR {%- endcomment -%}
+        {%- if kp_custom_pdp -%}
+          {%- comment -%}
+            Markup + styles: snippets/kpdp-social-proof.liquid and
+            assets/product-custom-pdp.css. Desktop only - the mobile copy is
+            rendered above the Add to Cart button in the buy-buttons block.
+          {%- endcomment -%}
+          {%- render 'kpdp-social-proof', product: product, placement: 'gallery' -%}
+
+          {%- comment -%} CONTAINS: bottom-right of the image; text and icon from theme settings {%- endcomment -%}
+          {%- assign kp_parts = product.metafields.custom.pdp_contains.value -%}
+          {%- if kp_parts != blank and  section.settings.show_contains and section.settings.contains_text != blank -%}
+            <button
+              type="button"
+              class="kpdp-contains js-kpdp-contains-open"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="kpdpContains-{{ section.id }}"
+            >
+              <span class="kpdp-contains__iconbox">
+                {%- if section.settings.contains_icon != blank -%}
+                  <img
+                    class="kpdp-contains__icon"
+                    src="{{ section.settings.contains_icon | image_url: width: 112 }}"
+                    width="{{ section.settings.contains_icon.width }}"
+                    height="{{ section.settings.contains_icon.height }}"
+                    alt=""
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {%- comment -%} Built-in kurta + dhoti mark; an uploaded image wins {%- endcomment -%}
+                  <svg
+                    class="kpdp-contains__icon kpdp-contains__icon--svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M6.2 4.2 8 3.4c.5 1 1.7 1 2.2 0l1.8.8 1 2.6-1.6.7v12.1H6.8V7.5L5.2 6.8Z"/>
+                    <path d="M15.6 4.2h4.6l.3 2.5h-5.2Z"/>
+                    <path d="M15.3 6.7h5.2l1.3 12.9h-7.8Z"/>
+                    <path d="M17.9 9.6v7.4"/>
+                  </svg>
+                {%- endif -%}
+              </span>
+              <span class="kpdp-contains__text">{{ section.settings.contains_text }}</span>
+            </button>
+
+          {%- comment -%}
+            CONTAINS DRAWER: one tab per entry in custom.pdp_contains
+            (metaobject "contains" -> title, subtitle, button, details).
+            button = tab label, details = rich text rendered as spec rows.
+          {%- endcomment -%}
+            {%- comment -%}
+              The SECOND tab opens by default — "About" sits first, and the garment
+              tab beside it is what the design shows active. Positional rather than
+              by name, so it works whatever the product calls that tab (Sherwani,
+              Kurta, Jacket...). A tab named in the section setting still wins when
+              the product actually has it, and a single-tab product falls back to
+              the first.
+            {%- endcomment -%}
+            {%- assign kp_want = section.settings.contains_default_tab | downcase | strip -%}
+            {%- assign kp_default = 0 -%}
+            {%- if kp_parts.size > 1 -%}
+              {%- assign kp_default = 1 -%}
+            {%- endif -%}
+            {%- if kp_want != blank -%}
+              {%- for part in kp_parts -%}
+                {%- assign kp_label = part.button.value | default: part.button | downcase | strip -%}
+                {%- if kp_label == kp_want -%}{%- assign kp_default = forloop.index0 -%}{%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- comment -%}
+              Heading and subtitle must match the tab that opens, or the
+              drawer paints the first tab's copy until the JS swaps it.
+            {%- endcomment -%}
+            {%- assign kp_first = kp_parts.first -%}
+            {%- for part in kp_parts -%}
+              {%- if forloop.index0 == kp_default -%}
+                {%- assign kp_first = part -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <div
+              class="kpdp-contains-drawer"
+              data-kpdp-default="{{ kp_default }}"
+              id="kpdpContains-{{ section.id }}"
+              role="dialog"
+              aria-modal="true"
+              aria-label="{{ section.settings.contains_text | escape }}"
+              hidden
+            >
+              <div class="kpdp-contains-drawer__overlay js-kpdp-contains-close"></div>
+              <div class="kpdp-contains-drawer__sheet">
+                <button type="button" class="kpdp-contains-drawer__close js-kpdp-contains-close" aria-label="Close">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+                <p class="kpdp-contains-drawer__title js-kpdp-contains-title">
+                  {{ kp_first.title.value | default: kp_first.title }}
+                </p>
+                <p class="kpdp-contains-drawer__note js-kpdp-contains-note">
+                  {{ kp_first.subtitle.value | default: kp_first.subtitle }}
+                </p>
+                <div class="kpdp-tabs" role="tablist">
+                  {%- for part in kp_parts -%}
+                    <button
+                      type="button"
+                      class="kpdp-tab{% if forloop.index0 == kp_default %} is-active{% endif %}"
+                      role="tab"
+                      aria-selected="{% if forloop.index0 == kp_default %}true{% else %}false{% endif %}"
+                      data-kpdp-tab="{{ forloop.index0 }}"
+                      data-kpdp-title="{{ part.title.value | default: part.title | escape }}"
+                      data-kpdp-note="{{ part.subtitle.value | default: part.subtitle | escape }}"
+                    >
+                      {{ part.button.value | default: part.button }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+                <div class="kpdp-panels">
+                  {%- for part in kp_parts -%}
+                    <div
+                      class="kpdp-panel{% if forloop.index0 == kp_default %} is-active{% endif %}"
+                      role="tabpanel"
+                      data-kpdp-panel="{{ forloop.index0 }}"
+                    >
+                      <div class="kpdp-rte" data-kpdp-rte="{{ part.details.value | json | escape }}"></div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+
+          <script>
+            (function () {
+              var root = document.getElementById('kpdpContains-{{ section.id }}');
+              console.error('root',root)
+              if (!root) return;
+              var opener = document.querySelector('.js-kpdp-contains-open');
+              var titleEl = root.querySelector('.js-kpdp-contains-title');
+              var noteEl = root.querySelector('.js-kpdp-contains-note');
+              var tabs = [].slice.call(root.querySelectorAll('.kpdp-tab'));
+              var panels = [].slice.call(root.querySelectorAll('.kpdp-panel'));
+
+              // Liquid hands back the rich-text tree, not HTML, so render it here.
+              // Rows are separated by newlines inside a text node as well as by blocks.
+              var KPDP_WS = /[ \t]+/g;
+              var KPDP_NL = String.fromCharCode(10);
+
+              function kpdpInline(node, acc) {
+                if (!node) return;
+                if (node.type === 'text') {
+                  acc.push(node.value || '');
+                  return;
+                }
+                (node.children || []).forEach(function (c) {
+                  kpdpInline(c, acc);
+                });
+              }
+
+              function kpdpBlocks(node, out) {
+                if (!node) return;
+                var t = node.type;
+                if (t === 'paragraph' || t === 'heading' || t === 'list-item') {
+                  var acc = [];
+                  kpdpInline(node, acc);
+                  out.push(acc.join(''));
+                  return;
+                }
+                (node.children || []).forEach(function (c) {
+                  kpdpBlocks(c, out);
+                });
+              }
+
+              function kpdpRows(raw) {
+                var tree;
+                try {
+                  tree = JSON.parse(raw);
+                } catch (e) {
+                  return null;
+                }
+                var blocks = [];
+                if (typeof tree === 'string') {
+                  // already HTML: read it through the DOM instead
+                  var tmp = document.createElement('div');
+                  tmp.innerHTML = tree;
+                  [].slice.call(tmp.querySelectorAll('p, li, h1, h2, h3, h4')).forEach(function (el) {
+                    blocks.push(el.innerText || el.textContent || '');
+                  });
+                  if (!blocks.length) blocks.push(tmp.textContent || '');
+                } else {
+                  kpdpBlocks(tree, blocks);
+                }
+                var rows = [];
+                blocks.forEach(function (blk) {
+                  blk.split(KPDP_NL).forEach(function (line) {
+                    var t = line.replace(KPDP_WS, ' ').trim();
+                    if (t) rows.push(t);
+                  });
+                });
+                return rows;
+              }
+
+              [].slice.call(root.querySelectorAll('.kpdp-rte')).forEach(function (holder) {
+                var rows = kpdpRows(holder.getAttribute('data-kpdp-rte') || '');
+                if (!rows) return;
+                holder.textContent = '';
+                rows.forEach(function (text) {
+                  var row = document.createElement('div');
+                  row.className = 'kpdp-spec';
+                  var at = text.indexOf(':');
+                  if (at > 0 && at < text.length - 1) {
+                    var k = document.createElement('span');
+                    k.className = 'kpdp-spec__k';
+                    k.textContent = text.slice(0, at + 1);
+                    var v = document.createElement('span');
+                    v.className = 'kpdp-spec__v';
+                    v.textContent = text.slice(at + 1).trim();
+                    row.appendChild(k);
+                    row.appendChild(v);
+                  } else {
+                    var only = document.createElement('span');
+                    only.className = 'kpdp-spec__v kpdp-spec__v--wide';
+                    only.textContent = text;
+                    row.appendChild(only);
+                  }
+                  holder.appendChild(row);
+                });
+              });
+
+              function setOpen(open) {
+                root.hidden = !open;
+                document.body.classList.toggle('kpdp-contains-open', open);
+                if (opener) opener.setAttribute('aria-expanded', String(open));
+              }
+
+              // Only the first entry carries the title and subtitle, so remember the
+              // first non-empty pair and reuse it for entries that leave them blank.
+              var fallbackTitle = '';
+              var fallbackNote = '';
+              tabs.forEach(function (t) {
+                if (!fallbackTitle) fallbackTitle = (t.getAttribute('data-kpdp-title') || '').trim();
+                if (!fallbackNote) fallbackNote = (t.getAttribute('data-kpdp-note') || '').trim();
+              });
+
+              function selectTab(i) {
+                tabs.forEach(function (t, n) {
+                  var on = String(n) === String(i);
+                  t.classList.toggle('is-active', on);
+                  t.setAttribute('aria-selected', String(on));
+                  if (!on) return;
+                  var heading = (t.getAttribute('data-kpdp-title') || '').trim() || fallbackTitle;
+                  var note = (t.getAttribute('data-kpdp-note') || '').trim() || fallbackNote;
+                  if (titleEl) {
+                    titleEl.textContent = heading;
+                    titleEl.hidden = !heading;
+                  }
+                  if (noteEl) {
+                    noteEl.textContent = note;
+                    noteEl.hidden = !note;
+                  }
+                });
+                panels.forEach(function (pnl) {
+                  pnl.classList.toggle('is-active', pnl.getAttribute('data-kpdp-panel') === String(i));
+                });
+              }
+
+              if (opener)
+                opener.addEventListener('click', function (e) {
+                  e.preventDefault();
+                  setOpen(true);
+                });
+              root.addEventListener('click', function (e) {
+                if (e.target.closest('.js-kpdp-contains-close')) {
+                  e.preventDefault();
+                  setOpen(false);
+                  return;
+                }
+                var tab = e.target.closest('.kpdp-tab');
+                if (tab) selectTab(tab.getAttribute('data-kpdp-tab'));
+              });
+              document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !root.hidden) setOpen(false);
+              });
+
+              selectTab(root.getAttribute('data-kpdp-default') || 0);
+            })();
+          </script>
+
+          {%- endif -%}
+          {%- comment -%} GALLERY ACTIONS: wishlist + share, top-right of the image {%- endcomment -%}
+          {%- liquid
+            assign kp_share_fb = true
+            assign kp_share_insta = true
+            assign kp_share_print = true
+            assign kp_share_wa = true
+            for b in section.blocks
+              if b.type == 'title'
+                assign kp_share_fb = b.settings.show_mob_fb
+                assign kp_share_insta = b.settings.show_mob_insta
+                assign kp_share_print = b.settings.show_mob_print
+                assign kp_share_wa = b.settings.show_mob_whatsapp
+                break
+              endif
+            endfor
+          -%}
+          <div class="kpdp-gallery-actions">
+            {%- comment -%}
+              Repeatable Wishlist Hero component (class + data-wlh-* driven).
+              NOT wishlisthero-custom-button: that is a single-id mount point already
+              used in the buy-buttons row, and a duplicate id would break the app.
+            {%- endcomment -%}
+            <div class="kpdp-gallery-actions__wishlist">
+              {%- render 'wishlisthero-collection-product',
+                product: product,
+                buttonMode: 'icon_only',
+                buttonView: 'Product',
+                buttonClass: 'kpdp-gallery-actions__btn kpdp-gallery-actions__btn--wishlist'
+              -%}
+              {%- comment -%}
+                Overlaid so the heart shape is ours, not the app glyph.
+                pointer-events:none lets the click reach the Wishlist Hero button beneath.
+              {%- endcomment -%}
+              <svg
+                class="kpdp-gallery-actions__heart"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 8.6C12 8.6 10.9 4.8 7.4 4.8C3.9 4.8 3 7.8 3 9.6C3 13.6 7.4 17 12 20.6C16.6 17 21 13.6 21 9.6C21 7.8 20.1 4.8 16.6 4.8C13.1 4.8 12 8.6 12 8.6Z"/>
+                <path d="M12 8.6V11.2"/>
+              </svg>
+            </div>
+
+            <div class="kpdp-gallery-actions__share">
+              <button
+                type="button"
+                class="kpdp-gallery-actions__btn kpdp-gallery-actions__btn--share js-kpdp-share-toggle"
+                aria-expanded="false"
+                aria-label="{{ 'general.social.share_heading' | t | escape }}"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <path d="M8.59 13.51l6.83 3.98"/>
+                  <path d="M15.41 6.51l-6.82 3.98"/>
+                </svg>
+              </button>
+              <div class="kpdp-gallery-actions__panel" hidden>
+                <div class="desk-share-soicial-icons">
+                  {%- render 'mobile-soical-share',
+                    sharetitle: product.title,
+                    shareurl: product.url,
+                    shareimage: product,
+                    sharefacebook: kp_share_fb,
+                    shareinstagram: kp_share_insta,
+                    shareprintrest: kp_share_print,
+                    sharewhatsapp: kp_share_wa,
+                    unique_id: 'kpdp-gallery-share'
+                  -%}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            (function () {
+              var wrap = document.currentScript.previousElementSibling;
+              if (!wrap) return;
+              var btn = wrap.querySelector('.js-kpdp-share-toggle');
+              var panel = wrap.querySelector('.kpdp-gallery-actions__panel');
+              if (!btn || !panel) return;
+              function setOpen(open) {
+                panel.hidden = !open;
+                btn.setAttribute('aria-expanded', String(open));
+              }
+              btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpen(panel.hidden);
+              });
+              // let the social links through, close on anything else
+              document.addEventListener('click', function (e) {
+                if (!panel.hidden && !wrap.contains(e.target)) setOpen(false);
+              });
+              panel.addEventListener('click', function (e) {
+                if (e.target.closest('a')) setOpen(false);
+              });
+              document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !panel.hidden) setOpen(false);
+              });
+            })();
+          </script>
+        {%- endif -%}
+        {%- comment -%} END SOCIAL PROOF BAR {%- endcomment -%}
+        {% comment %} Key Highlights Setup {% endcomment %}
+        {% assign show_highlight = false %}
+        {% if product.metafields.custom.product_specification_ocassion
+          or product.metafields.custom.fabric
+          or product.metafields.custom.colour
+          or product.metafields.custom.pattern
+        %}
+          {% assign show_highlight = true %}
+        {% endif %}
+        {% assign f = product.metafields.custom.fabric %}
+        {% assign c = product.metafields.custom.colour %}
+        {% assign p = product.metafields.custom.set_includes %}
+        {% comment %} Key Highlights Setup End {% endcomment %}
         <carousel-slider
           class="{% if section.settings.gallery_layout contains 'collage' or section.settings.gallery_layout contains 'columns' %}mobile-only{% endif %}"
           role="region"
@@ -185,22 +613,76 @@
                     else
                       assign loading = 'lazy'
                     endif
-            
+
                     render 'media', media: media, product: product, min_aspect_ratio: min_aspect_ratio, loading: loading
                   -%}
 
                   {%- if media.media_type == 'image' and section.settings.enable_zoom -%}
-                   </a>
+                    </a>
                   {%- endif -%}
-                  
-    {% if forloop.index0 == 1 and show_highlight %}
-      <div class="key-highlights-overlay">
-        <h2>Key Highlights</h2>
-        {% if c %}<div class="highlight-block"><strong>Colour:</strong><span>{{ c }}</span></div>{% endif %}
-        {% if f %}<div class="highlight-block"><strong>Fabric:</strong><span>{{ f }}</span></div>{% endif %}
-        {% if p %}<div class="highlight-block"><strong>Product Contains:</strong><span>{{ p }}</span></div>{% endif %}
-      </div>
-    {% endif %}
+
+                  {% if forloop.index0 == 1 and show_highlight %}
+                    <div class="key-highlights-overlay">
+                      <h2>Key Highlights</h2>
+                      <div class="kh-cols">
+                        <div class="kh-col">
+                          {% if c %}
+                            <div class="highlight-block">
+                              <strong>Colour:</strong><span>{{ c }}</span>
+                            </div>
+                          {% endif %}
+                          {% if f %}
+                            <div class="highlight-block">
+                              <strong>Fabric:</strong><span>{{ f }}</span>
+                            </div>
+                          {% endif %}
+                        </div>
+                        <div class="kh-col">
+                          {%- if p != blank -%}
+                            <div class="highlight-block">
+                              <strong>Product Contains:</strong>
+                              <span>
+                                {%- comment -%}
+                                  list metafield renders one item per line;
+                                  multi-line text keeps its own breaks
+                                {%- endcomment -%}
+                                {%- if p.type contains 'list.' -%}
+                                  {%- for kh_item in p.value -%}
+                                    <span class="kh-line">{{ kh_item }}</span>
+                                  {%- endfor -%}
+                                {%- else -%}
+                                  {%- comment -%}
+                                    Single string: split on the first separator that
+                                    actually appears - newline, pipe, semicolon, comma, then colon.
+                                  {%- endcomment -%}
+                                  {%- assign kh_raw = p.value | default: p -%}
+                                  {%- assign kh_parts = kh_raw | strip | newline_to_br | split: '<br />' -%}
+                                  {%- if kh_parts.size <= 1 -%}
+                                    {%- assign kh_parts = kh_raw | split: '|' -%}
+                                  {%- endif -%}
+                                  {%- if kh_parts.size <= 1 -%}
+                                    {%- assign kh_parts = kh_raw | split: ';' -%}
+                                  {%- endif -%}
+                                  {%- if kh_parts.size <= 1 -%}
+                                    {%- assign kh_parts = kh_raw | split: ',' -%}
+                                  {%- endif -%}
+                                  {%- if kh_parts.size <= 1 -%}
+                                    {%- assign kh_parts = kh_raw | split: ':' -%}
+                                  {%- endif -%}
+                                  {%- for kh_item in kh_parts -%}
+                                    {%- assign kh_line = kh_item | strip -%}
+                                    {%- if kh_line != blank -%}
+                                      <span class="kh-line">{{ kh_line }}</span>
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                {%- endif -%}
+                              </span>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
                 </div>
               {%- endfor -%}
             </div>
@@ -236,27 +718,99 @@
             display_mode: settings.product_rating_mode
           -%}
 
-          {% assign render_tag = false %}
-          {%- assign must_contain_tags = "top seller,super seller,bestseller,best seller" | split: "," -%}
-          {%- if product.tags and product.tags.size > 0 -%}
-            {%- for tag in product.tags -%}
-              {%- assign tag_clean = tag | strip | downcase -%}
-              {%- if must_contain_tags contains tag_clean -%}
-                {%- assign render_tag = true -%}
-                {%- break -%}
+          {%- comment -%}
+            Product badge, driven purely by product tags:
+
+              Bestseller  <- bestseller / best seller / top seller / super seller
+              Trending    <- trending / trending now
+
+            Exactly ONE ribbon ever renders. Products often carry tags from both
+            sets (e.g. "Trending" + "Top Seller"), so kp_badge picks a winner —
+            Trending first. Swap the two branches below to make Bestseller win.
+
+            Tags are compared stripped + lowercased, so "Top Seller" matches too.
+            Styling lives in assets/product.css (.cp-product-badges / .cp-badge-ribbon).
+          {%- endcomment -%}
+          {%- liquid
+            assign kp_bestseller_tags = 'bestseller,best seller,top seller,super seller' | split: ','
+            assign kp_trending_tags = 'trending,trending now' | split: ','
+            assign show_bestseller_badge = false
+            assign show_trending_badge = false
+
+            for tag in product.tags
+              assign tag_clean = tag | strip | downcase
+              if kp_bestseller_tags contains tag_clean
+                assign show_bestseller_badge = true
+              endif
+              if kp_trending_tags contains tag_clean
+                assign show_trending_badge = true
+              endif
+            endfor
+
+            assign kp_badge = ''
+            if show_trending_badge
+              assign kp_badge = 'trending'
+            elsif show_bestseller_badge
+              assign kp_badge = 'bestseller'
+            endif
+          -%}
+
+          {%- comment -%}
+            Mobile: the single gold ribbon for whichever badge won above
+            (CSS hides this wrapper on desktop).
+          {%- endcomment -%}
+          {%- if kp_badge != blank -%}
+            <div class="cp-product-badges">
+              {%- if kp_badge == 'bestseller' -%}
+                <div class="cp-badge-ribbon cp-badge-ribbon--bestseller">
+                  <svg
+                    class="cp-badge-ribbon__icon cp-badge-ribbon__icon--thumb"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"></path>
+                  </svg>
+                  <span>Bestseller</span>
+                </div>
+              {%- else -%}
+                <div class="cp-badge-ribbon cp-badge-ribbon--trending">
+                  <svg
+                    class="cp-badge-ribbon__icon cp-badge-ribbon__icon--flame"
+                    viewBox="0 0 10 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 13C7.76142 13 10 11.375 10 8.53125C10 7.3125 9.58333 5.28125 7.91667 3.65625C8.125 4.875 6.875 5.28125 6.875 5.28125C7.5 3.25 5.83333 0.40625 3.33333 0C3.63095 1.625 3.75 3.25 1.66667 4.875C0.625 5.6875 0 7.09226 0 8.53125C0 11.375 2.23858 13 5 13ZM5 12.1875C3.61929 12.1875 2.5 11.375 2.5 9.95312C2.5 9.34375 2.70833 8.32812 3.54167 7.51562C3.4375 8.125 4.16667 8.53125 4.16667 8.53125C3.85417 7.51562 4.58333 5.89062 5.83333 5.6875C5.68452 6.5 5.625 7.3125 6.66667 8.125C7.1875 8.53125 7.5 9.23363 7.5 9.95312C7.5 11.375 6.38071 12.1875 5 12.1875Z" fill="currentColor"></path>
+                  </svg>
+                  <span>Trending</span>
+                </div>
               {%- endif -%}
-            {%- endfor -%}
+            </div>
           {%- endif -%}
 
-          {%- if render_tag -%}
+          {%- comment -%}
+            Desktop: the original single purple pill, on the original tag set and
+            with the original markup — deliberately untouched. CSS hides it below
+            768px, where the ribbons above take over.
+          {%- endcomment -%}
+          {%- if show_bestseller_badge -%}
             <div class="cp-trending-badge">
-              <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 13C7.76142 13 10 11.375 10 8.53125C10 7.3125 9.58333 5.28125 7.91667 3.65625C8.125 4.875 6.875 5.28125 6.875 5.28125C7.5 3.25 5.83333 0.40625 3.33333 0C3.63095 1.625 3.75 3.25 1.66667 4.875C0.625 5.6875 0 7.09226 0 8.53125C0 11.375 2.23858 13 5 13ZM5 12.1875C3.61929 12.1875 2.5 11.375 2.5 9.95312C2.5 9.34375 2.70833 8.32812 3.54167 7.51562C3.4375 8.125 4.16667 8.53125 4.16667 8.53125C3.85417 7.51562 4.58333 5.89062 5.83333 5.6875C5.68452 6.5 5.625 7.3125 6.66667 8.125C7.1875 8.53125 7.5 9.23363 7.5 9.95312C7.5 11.375 6.38071 12.1875 5 12.1875Z" fill="white"></path>
+              <svg
+                width="10"
+                height="13"
+                viewBox="0 0 10 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path d="M5 13C7.76142 13 10 11.375 10 8.53125C10 7.3125 9.58333 5.28125 7.91667 3.65625C8.125 4.875 6.875 5.28125 6.875 5.28125C7.5 3.25 5.83333 0.40625 3.33333 0C3.63095 1.625 3.75 3.25 1.66667 4.875C0.625 5.6875 0 7.09226 0 8.53125C0 11.375 2.23858 13 5 13ZM5 12.1875C3.61929 12.1875 2.5 11.375 2.5 9.95312C2.5 9.34375 2.70833 8.32812 3.54167 7.51562C3.4375 8.125 4.16667 8.53125 4.16667 8.53125C3.85417 7.51562 4.58333 5.89062 5.83333 5.6875C5.68452 6.5 5.625 7.3125 6.66667 8.125C7.1875 8.53125 7.5 9.23363 7.5 9.95312C7.5 11.375 6.38071 12.1875 5 12.1875Z" fill="currentColor"></path>
               </svg>
               <span>Trending</span>
             </div>
           {%- endif -%}
-
         </carousel-slider>
 
         {%- if section.settings.gallery_layout contains 'collage'
@@ -420,15 +974,46 @@
       data-product-id="{{ product.id }}"
     >
       {% for block in section.blocks %}
-          {% case block.type %}
-            {% when 'recommendation' %}
-            
-          {% render 'more-way-to-style' %}
+        {% case block.type %}
+          {% when 'recommendation' %}
+            {% render 'more-way-to-style' %}
 
           {% when '@app' %}
             <div class="{% unless settings.qb_show_app_blocks %}not-in-quickbuy{% endunless %}">
               {% render block %}
             </div>
+
+          {% when 'text-with-icon-tags' %}
+            {%- comment -%}
+              custom.product_text_with_icon: list of the
+              product_text_with_icon metaobject (fields: icon, text)
+            {%- endcomment -%}
+            {%- assign ptwi_items = product.metafields.custom.product_text_with_icon.value -%}
+            {%- if kp_custom_pdp and ptwi_items != blank -%}
+              <div class="ptwi-row" {{ block.shopify_attributes }}>
+                {%- for ptwi in ptwi_items -%}
+                  {%- assign ptwi_text = ptwi.text.value -%}
+                  {%- assign ptwi_icon = ptwi.icon.value -%}
+                  {%- if ptwi_text != blank or ptwi_icon != blank -%}
+                    <span class="ptwi-tag">
+                      {%- if ptwi_icon != blank -%}
+                        <img
+                          class="ptwi-icon"
+                          src="{{ ptwi_icon | image_url: width: 64 }}"
+                          width="18"
+                          height="18"
+                          alt=""
+                          loading="lazy"
+                        >
+                      {%- endif -%}
+                      {%- if ptwi_text != blank -%}
+                        <span class="ptwi-text">{{ ptwi_text }}</span>
+                      {%- endif -%}
+                    </span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
 
           {% when 'title' %}
             <div class="title_share_button">
@@ -454,51 +1039,93 @@
               </div>
             </div>
 
+            {%- comment -%}
+              Mobile-only description under the title. The description
+              block itself sits at the end of the block list and is disabled;
+              this is hidden above 768px so desktop is untouched.
+            {%- endcomment -%}
+            {%- assign kp_desc = product.metafields.custom.product_description -%}
+            {%- if kp_custom_pdp and kp_desc != blank -%}
+              <div class="kpdp-title-description">{{ kp_desc.value | escape | newline_to_br }}</div>
+            {%- endif -%}
+
           {% when 'price' %}
             <div class="price-container" {{ block.shopify_attributes }}>
-              <div class="product-info__price product-price product-price--large">
+              <div class="product-info__price product-price product-price--large{% if kp_custom_pdp %} kpdp-price-row{% endif %}">
                 {% render 'price',
                   product: product,
                   show_currency_code: settings.product_currency_code_enabled,
                   for_variant_picker: true,
                   current_variant: current_variant
-                %} 
-                <p class="inclusive-tax">inclusive of all taxes</p>
+                %}
+                {%- comment -%}
+                  The custom template swaps the label for a short form
+                  next to the price on mobile; only its CSS knows which to hide.
+                {%- endcomment -%}
+                {%- if kp_custom_pdp -%}
+                  <p class="inclusive-tax">
+                    <span class="inclusive-tax__full">inclusive of all taxes</span>
+                    <span class="inclusive-tax__short">(inc. taxes)</span>
+                  </p>
+                {%- else -%}
+                  <p class="inclusive-tax">inclusive of all taxes</p>
+                {%- endif -%}
               </div>
- {%- comment -%} ——— START Myntra-style offer box ——— {%- endcomment -%}
-  {%- assign code  = product.metafields.custom.offer_code   | default: 'NEW5' -%}
-{%- assign text  = product.metafields.custom.offer_text   | default: 'Flat 5% off. Valid for all new users.' -%}
-{%- assign terms = product.metafields.custom.offer_terms  | default: '' -%}
 
-{% if product.tags contains 'no-discount' %}
-  <div class="product-offer-box cp_retail_note">
-    <strong>Please note: These styles are part of our exclusive collection and are not eligible for additional offers or discounts.</strong>
-  </div>
-{% else %}
-  <div class="product-offer-box">
-    <!-- Top Offer label with icon -->
-    <div class="offer-title-row">
-      <div class="coupon-icon">
-        <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.817 16.063V14.721C17.817 14.3887 17.949 14.07 18.184 13.835L19.133 12.886C19.6223 12.3967 19.6223 11.6033 19.133 11.114L18.184 10.165C17.949 9.93001 17.817 9.61131 17.817 9.27899V7.93599C17.817 7.24398 17.256 6.68299 16.564 6.68299H15.221C14.8887 6.68299 14.57 6.55097 14.335 6.31599L13.386 5.36699C12.8967 4.87767 12.1033 4.87767 11.614 5.36699L10.665 6.31599C10.43 6.55097 10.1113 6.68299 9.77899 6.68299H8.43599C8.1035 6.68299 7.78464 6.81514 7.54963 7.05034C7.31462 7.28554 7.18273 7.6045 7.18299 7.93699V9.27899C7.18299 9.61131 7.05097 9.93001 6.81599 10.165L5.86699 11.114C5.37767 11.6033 5.37767 12.3967 5.86699 12.886L6.81599 13.835C7.05097 14.07 7.18299 14.3887 7.18299 14.721V16.063C7.18299 16.755 7.74398 17.316 8.43599 17.316H9.77899C10.1113 17.316 10.43 17.448 10.665 17.683L11.614 18.632C12.1033 19.1213 12.8967 19.1213 13.386 18.632L14.335 17.683C14.57 17.448 14.8887 17.316 15.221 17.316H16.563C16.8955 17.3163 17.2144 17.1844 17.4496 16.9493C17.6848 16.7143 17.817 16.3955 17.817 16.063Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.78202 10.641C9.50715 10.3662 9.42492 9.95286 9.57366 9.59375C9.7224 9.23464 10.0728 9.00049 10.4615 9.00049C10.8502 9.00049 11.2006 9.23464 11.3494 9.59375C11.4981 9.95286 11.4159 10.3662 11.141 10.641C10.7657 11.0163 10.1573 11.0163 9.78202 10.641Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M13.859 14.718C13.5841 14.4431 13.5019 14.0298 13.6506 13.6707C13.7994 13.3115 14.1498 13.0774 14.5385 13.0774C14.9272 13.0774 15.2776 13.3115 15.4263 13.6707C15.5751 14.0298 15.4928 14.4431 15.218 14.718C14.8427 15.0932 14.2343 15.0932 13.859 14.718Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M15.218 9.28101L9.78101 14.719" stroke="#545454" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="offer-title">Offer</span>
-    </div>
+              {%- comment -%}
+                Brand rating pills sit directly under the price row and
+                above the offer box. The `brand-rating` block holds the settings; it
+                is rendered from here so it lands at that exact spot. A block the
+                merchant disables drops out of section.blocks, so it stops rendering.
+              {%- endcomment -%}
+              {%- if kp_custom_pdp -%}
+                {%- for br_block in section.blocks -%}
+                  {%- if br_block.type == 'brand-rating' -%}
+                    {%- render 'brand-rating', block: br_block, product: product -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- comment -%} ——— START Myntra-style offer box ——— {%- endcomment -%}
+              {%- assign code = product.metafields.custom.offer_code | default: 'NEW5' -%}
+              {%- assign text = product.metafields.custom.offer_text
+                | default: 'Flat 5% off. Valid for all new users.'
+              -%}
+              {%- assign terms = product.metafields.custom.offer_terms | default: '' -%}
 
-    <!-- Offer details -->
-    <div class="offer-content">
-      <div class="offer-code-first"><strong>{{ code }}</strong></div>
-      <div class="offer-text-main">{{ text }}</div>
-      <p class="offer-terms">{{ terms }}</p>
-    </div>
-  </div>
-{% endif %}
+              {% if product.tags contains 'no-discount' %}
+                <div class="product-offer-box cp_retail_note">
+                  <strong
+                    >Please note: These styles are part of our exclusive collection and are not eligible for additional
+                    offers or discounts.</strong
+                  >
+                </div>
+              {% else %}
+                <div class="product-offer-box">
+                  <!-- Top Offer label with icon -->
+                  <div class="offer-title-row">
+                    <div class="coupon-icon">
+                      <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.817 16.063V14.721C17.817 14.3887 17.949 14.07 18.184 13.835L19.133 12.886C19.6223 12.3967 19.6223 11.6033 19.133 11.114L18.184 10.165C17.949 9.93001 17.817 9.61131 17.817 9.27899V7.93599C17.817 7.24398 17.256 6.68299 16.564 6.68299H15.221C14.8887 6.68299 14.57 6.55097 14.335 6.31599L13.386 5.36699C12.8967 4.87767 12.1033 4.87767 11.614 5.36699L10.665 6.31599C10.43 6.55097 10.1113 6.68299 9.77899 6.68299H8.43599C8.1035 6.68299 7.78464 6.81514 7.54963 7.05034C7.31462 7.28554 7.18273 7.6045 7.18299 7.93699V9.27899C7.18299 9.61131 7.05097 9.93001 6.81599 10.165L5.86699 11.114C5.37767 11.6033 5.37767 12.3967 5.86699 12.886L6.81599 13.835C7.05097 14.07 7.18299 14.3887 7.18299 14.721V16.063C7.18299 16.755 7.74398 17.316 8.43599 17.316H9.77899C10.1113 17.316 10.43 17.448 10.665 17.683L11.614 18.632C12.1033 19.1213 12.8967 19.1213 13.386 18.632L14.335 17.683C14.57 17.448 14.8887 17.316 15.221 17.316H16.563C16.8955 17.3163 17.2144 17.1844 17.4496 16.9493C17.6848 16.7143 17.817 16.3955 17.817 16.063Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.78202 10.641C9.50715 10.3662 9.42492 9.95286 9.57366 9.59375C9.7224 9.23464 10.0728 9.00049 10.4615 9.00049C10.8502 9.00049 11.2006 9.23464 11.3494 9.59375C11.4981 9.95286 11.4159 10.3662 11.141 10.641C10.7657 11.0163 10.1573 11.0163 9.78202 10.641Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.859 14.718C13.5841 14.4431 13.5019 14.0298 13.6506 13.6707C13.7994 13.3115 14.1498 13.0774 14.5385 13.0774C14.9272 13.0774 15.2776 13.3115 15.4263 13.6707C15.5751 14.0298 15.4928 14.4431 15.218 14.718C14.8427 15.0932 14.2343 15.0932 13.859 14.718Z" stroke="#545454" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M15.218 9.28101L9.78101 14.719" stroke="#545454" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <span class="offer-title">Offer</span>
+                  </div>
 
-  {%- comment -%} ——— END Myntra-style offer box ——— {%- endcomment -%}
+                  <!-- Offer details -->
+                  <div class="offer-content">
+                    <div class="offer-code-first">
+                      <strong>{{ code }}</strong>
+                    </div>
+                    <div class="offer-text-main">{{ text }}</div>
+                    <p class="offer-terms">{{ terms }}</p>
+                  </div>
+                </div>
+              {% endif %}
+
+              {%- comment -%} ——— END Myntra-style offer box ——— {%- endcomment -%}
               <div class="price-descriptors">
                 {%- form 'product', product, class: 'js-instalments-form' -%}
                   <input type="hidden" name="id" value="{% if current_variant %}{{ current_variant.id }}{% endif %}">
@@ -535,7 +1162,11 @@
                           endif
                         -%}
                         <script type="text/template" data-variant="{{ variant.id }}">
-                          {{ incoming_html }}
+                          {
+                            {
+                              incoming_html;
+                            }
+                          }
                         </script>
 
                         {%- if current_variant and variant.id == current_variant.id -%}{{ incoming_html }}{%- endif -%}
@@ -560,13 +1191,244 @@
               {%- endif -%}
             </div>
 
+            {%- comment -%}
+              Brand rating. The block only carries the settings — its
+              markup is rendered by the `price` block above, so the pills land directly
+              under the price row and above the offer box, per the design. See
+              snippets/brand-rating.liquid.
+            {%- endcomment -%}
+          {% when 'brand-rating' %}
+
           {% when 'description' %}
-            <div
-              class="{% unless block.settings.show_in_quickbuy %}not-in-quickbuy{% endunless %}"
-              {{ block.shopify_attributes }}
-            >
-              {% render 'pdp-details-accordion', product: product, block: block %}
-            </div>
+            {%- if product.description != blank -%}
+              <div
+                class="{% unless block.settings.show_in_quickbuy %}not-in-quickbuy{% endunless %}{% if block.settings.show_in_tab %} product-info-accordion{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.show_in_tab %}
+                  <details-disclosure>
+                    <details
+                      class="disclosure"
+                      {% if block.settings.open_tab %}
+                        open
+                      {% endif %}
+                    >
+                      <summary class="disclosure__title">
+                        {%- if block.settings.icon == blank -%}
+                          {%- comment -%}{{- 'products.product.description' | t -}}{%- endcomment -%}
+                          <span>Product description {% render 'dropdown-svg' %} </span>
+                        {%- else -%}
+                          <div class="with-icon">
+                            {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                            <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                          </div>
+                        {%- endif -%}
+                      </summary>
+                      <div class="disclosure__panel has-motion">
+                        <div class="disclosure__content rte cf">
+                          {{- product.description -}}
+                        </div>
+                      </div>
+                    </details>
+                  </details-disclosure>
+
+                  <details-disclosure>
+                    <details
+                      class="disclosure last-diclosuer"
+                      {% if block.settings.open_tab %}
+                        open
+                      {% endif %}
+                    >
+                      <summary class="disclosure__title">
+                        {%- if block.settings.icon == blank -%}
+                          <span>
+                            Product Specification
+                            {% render 'dropdown-svg' %}
+                          </span>
+                        {%- else -%}
+                          <div class="with-icon">
+                            {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                            <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                          </div>
+                        {%- endif -%}
+                      </summary>
+                      <div class="disclosure__panel has-motion">
+                        <div class="disclosure__content rte cf">
+                          {% if product.metafields.custom.product_type != blank %}
+                            <p>Product Type: {{ product.metafields.custom.product_type }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.product_specification_ocassion != blank %}
+                            <p>Occasion: {{ product.metafields.custom.product_specification_ocassion }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.fabric != blank %}
+                            <p>Fabric : {{ product.metafields.custom.fabric }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.length != blank %}
+                            <p>Length : {{ product.metafields.custom.length }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.colour != blank %}
+                            <p>Colour : {{ product.metafields.custom.colour }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.pattern != blank %}
+                            <p>Pattern : {{ product.metafields.custom.pattern }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.fit != blank %}
+                            <p>Fit : {{ product.metafields.custom.fit }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.work_details != blank %}
+                            <p>Work Details:{{ product.metafields.custom.work_details }}</p>
+                          {% endif %}
+                          {% if product.metafields.custom.sleeve_length != blank %}
+                            <p>Sleeve Length: {{ product.metafields.custom.sleeve_length }}</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </details>
+                  </details-disclosure>
+
+                  {% if product.metafields.custom.product_highlights != blank %}
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                              ⁠Product Highlights
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom.product_highlights }}
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                  {% endif %}
+
+                  {% if product.metafields.custom.wash_care_instructions != blank %}
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                              ⁠Wash & Care Instructions
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom.wash_care_instructions }}
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                  {% endif %}
+
+                  {% if product.metafields.custom._shipping_return_details != blank %}
+                    <details-disclosure>
+                      <details
+                        class="disclosure last-diclosuer"
+                        {% if block.settings.open_tab %}
+                          open
+                        {% endif %}
+                      >
+                        <summary class="disclosure__title">
+                          {%- if block.settings.icon == blank -%}
+                            <span>
+                              Know More
+                              {% render 'dropdown-svg' %}
+                            </span>
+                          {%- else -%}
+                            <div class="with-icon">
+                              {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                              <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                            </div>
+                          {%- endif -%}
+                        </summary>
+                        <div class="disclosure__panel has-motion">
+                          <div class="disclosure__content rte cf">
+                            {{ product.metafields.custom._shipping_return_details }}
+                            <p>
+                              <br>
+                              <strong>Manufacturer Detail:<br></strong>
+                              <strong>KISAH APPAREL PRIVATE LIMITED<br></strong>
+                              P62,3rd Lane, Sector B,Metropolitan Housing Society, Kolkata 700105
+                            </p>
+                          </div>
+                        </div>
+                      </details>
+                    </details-disclosure>
+                  {% endif %}
+
+                  {% assign metaobject_list = product.metafields.custom.product_seller_information.value %}
+                  {% for metaobject_item in metaobject_list %}
+                    {% if metaobject_item.title != blank %}
+                      <details-disclosure class="cp_seller_info">
+                        <details
+                          class="disclosure last-diclosuer"
+                          {% if block.settings.open_tab %}
+                            open
+                          {% endif %}
+                        >
+                          <summary class="disclosure__title">
+                            {%- if block.settings.icon == blank -%}
+                              <span>
+                                {{ metaobject_item.title -}}
+                                {%- render 'dropdown-svg' %}
+                              </span>
+                            {%- else -%}
+                              <div class="with-icon">
+                                {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                                <span class="with-icon__beside">{{ 'products.product.description' | t }}</span>
+                              </div>
+                            {%- endif -%}
+                          </summary>
+                          <div class="disclosure__panel has-motion">
+                            <div class="disclosure__content rte cf">
+                              {{ metaobject_item.seller_information }}
+                            </div>
+                          </div>
+                        </details>
+                      </details-disclosure>
+                    {% endif %}
+                  {% endfor %}
+
+                {% else %}
+                  <div class="product-description rte cf">
+                    {%- if block.settings.icon == blank -%}
+                      {{- product.description -}}
+                    {%- else -%}
+                      <div class="with-icon">
+                        {% render 'icon', icon: block.settings.icon, size: 'small' %}
+                        <span class="with-icon__beside">{{ product.description }}</span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {% endif %}
+              </div>
+            {%- endif -%}
 
           {% when 'vendor' %}
             {%- liquid
@@ -622,29 +1484,89 @@
                 swatch_crop: settings.swatch_crop_align,
                 dynamic_availability_mode: 'down'
               %}
-              {% if product.options contains 'Size' or 'Title' %}
-                <a class="trigger-pop-up option-selector" style="cursor: pointer;">Size Chart</a>
-                {% render "Size-drawer", product: product %}
+              {%- liquid
+                assign has_size_option = false
+                for option in product.options_with_values
+                  assign opt_name = option.name | downcase
+                  if opt_name == 'size'
+                    assign has_size_option = true
+                    break
+                  endif
+                endfor
+
+                assign is_gift_product = false
+                assign type_down = product.type | downcase
+                if type_down contains 'gift' or product.handle contains 'gift-box' or product.handle == 'rakhi-gift-box-rakhigb-26'
+                  assign is_gift_product = true
+                endif
+              -%}
+
+              {% if has_size_option and is_gift_product == false %}
+                <a class="trigger-pop-up option-selector" style="cursor: pointer;">
+                  {%- comment -%}
+                    The icon + underlined label are sized by
+                    product-custom-pdp.css; the default template keeps the plain
+                    link the theme styles in main.css.
+                  {%- endcomment -%}
+                  {%- if kp_custom_pdp -%}
+                    <span class="size-chart-trigger__icon">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 9.4V7.6a2.1 2.1 0 1 0-2.1-2.1"/>
+                        <path d="M12 9.4 3.6 15.5c-.9.65-.44 2.07.66 2.07h15.48c1.1 0 1.56-1.42.66-2.07L12 9.4Z"/>
+                      </svg>
+                    </span>
+                    <span class="size-chart-trigger__text">Size Chart</span>
+                  {%- else -%}
+                    Size Chart
+                  {%- endif -%}
+                </a>
+                {% render 'Size-drawer', product: product %}
               {% endif %}
             </div>
 
+            {%- comment -%}
+              Mobile-only model/fit line, from the product metafield.
+              The block setting below it is only a fallback.
+            {%- endcomment -%}
+            {%- assign kp_model_info = product.metafields.custom.product_size_chart_text.value -%}
+            {%- if kp_model_info == blank -%}
+              {%- assign kp_model_info = block.settings.model_size_info -%}
+            {%- endif -%}
+            {%- if kp_custom_pdp and has_size_option and is_gift_product == false and kp_model_info != blank -%}
+              <div class="input-row kpdp-model-info">{{ kp_model_info | escape }}</div>
+            {%- endif -%}
+
             {%- assign child_kurta = product.metafields.custom.also_buy_child_kurta.value -%}
             {%- if child_kurta != blank -%}
-              <div class="child-product-selector input-row js-product" style="margin-top:20px; border-top: 1px solid #e2e2e2; padding-top:20px;">
-                
-
-                <p class="child_kurta_title_custom_bs" style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: 'Generis Sans W01 Bold' !important;">Also Add: {{ child_kurta.title }}</p>
+              <div
+                class="child-product-selector input-row js-product"
+                style="margin-top:20px; border-top: 1px solid #e2e2e2; padding-top:20px;"
+              >
+                <p
+                  class="child_kurta_title_custom_bs"
+                  style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: 'Generis Sans W01 Bold' !important;"
+                >
+                  Also Add: {{ child_kurta.title }}
+                </p>
                 <div class="price-container" {{ block.shopify_attributes }}>
-                 <div class="product-info__price product-price product-price--large">
-                {% render 'price',
-                  product: child_kurta,
-                  show_currency_code: settings.product_currency_code_enabled,
-                  for_variant_picker: true,
-                  current_variant: current_variant
-                %} 
-                <p class="inclusive-tax">inclusive of all taxes</p>
-              </div>
-              </div>
+                  <div class="product-info__price product-price product-price--large">
+                    {% render 'price',
+                      product: child_kurta,
+                      show_currency_code: settings.product_currency_code_enabled,
+                      for_variant_picker: true,
+                      current_variant: current_variant
+                    %}
+                    <p class="inclusive-tax">inclusive of all taxes</p>
+                  </div>
+                </div>
                 {% render 'variant-picker',
                   product: child_kurta,
                   product_form_id: 'child_product_form',
@@ -654,10 +1576,10 @@
                 <input type="hidden" id="js-child-variant-id" value="">
               </div>
               <script>
-                document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('DOMContentLoaded', function () {
                   var childSelector = document.querySelector('.child-product-selector');
                   if (childSelector) {
-                    childSelector.addEventListener('on:variant:change', function(e) {
+                    childSelector.addEventListener('on:variant:change', function (e) {
                       var hiddenInput = document.getElementById('js-child-variant-id');
                       if (hiddenInput && e.detail && e.detail.variant) {
                         hiddenInput.value = e.detail.variant.id;
@@ -674,11 +1596,20 @@
 
           {% when 'buy-buttons' %}
             {% comment %} Find Your Size widget — inline sizing recommender {% endcomment %}
-            {% if product.options contains 'Size' or product.options contains 'size' %}
+            {% if kp_custom_pdp and has_size_option and is_gift_product == false %}
               <div class="fys-buy-buttons-wrap">
                 {% render 'find-your-size', product: product %}
               </div>
             {% endif %}
+
+            {%- comment -%}
+              Social-proof bar, mobile placement: directly above Add to Cart.
+              The desktop copy stays pinned to the gallery image (see the top of this
+              file); product-custom-pdp.css shows only one of the two per breakpoint.
+            {%- endcomment -%}
+            {%- if kp_custom_pdp -%}
+              {%- render 'kpdp-social-proof', product: product, placement: 'atc' -%}
+            {%- endif -%}
             <buy-buttons class="buy-buttons-row block" {{ block.shopify_attributes }}>
               {% form 'product',
                 product,
@@ -740,7 +1671,9 @@
                         class="btn btn--large add-to-cart"
                         type="submit"
                         name="add"
-                        {%- if product.tags contains 'preorder' or product.metafields.custom.ready_to_dispatch_dispatch_in_30_days != blank -%}
+                        {%- if product.tags contains 'preorder'
+                          or product.metafields.custom.ready_to_dispatch_dispatch_in_30_days != blank
+                        -%}
                           data-add-to-cart-text="Preorder"
                         {%- endif -%}
                         data-add-to-cart-text="{{ add_to_cart_text | escape}}"
@@ -797,24 +1730,32 @@
                         {%- endif -%}
                       </button>
 
+                      {%- comment -%}
+                        Desktop only — product-custom-pdp.css hides this
+                        mount below 768px.
+                      {%- endcomment -%}
                       {% render 'wishlisthero-custom-button' %}
                       <div class="share-product-button share-svg">
                         {% render 'share-svg' %}
                       </div>
                     </div>
-                    {% if block.settings['payement-image'] != blank %}  
-                    <div class="payment-img">
+                    {% if block.settings['payement-image'] != blank %}
+                      <div class="payment-img">
                         <img src="{{ block.settings.payement-image | image_url }}" width="150px" height="auto">
-                    </div>
+                      </div>
                     {% endif %}
                     <div class="product-share-icons">
+                      {% assign share_url = product.url
+                        | append: '?utm_source=pdp-share&utm_medium=social&utm_campaign=web-pdp-share'
+                      %}
+
                       {% render 'mobile-soical-share',
                         sharefacebook: block.settings.show_fb,
                         shareinstagram: block.settings.show_insta,
                         shareprintrest: block.settings.show_print,
                         sharewhatsapp: block.settings.show_whatsapp,
                         sharetitle: product.title,
-                        shareurl: product.url,
+                        shareurl: share_url,
                         shareimage: product,
                         unique_id: 'mob-share'
                       %}
@@ -822,7 +1763,11 @@
 
                     {% if enable_dynamic_payment_button %}
                       <script class="dynamic-payment-button-template" type="text/template">
-                        {{ form | payment_button }}
+                        {
+                          {
+                            form | payment_button;
+                          }
+                        }
                       </script>
                     {% endif %}
 
@@ -830,13 +1775,45 @@
                       {% render 'backorder', product: product, variant: current_variant %}
                     {% endif %}
                   </div>
-                              
+
                   {% render 'notify-me' %}
-                        
+
+                  {%- comment -%} Help / WhatsApp chat line under Add To Cart {%- endcomment -%}
+                  {%- if kp_custom_pdp
+                    and block.settings.show_help_chat
+                    and block.settings.help_whatsapp_number != blank
+                  -%}
+                    {%- assign kp_wa = block.settings.help_whatsapp_number
+                      | remove: ' '
+                      | remove: '+'
+                      | remove: '-'
+                      | remove: '('
+                      | remove: ')'
+                    -%}
+                    {%- assign kp_wa_msg = block.settings.help_whatsapp_message | default: 'Hi' -%}
+                    <p class="kpdp-help-chat">
+                      {{ block.settings.help_text }}
+                      <a
+                        class="kpdp-help-chat__link"
+                        href="https://wa.me/{{ kp_wa }}?text={{ kp_wa_msg | url_encode }}"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {{- block.settings.help_link_text -}}
+                      </a>
+                    </p>
+                  {%- endif -%}
+
                   <div class="js-form-error lightly-spaced-row" role="alert" hidden></div>
                 {% else %}
                   <div class="no-stock-delivery">
-                    {% render 'wishlisthero-custom-button' %}
+                    {%- comment -%}
+                      Desktop only — main.css hides this mount below 768px,
+                      where the Sold Out button takes the full row.
+                    {%- endcomment -%}
+                    {% unless template.suffix == 'custom-product' %}
+                      {% render 'wishlisthero-custom-button' %}
+                    {% endunless %}
                     <div class="quantity-submit-row input-row">
                       <div class="quantity-submit-row__submit">
                         <button class="btn btn--large" name="add" type="submit" disabled>
@@ -870,13 +1847,16 @@
                     </div>
                   {% endcomment %}
                   <div class="product-share-icons">
+                    {% assign share_url = product.url
+                      | append: '?utm_source=pdp-share&utm_medium=social&utm_campaign=web-pdp-share'
+                    %}
                     {% render 'mobile-soical-share',
                       sharefacebook: block.settings.show_fb,
                       shareinstagram: block.settings.show_insta,
                       shareprintrest: block.settings.show_print,
                       sharewhatsapp: block.settings.show_whatsapp,
                       sharetitle: product.title,
-                      shareurl: product.url,
+                      shareurl: share_url,
                       shareimage: product,
                       unique_id: 'mob-share'
                     %}
@@ -1439,25 +2419,96 @@
             </div>
 
           {% when 'trust-icons' %}
-            {% comment %} <p class="delivery_timeli_custom">“2-day delivery available in 10,000+ pincodes. Enter your pincode to check exact delivery timeline.”</p> {% endcomment %}
             <div class="trust-icons_container">
               <div class="text_with-icons">
-                <img src="{{ block.settings.icon1 | image_url }}" width="{{ block.settings.icon1.width }}" height="{{ block.settings.icon1.height }}" alt="{{ block.settings.icon1.alt }}">
+                <img
+                  src="{{ block.settings.icon1 | image_url }}"
+                  width="{{ block.settings.icon1.width }}"
+                  height="{{ block.settings.icon1.height }}"
+                  alt="{{ block.settings.icon1.alt }}"
+                >
                 <span>{{ block.settings.text1 }}</span>
               </div>
               <div class="text_with-icons">
-                <img src="{{ block.settings.icon2 | image_url }}" width="{{ block.settings.icon2.width }}" height="{{ block.settings.icon2.height }}" alt="{{ block.settings.icon2.alt }}">
+                <img
+                  src="{{ block.settings.icon2 | image_url }}"
+                  width="{{ block.settings.icon2.width }}"
+                  height="{{ block.settings.icon2.height }}"
+                  alt="{{ block.settings.icon2.alt }}"
+                >
                 <span>{{ block.settings.text2 }}</span>
               </div>
               <div class="text_with-icons">
-                <img src="{{ block.settings.icon3 | image_url }}" width="{{ block.settings.icon3.width }}" height="{{ block.settings.icon3.height }}" alt="{{ block.settings.icon3.alt }}">
+                <img
+                  src="{{ block.settings.icon3 | image_url }}"
+                  width="{{ block.settings.icon3.width }}"
+                  height="{{ block.settings.icon3.height }}"
+                  alt="{{ block.settings.icon3.alt }}"
+                >
                 <span>{{ block.settings.text3 }}</span>
               </div>
               <div class="text_with-icons">
-                <img src="{{ block.settings.icon4 | image_url }}" width="{{ block.settings.icon4.width }}" height="{{ block.settings.icon4.height }}" alt="{{ block.settings.icon4.alt }}">
+                <img
+                  src="{{ block.settings.icon4 | image_url }}"
+                  width="{{ block.settings.icon4.width }}"
+                  height="{{ block.settings.icon4.height }}"
+                  alt="{{ block.settings.icon4.alt }}"
+                >
                 <span>{{ block.settings.text4 }}</span>
               </div>
             </div>
+          {% when 'trust-icons-mobile' %}
+            {%- if kp_custom_pdp -%}
+              <div class="tim-block">
+                {%- if block.settings.heading != blank -%}
+                  <p class="tim-heading">{{ block.settings.heading }}</p>
+                {%- endif -%}
+                <div class="tim-row">
+                  {%- for i in (1..4) -%}
+                    {%- assign k_icon = 'icon' | append: i -%}
+                    {%- assign k_text = 'text' | append: i -%}
+                    {%- assign tim_icon = block.settings[k_icon] -%}
+                    {%- assign tim_text = block.settings[k_text] -%}
+                    {%- if tim_icon != blank or tim_text != blank -%}
+                      <div class="tim-item">
+                        {%- if tim_icon != blank -%}
+                          <img
+                            class="tim-icon"
+                            src="{{ tim_icon | image_url: width: 160 }}"
+                            width="{{ tim_icon.width }}"
+                            height="{{ tim_icon.height }}"
+                            alt="{{ tim_icon.alt | escape }}"
+                            loading="lazy"
+                          >
+                        {%- else -%}
+                          {%- comment -%} Built-in fallbacks matching the design; an uploaded image wins {%- endcomment -%}
+                          <span class="tim-icon tim-icon--svg">
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              {%- case i -%}
+                                {%- when 1 -%}<path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a1 1 0 0 1 1 1v1.5"/><path d="M3 8.5v8A2.5 2.5 0 0 0 5.5 19h13a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 18.5 9h-13A2.5 2.5 0 0 1 3 8.5Z"/><path d="M8 12h4"/><path d="M20 12.5h-2a1.5 1.5 0 0 0 0 3h2"/>
+                                {%- when 2 -%}<path d="M4.5 12a7.5 7.5 0 0 1 12.4-5.7"/><path d="M19.5 12a7.5 7.5 0 0 1-12.4 5.7"/><path d="M17 3.4v3.2h-3.2"/><path d="M7 20.6v-3.2h3.2"/><path d="M12 9.2 15 11v3.2l-3 1.7-3-1.7V11Z"/>
+                                {%- else -%}<path d="M7 10.5v8"/><path d="M4.5 10.5h2.5v8H4.5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z"/><path d="M7 11.2 11 4.5a2 2 0 0 1 2.9 2.4L13 10.5h5a1.8 1.8 0 0 1 1.7 2.3l-1.4 5A2 2 0 0 1 16.4 19H7"/>
+                              {%- endcase -%}
+                            </svg>
+                          </span>
+                        {%- endif -%}
+                        {%- if tim_text != blank -%}
+                          <span class="tim-text">{{ tim_text | escape | newline_to_br }}</span>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
           {% when 'offer_box' %}
             {% if product.metafields.custom.offer_title != blank %}
               <div class="offer-box">
@@ -1543,7 +2594,14 @@
                       href="{{ pro.url }}"
                       class="product_select_meta_variant {% if product.url == pro.url %}current_pro_value{% endif %}"
                     >
-                      <img class="pro_meta_swatches" width="400" height="400" loading="lazy" src="{{ pro.featured_media | image_url: width: 90 }}">
+                      <img
+                        class="pro_meta_swatches"
+                        width="45"
+                        height="45"
+                        loading="lazy"
+                        alt="{{ pro.title | escape }}"
+                        src="{{ pro.featured_media | image_url: width: 90 }}"
+                      >
                       {%- comment -%}
                           <span class="pro_meta_title">{{ pro.title }}</span>
                         <span class="pro_meta_pricy">{{ pro.selected_or_first_available_variant.compare_at_price | minus:pro.selected_or_first_available_variant.price | times:100 | divided_by:pro.selected_or_first_available_variant.compare_at_price }}% off</span>
@@ -1661,7 +2719,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content kutra"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_set_2pc_Set.jpg?v=1719990298"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_set_2pc_Set.jpg?v=1719990298"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1670,7 +2731,10 @@
         {% if tag == 'Kurta' %}
           <span class="size-chart-content"
             ><img
-              width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Kurta.jpg?v=1720009008"
+              width="400"
+              height="400"
+              loading="lazy"
+              src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Kurta.jpg?v=1720009008"
               alt="Kurta Set"
           ></span>
         {% endif %}
@@ -1689,7 +2753,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content set"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_Sherwani_Set_3pc_Set.jpg?v=1720008922"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_Sherwani_Set_3pc_Set.jpg?v=1720008922"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1698,7 +2765,10 @@
         {% if tag == 'Bandhgala' %}
           <span class="size-chart-content"
             ><img
-              width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Bandhgala.jpg?v=1720008671"
+              width="400"
+              height="400"
+              loading="lazy"
+              src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Bandhgala.jpg?v=1720008671"
               alt="Kurta Set"
           ></span>
         {% endif %}
@@ -1708,7 +2778,10 @@
         {% if tag == 'Indowestern' %}
           <span class="size-chart-content"
             ><img
-              width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Sherwani.jpg?v=1720008600"
+              width="400"
+              height="400"
+              loading="lazy"
+              src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Sherwani.jpg?v=1720008600"
               alt="Kurta Set"
           ></span>
         {% endif %}
@@ -1727,7 +2800,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Sherwani_set_2pc_Set.jpg?v=1720008493"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Sherwani_set_2pc_Set.jpg?v=1720008493"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1741,7 +2817,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Jacket.jpg?v=1720008403"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Jacket.jpg?v=1720008403"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1755,7 +2834,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Bottomwear.jpg?v=1720008847"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Bottomwear.jpg?v=1720008847"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1769,7 +2851,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Bandhgala_Set_2pc_Set.jpg?v=1719995174"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Bandhgala_Set_2pc_Set.jpg?v=1719995174"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1783,7 +2868,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_Bandhgala_Set_3pc_Set_1.jpg?v=1720007407"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_Bandhgala_Set_3pc_Set_1.jpg?v=1720007407"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1797,7 +2885,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Short_Kurta.jpg?v=1720007734"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Only_Short_Kurta.jpg?v=1720007734"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1815,7 +2906,10 @@
       {% if show_size_chart %}
         <span class="size-chart-content"
           ><img
-            width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_jacket_Set_3pc_Set_1.jpg?v=1720008300"
+            width="400"
+            height="400"
+            loading="lazy"
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_jacket_Set_3pc_Set_1.jpg?v=1720008300"
             alt="Kurta Set"
         ></span>
       {% endif %}
@@ -1823,326 +2917,286 @@
   </div>
 </product-form>
 <script>
-
-console.log({{ product | json }}, "PDP JSON");
-
+  console.log({{ product | json }}, "PDP JSON");
 </script>
 {% if section.settings.show_location_underneath %}
   <div class="product-description rte container cf padded-row not-in-quickbuy">{{ product.description }}</div>
 {% endif %}
 
 <style>
-  {%- if product.tags contains 'preorder' -%}
-    .clickpost-edd__container
-  {
-      display:none !important;
-  }
-  .backorder{
-    display:none;
-  }
-  {%- endif -%}
-  #preorderoffer_box_Rht83D .offer-discount span{
-       max-width:unset;
-   }
-    .pop-up-modal {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      display: none;
-      transform: scale(1.1);
-      transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+    {%- if product.tags contains 'preorder' -%}
+      .clickpost-edd__container
+    {
+        display:none !important;
     }
-    .pop-up-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 1rem 1.5rem;
-      width: auto;
-      border-radius: 0.5rem;
+    .backorder{
+      display:none;
     }
-    .pop-up-content table {
-      table-layout: auto;
-    }
-    .close-button {
-      float: right;
-      /* width: 1.5rem;
-      line-height: 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 0.25rem;
-      background-color: lightgray; */
-    }
-    /* .close-button:hover {
-      background-color: darkgray;
-    } */
-    .close-button svg{
-      width:22px;
-      height:22px;
-    }
-    .show-pop-up {
-      z-index: 999;
-      opacity: 1;
-      display: block;
-      transform: scale(1);
-      transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-    }
-    .trigger-pop-up {
-      /* margin: 10px 0 10px 0; */
-      width: 100%;
-    }
-    .product-form .link-text{
-      margin-top:20px;
-   }
-    /* .product-form .link-text p a{
-      text-decoration: none;
-      border-bottom: 1px solid currentColor;
-    }
-    .not-in-quickbuy .product-description{
-      margin-top:20px;
-    } */
-  .pop-up-content {
-      max-height: 85%;
-      overflow-y: auto;
-  }
-    .variant-size-chart{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-     a.trigger-pop-up {
-      font-family: 'Generis Sans W01 Regular';
-      font-size: 16px;
-      line-height: 18px;
-  }
-   #shopify-section-{{section.id}} .product-share-icons .mob-share .svg-container-class svg path{
-       fill:#ffffff;
-  }
-  #shopify-section-{{section.id}} .product-share-icons .mob-share, #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share{
-      padding:9px 11px 5px 10px;
-      flex-direction:row;
-      gap:11px;
-      align-items:center;
-  }
-  #shopify-section-{{section.id}} .product-share-icons{
-       top:-55px;
-  }
-  #shopify-section-{{section.id}} .product-share-icons .mob-share .mob-share-links{
-       width:30px;
-      display:block;
-  }
-  #shopify-section-{{section.id}} .product-share-icons .mob-share .svg-container-class a{
-      width:25px;
-      display:block;
-  }
-   #shopify-section-{{section.id}} a.trigger-pop-up{
-        width:90px;
-        max-width:unset;
-        margin:0;
-        padding:0;
-        color: #343434;
-    }
-   
-  #shopify-section-{{section.id}}  variant-picker .option-selector{
-    margin-bottom:0;
-  }
-  .section-main-product .buy-buttons-row.block .product-form__item #wishlisthero-product-page-button-container button span{
-     align-items:center;
-  }
-  @media only screen and (max-width: 768px) {
-  #shopify-section-{{section.id}} .product-share-icons .mob-share, #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share{
-      padding:6px 11px 3px 10px;
-      {% comment %} display:none; {% endcomment %}
-  }
-  {% comment %} #shopify-section-{{section.id}} .mob-share-product-button.mob_share-svg_icon{
-    display:none;
-  } {% endcomment %}
-  #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share a{
-      width:27px;
-      display:block;
-  }
-  #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share .svg-container-class .native-share-img{
-      width:23px;
-      display:block;
-  }
-      .pop-up-content,
-      .size-chart-content table {
+    {%- endif -%}
+    #preorderoffer_box_Rht83D .offer-discount span{
+         max-width:unset;
+     }
+      .pop-up-modal {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        display: none;
+        transform: scale(1.1);
+        transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+      }
+      .pop-up-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 1rem 1.5rem;
+        width: auto;
+        border-radius: 0.5rem;
+      }
+      .pop-up-content table {
+        table-layout: auto;
+      }
+      .close-button {
+        float: right;
+        /* width: 1.5rem;
+        line-height: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 0.25rem;
+        background-color: lightgray; */
+      }
+      /* .close-button:hover {
+        background-color: darkgray;
+      } */
+      .close-button svg{
+        width:22px;
+        height:22px;
+      }
+      .show-pop-up {
+        z-index: 999;
+        opacity: 1;
+        display: block;
+        transform: scale(1);
+        transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+      }
+      .trigger-pop-up {
+        /* margin: 10px 0 10px 0; */
         width: 100%;
       }
-      .size-chart-content th,
-      .size-chart-content td {
-        padding: 10px;
+      .product-form .link-text{
+        margin-top:20px;
+     }
+      /* .product-form .link-text p a{
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
       }
-      .close-button svg {
-        width:20px;
-        height:20px;
+      .not-in-quickbuy .product-description{
+        margin-top:20px;
+      } */
+    .pop-up-content {
+        max-height: 85%;
+        overflow-y: auto;
+    }
+      .variant-size-chart{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
       }
-     #shopify-section-{{section.id}}  .variant-size-chart{
-       flex-wrap:wrap;
-       gap:20px;
+       a.trigger-pop-up {
+        font-family: 'Generis Sans W01 Regular';
+        font-size: 16px;
+        line-height: 18px;
     }
-     #shopify-section-{{section.id}} .opt-label{
-      min-width: 30px;
-      min-height: 30px;
+     #shopify-section-{{section.id}} .product-share-icons .mob-share .svg-container-class svg path{
+         fill:#ffffff;
     }
-    @media only screen and (min-width: 750px) {
-      .trigger-pop-up {
-        width: 50%;
+    #shopify-section-{{section.id}} .product-share-icons .mob-share, #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share{
+        padding:9px 11px 5px 10px;
+        flex-direction:row;
+        gap:11px;
+        align-items:center;
+    }
+    #shopify-section-{{section.id}} .product-share-icons{
+         top:-55px;
+    }
+    #shopify-section-{{section.id}} .product-share-icons .mob-share .mob-share-links{
+         width:30px;
+        display:block;
+    }
+    #shopify-section-{{section.id}} .product-share-icons .mob-share .svg-container-class a{
+        width:25px;
+        display:block;
+    }
+     #shopify-section-{{section.id}} a.trigger-pop-up{
+          width:90px;
+          max-width:unset;
+          margin:0;
+          padding:0;
+          color: #343434;
       }
+
+    #shopify-section-{{section.id}}  variant-picker .option-selector{
+      margin-bottom:0;
     }
-     a.trigger-pop-up {
-      /* margin-left: 340px !important; */
-      color: #343434;
+    .section-main-product .buy-buttons-row.block .product-form__item #wishlisthero-product-page-button-container button span{
+       align-items:center;
+    }
+    @media only screen and (max-width: 768px) {
+    #shopify-section-{{section.id}} .product-share-icons .mob-share, #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share{
+        padding:6px 11px 3px 10px;
+        {% comment %} display:none; {% endcomment %}
+    }
+    {% comment %} #shopify-section-{{section.id}} .mob-share-product-button.mob_share-svg_icon{
+      display:none;
+    } {% endcomment %}
+    #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share a{
+        width:27px;
+        display:block;
+    }
+    #shopify-section-{{section.id}} .desk-share-soicial-icons .desk-share .svg-container-class .native-share-img{
+        width:23px;
+        display:block;
+    }
+        .pop-up-content,
+        .size-chart-content table {
+          width: 100%;
+        }
+        .size-chart-content th,
+        .size-chart-content td {
+          padding: 10px;
+        }
+        .close-button svg {
+          width:20px;
+          height:20px;
+        }
+       #shopify-section-{{section.id}}  .variant-size-chart{
+         flex-wrap:wrap;
+         gap:20px;
+      }
+       #shopify-section-{{section.id}} .opt-label{
+        min-width: 30px;
+        min-height: 30px;
+      }
+      @media only screen and (min-width: 750px) {
+        .trigger-pop-up {
+          width: 50%;
+        }
+      }
+       a.trigger-pop-up {
+        /* margin-left: 340px !important; */
+        color: #343434;
+    }
+
+      span.size-chart-content tr td div {
+        text-align: left !important;
+    }
+    /* span.close-button {
+        border-radius: 25px;
+        line-height: 15px;
+        width: 20px;
+        height: 20px;
+        margin-bottom: 17px;
+        background: #383838;
+        color: #fff;
+    } */
+     /* a.trigger-pop-up {
+
+        width:90px;
+       /* max-width:150px; */
+       padding-left:20px;
+         /* margin: 0 0 -21px 0;  */
+    } */
+    #shopify-section-{{section.id}} .meta-content-image-container {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 6px 12px;
+        width: fit-content;
+        border-radius: 3px;
+        margin-bottom:20px;
+    }
+    #shopify-section-{{section.id}} .meta-content-image-container img{
+        width:14px;
+        height:auto;
+    }
+    #shopify-section-{{section.id}} .meta-content-image-container p{
+        margin:0;
+        font-size:14px;
+        line-height:16px;
+        font-weight:bold;
+    }
+    .product-media-wrapper {
+    position: relative;
   }
 
-    span.size-chart-content tr td div {
-      text-align: left !important;
-  }
-  /* span.close-button {
-      border-radius: 25px;
-      line-height: 15px;
-      width: 20px;
-      height: 20px;
-      margin-bottom: 17px;
-      background: #383838;
-      color: #fff;
-  } */
-   /* a.trigger-pop-up {
-
-      width:90px;
-     /* max-width:150px; */
-     padding-left:20px;
-       /* margin: 0 0 -21px 0;  */
-  } */
-  #shopify-section-{{section.id}} .meta-content-image-container {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 6px 12px;
-      width: fit-content;
-      border-radius: 3px;
-      margin-bottom:20px;
-  }
-  #shopify-section-{{section.id}} .meta-content-image-container img{
-      width:14px;
-      height:auto;
-  }
-  #shopify-section-{{section.id}} .meta-content-image-container p{
-      margin:0;
-      font-size:14px;
-      line-height:16px;
-      font-weight:bold;
-  }
-  .product-media-wrapper {
-  position: relative;
-}
-
-.zoom-icon {
-    position: absolute;
-    bottom: 8px;
-    left: 90%;
-    transform: translateX(-50%);
-    background: #f9f9f921;
-    padding: 10px;
-    border-radius: 50%;
-    font-size: 14px;
-    color: #545454;
-    cursor: pointer;
-    z-index: 10;
-    letter-spacing: 1px;
-    pointer-events: none;
-}
-  .zoom-icon svg {
-  display: block;
-  width: 24px;
-  height: 24px;
-}
-  .theme-product-reviews {
-    display: none !important;
-  }
-@media only screen and (min-width: 1024px) {
   .zoom-icon {
-   left: 95%;
+      position: absolute;
+      bottom: 8px;
+      left: 90%;
+      transform: translateX(-50%);
+      background: #f9f9f921;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 14px;
+      color: #545454;
+      cursor: pointer;
+      z-index: 10;
+      letter-spacing: 1px;
+      pointer-events: none;
   }
-}
+    .zoom-icon svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+    .theme-product-reviews {
+      display: none !important;
+    }
+  @media only screen and (min-width: 1024px) {
+    .zoom-icon {
+     left: 95%;
+    }
+  }
 </style>
-
-<script>
-  window.CP_PRODUCT = {{ product | json }};
-</script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-  	function share(){
-  		this.classList.toggle('active');
-          document.querySelector('.buy-buttons-row').classList.toggle('active');
-      }
-      function mobShare(){
-        this.classList.toggle('active');
-        document.querySelector('.title_share_button').classList.toggle('active');
-      }
-       document.querySelector('.share-product-button').addEventListener('click',  share )
-       document.querySelector('.mob-share-product-button').addEventListener('click', mobShare )
-
-  });
-   const sizedrawer = document.querySelector('.size-chart-drawer')
-    const modal = document.querySelector('.pop-up-modal');
-    const trigger = document.querySelector('.trigger-pop-up');
-    const closeButton = document.querySelector('.close-button');
-    const drawerclosebtn = document.querySelector('.size_drawer__close-btn');
-    const overlay = document.querySelector('.size-cart-drawer-overlay'); 
-    const body = document.querySelector('body');
-  
-    function toggleModal() {
-      // modal.classList.toggle('show-pop-up');
-      sizedrawer.classList.toggle('open');
-      overlay.classList.toggle('is-visible');
-      body.classList.toggle('scroll');
-    }
-
-    function windowOnClick(event) {
-      if (event.target === overlay) {
-        toggleModal();
-      }
-    }
-
-    trigger.addEventListener('click', toggleModal);
-    drawerclosebtn.addEventListener('click', toggleModal);
-    closeButton.addEventListener('click', toggleModal);
-    window.addEventListener('click', windowOnClick);
-
-
-
-  let sharebtns = document.querySelectorAll('.svg-container-class .native-share-img');
-   sharebtns.forEach((sharebtn) => {
-        sharebtn.addEventListener("click", function() {
-          nativeShare();
-        });
-      });
-    function nativeShare() {
-    navigator.share({
-      title: document.title,
-      text: 'Check out this link',
-      url: location.href,
-    })
-    .then(() => console.log('Successful share'))
-    .catch((error) => console.log('Error sharing', error));
-  }
-</script>
-
-
 
 {% schema %}
 {
   "name": "Product pages",
   "class": "section-main-product page-section-spacing page-section-spacing--no-top-mobile",
   "settings": [
+    {
+      "type": "header",
+      "content": "Gallery Contains button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contains",
+      "label": "Show Contains button",
+      "info": "Bottom-right of the product image on mobile.",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "contains_icon",
+      "label": "Contains icon"
+    },
+    {
+      "type": "text",
+      "id": "contains_default_tab",
+      "label": "Contains popup: default tab",
+      "info": "Leave blank to open the second tab (the garment tab, next to About) — this is the normal setting. Enter a tab name here only to force a specific one, e.g. Sherwani; it is ignored on products that have no tab by that name."
+    },
+    {
+      "type": "text",
+      "id": "contains_text",
+      "label": "Contains text",
+      "default": "Contains"
+    },
     {
       "type": "checkbox",
       "id": "show_breadcrumbs",
@@ -2159,10 +3213,10 @@ console.log({{ product | json }}, "PDP JSON");
       "type": "checkbox",
       "id": "inventory_transfers_enable",
       "label": "Show inventory transfer notice",
-      "info": "Shows under price. Learn how to create inventory transfers here",
+      "info": "Shows under price. Learn how to create inventory transfers [here](https://help.shopify.com/en/manual/products/inventory/transfers/create-transfer)",
       "default": true
     },
-     {
+    {
       "type": "image_picker",
       "id": "kid-size-image",
       "label": "kids Size drawer image"
@@ -2171,6 +3225,18 @@ console.log({{ product | json }}, "PDP JSON");
       "type": "image_picker",
       "id": "size-image",
       "label": "Size drawer image"
+    },
+    {
+      "type": "image_picker",
+      "id": "sizechart_help_icon",
+      "label": "Size chart: help icon",
+      "info": "Icon beside \"Want help with sizing?\". Leave empty to use the built-in WhatsApp icon."
+    },
+    {
+      "type": "text",
+      "id": "sizechart_help_whatsapp",
+      "label": "Size chart: WhatsApp number",
+      "info": "Digits with country code, e.g. 919876543210. Leave empty to link to the contact page."
     },
     {
       "type": "checkbox",
@@ -2184,8 +3250,8 @@ console.log({{ product | json }}, "PDP JSON");
     },
     {
       "type": "paragraph",
-      "content": "Learn more about media types"
-      },
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+    },
     {
       "type": "select",
       "id": "gallery_size",
@@ -2434,8 +3500,8 @@ console.log({{ product | json }}, "PDP JSON");
     },
     {
       "type": "paragraph",
-      "content": "Arrange product media by this option (all 'red' media together, then all 'blue' media together, for example). The first media in each group should be assigned to a variant. Read more"
-      },
+      "content": "Arrange product media by this option (all 'red' media together, then all 'blue' media together, for example). The first media in each group should be assigned to a variant. [Read more](https://cleancanvas.co.uk/support/general/grouped-variant-images)"
+    },
     {
       "type": "paragraph",
       "content": "Add the alt text 'all-groups' to show that media in all groups."
@@ -2449,11 +3515,22 @@ console.log({{ product | json }}, "PDP JSON");
       "type": "recommendation",
       "name": "Recommendation Section",
       "limit": 1,
-      "settings":[
+      "settings": [
         {
-          "type":"text",
-          "id":"recommendation_title",
-          "label":"Recommendation Title"
+          "type": "text",
+          "id": "recommendation_title",
+          "label": "Recommendation Title"
+        }
+      ]
+    },
+    {
+      "type": "text-with-icon-tags",
+      "name": "Text with icon tags",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Reads the product metafield custom.product_text_with_icon (list of product_text_with_icon metaobjects). Nothing renders when the product has no entries."
         }
       ]
     },
@@ -2461,36 +3538,36 @@ console.log({{ product | json }}, "PDP JSON");
       "type": "title",
       "name": "Title",
       "limit": 1,
-       "settings":[
-         {
-           "type":"header",
-           "content": "social icons"
-         },
-       {
-          "type":"checkbox",
-          "id":"show_mob_fb",
-          "label":"Show Facebook",
-          "default":true
+      "settings": [
+        {
+          "type": "header",
+          "content": "social icons"
         },
         {
-          "type":"checkbox",
-          "id":"show_mob_insta",
-          "label":"Show Instagram",
-          "default":true
+          "type": "checkbox",
+          "id": "show_mob_fb",
+          "label": "Show Facebook",
+          "default": true
         },
         {
-          "type":"checkbox",
-          "id":"show_mob_print",
-          "label":"Show Printrest",
-          "default":true
+          "type": "checkbox",
+          "id": "show_mob_insta",
+          "label": "Show Instagram",
+          "default": true
         },
         {
-          "type":"checkbox",
-          "id":"show_mob_whatsapp",
-          "label":"Show Whatsapp",
-          "default":true
-         }
-       ]
+          "type": "checkbox",
+          "id": "show_mob_print",
+          "label": "Show Printrest",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mob_whatsapp",
+          "label": "Show Whatsapp",
+          "default": true
+        }
+      ]
     },
     {
       "type": "price",
@@ -2507,157 +3584,174 @@ console.log({{ product | json }}, "PDP JSON");
           "type": "checkbox",
           "label": "Show product rating",
           "id": "enable_product_reviews_by_price",
-          "info": "Add reviews by installing an app.",
+          "info": "Add reviews by installing [an app](https://apps.shopify.com/search?q=reviews). App must support Shopify's standard rating metafield.",
           "default": true
         }
       ]
     },
     {
-        "type": "offer_box",
-         "name":"Offer box ",
-     "settings": [
-          {
-            "type":"text",
-             "id":"tag",
-              "label": "Collection tags"
-          },
-          {
-            "type":"image_picker",
-             "id":"icon",
-             "label": "Icon"
-
-          },
-          {
-            "type": "text",
-            "id":"title",
-            "label": "Title"
-          },
-          {
-            "type":"text",
-             "id":"text",
-             "label": "Offer text"
-          }
-        ]
-      },
-      {
-       "type":"meta-information",
-       "name":"Meta information",
-       "settings":[
+      "type": "brand-rating",
+      "name": "Brand rating",
+      "limit": 1,
+      "settings": [
         {
-         "type":"image_picker",
-          "id":"meta-img",
-          "label":"image"
+          "type": "paragraph",
+          "content": "Reads the product metafield custom.product_brand_rating (list of product_brand_rating metaobjects: icon, text, svg, number, subtext). One pill renders per entry. Nothing renders when the product has no entries and no fallback is set."
         },
         {
-        "type":"color",
-        "id":"meta-text",
-        "label":" Text color"
-       },
+          "type": "text",
+          "id": "fallback_handles",
+          "label": "Fallback entry handles",
+          "info": "Comma-separated product_brand_rating handles to show on products that have no custom.product_brand_rating metafield. Leave empty to show nothing."
+        },
         {
-        "type":"color",
-        "id":"meta-bg",
-        "label":"Background color"
-       }
-     ]
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#FFF3DA"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#1F1F1F"
+        }
+      ]
     },
-     {
-        "type": "preorderoffer_box",
-         "name":"Preorder Offer box ",
-         "settings": [
-          {
-            "type":"image_picker",
-             "id":"icon",
-             "label": "Icon"
+    {
+      "type": "offer_box",
+      "name": "Offer box ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Collection tags"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Offer text"
+        }
+      ]
+    },
+    {
+      "type": "meta-information",
+      "name": "Meta information",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "meta-img",
+          "label": "image"
+        },
+        {
+          "type": "color",
+          "id": "meta-text",
+          "label": " Text color"
+        },
+        {
+          "type": "color",
+          "id": "meta-bg",
+          "label": "Background color"
+        }
+      ]
+    },
+    {
+      "type": "preorderoffer_box",
+      "name": "Preorder Offer box ",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Offer text"
+        }
+      ]
+    },
+    {
+      "type": "preorderoffer_box_1",
+      "name": "Preorder Offer box 1",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon-1",
+          "label": "Icon"
+        },
 
-          },
-          {
-            "type": "text",
-            "id":"title",
-            "label": "Title"
-          },
-          {
-            "type":"textarea",
-             "id":"text",
-             "label": "Offer text"
-          }
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1"
+        },
+        {
+          "type": "textarea",
+          "id": "text_1",
+          "label": "Offer text 1"
+        }
+      ]
+    },
+    {
+      "type": "preorderoffer_box_2",
+      "name": "Preorder Offer box 2",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon-2",
+          "label": "Icon"
+        },
 
-        ]
-      },
-      {
-        "type": "preorderoffer_box_1",
-         "name":"Preorder Offer box 1",
-         "settings": [
-          {
-            "type":"image_picker",
-             "id":"icon-1",
-             "label": "Icon"
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2"
+        },
+        {
+          "type": "textarea",
+          "id": "text_2",
+          "label": "Offer text 2"
+        }
+      ]
+    },
+    {
+      "type": "preorderoffer_box_3",
+      "name": "Preorder Offer box 3",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon-3",
+          "label": "Icon"
+        },
 
-          },
-
-          {
-            "type": "text",
-            "id":"title_1",
-            "label": "Title 1"
-          },
-          {
-            "type":"textarea",
-             "id":"text_1",
-             "label": "Offer text 1"
-          }
-
-
-        ]
-      },
-       {
-        "type": "preorderoffer_box_2",
-         "name":"Preorder Offer box 2",
-         "settings": [
-          {
-            "type":"image_picker",
-             "id":"icon-2",
-             "label": "Icon"
-
-          },
-
-          {
-            "type": "text",
-            "id":"title_2",
-            "label": "Title 2"
-          },
-          {
-            "type":"textarea",
-             "id":"text_2",
-             "label": "Offer text 2"
-          }
-
-
-        ]
-      },
-      {
-        "type": "preorderoffer_box_3",
-         "name":"Preorder Offer box 3",
-         "settings": [
-          {
-            "type":"image_picker",
-             "id":"icon-3",
-             "label": "Icon"
-
-          },
-
-          {
-            "type": "text",
-            "id":"title_3",
-            "label": "Title 3"
-          },
-          {
-            "type":"textarea",
-             "id":"text_3",
-             "label": "Offer text 3"
-          }
-
-
-        ]
-      },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3"
+        },
+        {
+          "type": "textarea",
+          "id": "text_3",
+          "label": "Offer text 3"
+        }
+      ]
+    },
     {
       "type": "description",
       "name": "Description",
@@ -2906,23 +4000,33 @@ console.log({{ product | json }}, "PDP JSON");
           "type": "page",
           "id": "size_chart_page",
           "label": "Page containing size chart"
+        },
+        {
+          "type": "header",
+          "content": "Model and fit note"
+        },
+        {
+          "type": "text",
+          "id": "model_size_info",
+          "label": "Model and fit note",
+          "info": "Optional fallback shown under the size options on mobile. The product metafield custom.product_size_chart_text takes priority; leave blank to show nothing when that metafield is empty."
         }
       ],
       "limit": 1
     },
-     {
-        "type": "product-select",
-        "name": "Product Select",
-        "limit": 1,
-        "settings": [
-          {
+    {
+      "type": "product-select",
+      "name": "Product Select",
+      "limit": 1,
+      "settings": [
+        {
           "type": "text",
           "id": "product_select_title",
           "label": "Product Select Title",
           "default": "Color"
-          }
-        ]
-      },
+        }
+      ]
+    },
     {
       "type": "buy-buttons",
       "name": "Buy buttons",
@@ -2938,8 +4042,8 @@ console.log({{ product | json }}, "PDP JSON");
           "type": "checkbox",
           "id": "enable_payment_button",
           "label": "Show dynamic checkout button",
-          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. Learn more",
-      "default": true
+          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "default": true
         },
         {
           "type": "checkbox",
@@ -2953,62 +4057,96 @@ console.log({{ product | json }}, "PDP JSON");
           "id": "show_pickup_availability",
           "label": "Show pickup availability",
           "default": true,
-          "info": "Show customers where they can pick up the product. Learn more"
-      },
+          "info": "Show customers where they can pick up the product. [Learn more](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)"
+        },
         {
           "type": "checkbox",
           "id": "show_gift_card_recipient",
           "default": false,
           "label": "Show recipient information form for gift cards",
-          "info": "Allow customers to send gift cards to a recipient along with a personal message. When enabled, the dynamic checkout button will be disabled for gift cards. Learn more"
-      },
-         {
+          "info": "Allow customers to send gift cards to a recipient along with a personal message. When enabled, the dynamic checkout button will be disabled for gift cards. [Learn more](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)"
+        },
+        {
           "type": "image_picker",
           "id": "payement-image",
           "label": "payment Image"
         },
         {
           "type": "header",
-          "content":"Social icons"
+          "content": "Social icons"
         },
         {
-          "type":"checkbox",
-          "id":"show_fb",
-          "label":"Show Facebook",
-          "default":true
+          "type": "checkbox",
+          "id": "show_fb",
+          "label": "Show Facebook",
+          "default": true
         },
         {
-          "type":"checkbox",
-          "id":"show_insta",
-          "label":"Show Instagram",
-          "default":true
+          "type": "checkbox",
+          "id": "show_insta",
+          "label": "Show Instagram",
+          "default": true
         },
         {
-          "type":"checkbox",
-          "id":"show_print",
-          "label":"Show Printrest",
-          "default":true
+          "type": "checkbox",
+          "id": "show_print",
+          "label": "Show Printrest",
+          "default": true
         },
         {
-          "type":"checkbox",
-          "id":"show_whatsapp",
-          "label":"Show Whatsapp",
-          "default":true
+          "type": "checkbox",
+          "id": "show_whatsapp",
+          "label": "Show Whatsapp",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Help / chat link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_help_chat",
+          "label": "Show help line under Add To Cart",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "help_text",
+          "label": "Help text",
+          "default": "For help with sizing, delivery or anything else,"
+        },
+        {
+          "type": "text",
+          "id": "help_link_text",
+          "label": "Link text",
+          "default": "Chat with us"
+        },
+        {
+          "type": "text",
+          "id": "help_whatsapp_number",
+          "label": "WhatsApp number",
+          "info": "Country code first, digits only. Leave blank to hide the line.",
+          "default": "916289902520"
+        },
+        {
+          "type": "text",
+          "id": "help_whatsapp_message",
+          "label": "Pre-filled WhatsApp message",
+          "default": "Hi"
         }
-
       ]
     },
     {
-        "type": "links",
-        "name": "Links",
-        "settings": [
-          {
-            "type":"richtext",
-             "id":"text",
-             "label": "content"
-          }
-        ]
-      },
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "content"
+        }
+      ]
+    },
     {
       "type": "inventory-level",
       "name": "Inventory level",
@@ -3082,88 +4220,144 @@ console.log({{ product | json }}, "PDP JSON");
     {
       "type": "trust-icons",
       "name": "Trust icons",
-      "settings":[
+      "settings": [
         {
-          "type":"image_picker",
-           "id":"icon1",
-           "label":"Image"
+          "type": "image_picker",
+          "id": "icon1",
+          "label": "Image 1"
         },
         {
-          "type":"text",
-           "id":"text1",
-           "label":"text"
+          "type": "text",
+          "id": "text1",
+          "label": "Text 1"
         },
         {
-          "type":"image_picker",
-           "id":"icon2",
-           "label":"Image"
+          "type": "image_picker",
+          "id": "icon2",
+          "label": "Image 2"
         },
         {
-          "type":"text",
-           "id":"text2",
-           "label":"text"
-        },
-         {
-          "type":"image_picker",
-           "id":"icon3",
-           "label":"Image"
+          "type": "text",
+          "id": "text2",
+          "label": "Text 2"
         },
         {
-          "type":"text",
-           "id":"text3",
-           "label":"text"
+          "type": "image_picker",
+          "id": "icon3",
+          "label": "Image 3"
         },
         {
-          "type":"image_picker",
-           "id":"icon4",
-           "label":"Image"
+          "type": "text",
+          "id": "text3",
+          "label": "Text 3"
         },
         {
-          "type":"text",
-           "id":"text4",
-           "label":"text"
+          "type": "image_picker",
+          "id": "icon4",
+          "label": "Image 4"
+        },
+        {
+          "type": "text",
+          "id": "text4",
+          "label": "Text 4"
         }
       ]
     },
-     {
-        "type": "delivery-date-check",
-        "name": "Check Delivery Details",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Heading",
-            "default": "Check Delivery Details"
-          },
-          {
-            "type": "textarea",
-            "id": "sub_title",
-            "label": "Sub Heading",
-            "default": "<p>We're commited to getting you things <br><span>super quick.</span></p>",
-            "info": "Example: <p>We're commited to getting you things <br><span>super quick.</span></p>"
-          },
-          {
-            "type": "text",
-            "id": "input_text",
-            "label": "Placeholder Text",
-            "default": "Enter Your Pincode"
-          },
-          {
-            "type": "text",
-            "id": "button_text",
-            "label": "Button Text",
-            "default": "Change"
-          },
-          {
-            "type": "textarea",
-            "id": "notes",
-            "label": "Notes",
-            "default": "<p>This an estimated date, the delivery time might take longer during festive season</p>",
-            "info": "Example: <p>This an estimated date, the delivery time might take longer during festive season</p>"
-          }
-
-        ]
-      },
+    {
+      "type": "trust-icons-mobile",
+      "name": "Trust icons (mobile)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shown on mobile only. The desktop Trust icons block is hidden below 768px."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop with Confidence"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon1",
+          "label": "Image 1"
+        },
+        {
+          "type": "textarea",
+          "id": "text1",
+          "label": "Text 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon2",
+          "label": "Image 2"
+        },
+        {
+          "type": "textarea",
+          "id": "text2",
+          "label": "Text 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon3",
+          "label": "Image 3"
+        },
+        {
+          "type": "textarea",
+          "id": "text3",
+          "label": "Text 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon4",
+          "label": "Image 4"
+        },
+        {
+          "type": "textarea",
+          "id": "text4",
+          "label": "Text 4"
+        }
+      ]
+    },
+    {
+      "type": "delivery-date-check",
+      "name": "Check Delivery Details",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Check Delivery Details"
+        },
+        {
+          "type": "textarea",
+          "id": "sub_title",
+          "label": "Sub Heading",
+          "default": "<p>We're commited to getting you things <br><span>super quick.</span></p>",
+          "info": "Example: <p>We're commited to getting you things <br><span>super quick.</span></p>"
+        },
+        {
+          "type": "text",
+          "id": "input_text",
+          "label": "Placeholder Text",
+          "default": "Enter Your Pincode"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Change"
+        },
+        {
+          "type": "textarea",
+          "id": "notes",
+          "label": "Notes",
+          "default": "<p>This an estimated date, the delivery time might take longer during festive season</p>",
+          "info": "Example: <p>This an estimated date, the delivery time might take longer during festive season</p>"
+        }
+      ]
+    },
     {
       "type": "accordion",
       "name": "Collapsible tab",
@@ -3991,8 +5185,8 @@ console.log({{ product | json }}, "PDP JSON");
       "settings": [
         {
           "type": "paragraph",
-          "content": "To use a different list for each product, use a product reference list metafield."
-},
+          "content": "To use a different list for each product, use a product reference list [metafield](https://help.shopify.com/en/manual/metafields) as a dynamic source."
+        },
         {
           "type": "text",
           "id": "title",
@@ -4014,8 +5208,8 @@ console.log({{ product | json }}, "PDP JSON");
       "settings": [
         {
           "type": "paragraph",
-          "content": "To select complementary products, add the Search & Discovery app. Learn more"
-      },
+          "content": "To select complementary products, add the Search & Discovery app. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)"
+        },
         {
           "type": "text",
           "id": "heading",
@@ -4227,7 +5421,6 @@ console.log({{ product | json }}, "PDP JSON");
           "default": true
         }
       ]
-
     },
     {
       "type": "divider",

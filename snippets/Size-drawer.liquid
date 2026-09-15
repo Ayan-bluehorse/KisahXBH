@@ -6,7 +6,7 @@
     display: none;
   }
   .template-product .size-chart-drawer .tab{
-  	display: none;
+  	display none;
       width:100%;
       padding:0 20px;
   }
@@ -254,6 +254,235 @@
 
 
 
+<style>
+  /* ---- Size chart: Size Guide / How to Measure ---- */
+
+  /* Mobile only — desktop keeps the drawer's existing typography. */
+  @media only screen and (max-width: 768px) {
+
+  /* Typography: the whole drawer runs on Nunito Sans, same as the PDP.
+     Two things fight this and both need !important to beat:
+       - main.css:27  p { font-family: Generis Sans W01 Regular !important }  (site-wide)
+       - the drawer's own table th/td rules above, which ask for Generis Sans
+     Icon fonts are excluded so their glyphs still resolve. */
+  .size-chart-drawer,
+  .size-chart-drawer p,
+  .size-chart-drawer h1,
+  .size-chart-drawer h2,
+  .size-chart-drawer h3,
+  .size-chart-drawer h4,
+  .size-chart-drawer h5,
+  .size-chart-drawer h6,
+  .size-chart-drawer ul,
+  .size-chart-drawer li,
+  .size-chart-drawer div,
+  .size-chart-drawer span:not([class*="icon"]):not([class*="wlh-"]),
+  .size-chart-drawer a,
+  .size-chart-drawer button,
+  .size-chart-drawer summary,
+  .size-chart-drawer table,
+  .size-chart-drawer th,
+  .size-chart-drawer td {
+    font-family: "Nunito Sans", sans-serif !important;
+  }
+
+  /* "How to Measure" list — the one panel that never got the PDP type scale,
+     so it inherited the site defaults (Generis for <p>, theme heading for <h3>). */
+  .size-chart-drawer .disclosure__content h3 {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 20px !important;
+    color: #111 !important;
+  }
+  .size-chart-drawer .disclosure__content p {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    color: #222 !important;
+  }
+  .size-chart-drawer .disclosure__title p {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 22px !important;
+    color: #000 !important;
+  }
+
+  } /* end mobile-only typography */
+
+  .size-chart-drawer .sc-help {
+    display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+    margin: 0 0 18px; padding: 4px 0;
+    border: 0; background: transparent;
+  }
+  .size-chart-drawer .sc-help__link { white-space: nowrap; }
+  .size-chart-drawer .sc-help__badge {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: 36px; height: 36px; border-radius: 50%; background: #FBF1DC;
+  }
+  .size-chart-drawer .sc-help__icon { width: 21px; height: 21px; }
+  .size-chart-drawer .sc-help__icon--img { object-fit: contain; border-radius: 50%; }
+  /* 16px is the spec, but at 375px the two strings alone need 297 of 307px.
+     clamp holds 16px wherever it fits and shrinks only to keep one line. */
+  .size-chart-drawer .sc-help__text {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: clamp(12px, 3.8vw, 16px) !important; font-weight: 700 !important;
+    line-height: 22px; color: #000; white-space: nowrap;
+  }
+  .size-chart-drawer .sc-help__link {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: clamp(12px, 3.8vw, 16px) !important; font-weight: 700 !important;
+    line-height: 22px; color: #B78A2E !important;
+    text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
+  }
+
+  /* folder tabs — the theme styles these with .template-product ... a.tab-a.active-a
+     and colour !important, so these need matching weight to win. */
+  .size-chart-drawer ul.tabs-btn-container {
+    display: flex !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
+    list-style: none;
+  }
+  .size-chart-drawer ul.tabs-btn-container li { flex: 1 1 0; min-width: 0; margin: 0; }
+  .size-chart-drawer ul.tabs-btn-container li + li { margin-left: 0; }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a {
+    position: relative;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 12px 8px !important;
+    text-align: center;
+    border: 1px solid #E9C98F !important;
+    border-radius: 10px 10px 0 0;
+    background: #FDEFD5 !important;
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 20px !important;
+    color: #111 !important;
+    text-decoration: none;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a:hover,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a:hover {
+    background: #FDEFD5 !important;
+    color: #111 !important;
+    border: 1px solid #E9C98F !important;
+    border-bottom-color: transparent !important;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a,
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a {
+    background: #FFF !important;
+    color: #111 !important;
+    border: 1px solid #E9C98F !important;
+    border-bottom-color: transparent !important;
+  }
+
+  /* uniform inner padding for the whole drawer content */
+  .template-product .size-chart-drawer,
+  .size-chart-drawer { padding: 42px 24px 32px !important; box-sizing: border-box !important; }
+  /* the theme pads .tab as well; drop it so the inset is not doubled */
+  .size-chart-drawer .tab { padding-left: 0 !important; padding-right: 0 !important; }
+
+  /* only the active panel shows (the theme rule above has a typo: "display none") */
+  .size-chart-drawer .tab { display: none; }
+  .size-chart-drawer .tab.tab-active { display: block; }
+  /* theme sets .tab width:100% AND padding:0 20px on content-box, overflowing by 40px */
+  .size-chart-drawer .tab,
+  .size-chart-drawer .sc-help,
+  .size-chart-drawer .sc-note-row,
+  .size-chart-drawer .sc-table-wrap,
+  .size-chart-drawer ul.tabs-btn-container { box-sizing: border-box !important; }
+  .size-chart-drawer .sc-note-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px;
+  }
+  .size-chart-drawer .sc-note {
+    margin: 0; font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px !important; font-weight: 500 !important; line-height: 17px !important;
+    color: #222;
+  }
+  .size-chart-drawer .sc-units {
+    display: flex; flex: none; border: 1px solid #E9C98F; border-radius: 8px; overflow: hidden;
+  }
+  .size-chart-drawer .sc-unit {
+    padding: 7px 16px; border: 0; background: #FDF6E8; cursor: pointer;
+    font-family: "Nunito Sans", sans-serif !important; font-size: 14px; font-weight: 600; color: #8A8A8A;
+  }
+  .size-chart-drawer .sc-unit + .sc-unit { border-left: 1px solid #E9C98F; }
+  .size-chart-drawer .sc-unit.is-active { background: #FFF; color: #111; }
+
+  .size-chart-drawer .sc-table-wrap { overflow-x: auto; margin-top: 16px; }
+  /* main.css sets border-top/bottom on every th,td and 3px under th */
+  .size-chart-drawer .sc-table th,
+  .size-chart-drawer .sc-table td { border: 0 !important; }
+
+  .size-chart-drawer .sc-table {
+    width: 100%; border-collapse: collapse; table-layout: fixed;
+    font-family: "Nunito Sans", sans-serif; font-size: 13px;
+  }
+  .size-chart-drawer .sc-table th:first-child,
+  .size-chart-drawer .sc-table td:first-child { width: 24%; }
+  /* the header text is wider than an even share, so widen the column too -
+     otherwise it overflows its box and the padding has no visual effect */
+  .size-chart-drawer .sc-table th:last-child,
+  .size-chart-drawer .sc-table td:last-child { width: 22%; padding-right: 16px !important; }
+  .size-chart-drawer .sc-table thead th {
+    padding: 12px 4px !important; background: #000 !important; color: #FFF !important;
+    font-family: "Nunito Sans", sans-serif !important; font-size: 14px !important;
+    font-weight: 700 !important; line-height: 27px !important;
+    text-align: center !important; white-space: nowrap;
+  }
+  .size-chart-drawer .sc-table thead th:first-child { text-align: left; padding-left: 16px; }
+  .size-chart-drawer .sc-table tbody th {
+    padding: 11px 4px 11px 12px !important; text-align: left !important;
+    font-family: "Nunito Sans", sans-serif !important; font-size: 14px !important;
+    font-weight: 600 !important; line-height: 27px !important;
+    color: #111 !important; white-space: nowrap;
+    text-transform: none !important; background: transparent !important;
+  }
+  .size-chart-drawer .sc-table tbody td {
+    padding: 11px 4px !important; text-align: center !important;
+    font-family: "Nunito Sans", sans-serif !important; font-size: 14px !important;
+    font-weight: 600 !important; line-height: 27px !important; color: #111 !important;
+    text-transform: none !important; background: transparent !important;
+    font-variant-numeric: tabular-nums;
+  }
+  /* stripe the row and its cells, so no cell can paint a different colour */
+  .size-chart-drawer .sc-table tbody tr:nth-child(even),
+  .size-chart-drawer .sc-table tbody tr:nth-child(even) > * { background: #F2F2F4 !important; }
+  .size-chart-drawer .sc-table tbody tr:nth-child(odd),
+  .size-chart-drawer .sc-table tbody tr:nth-child(odd) > * { background: #FFF !important; }
+  .size-chart-drawer .sc-std { display: block; font-size: 11px; font-weight: 400; color: #777; }
+
+  /* title removed by design; the close button stays in this header */
+  .size-chart-drawer .size-chart-heading h2 { display: none !important; }
+  .size-chart-drawer .size_drawer__close-btn { display: none !important; }
+
+  @media only screen and (max-width: 430px) {
+    .size-chart-drawer .sc-help { gap: 7px; padding: 4px 0; }
+    /* largest that still keeps the line unbroken at 375px */
+    .size-chart-drawer .sc-help__badge { width: 30px; height: 30px; }
+    .size-chart-drawer .sc-help__icon { width: 18px; height: 18px; }
+    /* size is fixed by spec at 16px; only the badge scales down */
+    /* .sc-note size is fixed by spec at 14px */
+    .size-chart-drawer .sc-unit { padding: 6px 12px; font-size: 13px; }
+    .template-product .size-chart-drawer,
+    .size-chart-drawer { padding: 34px 18px 26px !important; }
+    .size-chart-drawer .sc-table { font-size: 12px; }
+    .size-chart-drawer .sc-table th:first-child,
+    .size-chart-drawer .sc-table td:first-child { width: 19%; }
+    /* last resort: let a long header wrap rather than overflow */
+    .size-chart-drawer .sc-table thead th { padding: 12px 1px !important; }
+    .size-chart-drawer .sc-table tbody td { padding: 11px 1px !important; }
+    .size-chart-drawer .sc-table tbody th { padding-left: 6px !important; padding-right: 1px !important; }
+    /* thead size is fixed by spec at 14px */
+    /* body cell size is fixed by spec at 14px */
+  }
+</style>
+
 <div class="size-chart-drawer">
   <div class="size-chart-heading">
     <h2>Kisah Size Chart</h2>
@@ -302,80 +531,82 @@
   {% endif %}
 {% endfor %}
 
-<ul class="tabs-btn-container">
-  <li>
-    <a href="#" class="tab-a {% if has_kid %}active-a{% endif %}" data-id="tab1">
-      Kid's Sizes
-    </a>
-  </li>
+{%- comment -%} Size chart: Size Guide + How to Measure tabs {%- endcomment -%}
+{%- assign sc_wa = section.settings.sizechart_help_whatsapp | default: shop.phone | remove: " " | remove: "+" | remove: "-" -%}
+<div class="sc-help">
+  <span class="sc-help__badge" aria-hidden="true">
+    {%- if section.settings.sizechart_help_icon != blank -%}
+      <img class="sc-help__icon sc-help__icon--img" width="21" height="21" loading="lazy"
+           src="{{ section.settings.sizechart_help_icon | image_url: width: 84 }}" alt="">
+    {%- else -%}
+    <svg class="sc-help__icon" viewBox="0 0 32 32" fill="none">
+    <path d="M16.02 4.5a11.4 11.4 0 0 0-9.77 17.3L4.8 27.2l5.55-1.42A11.4 11.4 0 1 0 16.02 4.5Z" fill="#C8912F"/>
+    <path d="M21.3 18.6c-.29-.15-1.72-.85-1.99-.94-.26-.1-.46-.15-.65.14-.19.29-.74.94-.91 1.13-.17.19-.34.22-.62.07-.29-.14-1.23-.45-2.34-1.44-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.59.13-.13.29-.34.43-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.89-2.15-.23-.56-.47-.49-.65-.5h-.55c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38 0 1.4 1.02 2.76 1.17 2.95.14.19 2.01 3.07 4.88 4.31.68.29 1.21.47 1.63.6.68.22 1.31.19 1.8.11.55-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.19-.55-.34Z" fill="#fff"/>
+    </svg>
+    {%- endif -%}
+  </span>
+  <span class="sc-help__text">Want help with sizing?</span>
+  {%- if sc_wa != blank -%}
+    <a class="sc-help__link" href="https://wa.me/{{ sc_wa }}?text={{ 'Hi, I need help choosing my size.' | url_encode }}" target="_blank" rel="noopener">Talk to an Expert</a>
+  {%- else -%}
+    <a class="sc-help__link" href="{{ routes.root_url }}pages/contact">Talk to an Expert</a>
+  {%- endif -%}
+</div>
 
-  <li>
-    <a href="#" class="tab-a {% unless has_kid %}active-a{% endunless %}" data-id="tab2">
-      Men's Sizes
-    </a>
-  </li>
+<ul class="tabs-btn-container">
+  <li><a href="#" class="tab-a active-a" data-id="tab1">Size Guide</a></li>
+  <li><a href="#" class="tab-a" data-id="tab2">How to Measure</a></li>
 </ul>
 
-  <div class="tab {% if has_kid %}active-a tab-active{% endif %} " data-id="tab1">
-    <div class="size-chart-table">
-      <table>
+<div class="tab active-a tab-active" data-id="tab1">
+  <div class="sc-note-row">
+    <p class="sc-note">Kisah size is same as standard size</p>
+    <div class="sc-units" role="group" aria-label="Units">
+      <button type="button" class="sc-unit is-active" data-sc-unit="in">in</button>
+      <button type="button" class="sc-unit" data-sc-unit="cm">cm</button>
+    </div>
+  </div>
+
+  <div class="size-chart-table sc-table-wrap">
+    {%- if has_kid -%}
+      <table class="sc-table">
         <thead>
-          <tr>
-            <th colspan="7" class="top-heading">To Fit Body Measurements</th>
-          </tr>
-          <tr>
-            <th>SIZE</th>
-            <th>STANDARD SIZE</th>
-            <th>CHEST</th>
-            <th>WAIST</th>
-            <th>SHOULDER</th>
-            <th>HIP</th>
-          </tr>
+          <tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hip</th><th>Shoulder</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>4</td>
-            <td>3-4 YEARS</td>
-            <td>22</td>
-            <td>21</td>
-            <td>10.5</td>
-            <td>24</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>5-6 YEARS</td>
-            <td>25</td>
-            <td>23</td>
-            <td>11</td>
-            <td>26</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>7-8 YEARS</td>
-            <td>27</td>
-            <td>26</td>
-            <td>11.5</td>
-            <td>29</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>9-10 YEARS</td>
-            <td>30</td>
-            <td>28</td>
-            <td>12</td>
-            <td>31</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>11-12 YEARS</td>
-            <td>32</td>
-            <td>31</td>
-            <td>12.5</td>
-            <td>34</td>
-          </tr>
+            <tr><th scope="row">4<span class="sc-std">3-4 YEARS</span></th><td data-in="22">22</td><td data-in="21">21</td><td data-in="24">24</td><td data-in="10.5">10.5</td></tr>
+            <tr><th scope="row">6<span class="sc-std">5-6 YEARS</span></th><td data-in="25">25</td><td data-in="23">23</td><td data-in="26">26</td><td data-in="11">11</td></tr>
+            <tr><th scope="row">8<span class="sc-std">7-8 YEARS</span></th><td data-in="27">27</td><td data-in="26">26</td><td data-in="29">29</td><td data-in="11.5">11.5</td></tr>
+            <tr><th scope="row">10<span class="sc-std">9-10 YEARS</span></th><td data-in="30">30</td><td data-in="28">28</td><td data-in="31">31</td><td data-in="12">12</td></tr>
+            <tr><th scope="row">12<span class="sc-std">11-12 YEARS</span></th><td data-in="32">32</td><td data-in="31">31</td><td data-in="34">34</td><td data-in="12.5">12.5</td></tr>
         </tbody>
       </table>
-    </div>
+    {%- else -%}
+      <table class="sc-table">
+        <thead>
+          <tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hip</th><th>Shoulder</th></tr>
+        </thead>
+        <tbody>
+            <tr><th scope="row">XS-36</th><td data-in="36">36</td><td data-in="34">34</td><td data-in="38">38</td><td data-in="16.5">16.5</td></tr>
+            <tr><th scope="row">S-38</th><td data-in="38">38</td><td data-in="36">36</td><td data-in="40">40</td><td data-in="17">17</td></tr>
+            <tr><th scope="row">M-40</th><td data-in="40">40</td><td data-in="38">38</td><td data-in="42">42</td><td data-in="17.5">17.5</td></tr>
+            <tr><th scope="row">L-42</th><td data-in="42">42</td><td data-in="40">40</td><td data-in="44">44</td><td data-in="18">18</td></tr>
+            <tr><th scope="row">XL-44</th><td data-in="44">44</td><td data-in="42">42</td><td data-in="46">46</td><td data-in="18.5">18.5</td></tr>
+            <tr><th scope="row">XXL-46</th><td data-in="46">46</td><td data-in="44">44</td><td data-in="48">48</td><td data-in="19">19</td></tr>
+            <tr><th scope="row">3XL-48</th><td data-in="48">48</td><td data-in="46">46</td><td data-in="50">50</td><td data-in="19.5">19.5</td></tr>
+            <tr><th scope="row">4XL-50</th><td data-in="50">50</td><td data-in="48">48</td><td data-in="52">52</td><td data-in="20">20</td></tr>
+            <tr><th scope="row">5XL-52</th><td data-in="52">52</td><td data-in="50">50</td><td data-in="54">54</td><td data-in="20.5">20.5</td></tr>
+            <tr><th scope="row">6XL-54</th><td data-in="54">54</td><td data-in="52">52</td><td data-in="56">56</td><td data-in="21">21</td></tr>
+            <tr><th scope="row">7XL-56</th><td data-in="56">56</td><td data-in="54">54</td><td data-in="5580">5580</td><td data-in="21.5">21.5</td></tr>
+        </tbody>
+      </table>
+    {%- endif -%}
+  </div>
+
+</div>
+
+<div class="tab" data-id="tab2">
+  {%- if has_kid -%}
    <div class="overall-content-wraping">
     <div class="size-chart-accordion">
       <details-disclosure>
@@ -447,118 +678,7 @@
       </details-disclosure>
     </div>
   </div>
-
-  </div>
-  <!-- end of tab one -->
-
-  <div class="tab {% unless has_kid %}active-a tab-active{% endunless %} " data-id="tab2">
-    <div class="size-chart-table">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="6" class="top-heading">To Fit Body Measurements</th>
-          </tr>
-          <tr>
-            <th>KISAH SIZE</th>
-            <th>STANDARD SIZE</th>
-            <th>CHEST</th>
-            <th>WAIST</th>
-            <th>HIP</th>
-            <th>SHOULDER</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>36</td>
-            <td>XS</td>
-            <td>36</td>
-            <td>34</td>
-            <td>38</td>
-            <td>16.5</td>
-          </tr>
-          <tr>
-            <td>38</td>
-            <td>S</td>
-            <td>38</td>
-            <td>36</td>
-            <td>40</td>
-            <td>17</td>
-          </tr>
-          <tr>
-            <td>40</td>
-            <td>M</td>
-            <td>40</td>
-            <td>38</td>
-            <td>42</td>
-            <td>17.5</td>
-          </tr>
-          <tr>
-            <td>42</td>
-            <td>L</td>
-            <td>42</td>
-            <td>40</td>
-            <td>44</td>
-             <td>18</td>
-          </tr>
-          <tr>
-            <td>44</td>
-            <td>XL</td>
-            <td>44</td>
-            <td>42</td>
-            <td>46</td>
-            <td>18.5</td>
-          </tr>
-          <tr>
-            <td>46</td>
-            <td>XXL</td>
-            <td>46</td>
-            <td>44</td>
-            <td>48</td>
-            <td>19</td>
-          </tr>
-          <tr>
-            <td>48</td>
-            <td>3XL</td>
-            <td>48</td>
-            <td>46</td>
-            <td>50</td>
-            <td>19.5</td>
-          </tr>
-          <tr>
-            <td>50</td>
-            <td>4XL</td>
-            <td>50</td>
-            <td>48</td>
-            <td>52</td>
-             <td>20</td>
-          </tr>
-          <tr>
-            <td>52</td>
-            <td>5XL</td>
-            <td>52</td>
-            <td>50</td>
-            <td>54</td>
-            <td>20.5</td>
-          </tr>
-          <tr>
-            <td>54</td>
-            <td>6XL</td>
-            <td>54</td>
-            <td>52</td>
-            <td>56</td>
-            <td>21</td>
-          </tr>
-          <tr>
-            <td>56</td>
-            <td>7XL</td>
-            <td>56</td>
-            <td>54</td>
-            <td>58</td>
-            <td>21.5</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  {%- else -%}
 <div class="overall-content-wraping">
     <div class="size-chart-accordion">
       <details-disclosure>
@@ -616,8 +736,8 @@
       </details-disclosure>
     </div>
   </div>
-    
-  </div>
+  {%- endif -%}
+</div>
   <!-- end of tab two -->
 
   
@@ -633,6 +753,25 @@
         $(".tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
         $(".tab-a").removeClass('active-a');
         $(this).parent().find(".tab-a").addClass('active-a');
+        return false;
        });
+
+      // in/cm toggle: cells carry inches in data-in
+      function kisahApplyUnit(unit) {
+        $('.sc-unit').removeClass('is-active');
+        $('.sc-unit[data-sc-unit="' + unit + '"]').addClass('is-active');
+        $('.sc-table td[data-in]').each(function () {
+          var inches = parseFloat($(this).attr('data-in'));
+          if (isNaN(inches)) return;
+          $(this).text(unit === 'cm' ? Math.round(inches * 2.54 * 10) / 10 : inches);
+        });
+      }
+
+      $(document).on('click', '.sc-unit', function () {
+        kisahApplyUnit($(this).data('sc-unit'));
+      });
+
+      // cm is the default, so convert the inch values on load
+      kisahApplyUnit($('.sc-unit.is-active').data('sc-unit') || 'in');
   });
 </script>
