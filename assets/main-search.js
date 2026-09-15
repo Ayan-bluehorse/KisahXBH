@@ -215,7 +215,7 @@ const MainSearch = class extends HTMLElement {
               .then((responseText) => {
                 let resultsList = parseGridFromHtml(responseText);
 
-                // If pure number (e.g. 0637) returned no products for KA-, try KK- (kids) fallback
+                // 1. If pure number (e.g. 0637) returned no products for KA-, try KK- (kids) fallback
                 if (!gridHasBlocks(resultsList) && smartSku.isPureNumber) {
                   return fetchSearchHtml(`kk-${smartSku.rawNumber}`)
                     .then((kkText) => {
@@ -229,6 +229,38 @@ const MainSearch = class extends HTMLElement {
                     })
                     .catch(() => resultsList);
                 }
+
+                // 2. If multi-hyphen SKU (e.g. KA-1258-5588-T301) returned no products, try space-separated tokens
+                if (!gridHasBlocks(resultsList) && queryToUse.includes('-')) {
+                  const spaceSeparated = queryToUse.replace(/-/g, ' ');
+                  return fetchSearchHtml(spaceSeparated)
+                    .then((spaceText) => {
+                      const spaceGrid = parseGridFromHtml(spaceText);
+                      if (gridHasBlocks(spaceGrid)) {
+                        linkURL.searchParams.set('q', spaceSeparated);
+                        runGridIntoUi(spaceGrid);
+                        return null;
+                      }
+
+                      // Try stripped prefix without leading KA- (e.g. 1258-5588-T301)
+                      const withoutPrefix = queryToUse.replace(/^k[ak]-/i, '');
+                      if (withoutPrefix !== queryToUse) {
+                        return fetchSearchHtml(withoutPrefix).then((wpText) => {
+                          const wpGrid = parseGridFromHtml(wpText);
+                          if (gridHasBlocks(wpGrid)) {
+                            linkURL.searchParams.set('q', withoutPrefix);
+                            runGridIntoUi(wpGrid);
+                            return null;
+                          }
+                          return resultsList;
+                        });
+                      }
+
+                      return resultsList;
+                    })
+                    .catch(() => resultsList);
+                }
+
                 return resultsList;
               })
               .then((resultsList) => {
