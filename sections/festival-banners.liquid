@@ -1,0 +1,194 @@
+<div class="container">
+<div class="max-container">
+<div class="festival-banner">
+  {%- if section.settings.head != blank -%}
+  <h2>{{ section.settings.head }}</h2>
+  {% endif %}
+  <div class="festiver-banner-container">
+    {% for block in section.blocks %}
+    <div class="slick-slide"> 
+      {%- if block.settings.link != blank -%}
+      <a href="{{ block.settings.link }}">
+      {%- endif -%}
+        
+      {%- if  block.settings.img != blank -%}
+       <img src="{{ block.settings.img | image_url}}" width="auto" height="auto" class="deskfesti-img">
+        {% if  block.settings.mobimg !=blank %}
+        <img src="{{ block.settings.mobimg | image_url }}" width="auto" height="auto" class="mobfesti-img">
+        {% endif %}
+      {%- endif -%}
+        
+      {%- if block.settings.link != blank -%}
+       </a>
+      {%- endif -%}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+</div>
+
+<style>
+#shopify-section-{{section.id}} {
+  padding-top: {{ section.settings.desk-padding-top }}px;
+  padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+  background:{{section.settings.bg-color}};
+}
+#shopify-section-{{section.id}} .max-container {
+    max-width:1000px;
+    margin:0 auto;
+}
+#shopify-section-{{ section.id }} .festival-banner h2{
+    font-family: Gabarito;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 57.6px;
+    text-align: center;
+    color:{{ section.settings.head-color | default:"#201747" }};
+    text-transform: uppercase;
+}
+#shopify-section-{{section.id}} .festival-banner .mobfesti-img{
+  display:none;
+}
+#shopify-section-{{section.id}} .festival-banner img{
+   width:100%;                                                 
+}
+#shopify-section-{{section.id}} .slick-arrow{
+    display:none !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li.slick-active button:before {
+    color: #201747 !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li {
+    width: 13px !important;
+    height: 13px !important;
+    margin: 0;
+    color: #A3A3A3;
+}
+#shopify-section-{{section.id}} .slick-dots {
+    bottom: -17px;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{ section.id }} .festival-banner h2{
+     font-size: 28px;
+     line-height: 33.6px;
+}
+#shopify-section-{{section.id}} .festival-banner .deskfesti-img{
+   display:none;
+}
+
+#shopify-section-{{section.id}} .festival-banner .mobfesti-img{
+  display:block;
+}  
+}
+</style>
+
+
+
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+
+  $('#shopify-section-{{ section.id }} .festiver-banner-container').slick({
+     dots: true,  
+    infinite: false,
+    speed: 300,
+  }); 
+
+});
+</script>
+
+
+{% schema %}
+  {
+    "name": "festival banner image",
+    "settings": [
+      {
+        "type": "text",
+        "id": "head",
+         "label": "Heading"
+      },
+       {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+      
+    ],
+    "blocks": [
+      {
+        "type": "banner-image",
+         "name":"banner image",
+       "settings": [
+         {
+           "type": "image_picker",
+            "id": "img",
+             "label": "Desk Banner image"
+         },
+         {
+           "type": "image_picker",
+            "id": "mobimg",
+             "label": "Mobile banner image"
+         },
+         {
+           "type": "url",
+            "id": "link",
+           "label": "Banner link"
+         }
+       ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "festival banner image"
+      }
+    ]
+  }
+{% endschema %}

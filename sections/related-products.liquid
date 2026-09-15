@@ -1,0 +1,331 @@
+<style>
+.related-products .fully-spaced-row{
+   margin-top:20px;
+   margin-bottom:20px;
+}
+.related-products .hometitle{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 26px;
+    text-align: center;
+    color: #000000;
+    margin-bottom:17px;
+}
+.related-products .product-grid--per-row-4{
+  column-gap:10px;
+}
+.related-products .product-block__detail .product-block__title{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    opacity: 0.8;
+    margin-bottom:5px;
+}
+.related-products .product-block__detail .price__default{
+    display:block;
+    margin-bottom:3px;
+}
+.related-products .product-block__detail .price__current{
+    order:2;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: rgba(52, 52, 52, 0.83);
+    margin:0;
+}
+.related-products .product-block__detail .price__was{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: rgba(52, 52, 52, 0.83);
+    text-decoration-color: #FF0000;
+    order:1;
+    margin:0;
+}
+#shopify-section-{{ section.id }} .price .product-label-list .product-label-container{
+     display:block;
+}
+#shopify-section-{{ section.id }} .price--on-sale{
+     gap:5px;
+}
+#shopify-section-{{ section.id }} .price .price__default{
+     display:flex;
+     align-items:center;
+     gap:9px;
+}
+#shopify-section-{{ section.id }} .price .product-label-list{
+    order:2;
+}
+#shopify-section-{{ section.id }} .product-label-container{
+    position:unset;
+}
+#shopify-section-{{ section.id }} .quickbuy-container .product-label-container{
+    position:unset;
+    display:none;
+}
+/* .related-products .product-price--block .product-label-container .product-label>span {
+    background:unset;
+    font-family: Generis Sans W01 Regular;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    display: block;
+    color: #000000;
+    opacity: 0.8;
+    padding:0;
+
+} */
+.related-products .image-label-wrap .collection-tag-label{
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background: linear-gradient(90deg, #A68811 -15.48%, #C1A01E 49.84%, #836900 116.67%);
+    border-radius: 50px 0px 0px 50px;
+}
+.related-products .image-label-wrap .collection-tag-label span{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    opacity: 0.8;
+    padding: 3px 5px 4px 12px;
+    display: block;
+    
+}
+.related-products .btn--large{
+    box-shadow: 0 4px 8px 3px #00000026, 0 1px 3px #0000004d; 
+    border-radius: 50px;
+    color: #fff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    font-family: Generis Sans W01 Bold;
+    text-transform: capitalize;
+    min-height: 40px;
+    padding: 0 25px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #201747;
+    width: 100%;
+    margin: 12px 0;
+}
+/* grid same height */
+/* .related-products .product-grid{
+   align-items: stretch;
+}
+.related-products .product-block{
+   height: 100%;
+}
+.related-products .product-block .block-inner{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+.related-products .block-inner-inner {
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+}
+.related-products .product-block .image-cont{
+    height: 100%;
+    overflow:unset;
+    margin:unset;
+}
+.related-products .product-grid .product-block__detail{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content:space-between;
+}
+.related-products .product-block .product-block__detail>.inner{
+    width:100%;
+    margin:unset;
+} */
+@media screen and (max-width:768px){
+.related-products .product-block__detail .product-block__title{
+    font-size: 16px;
+    line-height: 18px;
+}
+.related-products .product-block__detail .price__current{
+    font-size: 16px;
+    line-height: 18px;
+}
+.related-products .product-block__detail .price__was{
+    font-size: 16px;
+    line-height: 18px; 
+}
+}
+@media screen and (max-width:420px){
+.related-products .product-block__detail .price__current{
+    font-size: 13px;
+    line-height: 15px;
+}
+.related-products .product-block__detail .price__was{
+    font-size: 13px;
+    line-height: 15px; 
+}
+.related-products .image-label-wrap .collection-tag-label span{
+  padding: 3px 3px 3px 9px;
+  font-size:9px;
+}
+/* .related-products .product-price--block .product-label-container .product-label>span{
+    font-size: 13px;
+    line-height: 15px;
+} */
+.related-products .product-block__detail .product-block__title {
+    margin:0;
+}
+}
+@media screen and (max-width:340px){
+.related-products .product-block__detail .price__default{
+    margin:0;
+}
+/* .related-products .product-block__detail .price__current{
+    font-size: 11px;
+    line-height: 13px;
+}
+.related-products .product-block__detail .price__was{
+    font-size: 11px;
+    line-height: 13px; 
+}  */
+/* .related-products .product-price--block .product-label-container .product-label>span{
+    font-size: 11px;
+    line-height: 13px;
+} */
+.related-products .product-block__detail .product-block__title {
+    font-size: 14px;
+    line-height: 16px;
+    margin:0;
+}
+}
+</style>
+
+<div class="related-products"
+    data-section-id="{{ section.id }}"
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&limit={{ section.settings.grid }}&product_id={{ product.id }}"
+    data-cc-animate>
+
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <div class="container{% if settings.use_fullwidth_layout %} container--no-max{% endif %} fully-spaced-row">
+      <h4 class="align-center hometitle">{{ section.settings.title }}</h4>
+
+      <div class="collection-listing related-collection">
+        <div class="product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}">
+          {%- liquid
+            if settings.prod_thumb_shape == 'portrait-23'
+              assign chosen_aspect_ratio = 0.67
+            elsif settings.prod_thumb_shape == 'portrait-45'
+              assign chosen_aspect_ratio = 0.8
+            elsif settings.prod_thumb_shape == 'square'
+              assign chosen_aspect_ratio = 1.0
+            elsif settings.prod_thumb_shape == 'landscape-54'
+              assign chosen_aspect_ratio = 1.25
+            elsif settings.prod_thumb_shape == 'landscape-32'
+              assign chosen_aspect_ratio = 1.50
+            elsif settings.prod_thumb_shape == 'tallest'
+              assign chosen_aspect_ratio = 99
+              for product in recommendations.products
+                if product.featured_media.preview_image.aspect_ratio < chosen_aspect_ratio
+                  assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                endif
+              endfor
+            else
+              assign chosen_aspect_ratio = 0
+              for product in recommendations.products
+                if product.featured_media.preview_image.aspect_ratio > chosen_aspect_ratio
+                  assign chosen_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                endif
+              endfor
+            endif
+          -%}
+          {%- for product in recommendations.products -%}
+            {% render 'product-block', product: product, custom_aspect_ratio: chosen_aspect_ratio %}
+          {%- endfor -%}
+        </div>
+      </div>
+
+    </div>
+  {% endif %}
+</div>
+
+
+{% javascript %}
+var loadProductRecommendationsIntoSection = function() {
+  // Look for an element with class 'related-products'
+  var productRecommendationsSection = document.querySelector(".related-products");
+  if (productRecommendationsSection === null) { return; }
+  // Create request and submit it using Ajax
+  var request = new XMLHttpRequest();
+  request.open("GET", productRecommendationsSection.dataset.url);
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 300) {
+      var container = document.createElement("div");
+      container.innerHTML = request.response;
+      productRecommendationsSection.innerHTML = container.querySelector(".related-products").innerHTML;
+    }
+  };
+  request.send();
+};
+// fetch when section reloads in editor
+document.addEventListener("shopify:section:load", function(event) {
+  if (document.querySelector('[data-section-id="' + event.detail.sectionId + '"].related-products')) {
+    loadProductRecommendationsIntoSection();
+  }
+});
+// Fetching the recommendations on page load
+loadProductRecommendationsIntoSection();
+{% endjavascript %}
+
+
+{% schema %}
+{
+  "name": "Related products",
+  "class": "section-related-products",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dynamic recommendations use order and product information to change and improve over time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show product vendor",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "label": "Maximum products to show",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

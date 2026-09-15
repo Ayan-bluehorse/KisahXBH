@@ -1,0 +1,337 @@
+<div class="slide-images container">
+  <div class="slide-img-cont-pad">
+      <div class="slide-sec-head">
+        <h2>{{ section.settings.head }}</h2>
+        {% if section.settings.sub_head != blank %}
+        <p>{{ section.settings.sub_head }}</p>
+        {% endif %}
+      </div>
+      <div class="side-img-part side-img-part-slider ">
+        {% for block in section.blocks %}
+          <div class="imges-part-wrap slick-slide">
+          {% if block.settings.link != blank  %}
+           <a href="{{ block.settings.link }}">
+            {% endif %}
+              {% if block.settings.img != blank  %}
+               <img src="{{ block.settings.img | image_url }}" width="auto" height="auto">
+               {% endif %} 
+              {% if block.settings.link != blank  %} 
+              </a>
+              {% endif %}  
+               {% if  block.settings.text != blank %}
+               <div class="image-day-text-container">
+                <span>{{ block.settings.text }}</span>
+              </div>
+              {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+
+<style>
+#shopify-section-{{section.id}}{
+    padding-top: {{ section.settings.desk-padding-top }}px;
+    padding-bottom: {{ section.settings.desk-padding-bottom }}px; 
+    background:{{section.settings.bg-color}};
+}
+#shopify-section-{{section.id}} .slide-images{
+      margin:0 auto;
+}
+/* #shopify-section-{{section.id}} .slide-images .slide-img-cont-pad{
+      padding:0 25px;
+}  */
+#shopify-section-{{section.id}} .slide-images .slide-sec-head{
+      text-align:center;
+}
+#shopify-section-{{section.id}} .slide-images .slide-sec-head h2{
+      font-family: Gabarito;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 57.6px;
+      text-align: center;
+      text-transform: uppercase;
+      color:{{ section.settings.head-color | default:"#201747" }};
+
+}
+#shopify-section-{{section.id}} .slide-images .side-img-part .imges-part-wrap{
+       margin-right:8px
+}  
+#shopify-section-{{section.id}} .slick-dotted.slick-slider{
+      margin-bottom:10px;
+}
+#shopify-section-{{section.id}} .slick-dots{
+       display:none !important;
+}
+#shopify-section-{{section.id}} .slick-dots li button{
+       display:none;
+}
+/* #shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+   
+} */
+#shopify-section-{{section.id}} .slide-img-cont-pad .image-day-text-container span{
+        text-align:center;
+        font-size:16px;
+        line-height:18px;
+        margin: 0;
+        padding: 8px 0;
+        display:block;
+        font-family: 'Generis Sans W01 Bold';
+}
+#shopify-section-{{section.id}} .slick-prev, .slick-next {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%);
+  z-index: 12; 
+}
+#shopify-section-{{section.id}} .slick-arrow svg{
+  text-align: center;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+  background: #fff;
+  padding: 5px;
+  border-radius: 50px;
+  width: 35px;
+  height: 35px; 
+}
+#shopify-section-{{section.id}} .slick-prev {
+  left: -19px;
+ 
+}
+#shopify-section-{{section.id}} .slick-prev svg{
+   transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .slick-next {
+  right: -10px; 
+}
+#shopify-section-{{section.id}} .slick-prev:before,#shopify-section-{{section.id}} .slick-next:before{
+    content: ' ';
+}
+
+@media screen and (max-width:767px){
+#shopify-section-{{section.id}}{
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px; 
+    }
+#shopify-section-{{section.id}} .slide-images .slide-sec-head h2{
+        font-size: 28px;
+        line-height: 33.6px;
+}
+#shopify-section-{{section.id}} .slick-next.slick-arrow{
+     right: -3px;
+     z-index:999;
+}
+#shopify-section-{{section.id}} .slick-prev.slick-arrow{
+    left: -12px;
+    z-index:999;
+}
+#shopify-section-{{section.id}} .slide-img-cont-pad .image-day-text-container span{
+    font-size:14px;
+    line-height:16px;
+}
+#shopify-section-{{section.id}} .slick-arrow svg{
+  width: 30px;
+  height: 30px; 
+  padding: 4px;
+}
+#shopify-section-{{section.id}} .slick-next {
+  right: 0; 
+}
+}
+</style>
+
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+
+  
+  $('#shopify-section-{{ section.id }} .side-img-part').slick({
+    dots: true,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4.38,
+    slidesToScroll: 2,
+   prevArrow: '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="27" viewBox="0 0 32 27" fill="none"><g><path d="M9.33313 26.9997C9.15765 27.0005 8.9837 26.9722 8.82125 26.9162C8.6588 26.8602 8.51105 26.7777 8.38646 26.6734C8.26149 26.5689 8.1623 26.4444 8.09461 26.3073C8.02692 26.1702 7.99207 26.0232 7.99207 25.8747C7.99207 25.7262 8.02692 25.5791 8.09461 25.442C8.1623 25.305 8.26149 25.1805 8.38646 25.0759L19.2798 15.8847C20.0289 15.2519 20.4496 14.3941 20.4496 13.4997C20.4496 12.6053 20.0289 11.7475 19.2798 11.1147L8.38646 1.92347C8.13539 1.71163 7.99434 1.42431 7.99434 1.12472C7.99434 0.82513 8.13539 0.537811 8.38646 0.32597C8.63753 0.114128 8.97806 -0.00488281 9.33313 -0.00488281C9.6882 -0.00488281 10.0287 0.114128 10.2798 0.32597L21.1731 9.51721C21.794 10.0397 22.2865 10.6604 22.6226 11.3438C22.9587 12.0272 23.1317 12.7598 23.1317 13.4997C23.1317 14.2396 22.9587 14.9722 22.6226 15.6556C22.2865 16.339 21.794 16.9597 21.1731 17.4822L10.2798 26.6734C10.1552 26.7777 10.0075 26.8602 9.84501 26.9162C9.68256 26.9722 9.50861 27.0005 9.33313 26.9997Z" fill="black" fill-opacity="0.83"/></g></svg></button>',
+   nextArrow: '<button type="button" class="slick-next"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="27" viewBox="0 0 32 27" fill="none"><g><path d="M9.33313 26.9997C9.15765 27.0005 8.9837 26.9722 8.82125 26.9162C8.6588 26.8602 8.51105 26.7777 8.38646 26.6734C8.26149 26.5689 8.1623 26.4444 8.09461 26.3073C8.02692 26.1702 7.99207 26.0232 7.99207 25.8747C7.99207 25.7262 8.02692 25.5791 8.09461 25.442C8.1623 25.305 8.26149 25.1805 8.38646 25.0759L19.2798 15.8847C20.0289 15.2519 20.4496 14.3941 20.4496 13.4997C20.4496 12.6053 20.0289 11.7475 19.2798 11.1147L8.38646 1.92347C8.13539 1.71163 7.99434 1.42431 7.99434 1.12472C7.99434 0.82513 8.13539 0.537811 8.38646 0.32597C8.63753 0.114128 8.97806 -0.00488281 9.33313 -0.00488281C9.6882 -0.00488281 10.0287 0.114128 10.2798 0.32597L21.1731 9.51721C21.794 10.0397 22.2865 10.6604 22.6226 11.3438C22.9587 12.0272 23.1317 12.7598 23.1317 13.4997C23.1317 14.2396 22.9587 14.9722 22.6226 15.6556C22.2865 16.339 21.794 16.9597 21.1731 17.4822L10.2798 26.6734C10.1552 26.7777 10.0075 26.8602 9.84501 26.9162C9.68256 26.9722 9.50861 27.0005 9.33313 26.9997Z" fill="black" fill-opacity="0.83"/></g></svg></button>',
+    responsive: [
+        {
+
+          breakpoint: 1000,
+          settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              infinite: true,
+            
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }
+       
+    ]
+  });
+
+
+function updatePadding() {
+  const sideImgPart = document.querySelector('.side-img-part');
+  const categoryGrid = document.querySelector('.cp-category-grid');
+
+  if (!sideImgPart || !categoryGrid) return;
+
+  if (window.innerWidth >= 769) {
+    const left = categoryGrid.getBoundingClientRect().left;
+    sideImgPart.style.paddingLeft = left + 'px';
+  } else {
+    // Reset padding for mobile
+    sideImgPart.style.paddingLeft = '';
+  }
+}
+
+window.addEventListener('load', () => {
+  requestAnimationFrame(updatePadding);
+});
+
+window.addEventListener('resize', updatePadding);
+
+
+
+  
+
+});
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Slide images",
+    "class": "slide-image-wrapper",
+    "settings": [
+      {
+        "type": "text",
+         "id": "head",
+          "label": "Heading"
+      },
+      {
+        "type": "text",
+         "id": "sub_head",
+          "label": "Sub Heading"
+      },
+      {
+         "type": "color",
+          "id": "bg-color",
+          "label": "Background color"
+      },
+      {
+         "type": "color",
+         "id": "head-color",
+          "label": "Heading color"
+      },
+      
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+      },
+     {
+          "type": "range",
+          "id": "desk-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+     },
+    {
+          "type": "range",
+          "id": "desk-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    },
+    {
+          "type": "header",
+          "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    }
+    ],
+    "blocks": [
+       {
+        "type": "slide-images",
+         "name":"Slide images",
+          "settings": [
+          {
+            "type": "image_picker",
+             "id": "img",
+              "label": "Image"
+          },
+          {
+            "type": "url",
+             "id": "link",
+              "label": "Image link"
+          },
+          {
+            "type":"text",
+             "id": "text",
+             "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Slide images"
+      }
+    ]
+  }
+{% endschema %}

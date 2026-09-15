@@ -1,0 +1,194 @@
+<section 
+  id="shopify-section-{{ section.id }}" 
+  class="dulhe-toli-section"
+  style="background-image: url({{ section.settings.background_image | image_url }});"
+>
+  <div class="container">
+
+    <!-- Heading Image -->
+    <div class="heading-image">
+      {% if section.settings.heading_image %}
+        <img 
+          width="{{ section.settings.heading_image.width }}" height="{{ section.settings.heading_image.height }}" loading="lazy" src="{{ section.settings.heading_image | image_url: width: 1200 }}"
+          alt="Heading Image"
+          class="heading-img"
+        >
+      {% endif %}
+    </div>
+
+    <!-- Section Title -->
+    <h2 class="section-title">{{ section.settings.section_title }}</h2>
+
+    <!-- Video Grid -->
+    <div class="video-grid">
+
+     {%- unless section.settings.full_width -%}<div class="container">{%- endunless -%}
+    {%- for block in section.blocks -%}
+      {% render block %}
+    {%- endfor -%}
+  {%- unless section.settings.full_width -%}</div>{%- endunless -%}
+      
+    </div>
+
+  </div>
+</section>
+
+
+<style>
+.dulhe-toli-section {
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  padding: 28px 0 80px;
+  color: #fff;
+  text-align: center;
+}
+
+.heading-image {
+  margin-bottom: 30px;
+}
+
+.heading-img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.video-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.video-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 50%;
+  visibility: hidden;
+}
+
+.video-block:hover .video-overlay {
+  visibility: visible;
+}
+
+.play-btn {
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  background: #ff5722;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+
+.play-btn:hover {
+  background-color: #e64a19;
+}
+
+.dulhe-toli-section .container {
+    max-width: 1280px;
+}
+
+.dulhe-toli-section .container .heading-image {
+    margin-bottom: 60px;
+}
+
+.dulhe-toli-section .container .heading-image img.heading-img {
+    max-width: 555px;
+}
+
+.dulhe-toli-section .video-grid .container {
+    padding: 0;
+}
+.dulhe-toli-section .video-grid {
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+
+.dulhe-toli-section .container .heading-image img.heading-img {
+    max-width: 264px;
+}
+
+.dulhe-toli-section {
+        padding: 30px 0 38px;
+        background-position: top right;
+        background-position-y: -50px;
+        background-repeat: no-repeat;
+        background-color: #ffedca;
+}
+
+.dulhe-toli-section .container .heading-image {
+    margin-bottom: 70px;
+}
+
+  .video-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-title {
+    font-size: 36px;
+  }
+}
+
+
+</style>
+
+
+{% schema %}
+{
+  "name": "Dulhe Ki Toli",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "heading_image",
+      "label": "Heading Image"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "DULHE KI TOLI"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dulhe Ki Toli"
+    }
+  ]
+}
+{% endschema %}

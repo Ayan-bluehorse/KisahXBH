@@ -1,0 +1,78 @@
+<section class="about-mainsection about-banner-section">
+  <div class="container">
+    <div class="cp-cols-group about-bannercontent-group">
+      <div class="cp-col about-heading-group">
+        <h1>
+          {{ section.settings.heading_text | escape }}
+          <span>{{ section.settings.highlight_text | escape }}</span>
+        </h1>
+      </div>
+      <div class="cp-col about-text-group">
+        {{ section.settings.description_text }}
+      </div>
+    </div>
+    <div class="about-img-group">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url }}"
+          alt="{{ section.settings.image_alt | default: 'Banner Image' }}"
+          width="1248"
+          height="800"
+          loading="lazy"
+        />
+      {% else %}
+        <img
+          src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/about-banner-img.jpg?v=1750683403"
+          alt="Banner Image"
+          width="1248"
+          height="800"
+          loading="lazy"
+        />
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Banner Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Main Heading",
+      "default": "Bespoke artistry applied to bold statements –"
+    },
+    {
+      "type": "text",
+      "id": "highlight_text",
+      "label": "Highlighted Text",
+      "default": "this is Kisah."
+    },
+    {
+      "type": "richtext",
+      "id": "description_text",
+      "label": "Description",
+      "default": "<p>A kernel of an idea- democratizing high fashion, and making it accessible to all. Born from a legacy of bespoke artistry, Kisah was founded to break the monotony of traditional men’s ethnic wear with bold colors and experimental designs. What began as an online-first brand is now redefining occasion wear for a new generation—one that celebrates individuality and rebels against the ordinary.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Banner Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Banner Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

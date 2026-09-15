@@ -1,0 +1,431 @@
+<style>
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.desk-padding-top}}px;
+  padding-bottom:{{section.settings.desk-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .form-heading h2{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    font-family: 'Generis Sans W04 Medium';
+} 
+#shopify-section-{{section.id}} .career-form form{
+    max-width:900px;
+    margin:0 auto;
+}
+#shopify-section-{{section.id}} .career-form form input{
+    background: #FFFFFF;
+    border: 0.5px solid #201747;
+    border-radius: 10px;
+    padding:7px 0;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format{
+    display:flex;
+    margin-bottom: 25px;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .first-name_input{
+    display:flex;
+    flex-direction:column;
+    width:50%;
+}
+#shopify-section-{{section.id}} .career-form label{
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    margin-bottom:5px;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .first-name_input input{
+    max-width:85%;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .last-name_input{
+    display:flex;
+    flex-direction:column;
+    width:50%;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .last-name_input input{
+   max-width:85%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container{
+   display:flex;
+   margin-bottom:25px;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .email-container{
+   display:flex;
+   flex-direction:column;
+   width:50%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .email-container input{
+   max-width:85%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .file-container{
+   display:flex;
+   flex-direction:column;
+   width:50%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .file-container input{
+   max-width:85%;
+   padding:7px 12px;
+}
+#shopify-section-{{section.id}} .career-form .textarea_wrapper{
+   display:flex;
+   flex-direction:column;
+}
+#shopify-section-{{section.id}} .career-form .textarea_wrapper textarea{
+   max-width:93%;
+   padding:30px 0;
+}
+#shopify-section-{{section.id}} .career-form .submit-btn-container{
+   display:flex;
+   justify-content:center;
+}
+#shopify-section-{{section.id}} .career-form button.career-btn{
+    width: 165px;
+    background: #201747;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    max-width: 160px;
+    color: #fff;
+    padding: 10px;
+    margin-top:10px;
+}
+#shopify-section-{{section.id}} .thank-you-pop{
+    max-width: 500px;
+    background: #fff;
+    border-radius: 10px;
+    padding:22px 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#shopify-section-{{section.id}} .thank-you-pop .thank-close-svg {
+    float: right;
+    cursor: pointer;
+}
+#shopify-section-{{section.id}} .thank-image-container {
+    width: 80px;
+    text-align: center;
+    margin: 0 auto;
+}
+#shopify-section-{{section.id}} .thank-you-pop .thank-content-container h3{
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .thank-you-pop .content-container{
+   padding: 10px 25px;
+}
+#shopify-section-{{section.id}} .thank-you-pop .content-container p{
+   max-width: 300px;
+   text-align: center;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.mob-padding-top}}px;
+  padding-bottom:{{section.settings.mob-padding-bottom}}px;
+}
+ 
+#shopify-section-{{section.id}} .form-heading h2{
+  font-size: 20px;
+  line-height: 24px;
+}
+#shopify-section-{{section.id}} .career-form label{
+  font-size:16px;
+  line-height:18px;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format{
+  flex-direction:column;
+  gap:20px;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container{
+  flex-direction:column;
+  gap:20px;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .first-name_input{
+   width:100%;
+}
+#shopify-section-{{section.id}} .career-form .text-name-format .last-name_input{
+    width:100%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .email-container{ 
+  width:100%;
+}
+#shopify-section-{{section.id}} .career-form .email-file-container .file-container{ 
+  width:100%;
+}
+</style>
+
+
+<div class="career-form container">
+  <div class="form-heading">
+    <h2>{{ section.settings.head }}</h2>
+  </div>
+ <form method="post" action="https://script.google.com/macros/s/AKfycbzZrHAqeda3x3UqgWoIj8F5kD4idlZ4t58Xac1OtRuuJZqDYeBtIpdtFU3R2q5qCCKPZA/exec" id="career-form">
+  {% for block in section.blocks %}
+   {% case block.type %}
+    {% when 'text' %}
+     <div class="text-name-format">
+      <div class="first-name_input">
+        <label for="career_name">{{ block.settings.name }}</label>
+       <input
+          type="text"
+          autocomplete="name"
+          required
+          id="name"
+          name="First name"
+          value="" />
+       </div>
+    <div class="last-name_input">
+    <label for="career_name">{{ block.settings.last-name}}</label>
+    <input
+      type="text"
+      autocomplete="name"
+      required
+      id="lastname"
+      name="Last name"
+      value="" />
+    </div>
+    </div>
+   {% when 'email' %}
+     <div class="email-file-container">
+     <div class="email-container">
+     <label for="career-email">{{ block.settings.email-label }}</label>
+      <input
+        type="email"
+        required
+        id="contact_email"
+        class="email"
+        name="Email"
+        autocomplete="email"
+        spellcheck="false"
+        autocapitalize="off"
+        value=""/>
+     </div>
+     <div class="file-container">
+     <label>{{ block.settings.file-label }}</label>
+     <input type="file" id="career-file" name="Resume" value="upload-resume">
+     </div>
+     </div>
+     {% when 'textarea' %}
+     <div class="textarea_wrapper">
+     <label>{{ block.settings.text-area }}</label>
+     <textarea id="coverletter-content" name="coverletter">
+    </textarea>
+     </div>
+     <div class="submit-btn-container">
+          <button class="career-btn" type="submit" disabled>{{ section.settings.btn-name }}</button>
+        </div>
+  {% endcase %}
+  {% endfor %}
+ </form> 
+</div>
+
+<div class="thank-you-pop" style="display:none">
+  <div class="thank-close-svg">
+   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 15 15" fill="none"  class="close-svg">
+    <path d="M1 14.1528L14.1529 0.999885" stroke="black" stroke-linecap="round"/>
+    <path d="M1 1.15283L14.1529 14.3058" stroke="black" stroke-linecap="round"/>
+   </svg>
+    </div>
+  <div class="content-container">
+    <div class="thank-image-container">
+      <img src="{{ section.settings.img | image_url }}" width='auto' height='auto'>
+    </div>
+    <div class="thank-content-container">
+      <h3>{{ section.settings.pop-head }}</h3>
+      <p>{{ section.settings.pop-text }}</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let svg = document.querySelector('.thank-close-svg');
+  svg.addEventListener("click", ()=>{
+     document.querySelector('.thank-you-pop').style.display = "none";
+  })
+window.addEventListener("load", function() {
+  const form = document.getElementById('career-form');
+  const thankYouPop = document.querySelector('.thank-you-pop');
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = e.target.action;
+    document.querySelector('.career-btn').setAttribute("disabled", "true");
+    fetch(action, {
+      method: 'POST',
+      body: data,
+     
+    })
+    .then(response => response.json()) // Parse response as JSON
+    .then((responseJson) => {
+      console.log(responseJson, 'response from server');
+      if (responseJson.result === "success") {
+        if (thankYouPop) {
+          thankYouPop.style.display = "block";
+           document.querySelector('.career-btn').setAttribute("disabled", "false");
+        } else {
+          console.error('.thank-you-pop element not found');
+        }
+      } else {
+        console.error('Form submission failed:', responseJson);
+      }
+    })
+    .catch(error => {
+      console.error('Error submitting form:', error);
+    });
+  });
+});
+
+
+</script>
+      
+
+{% schema %}
+{
+  "name": "Career form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "head",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "btn-name",
+      "label": "Button Name"
+    },
+    {
+      "type": "header",
+      "content": "Popup content"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Thank you image"
+    },
+    {
+      "type": "text",
+      "id": "pop-head",
+      "label": "Popup Heading"
+    },
+    {
+      "type": "text",
+      "id": "pop-text",
+      "label": "Popup text"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "last-name",
+          "label": "LastName"
+        }
+      ]
+    },
+    {
+      "type": "email",
+      "name": "Email",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "email-label",
+          "label": "Email"
+        },
+        {
+          "type": "text",
+          "id": "file-label",
+          "label": "File name"
+        }
+      ]
+    },
+    {
+      "type": "textarea",
+      "name": "Textarea",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text-area",
+          "label": "Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Career form"
+    }
+  ]
+}
+{% endschema %}

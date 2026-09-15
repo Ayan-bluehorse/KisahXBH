@@ -1,0 +1,153 @@
+.section-search-template .product-grid {
+    column-gap: 15px;
+    row-gap: 0px;
+}
+
+.section-search-template .toggle-btn{
+    width:unset; 
+    height:unset;
+    padding:0;
+    border: 1px solid #00000087;
+    border-radius: 10px;
+    height: 2.6rem;
+    width: 170px;
+    padding: 2px 20px;
+    gap:10px;
+}
+.section-search-template .utility-bar__left span {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+    opacity: 0.8;
+}
+.section-search-template .utility-bar__left .btn-icon{
+    order:2;
+}
+.section-search-template #CollectionFilterForm {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+}
+.section-search-template #CollectionFilterForm .filter-group__heading {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+.section-search-template #CollectionFilterForm .filter-group {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+.section-search-template .filters__heading .filters__heading-text {
+    color: #000000;
+    Font-size: 18px;
+    text-transform: uppercase;
+    font-family: 'Generis Sans W01 Bold';
+    text-align: center;
+}
+.section-search-template #CollectionFilterForm .filter-group .filter-group__heading__text {
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+}
+.section-search-template #CollectionFilterForm .filter-group__item .filter-group__item__text {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+.section-search-template .close-container{
+    display:none;
+}
+.section-search-template .filter-group__clear-row.mob-show {
+    display: none;
+}
+.section-search-template .product-block__title {
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+.section-search-template .product-block__detail .price__current {
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+.section-search-template .product-block__detail .price__was {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: rgba(52, 52, 52, 0.69);
+    opacity: 0.8;
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 0, 0, 1);
+}
+.section-search-template .utility-bar__centre .utility-bar__item{
+   font-family: 'Generis Sans W01 Regular';
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 18px;
+}
+.section-search-template .toggle-btn .toggle-btn__chevron svg{
+   transform: rotate(90deg);
+} 
+.section-search-template .toggle-btn--revealed-desktop .toggle-btn__chevron svg{
+    transform: rotate(180deg);
+}
+.template-search .product-grid .block-inner-inner .product-label-container{
+  position:unset;
+}
+@media screen and (max-width:768px){
+.section-search-template .toggle-btn .toggle-btn__chevron {
+        display:block;
+}
+.section-search-template .utility-bar__item.desktop-only{
+      display:none;
+}
+.section-search-template .product-grid {
+    column-gap: 8px;
+}
+.toggle-btn--revealed-desktop .toggle-btn__chevron {
+        transform: rotate(90deg);
+}
+.utility-bar__centre .utility-bar__item{
+    font-size: 14px;
+    line-height: 16px;
+}
+.section-search-template .toggle-btn {
+    width: 130px;
+}
+.section-search-template .utility-bar__left span {
+     font-size: 20px;
+    line-height: 22px;
+}
+.section-search-template .product-block__title {
+    font-size: 14px;
+    line-height: 16px;
+    padding-right: 30px;
+}
+.section-search-template .product-block__detail .price__current {
+    font-size: 14px;
+    line-height: 16px;
+    
+}
+.section-search-template .product-block__detail .price__was {
+    font-size: 14px;
+    line-height: 16px;
+    
+}
+}

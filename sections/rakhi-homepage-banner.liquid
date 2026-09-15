@@ -1,0 +1,84 @@
+{%- style -%}
+  .rakhi-hp-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: center;
+    background: linear-gradient(#e7a06c, #684032);
+    color: white;
+    min-height: 500px;
+    position: relative;
+    padding-bottom: 40px;
+  }
+  .rakhi-hp-content {
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    width: 100%;
+    padding: 40px 20px;
+  }
+  .rakhi-hp-content h2 {
+    font-size: 42px;
+    font-family: Georgia, serif;
+    margin: 8px 0;
+    color: #fff;
+  }
+  .rakhi-hp-content small {
+    letter-spacing: 2px;
+    font-size: 12px;
+  }
+  .rakhi-hp-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .rakhi-hp-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .rakhi-btn {
+    padding: 12px 24px;
+    border: 1px solid white;
+    background: white;
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  .rakhi-btn.alt {
+    background: transparent;
+    color: white;
+  }
+{%- endstyle -%}
+
+<div class="rakhi-hp-banner" {% if section.settings.image != blank %}style="background: url({{ section.settings.image | image_url }}) center/cover no-repeat;"{% endif %}>
+  <div class="rakhi-hp-content">
+    <small>THE ART OF GIFTING</small>
+    <h2>The perfect kurta.<br>The perfect gift.</h2>
+    <p>Premium occasionwear, beautifully gift-ready.</p>
+    <div class="rakhi-hp-actions">
+      <a href="/pages/rakhi-gifting" class="rakhi-btn">SHOP KURTAS</a>
+      <a href="/pages/rakhi-gifting" class="rakhi-btn alt">MAKE IT A GIFT</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Rakhi Homepage Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rakhi Homepage Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,451 @@
+{% if template.name == 'collection' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": {{ collection.title | json }},
+    "description": {{ collection.description | strip_html | json }},
+    "url": {{ request.origin | append: collection.url | json }},
+    "numberOfItems": {{ collection.products.size | json }},
+    "itemListElement": [
+      {%- for product in collection.products -%}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "name": {{ product.title | json }},
+          "url": {{ request.origin | append: product.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ request.origin | json }}
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": {{ request.origin | append: collection.url | json }}
+      }
+    ]
+  }
+  </script>
+{% endif %}
+
+
+
+{% if template.name == 'article' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
+  "image": {{ article.image | image_url: width: 1200 | prepend: "https:" | json }},
+  "url": {{ request.origin | append: article.url | json }},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ article.author | json }},
+    "url": {{ request.origin | append: blog.url | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kisah",
+    "url": "https://kisah.in/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kisah.in/cdn/shop/files/Group_63_1.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "url": {{ request.origin | append: article.url | json }}
+  }
+}
+</script>
+{% endif %}
+
+{%- assign is_howto = false -%}
+{%- if article.tags contains 'how-to' -%}{%- assign is_howto = true -%}{%- endif -%}
+{%- if article.title contains 'How to' -%}{%- assign is_howto = true -%}{%- endif -%}
+{%- if article.title contains 'How To' -%}{%- assign is_howto = true -%}{%- endif -%}
+{%- if article.title contains 'Guide' -%}{%- assign is_howto = true -%}{%- endif -%}
+
+{% if template.name == 'article' and is_howto %}
+{%- assign steps = article.content | split: '<h2' -%}
+{%- assign step_position = 0 -%}
+{%- assign steps_json = '' -%}
+
+{%- for step in steps -%}
+  {%- if forloop.first -%}{%- continue -%}{%- endif -%}
+
+  {%- assign h2_full = step | split: '</h2>' | first -%}
+  {%- assign h2_parts = h2_full | split: '>' -%}
+  {%- assign h2_content = '' -%}
+  {%- for part in h2_parts -%}
+    {%- unless forloop.first -%}
+      {%- if h2_content != '' -%}{%- assign h2_content = h2_content | append: '>' -%}{%- endif -%}
+      {%- assign h2_content = h2_content | append: part -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- assign step_name = h2_content | strip_html | strip -%}
+  {%- assign step_text = step | split: '</h2>' | last | strip_html | truncate: 300 | strip -%}
+
+  {%- if step_name != blank and step_text != blank -%}
+    {%- assign step_position = step_position | plus: 1 -%}
+    {%- capture step_obj -%}{"@type":"HowToStep","position":{{ step_position }},"name":{{ step_name | json }},"text":{{ step_text | json }}}{%- endcapture -%}
+    {%- if steps_json != '' -%}{%- assign steps_json = steps_json | append: ',' -%}{%- endif -%}
+    {%- assign steps_json = steps_json | append: step_obj -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if steps_json != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": {{ article.title | json }},
+  "description": {{ article.excerpt_or_content | strip_html | truncate: 160 | json }},
+  "image": {{ article.image | image_url: width: 1200 | prepend: "https:" | json }},
+  "totalTime": "PT10M",
+  "step": [{{ steps_json }}]
+}
+</script>
+{%- endif -%}
+
+{% endif %}
+
+{% if page.handle == 'faq-1' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I place an order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "(i) Add the item to your shopping cart. (ii) Continue to shop or buy the desired item. (iii) Once your selection is complete click on the checkout & pay icon. (iv) Select your payment mode. (v) Once the payment is done you will receive a confirmation email that your order has been placed on the registered email address given at the time of sign up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I change the shipping address of the order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, you can change the shipping address of your order only before it is billed or shipped. No changes can be done post order shipment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I am not available when the order is delivered?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As a policy, our courier partners will always call/text message you before delivery to check your availability. However, in case the order arrives when you are not available, it will be re-dispatched after your confirmation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you arrange the delivery on priority or expedited delivery since I am leaving the country?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We always try to deliver the order at the earliest, but we would not be able to accommodate any special requests during the sale period. We commit to try our best."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer made-to-order service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kisah offers ready-to-wear products in standard sizes. For further assistance get in touch with our Customer Care Team at support@kisah.in"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if a wrong product was delivered?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In the unlikely event that the product you paid for is not the one you received, contact our team at support@kisah.in within 24 hours of delivery. They will guide you and make sure you get your ordered item at the earliest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if a product I ordered is out of stock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If a product is out of stock, you will be informed when you add it to your Shopping Cart or at Checkout. In rare cases, if the product is out of stock after your order is confirmed, we will initiate order cancellation and refund the amount or offer an exchange of products of the same value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "If I have received a damaged item during the Sale, would you offer to replace this item?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We will offer a replacement of the same item if we have available stock at the time. The customer has to intimate our team within 48 hours of delivery of the product."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you have alteration facilities?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, we do not provide any alteration facilities. Kindly go through the size chart before placing your order."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "If I place an order now, can you arrange the delivery after a period of time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As long as the payment is made at the time of placing an order, we can ship it at a later time if the request is feasible for us. For further assistance get in touch with us at support@kisah.in"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you accept returns and refunds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We will accept returns and exchange for 7 days from the date of delivery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I cancel my order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You may cancel your order within 24 hours of placing one. Once shipped, your order cannot be cancelled. For prepaid orders, your money will get refunded within 7-8 business days to your source payment option."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How will the customer receive the refund?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Please check the Return Policy on our website for detailed information on how refunds are processed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is your Exchange policy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We only accept exchange if: (i) The product is incorrect from the one you ordered or saw on the website, or (ii) The product has genuine manufacturing defects. Image and video of the defect is mandatory in such cases."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I return or exchange items bought on sale?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We do not exchange or accept returns of items bought on sale unless the products received are damaged or the incorrect size got shipped."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer Partial Cash on Delivery (Partial COD)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We might offer Partial COD in select PIN codes and on select products. A small upfront amount is paid online, with the balance due in cash at delivery. This is subject to internal checks. The upfront fee is non-refundable in case of an RTO."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the online payment options available on your website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We accept all Debit/Credit cards and Internet banking services of all major banks. We also accept wallet payments."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you provide Cash on Delivery (COD) service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we provide Cash on Delivery service at select locations. Please enter your PIN code during the checkout page to confirm your area eligibility."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My transaction failed, I received a payment gateway error message. Please help.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sorry, that shouldn't have happened; it could be due to some technical glitch. Try retrying and if it continues then feel free to get in touch with our Customer Care Team and they will try to complete your order."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if my credit/debit card has been compromised while making online payment?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We do not store/retain any of your credit/debit card information. If you suspect that something is not right then contact your bank immediately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How to look tall in ethnic wear for men?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose outfits with vertical design elements like a straight-cut long kurta for men, tonal layering, and minimal contrast between top and bottom. Monochrome looks, high-waist trousers, and streamlined silhouettes create an elongated appearance. Avoid bulky layers and oversized prints that visually shorten your frame."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose the right colour for my ethnic outfit based on my skin tone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For warm skin tones, earthy shades like olive, maroon, and gold work beautifully. Cooler tones pair well with navy, emerald, and charcoal. Neutral tones such as beige, ivory, and pastels flatter most complexions. They offer a refined and balanced look for both day and evening events."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the latest trends in men's ethnic and Indo-Western fashion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Current trends include textured fabrics, asymmetrical kurtas, men's bandhgala suits with modern tailoring, and fusion pairings like bomber jackets with traditional wear. Muted pastels, jewel tones, and minimal embroidery are popular, along with layered looks that blend traditional craftsmanship with contemporary silhouettes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I transition my ethnic outfit from day events to evening celebrations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with a light kurta or Indo Western dress for men for daytime and elevate it for the evening by adding a structured jacket, dupatta, or statement accessory. Swap casual footwear for polished mojaris or dress shoes to instantly create a more refined, celebration-ready appearance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I look for when buying premium men's ethnic wear online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Check fabric quality, detailed size guides, and close-up images of stitching and embellishments. Look for breathable materials, clear return policies, and customer reviews. Premium men's ethnic wear should offer both comfort and craftsmanship, ensuring a polished look and long-lasting value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best ethnic outfit for a groom's brother or wedding guest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A bandhgala set, kurta jacket ensemble, or Indo-Western dhoti set offers the perfect balance of elegance and individuality. These styles stand out without overshadowing the groom, providing a refined yet festive look suitable for ceremonies, receptions, and celebratory gatherings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which men's ethnic outfit looks best for tall and slim body types?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Layered outfits, like kurta jacket for men, bandhgalas, and textured Indo-Western ensembles, suit tall, slim frames well. These styles add structure and visual balance. Opt for slightly heavier fabrics and subtle patterns to create depth without overpowering your natural silhouette."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the must-have ethnic outfits for every man's wardrobe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every man should own a classic kurta set, a statement bandhgala or Jodhpuri suit, and a versatile Indo Western suit for men. These essentials ensure you are prepared for festive occasions, weddings, and formal gatherings with a stylish and culturally rooted look."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose the right ethnic wear for different occasions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For casual gatherings, opt for simple kurta sets or light Indo-Western styles. Weddings and receptions call for Jodhpuri bandhgala suits, sherwani-inspired outfits, or layered looks. Festivals suit vibrant colours and textured fabrics. Always consider event formality, season, and personal comfort when choosing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I layer Indo-Western outfits for a modern ethnic look?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with a well-fitted kurta or mid-length kurta and add a structured jacket, Nehru jacket, or an asymmetrical shrug. Choose contrasting yet complementary textures like silk with jacquard. Keep the bottom streamlined with tailored trousers or dhotis to maintain a sharp, contemporary silhouette."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I style a kurta pajama with a jacket for a wedding guest look?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Choose a kurta pajama set for men and elevate it with a richly textured or embroidered jacket. Opt for deep shades like wine, navy, or emerald for festive appeal. Complete the look with mojaris or polished loafers and a subtle brooch for added elegance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Indo-Western kurta sets suitable for formal evening events?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, the Indo Western suit for men works beautifully on formal evenings when styled with structured jackets, minimal embroidery, and darker colour palettes. Fabrics like silk blends or jacquard add sophistication. Tailored trousers and refined footwear help maintain a polished, occasion-appropriate appearance."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I wear a sequinned kurta or an embroidered jacket for cocktail night?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Cocktail nights are perfect for subtle glamour. Pair a men's party wear kurta with sleek trousers, or style a minimalist kurta with a heavily embroidered jacket. Keep accessories understated and opt for clean, modern footwear to balance shine with sophistication."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which trousers or dhotis go best with Indo-Western kurtas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tapered trousers, ankle-length pants, and structured dhotis pair best with an Indo Western kurta set for men. These bottoms create a contemporary edge while maintaining traditional charm. Choose neutral shades for versatility or tonal matches to create a streamlined, elongated silhouette for festive and formal occasions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I make a kurta pajama look more formal with layering?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Add a tailored jacket, bandhgala, or Nehru vest in a premium fabric to instantly elevate the traditional kurta for men. Stick to rich, solid colours with minimal detailing. Finish with formal footwear and a pocket square to create a refined, event-ready look."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I wear printed or solid kurtas for mehndi ceremonies?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both work well, but printed kurtas add a playful, festive vibe ideal for daytime mehndi events. A mens kurta for mehndi in bright or pastel shades offers a clean, elegant look. Choose lightweight fabrics and comfortable fits to stay stylish throughout the celebration."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I keep my mehndi outfit stylish yet comfortable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Opt for breathable fabrics like cotton-silk blends or lightweight jacquard. Choose relaxed silhouettes and minimal layering. Bright colours or subtle prints in mehndi dress for men keep it festive, while comfortable footwear and easy-to-move-in bottoms ensure you enjoy the event without feeling restricted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can sherwanis be styled in an Indo-Western way?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, sherwanis can be modernised by pairing them with tailored trousers instead of traditional churidars. Add minimalist accessories and sleek footwear for a contemporary touch. Choosing textured fabrics and subtle detailing in sherwani set for men helps maintain tradition while embracing a refined Indo-Western aesthetic."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between Indo-Western and sherwani?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A sherwani for men is a traditional, long, structured outfit typically worn for weddings and formal ceremonies. Indo-Western wear blends traditional Indian elements with modern silhouettes, such as jackets, trousers, or asymmetrical kurtas, offering a versatile, contemporary style suitable for various occasions."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}

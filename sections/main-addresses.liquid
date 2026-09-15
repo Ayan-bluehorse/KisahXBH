@@ -1,0 +1,461 @@
+<script src="{{ 'country-province-selector.js' | asset_url }}" defer></script>
+<script src="{{ 'customer-addresses.js' | asset_url }}" defer></script>
+
+<style>
+#shopify-section-{{section.id}} .js-add-address{
+    text-transform: capitalize;
+    background: #201747;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    color: #ffffff;
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    width: fit-content;
+    padding: 12px 16px;
+}
+#shopify-section-{{section.id}} .address-table , #add_address{
+   width:calc(80% - 20px);
+   margin:0 auto;
+   background:#ffffff;
+   box-shadow:0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+   padding:0;
+}
+#shopify-section-{{section.id}} .address-table .view_address{
+    padding: 20px;
+}
+#shopify-section-{{section.id}} .address-table .flex-container{
+    display:flex;
+    justify-content:center;
+    gap:14%;
+}
+customer-addresses .title.align-center{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    color: #000000
+}
+#shopify-section-{{section.id}}  label{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000
+}
+#shopify-section-{{section.id}}  form input{
+    border: 0.5px solid #201747;
+    border-radius: 10px;
+    padding:10px;
+    font-size: 16px;
+    line-height: 18px;
+    font-family: 'Generis Sans W01 Regular';
+}
+#shopify-section-{{section.id}} .address-tables .lightly-styled-select{
+    border: unset; 
+    border-radius:unset; 
+    background:none;
+}
+#shopify-section-{{section.id}} h4{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .edit_address h4{
+    background: #201747;
+    padding: 10px;
+    color:#ffffff;
+}
+#shopify-section-{{section.id}} .address-tables .address-actions a{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: right;
+    text-decoration-line: underline;
+    color: #000000;
+    text-decoration-color: #000000;
+}
+#shopify-section-{{section.id}} form select{
+    border: 0.5px solid #201747 !important;
+    border-radius: 10px !important;
+    padding:10px !important;
+    line-height:1 !important;
+    max-width:100% !important;
+    background:#ffffff !important;
+    font-family: 'Generis Sans W01 Regular';
+    font-size:16px !important;
+    line-height:18px !important;
+}
+#shopify-section-{{section.id}} form{
+    padding:20px 8rem;
+}
+#shopify-section-{{section.id}} .address-tables .input-row {
+    max-width: 100%;
+    width: 100%;
+}
+#shopify-section-{{section.id}} .lightly-spaced-row-above.btn-flex-content{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap:15%;
+}
+#shopify-section-{{section.id}} form .btn{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    background: #201747;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    width: fit-content;
+    padding: 10px 35px;
+}
+#shopify-section-{{section.id}} .account-form .note {
+      margin:0;
+}
+#shopify-section-{{section.id}} .lightly-spaced-row-above.btn-flex-content p{
+     margin:0;
+}
+#shopify-section-{{section.id}} .lightly-spaced-row-above.btn-flex-content .note .js-cancel{ 
+    background: #FFFFFF;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.83);
+    font-family: 'Generis Sans W01 Regular';
+    text-decoration: none;
+    width: fit-content;
+    display: block;
+    padding: 10px 35px;
+    margin:0;
+}
+#shopify-section-{{section.id}} .address-table .view_address{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    font-family: 'Generis Sans W01 Regular';
+}
+#shopify-section-{{section.id}} .account-home-container{
+     display:flex;
+     align-items:center;
+     justify-content:space-between;
+}
+#shopify-section-{{section.id}} .account-home-container .note a{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    text-decoration-line: underline;
+    color: #000000;
+    text-decoration-color: #000000;
+    display:flex;
+    align-items:center;
+}
+#shopify-section-{{section.id}} .account-home-container .note a svg{
+   transform: rotate(180deg);
+   width:20px;
+}
+@media screen and (max-width:786px){
+customer-addresses .title.align-center {
+    font-size: 22px;
+    line-height: 24px;
+}
+#shopify-section-{{section.id}} .js-add-address{
+    font-size: 14px;
+    line-height: 15px;
+    padding: 10px 14px;
+}
+#shopify-section-{{section.id}} .address-table .view_address{
+    font-size: 14px;
+    line-height: 16px;
+}
+#shopify-section-{{section.id}} .account-home-container .note a{
+    font-size: 14px;
+    line-height: 16px; 
+}
+#shopify-section-{{section.id}} .account-home-container .note a svg{
+   width:22px;
+}
+#shopify-section-{{section.id}} .address-table, #add_address{
+   width:100%;
+} 
+#shopify-section-{{section.id}} .address-table .flex-container{
+   flex-direction:column;
+}
+#shopify-section-{{section.id}} form{
+    padding:20px 3rem;
+}
+#shopify-section-{{section.id}} .lightly-spaced-row-above.btn-flex-content .note .js-cancel{ 
+   font-size: 14px;
+   line-height: 16px;
+   padding: 8px 30px;
+}
+#shopify-section-{{section.id}} form .btn{
+   font-size: 14px;
+   line-height: 16px;
+   padding: 8px 30px;
+}
+#shopify-section-{{section.id}} .account-form label{
+   font-size: 14px;
+   line-height: 16px;
+}
+#shopify-section-{{section.id}}  form input{
+    font-size: 14px;
+    line-height: 16px;
+}
+#shopify-section-{{section.id}} form select{
+    font-size: 14px !important;
+    line-height: 16px !important;
+}
+}
+@media screen and (max-width:400px){
+  #shopify-section-{{section.id}} form{
+    padding:20px 2rem;
+}
+}
+</style>
+
+
+
+{% paginate customer.addresses by 10 %}
+<div class="container">
+  <customer-addresses>
+    <div class="spaced-row" data-cc-animate>
+      <!-- <h2 class="title align-center">{{ 'customer.addresses.title' | t }}</h2> -->
+      <h2 class="name title align-center">Hello {{ customer.name }}</h2>
+      <div class="account-home-container">
+      <button class="btn btn--secondary js-add-address">{{ 'customer.addresses.add_new' | t }}</button>
+      <div class="note"><a class="underline" href="{{ routes.account_url }}">{% comment %}{{ 'customer.account.home' | t }} {% endcomment %}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+         <path d="M8.20986 5.29018C8.11613 5.38315 8.04174 5.49375 7.99097 5.61561C7.9402 5.73746 7.91406 5.86817 7.91406 6.00018C7.91406 6.13219 7.9402 6.2629 7.99097 6.38476C8.04174 6.50662 8.11613 6.61722 8.20986 6.71018L12.7899 11.2902C12.8836 11.3831 12.958 11.4937 13.0087 11.6156C13.0595 11.7375 13.0856 11.8682 13.0856 12.0002C13.0856 12.1322 13.0595 12.2629 13.0087 12.3848C12.958 12.5066 12.8836 12.6172 12.7899 12.7102L8.20986 17.2902C8.11613 17.3831 8.04174 17.4937 7.99097 17.6156C7.9402 17.7375 7.91406 17.8682 7.91406 18.0002C7.91406 18.1322 7.9402 18.2629 7.99097 18.3848C8.04174 18.5066 8.11613 18.6172 8.20986 18.7102C8.39722 18.8964 8.65067 19.001 8.91486 19.001C9.17904 19.001 9.4325 18.8964 9.61986 18.7102L14.2098 14.1202C14.7716 13.5577 15.0872 12.7952 15.0872 12.0002C15.0872 11.2052 14.7716 10.4427 14.2098 9.88018L9.61986 5.29018C9.43249 5.10393 9.17904 4.99939 8.91486 4.99939C8.65067 4.99939 8.39722 5.10393 8.20986 5.29018Z" fill="#374957"/>
+        </svg>Go back </a></div>
+      </div>
+    </div>
+
+    <div id="add_address" class="customer_address account-form edit_address small-form hidden">
+       <h4>{{ 'customer.addresses.add_new' | t }}</h4>
+      {% form 'customer_address', customer.new_address %}
+       
+        
+        <div class="input-row">
+          <label for="address_first_name_new">{{ 'customer.addresses.first_name' | t }}</label>
+          <input type="text" id="address_first_name_new" class="address_form" name="address[first_name]" value="{{ form.first_name }}" size="40" />
+        </div>
+        <div class="input-row">
+          <label for="address_last_name_new">{{ 'customer.addresses.last_name' | t }}</label>
+          <input type="text" id="address_last_name_new" class="address_form" name="address[last_name]" value="{{ form.last_name }}" size="40" />
+        </div>
+        
+        
+        <div class="input-row">
+          <label for="address_company_new">{{ 'customer.addresses.company' | t }}</label>
+          <input type="text" id="address_company_new" class="address_form" name="address[company]" value="{{ form.company }}" size="40" />
+        </div>
+        <div class="input-row">
+          <label for="address_address1_new">{{ 'customer.addresses.address1' | t }}</label>
+          <input type="text" id="address_address1_new" class="address_form" name="address[address1]" value="{{ form.address1 }}" size="40" />
+        </div>
+        
+        
+        <div class="input-row">
+          <label for="address_address2_new">{{ 'customer.addresses.address2' | t }}</label>
+          <input type="text" id="address_address2_new" class="address_form" name="address[address2]" value="{{ form.address2 }}" size="40" />
+        </div>
+        <div class="input-row">
+          <label for="address_city_new">{{ 'customer.addresses.city' | t }}</label>
+          <input type="text" id="address_city_new" class="address_form" name="address[city]" value="{{ form.city }}" size="40" />
+        </div>
+        
+        <country-province-selector>
+          <div class="input-row">
+            <label for="edit-new-country">{{ 'customer.addresses.country' | t }}</label>
+            <span class="lightly-styled-select">
+              <select class="w-full js-country-select" id="edit-new-country" name="address[country]" data-default="{{ form.country }}" autocomplete="country">
+                {{ all_country_option_tags }}
+              </select>
+              {% render 'icon-chevron-down' %}
+            </span>
+          </div>
+          <div class="input-row js-province-container" id="edit-new-province-container" hidden>
+            <label for="edit-new-province">{{ 'customer.addresses.province' | t }}</label>
+            <span class="lightly-styled-select">
+              <select class="w-full js-province-select" id="edit-new-province" name="address[province]" data-default="{{ form.province }}" autocomplete="address-level1">
+              </select>
+              {% render 'icon-chevron-down' %}
+            </span>
+          </div>
+        </country-province-selector>
+        
+        <div class="input-row">
+          <label for="address_zip_new">{{ 'customer.addresses.zip' | t }}</label>
+          <input type="text" id="address_zip_new" class="address_form" name="address[zip]" value="{{ form.zip }}" size="40" />
+        </div>
+        <div class="input-row">
+          <label for="address_phone_new">{{ 'customer.addresses.phone' | t }}</label>
+          <input type="tel" id="address_phone_new" class="address_form" name="address[phone]" value="{{ form.phone }}" size="40" />
+        </div>
+        
+        <div class="input-row">
+          <label class="checkbox-label">
+            {{ form.set_as_default_checkbox }} {{ 'customer.addresses.set_default' | t }}
+          </label>
+        </div>
+        <div class="lightly-spaced-row-above btn-flex-content">
+          <p>
+            <button class="btn" type="submit">{{ 'customer.addresses.add' | t }}</button>
+          </p>
+          <span class="note"><a href="#" class="js-cancel underline ">{{ 'customer.addresses.cancel' | t }}</a></span>
+        </div>
+      {% endform %}
+    </div>
+
+    <div class="address-tables" data-cc-animate>
+      {% for address in customer.addresses %}
+      <div class="address-table spaced-row">
+        <div id="view_address_{{ address.id }}" class="customer_address view_address">
+         {% comment %} <h4 class="address_title">
+            {{ address.street }}
+            {% if address == customer.default_address %}<span class="note">({{ 'customer.addresses.default' | t }})</span>{% endif %}
+          </h4>{% endcomment %}
+          <div class="view_address lightly-spaced-row">
+            <div>{{ address.first_name }} {{ address.last_name }}</div>
+            <div>{{ address.company }}</div>
+            <div>{{ address.street }}</div>
+            <div>{{ address.city }} {% if address.province_code %}, {{ address.province_code }}{% endif %}</div>
+            <div>{{ address.country }} {{ address.zip }}</div>
+            <div class="address-phone">{{ address.phone }}</div>
+          </div>
+          <p class="address-actions">
+            <a href="#"
+              class="address-edit-toggle js-edit-address underline"
+              data-form-id="{{ address.id }}"
+              aria-owns="edit_address_{{ address.id }}"
+              aria-expanded="false"
+            >
+              {{- 'customer.addresses.edit' | t -}}
+            </a>
+            <a href="#"
+              class="address-delete js-delete-address underline"
+              data-target="{{ address.url }}"
+              data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}"
+            >
+              {{- 'customer.addresses.delete' | t -}}
+            </a>
+          </p>
+        </div>
+        {% comment %}<div id="edit_address_{{ address.id }}" class="customer_address account-form edit_address small-form hidden">{% endcomment %}
+        <div id="edit_address_{{ address.id }}" class="customer_address account-form edit_address hidden">
+          <h4>{{ 'customer.addresses.edit_address' | t }}</h4>
+
+          {% form 'customer_address', address %}
+             <div class="flex-container">
+              <div class="input-row">
+                <label for="address_first_name_{{ form.id }}">{{ 'customer.addresses.first_name' | t }}</label>
+                <input type="text" id="address_first_name_{{ form.id }}" class="address_form" name="address[first_name]" value="{{ form.first_name }}" size="40" />
+              </div>
+              <div class="input-row">
+                <label for="address_last_name_{{ form.id }}">{{ 'customer.addresses.last_name' | t }}</label>
+                <input type="text" id="address_last_name_{{ form.id }}" class="address_form" name="address[last_name]" value="{{ form.last_name }}" size="40" />
+              </div>
+             </div>
+              <div class="flex-container">
+              <div class="input-row">
+                <label for="address_company_{{ form.id }}">{{ 'customer.addresses.company' | t }}</label>
+                <input type="text" id="address_company_{{ form.id }}" class="address_form" name="address[company]" value="{{ form.company }}" size="40" />
+              </div>
+              <div class="input-row">
+                <label for="address_address1_{{ form.id }}">{{ 'customer.addresses.address1' | t }}</label>
+                <input type="text" id="address_address1_{{ form.id }}" class="address_form" name="address[address1]" value="{{ form.address1 }}" size="40" />
+              </div>
+              </div>
+
+              <div class="flex-container">
+              <div class="input-row">
+                <label for="address_address2_{{ form.id }}">{{ 'customer.addresses.address2' | t }}</label>
+                <input type="text" id="address_address2_{{ form.id }}" class="address_form" name="address[address2]" value="{{ form.address2 }}" size="40" />
+              </div>
+              <div class="input-row">
+                <label for="address_city_{{ form.id }}">{{ 'customer.addresses.city' | t }}</label>
+                <input type="text" id="address_city_{{ form.id }}" class="address_form" name="address[city]" value="{{ form.city }}" size="40" />
+              </div>
+              </div>
+
+              <country-province-selector>
+                <div class="flex-container">
+                <div class="input-row">
+                  <label for="edit-{{ address.id }}-country">{{ 'customer.addresses.country' | t }}</label>
+                  <span class="lightly-styled-select">
+                    <select class="w-full js-country-select" id="edit-{{ address.id }}-country" name="address[country]" data-default="{{ form.country }}" autocomplete="country">
+                      {{ all_country_option_tags }}
+                    </select>
+                    {% render 'icon-chevron-down' %}
+                  </span>
+                </div>
+                <div class="input-row js-province-container" id="edit-{{ address.id }}-province-container" hidden>
+                  <label for="edit-{{ address.id }}-province">{{ 'customer.addresses.province' | t }}</label>
+                  <span class="lightly-styled-select">
+                    <select class="w-full js-province-select" id="edit-{{ address.id }}-province" name="address[province]" data-default="{{ form.province }}" autocomplete="address-level1">
+                    </select>
+                    {% render 'icon-chevron-down' %}
+                  </span>
+                </div>
+                </div>
+              </country-province-selector>
+
+             <div class="flex-container">
+              <div class="input-row">
+                <label for="address_zip_{{ form.id }}">{{ 'customer.addresses.zip' | t }}</label>
+                <input type="text" id="address_zip_{{ form.id }}" class="address_form" name="address[zip]" value="{{ form.zip }}" size="40" />
+              </div>
+              <div class="input-row">
+                <label for="address_phone_{{ form.id }}">{% comment %}{{ 'customer.addresses.phone' | t }}{% endcomment %} Contact Number</label>
+                <input type="tel" id="address_phone_{{ form.id }}" class="address_form" name="address[phone]" value="{{ form.phone }}" size="40" />
+              </div>
+             </div>
+              <div class="input-row">
+                <label class="checkbox-label">
+                  {{ form.set_as_default_checkbox }} {{ 'customer.addresses.set_default' | t }}
+                </label>
+              </div>
+            <div class="lightly-spaced-row-above btn-flex-content">
+              {% comment %}<p><button class="btn" type="submit">{{ 'customer.addresses.update' | t }}</button></p>{% endcomment %}
+              <p style="order:2;"><button class="btn" type="submit">Save</button></p>
+               {% comment %}<p><span class="note"><a href="#" class="js-cancel underline">{{ 'customer.addresses.cancel' | t }}</a></span></p>{% endcomment %}
+              <p style="order:1;"><span class="note"><a href="#" class="js-cancel underline">Cancel</a></span></p>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </customer-addresses>
+
+  <div class="pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
+</div>
+{% endpaginate %}

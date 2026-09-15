@@ -1,0 +1,67 @@
+<section class="about-mainsection about-craft-section">
+  <div class="container">
+    <div class="about-craft-content">
+      <h2>
+        {% if section.settings.icon %}
+          <img
+            src="{{ section.settings.icon | image_url }}"
+            alt="{{ section.settings.icon_alt | default: 'Craft Icon' }}"
+            width="92"
+            height="88"
+            loading="lazy"
+          />
+        {% else %}
+          <img
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kisah_Icon_3252c426-1c6e-4cbb-bd4d-37fd86247467.png?v=1750683400"
+            alt="Craft Icon"
+            width="92"
+            height="88"
+            loading="lazy"
+          />
+        {% endif %}
+        {{ section.settings.heading_text }}
+      </h2>
+        {{ section.settings.content }}
+    </div>
+  </div>
+</section>
+
+
+
+
+{% schema %}
+{
+  "name": "Craft",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Heading Icon Image"
+    },
+    {
+      "type": "text",
+      "id": "icon_alt",
+      "label": "Image Alt Text",
+      "default": "Craft Icon"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "It’s all about the <span>Craft</span>"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content",
+      "default": "<h5>At Kisah, every garment tells a story—of heritage, heart, and the hands that bring it to life. Each piece is a heartfelt creation, lovingly crafted by skilled karigars from across India, who pour generations of wisdom into every stitch. We honour their artistry by blending time-honoured techniques with bold, modern expression—offering ethnic wear that’s not only striking but soulful.</h5>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Craft",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

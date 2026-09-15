@@ -1,0 +1,1608 @@
+/* ==========================================================================
+   Custom-template PDP styles (the "kpdp" mobile redesign).
+
+   Loaded by sections/main-product.liquid ONLY when template.suffix is
+   'custom-product' (templates/product.custom-product.json). The default
+   product template and product.preorder never load this file, so they keep
+   the theme's original PDP look.
+
+   Split out of assets/product.css; everything below this header used to be
+   the tail of that file. Markup for these rules is likewise gated behind
+   `kp_custom_pdp` in sections/main-product.liquid — keep the two in sync.
+   ========================================================================== */
+
+/* ==========================================================================
+   Mobile: PDP gallery thumbnails -> dot carousel
+   ---------------------------------------------------------------------------
+   Deliberately in its own @media block. The `@media screen and (max-width:768px)`
+   block earlier in this file is dead: a stray closing brace immediately above it
+   blank line before it) gets parsed as the start of a qualified rule, which then
+   swallows the whole @media block. Verified in-browser: the block's rules never
+   apply. Until that brace is removed, anything added there has no effect.
+
+   Restyles the theme's existing .thumbnails carousel into dots overlaid on the
+   main image. No markup or JS change: the dots are still the theme's thumbnail
+   elements, so active-state sync (media-gallery mediaLists) and click-to-select
+   (the delegated .thumbnail handler) keep working.
+
+   Selectors are prefixed with .media-gallery so they still win if the stray
+   brace is ever fixed and the original 60px filmstrip rules come back to life.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .media-gallery .media-gallery__inner {
+    /* .main-image bottom margin (20px) + gap (10px). The social-proof bar used
+       to sit in here too (+36px); on mobile it now renders above Add to Cart.
+       Nudge this single value to move the dots up or down. */
+    --gallery-dots-offset: 30px;
+    position: relative;
+    /* Contain .main-image bottom margin so the offset above is predictable */
+    display: flow-root;
+  }
+
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails {
+    position: absolute;
+    right: 0;
+    bottom: var(--gallery-dots-offset, 58px);
+    left: 0;
+    z-index: 7;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .slider {
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .slider__grid {
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .slider__item {
+    flex: 0 0 auto;
+    width: auto;
+    padding-inline-end: 0;
+  }
+
+  /* Keep a tappable box around each 8px dot */
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hide the thumbnail image and media badges, leaving only the dot */
+  .media-gallery .media-gallery__inner .carousel.block.thumbnails .img-ar,
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .thumbnail__badge {
+    display: none;
+  }
+
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .thumbnail::after {
+    height: 0;
+  }
+
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .slider__grid
+    .border-dots {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  .media-gallery
+    .media-gallery__inner
+    .carousel.block.thumbnails
+    .slider__item.is-active
+    .border-dots {
+    background: #fff;
+    transform: scale(1.3);
+  }
+}
+
+/* ==========================================================================
+   PDP gallery actions: wishlist + share, overlaid top-right of the image.
+   Lives in its own @media block for the same reason as the dot carousel -
+   the max-width:768px block earlier in this file is dead (stray closing brace
+   above it swallows the whole block).
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .main-image .kpdp-gallery-actions {
+    display: flex;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .main-image .kpdp-gallery-actions__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: #ffffff66;
+    color: #ffffff;
+    cursor: pointer;
+    /* Wishlist Hero positions its own button absolutely; keep it in flow here */
+    position: static !important;
+    inset: auto !important;
+  }
+
+  .main-image .kpdp-gallery-actions__btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .main-image .kpdp-gallery-actions__btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  /* Wishlist: app button underneath, our heart drawn on top */
+  .main-image .kpdp-gallery-actions__wishlist {
+    position: relative;
+    display: flex;
+  }
+
+  .main-image .kpdp-gallery-actions__heart {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    /* clicks fall through to the Wishlist Hero button below */
+    pointer-events: none;
+  }
+
+  /* Hide whatever glyph Wishlist Hero injects, so only our heart shows */
+  .main-image .kpdp-gallery-actions__btn--wishlist svg,
+  .main-image .kpdp-gallery-actions__btn--wishlist i,
+  .main-image .kpdp-gallery-actions__btn--wishlist img,
+  .main-image .kpdp-gallery-actions__btn--wishlist span {
+    display: none !important;
+  }
+
+  .main-image .kpdp-gallery-actions__share {
+    position: relative;
+  }
+
+  /* Share panel: same snippet and links as the title share control,
+     but anchored to this button so nothing scrolls away. */
+  .main-image .kpdp-gallery-actions__panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 8;
+  }
+
+  .main-image .kpdp-gallery-actions__panel[hidden] {
+    display: none;
+  }
+
+  .main-image .kpdp-gallery-actions__panel ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: max-content;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 50px;
+    background: #201747;
+    list-style: none;
+  }
+
+  .main-image .kpdp-gallery-actions__panel li {
+    margin: 0;
+    line-height: 0;
+  }
+
+  .main-image .kpdp-gallery-actions__panel img {
+    display: block;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* ==========================================================================
+   Desktop guard: the gallery action buttons are a mobile-only feature.
+   Their layout lives in the max-width:768px block below, so without this the
+   markup would render unstyled and in-flow on desktop.
+   ========================================================================== */
+@media screen and (min-width: 768.02px) {
+  .main-image .kpdp-gallery-actions {
+    display: none;
+  }
+
+  /* Description under the title is a mobile-only addition */
+  .kpdp-title-description {
+    display: none;
+  }
+
+  /* Desktop keeps the long tax wording */
+  .kpdp-price-row .inclusive-tax__short {
+    display: none;
+  }
+
+  /* Desktop keeps the plain option name in the legend */
+  .opt-legend__prompt {
+    display: none;
+  }
+
+  /* Ruler icon and model line are mobile-only additions */
+  .size-chart-trigger__icon,
+  .kpdp-model-info {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Product title - mobile spec (desktop keeps 27px / rgba(52,52,52,.83)).
+     GenerisSansW01-Heavy has no @font-face in this theme, so it falls back to
+     the declared Bold face until the Heavy file is added. */
+  .section-main-product .product-column-right .title-row .product-title {
+    font-family: "GenerisSansW01-Heavy", "Generis Sans W01 Bold", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: #000000;
+  }
+
+  /* Sharing moved to the gallery overlay, so drop the one beside the title.
+     Desktop already hides this icon (main.css, min-width:768px). */
+  .detail.product-column-right .title_share_button .mob-share-product-button,
+  .detail.product-column-right .title_share_button .mob_share-svg_icon {
+    display: none;
+  }
+
+  .kpdp-title-description {
+    margin: 0;
+    color: #6b6b6b;
+  }
+
+  /* main.css:28 sets a global "p { font-family: ... !important }", so the rich
+     text inside the description needs !important to take Nunito Sans. */
+  .kpdp-title-description,
+  .kpdp-title-description p,
+  .kpdp-title-description li,
+  .kpdp-title-description span {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .kpdp-title-description > *:first-child {
+    margin-top: 0;
+  }
+  .kpdp-title-description > *:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Price row: MRP, price and tax note on one line. main.css only makes
+     .product-price a flex row above 768px, so without this the tax note
+     drops onto its own line on mobile. Scoped to .kpdp-price-row so the
+     child-kurta cross-sell price block is not affected. */
+  .section-main-product .product-column-right .price-container .kpdp-price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    margin-top: 12px;
+  }
+
+  .kpdp-price-row .inclusive-tax__full {
+    display: none;
+  }
+
+  .kpdp-price-row .inclusive-tax__short {
+    display: inline;
+  }
+
+  /* Compare-at price - mobile spec. GenerisSansW01-Medium has no @font-face in
+     this theme, so it falls back to the declared Regular face. The base rule
+     uses font-size !important, so this one has to as well. */
+  .section-main-product
+    .product-column-right
+    .price-container
+    .kpdp-price-row
+    .price__default
+    .price__was {
+    font-family:
+      "GenerisSansW01-Medium", "Generis Sans W01 Regular", sans-serif;
+    font-size: 16px !important;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  /* Price value - mobile spec. Desktop keeps 20px / 600 / Generis. */
+  .section-main-product
+    .product-column-right
+    .price-container
+    .kpdp-price-row
+    .price__default
+    .price__current {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 22px;
+    color: #000000;
+  }
+
+  /* (inc. taxes) - main.css:28 forces a global p font-family with !important,
+     so the family here needs !important or it renders in Generis Sans. */
+  .product-column-right .price-container .kpdp-price-row .inclusive-tax,
+  .product-column-right .price-container .kpdp-price-row .inclusive-tax span {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 500;
+  }
+
+  .product-column-right .price-container .kpdp-price-row .inclusive-tax {
+    margin: 0;
+    color: #008000;
+  }
+
+  /* ---- Size selector ---- */
+  .opt-legend__name {
+    display: none;
+  }
+  .opt-legend__prompt {
+    display: inline;
+  }
+
+  /* main.css:3717 hides every .product-form .label, and .flex-container is a
+     space-between row - so the legend has to be un-hidden AND the container
+     turned into a column, or it sits beside the pills instead of above them. */
+  .section-main-product .product-column-right .input-row .flex-container {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: none;
+    width: 100%;
+  }
+
+  .section-main-product
+    .product-form
+    [data-selector-type="listed"].option-selector
+    legend.label {
+    display: block;
+    float: none;
+    margin: 0;
+    padding: 0;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000000;
+  }
+
+  /* Put "Size Chart" on the legend line, right aligned. main.css uses
+     column-reverse here, which stacks it above the picker instead. */
+  .product-form .input-row.variant-size-chart {
+    position: relative;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    margin: 16px 0 5px !important;
+  }
+
+  .product-form .input-row.variant-size-chart > a.trigger-pop-up {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    /* The link otherwise inherits body colour (settings.font_col_base, #5c5c5c) */
+    color: #000000 !important;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .product-form
+    .input-row.variant-size-chart
+    > a.trigger-pop-up
+    .size-chart-trigger__text,
+  .product-form
+    .input-row.variant-size-chart
+    > a.trigger-pop-up
+    .size-chart-trigger__icon {
+    color: #000000 !important;
+  }
+
+  .size-chart-trigger__icon svg path {
+    stroke: #000000;
+  }
+
+  /* main.css:6887 pulls this row up with margin-top:-10px, leaving no gap
+     under the "Select Size:" legend. */
+  .section-main-product .product-column-right .input-row .flex-container,
+  fieldset.option-selector .flex-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .section-main-product .product-form .option-selector .option-selector__btns,
+  .option-selector__btns {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 8px 0 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 0 !important;
+    overflow: visible !important;
+  }
+
+  .opt-label,
+  .opt-label.btn,
+  .opt-label--btn,
+  .option-selector .opt-label {
+    display: inline-flex !important;
+    position: relative !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    min-width: 44px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 6px 10px !important;
+    border: 1.5px solid #1E1E1E !important;
+    border-radius: 0 !important;
+    background-color: #FFFFFF !important;
+    color: rgb(var(--input-text-color)) !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    transition: all 0.15s ease-in-out;
+  }
+
+  .opt-btn:checked + .opt-label {
+    background-color: #201747 !important;
+    border-color: #201747 !important;
+    border-radius: 0 !important;
+    color: #FFFFFF !important;
+  }
+
+  .opt-btn.is-unavailable + .opt-label {
+    background-color: #F2F2F4 !important;
+    border-color: #D8D8DC !important;
+    border-radius: 0 !important;
+    color: #98989E !important;
+    opacity: 0.65 !important;
+  }
+
+  .opt-btn.is-unavailable:checked + .opt-label {
+    background-color: #D5D5DA !important;
+    border-color: #8E8E96 !important;
+    border-radius: 0 !important;
+    color: #333333 !important;
+    opacity: 0.85 !important;
+  }
+
+  .opt-btn.is-unavailable + .opt-label::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .product-form .input-row.variant-size-chart > a.trigger-pop-up {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .size-chart-trigger__icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .size-chart-trigger__icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .size-chart-trigger__text {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* The 17px gap above this text was mostly main.css:3745
+     (.product-form .option-selector { margin-bottom: 20px }), not this margin. */
+  /* Gap above the model line came mostly from the fieldset padding-bottom (10px)
+     plus two stacked bottom margins - not from the text margin. */
+  .product-form .input-row.variant-size-chart {
+    margin-bottom: 0 !important;
+  }
+
+  .section-main-product .product-column-right .input-row.kpdp-model-info {
+    display: block;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
+    /* 13px text in an 18px line-box leaves ~2.5px half-leading above the
+       glyphs; trim it so the text sits flush under the pills. */
+    line-height: 100%;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #b78a2e;
+  }
+
+  /* Gradient label chip is not in the mobile design */
+  .section-main-product
+    .product-column-right
+    .price-container
+    .kpdp-price-row
+    .price__default
+    variant-content.product-label-list {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Mobile: single full-width Add to Cart, wishlist hidden.
+   Desktop keeps the 45/50 wishlist + add-to-cart split.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  /* Wishlist Hero mounts into .product-form__item in the buy-buttons row */
+  .section-main-product
+    .buy-buttons-row
+    .quantity-submit-row__submit
+    .product-form__item {
+    display: none !important;
+  }
+
+  .section-main-product .buy-buttons-row .quantity-submit-row__submit {
+    display: flex;
+    gap: 0;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .section-main-product
+    .buy-buttons-row
+    .quantity-submit-row__submit
+    button[type="submit"].add-to-cart {
+    /* row-reverse puts the trailing bag icon in front of the label without
+       needing a wrapper class - the preorder branch has no span around its svg */
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    /* main.css:11414 sets padding:0 !important on this exact button below 768px,
+       so these have to be !important or the height never changes. */
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+    border-radius: 50px;
+    /* GenerisSansW01-Bold is the Figma layer name for the face declared in
+       main.css as "Generis Sans W01 Bold" - same typeface, different spelling. */
+    font-family: "GenerisSansW01-Bold", "Generis Sans W01 Bold", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.45px;
+  }
+
+  /* the svg carries an inline style="margin-left:15px" and width/height=20 */
+  .section-main-product .buy-buttons-row .add-to-cart .add-to-cart-bag {
+    margin-left: 0 !important;
+    width: 16px !important;
+    height: 17px !important;
+  }
+
+  .section-main-product .buy-buttons-row .add-to-cart > span {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   Help / WhatsApp chat line under Add To Cart (mobile only)
+   ========================================================================== */
+@media screen and (min-width: 768.02px) {
+  .kpdp-help-chat {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .kpdp-help-chat {
+    display: block;
+    margin: 14px 0 0;
+    text-align: center;
+  }
+
+  /* main.css:28 forces a global p font-family with !important */
+  .kpdp-help-chat,
+  .kpdp-help-chat .kpdp-help-chat__link {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .kpdp-help-chat {
+    color: #5c5c5c;
+  }
+
+  .kpdp-help-chat .kpdp-help-chat__link {
+    color: #b78a2e;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   Trust icons: separate desktop and mobile blocks.
+   .tim-block  = "Trust icons (mobile)" block, mobile only
+   .trust-icons_container = original Trust icons block, desktop only
+   ========================================================================== */
+.tim-block {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .section-main-product .product-column-right .trust-icons_container {
+    display: none !important;
+  }
+
+  .tim-block {
+    display: block;
+    margin: 24px 0;
+  }
+
+  .tim-heading {
+    margin: 0 0 20px;
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #111111;
+    text-align: left;
+  }
+
+  .tim-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .tim-item {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .tim-icon {
+    box-sizing: border-box;
+    width: 62px;
+    height: 62px;
+    max-width: none;
+    padding: 13px;
+    border: 1px solid #f1e0be;
+    border-radius: 50%;
+    background: #fcefd6;
+    object-fit: contain;
+  }
+
+  /* built-in SVG icons share the circle, and take the gold stroke */
+  .tim-icon--svg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #b78a2e;
+  }
+
+  .tim-icon--svg svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tim-text {
+    display: block;
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #111111;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   ClickPost estimated delivery - mobile.
+   NOTE: this block's DOM is rendered by the app, not the theme. Only these
+   hooks are known from the export: .clickpost-edd__container / __heading /
+   __form / __submit-button, #response-edd, #response-success.
+   The pin icon, pincode row and "Change" link in the design are app markup
+   whose classes are not visible here, so they are not targeted yet.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .product-column-right .clickpost-edd__container {
+    max-width: 100%;
+  }
+
+  .product-column-right .clickpost-edd__container .clickpost-edd__heading {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #111111;
+    margin-bottom: 10px;
+  }
+
+  /* result line becomes the cream confirmation banner */
+  .product-column-right .clickpost-edd__container #response-edd {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 16px !important;
+    border-radius: 8px;
+    background: #fcf0da;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #111111;
+  }
+}
+
+/* ==========================================================================
+   Text-with-icon tags above the product title (metaobject driven)
+   ========================================================================== */
+.ptwi-row {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .ptwi-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 14px 0;
+  }
+
+  .ptwi-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #fcefd6;
+  }
+
+  .ptwi-icon {
+    width: 18px;
+    height: 18px;
+    max-width: none;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .ptwi-text {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #b78a2e;
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   Mobile: inset the whole product info column from the left.
+   Replaces the per-block padding that was on .ptwi-row and .tim-block.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .section-main-product .product-column-right {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* ==========================================================================
+   "Contains" button, bottom-right of the gallery image (mobile only).
+   Sits clear of the dot carousel and the social-proof bar.
+   ========================================================================== */
+.kpdp-contains {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .main-image .kpdp-contains {
+    position: absolute;
+    right: 24px;
+    /* dot centres sit ~20px above the image bottom */
+    bottom: 21px;
+    /* above the full-width dot container so it is not covered */
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    padding: 0;
+  }
+
+  .main-image .kpdp-contains__iconbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 46px;
+    height: 46px;
+    border-radius: 7px;
+    /* Translucent white tile: enough to lift the icon off the photo without
+       reading as a solid chip. Raise the alpha (80 -> B3) for more presence,
+       lower it (-> 4D) for less. */
+    background: #ffffff80;
+  }
+
+  .main-image .kpdp-contains__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    max-width: none;
+    object-fit: contain;
+  }
+
+  /* The uploaded contains_icon is a pale background-removed PNG, so it all but
+     vanishes on the translucent tile — and `color` cannot reach an <img> the
+     way it reaches the inline SVG fallback. brightness(0) flattens the artwork
+     to a solid black silhouette while leaving its transparency intact, which
+     matches the built-in SVG's #000.
+
+     Delete this rule if a properly coloured icon is uploaded; it would flatten
+     that one too. Scoped to img so the SVG fallback is untouched. */
+  .main-image img.kpdp-contains__icon {
+    filter: brightness(0);
+  }
+
+  .main-image .kpdp-contains__icon--svg {
+    color: #000000;
+  }
+
+  .main-image .kpdp-contains__text {
+    box-sizing: border-box;
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: #ffffff;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #000000;
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   "Contains" drawer: bottom sheet with tab switching
+   ========================================================================== */
+body.kpdp-contains-open {
+  overflow: hidden;
+}
+
+.kpdp-contains-drawer[hidden] {
+  display: none;
+}
+
+.kpdp-contains-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+}
+
+.kpdp-contains-drawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.kpdp-contains-drawer__sheet {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+  border-radius: 16px 16px 0 0;
+  background: #ffffff;
+}
+
+.kpdp-contains-drawer__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #000000;
+  cursor: pointer;
+}
+
+.kpdp-contains-drawer__close svg {
+  width: 100%;
+  height: 100%;
+}
+
+.kpdp-contains-drawer__title {
+  margin: 0 34px 6px 0;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 20px !important;
+  color: #000000;
+}
+
+.kpdp-contains-drawer__note {
+  margin: 0 0 12px;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 200 !important;
+  line-height: 27px !important;
+  color: #000000;
+}
+
+.kpdp-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  /* the strip line the active tab breaks through */
+  border-bottom: 1px solid #b78a2e99;
+}
+
+.kpdp-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  padding: 11px 8px;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: #b78a2e99;
+  border-radius: 8px 8px 0 0;
+  background: #fdefd5;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 20px !important;
+  color: #000000;
+  cursor: pointer;
+}
+
+.kpdp-tab.is-active {
+  background: #ffffff;
+}
+
+/* cover the strip line under the active tab so it joins the panel below */
+.kpdp-tab.is-active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: #ffffff;
+}
+
+.kpdp-panel {
+  display: none;
+}
+.kpdp-panel.is-active {
+  display: block;
+}
+
+.kpdp-spec {
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.kpdp-spec__k,
+.kpdp-spec__v {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+}
+
+.kpdp-spec__k {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 27px !important;
+}
+.kpdp-spec__v {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 27px !important;
+}
+
+/* rich-text panel body: the JS rewrites each line into a .kpdp-spec row */
+.kpdp-rte > * {
+  margin: 0;
+}
+.kpdp-rte ul,
+.kpdp-rte ol {
+  padding: 0;
+  list-style: none;
+}
+.kpdp-spec__v--wide {
+  grid-column: 1 / -1;
+}
+
+/* the theme centres text inside the gallery column; the sheet must not inherit it */
+.kpdp-contains-drawer__sheet {
+  text-align: left;
+}
+.kpdp-contains-drawer__title,
+.kpdp-contains-drawer__note,
+.kpdp-spec__k,
+.kpdp-spec__v {
+  text-align: left;
+}
+
+/* ==========================================================================
+   Brand rating pill under the price.
+   Content comes from the product_brand_rating metaobject; see
+   snippets/brand-rating-pill.liquid.
+   ========================================================================== */
+/* hidden on the PDP at every breakpoint — see the mobile block below, which
+   keeps the layout rules but stays display: none */
+.brand-rating {
+  display: none;
+}
+
+.brand-rating__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: var(--brand-rating-bg, #fff3da);
+  color: var(--brand-rating-text, #1f1f1f);
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+.brand-rating__logo {
+  width: 22px;
+  height: 17px;
+  max-width: none;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-rating__label {
+  color: inherit;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+/* the label is a rich-text field, so it arrives wrapped in a paragraph */
+.brand-rating__label > * {
+  display: inline;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.brand-rating__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-rating__symbol {
+  width: 18px;
+  height: 18px;
+  max-width: none;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* only used when the metaobject entry has no `svg` image */
+.brand-rating__symbol--fallback {
+  color: #f5b301;
+}
+
+.brand-rating__value {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+.brand-rating__subtext {
+  color: #8a8a8a;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .brand-rating {
+    /* was display: flex — pill hidden on the PDP */
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+    /* extra room above so the pill clears the price row */
+    margin: 20px 0 12px;
+    text-align: left;
+  }
+
+  .brand-rating__pill {
+    gap: 6px;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+
+  .brand-rating__symbol {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* ==========================================================================
+   Alt-text label ("Show alt text over image").
+
+   Two problems the theme's own rule can't solve here:
+
+   1. main.css:10594 pins .product-media__label to bottom:10px of
+      .product-media--image, and .kpdp20-proof is pinned to bottom:0 of the
+      same visual box at z-index 6 — so the label sat *under* the bar and its
+      text was sliced off. Extra padding cannot fix that; the label has to
+      clear the bar.
+   2. The theme's 0.5em/1em padding leaves the text almost flush with the
+      white box, so lines read as cramped and descenders look clipped.
+
+   Only the custom template loads this file, and it is also the only template
+   that renders the bar — the default PDP keeps the theme's bottom:10px.
+   ========================================================================== */
+.media-gallery .main-image {
+  /* Desktop: flush on top of the proof bar (6 + 15 + 6 = 27px), no gap.
+     The Contains button is mobile-only, so the label runs full width. */
+  --kpdp-label-bottom: 27px;
+  --kpdp-label-max: calc(100% - 20px);
+}
+
+.media-gallery .main-image .product-media__label {
+  /* Fallbacks matter: an undefined var makes the declaration invalid, which
+     drops `bottom` and slams the label to the top of the image. */
+  bottom: var(--kpdp-label-bottom, 27px);
+  max-width: var(--kpdp-label-max, calc(100% - 20px));
+  /* Roomier than the theme's 0.5em/1em so the text is not flush with the
+     white box, and a taller line-height so wrapped lines do not crowd.
+     Bottom is lighter than top: the 10px gap to the proof bar already reads
+     as space under the text, so a matching 11px there looked bottom-heavy. */
+  padding: 11px 14px 6px;
+  line-height: 1.5;
+  /* Wrap rather than overflow. The ceiling guards against an unusually long
+     alt string swallowing the photo — it is not a crop; the current copy
+     fits inside it at both breakpoints. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .media-gallery .main-image {
+    /* Flush to the image bottom. The social-proof bar that used to occupy this
+       35px now renders above the Add to Cart button. Full width — the dots and
+       the Contains button lift above it (below), so the label gets its own band
+       and the sentence stays on two lines. */
+    --kpdp-label-bottom: 0px;
+  }
+
+  /* The label owns the strip from the image bottom to roughly 68px up
+     (10px offset + a 2-line box: 2 x 18px line + 22px padding). The dot
+     carousel and the Contains button would otherwise sit inside that strip —
+     Contains shared its line, and the dots were hidden behind the opaque
+     white box — so both move above it.
+
+     :has() keeps this conditional. Products whose alt text is blank or equal
+     to the product title render no label at all (see snippets/media.liquid),
+     and those pages must keep the original offsets rather than leave a gap. */
+  .media-gallery .media-gallery__inner:has(.product-media__label) {
+    /* 78px clear of the image bottom + .main-image's 20px bottom margin */
+    --gallery-dots-offset: 98px;
+  }
+
+  .media-gallery .main-image:has(.product-media__label) .kpdp-contains {
+    /* keeps its original ~11px rise above the dot row */
+    bottom: 89px;
+  }
+}
+
+/* ==========================================================================
+   Sold-out size chips
+   ---------------------------------------------------------------------------
+   Two theme rules made a sold-out size read as "crossed out" instead of
+   "disabled":
+
+   1. main.css:11609 (.opt-btn.is-unavailable + .opt-label:after) paints a 1px
+      bar rotated 144deg across the chip, and main.css:6900 keeps the solid
+      black border under it.
+   2. The custom-template rule above
+      (.opt-btn:checked + .opt-label { background-color:#201747 !important })
+      also beats the theme's .opt-btn.is-unavailable:checked grey, so selecting
+      a sold-out size painted it the same navy as an in-stock one - the S-38
+      case on a fully sold-out product.
+
+   Both are replaced with a flat greyed-back state: no line, muted fill, faded
+   text, still legible. The chips stay clickable on purpose - the back-in-stock
+   notifier block needs the shopper to be able to pick a sold-out size - so this
+   is cursor: not-allowed, not pointer-events: none.
+
+   Mobile only, per the design brief - above 768px the template keeps the
+   theme's strike-through treatment.
+
+
+/* ==========================================================================
+   Social-proof bar - "N people bought this product in last 30 days"
+   ---------------------------------------------------------------------------
+   Markup: snippets/kpdp-social-proof.liquid, rendered twice by
+   sections/main-product.liquid. These rules were an inline <style> block in
+   that section until the bar gained a second placement.
+
+   Desktop (>768px): --gallery, pinned to the bottom of the gallery image.
+   Mobile  (<=768px): --atc, static, directly above the Add to Cart button.
+
+   Exactly one is visible at a time, so the pair never reads as a duplicate.
+   ========================================================================== */
+
+.media-gallery .main-image {
+  position: relative;
+}
+
+.kpdp20-proof {
+  display: flex;
+  justify-content: center;
+  background: #201747;
+  padding: 6px 12px;
+}
+
+.kpdp20-proof__text {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #fff;
+  font-weight: 400;
+  font-family: "Nunito Sans" !important;
+}
+
+.kpdp20-proof__icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.kpdp20-proof__count {
+  font-weight: 700;
+}
+
+.kpdp20-proof__icon--svg {
+  display: none;
+}
+
+/* Desktop placement: overlaid on the image, mobile copy suppressed. */
+.kpdp20-proof--gallery {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+}
+
+.kpdp20-proof--atc {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  /* Swap which copy renders. */
+  .kpdp20-proof--gallery {
+    display: none;
+  }
+
+  /* Matches the slim-fit guidance note: same lavender card, same violet ink,
+     and 25px stack rhythm, on a slightly roomier box. The 25px top / 0 bottom mirrors
+     .product-form .input-row (main.css:3710) - the note's own margin - and the
+     gap under it comes from .buy-buttons-row's own 15px top margin.
+     No negative margin any more: the bar is an inset card, not a full-bleed
+     band, so it reads as a pair with the note rather than a leftover strip. */
+  .kpdp20-proof--atc {
+    display: flex;
+    margin: 25px 0 0;
+    padding: 9px 16px;
+    border-radius: 10px;
+    background: #f1edfd;
+  }
+
+  .kpdp20-proof__text {
+    line-height: 15px;
+    font-weight: 500;
+  }
+
+  /* The white text and gold icon below were set for the dark gradient this bar
+     used to carry; on #F1EDFD they land at 1.1:1 and 1.9:1 contrast, i.e. all
+     but invisible. Both move to the violet used by the slim-fit note (6.6:1).
+     Scoped to --atc so the desktop bar, still navy, keeps its white-on-dark. */
+  .kpdp20-proof--atc .kpdp20-proof__text,
+  .kpdp20-proof--atc .kpdp20-proof__icon--svg {
+    color: #5e3bb3;
+  }
+
+  /* 12px/15px was sized for the dark strip. The base rule carries !important on
+     the family, so the override repeats it. Weights stay as they were - the
+     count is bold on purpose. */
+  .kpdp20-proof--atc .kpdp20-proof__text {
+    font-family: "Nunito Sans", sans-serif !important;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Gap between the card and the Add to Cart button. It was whatever
+     .buy-buttons-row happened to carry - 15px on mobile (product.css:668),
+     25px from main.css:3710 if that ever stops matching - collapsed against the
+     card's 0 bottom margin. Pinned here instead, adjacent-sibling scoped so it
+     only applies where the card actually precedes the button. Four classes
+     outrank both of those rules, so this ONE value is the whole gap: change it
+     and nothing else. */
+  .section-main-product .product-form .kpdp20-proof--atc + .buy-buttons-row {
+    margin-top: 20px;
+  }
+
+  /* ...and nothing inside the row may add to it. The button sits four levels
+     down (<buy-buttons> > form > .no-stock-delivery > .quantity-submit-row >
+     .quantity-submit-row__submit > button) and which of those carries top
+     spacing depends on the branch: in stock, .quantity-submit-row__submit is
+     also an .input-row and picks up 15px from product.css:538; sold out, it is
+     the flex .no-stock-delivery row instead. Rather than chase the branch,
+     every wrapper between the row and the button is flattened, which leaves the
+     margin above as the only gap in play. Scoped to the custom PDP, to mobile,
+     and to rows that actually follow the proof card. */
+  .section-main-product
+    .product-form
+    .kpdp20-proof--atc
+    + .buy-buttons-row
+    .form,
+  .section-main-product
+    .product-form
+    .kpdp20-proof--atc
+    + .buy-buttons-row
+    .no-stock-delivery,
+  .section-main-product
+    .product-form
+    .kpdp20-proof--atc
+    + .buy-buttons-row
+    .quantity-submit-row,
+  .section-main-product
+    .product-form
+    .kpdp20-proof--atc
+    + .buy-buttons-row
+    .quantity-submit-row__submit {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  /* Line-art figures on the tint; the PNG mark is the desktop treatment. */
+  .kpdp20-proof__icon--png {
+    display: none;
+  }
+
+  .kpdp20-proof__icon--svg {
+    display: inline-block;
+  }
+}
+
+/* ==========================================================================
+   Slim-fit guidance note ("For a slim fit, we recommend selecting one size
+   smaller.")
+   ---------------------------------------------------------------------------
+   Markup and the JS that shows it for sizes 40/42/44 are in
+   sections/main-product.liquid; neither the icon nor the copy changes here.
+   The base look is an inline <style> in that same section (.slim-fit-guidance-msg,
+   ~line 2881) which loads AFTER this file, so every declaration below needs the
+   .section-main-product .product-form prefix to outrank it on specificity -
+   dropping the prefix silently reverts the box to the old blue-grey.
+
+   Redesign, per spec: violet on a lavender card, matching the #5E3BB3 already
+   hard-coded on the icon, with a roomier box and a lighter icon stroke.
+   Mobile only - above 768px the inline base styles still apply.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .section-main-product .product-form .slim-fit-guidance-msg {
+    gap: 10px;
+    align-items: center;
+    padding: 11px 14px;
+    border-radius: 10px;
+    background: #f1edfd;
+    color: #5e3bb3;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* The 16px/stroke-width 2 on the tag reads heavy next to 14px text. CSS wins
+     over SVG presentation attributes, so this restyles the icon without
+     touching its markup. */
+  .section-main-product .product-form .slim-fit-guidance-msg svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.5;
+  }
+
+  /* Hidden on mobile, per the brief. !important is not decoration here: the
+     section's own script writes display:flex / display:none straight onto the
+     element's style attribute (main-product.liquid ~2946) whenever the shopper
+     picks size 40/42/44, and an inline style beats any plain rule. The script
+     is left running - it just has nothing visible to toggle below 768px.
+
+     The design rules above are kept rather than deleted: they are what the note
+     looks like if this one rule is ever removed. Desktop is unaffected either
+     way - it renders from the inline <style> in the section. */
+  .section-main-product .product-form .slim-fit-guidance-msg {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   PDP Details Accordion (Specifications, Description, Shipping)
+   ========================================================================== */
+.pdp-accordion-group {
+  margin-top: 15px;
+  border-top: 1px solid #E8E8E8;
+}
+.pdp-accordion-item {
+  border-bottom: 1px solid #E8E8E8;
+}
+details.pdp-accordion-item > summary.pdp-accordion-summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 0 !important;
+  cursor: pointer !important;
+  list-style: none !important;
+  user-select: none !important;
+}
+details.pdp-accordion-item > summary.pdp-accordion-summary::-webkit-details-marker,
+details.pdp-accordion-item > summary.pdp-accordion-summary::marker {
+  display: none !important;
+  content: "" !important;
+}
+.pdp-accordion-title {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1E1E1E;
+}
+.pdp-accordion-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pdp-accordion-icon::before,
+.pdp-accordion-icon::after {
+  content: '';
+  position: absolute;
+  background-color: #333333;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.pdp-accordion-icon::before {
+  width: 12px;
+  height: 1.5px;
+}
+.pdp-accordion-icon::after {
+  width: 1.5px;
+  height: 12px;
+}
+.pdp-accordion-item[open] .pdp-accordion-icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+.pdp-accordion-content {
+  padding: 0 0 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4A4A4A;
+}
+.pdp-specs-table {
+  display: flex;
+  flex-direction: column;
+}
+.pdp-spec-row {
+  display: flex;
+  padding: 6px 0;
+  border-bottom: 1px solid #F2F2F4;
+  font-size: 13px;
+}
+.pdp-spec-row:last-child {
+  border-bottom: none;
+}
+.pdp-spec-key {
+  width: 35%;
+  min-width: 110px;
+  color: #888888;
+}
+.pdp-spec-val {
+  width: 65%;
+  color: #1E1E1E;
+  font-weight: 500;
+}
+.pdp-desc-body,
+.pdp-ship-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4A4A4A;
+}

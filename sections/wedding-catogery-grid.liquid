@@ -1,0 +1,282 @@
+<section 
+  id="shopify-section-{{ section.id }}" 
+  class="cp-category-grid-section"
+  style="
+    {% if section.settings.background_color != blank %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+  "
+>
+  <div class="container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="cp-cat-title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="cp-cat-subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="cp-category-grid">
+        {% for block in section.blocks %}
+        {% assign cat = collections[block.settings.collection] %}
+
+        {% if cat != blank %}
+        <div class="cp-category-item" id="block-{{ block.id }}">
+
+            <a href="{{ cat.url }}" class="cp-cat-img-wrap">
+            {% if block.settings.image != blank %}
+                <img 
+                width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy" src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ cat.title | escape }}"
+                class="cp-cat-img">
+            {% else %}
+                <img 
+                width="{{ cat.featured_image.width }}" height="{{ cat.featured_image.height }}" loading="lazy" src="{{ cat.featured_image | image_url: width: 600 }}"
+                alt="{{ cat.title | escape }}"
+                class="cp-cat-img">
+            {% endif %}
+            </a>
+            <h3 class="cp-cat-name">
+            {% if block.settings.collection_title != blank %}
+              <a href="{{ cat.url }}" >
+                {{ block.settings.collection_title }}
+              </a>
+            {% else %}
+              <a href="{{ cat.url }}" >
+                {{ cat.title }}
+              </a>
+            {% endif %}
+            </h3>
+
+            <p class="cp-cat-styles">
+            {{ cat.products_count }} Styles
+            </p>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+      <!-- SEE ALL BUTTON (ONLY FOR MOBILE) -->
+    <button class="cp-see-all-btn">See all</button>
+
+
+  </div>
+</section>
+
+<style>
+    .cp-category-grid-section {
+    padding: 0px 0 27px;
+    text-align: center;
+}
+
+.cp-category-grid-section .container {
+    max-width: 1280px;
+}
+
+.cp-category-grid-section h2.cp-cat-title {
+    text-align: center;
+    font-size: 48px;
+    line-height: 48px;
+    font-family: Playfair Display ;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+.cp-category-grid-section  p.cp-cat-subtitle {
+    color: #4a5565;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: normal;
+    font-family: Manrope ;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.cp-category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 27px;
+    column-gap: 20px;
+}
+
+.cp-category-item {
+  text-align: left;
+}
+
+.cp-cat-img-wrap {
+  display: block;
+  overflow: hidden;
+}
+
+.cp-cat-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cp-cat-name {
+margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 6px;
+font-family: Playfair Display !important;
+}
+
+.cp-cat-styles {
+font-size: 14px;
+    color: #6A7282;
+    line-height: normal;
+  font-family: Manrope !important;
+    margin: 0;
+    display: none;
+}
+
+/* Responsive Grid */
+@media (max-width: 991px) {
+  .cp-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+
+.template-suffix-wedding-lp2 .cp-cat-img {
+  border-radius: 2.71px;
+}
+
+.cp-category-grid-section h2.cp-cat-title {
+    font-size: 24px !important;
+    line-height: normal !important;
+    margin-bottom: 8px;
+}
+
+.cp-category-grid-section p.cp-cat-subtitle {
+    font-size: 14px;
+    line-height: normal;
+    margin-bottom: 17px;
+}
+
+.cp-category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 18px;
+    column-gap: 10px;
+}
+
+.template-suffix-wedding-lp2 .cp-category-grid-section .cp-category-grid>.cp-category-item,
+ .cp-category-grid-section .cp-category-item {
+    display: none;
+  }
+
+.template-suffix-wedding-lp2 .cp-category-grid-section .cp-category-grid>.cp-category-item:nth-child(-n+4),
+.cp-category-grid-section .cp-category-item:nth-child(-n+4) {
+    display: block;
+  }
+
+
+.cp-cat-name {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.cp-cat-styles {
+    font-size: 12px;
+}
+
+.cp-category-grid-section .container {
+    text-align: center;
+}
+
+button.cp-see-all-btn {
+    margin: 18px auto 0;
+    font-size: 16px;
+    line-height: normal;
+    padding: 0;
+    text-decoration: underline;
+    font-weight: 600;
+    font-family: Playfair Display;
+    cursor: pointer;
+}
+
+
+}
+
+@media (min-width:769px) {
+.cp-see-all-btn {
+  display: none;
+}
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const btn = document.querySelector(".cp-see-all-btn");
+  if (!btn) return;
+
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".cp-category-item").forEach(item => {
+      item.style.display = "block";
+    });
+
+    btn.style.display = "none"; // hide button after expanding
+  });
+});
+</script>
+
+
+{% schema %}
+{
+  "name": "Shop by Category",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Curated collections for the modern groom"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF2EA"
+    }
+  ],
+  "blocks": [
+    {
+        "type": "category_item",
+        "name": "Category Item",
+        "settings": [
+            {
+            "type": "collection",
+            "id": "collection",
+            "label": "Select Category Collection"
+            },
+            {
+            "type": "text",
+            "id": "collection_title",
+            "label": "Collection Title"
+            },
+            {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Custom Image (Optional)"
+            }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Category"
+    }
+  ]
+}
+{% endschema %}
+

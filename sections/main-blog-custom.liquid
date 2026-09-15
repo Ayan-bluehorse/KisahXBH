@@ -1,0 +1,960 @@
+<style>
+.template-blog{
+  background:#F3F3F3;
+}
+.template-blog .page-header{
+  padding:0;
+}
+ .template-blog .page-section-spacing{
+   margin-top:8px;
+ }
+  nav.breadcrumbs-blog ol.breadcrumbs-blog__list{
+    display: flex;
+    list-style: none;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+  }
+   nav.breadcrumbs-blog li a{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    color: #000000;
+    opacity: 0.8;
+    font-family: 'Generis Sans W01 Regular';
+   }
+.template-blog .majortitle{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 32px;
+    text-align: center;
+    color: #000000;
+    text-transform: uppercase;
+    margin-bottom:10px;
+}
+ .article-list.article-layout--columns{
+   justify-content:space-between;
+    margin-right:0;
+    margin-left:0;
+ }
+ .article-list.article-layout--columns .article{
+    width: 40.33%;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px 15px 30px 15px;
+    margin-bottom:20px;
+    position:relative;
+ }
+ .article-list.article-layout--columns .article .article__inner h2{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+    font-family: 'Generis Sans W01 Bold';
+    text-decoration: underline;
+    margin-bottom: 10px;
+ }
+  .article-list.article-layout--columns .article .article__inner .rte{
+    margin:0;
+    flex-grow:0;
+  }
+ .article-list.article-layout--columns .article .article__inner .rte span{ 
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    display: block
+ }
+ .article-list.article-layout--columns .article .article__inner .meta{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ .article-list.article-layout--columns .article .article__inner .meta .iconmeta.time{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+   }
+  .article-list.article-layout--columns .article .blog-share{
+    background:#201747;
+    border-radius:50px;
+    padding:10px 8px;
+    position:absolute;
+    bottom:64px;
+    right:15px;
+    opacity:0;
+    visibility:hidden;
+  }
+   .article-list.article-layout--columns .article.active .blog-share{
+    opacity:1;
+    visibility:visible;
+   }
+  .article-list.article-layout--columns .article .article__inner .meta svg{
+    width:25px;
+  }
+@media screen and (max-width:768px){
+.template-blog .majortitle{
+    font-size: 26px;
+    line-height: 28px;
+}
+ .article-list.article-layout--columns .article{
+   width:100%;
+ }
+ .article-list.article-layout--columns .article .article__inner h2{
+    font-size: 16px;
+    line-height: 16px;
+ }
+ .article-list.article-layout--columns .article .article__inner .rte span{ 
+    font-size: 14px;
+    line-height: 16px;
+ }
+ .article-list.article-layout--columns .article .article__inner .meta .iconmeta.time{
+    font-size: 14px;
+    line-height: 16px;
+   }
+}
+</style>
+
+{%- assign breadcrumbs_title = 'general.breadcrumbs.breadcrumbs_title' | t | default: 'Breadcrumbs' -%}
+{% paginate blog.articles by 12 %}
+<div class="container">
+    <nav class="breadcrumbs-blog" aria-label="{{ breadcrumbs_title }}">
+      <ol class="breadcrumbs-blog__list">
+         <li class="breadcrumbs-list__item">
+           <a class="breadcrumbs-list__link" href="{{ routes.root_url }}">Home</a> 
+         </li>
+         <li class="divider" aria-hidden="true">
+           /
+         </li>
+         <li class="breadcrumbs-list__item" aria-current="page">
+           {{ blog.title | link_to: blog.url }}
+         </li>
+      </ol>
+    </nav>
+  
+  {% if section.settings.show_page_title %}
+    <div class="page-header" data-cc-animate>
+      <h1 class="majortitle">{{ blog.title }}</h1>
+    </div>
+  {% endif %}
+
+  <div class="utility-bar" data-cc-animate>
+    <div class="utility-bar__left">
+      {% if blog.all_tags.size > 0 %}
+        <div class="utility-bar__item">
+          <link-dropdown class="link-dropdown link-dropdown--left-aligned link-dropdown--with-icon">
+            <div class="visually-hidden" id="filter-dropdown-heading">{{ 'blogs.filtering.filter_by' | t | escape }}</div>
+            <button class="link-dropdown__button has-motion" aria-expanded="false" aria-controls="filter-dropdown-options" aria-describedby="filter-dropdown-heading">
+              <span class="link-dropdown__button-text">
+                <span class="link-dropdown__button-prefix-icon">{% render 'icon-filter', stroke_width: 1.3 %}</span>
+                {%- if current_tags -%}
+                  {{- current_tags | join: ', ' -}}
+                {%- else -%}
+                  {{- 'blogs.filtering.filter_by' | t -}}
+                {%- endif -%}
+              </span>
+              <span class="link-dropdown__button-icon has-motion">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
+            </button>
+            <div class="link-dropdown__options" id="filter-dropdown-options">
+              {% if current_tags %}
+                <a href="{{ blog.url }}" class="link-dropdown__link">
+                  {{- 'blogs.filtering.all' | t -}}
+                </a>
+              {% endif %}
+
+              {% for tag in blog.all_tags %}
+                <a href="{{ tag | link_to_tag: tag | split: 'href="' | last | split: '"' | first }}"
+                  class="link-dropdown__link{% if current_tags contains tag %} link-dropdown__link--active{% endif %}">
+                  {{- tag -}}
+                </a>
+              {% endfor %}
+            </div>
+          </link-dropdown>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_twitter or section.settings.show_facebook or section.settings.show_rss_icon %}
+      <div class="utility-bar__right" data-cc-animate>
+        {% if section.settings.show_twitter or section.settings.show_facebook %}
+          <span class="utility-bar__item desktop-only">
+            <div class="social-share flex items-center">
+              <p class="social-share__heading">{{ 'general.social.share_heading' | t }}</p>
+              {% render 'social-share',
+                  share_twitter: section.settings.show_twitter,
+                  share_facebook: section.settings.show_facebook,
+                  share_title: blog.title,
+                  share_url: blog.url %}
+            </div>
+          </span>
+        {% endif %}
+        {% if section.settings.show_rss_icon %}
+          <a class="rsslink utility-bar__item" href="{{ blog.url }}.atom" title="{{ blog.title | escape }} RSS">{% render 'icon-rss' %}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if section.settings.layout == 'columns' %}<div class="container">{% endif %}
+<div class="article__flex_container">  
+  <div class="article__list_customz_container">
+    <div class="article__list_customz article-list article-layout--{{ section.settings.layout }}">
+    
+      {% for article in blog.articles %}
+    
+      <div class="article" data-cc-animate>
+        <div class="article__inner {% if section.settings.layout != 'columns' %}container container--reading-width{% endif %}">
+          
+          {% if article.image %}
+            <div class="article-image">
+              <a href="{{ article.url }}">
+                 <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+              </a>
+            </div>
+          {% endif %}
+    
+          <h2>{{ article.title | escape | link_to: article.url }}</h2>
+    
+          {%- if section.settings.show_excerpts -%}
+            <div class="rte cf">
+              {%- if article.excerpt.size > 0 -%}
+                {{ article.excerpt }}
+              {%- else -%}
+                {{ article.content | strip_html | truncatewords: 30 }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+    
+          <div class="meta">
+            <span class="iconmeta time">
+              {% if section.settings.show_date %}
+                
+                {% assign now = 'now' | date: "%s" %}
+                {% assign published = article.published_at | date: "%s" %}
+                {% assign diff_seconds = now | minus: published %}
+                
+                {% assign diff_days = diff_seconds | divided_by: 86400 %}
+                {% assign diff_months = diff_days | divided_by: 30 %}
+                {% assign years = diff_months | divided_by: 12 %}
+                
+                {% if diff_days == 0 %}
+                  Today
+                {% elsif years >= 1 %}
+                  {{ years }} year{% if years > 1 %}s{% endif %} ago
+                {% elsif diff_months >= 1 %}
+                  {{ diff_months }} month{% if diff_months > 1 %}s{% endif %} ago
+                {% else %}
+                  {{ diff_days }} day{% if diff_days > 1 %}s{% endif %} ago
+                {% endif %}
+                
+                
+              {% endif %}
+              {% if section.settings.show_author %}
+                {% if section.settings.show_date %}&mdash;{% endif %}
+                <span class="author">{{ article.author }}</span>
+              {% endif %}
+            </span>
+    
+            {% if section.settings.show_article_tags %}
+            {% capture tag_markup %}
+            <div class="iconmeta tags">
+              <span class="label">{{ 'blogs.tags.label' | t }}:</span>
+              {% for tag in article.tags %}
+                {{ tag | link_to_tag: tag }}
+              {% endfor %}
+            </div>
+            {% endcapture %}
+            {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
+            {% endif %}
+            {% if section.settings.show_share_icon %}
+            <div class="blog_share_svg">
+             {% render 'share-svg' %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+                      
+        {% if section.settings.show_share_icon %}
+        {% render 'mobile-soical-share'
+               shareurl:blog.url,
+               shareimage:article.image,
+               share_title:blog.title,
+               unique_id:"blog-share"
+             %}
+        {% endif %}
+                      
+      </div>
+    
+      {% else %}
+    
+      <div class="container"><h5 class="align-centre fully-spaced-row">{{ 'blogs.article.no_matches' | t }}</h5></div>
+    
+      {% endfor %}
+    </div>
+                      
+    <div class="custom__pagination-control container pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
+                      
+  </div>
+                      
+  <div class="article__right_container">
+
+      {% if blog.metafields.custom.article_list != blank %}
+      <div class="custom__article_slider">
+        <div class="article-list custom__article_slick">
+          {% for article_custom in blog.metafields.custom.article_list.value %}
+            {% assign article = articles[article_custom] %}
+            
+            <div class="article slick-slide" data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
+               
+              <div class="article__inner">
+                {% if article.image %}
+                  <div class="article-image">
+                    <a href="{{ article.url }}">
+                       <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+                    </a>
+                  </div>
+                {% endif %}
+  
+                <div class="article__title_container">
+                 <h3 class="slider__article_title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+                </div>
+                
+              </div>
+            </div> 
+            
+         {% endfor %}
+          </div>
+      </div>
+      {% endif %}
+
+
+      {% if section.settings.blog != blank %}
+      <div class="custom__article_grid">
+        {% if section.settings.latest__posts_title != blank %}
+        <h3 class="latest__post_title">{{ section.settings.latest__posts_title }}</h3>
+        {% endif %}
+        {%- assign blogzz = blogs[section.settings.blog] -%}
+        <div class="article-list">
+          {% for article in blogzz.articles limit: section.settings.post_limit %}
+          <div class="article__grid_cust">
+             
+            <div class="custarticle__inner">
+              {% if article.image %}
+                <div class="custarticle-image">
+                  <a href="{{ article.url }}">
+                     <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+                  </a>
+                </div>
+              {% endif %}
+
+              <div class="subtitle__container">
+                <div class="subtitle__overlay">
+
+                  {% if article.tags.size > 0 %}
+                  <div class="iconmeta tags">
+                    <span class="label">{{ 'blogs.tags.label' | t }}:</span>
+                    {% for tag in article.tags %}
+                      <span class="latest__tag">{{ tag | link_to_tag: tag }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+            
+                 <h3 class="article__grid_subtitle"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    
+
+    {% if blog.metafields.custom.top_posts != blank %}
+    <div class="top__posts_grid">
+      <h3 class="top__posts_title">Top Posts</h3>
+      <div class="top__posts_grid_container">
+        {% for article_custom in blog.metafields.custom.top_posts.value %}
+          {% assign article = articles[article_custom] %}
+          
+          <div class="article top__posts_box">
+             
+            <div class="top__posts__inner">
+              {% if article.image %}
+                <div class="article-image">
+                  <a href="{{ article.url }}">
+                     <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+                  </a>
+                </div>
+              {% endif %}
+
+              <div class="article__title_container">
+               <h3 class="slider__article_title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+                <span class="iconmeta time">
+
+                  {% assign now = 'now' | date: "%s" %}
+                  {% assign published = article.published_at | date: "%s" %}
+                  {% assign diff_seconds = now | minus: published %}
+                  
+                  {% assign diff_days = diff_seconds | divided_by: 86400 %}
+                  {% assign diff_months = diff_days | divided_by: 30 %}
+                  {% assign years = diff_months | divided_by: 12 %}
+                  
+                  {% if diff_days == 0 %}
+                    Today
+                  {% elsif years >= 1 %}
+                    {{ years }} year{% if years > 1 %}s{% endif %} ago
+                  {% elsif diff_months >= 1 %}
+                    {{ diff_months }} month{% if diff_months > 1 %}s{% endif %} ago
+                  {% else %}
+                    {{ diff_days }} day{% if diff_days > 1 %}s{% endif %} ago
+                  {% endif %}
+          
+                  {% if section.settings.show_author %}
+                    {% if section.settings.show_date %}&mdash;{% endif %}
+                    <span class="author">{{ article.author }}</span>
+                  {% endif %}
+                </span>
+              </div>
+              
+            </div>
+          </div> 
+          
+       {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if section.settings.blog__recent != blank %}
+    <div class="recent__posts_grid mm">
+      <h3 class="recent__posts_title">{{ section.settings.recent__posts_title }}</h3>
+      {%- assign blogzx = blogs[section.settings.blog] -%}
+      <div class="recent__posts_grid_container">
+        {% for article_customq in blogzx.articles limit: section.settings.recent__post_limit %}
+        
+          <div class="article recent__posts_box">
+             
+            <div class="recent__posts__inner">
+
+              <div class="article__title_container">
+               <h3 class="slider__article_title"><a href="{{ article_customq.url }}">{{ article_customq.title | escape }}</a></h3>
+              </div>
+              
+            </div>
+          </div> 
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    
+    <div class="custom__article__tags_main">
+      <h3 class="recent__posts_title">Tag Cloud</h3>
+      {%- for tag in blog.all_tags -%}
+      {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
+      <a class="cust__article-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+      {%- endfor -%}
+    </div>
+
+        
+      
+  </div>
+</div>
+
+{% if section.settings.layout == 'columns' %}</div>{% endif %}
+{% endpaginate %}
+
+
+<style>
+/* Slick Css Start */
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-prev:before {
+    content: "";
+    display: block;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 37px;
+    background-position: center;
+    background-size: contain;
+    opacity: 1;
+    background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-next:before {
+    content: "";
+    display: block;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 37px;
+    background-position: center;
+    background-size: contain;
+    opacity: 1;
+    background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+    transform: rotate(180deg);
+}
+/* Slick Css End */
+  
+#shopify-section-{{ section.id }} .article__flex_container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz_container {
+    width: 66.66%;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container {
+    width: 33.33%;
+    padding-left: 60px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider {
+    margin: 0 0 28px;
+    padding: 0 0 28px;
+    border-bottom: 1px solid rgba(24, 24, 24, .05);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
+    width: calc(33.33% - 15px);
+    background: transparent;
+    box-shadow: unset;
+    border: 0;
+    padding: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article__inner .article-image img {
+    aspect-ratio: 139 / 125;
+    object-fit: cover;
+    display: block;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article {
+    padding: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner {
+    position: relative;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner .article-image {
+    margin-bottom: 3em;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner .article-image img {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    object-fit: cover;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner .article__title_container {
+    margin: 0;
+    width: 90%;
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: #ffffff;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner .slider__article_title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    font-family: 'Generis Sans W01 Bold';
+    margin: 0;
+    padding: 15px;
+    text-align: left;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner {
+    position: relative;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article__inner h2 {
+    text-decoration: none;
+    text-align: left;
+    margin: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner .custarticle-image img {
+    width: 100%;
+    aspect-ratio: 95 / 66;
+    object-fit: cover;
+    display: block;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner .subtitle__container {
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 1;
+    padding: 0 15px 20px 15px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid,
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .top__posts_grid {
+    margin: 0 0 28px;
+    padding: 0 0 28px;
+    border-bottom: 1px solid rgba(24, 24, 24, .05);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .latest__post_title,
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .top__posts_grid .top__posts_title,
+#shopify-section-{{ section.id }} .article__flex_container .recent__posts_grid .recent__posts_title,
+#shopify-section-{{ section.id }} .custom__article__tags_main .recent__posts_title {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom: 18px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .article__grid_cust {
+    margin-bottom: 2px;
+}
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .article__grid_subtitle {
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    font-family: 'Generis Sans W01 Bold';
+    margin: 0;
+}
+
+#shopify-section-{{ section.id }} .top__posts_grid_container .top__posts_box {
+    margin: 0 0 32px;
+}
+#shopify-section-{{ section.id }} .top__posts_grid_container .top__posts_box:last-child {
+    margin: 0;
+}
+#shopify-section-{{ section.id }} .top__posts_box .top__posts__inner {
+    display: flex;
+    gap: 5%;
+}
+#shopify-section-{{ section.id }} .top__posts_box .top__posts__inner .article-image {
+    width: 35%;
+    margin: 0;
+}
+#shopify-section-{{ section.id }} .top__posts_box .top__posts__inner .article__title_container {
+    width: 60%;
+}
+#shopify-section-{{ section.id }} .top__posts_box .top__posts__inner .article-image img {
+    width: 100%;
+    aspect-ratio: 35 / 27;
+    object-fit: cover;
+    display: block;
+}
+#shopify-section-{{ section.id }} .article__flex_container .recent__posts_grid .recent__posts__inner .article__title_container {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(24, 24, 24, .05);
+}
+#shopify-section-{{ section.id }} .top__posts_box .top__posts__inner .article__title_container .slider__article_title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    font-family: 'Generis Sans W01 Bold';
+    margin: 0 0 6px;
+    text-align: left;
+}
+#shopify-section-{{ section.id }} .article__flex_container .recent__posts_grid .recent__posts__inner .slider__article_title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    font-family: 'Generis Sans W01 Bold';
+    margin: 0;
+    text-align: left;
+}
+#shopify-section-{{ section.id }} .custom__article__tags_main .cust__article-tag {
+    display: block;
+    float: left;
+    margin: 4px;
+    padding: 0 10px;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 13px !important;
+    line-height: 30px;
+}
+
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .iconmeta {
+    margin: 0 0 10px;
+}
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .iconmeta .latest__tag {
+    margin-right: 6px;
+}
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .iconmeta .latest__tag a,
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .iconmeta .label {
+    color: #ffffff;
+}
+
+#shopify-section-{{ section.id }} .article__flex_container .recent__posts_grid {
+    margin: 0 0 28px;
+    padding: 0 0 28px;
+    border-bottom: 1px solid rgba(24, 24, 24, .05);
+}
+#shopify-section-{{ section.id }} .article__flex_container .recent__posts_grid .recent__posts_grid_container .article.recent__posts_box:last-child .article__title_container {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .custom__pagination-control {
+    margin-top: 60px;
+}
+  
+@media only screen and (max-width: 1100px) {
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz {
+    gap: 11px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
+    width: calc(50% - 11px);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner:before {
+    height: 40%;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container {
+    padding-left: 30px;
+}
+}
+  
+@media only screen and (max-width: 768px) {
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article .article__inner .slider__article_title,
+#shopify-section-{{ section.id }} .custom__article_grid .custarticle__inner .subtitle__container .article__grid_subtitle {
+    font-size: 16px;
+    line-height: 18px;
+}
+}
+  
+@media only screen and (max-width: 767px) {
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
+    width: calc(50% - 6px);
+    /* padding: 10px 10px 20px 10px; */
+}
+#shopify-section-{{ section.id }} .article__flex_container .custom__pagination-control {
+    margin-top: 20px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz_container {
+    margin-bottom: 10px;/*40px*/
+    width: 100%;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz {
+    gap: 5px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container {
+    width: 100%;
+    padding: 0;
+}
+/* #shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-prev,
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-next{
+    display: none !important;
+} */
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-prev {
+    left: 0;
+    z-index: 1;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .slick-next {
+    right: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_grid .custarticle__inner:before {
+    height: 25%;
+}
+}
+</style>
+                    
+
+<script>
+ let clickSvg = document.querySelectorAll('.blog_share_svg svg');
+   let article = document.querySelectorAll('.article');
+   clickSvg.forEach( function(clickBtn, index){
+   clickBtn.addEventListener('click',()=>{
+      article[index].classList.toggle('active');
+   }); 
+ });
+
+
+// Custom script Start
+
+window.kisahWhenJQueryReady(function($) {
+  
+$('#shopify-section-{{ section.id }} .custom__article_slick').slick({
+  dots: false,
+  infinite: false,
+  arrow: true,
+  speed: 300,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  infinite: true,
+  autoplay: false,
+  autoplaySpeed: 2000,
+    responsive: [
+        {
+          breakpoint: 767,
+          settings: {
+              arrow: false,
+          }
+        }
+    ]
+});
+
+});
+</script>
+                    
+                    
+{% schema %}
+{
+  "name": "Main Blog Custom",
+  "class": "page-section-spacing",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_page_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "columns",
+      "options": [
+        {
+          "label": "List",
+          "value": "list"
+        },
+        {
+          "label": "Grid",
+          "value": "columns"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpts",
+      "label": "Show excerpt",
+      "info": "Change excerpts by editing your blog posts. Learn more",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_article_tags",
+      "label": "Show tags underneath articles",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_icon",
+      "label": "Show Share Icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Sharing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rss_icon",
+      "label": "Show RSS feed link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_twitter",
+      "label": "Show X (formerly Twitter) sharing icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_facebook",
+      "label": "Show Facebook sharing icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Latest Posts"
+    },
+    {
+      "type": "text",
+      "id": "latest__posts_title",
+      "label": "Heading",
+      "default": "Latest Posts"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Latest Posts Blog"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "Latest Posts Limit",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Recent Posts"
+    },
+    {
+      "type": "text",
+      "id": "recent__posts_title",
+      "label": "Heading",
+      "default": "Recent Posts"
+    },
+    {
+      "type": "blog",
+      "id": "blog__recent",
+      "label": "Recent Posts Blog"
+    },
+    {
+      "type": "range",
+      "id": "recent__post_limit",
+      "label": "Recent Posts Limit",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name":"Main Blog Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,81 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "author_bio_nVyzd4": {
+          "type": "author-bio",
+          "name": "Author Bio",
+          "settings": {
+            "section_title": "",
+            "alignment": "center",
+            "max_width": 900,
+            "section_bg": "rgba(0,0,0,0)",
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/user.png",
+            "avatar_border": "#dddddd",
+            "name": "Tanvi Jain",
+            "role": "Head of Design",
+            "bio": "<p>Tanvi Jain is the Head of Design at Kisah, where she leads the creative vision behind the brand’s contemporary ethnic menswear collections. With a keen eye for detail and a deep understanding of evolving fashion trends, she blends traditional craftsmanship with modern design sensibilities. At Kisah, she continues to shape collections that resonate with the modern man, ensuring every outfit is both timeless and trend-forward.</p>"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "author_bio_nVyzd4"
+      ],
+      "custom_css": [
+        ".blog_share_svg {display: none;}"
+      ],
+      "settings": {
+        "show_date": true,
+        "show_author": false,
+        "show_article_tags": false,
+        "show_sharing_icons": false,
+        "show_twitter": false,
+        "show_facebook": false,
+        "show_pinterest": false,
+        "show_featured_image": true,
+        "full_width_image": false,
+        "featured_image_height": "natural",
+        "enable_title_overlay": false,
+        "overlay_style": "shadow"
+      }
+    },
+    "custom_liquid_8mA49Y": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": true,
+        "code": "{% assign content_parts = article.content | split: 'href=\"' %}\n{% assign used_handles = '' %}\n{% assign found_products = false %}\n\n{% capture product_grid %}\n  {% for part in content_parts %}\n    {% if part contains '/products/' %}\n\n      {% assign handle_raw = part | split: '/products/' | last %}\n      {% assign product_handle = handle_raw | split: '\"' | first | split: '?' | first | split: '/' | first %}\n\n      {% unless used_handles contains product_handle %}\n        {% assign product = all_products[product_handle] %}\n        \n        {% if product != blank %}\n          {% assign used_handles = used_handles | append: product_handle | append: ',' %}\n          {% assign found_products = true %}\n\n          {% render 'product-block', product: product %}\n          \n        {% endif %}\n      {% endunless %}\n\n    {% endif %}\n  {% endfor %}\n{% endcapture %}\n\n{% if found_products %}\n  <div class=\"blog-mentioned-products\" style=\"margin-top: 60px;\">\n    <div class=\"container\">\n      <div class=\"template-collection\">\n\n        <h2 class=\"section-title\" style=\"margin-bottom: 30px; text-align:center;\">\n          Products Mentioned In This Article\n        </h2>\n\n        <div class=\"product-grid product-grid--per-row-4 product-grid--per-row-mob-2 product-grid--per-row-mob-2\">\n          {{ product_grid }}\n        </div>\n\n      </div>\n    </div>\n  </div>\n{% endif %}"
+      }
+    },
+    "featured_blog_HPrGpB": {
+      "type": "featured-blog",
+      "settings": {
+        "title": "You May Also Like",
+        "blog": "news",
+        "post_limit": 3,
+        "show_author": false,
+        "show_date": true,
+        "show_excerpts": true,
+        "crop_ratio": "1.33",
+        "color_scheme": "default"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_8mA49Y",
+    "featured_blog_HPrGpB"
+  ]
+}

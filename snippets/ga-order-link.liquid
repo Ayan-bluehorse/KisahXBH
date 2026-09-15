@@ -1,0 +1,291 @@
+{%- comment -%}
+  GA4 Cart Attribution & Order Linking Engine
+  Reliably extracts GA4 client_id (matching user_pseudo_id) & session_id and stamps them
+  as Shopify Cart Attributes for 100% order-level join in BigQuery/GA4 export across all
+  checkout channels (GoKwik, Drawer, Quick View, Direct Checkout).
+{%- endcomment -%}
+
+<script>
+(function() {
+  'use strict';
+
+  var GA4_MEASUREMENT_ID = '{{ settings.ga4Gokwik | default: "G-31X587J1SK" }}';
+  var STORAGE_KEY_CLIENT_ID = '_ga_client_id_cached';
+  var STORAGE_KEY_SESSION_ID = '_ga_session_id_cached';
+
+  var state = {
+    clientId: (function() {
+      try { return sessionStorage.getItem(STORAGE_KEY_CLIENT_ID); } catch(e) { return null; }
+    })(),
+    sessionId: (function() {
+      try { return sessionStorage.getItem(STORAGE_KEY_SESSION_ID); } catch(e) { return null; }
+    })(),
+    stamped: false,
+    isSyncing: false
+  };
+
+  /* ---- 1. Parse GA4 cookies directly ---- */
+  function parseGaCookies() {
+    var cookies = document.cookie ? document.cookie.split('; ') : [];
+    var cid = null;
+    var sid = null;
+
+    for (var i = 0; i < cookies.length; i++) {
+      var parts = cookies[i].split('=');
+      var name = parts[0];
+      var val = parts.slice(1).join('=');
+
+      // Standard _ga cookie format: GA1.1.123456789.1690000000 -> 123456789.1690000000
+      if (name === '_ga' && val) {
+        var match = val.match(/^GA\d+\.\d+\.(.+)$/);
+        if (match) cid = match[1];
+      }
+
+      // GA4 session cookie format: _ga_XXXXXXXXXX=GS1.1.1690000000.1.1.1690000005.0.0.0
+      if (name.indexOf('_ga_') === 0 && val) {
+        var sMatch = val.match(/^GS\d+\.\d+\.(\d+)/);
+        if (sMatch) sid = sMatch[1];
+      }
+    }
+    return { clientId: cid, sessionId: sid };
+  }
+
+  /* ---- 2. Inject hidden inputs into all add-to-cart & product forms ---- */
+  function injectFormInputs(attributes) {
+    if (!attributes || typeof attributes !== 'object') return;
+    var forms = document.querySelectorAll('form[action*="/cart/add"], form[action*="/cart"], form.js-product, .quickbuy-container form');
+    forms.forEach(function(form) {
+      Object.keys(attributes).forEach(function(key) {
+        var input = form.querySelector('input[name="attributes[' + key + ']"]');
+        if (!input) {
+          input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'attributes[' + key + ']';
+          input.setAttribute('data-ga4-attr', key);
+          form.appendChild(input);
+        }
+        input.value = attributes[key];
+      });
+    });
+  }
+
+  /* ---- 3. Push to Shopify Cart Attributes (/cart/update.js) ---- */
+  function syncToShopifyCart(clientId, sessionId, force, callback) {
+    if (!clientId && !sessionId) {
+      if (typeof callback === 'function') callback(null);
+      return;
+    }
+
+    var attributes = {};
+    if (clientId) attributes['ga_client_id'] = clientId;
+    if (sessionId) attributes['ga_session_id'] = String(sessionId);
+
+    // Proactively inject into all forms on the page
+    injectFormInputs(attributes);
+
+    if (state.isSyncing) return;
+    state.isSyncing = true;
+
+    fetch('/cart/update.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ attributes: attributes }),
+      keepalive: true
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(cart) {
+      state.stamped = true;
+      state.isSyncing = false;
+      try {
+        if (clientId) sessionStorage.setItem(STORAGE_KEY_CLIENT_ID, clientId);
+        if (sessionId) sessionStorage.setItem(STORAGE_KEY_SESSION_ID, String(sessionId));
+      } catch(e) {}
+      if (typeof callback === 'function') callback(cart);
+    })
+    .catch(function(err) {
+      state.isSyncing = false;
+      if (typeof callback === 'function') callback(null);
+    });
+  }
+
+  /* ---- 4. Primary Extractor with gtag('get') and Cookie Fallback ---- */
+  function resolveIds(onComplete) {
+    // 1. If both already cached, call immediately
+    if (state.clientId && state.sessionId) {
+      if (typeof onComplete === 'function') onComplete(state.clientId, state.sessionId);
+      return;
+    }
+
+    // 2. Try official gtag('get') API if available
+    if (typeof window.gtag === 'function' && GA4_MEASUREMENT_ID) {
+      try {
+        if (!state.clientId) {
+          window.gtag('get', GA4_MEASUREMENT_ID, 'client_id', function(cid) {
+            if (cid) {
+              state.clientId = String(cid);
+              try { sessionStorage.setItem(STORAGE_KEY_CLIENT_ID, state.clientId); } catch(e) {}
+              if (state.clientId && state.sessionId && typeof onComplete === 'function') {
+                onComplete(state.clientId, state.sessionId);
+              }
+            }
+          });
+        }
+        if (!state.sessionId) {
+          window.gtag('get', GA4_MEASUREMENT_ID, 'session_id', function(sid) {
+            if (sid) {
+              state.sessionId = String(sid);
+              try { sessionStorage.setItem(STORAGE_KEY_SESSION_ID, state.sessionId); } catch(e) {}
+              if (state.clientId && state.sessionId && typeof onComplete === 'function') {
+                onComplete(state.clientId, state.sessionId);
+              }
+            }
+          });
+        }
+      } catch (e) {}
+    }
+
+    // 3. Fallback: Parse from cookies directly
+    var cookieIds = parseGaCookies();
+    if (cookieIds.clientId && !state.clientId) {
+      state.clientId = cookieIds.clientId;
+      try { sessionStorage.setItem(STORAGE_KEY_CLIENT_ID, cookieIds.clientId); } catch(e) {}
+    }
+    if (cookieIds.sessionId && !state.sessionId) {
+      state.sessionId = cookieIds.sessionId;
+      try { sessionStorage.setItem(STORAGE_KEY_SESSION_ID, cookieIds.sessionId); } catch(e) {}
+    }
+
+    if ((state.clientId || state.sessionId) && typeof onComplete === 'function') {
+      onComplete(state.clientId, state.sessionId);
+    }
+  }
+
+  /* ---- 5. Polling Loop with Retries for First-Pageview Races ---- */
+  function initPolling() {
+    var delays = [100, 300, 700, 1500, 3000, 5000];
+    var attempt = 0;
+
+    function checkAndSync() {
+      resolveIds(function(cid, sid) {
+        if (!state.stamped) {
+          syncToShopifyCart(cid, sid, false);
+        }
+      });
+
+      if ((!state.clientId || !state.sessionId) && attempt < delays.length) {
+        setTimeout(checkAndSync, delays[attempt]);
+        attempt++;
+      }
+    }
+
+    checkAndSync();
+  }
+
+  /* ---- 6. Checkout Interceptors (GoKwik, Rebuy, Helium, Native Checkout) ---- */
+  function setupCheckoutInterceptors() {
+    var checkoutSelectors = [
+      '#gokwik-buy-now',
+      '.gokwik-checkout button',
+      '.gokwik-checkout',
+      '.rebuy-cart__checkout-button',
+      '.shopifycheckoutbtn',
+      'button[name="checkout"]',
+      'input[name="checkout"]',
+      'a[href*="/checkout"]',
+      '.checkout-button',
+      '[data-helium-name="checkout-button"]',
+      '.cart-drawer__footer .btn'
+    ].join(',');
+
+    // Intercept checkout clicks in capture phase
+    document.addEventListener('click', function(e) {
+      var target = e.target && e.target.closest && e.target.closest(checkoutSelectors);
+      if (!target) return;
+
+      resolveIds(function(cid, sid) {
+        syncToShopifyCart(cid, sid, true);
+      });
+    }, true);
+
+    // Form submit listener (capture phase)
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      if (!form || form.tagName !== 'FORM') return;
+      var action = form.getAttribute('action') || '';
+      if (action.indexOf('/cart/add') !== -1 || action.indexOf('/cart') !== -1) {
+        resolveIds(function(cid, sid) {
+          syncToShopifyCart(cid, sid, true);
+        });
+      }
+    }, true);
+
+    // Re-sync on AJAX cart events or drawer open
+    [
+      'cart:updated',
+      'cart:refresh',
+      'cart:add',
+      'helium:cart-drawer:open',
+      'dispatch:cart-drawer:open',
+      'dispatch:cart-drawer:refresh',
+      'on:cart:after-merge',
+      'rebuy.cart.change',
+      'rebuy:smartcart.open',
+      'on:quickbuy:after-open',
+      'shopify:section:load'
+    ].forEach(function(evtName) {
+      document.addEventListener(evtName, function() {
+        resolveIds(function(cid, sid) {
+          syncToShopifyCart(cid, sid, false);
+        });
+      });
+      window.addEventListener(evtName, function() {
+        resolveIds(function(cid, sid) {
+          syncToShopifyCart(cid, sid, false);
+        });
+      });
+    });
+
+    // Observe DOM additions for any newly injected forms or modal elements
+    if (window.MutationObserver) {
+      var observer = new MutationObserver(function() {
+        if (state.clientId || state.sessionId) {
+          var attrs = {};
+          if (state.clientId) attrs['ga_client_id'] = state.clientId;
+          if (state.sessionId) attrs['ga_session_id'] = state.sessionId;
+          injectFormInputs(attrs);
+        }
+      });
+      observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
+    }
+  }
+
+  /* ---- 7. Global API for other scripts & verification ---- */
+  window.GA4Attribution = {
+    getClientId: function() { return state.clientId; },
+    getSessionId: function() { return state.sessionId; },
+    syncCart: function(cb) {
+      resolveIds(function(cid, sid) {
+        syncToShopifyCart(cid, sid, true, cb);
+      });
+    }
+  };
+  window.__getGa4Attribution = function() {
+    resolveIds();
+    return {
+      client_id: state.clientId,
+      session_id: state.sessionId
+    };
+  };
+
+  /* ---- Bootstrapping ---- */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initPolling();
+      setupCheckoutInterceptors();
+    });
+  } else {
+    initPolling();
+    setupCheckoutInterceptors();
+  }
+})();
+</script>

@@ -1,0 +1,188 @@
+<style>
+#shopify-section-{{section.id}} {
+   padding-top: {{ section.settings.desk-padding-top }}px;
+   padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-header{
+    margin: 30px 0 15px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-header h2{
+    font-family: 'Generis Sans W01 Bold';
+    font-size: 24px;
+    line-height: 26px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question svg{
+  transform: rotate(272deg);
+  transition:0.4s ease-in-out;
+  width:20%;
+  max-width:14px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question.active svg{
+  transform: rotate(360deg);
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question span{
+    display: flex;
+    align-items: center;
+    gap: 50px; 
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question .queston-span{
+   font-family: Generis Sans W01 Regular;
+   font-size: 18px;
+   color: #000000;
+   line-height: 20px;
+   width:80%;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-answer{
+     max-height: 0;
+     overflow: hidden;
+     transition: max-height 0.2s ease-out;
+     margin: 10px 15px 10px 60px;
+     font-family: Generis Sans W01 Regular;
+     font-size: 16px;
+     color: #000000;
+     line-height: 18px;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+     padding-top: {{ section.settings.mob-padding-top }}px;
+     padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+} 
+ #shopify-section-{{section.id}} .accordion-content-container .accordion-header h2{
+    font-size: 20px;
+    line-height: 24px;
+} 
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question .queston-span{
+   font-size: 16px;
+   line-height: 18px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-answer{
+     font-size: 14px;
+     line-height: 16px;
+}
+#shopify-section-{{section.id}} .accordion-content-container .accordion-faq-question svg{
+  max-width:12px;
+}
+}
+</style>
+
+
+<div class="container">
+<div class="accordion-content-container">
+  {% for block in section.blocks %}
+  {% if block.settings.head != blank %}
+  <div class="accordion-header" {% if forloop.first %} style="margin-top:0;"{% endif %}>
+    <h2>{{ block.settings.head }}</h2>
+  </div>
+  {% endif %}
+  <div class="accordion-faq-question">
+    <span>{% render 'dropdown-svg' %}<span class="queston-span">{{ block.settings.question }}</span></span>
+   </div>
+   <div class="accordion-answer">
+     {{ block.settings.answer }}
+   </div>
+  {% endfor %}
+</div>
+</div>
+
+<script>
+const accordionItemHeaders = document.querySelectorAll(".accordion-faq-question");
+  console.log(accordionItemHeaders, 'accordionItemHeaders');
+   accordionItemHeaders.forEach(accordionItemHeader => {
+   accordionItemHeader.addEventListener("click", event => {
+   accordionItemHeader.classList.toggle("active");
+     const accordionItemBody = accordionItemHeader.nextElementSibling;
+      console.log(accordionItemBody.scrollHeight, 'accordionItemBody.scrollHeight');
+     if(accordionItemHeader.classList.contains("active")) { 
+      accordionItemBody.style.maxHeight = accordionItemBody.scrollHeight + "px";
+     }
+     else {
+       accordionItemBody.style.maxHeight = 0;
+     }
+    
+   });
+});
+</script>
+{% schema %}
+  {
+    "name": "Accordion",
+    "settings": [
+      
+    ],
+    "blocks": [
+      {
+        "type": "faq",
+         "name": "faq",
+        "settings": [
+          {
+            "type": "text",
+             "id": "head",
+              "label": "Heading"
+          },
+          {
+            "type": "text",
+            "id": "question",
+             "label": "Question"
+          },
+          {
+            "type": "textarea",
+            "id": "answer",
+             "label": "Answer"
+          },
+           {
+        "type": "header",
+         "content": "SECTION PADDING FOR DESKTOP"
+     },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name":"Accordion"
+      }
+    ]
+  }
+{% endschema %}

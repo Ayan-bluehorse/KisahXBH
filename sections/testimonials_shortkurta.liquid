@@ -1,0 +1,715 @@
+{% comment %} {%- comment -%}
+  Text-Based Testimonials Carousel
+  - Fully responsive horizontal scrolling carousel.
+  - No images used; completely text and SVG-based.
+  - Pre-filled with the 5 specific reviews from the design files.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+-%}
+
+<style>
+  #testi-{{ sid }} {
+    background: {{ s.color_background }};
+    padding: {{ s.padding_top_mobile }}px 0 {{ s.padding_bottom_mobile }}px;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .testi-hd-{{ sid }} {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .testi-hd-{{ sid }} h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0;
+    font-size: 1.8rem;
+    color: {{ s.color_heading }};
+    text-transform: uppercase;
+  }
+
+  /* Carousel Scroll Container */
+  .testi-carousel-{{ sid }} {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    padding: 0.5rem 1.5rem 2rem;
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .testi-carousel-{{ sid }}::-webkit-scrollbar { 
+    display: none; /* Safari and Chrome */
+  }
+  
+  .testi-carousel-{{ sid }}:active { 
+    cursor: grabbing; 
+  }
+  
+  /* Individual Review Cards */
+  .testi-card-{{ sid }} {
+    background-color: {{ s.color_card_bg }};
+    border-radius: {{ s.card_radius }}px;
+    padding: 2rem 1.5rem;
+    flex: 0 0 auto;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    scroll-snap-align: center;
+    /* Soft shadow to match the floating card aesthetic */
+    box-shadow: 0 6px 20px rgba(13, 12, 10, 0.04); 
+  }
+
+  /* SVG Stars */
+  .testi-stars-{{ sid }} {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.2rem;
+  }
+
+  .testi-stars-{{ sid }} svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .star-filled { color: {{ s.color_stars }}; }
+  .star-empty { color: {{ s.color_stars_empty }}; }
+
+  /* Typography */
+  .testi-quote-{{ sid }} {
+    font-weight: 600;
+    font-size: 14px;
+    color: {{ s.color_text }};
+    margin: 0 0 1.5rem 0;
+    line-height: 1.4;
+    flex-grow: 1; /* Pushes the author text to the bottom evenly */
+  }
+
+  .testi-author-{{ sid }} {
+    font-weight: 400;
+    font-size: 13px;
+    color: {{ s.color_text }};
+    margin: 0;
+  }
+
+  /* Desktop layout overrides */
+  @media (min-width: 990px) {
+    #testi-{{ sid }} { 
+      padding: {{ s.padding_top }}px 0 {{ s.padding_bottom }}px; 
+    }
+    .testi-hd-{{ sid }} {
+      margin-bottom: 2.5rem;
+    }
+    .testi-hd-{{ sid }} h2 {
+      font-size: 2.2rem;
+    }
+    .testi-carousel-{{ sid }} {
+      justify-content: {% if section.blocks.size <= 4 %}center{% else %}flex-start{% endif %};
+      padding: 1rem 3rem 3rem;
+      gap: 1.5rem;
+    }
+    .testi-card-{{ sid }} {
+      width: 280px;
+    }
+  }
+</style>
+
+<section id="testi-{{ sid }}">
+  <div class="testi-hd-{{ sid }}">
+    <h2>{{ s.header_text }}</h2>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="testi-carousel-{{ sid }}">
+      {%- for block in section.blocks -%}
+        <div class="testi-card-{{ sid }}" {{ block.shopify_attributes }}>
+          
+          <div class="testi-stars-{{ sid }}">
+            {%- assign rating = block.settings.rating -%}
+            {%- for i in (1..5) -%}
+              {%- if i <= rating -%}
+                <svg class="star-filled" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {%- else -%}
+                <svg class="star-empty" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if block.settings.quote != blank -%}
+            <p class="testi-quote-{{ sid }}">{{ block.settings.quote | newline_to_br }}</p>
+          {%- endif -%}
+          
+          {%- if block.settings.author != blank -%}
+            <p class="testi-author-{{ sid }}">{{ block.settings.author }}</p>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials Carousel",
+  "tag": "section",
+  "class": "section-testimonials-carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "header_text",
+      "label": "Heading",
+      "default": "WHAT PEOPLE ARE SAYING"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Review card corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Section background",
+      "default": "#F0ECE6"
+    },
+    {
+      "type": "color",
+      "id": "color_card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading color",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text color",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_stars",
+      "label": "Filled star color",
+      "default": "#8B1A1A"
+    },
+    {
+      "type": "color",
+      "id": "color_stars_empty",
+      "label": "Empty star color",
+      "default": "#DDD5C8"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote text",
+          "default": "\"Didn't plan on buying a second one\""
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Info",
+          "default": "Rahul, Pune"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Carousel",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Didn't plan on buying\na second one\"",
+            "author": "Rahul, Pune"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "quote": "\"Wore it for coffee.\nStayed in it all day\"",
+            "author": "Arjun, Bengaluru"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "quote": "\"The shirt I wear when\nI don't know the plan yet\"",
+            "author": "Karan, Delhi"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Looks Indian.\nDoesn't feel occasion-only\"",
+            "author": "Nishant, Mumbai"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"My friends noticed\nimmediately\"",
+            "author": "Aman, Jaipur"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+
+
+
+{%- comment -%}
+  Text-Based Testimonials Carousel
+  - Fully responsive horizontal scrolling carousel.
+  - Inherits theme's global font-family and font-size.
+  - Pre-filled with the 5 specific reviews from the design files.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+-%}
+
+<style>
+  #testi-{{ sid }} {
+    background: {{ s.color_background }};
+    padding: {{ s.padding_top_mobile }}px 0 {{ s.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+  
+  .testi-hd-{{ sid }} {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .testi-hd-{{ sid }} h2 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0;
+    color: {{ s.color_heading }};
+    text-transform: uppercase;
+  }
+
+  /* Carousel Scroll Container */
+  .testi-carousel-{{ sid }} {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    padding: 0.5rem 1.5rem 2rem;
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .testi-carousel-{{ sid }}::-webkit-scrollbar { 
+    display: none; /* Safari and Chrome */
+  }
+  
+  .testi-carousel-{{ sid }}:active { 
+    cursor: grabbing; 
+  }
+  
+  /* Individual Review Cards */
+  .testi-card-{{ sid }} {
+    background-color: {{ s.color_card_bg }};
+    border-radius: {{ s.card_radius }}px;
+    padding: 2rem 1.5rem;
+    flex: 0 0 auto;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    scroll-snap-align: center;
+    /* Soft shadow to match the floating card aesthetic */
+    box-shadow: 0 6px 20px rgba(13, 12, 10, 0.04); 
+  }
+
+  /* SVG Stars */
+  .testi-stars-{{ sid }} {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.2rem;
+  }
+
+  .testi-stars-{{ sid }} svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .star-filled { color: {{ s.color_stars }}; }
+  .star-empty { color: {{ s.color_stars_empty }}; }
+
+  /* Typography */
+  .testi-quote-{{ sid }} {
+    font-weight: 600;
+    color: {{ s.color_text }};
+    margin: 0 0 1.5rem 0;
+    line-height: 1.4;
+    flex-grow: 1; /* Pushes the author text to the bottom evenly */
+  }
+
+  .testi-author-{{ sid }} {
+    font-weight: 400;
+    color: {{ s.color_text }};
+    margin: 0;
+  }
+
+  /* Constrain carousel to page width */
+  .testi-carousel-{{ sid }} {
+    max-width: var(--page-container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-pad-x);
+    padding-right: var(--container-pad-x);
+  }
+
+  /* Desktop layout overrides */
+  @media (min-width: 990px) {
+    #testi-{{ sid }} { 
+      padding: {{ s.padding_top }}px 0 {{ s.padding_bottom }}px; 
+    }
+    .testi-hd-{{ sid }} {
+      margin-bottom: 2.5rem;
+    }
+    .testi-carousel-{{ sid }} {
+      justify-content: {% if section.blocks.size <= 4 %}center{% else %}flex-start{% endif %};
+      gap: 1.5rem;
+    }
+    .testi-card-{{ sid }} {
+      width: 280px;
+    }
+  }
+</style>
+
+<section id="testi-{{ sid }}">
+  <div class="testi-hd-{{ sid }}">
+    <h2>{{ s.header_text }}</h2>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="testi-carousel-{{ sid }}">
+      {%- for block in section.blocks -%}
+        <div class="testi-card-{{ sid }}" {{ block.shopify_attributes }}>
+          
+          <div class="testi-stars-{{ sid }}">
+            {%- assign rating = block.settings.rating -%}
+            {%- for i in (1..5) -%}
+              {%- if i <= rating -%}
+                <svg class="star-filled" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {%- else -%}
+                <svg class="star-empty" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if block.settings.quote != blank -%}
+            <p class="testi-quote-{{ sid }}">{{ block.settings.quote | newline_to_br }}</p>
+          {%- endif -%}
+          
+          {%- if block.settings.author != blank -%}
+            <p class="testi-author-{{ sid }}">{{ block.settings.author }}</p>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials Carousel",
+  "tag": "section",
+  "class": "section-testimonials-carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "header_text",
+      "label": "Heading",
+      "default": "WHAT PEOPLE ARE SAYING"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Review card corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Section background",
+      "default": "#F0ECE6"
+    },
+    {
+      "type": "color",
+      "id": "color_card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading color",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text color",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_stars",
+      "label": "Filled star color",
+      "default": "#8B1A1A"
+    },
+    {
+      "type": "color",
+      "id": "color_stars_empty",
+      "label": "Empty star color",
+      "default": "#DDD5C8"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote text",
+          "default": "\"Didn't plan on buying a second one\""
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Info",
+          "default": "Rahul, Pune"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Carousel",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Didn't plan on buying\na second one\"",
+            "author": "Rahul, Pune"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "quote": "\"Wore it for coffee.\nStayed in it all day\"",
+            "author": "Arjun, Bengaluru"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "quote": "\"The shirt I wear when\nI don't know the plan yet\"",
+            "author": "Karan, Delhi"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"Looks Indian.\nDoesn't feel occasion-only\"",
+            "author": "Nishant, Mumbai"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "\"My friends noticed\nimmediately\"",
+            "author": "Aman, Jaipur"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

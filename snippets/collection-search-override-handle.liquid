@@ -1,0 +1,15 @@
+{%- comment -%}
+  Returns a collection handle when search terms match a curated override, else blank.
+  Priority: Jamai Sashti, then size-inclusive.
+{%- endcomment -%}
+{% capture jamai_sashti_flag %}{% render 'jamai-sashti-flag', terms: terms %}{% endcapture %}
+{% capture size_inclusive_flag %}{% render 'size-inclusive-flag', terms: terms %}{% endcapture %}
+{%- liquid
+  assign override_handle = ''
+  if jamai_sashti_flag == '1'
+    assign override_handle = 'jamai-sashti-ethincwear-for-men'
+  elsif size_inclusive_flag == '1'
+    assign override_handle = 'size-inclusive'
+  endif
+-%}
+{{- override_handle -}}

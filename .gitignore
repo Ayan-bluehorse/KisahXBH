@@ -1,0 +1,15 @@
+# Shopify CLI
+.shopify/
+.env
+
+# Scratch and test files
+scratch/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.log
+*.tmp

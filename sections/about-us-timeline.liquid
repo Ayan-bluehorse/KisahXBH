@@ -1,0 +1,235 @@
+<div class="container">
+ <div class="timeline-about-us">
+   <div class="timeline-heading">
+     <h2>{{ section.settings.head }}</h2>
+   </div>
+   <div class="desktop-timeline-img">
+   
+     {% render 'image',
+       image: section.settings.image,
+       width:2330px
+     %}
+     </div>
+     <div class="mobile-timeline-img">
+        {% render 'image',
+       image: section.settings.mob-image,
+       width:2330px
+     %}
+     </div>
+</div>
+</div>
+
+
+<style>
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.desk-padding-top}}px;
+  padding-bottom:{{section.settings.desk-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .mobile-timeline-img{
+   display:none;
+}
+#shopify-section-{{section.id}} .timeline-heading h2{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .desktop-timeline-img img{
+    width:1000px;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.mob-padding-top}}px;
+  padding-bottom:{{section.settings.mob-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .timeline-heading h2{ 
+    font-size: 20px;
+    line-height: 22px;
+    text-align:left;
+}
+#shopify-section-{{section.id}} .desktop-timeline-img{  
+  display:none;
+}
+#shopify-section-{{section.id}} .mobile-timeline-img{
+   display:block;
+}
+}
+/* .circle-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap:50%;
+}
+.circle-and-cont {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+.circle-content:after{
+  width: 100%;
+  content: " ";
+  border: 1px solid #000000;
+  position: absolute;
+  top: 37px;
+}
+.circle{
+  width: 80px;
+  height: 80px;
+  background: #A68811;
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 50%; 
+  position:relative;
+  z-index:99;
+}
+.content-part{
+  margin-top:45px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #000000;
+  opacity: 0.8;
+  font-family: Generis Sans W01 Regular !important;
+}
+.end-part-corner {
+    border-right: 1px solid #000000;
+    float: right;
+    height: 131px;
+    position: relative;
+    top: -44px;
+    border-radius: 50%;
+    right: -58px;
+    overflow: hidden;
+    width: 157px;
+}
+.first-part-corner{
+    border-left: 2px solid #000;
+    width: 300px;
+    height: 157px;
+    border-radius: 50%;
+    position: relative;
+    top: 5px;
+}
+
+.row2-content::before{
+  width: 100%;
+  content: " ";
+  border: 1px solid #000000;
+  position: absolute;
+}
+.row2-content{
+    position: relative;
+    display: flex;
+    align-items: center;
+    top: 46px;
+    right: -148px;
+    justify-content:center;
+    gap:50%;
+}
+.row2-content::after{
+  width: 100%;
+  content: " ";
+  border: 1px solid #000000;
+  position: absolute;
+}
+.row3-content{
+    position: relative;
+    display: flex;
+    align-items: center;
+    top: -28px;
+    right: -148px;
+    justify-content:center;
+    gap:50%;
+    width:80%;
+}
+.row3-content::after{
+  width: 100%;
+  content: " ";
+  border: 1px solid #000000;
+  position: absolute;
+}
+/* .circle-and-cont.third-last-circle {
+    position: relative;
+    right: -185px;
+} */ */
+</style>
+{% schema %}
+  {
+    "name": "about us timeline",
+    "settings": [
+      {
+        "type": "text",
+         "id": "head",
+         "label": "Heading"
+      },
+      {
+        "type": "image_picker",
+        "id":"image",
+         "label": "image"
+      },
+      {
+        "type": "image_picker",
+        "id":"mob-image",
+         "label": "image"
+      },
+      {
+      "type": "header",
+     "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+      
+    ],
+    "presets": [
+      {
+        "name": "about us timeline"
+      }
+    ]
+  }
+{% endschema %}

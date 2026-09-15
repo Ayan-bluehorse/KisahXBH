@@ -1,0 +1,347 @@
+{%- assign best_fits = product.metafields.custom.best_fits.value -%}
+{%- if best_fits != blank -%}
+  {%- assign product_count = 0 -%}
+  {%- for p in best_fits -%}{%- assign product_count = product_count | plus: 1 -%}{%- endfor -%}
+  <div class="more-ways-to-style {% if product_count < 3 %}more-ways-to-style--compact{% endif %}">
+    {% for block in section.blocks %}
+      {% if block.settings.recommendation_title != blank %}
+        <h3 class="recommendation_title">{{ block.settings.recommendation_title }}</h3>
+      {% endif %}
+    {% endfor %}
+    
+    <div class="recommendation-style-slider-wrapper">
+
+      <!-- Slider -->
+      <div class="recommendation-style-carousel">
+        {%- for related_product in product.metafields.custom.best_fits.value -%}
+          {%- assign p = related_product -%}
+          <div class="recommendation-style-item">
+            <a href="{{ p.url }}">
+              <img 
+                width="{{ p.featured_image.width }}" height="{{ p.featured_image.height }}" loading="lazy" src="{{ p.featured_image | image_url: width: 400 }}" 
+                alt="{{ p.title }}" 
+                loading="lazy"
+              >
+            </a>
+            <div class="style-info">
+              <p class="style-title">{{ p.title }}</p>
+              
+              <p class="style-price">
+                {{ p.price | money }}
+                {%- if p.compare_at_price > p.price -%}
+                  <span class="compare">{{ p.compare_at_price | money }}</span>
+                {%- endif -%}
+              </p>
+
+              <form method="post" action="{{ routes.cart_add_url }}" class="style-cart-form">
+                <select name="id">
+                  {%- for variant in p.variants -%}
+                    {%- if variant.available -%}
+                      <option value="{{ variant.id }}">{{ variant.title }}</option>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </select>
+                <button type="submit" class="add-to-cart-btn add-to-cart">Add to Bag
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M6.31138 8.31615C6.01954 5.87743 6.31138 1 9.81353 1C11.435 0.999989 14.1285 2.09742 13.4281 8.31615" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M2.56774 6.22583C1.31355 6.22583 1 7.27099 1 7.79358V16.1549C1 17.8272 2.56774 18.7678 3.6129 18.7678H15.1097C17.2 18.7678 18.2452 18.2452 18.7677 17.2001C19.2903 16.1549 18.7677 9.04777 18.7677 7.79358C18.7677 6.53938 17.5484 6.22583 17.2 6.22583H2.56774Z" stroke="white" stroke-width="1.2"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <!-- Slick Arrows Inside Wrapper -->
+      <button class="style-arrow left" aria-label="Previous">&#10094;</button>
+      <button class="style-arrow right" aria-label="Next">&#10095;</button>
+    </div>
+  </div>
+{%- endif -%}
+
+
+<style>
+
+  .recommendation_title {
+    font-size: 22px;
+    font-family: 'Generis Sans W01 Bold' !important;
+    line-height: normal;
+    letter-spacing: normal;
+    margin: 0;
+    padding: 0 5px;
+    margin-bottom: 20px;
+}
+
+.more-ways-to-style {
+margin: 0px 0 20px;
+    position: relative;
+}
+
+.recommendation-style-slider-wrapper {
+	position: relative;
+	overflow: hidden;
+}
+
+.recommendation-style-carousel {
+	display: flex;
+	transition: transform 0.5s ease-in-out;
+  gap: 3px;
+  direction: rtl;
+}
+
+.recommendation-style-item {
+    {% comment %} flex: 0 0 calc(40% - -6px);
+    margin: 0 2px; {% endcomment %}
+    flex: 0 0 calc(100% / 2.5 - 1.5px);
+    margin: 0 2px;
+    border: 1px solid #0000001a;
+    border-radius: 0;
+    padding: 0;
+    background: #F3F3F3;
+}
+
+{% comment %} .recommendation-style-item:first-child {
+    margin-left: 26px;
+} {% endcomment %}
+
+.recommendation-style-item > a > img {
+	vertical-align: bottom;
+}
+
+.recommendation-style-item .style-info {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 8px;
+    padding-top: 10px;
+    direction: ltr;
+}
+
+.recommendation-style-item .style-title {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight:600;
+    font-family: 'Generis Sans W01 Regular' !important;
+    letter-spacing: 0;
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 40px;
+}
+
+
+
+.recommendation-style-item .style-price {
+font-size: 14px;
+    line-height: 25.6px;
+    font-family: 'Generis Sans W01 Regular' !important;
+    color: #000000;
+    margin-bottom: 0;
+    display: flex;
+}
+
+.style-price .compare {
+	text-decoration: line-through;
+	margin-left: 5px;
+	color: #777;
+  font-size: 15.75px;
+  line-height: 25.6px;
+  font-family: 'Generis Sans W01 Regular' !important;
+}
+
+.recommendation-style-item form select {
+    width: 100%;
+    border: 1px solid #E5E5E5;
+    background-color: #ccc;
+    border-radius: 50px;
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #919191 50%), linear-gradient(135deg, #919191 50%, transparent 50%), linear-gradient(to right, #919191, #919191);
+    background-position: calc(100% - 20px) calc(1em + 0px), calc(100% - 15px) calc(1em + 0px), calc(100% - 2.5em) 0.4em;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    padding: 5px 50px 5px 10px;
+    color: #000;
+}
+
+.recommendation-style-item form .add-to-cart-btn {
+  background: #201747;
+  color: #fff;
+  border: none;
+  padding: 6.6px 12px;
+  margin-top: 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 13px;
+  line-height: normal;
+}
+
+.recommendation-style-item form .add-to-cart-btn svg {
+    vertical-align: bottom;
+    margin-left: 4px;
+}
+
+.style-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 50%;
+	width: 34px;
+	height: 34px;
+	font-size: 18px;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.more-ways-to-style--compact .slick-list,
+.more-ways-to-style--compact .slick-track {
+    width: 100% !important;
+}
+
+.recommendation-style-carousel.slick-initialized .recommendation-style-item {
+    display: block !important;
+    margin: 0 5px !important;
+    aspect-ratio: 2 / 3;
+}
+
+.style-arrow.left {
+	left: 0;
+}
+
+.style-arrow.right {
+	right: 0;
+}
+
+
+  {% comment %} .more-ways-to-style {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+}
+ {% endcomment %}
+
+
+
+
+</style>
+
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+  const slider = $(".recommendation-style-carousel");
+
+  slider.slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    infinite: false,
+    arrows: false,
+    dots: false,
+    initialSlide: 0,
+    centerMode: false,
+    variableWidth: false,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2
+        }
+      }
+    ]
+  });
+
+  // External arrows
+  document.querySelector(".style-arrow.left")?.addEventListener("click", function () {
+    slider.slick('slickPrev');
+  });
+
+  document.querySelector(".style-arrow.right")?.addEventListener("click", function () {
+    slider.slick('slickNext');
+  });
+  window.addEventListener('load', function() {
+    slider.slick('setPosition');
+  });
+});
+</script>
+
+
+
+
+{% comment %} <script>
+document.addEventListener("DOMContentLoaded", function(){
+  const slider = document.querySelector(".recommendation-style-carousel");
+  const leftBtn = document.querySelector(".style-arrow.left");
+  const rightBtn = document.querySelector(".style-arrow.right");
+  const items = slider.querySelectorAll(".recommendation-style-item");
+  const itemWidth = items[0].offsetWidth + 10; // card + margin
+  let currentIndex = 2; // because we’ll clone slides
+
+  // Clone first 2 and last 2 slides for infinite effect
+  const firstClone = items[0].cloneNode(true);
+  const secondClone = items[1].cloneNode(true);
+  const lastClone = items[items.length - 1].cloneNode(true);
+  const secondLastClone = items[items.length - 2].cloneNode(true);
+
+  slider.appendChild(firstClone);
+  slider.appendChild(secondClone);
+  slider.insertBefore(lastClone, items[0]);
+  slider.insertBefore(secondLastClone, items[0]);
+
+  // Update items after cloning
+  const allItems = slider.querySelectorAll(".recommendation-style-item");
+
+  slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
+
+  const moveToIndex = (index) => {
+    slider.style.transition = "transform 0.5s ease-in-out";
+    slider.style.transform = `translateX(-${itemWidth * index}px)`;
+  };
+
+  rightBtn.addEventListener("click", () => {
+    if (currentIndex >= allItems.length - 2) return;
+    currentIndex++;
+    moveToIndex(currentIndex);
+  });
+
+  leftBtn.addEventListener("click", () => {
+    if (currentIndex <= 0) return;
+    currentIndex--;
+    moveToIndex(currentIndex);
+  });
+
+  slider.addEventListener("transitionend", () => {
+    if (allItems[currentIndex].isEqualNode(firstClone)) {
+      slider.style.transition = "none";
+      currentIndex = 2;
+      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
+    }
+    if (allItems[currentIndex].isEqualNode(secondClone)) {
+      slider.style.transition = "none";
+      currentIndex = 3;
+      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
+    }
+    if (allItems[currentIndex].isEqualNode(lastClone)) {
+      slider.style.transition = "none";
+      currentIndex = allItems.length - 3;
+      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
+    }
+    if (allItems[currentIndex].isEqualNode(secondLastClone)) {
+      slider.style.transition = "none";
+      currentIndex = allItems.length - 4;
+      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
+    }
+  });
+});
+</script> {% endcomment %}

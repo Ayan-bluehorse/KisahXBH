@@ -1,0 +1,39 @@
+{%- comment -%}
+  Social-proof bar - "N people bought this product in last 30 days".
+
+  Custom-product PDP only. sections/main-product.liquid renders it twice and
+  assets/product-custom-pdp.css shows exactly one at a time:
+
+    placement: 'gallery'  pinned to the bottom of .main-image  -> desktop only
+    placement: 'atc'      static, directly above Add to Cart   -> mobile only
+
+  Two instances rather than one moved element: the two live in different
+  columns of the PDP (.product-column-left vs .product-column-right), so no
+  amount of CSS can reparent a single node between them.
+
+  The count is deterministic per product (product.id modulo 31 + 20), not a
+  real order figure - keep it that way unless a real source is wired up.
+
+  Parameters:
+  - product   {Object} - Product object.
+  - placement {String} - 'gallery' (default) or 'atc'.
+{%- endcomment -%}
+
+{%- liquid
+  assign kp_count = product.id | modulo: 31 | plus: 20
+  assign kp_icon = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/43e1b7df863296c28a18465848ec0ec0.png?v=1751030942'
+  assign kp_place = placement | default: 'gallery'
+-%}
+<div class="kpdp20-proof kpdp20-proof--{{ kp_place }}">
+  <p class="kpdp20-proof__text">
+    <img class="kpdp20-proof__icon kpdp20-proof__icon--png" width="16" height="16" loading="lazy" src="{{ kp_icon | escape }}" alt="">
+    <svg class="kpdp20-proof__icon kpdp20-proof__icon--svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    <span class="kpdp20-proof__count">{{ kp_count }}</span>
+    people bought this product in last 30 days
+  </p>
+</div>

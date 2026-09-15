@@ -1,0 +1,436 @@
+<style>
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.padding_top}}px;
+  padding-bottom:{{section.settings.padding_bottom}}px;
+}
+#shopify-section-{{section.id}} h5.name{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    color: #000000;
+    margin-bottom:40px;
+}
+#shopify-section-{{section.id}} .acc-nav-list{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+#shopify-section-{{section.id}} .acc-nav-list .nav-title{
+    font-family: Generis Sans W01 Regular;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000
+}
+#shopify-section-{{section.id}} .acc-nav-list a{
+     display:flex;
+     justify-content:space-between;
+     align-items:center;
+}
+#shopify-section-{{section.id}} ul.acc-nav-list li{
+    border-bottom: 1px solid #000000;
+    padding: 10px 20px 10px 10px
+}
+#shopify-section-{{section.id}} #customer_sidebar{
+     float:unset;
+     width:100%;
+}
+#shopify-section-{{section.id}} #customer_sidebar #customer_detail{
+     background: #FFFFFF;
+     box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+     max-width:720px;
+     margin:0 auto;
+     
+}
+#shopify-section-{{section.id}} #customer_orders{
+    width:100%;
+    float:unset;
+}
+#shopify-section-{{section.id}} #customer_sidebar .profile-head-name{
+    background:#201747;
+    padding:10px 0;
+}
+#shopify-section-{{section.id}} #customer_sidebar .profile-head-name h3{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    color: #FFFFFF;
+    font-family: 'Generis Sans W01 Bold';
+    margin:0;
+}
+#shopify-section-{{section.id}} #customer_sidebar .profile-content-wrap{
+    display: flex;
+    flex-direction: column;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 50px 30px 0  30px;
+}
+#shopify-section-{{section.id}} #customer_sidebar .flex-container{
+     display:flex;
+     align-items:center;
+     justify-content:space-between;
+     margin:0 0 2.5rem 0;
+}
+#shopify-section-{{section.id}} #customer_sidebar .flex-container p {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    width: 50%;
+    padding:0 0 0 16px;
+    word-wrap:break-word;
+}
+#shopify-section-{{section.id}} #customer_sidebar .flex-container span{
+     font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    width: 35%;
+}
+#shopify-section-{{section.id}} #customer_sidebar p{
+     margin:0;
+}
+#shopify-section-{{section.id}} #customer_sidebar #customer_orders p{
+    text-align:center;
+}
+#shopify-section-{{section.id}} #customer_sidebar .view-address{
+    background: #201747;
+    border: 1px solid #201747;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    color: #ffffff;
+    padding: 8px 20px;
+    width:fit-content;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: right;
+    text-decoration-line:none;
+    text-decoration-color: unset;
+}
+#shopify-section-{{section.id}} #customer_sidebar .logout-edit{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 24px 23px 35px;
+}
+#shopify-section-{{section.id}} #customer_sidebar .logout-edit .profile-login{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: right;
+    text-decoration-line: underline;
+    color: #000000;
+}
+  #shopify-section-{{section.id}} #customer_sidebar #customer_detail{
+     display:none;
+}  
+ #shopify-section-{{section.id}} #customer_orders{
+     display:none;
+} 
+#shopify-section-{{section.id}} .go-back-btn{
+     display:none;
+     float:right;
+    
+}
+#shopify-section-{{section.id}} .go-back-btn a{
+     font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: right;
+    text-decoration-line: underline;
+    color: #000000;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} #customer_sidebar .profile-head-name h3{
+    font-size: 20px;
+    line-height: 24px;
+}  
+#shopify-section-{{section.id}} #customer_sidebar .logout-edit{
+    padding:0 24px 23px 13px;
+}
+#shopify-section-{{section.id}} #customer_sidebar .flex-container span{
+    font-size: 14px;
+    line-height: 16px;
+}
+#shopify-section-{{section.id}} #customer_sidebar .flex-container p {
+    font-size: 14px;
+    line-height: 16px; 
+}
+#shopify-section-{{section.id}} #customer_sidebar .view-address{
+    font-size: 14px;
+    line-height: 16px;
+}
+}
+</style>
+
+
+<div class="container">
+  <div class="" data-cc-animate>
+    <div class="lightly-spaced-row align-end">
+      <a class="underline" href="{{ routes.account_logout_url }}" style="display:none">{{ 'customer.account.log_out' | t }}</a>
+    </div>
+    {% comment %} <h2 class="title align-center">{{ 'customer.account.title' | t }}</h2> {% endcomment %}
+    <h5 class="name">Hello {{ customer.name }}</h5>
+     <div class="go-back-btn">
+        <a href="/account">Go Back</a>
+      </div>
+  </div>
+
+  <ul class="acc-nav-list">
+      {% for navLinks in linklists[section.settings.accnavList].links %}
+        {%- assign navicons =  navLinks.title | downcase | handleize | prepend:'user-' | append:'.png' -%}
+      <li class="{{ navLinks.title }}">
+        {%- assign downcaseTitle = navLinks.title | downcase -%}
+        <a href="{{ navLinks.url }}" class="{% if downcaseTitle == 'profile' %}active{% endif %}">
+          <span>
+            <span class="nav-icon-holder {{ navLinks.title | handleize }}">
+               {%- if images[navicons] != blank -%}
+                  {{ 
+                     images[navicons]
+                     | image_url: width: 40, height: auto
+                     | image_tag:
+                       alt:images[navicons].alt,
+                       class: 'user-nav-icon',
+                       loading: 'lazy'
+                  }} 
+                {%- endif -%}
+              </span>
+            <span class="nav-title">
+              {{ navLinks.title }}
+            </span>
+          </span>
+         <span class="icon-right-arrow"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+         <path d="M8.20986 5.29018C8.11613 5.38315 8.04174 5.49375 7.99097 5.61561C7.9402 5.73746 7.91406 5.86817 7.91406 6.00018C7.91406 6.13219 7.9402 6.2629 7.99097 6.38476C8.04174 6.50662 8.11613 6.61722 8.20986 6.71018L12.7899 11.2902C12.8836 11.3831 12.958 11.4937 13.0087 11.6156C13.0595 11.7375 13.0856 11.8682 13.0856 12.0002C13.0856 12.1322 13.0595 12.2629 13.0087 12.3848C12.958 12.5066 12.8836 12.6172 12.7899 12.7102L8.20986 17.2902C8.11613 17.3831 8.04174 17.4937 7.99097 17.6156C7.9402 17.7375 7.91406 17.8682 7.91406 18.0002C7.91406 18.1322 7.9402 18.2629 7.99097 18.3848C8.04174 18.5066 8.11613 18.6172 8.20986 18.7102C8.39722 18.8964 8.65067 19.001 8.91486 19.001C9.17904 19.001 9.4325 18.8964 9.61986 18.7102L14.2098 14.1202C14.7716 13.5577 15.0872 12.7952 15.0872 12.0002C15.0872 11.2052 14.7716 10.4427 14.2098 9.88018L9.61986 5.29018C9.43249 5.10393 9.17904 4.99939 8.91486 4.99939C8.65067 4.99939 8.39722 5.10393 8.20986 5.29018Z" fill="#374957"/>
+        </svg></span> 
+        </a>
+      </li>
+    {% endfor %}
+
+{% comment %} 
+      <li>
+        {% assign logOutIcon =  'user-logout.png' %}
+        <a href="{{ routes.account_logout_url }}" {{ logOutIcon }}>
+         <span>
+            <span class="nav-icon-holder">
+               {%- if images[logOutIcon] != blank -%}
+                  {{ 
+                     images[logOutIcon]
+                     | image_url: width: 40, height: auto
+                     | image_tag:
+                       alt:images[logOutIcon].alt,
+                       class: 'user-nav-icon',
+                       loading: 'lazy'
+                  }} 
+                {%- endif -%}
+              </span>
+          <span class="nav-title">
+             {{ 'customer.log_out' | t }}
+            </span> 
+          </span>
+          <span></span>
+         
+          
+        </a>
+      </li> 
+           {% endcomment %}
+    </ul>
+
+
+  
+  <div class="cf">   
+    <div id="customer_sidebar" data-cc-animate>
+      <div id="customer_detail" class="group">
+       
+        <div class="profile-head-name">
+          <h3>My Profile</h3>
+        </div>
+        <div class="profile-content-wrap">
+        <div class="name-container-profile flex-container">
+          <span class="label-name">First Name :</span>
+         <p class="name">{{ customer.first_name }}</p>
+        </div>
+        <div class="name-container-profile flex-container">
+          <span class="label-name">Last Name :</span>
+         <p class="name">{{ customer.last_name }}</p>
+        </div>
+         <div class="email-container-profile flex-container">
+          <span class="label-email">Email :</span>
+          <p class="email note">{{ customer.email }}</p>
+         </div>
+          <div class="ph-container-profile flex-container">
+         <span class="label-ph">Contact Number :</span>
+         <p class="address-phone">{{ customer.default_address.phone }}</p>
+       </div> 
+        <div class="address note lightly-spaced-row flex-container">
+          <span class="label-saved-address">Saved Address: </span>
+          {% if customer.default_address != nil and customer.default_address != blank %}
+            <p> {{ customer.default_address.address1 }}, {% if customer.default_address.address2 != "" and customer.default_address.address2 != blank %}
+             {{ customer.default_address.address2 }},
+            {% endif %}{{ customer.default_address.city }}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}
+            {{ customer.default_address.zip }}</p>
+          {% endif %}
+        </div>
+        
+      </div>
+       <div class="logout-edit"> 
+        <a class="underline custom-link view-address" href="{{ routes.account_addresses_url }}">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+         <a href="/account/logout" class="profile-login">Logout</a>
+        </div>
+    </div>
+
+    <div id="customer_orders" data-cc-animate>
+      {% paginate customer.orders by 20 %}
+        {% if customer.orders.size != 0 %}
+          <link rel="stylesheet" href="{{ 'responsive-table.css' | asset_url }}">
+          <script src="{{ 'responsive-table.js' | asset_url }}" defer></script>
+          <responsive-table>
+            <table class="responsive-table">
+              <thead>
+                <tr>
+                  <th class="order_number">{{ 'customer.orders.order_number' | t }}</th>
+                  <th class="date">{{ 'customer.orders.date' | t }}</th>
+                  <th class="payment_status">{{ 'customer.orders.payment_status' | t }}</th>
+                  <th class="fulfillment_status">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                  <th class="total">{{ 'customer.orders.total' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in customer.orders %}
+                <tr class="{% if order.cancelled %}cancelled_order{% endif %}">
+                  <td class="responsive-table__cell-head">
+                    <span class="responsive-table__cell-label">{{ 'customer.orders.order_number' | t }}</span>
+                    <a class="underline" href="{{ order.customer_url }}">{{ order.name }}</a>
+                    <span class="mobile-only">- {{ order.created_at | date: format: 'date' }}</span>
+                    <span class="responsive-table__cell-head__icon">{% render 'icon-chevron-right' %}</span>
+                  </td>
+                  <td class="desktop-only">
+                    <span class="note">{{ order.created_at | date: format: 'date' }}</span>
+                  </td>
+                  <td class="responsive-table__first-mobile-cell">
+                    <span class="responsive-table__cell-label">{{ 'customer.orders.payment_status' | t }}</span>
+                    <span class="status_{{ order.financial_status }}">{{ order.financial_status_label }}</span>
+                  </td>
+                  <td>
+                    <span class="responsive-table__cell-label">{{ 'customer.orders.fulfillment_status' | t }}</span>
+                    <span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span>
+                  </td>
+                  <td>
+                    <span class="responsive-table__cell-label">{{ 'customer.orders.total' | t }}</span>
+                    <span class="total">
+                      {%- if settings.cart_currency_code_enabled -%}
+                        {{- order.total_price | money_with_currency -}}
+                      {%- else -%}
+                        {{- order.total_price | money -}}
+                      {%- endif -%}
+                    </span>
+
+                    <div class="responsive-table__more">
+                      <a href="{{ order.customer_url }}" class="underline">{{ 'customer.orders.view_order' | t }}</a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </responsive-table>
+        {% else %}
+          <p>{{ 'customer.orders.none' | t }}</p>
+        {% endif %}
+
+        <div class="pagination-row">{% render 'pagination-control', paginate: paginate %}</div>
+      {% endpaginate %}
+    </div>
+  </div>
+</div>
+</div>
+
+
+<script>
+  let profilebtn = document.querySelector('.profile');
+  let orderBtn = document.querySelector('.orders');
+  let goback = document.querySelector('.go-back-btn');
+  profilebtn.addEventListener("click", function(event){
+      event.preventDefault();
+    let linkshide = document.querySelector('.acc-nav-list');
+    let profiledetails = document.querySelector('#customer_detail');
+     linkshide.style.display="none";
+    profiledetails.style.display="block";
+     if( profiledetails.style.display="block" ){
+        goback.style.display="block";
+    }
+    else{
+       goback.style.display="none";
+   }
+  })
+  
+  orderBtn.addEventListener("click", function(event){
+     let linkshide = document.querySelector('.acc-nav-list');
+     let orderDetails = document.querySelector('#customer_orders');
+      linkshide.style.display="none";
+       orderDetails.style.display="block"
+     if( orderDetails.style.display="block" ){
+        goback.style.display="block";
+    }
+    else{
+       goback.style.display="none";
+   }
+  })
+</script>
+
+{% schema %}
+  {
+  "name": "Custom main Account",
+  "settings": [
+    {
+      "type":"link_list",
+      "id":"accnavList",
+      "label":"Select Navigation List"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "section padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "section padding bottom",
+      "default": 36
+    }
+  ],
+  "presets":[
+    {
+     "name": "Custom main Account"
+    }
+  ]
+}
+{% endschema %}

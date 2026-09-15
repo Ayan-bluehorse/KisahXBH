@@ -1,0 +1,213 @@
+{%- comment -%}
+  Final CTA — "Wear Indian. More Often."
+  - Ported from custom "Kisah" reference designs
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+-%}
+
+<style>
+  #fc-{{ sid }} {
+    --fc-bg: {{ s.color_background }};
+    --fc-heading: {{ s.color_heading }};
+    --fc-text: {{ s.color_text }};
+    --fc-btn-bg: {{ s.color_btn_bg }};
+    --fc-btn-txt: {{ s.color_btn_txt }};
+    --fc-btn-hov: {{ s.color_btn_hover }};
+    
+    background: var(--fc-bg);
+    padding: 5rem 0;
+  }
+
+  #fc-{{ sid }} .fc-inner {
+    max-width: var(--page-container-width);
+    margin: 0 auto;
+    padding: 0 var(--container-pad-x);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  #fc-{{ sid }} *,
+  #fc-{{ sid }} *::before,
+  #fc-{{ sid }} *::after { box-sizing: border-box; }
+  
+  #fc-{{ sid }} .fc-tag {
+    font-size: .6rem;
+    font-weight: 600;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: var(--fc-text);
+    opacity: 0.3;
+    margin: 0 0 1rem;
+  }
+
+  #fc-{{ sid }} .fc-h {
+    font-family: 'EB Garamond', serif;
+    font-size: 3.5rem;
+    color: var(--fc-heading);
+    line-height: 1.05;
+    margin: 0 0 .5rem;
+  }
+
+  #fc-{{ sid }} .fc-sub {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--fc-text);
+    opacity: 0.45;
+    margin: 0 0 2.5rem;
+  }
+
+  #fc-{{ sid }} .fc-btn {
+    padding: 1rem 4rem;
+    background: var(--fc-btn-bg);
+    color: var(--fc-btn-txt);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    transition: background .2s, color .2s;
+    display: inline-block;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  #fc-{{ sid }} .fc-btn:hover {
+    background: var(--fc-btn-hov);
+    color: var(--fc-btn-bg);
+  }
+
+  @media (max-width: 749px) {
+    #fc-{{ sid }} {
+      padding: 2.5rem 0;
+    }
+    #fc-{{ sid }} .fc-tag {
+      font-size: .54rem;
+      letter-spacing: .22em;
+      margin-bottom: .8rem;
+    }
+    #fc-{{ sid }} .fc-h {
+      font-size: 2.2rem;
+      margin-bottom: .4rem;
+    }
+    #fc-{{ sid }} .fc-sub {
+      font-size: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    #fc-{{ sid }} .fc-btn {
+      display: block;
+      width: 100%;
+      padding: .88rem;
+      font-size: .66rem;
+    }
+  }
+</style>
+
+<div id="fc-{{ sid }}">
+  <div class="fc-inner">
+  {%- if s.tagline != blank -%}
+    <p class="fc-tag">{{ s.tagline }}</p>
+  {%- endif -%}
+  
+  {%- if s.heading != blank -%}
+    <h2 class="fc-h">{{ s.heading | newline_to_br }}</h2>
+  {%- endif -%}
+  
+  {%- if s.subheading != blank -%}
+    <p class="fc-sub">{{ s.subheading }}</p>
+  {%- endif -%}
+  
+  {%- if s.button_label != blank -%}
+    <a href="{{ s.button_link | default: '#' }}" class="fc-btn">{{ s.button_label }}</a>
+  {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Final CTA",
+  "tag": "section",
+  "class": "section-final-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "The Social Club · Kisah SS '25"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wear Indian.\nMore Often."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every day is the occasion."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop 26 Styles"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_heading",
+      "label": "Heading",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Subdued Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_bg",
+      "label": "Button Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_txt",
+      "label": "Button Text",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_btn_hover",
+      "label": "Button Hover Background",
+      "default": "#8B1A1A"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Final CTA"
+    }
+  ]
+}
+{% endschema %}

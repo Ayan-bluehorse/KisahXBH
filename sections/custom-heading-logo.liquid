@@ -1,0 +1,150 @@
+<div class="logo-haeding-img container">
+  {% if section.settings.logo-img != blank %}
+  <div class="image-logo-container">
+    <img src="{{ section.settings.logo-img | image_url }}" width="{{ section.settings.logo-img.width }}" height="{{ section.settings.logo-img.height }}" alt="{{ section.settings.logo-img.alt }}">
+  </div>
+  {% endif %}
+</div>
+
+
+
+<style>
+#shopify-section-{{section.id}} {
+  padding-top: {{ section.settings.desk-padding-top }}px;
+  padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+} 
+  #shopify-section-{{section.id}} .image-logo-container{
+    text-align:{{section.settings.vertical_alignment}};
+  }
+  #shopify-section-{{section.id}} .image-logo-container img{
+     width:100%;
+     {% comment %} max-width:400px; {% endcomment %}
+      max-width:{{ section.settings.desktop-width }}px;
+      margin:0 auto;
+
+   }
+  
+@media screen and (max-width:768px){
+  #shopify-section-{{section.id}} {
+      padding-top: {{ section.settings.mob-padding-top }}px;
+      padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+    }
+   #shopify-section-{{section.id}} .image-logo-container img{
+     {% comment %} max-width:300px; {% endcomment %}
+      max-width:{{ section.settings.mob-width }}px;
+   }
+}
+{% comment %} @media screen and (max-width:610px){
+#shopify-section-{{section.id}} .image-logo-container img{
+     max-width:230px;
+   }
+} {% endcomment %}
+</style>
+
+{% schema %}
+  {
+    "name": "custom logo heading",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo-img",
+         "label": "Logo Heading image"
+      },
+      {
+      "type": "range",
+      "id": "desktop-width",
+      "min": 100,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop width",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "mob-width",
+      "min": 100,
+      "max": 1000,
+      "step": 20,
+      "unit": "px",
+      "label": "Mobile width",
+      "default": 300
+    },
+
+      {
+          "type": "select",
+          "id": "vertical_alignment",
+          "label": "Position alignment",
+          "options": [
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default": "center"
+     },
+    
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+      },
+     {
+          "type": "range",
+          "id": "desk-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+     },
+    {
+          "type": "range",
+          "id": "desk-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    },
+    {
+          "type": "header",
+          "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    }
+    ],
+    "presets": [
+      {
+        "name": "custom logo heading"
+      }
+    ]
+  }
+{% endschema %}

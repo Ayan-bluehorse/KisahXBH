@@ -1,0 +1,281 @@
+<section 
+  id="shopify-section-{{ section.id }}" 
+  class="after-party-section"
+  style="
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="ap-container">
+
+    <div class="ap-left">
+      {% if section.settings.heading != blank %}
+        <h2 class="ap-heading" style="color: {{ section.settings.heading_color }};">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.subheading != blank %}
+        <p class="ap-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+
+      {% if section.settings.btn_label != blank %}
+        <a 
+          href="{{ section.settings.btn_link }}" 
+          class="ap-btn" 
+          style="background-color: {{ section.settings.btn_bg }}; color: {{ section.settings.btn_color }};"
+        >
+          {{ section.settings.btn_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="ap-right">
+      {% if section.settings.mobile_image %}
+        <a 
+          href="{{ section.settings.btn_link }}" class="overlay_link">
+    <img 
+      width="{{ section.settings.mobile_image.width }}" height="{{ section.settings.mobile_image.height }}" loading="lazy" src="{{ section.settings.mobile_image | image_url: width: 900 }}"
+      alt="After Party Image Mobile"
+      class="ap-image mobile-img"
+    >
+    </a>
+  {% endif %}
+
+  {% if section.settings.main_image %}
+    <a 
+          href="{{ section.settings.btn_link }}" class="overlay_link">
+    <img 
+      width="{{ section.settings.main_image.width }}" height="{{ section.settings.main_image.height }}" loading="lazy" src="{{ section.settings.main_image | image_url: width: 1600 }}"
+      alt="After Party Image Desktop"
+      class="ap-image desktop-img"
+    >
+      </a>
+  {% endif %}
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+.after-party-section {
+    width: 100%;
+    background-color: #FFF1EA;
+}
+
+/* MAIN CONTAINER */
+.ap-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* LEFT SIDE */
+.ap-left {
+    width: 45%;
+    padding: 40px 20px;
+    padding-left: 100px;
+    padding-right: 48px;
+}
+
+.ap-heading {
+    margin-bottom: 12px;
+    font-family: Playfair Display;
+    font-size: 48px;
+    line-height: normal;
+}
+
+.ap-subheading {
+font-size: 24px;
+    line-height: 150%;
+    margin-bottom: 38px;
+    font-family: 'Manrope' !important;
+    color: #00000099;
+}
+
+.ap-btn {
+    display: inline-block;
+    padding: 16px 42.5px;
+    font-size: 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    line-height: 24px;
+    font-family: Playfair Display;
+}
+
+/* RIGHT SIDE IMAGE */
+.ap-right {
+  width: 55%;
+}
+
+.ap-image {
+  width: 100%;
+  display: block;
+}
+
+.mobile-img { 
+    display: none; 
+}
+.desktop-img { 
+    display: block; 
+}
+
+@media (max-width:1200px) and (min-width:769px) {
+    .ap-left {
+        padding-left: 30px;
+        width: 60%;
+    }
+
+.ap-heading {
+    font-size: 38px;
+}
+
+.ap-subheading {
+    font-size: 18px;
+}
+
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+.mobile-img { 
+    display: block;
+ }
+
+  .desktop-img { 
+    display: none;
+ }
+
+  .ap-container {
+    flex-direction: column;
+  }
+
+  .ap-left, 
+  .ap-right {
+    width: 100%;
+  }
+
+.ap-container {
+    display: block;
+    position: relative;
+}
+
+.ap-container .ap-left {
+    position: absolute;
+    bottom: 38px;
+    left: 0;
+    right: 0;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.ap-container .ap-left .ap-heading {
+    font-size: 25px;
+    line-height: 40px;
+    color: #fff !important;
+}
+
+.ap-container .ap-left .ap-subheading {
+    font-size: 12px;
+    line-height: 22px;
+    color: #fff;
+    margin-bottom: 7.47px;
+    letter-spacing: 0.5px;
+}
+
+.ap-container .ap-left a.ap-btn {
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding: 8px 28px;
+    border-radius: 8px;
+}
+
+}
+</style>
+
+{% schema %}
+{
+  "name": "After Party Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "After party collection"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#B03339"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Explore Kisah’s exclusive collections for every ceremony"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button Background",
+      "default": "#B03339"
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+        "type": "image_picker",
+        "id": "main_image",
+        "label": "Desktop Image"
+        },
+        {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile Image (optional)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "After Party Collection"
+    }
+  ]
+}
+{% endschema %}

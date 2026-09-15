@@ -1,0 +1,177 @@
+{%- liquid
+  assign _ps_terms = ''
+  if predictive_search
+    assign _ps_terms = predictive_search.terms | default: ''
+  endif
+-%}
+{% capture override_handle %}{% render 'collection-search-override-handle', terms: _ps_terms %}{% endcapture %}
+{%- liquid
+  assign override_handle = override_handle | strip
+  assign override_coll = blank
+  assign prepend_override = false
+  if override_handle != blank
+    assign override_coll = collections[override_handle]
+    if override_coll
+      assign prepend_override = true
+    endif
+  endif
+  assign show_predictive_shell = false
+  if predictive_search and predictive_search.performed
+    assign show_predictive_shell = true
+  endif
+  if prepend_override
+    assign show_predictive_shell = true
+  endif
+-%}
+{%- if show_predictive_shell -%}
+  <div id="predictive-search-results" class="product-grid product-grid--per-row-4 product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}">
+    {%- liquid
+      if predictive_search and predictive_search.performed
+        if settings.prod_thumb_shape == 'portrait-23'
+          assign chosen_product_aspect_ratio = 0.67
+        elsif settings.prod_thumb_shape == 'portrait-45'
+          assign chosen_product_aspect_ratio = 0.8
+        elsif settings.prod_thumb_shape == 'square'
+          assign chosen_product_aspect_ratio = 1.0
+        elsif settings.prod_thumb_shape == 'landscape-54'
+          assign chosen_product_aspect_ratio = 1.25
+        elsif settings.prod_thumb_shape == 'landscape-32'
+          assign chosen_product_aspect_ratio = 1.50
+        elsif settings.prod_thumb_shape == 'tallest'
+          assign chosen_product_aspect_ratio = 99
+          for product in predictive_search.resources.products
+            if product.featured_media.preview_image.aspect_ratio < chosen_product_aspect_ratio
+              assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+            endif
+          endfor
+        else
+          assign chosen_product_aspect_ratio = 0
+          for product in predictive_search.resources.products
+            if product.featured_media.preview_image.aspect_ratio > chosen_product_aspect_ratio
+              assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+            endif
+          endfor
+        endif
+
+        if settings.coll_grid_image_shape == 'portrait-23'
+          assign chosen_collection_aspect_ratio = 0.67
+        elsif settings.coll_grid_image_shape == 'portrait-45'
+          assign chosen_collection_aspect_ratio = 0.8
+        elsif settings.coll_grid_image_shape == 'square'
+          assign chosen_collection_aspect_ratio = 1.0
+        elsif settings.coll_grid_image_shape == 'landscape-54'
+          assign chosen_collection_aspect_ratio = 1.25
+        elsif settings.coll_grid_image_shape == 'landscape-32'
+          assign chosen_collection_aspect_ratio = 1.50
+        elsif settings.coll_grid_image_shape == 'tallest'
+          assign chosen_collection_aspect_ratio = 99
+          for collection in predictive_search.resources.collections
+            if collection.featured_image.aspect_ratio < chosen_collection_aspect_ratio
+              assign chosen_collection_aspect_ratio = collection.featured_image.aspect_ratio
+            endif
+          endfor
+        else
+          assign chosen_collection_aspect_ratio = 0
+          for collection in predictive_search.resources.collections
+            if collection.featured_image.aspect_ratio > chosen_collection_aspect_ratio
+              assign chosen_collection_aspect_ratio = collection.featured_image.aspect_ratio
+            endif
+          endfor
+        endif
+      else
+        if settings.prod_thumb_shape == 'portrait-23'
+          assign chosen_product_aspect_ratio = 0.67
+        elsif settings.prod_thumb_shape == 'portrait-45'
+          assign chosen_product_aspect_ratio = 0.8
+        elsif settings.prod_thumb_shape == 'square'
+          assign chosen_product_aspect_ratio = 1.0
+        elsif settings.prod_thumb_shape == 'landscape-54'
+          assign chosen_product_aspect_ratio = 1.25
+        elsif settings.prod_thumb_shape == 'landscape-32'
+          assign chosen_product_aspect_ratio = 1.50
+        elsif settings.prod_thumb_shape == 'tallest'
+          assign chosen_product_aspect_ratio = 99
+          for product in override_coll.products
+            if product.available and product.featured_media
+              unless product.tags contains 'no-search'
+                if product.featured_media.preview_image.aspect_ratio < chosen_product_aspect_ratio
+                  assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                endif
+              endunless
+            endif
+          endfor
+        else
+          assign chosen_product_aspect_ratio = 0
+          for product in override_coll.products
+            if product.available and product.featured_media
+              unless product.tags contains 'no-search'
+                if product.featured_media.preview_image.aspect_ratio > chosen_product_aspect_ratio
+                  assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
+                endif
+              endunless
+            endif
+          endfor
+        endif
+
+        if settings.coll_grid_image_shape == 'portrait-23'
+          assign chosen_collection_aspect_ratio = 0.67
+        elsif settings.coll_grid_image_shape == 'portrait-45'
+          assign chosen_collection_aspect_ratio = 0.8
+        elsif settings.coll_grid_image_shape == 'square'
+          assign chosen_collection_aspect_ratio = 1.0
+        elsif settings.coll_grid_image_shape == 'landscape-54'
+          assign chosen_collection_aspect_ratio = 1.25
+        elsif settings.coll_grid_image_shape == 'landscape-32'
+          assign chosen_collection_aspect_ratio = 1.50
+        else
+          assign chosen_collection_aspect_ratio = 1.0
+        endif
+      endif
+    -%}
+    {%- if prepend_override -%}
+      {%- assign override_quick_shown = 0 -%}
+      {%- assign override_id_prefix = ',' -%}
+      {%- for product in override_coll.products -%}
+        {%- if product.available -%}
+          {%- if product.tags contains 'no-search' -%}{%- continue -%}{%- endif -%}
+          {% render 'product-block', product: product, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true, in_predictive_search: true %}
+          {%- assign override_id_prefix = override_id_prefix | append: product.id | append: ',' -%}
+          {%- assign override_quick_shown = override_quick_shown | plus: 1 -%}
+          {%- if override_quick_shown >= 8 -%}{%- break -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if predictive_search and predictive_search.performed -%}
+      {%- liquid
+        for product in predictive_search.resources.products
+          if product.tags contains 'no-search'
+            continue
+          endif
+          if prepend_override
+            assign needle = ',' | append: product.id | append: ','
+            if override_id_prefix contains needle
+              continue
+            endif
+          endif
+          render 'product-block', product: product, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true, in_predictive_search: true
+        endfor
+
+        for collection in predictive_search.resources.collections
+          render 'collection-block', collection: collection, custom_aspect_ratio: chosen_collection_aspect_ratio, animate: true
+        endfor
+      -%}
+
+      {%- for page in predictive_search.resources.pages -%}
+        <div class="product-block page-block">
+          <div class="page-block__title"><a href="{{ page.url }}">{{ page.title }}</a></div>
+        </div>
+      {%- endfor -%}
+
+      {%- for article in predictive_search.resources.articles -%}
+        <div class="product-block page-block">
+          <div class="page-block__title"><a href="{{ article.url }}">{{ article.title }}</a></div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+{%- endif -%}

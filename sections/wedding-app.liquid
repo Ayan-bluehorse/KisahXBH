@@ -1,0 +1,88 @@
+<section 
+  id="shopify-section-{{ section.id }}" 
+  class="dulhe-toli-section {{ section.settings.section_class }}"
+  style="background-image: url({{ section.settings.background_image | image_url }});"
+>
+  <div class="container">
+      <!-- Heading Image -->
+    <div class="heading-image">
+      {% if section.settings.heading_image %}
+        <img 
+          width="{{ section.settings.heading_image.width }}" height="{{ section.settings.heading_image.height }}" loading="lazy" src="{{ section.settings.heading_image | image_url: width: 1200 }}"
+          alt="Heading Image"
+          class="heading-img"
+        >
+      {% endif %}
+    </div>
+
+    <!-- Section Title -->
+    <h2 class="section-title">{{ section.settings.section_title }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="27" viewBox="0 0 22 27" fill="none">
+<path d="M4.31041 1.00024C4.03731 2.09682 3.2097 5.1217 2.65726 8.02453C2.10485 10.6501 1.69105 12.4418 1.41588 13.7494C1.27726 14.3743 1.1407 14.9205 1 16.3109" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+<path d="M5.96484 17.5523C6.92488 17.2792 10.2187 15.0861 13.0594 13.3502C15.6147 11.7632 17.2699 10.5218 18.3706 9.76457C18.9251 9.41698 19.4713 9.14387 20.8617 8.03491" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+<path d="M6.37891 25.4145C6.65199 25.4145 8.97754 25.4145 12.5611 25.3462C13.9597 25.2779 14.5059 25.1414 15.6749 25.071C16.8439 25.0007 18.6191 25.0007 20.4481 25.0007" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+</svg>
+    </h2>
+    {%  if section.settings.section_sub_title != blank %}
+    <p>{{ section.settings.section_sub_title }}</p>
+    {% endif %}
+<div class="fully-spaced-row--medium">
+  {%- unless section.settings.full_width -%}<div class="container">{%- endunless -%}
+    {%- for block in section.blocks -%}
+      {% render block %}
+    {%- endfor -%}
+  {%- unless section.settings.full_width -%}</div>{%- endunless -%}
+</div>
+
+ </div>
+</section>
+{% schema %}
+{
+  "name": "Wedding Apps",
+  "class": "section-apps",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Wide display",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "heading_image",
+      "label": "Heading Image"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "DULHE KI TOLI"
+    },
+    {
+      "type": "text",
+      "id": "section_sub_title",
+      "label": "Section Sub Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wedding Apps"
+    }
+  ]
+}
+{% endschema %}

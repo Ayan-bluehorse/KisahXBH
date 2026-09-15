@@ -1,0 +1,147 @@
+<style> 
+#shopify-section-{{section.id}} {
+    padding-top: {{ section.settings.desk-padding-top }}px;
+    padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+} 
+#shopify-section-{{section.id}} .about-text-image{
+   display:flex;
+   gap:5px;
+}
+#shopify-section-{{section.id}} .about-text-image .text-container{
+    width:49%;
+}
+#shopify-section-{{section.id}} .about-text-image .text-container p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    opacity: 0.8;
+    margin-bottom:40px
+}
+#shopify-section-{{section.id}} .about-text-image .image-container{
+    width:50%;
+} 
+#shopify-section-{{section.id}} .about-text-image .text-container h3{
+  font-family: 'Generis Sans W01 Bold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 27px;
+  text-transform: uppercase;
+  color: #000000;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.mob-padding-top}}px;
+  padding-bottom:{{section.settings.mob-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .about-text-image{  
+   flex-direction:column-reverse;
+}
+#shopify-section-{{section.id}} .about-text-image .image-container{
+    width:100%;
+    margin-bottom:10px;
+} 
+#shopify-section-{{section.id}} .about-text-image .text-container{
+    width:100%;
+}
+#shopify-section-{{section.id}} .about-text-image .text-container h3{
+    font-size: 18px;
+    line-height: 22px;
+}
+#shopify-section-{{section.id}} .about-text-image .text-container p{
+    font-size: 14px;
+    line-height: 16px;
+    margin-bottom:20px
+}
+}
+</style>
+
+<div class="container" {{ template.suffix }}>
+ <div class="about-text-image">
+   <div class="text-container">
+     {{ section.settings.text }}
+   </div>
+   <div class="image-container">
+      {% render 'image',
+        image: section.settings.image,
+        sizes: '100vw',
+        widths: '960',
+        class: 'img-fit'
+      %}
+   </div>
+</div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "text with image",
+    "settings": [
+      {
+        "type": "textarea",
+         "id":"text",
+         "label": "Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+         "label": "Image"
+      },
+       {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+    ],
+    "presets": [
+      {
+        "name":"text with image"
+      }
+    ]
+  }
+{% endschema %}

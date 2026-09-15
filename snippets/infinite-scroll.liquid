@@ -1,0 +1,627 @@
+{%- comment -%}
+  Collection infinite scroll and stock-tier ordering.
+
+  This snippet is the sole owner of pagination. Product cards must be direct
+  children of #product-grid inside wrappers with:
+    data-stock-sort-item
+    data-available-variants
+    data-total-variants
+
+  The primary grid keeps products with at least 50% available variants.
+  Products below 50% remain hidden in the secondary grid until pagination is
+  complete. On a two-column mobile grid, an odd primary tail is buffered in
+  the hidden secondary grid and restored before the next page is appended.
+{%- endcomment -%}
+
+<div
+  id="infinite-scroll-{{ section.id }}"
+  data-infinite-scroll
+  data-grid-selector="#product-grid"
+  data-low-stock-selector="#low-stock-product-grid-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-current-page="{{ paginate.current_page }}"
+  data-pages="{{ paginate.pages }}"
+  data-min-loader-ms="1200"
+  {% if paginate.next %}data-next-url="{{ paginate.next.url | escape }}"{% endif %}
+>
+  <div
+    class="infinite-scroll__loader"
+    data-infinite-scroll-loader
+    role="status"
+    aria-live="polite"
+    {% unless paginate.next %}hidden{% endunless %}
+  >
+    <span class="infinite-scroll__spinner" aria-hidden="true"></span>
+    <span data-infinite-scroll-label>Loading more products...</span>
+  </div>
+
+  <div
+    class="infinite-scroll__sentinel"
+    data-infinite-scroll-sentinel
+    {% unless paginate.next %}hidden{% endunless %}
+  ></div>
+
+  <noscript>{{ paginate | default_pagination }}</noscript>
+</div>
+
+<style>
+  #infinite-scroll-{{ section.id }} {
+    width: 100%;
+    clear: both;
+    overflow-anchor: none;
+  }
+
+  #infinite-scroll-{{ section.id }}[hidden] {
+    display: none !important;
+  }
+
+  #infinite-scroll-{{ section.id }} .infinite-scroll__loader {
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px 0;
+    font-family: 'Generis Sans W01 Regular', sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    color: #201747;
+    text-align: center;
+  }
+
+  #infinite-scroll-{{ section.id }} .infinite-scroll__loader[hidden],
+  #infinite-scroll-{{ section.id }} .infinite-scroll__sentinel[hidden] {
+    display: none !important;
+  }
+
+  #infinite-scroll-{{ section.id }} .infinite-scroll__spinner {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(32, 23, 71, 0.16);
+    border-top-color: #201747;
+    border-radius: 50%;
+    animation: infinite-scroll-spin-{{ section.id }} 0.75s linear infinite;
+  }
+
+  #infinite-scroll-{{ section.id }} .infinite-scroll__sentinel {
+    width: 100%;
+    height: 2px;
+    overflow-anchor: none;
+  }
+
+  @keyframes infinite-scroll-spin-{{ section.id }} {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  if (window.__kisahInfiniteScrollManager) {
+    window.__kisahInfiniteScrollManager.boot();
+    return;
+  }
+
+  var initializedRoots = new WeakSet();
+
+  function directStockItems(grid) {
+    var items = [];
+
+    if (!grid) return items;
+
+    for (var i = 0; i < grid.children.length; i++) {
+      if (grid.children[i].hasAttribute('data-stock-sort-item')) {
+        items.push(grid.children[i]);
+      }
+    }
+
+    return items;
+  }
+
+  function isKurtaType(item) {
+    var type = (item.getAttribute('data-product-type') || '').toLowerCase().trim();
+    return type.indexOf('kurta') !== -1;
+  }
+
+  function stockTier(item) {
+    var available = parseInt(item.getAttribute('data-available-variants'), 10);
+    var total = parseInt(item.getAttribute('data-total-variants'), 10);
+
+    if (
+      !Number.isFinite(available) ||
+      !Number.isFinite(total) ||
+      total <= 0
+    ) {
+      return 'primary';
+    }
+
+    if (available / total >= 0.5) {
+      return 'primary';
+    }
+
+    return 'low';
+  }
+
+  function parseSectionResponse(html, gridSelector, sectionId) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+
+    var fragment = template.content;
+    var sectionRoot = fragment.querySelector(
+      '#shopify-section-' + sectionId
+    );
+    var scope = sectionRoot || fragment;
+    var grid = scope.querySelector(gridSelector);
+    var nextRoot = scope.querySelector('[data-infinite-scroll]');
+    var currentPage = grid
+      ? parseInt(grid.getAttribute('data-current-page'), 10)
+      : NaN;
+    var pages = grid
+      ? parseInt(grid.getAttribute('data-total-pages'), 10)
+      : NaN;
+    var nextUrl = nextRoot
+      ? nextRoot.getAttribute('data-next-url')
+      : null;
+
+    if (!nextUrl && grid) {
+      nextUrl = grid.getAttribute('data-next-page-url');
+    }
+
+    return {
+      grid: grid,
+      nextUrl: nextUrl,
+      currentPage: currentPage,
+      pages: pages
+    };
+  }
+
+  function initInfiniteScroll(root) {
+    if (!root || initializedRoots.has(root)) return;
+
+    initializedRoots.add(root);
+    root.setAttribute('data-inited', '1');
+
+    var sectionId = root.getAttribute('data-section-id');
+    var shopifySection = document.getElementById(
+      'shopify-section-' + sectionId
+    );
+    var scope = shopifySection || root.parentElement;
+    var gridSelector = root.getAttribute('data-grid-selector') || '#product-grid';
+    var lowStockSelector = root.getAttribute('data-low-stock-selector');
+    var grid = scope ? scope.querySelector(gridSelector) : null;
+    var lowStockGrid = scope && lowStockSelector
+      ? scope.querySelector(lowStockSelector)
+      : null;
+    var loader = root.querySelector('[data-infinite-scroll-loader]');
+    var loaderLabel = root.querySelector('[data-infinite-scroll-label]');
+    var sentinel = root.querySelector('[data-infinite-scroll-sentinel]');
+    var nextUrl = root.getAttribute('data-next-url');
+    var currentPage = parseInt(root.getAttribute('data-current-page'), 10) || 1;
+    var pages = parseInt(root.getAttribute('data-pages'), 10) || 1;
+    var minimumLoaderMs = parseInt(
+      root.getAttribute('data-min-loader-ms'),
+      10
+    ) || 0;
+    var hasNextPage = Boolean(nextUrl) || currentPage < pages;
+    var isLoading = false;
+    var observer = null;
+    var abortController = null;
+    var pendingPrimaryTail = null;
+    var retryTimer = null;
+    var targetProductId = getTargetProductId();
+
+    if (!grid || !loader || !sentinel) {
+      console.warn('Infinite scroll: required collection elements were not found.');
+      return;
+    }
+
+    function getTargetProductId() {
+      if (!window.location.hash || window.location.hash.length < 2) return null;
+
+      var id;
+
+      try {
+        id = decodeURIComponent(window.location.hash.slice(1));
+      } catch (error) {
+        id = window.location.hash.slice(1);
+      }
+
+      return id.indexOf('jump-id') === 0 ? id : null;
+    }
+
+    function usesTwoMobileColumns() {
+      if (!window.matchMedia('(max-width: 768px)').matches) return false;
+
+      if (grid.classList.contains('product-grid--per-row-mob-2')) {
+        return true;
+      }
+
+      var columns = window.getComputedStyle(grid).gridTemplateColumns;
+
+      return Boolean(
+        columns &&
+        columns !== 'none' &&
+        columns.trim().split(/\s+/).length === 2
+      );
+    }
+
+    function restorePendingTail() {
+      if (!pendingPrimaryTail) return;
+
+      if (pendingPrimaryTail.isConnected) {
+        pendingPrimaryTail.removeAttribute('data-primary-tail-buffer');
+        grid.appendChild(pendingPrimaryTail);
+      }
+
+      pendingPrimaryTail = null;
+    }
+
+    function distributeItems(items) {
+      restorePendingTail();
+
+      var fragment = document.createDocumentFragment();
+      var appendedItems = [];
+
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var tier = stockTier(item);
+
+        item.setAttribute('data-stock-tier', tier === 'remove' ? 'primary' : tier);
+
+        fragment.appendChild(item);
+        appendedItems.push(item);
+      }
+
+      grid.appendChild(fragment);
+      return appendedItems;
+    }
+
+    function setLowStockVisibility(visible) {
+      if (lowStockGrid) {
+        lowStockGrid.hidden = !visible;
+        lowStockGrid.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      }
+    }
+
+    function setLoaderState(state, label) {
+      loader.hidden = !state;
+      sentinel.hidden = !state;
+      root.hidden = !state;
+
+      if (loaderLabel && label) {
+        loaderLabel.textContent = label;
+      }
+    }
+
+    function buildSectionUrl(pageUrl) {
+      var url = new URL(pageUrl, window.location.origin);
+      url.searchParams.set('section_id', sectionId);
+      return url.toString();
+    }
+
+    function deriveNextUrl(requestedUrl, responsePage, responsePages) {
+      if (
+        !Number.isFinite(responsePage) ||
+        !Number.isFinite(responsePages) ||
+        responsePage >= responsePages
+      ) {
+        return null;
+      }
+
+      var url = new URL(requestedUrl, window.location.origin);
+      url.searchParams.set('page', responsePage + 1);
+      return url.pathname + url.search;
+    }
+
+    function preserveViewportWhile(callback) {
+      var shouldPreserve = root.getBoundingClientRect().top <= window.innerHeight;
+      var scrollX = window.pageXOffset;
+      var scrollY = window.pageYOffset;
+      var previousOverflowAnchor = scope.style.overflowAnchor;
+
+      if (shouldPreserve) {
+        scope.style.overflowAnchor = 'none';
+      }
+
+      var result = callback();
+
+      if (shouldPreserve) {
+        requestAnimationFrame(function () {
+          window.scrollTo(scrollX, scrollY);
+          scope.style.overflowAnchor = previousOverflowAnchor;
+        });
+      }
+
+      return result;
+    }
+
+    function updateProductCount() {
+      var countEl = scope ? scope.querySelector('[data-collection-count-item]') : document.querySelector('[data-collection-count-item]');
+      if (!countEl) return;
+      var count = grid ? grid.querySelectorAll('.product-block').length : 0;
+      count += lowStockGrid ? lowStockGrid.querySelectorAll('.product-block').length : 0;
+      if (count > 0) {
+        countEl.textContent = count + (count === 1 ? ' product' : ' products');
+      }
+    }
+
+    function finishPagination() {
+      hasNextPage = false;
+      nextUrl = null;
+      root.removeAttribute('data-next-url');
+
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+
+      setLoaderState(false);
+      setLowStockVisibility(true);
+      scrollToTargetIfAvailable();
+      updateProductCount();
+    }
+
+    function scrollToTargetIfAvailable() {
+      if (!targetProductId) return false;
+
+      var target = document.getElementById(targetProductId);
+
+      if (!target) return false;
+      if (lowStockGrid.hidden && lowStockGrid.contains(target)) return false;
+
+      targetProductId = null;
+
+      requestAnimationFrame(function () {
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      });
+
+      return true;
+    }
+
+    function loadNextPage(forceForRestore) {
+      if (
+        isLoading ||
+        !hasNextPage ||
+        !nextUrl ||
+        !root.isConnected
+      ) {
+        return;
+      }
+
+      isLoading = true;
+      var requestedUrl = nextUrl;
+      var startedAt = Date.now();
+      root.removeAttribute('data-load-error');
+      setLoaderState(true, 'Loading more products...');
+
+      abortController = 'AbortController' in window
+        ? new AbortController()
+        : null;
+
+      fetch(buildSectionUrl(requestedUrl), {
+        credentials: 'same-origin',
+        signal: abortController ? abortController.signal : undefined
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error('Infinite scroll fetch failed: ' + response.status);
+          }
+
+          return response.text();
+        })
+        .then(function (html) {
+          var parsed = parseSectionResponse(html, gridSelector, sectionId);
+
+          if (!parsed.grid) {
+            throw new Error('Infinite scroll response did not contain the product grid.');
+          }
+
+          var resolvedNextUrl = parsed.nextUrl || deriveNextUrl(
+            requestedUrl,
+            parsed.currentPage,
+            parsed.pages
+          );
+          var waitMs = forceForRestore
+            ? 0
+            : Math.max(0, minimumLoaderMs - (Date.now() - startedAt));
+
+          return new Promise(function (resolve) {
+            window.setTimeout(function () {
+              resolve({
+                parsed: parsed,
+                nextUrl: resolvedNextUrl
+              });
+            }, waitMs);
+          });
+        })
+        .then(function (result) {
+          if (!root.isConnected) return;
+
+          currentPage = Number.isFinite(result.parsed.currentPage)
+            ? result.parsed.currentPage
+            : currentPage + 1;
+          pages = Number.isFinite(result.parsed.pages)
+            ? result.parsed.pages
+            : pages;
+          nextUrl = result.nextUrl;
+          hasNextPage = Boolean(nextUrl) && currentPage < pages;
+
+          root.setAttribute('data-current-page', currentPage);
+          root.setAttribute('data-pages', pages);
+
+          if (nextUrl) {
+            root.setAttribute('data-next-url', nextUrl);
+          } else {
+            root.removeAttribute('data-next-url');
+          }
+
+          var incomingItems = directStockItems(result.parsed.grid);
+          var appendedItems = preserveViewportWhile(function () {
+            return distributeItems(incomingItems);
+          });
+
+          document.dispatchEvent(new CustomEvent('infinite-scroll:loaded', {
+            detail: {
+              grid: grid,
+              items: appendedItems,
+              currentPage: currentPage,
+              pages: pages
+            }
+          }));
+
+          if (!hasNextPage) {
+            finishPagination();
+            return;
+          }
+
+          setLowStockVisibility(false);
+          setLoaderState(true, 'Loading more products...');
+          scrollToTargetIfAvailable();
+
+          requestAnimationFrame(function () {
+            if (
+              root.isConnected &&
+              sentinel.getBoundingClientRect().top <= window.innerHeight
+            ) {
+              loadNextPage(Boolean(targetProductId));
+            }
+          });
+        })
+        .catch(function (error) {
+          if (error && error.name === 'AbortError') return;
+
+          console.error('Infinite scroll error:', error);
+          root.setAttribute('data-load-error', 'true');
+          setLoaderState(true, 'Unable to load products. Tap to retry.');
+
+          if (retryTimer) {
+            window.clearTimeout(retryTimer);
+            retryTimer = null;
+          }
+        })
+        .finally(function () {
+          isLoading = false;
+          abortController = null;
+        });
+    }
+
+    function restoreTargetOrLoad() {
+      if (!targetProductId) return;
+      if (scrollToTargetIfAvailable()) return;
+
+      if (hasNextPage) {
+        loadNextPage(true);
+      }
+    }
+
+    function handleSectionClick(event) {
+      var target = event.target;
+
+      if (!target || !target.closest) return;
+
+      if (
+        root.getAttribute('data-load-error') === 'true' &&
+        target.closest('[data-infinite-scroll-loader]')
+      ) {
+        root.removeAttribute('data-load-error');
+        loadNextPage(false);
+      }
+    }
+
+    setLowStockVisibility(false);
+    try {
+      distributeItems(directStockItems(grid));
+    } finally {
+      grid.setAttribute('data-stock-sorted', 'true');
+    }
+
+    if (!hasNextPage) {
+      finishPagination();
+      return;
+    }
+
+    setLoaderState(true, 'Loading more products...');
+    scope.addEventListener('click', handleSectionClick);
+
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            loadNextPage(false);
+            break;
+          }
+        }
+      }, {
+        rootMargin: '400px 0px 400px 0px',
+        threshold: 0
+      });
+
+      observer.observe(sentinel);
+    } else {
+      var ticking = false;
+
+      window.addEventListener('scroll', function () {
+        if (ticking || !root.isConnected) return;
+
+        ticking = true;
+        requestAnimationFrame(function () {
+          if (sentinel.getBoundingClientRect().top <= (window.innerHeight + 400)) {
+            loadNextPage(false);
+          }
+          ticking = false;
+        });
+      }, { passive: true });
+    }
+
+    restoreTargetOrLoad();
+  }
+
+  function storeProductHash(event) {
+    var target = event.target;
+
+    if (!target || !target.closest) return;
+
+    var link = target.closest('a.product-link[href]');
+
+    if (!link) return;
+
+    var block = link.closest('[id^="jump-id"]');
+
+    if (!block || !block.id) return;
+
+    history.replaceState(
+      null,
+      '',
+      window.location.pathname +
+        window.location.search +
+        '#' +
+        encodeURIComponent(block.id)
+    );
+  }
+
+  function boot() {
+    var roots = document.querySelectorAll('[data-infinite-scroll]');
+
+    for (var i = 0; i < roots.length; i++) {
+      initInfiniteScroll(roots[i]);
+    }
+  }
+
+  window.__kisahInfiniteScrollManager = { boot: boot };
+  document.addEventListener('click', storeProductHash, { passive: true });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  document.addEventListener('shopify:section:load', boot);
+  document.addEventListener('shopify:section:select', boot);
+  document.addEventListener('facet-filter:applied', boot);
+  document.addEventListener('collection:reloaded', boot);
+})();
+</script>

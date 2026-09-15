@@ -1,0 +1,136 @@
+
+<style>
+#shopify-section-{{section.id}} {
+   padding-top: {{ section.settings.desk-padding-top }}px;
+   padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+   background:{{section.settings.bg-color}};
+}
+  #shopify-section-{{section.id}} .offer-box-grid{
+     display:flex;
+     gap:10px;
+     flex-wrap:wrap;
+     max-width: 1000px; 
+     margin:0 auto;
+     width:100%;
+  }
+ #shopify-section-{{section.id}} .offer-details{
+    width: 30%;
+    text-align: center;
+    background: {{section.settings.box-bg}};
+    padding: 18px 15px 20px;
+    border-radius: 7px;
+    flex:1 0 auto;
+ }
+@media screen and (max-width:767px){
+#shopify-section-{{section.id}} {
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+ #shopify-section-{{section.id}} .offer-details{
+    width: 45%;
+   
+ }
+}
+</style>
+
+
+<div class="container">
+<div class="offer-box-grid">
+  {% for block in section.blocks %}
+  <div class="offer-details">
+    {% if block.settings.img != blank %}
+       <img src="{{ block.settings.img | image_url }}" width="auto" height="auto">
+      {% endif %}
+    <p>{{ block.settings.off-text  }}</p>
+  </div>
+  {% endfor %}
+</div>
+</div>
+{% schema %}
+{
+  "name": "offer details",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "box-bg",
+      "label": "Grid Background color"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "offer-box",
+      "name": "offer box",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "offer img"
+        },
+        {
+          "type": "text",
+          "id": "off-text",
+          "label": "offer-text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "offer details"
+    }
+  ]
+}
+{% endschema %}

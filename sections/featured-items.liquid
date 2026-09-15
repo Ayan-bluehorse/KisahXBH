@@ -1,0 +1,106 @@
+<section class="about-mainsection about-featured-section">
+  <div class="container">
+    <div class="about-featured-headings">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="about-featureditems-group">
+      {% for block in section.blocks %}
+        <div class="about-featured-item">
+          <div class="featureditem-img-group">
+            {% if block.settings.image %}
+              <img
+                src="{{ block.settings.image | image_url }}"
+                alt="{{ block.settings.image_alt | default: 'Image' }}"
+                width="612"
+                height="519"
+                loading="lazy"
+              />
+            {% else %}
+              <img
+                src="{{ block.settings.fallback_image | default: 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/default-featured.jpg?v=1' }}"
+                alt="Default Image"
+                width="612"
+                height="519"
+                loading="lazy"
+              />
+            {% endif %}
+          </div>
+          <div class="featureditem-content-group">
+            <div class="featureditem-content">
+              <h3>{{ block.settings.title }}</h3>
+              {{ block.settings.description }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Items",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "It’s <span>bold</span>, it’s <span>beautiful</span>, it’s <span>rebellious</span>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_item",
+      "name": "Featured Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image Alt Text",
+          "default": "Image"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title",
+          "default": "Revolutionizing Men’s <span>Ethnic Wear</span>"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<h5>Kisah transforms traditional Indian occasion wear with bold, modern designs that blend tradition with contemporary style.</h5>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Featured Items",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "featured_item",
+          "settings": {
+            "title": "Revolutionizing Men’s <span>Ethnic Wear</span>",
+            "description": "<h5>Kisah transforms traditional Indian occasion wear with bold, modern designs that blend tradition with contemporary style.</h5>"
+          }
+        },
+        {
+          "type": "featured_item",
+          "settings": {
+            "title": "<span>Gen Z</span> - Focused Innovation",
+            "description": "<h5>Catering to the new-age rebels, Kisah offers versatile outfits that can be styled for multiple events, encouraging individuality and self-expression.</h5>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

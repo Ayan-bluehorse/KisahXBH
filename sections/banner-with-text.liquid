@@ -1,0 +1,897 @@
+<div class="new-home-page-banner">
+    <div class="banner-image-sec">
+         {% for block in section.blocks %}
+            {% assign first = forloop.first %}
+           <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
+             {% if block.type == 'slide_banner_dual_button' %}
+                <div class="desk-mob-img-wrap dual-button-wrap" id="dual-wrap-{{block.id}}" style="position:relative;display:block;">
+                 {% if block.settings.mob-img != blank %}
+                   <img
+                     src="{{ block.settings.mob-img | image_url: width: 800 }}"
+                     srcset="
+                       {{ block.settings.mob-img | image_url: width: 320 }} 320w,
+                       {{ block.settings.mob-img | image_url: width: 420 }} 420w,
+                       {{ block.settings.mob-img | image_url: width: 600 }} 600w
+                     "
+                     sizes="(max-width: 768px) 100vw"
+                     width="420"
+                     height="auto"
+                     alt="{{ block.settings.mob-img.alt | escape }}"
+                     class="mob-img"
+                     loading="eager"
+                     fetchpriority="high"
+                   >
+                 {% endif %}
+                 
+                 {% if block.settings.desk-img != blank %}
+                   <img
+                     src="{{ block.settings.desk-img | image_url: width: 2000 }}"
+                     srcset="
+                       {{ block.settings.desk-img | image_url: width: 800 }} 800w,
+                       {{ block.settings.desk-img | image_url: width: 1000 }} 1000w,
+                       {{ block.settings.desk-img | image_url: width: 1400 }} 1400w
+                     "
+                     sizes="(min-width: 769px) 100vw"
+                     width="1000"
+                     height="auto"
+                     alt="{{ block.settings.desk-img.alt | escape }}"
+                     class="desk-img"
+                     loading="eager"
+                     fetchpriority="high"
+                   >
+                 {% endif %}
+                 <div style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:15;pointer-events:none;">
+                   <div class="rakhi-btn-{{block.id}}" style="position:absolute;bottom:{{ block.settings.desk_top_offset | default: 22 }}%;left:{{ block.settings.desk_left_offset | default: 5 }}%;display:flex;flex-direction:column;gap:10px;width:auto;min-width:220px;max-width:250px;box-sizing:border-box;pointer-events:auto;">
+                     {% if block.settings.button1_name != blank %}
+                       <a href="{{ block.settings.button1_link | default: '#' }}" class="rakhi-dual-btn primary-rakhi-btn">{{ block.settings.button1_name }}</a>
+                     {% endif %}
+                     {% if block.settings.button2_name != blank %}
+                       <a href="{{ block.settings.button2_link | default: '#' }}" class="rakhi-dual-btn secondary-rakhi-btn">{{ block.settings.button2_name }}</a>
+                     {% endif %}
+                   </div>
+                 </div>
+               </div>
+            {% else %}
+              <div class="desk-mob-img-wrap">
+               {% if block.settings.link != blank %}
+                  <a href="{{ block.settings.link }}" aria-label="Banner Url">
+              {% endif %}
+               {% if block.settings.mob-img != blank %}
+              <img
+               src="{{ block.settings.mob-img | image_url: width: 800 }}"
+                  srcset="
+                {{ block.settings.mob-img | image_url: width: 320 }} 320w,
+                {{ block.settings.mob-img | image_url: width: 420 }} 420w,
+                {{ block.settings.mob-img | image_url: width: 600 }} 600w"
+                 sizes="(max-width: 768px) 100vw"
+                  width="420"
+                 height="auto"
+                 alt="{{ block.settings.mob-img.alt | escape }}"
+                class="mob-img"
+                loading="eager"
+                 fetchpriority="high"
+                />
+          {% endif %}
+          
+           {% if block.settings.desk-img != blank %}
+            <img
+               src="{{ block.settings.desk-img | image_url: width: 2000 }}"
+               srcset="
+                 {{ block.settings.desk-img | image_url: width: 800 }} 800w,
+                 {{ block.settings.desk-img | image_url: width: 1000 }} 1000w,
+                 {{ block.settings.desk-img | image_url: width: 1400 }} 1400w"
+                 sizes="(min-width: 769px) 100vw"
+                 width="1000"
+                 height="auto"
+                 alt="{{ block.settings.desk-img.alt | escape }}"
+                 class="desk-img"
+                 loading="eager"
+                fetchpriority="high"
+             />
+            {% endif %}
+                {% if block.settings.link != blank %}
+                 </a>
+                 {% endif %}
+                   <div class="butn-para-content position-{{block.settings.position}} mob-pos-{{ block.settings.mob-position }}">
+                 <div class="button-with-content">
+                   <div class="hide-mobile-cont">
+                     <p>{{ block.settings.sub-head}}</p>
+                     <h2>{{ block.settings.head }}</h2>
+                     <p class="sub-para">{{ block.settings.content }}</p>
+                   </div>
+                    <div class="content-bannner-link" id="no-{{block.id}}">
+                      {% if block.settings.button-link != blank %}
+                      <a href="{{ block.settings.button-link }}">{{block.settings.button-name }}</a>
+                      {% endif %}
+                     </div>
+                 </div>
+              </div> 
+             </div>
+             <div class="content-bannner-link mob-link" id="no-{{block.id}}">
+                       {% if block.settings.button-link != blank %}
+                       <a href="{{ block.settings.button-link }}">{{block.settings.button-name }}</a>
+                     {% endif %}    
+               </div>
+            {% endif %}
+               <style>
+             #block-{{block.id}}.wrapping-content{
+                 position:relative;
+            } 
+             #block-{{block.id}} .desk-mob-img-wrap{
+                 position:relative;
+            }
+             /* Dual Button Mobile Override */
+             {% if block.type == 'slide_banner_dual_button' %}
+             @media screen and (max-width: 768px) {
+               .rakhi-btn-{{block.id}} {
+                   bottom: {{ block.settings.mob_top_offset | default: 20 }}% !important;
+                   top: auto !important;
+                   left: 50% !important;
+                   transform: translateX(-50%) !important;
+                   width: auto !important;
+                   min-width: 155px !important;
+                   max-width: 190px !important;
+                   gap: 7px !important;
+               }
+             }
+             {% endif %}
+
+                  #block-{{block.id}} .butn-para-content{
+                    display:none;
+                  }
+             #block-{{block.id}} .butn-para-content.position-left{
+                   display:flex;
+                   justify-content:flex-start;
+                   width:100%;
+                   position:absolute;
+                   top:70px; 
+                   z-index:9999;
+                   padding: 1rem 1rem 1rem 6.2rem;
+             }
+              #block-{{block.id}} .butn-para-content.position-right{
+                   display:flex;
+                   justify-content:flex-end;
+                   width:100%;
+                   position:absolute;
+                   top:70px; 
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             }
+             #block-{{block.id}} .butn-para-content.position-bottom{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   width:100%;
+                   position:absolute;
+                   bottom:50px;
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             }
+              #block-{{block.id}} .butn-para-content.position-top{
+                   display:flex;
+                   align-items:flex-start;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             }
+             #block-{{block.id}} .button-with-content .hide-mobile-cont {
+                  max-width: 42rem;
+                  display:flex;
+                  flex-direction:column;
+                  position:relative;
+             } 
+            
+           #block-{{block.id}} .button-with-content p{
+                  font-size: 36px;
+                  font-weight: 400;
+                  line-height: 41.41px;
+                  text-align: left;
+                  color:#ffffff;
+                  margin:0;
+           }
+           #block-{{block.id}} .content-bannner-link{ 
+                  max-width: 42rem;
+                  margin-top:30px;
+                  position:absolute;
+                  bottom:20px;
+                  left:50%;
+                  transform:translate(-50%, -42px);
+           }
+            @media screen and (max-width:768px){
+              /* #block-{{block.id}} .butn-para-content.position-top, #block-{{block.id}} .butn-para-content.position-bottom,#block-{{block.id}} .butn-para-content.position-right,
+              #block-{{block.id}} .butn-para-content.position-left{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   width:100%;
+                   position:absolute;
+                   bottom:-1%;
+                   left:58%;
+                   top:unset;
+                   transform:translate(-50%, -50%);
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             } */
+               #block-{{block.id}} .butn-para-content.mob-pos-top{
+                   display:flex;
+                   align-items:flex-start;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+              #block-{{block.id}} .butn-para-content.mob-pos-center{
+                   display:flex;
+                   align-items:center;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+                 
+              #block-{{block.id}} .butn-para-content.mob-pos-bottom{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   position:absolute;
+                   bottom:75px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+             .butn-para-content.mob-pos-bottom .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:37%;
+                   transform:translate(-50%,-50%);
+            }
+            .butn-para-content.mob-pos-top .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:13%;
+                   transform:translate(-50%,-50%);
+              }
+              .butn-para-content.mob-pos-center .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:63%;
+                   transform:translate(-50%,-50%);
+             }
+            
+            }
+           </style> 
+           </div>
+         {% endfor %}
+     </div>
+     {% if section.settings.whats-icon != blank %}
+      <div class="icon-pos-part">
+      <a href="{{  }}">
+        <img src="{{ section.settings.whats-icon | image_url}}" width="auto" height="auto">
+        </a>
+     </div>
+      {% endif %}
+    <div class="icon-width">
+      {% if section.settings.gift-icon != blank %}
+      <div class="icons-part">
+        <a href="#gift-form">
+          <img src="{{ section.settings.gift-icon | image_url }}" width="auto" height="auto">
+         </a>
+      </div>
+      {% endif %}
+   </div>
+</div>
+
+
+<style>
+#shopify-section-{{section.id}} {
+   padding-top: {{ section.settings.desk-padding-top }}px;
+   padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+}
+/* Fix: global button reset (font-size:inherit, color:inherit) overrides Slick's
+   arrow/dot styles. These high-specificity rules restore them. */
+#shopify-section-{{section.id}} .slick-prev,
+#shopify-section-{{section.id}} .slick-next {
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: transparent;
+  border: none;
+  outline: none;
+  background: transparent;
+  z-index: 100;
+}
+#shopify-section-{{section.id}} .slick-dots li button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+  cursor: pointer;
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+      display:none;
+}
+#shopify-section-{{section.id}} .slick-dotted.slick-slider{
+      margin-bottom: 0px;/*10px*/
+}
+/* Position dots overlaid on the banner image */
+#shopify-section-{{section.id}} .slick-dots {
+  display: flex !important;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 20px !important;
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  z-index: 10;
+}
+#shopify-section-{{section.id}} .slick-dots li {
+  display: block !important;
+  margin: 0 5px !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+#shopify-section-{{section.id}} .slick-dots li button {
+  display: block !important;
+  width: 9px !important;
+  height: 9px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  text-indent: -9999px !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+#shopify-section-{{section.id}} .slick-dots li button:before {
+  display: none !important; /* Hide original slick icon font dot */
+}
+#shopify-section-{{section.id}} .slick-dots li.slick-active button {
+  background: #ffffff !important;
+}
+{% unless section.settings.show_dots %}
+#shopify-section-{{section.id}} .slick-dots {
+  display: none !important;
+}
+{% endunless %}
+/* #shopify-section-{{section.id}} .content-bannner-link.mob-link{
+      display:none;
+} */
+#shopify-section-{{section.id}} .butn-para-content{
+     display:none !important;
+}
+#shopify-section-{{section.id}} .new-home-page-banner {
+       position:relative; 
+      overflow:hidden;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec{
+        /* position:relative; */
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 41.41px;
+        text-align: left;
+        color:#ffffff;
+        margin:0;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .desk-img{
+       width:100%;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+  width:100%;
+  /* height: 70vh; */
+}
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content .sub-para{
+      align-self:flex-end;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+      font-family: Westack;
+      font-size: 96px;
+      font-weight: 400;
+      line-height: 110.44px;
+      text-align: left;
+      color:#ffffff;
+      margin:0;
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+      color:#fff;
+      background:#201747;
+      box-shadow: 0px 4px 8px 3px #00000026;
+      padding:8px 20px;
+      border-radius:50px;
+      font-size:16px;
+      line-height:17.74px
+
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part{
+      position:fixed;
+      right: 10%;
+      bottom: 50px;
+      z-index:999;
+      display:none;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-width{
+      position:fixed;
+      left: 10%;
+      bottom: 65px;
+      max-width:50px;
+      z-index:999;
+      display:none;
+
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icons-part{
+      background:#ffffff;
+      padding: 7px 8px 1px;
+      box-shadow: 0px 1px 3px 0px #0000004D;
+      border-radius:100px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part img{
+       max-width:50px;
+}
+#shopify-section-{{section.id}} .icons-part img{
+       max-width:30px; 
+}
+#shopify-section-{{ section.id }} .slick-dots{
+        bottom:8px;
+}
+#shopify-section-{{ section.id }} .slick-dots li.slick-active button:before {
+        color:#ffffff !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li {
+         width:13px !important;
+         height:13px !important;
+         margin:0;
+         color:#A3A3A3;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next{
+     right:12px;
+     z-index:100;
+     top:50%;
+     transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+        
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev{
+       left:6px;
+       z-index:100;
+       top:50%;
+       transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+} 
+@media screen and (max-width:1440px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 28px;
+        line-height: 30.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+          font-size: 84px;
+          line-height: 90.44px;
+}
+
+}
+
+@media screen and (max-width:1220px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+      font-size: 28px;
+      line-height: 26.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+      font-size: 72px;
+      line-height: 89.44px;
+}
+
+}
+@media screen and (max-width:1100px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+        font-size: 64px;
+        line-height: 79.44px;
+}
+}
+@media screen and (max-width:900px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 20px;
+        line-height: 24.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+        font-size: 60px;
+        line-height: 63.44px;
+}
+
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+     padding-top: {{ section.settings.mob-padding-top }}px;
+     padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+} 
+#shopify-section-{{section.id}} .content-bannner-link{
+         display:none;
+  }
+#shopify-section-{{section.id}} .content-bannner-link.mob-link{
+         display:block;
+         bottom: 42px;
+         left: 50%;
+         position: absolute;
+         transform: translateX(-50%);
+        
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+          display:block;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .desk-img{
+         display:none;
+}
+
+#shopify-section-{{section.id}} .icons-part img{
+          max-width:25px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+          font-size:12px;
+          line-height:17.74px;
+          padding: 10px 18px;
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part{
+           right: 40px; 
+           bottom: 41px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-width{  
+            left: 40px;
+            bottom: 55px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part img{
+            max-width:45px;
+}
+#shopify-section-{{section.id}} .content-bannner-link.mobile-link{
+           position:absolute;
+           bottom:-141%;
+           left:11%;
+           transform:translate(-50%, -50%);
+           display:block;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+      width: 25px;
+      height: 30px
+
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        width: 25px;
+        height: 30px;
+}  
+}
+@media screen and (max-width:400px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1{
+        font-size: 50px;
+        line-height: 60.44px;
+}
+}
+@media screen and (max-width:375px){
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+   padding: 7px 10px;
+}
+}
+/* Rakhi Dual Button Appearance - scoped to section, no positioning here */
+#shopify-section-{{section.id}} .rakhi-dual-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+#shopify-section-{{section.id}} .rakhi-dual-btn.primary-rakhi-btn {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #000000 !important;
+}
+
+#shopify-section-{{section.id}} .rakhi-dual-btn.primary-rakhi-btn:hover {
+  background-color: #222222 !important;
+  color: #ffffff !important;
+}
+
+#shopify-section-{{section.id}} .rakhi-dual-btn.secondary-rakhi-btn {
+  background-color: #dfd3be !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+#shopify-section-{{section.id}} .rakhi-dual-btn.secondary-rakhi-btn:hover {
+  background-color: #d2c5ae !important;
+  color: #000000 !important;
+}
+
+@media screen and (max-width: 768px) {
+  #shopify-section-{{section.id}} .rakhi-dual-btn {
+    padding: 7px 14px;
+    font-size: 10.5px;
+    letter-spacing: 0.8px;
+    line-height: 1.2;
+    border-radius: 4px;
+  }
+}
+</style>
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+  function initializeSlick() {
+    var slickOptions = {
+      dots: {% if section.settings.show_dots == false %}false{% else %}true{% endif %},  
+      infinite: true,
+      speed: 500,
+      autoplay:true,
+     autoplaySpeed:3000,
+    };
+
+    // Initialize or reinitialize the Slick slider
+    var $slider = $('#shopify-section-{{ section.id }} .banner-image-sec');
+    if ($slider.hasClass('slick-initialized')) {
+      $slider.slick('unslick');
+    }
+    $slider.slick(slickOptions);
+  }
+
+  // Initial check
+  initializeSlick();
+
+  // Check on window resize
+  $(window).resize(function() {
+    initializeSlick();
+  });
+});
+
+</script>
+
+
+{% schema %}
+{
+  "name": "New Home Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "gift-icon",
+      "label": "Gift icon"
+    },
+    {
+      "type": "image_picker",
+      "id": "whats-icon",
+      "label": "Whats app icon"
+    },
+    {
+      "type": "url",
+      "id": "whats-app-link",
+      "label": "whats app link"
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SLIDER SETTINGS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show navigation dots",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide_banner",
+      "name": "Slide Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desk-img",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mob-img",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Banner Link"
+        },
+        {
+          "type": "text",
+          "id": "button-name",
+          "label": "Button Name"
+        },
+        {
+          "type": "url",
+          "id": "button-link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "slide_banner_dual_button",
+      "name": "Dual Button Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "desk-img",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mob-img",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "header",
+          "content": "BUTTON 1 (PRIMARY - BLACK)"
+        },
+        {
+          "type": "text",
+          "id": "button1_name",
+          "label": "Button 1 Label",
+          "default": "BUILD HIS GIFT BOX"
+        },
+        {
+          "type": "url",
+          "id": "button1_link",
+          "label": "Button 1 Link"
+        },
+        {
+          "type": "header",
+          "content": "BUTTON 2 (SECONDARY - CREAM)"
+        },
+        {
+          "type": "text",
+          "id": "button2_name",
+          "label": "Button 2 Label",
+          "default": "SHOP RAKHI KURTAS"
+        },
+        {
+          "type": "url",
+          "id": "button2_link",
+          "label": "Button 2 Link"
+        },
+        {
+          "type": "header",
+          "content": "BUTTON POSITIONING SLIDERS (%)"
+        },
+        {
+          "type": "range",
+          "id": "desk_top_offset",
+          "min": 0,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop Top Position (%)",
+          "default": 62
+        },
+        {
+          "type": "range",
+          "id": "desk_left_offset",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "%",
+          "label": "Desktop Left Position (%)",
+          "default": 8
+        },
+        {
+          "type": "range",
+          "id": "mob_top_offset",
+          "min": 0,
+          "max": 95,
+          "step": 1,
+          "unit": "%",
+          "label": "Mobile Top Position (%)",
+          "default": 27
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "New Home Banner"
+    }
+  ]
+}
+{% endschema %}

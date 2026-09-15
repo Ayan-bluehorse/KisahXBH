@@ -1,0 +1,192 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "banner_with_text_HdNwtF": {
+      "type": "banner-with-text",
+      "blocks": {
+        "slide_banner_TR7BBK": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/Festive_essentials_Dekstop_2.jpg",
+            "mob-img": "shopify://shop_images/Festive_Essentials_2.jpg",
+            "link": "https://kisah.in/collections/navratri-collection",
+            "button-name": "",
+            "button-link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_banner_TR7BBK"
+      ],
+      "settings": {
+        "whats-app-link": "",
+        "desk-padding-top": 0,
+        "desk-padding-bottom": 10,
+        "mob-padding-top": 8,
+        "mob-padding-bottom": 8
+      }
+    },
+    "image_grid_gjpbtq": {
+      "type": "image-grid",
+      "blocks": {
+        "image_grid_g46k4F": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/RED.jpg",
+            "link": "https://kisah.in/collections/red",
+            "text": "Day 1"
+          }
+        },
+        "image_grid_7EcRRr": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Blue.jpg",
+            "link": "https://kisah.in/collections/royal-blue",
+            "text": "Day 2"
+          }
+        },
+        "image_grid_nrm9XH": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Yellow.jpg",
+            "link": "https://kisah.in/collections/yellow",
+            "text": "Day 3"
+          }
+        },
+        "image_grid_wwWbqK": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Green.jpg",
+            "link": "https://kisah.in/collections/green",
+            "text": "Day 4"
+          }
+        },
+        "image_grid_NpeJhn": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Orange.jpg",
+            "link": "https://kisah.in/collections/orange",
+            "text": "Day 5"
+          }
+        },
+        "image_grid_keMdXg": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/White.jpg",
+            "link": "https://kisah.in/collections/white",
+            "text": "Day 6"
+          }
+        },
+        "image_grid_L4waWb": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Pink.jpg",
+            "link": "https://kisah.in/collections/pink",
+            "text": "Day 7"
+          }
+        },
+        "image_grid_LjaHFV": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Grey.jpg",
+            "link": "https://kisah.in/collections/grey",
+            "text": "Day 8"
+          }
+        },
+        "image_grid_hPGXch": {
+          "type": "image-grid",
+          "settings": {
+            "img": "shopify://shop_images/Lilac.jpg",
+            "link": "https://kisah.in/collections/lilac",
+            "text": "Day 9"
+          }
+        },
+        "image_grid_M3i69Y": {
+          "type": "image-grid",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Royal_Blue.jpg",
+            "link": "",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_grid_g46k4F",
+        "image_grid_7EcRRr",
+        "image_grid_nrm9XH",
+        "image_grid_wwWbqK",
+        "image_grid_NpeJhn",
+        "image_grid_keMdXg",
+        "image_grid_L4waWb",
+        "image_grid_LjaHFV",
+        "image_grid_hPGXch",
+        "image_grid_M3i69Y"
+      ],
+      "settings": {
+        "head": "",
+        "btn": "Shop All",
+        "link": "https://kisah.in/collections/navratri-collection",
+        "desk-padding-top": 16,
+        "desk-padding-bottom": 16,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 16
+      }
+    },
+    "festival_banners_tbEfzc": {
+      "type": "festival-banners",
+      "blocks": {
+        "banner_image_cneQXP": {
+          "type": "banner-image",
+          "settings": {
+            "img": "shopify://shop_images/Festive_essentials_Dekstop_2.jpg",
+            "mobimg": "shopify://shop_images/Festive_Essentials_2.jpg",
+            "link": "https://kisah.in/collections/navratri-collection"
+          }
+        },
+        "banner_image_JqqyPa": {
+          "type": "banner-image",
+          "settings": {
+            "img": "shopify://shop_images/Festive_essentials_Dekstop_2.jpg",
+            "mobimg": "shopify://shop_images/Festive_Essentials_2.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_image_cneQXP",
+        "banner_image_JqqyPa"
+      ],
+      "disabled": true,
+      "settings": {
+        "head": "",
+        "desk-padding-top": 0,
+        "desk-padding-bottom": 0,
+        "mob-padding-top": 0,
+        "mob-padding-bottom": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "banner_with_text_HdNwtF",
+    "image_grid_gjpbtq",
+    "festival_banners_tbEfzc"
+  ]
+}

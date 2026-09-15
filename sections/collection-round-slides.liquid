@@ -1,0 +1,273 @@
+<div class="collection-slide-tiles collection-slide-tiles-slider container">
+  {% for block in section.blocks %}
+  <div class="round-image-with-content slick-slide"  aria-label="{{ block.settings.collection-title }}">
+    <a href="{{ block.settings.link }}" aria-label="Collection list">
+      {% if block.settings.img != blank %}
+        <div class="round__cust_img">
+          {%- render 'image' with block.settings.img, loading: 'eager', fetchpriority: 'high' -%}
+          {%- comment -%} <img class="block__img" src="{{ block.settings.img | img_url:'300x' }}" width="300" height="300"> {%- endcomment -%}
+        </div>
+      {% endif %}
+      <p>{{ block.settings.text }}</p>
+    </a>
+  </div>
+ {% endfor %}
+</div>
+
+<style>
+#shopify-section-{{section.id}} {
+    padding-top: {{ section.settings.desk-padding-top }}px;
+    padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+    overflow:hidden;
+}  
+#shopify-section-{{section.id}} .collection-slide-tiles {
+    /* max-width:1300px; */
+     margin:0 auto;
+} 
+#shopify-section-{{section.id}} .collection-slide-tiles .slick-dots{
+          display:none !important;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content{
+      margin-right:15px;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content a{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content img{
+      max-width:150px;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content p{
+      font-family: GenerisSansW01-Regular;
+      font-size: 24px;
+      font-weight: 700;/*400*/
+      line-height: 26.47px;
+      text-align: center;
+      color:#000000;
+      margin: 16px 0 0 0;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .slick-dots li button{
+      display:none;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+  content: "";
+  display: block;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 37px;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+  transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+  content: "";
+  display: block;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 37px;
+  background-position: center;
+  background-size: contain;
+  opacity: 1;
+  background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+}
+#shopify-section-{{section.id}} .slick-prev{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    left: 0; 
+}
+#shopify-section-{{section.id}} .slick-next{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    right: 0; 
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+      padding-top: {{ section.settings.mob-padding-top }}px;
+      padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content p{
+      line-height:15.53px;
+      font-size:14px;
+      margin: 8px 0 0;
+}
+  
+}  
+@media screen and (max-width:578px){
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content img{
+        max-width:100px;
+} 
+}
+@media screen and (max-width:400px){
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content img{
+         /* max-width:90px; */
+          max-width:78px;
+} 
+/* #shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content p{
+         font-size:11px;
+} */
+}
+
+@media screen and (min-width: 1200px) {
+#shopify-section-{{section.id}} .collection-slide-tiles .round-image-with-content img {
+     /* max-width: 163px; */
+     max-width: 175px;
+}
+}
+</style>
+
+
+
+
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+  $('#shopify-section-{{ section.id }} .collection-slide-tiles').slick({
+    dots: true,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 6,
+    slidesToScroll: 3,
+    arrows :{{section.settings.show-arrows}},
+    responsive: [
+        {
+
+          breakpoint: 1100,
+          settings: {
+              slidesToShow: 4,
+              slidesToScroll: 3,
+              infinite: true,
+
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 3.50,
+            slidesToScroll: 3
+          }
+        },
+        {
+          breakpoint: 400,
+          settings: {
+            slidesToShow: 3.6,
+            slidesToScroll: 3
+          }
+        },
+       {
+          breakpoint: 350,
+          settings: {
+            slidesToShow: 3.1,
+            slidesToScroll: 3
+          }
+        }
+    ]
+  });
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Collection round slides",
+    "settings": [
+       {
+        "type": "checkbox",
+         "id": "show-arrows",
+          "label": "Show Slide Arrows"
+      },
+      
+       {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+      
+    ],
+    "blocks": [
+      {
+        "type": "image-slide",
+        "name":"Image Slide",
+        "settings": [
+          {
+            "type": "url",
+             "id":"link",
+              "label":"Link"
+          },
+          {
+            "type": "image_picker",
+             "id":"img",
+              "label":"Image"
+          },
+          {
+            "type": "text",
+             "id":"text",
+              "label":"Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection round slides"
+      }
+    ]
+  }
+{% endschema %}

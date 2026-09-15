@@ -1,0 +1,497 @@
+/* ============================================================
+   KISAH — Find Your Size  (v3 – final design)
+   Scoped via .fys prefix.  Uses --fys-font: inherit in the
+   Shopify theme so it picks up the site font automatically.
+   ============================================================ */
+
+/* --- Tokens (match the HTML design file) --- */
+[data-fys-container] {
+  --fys-font: inherit;
+  --navy: #2B2B6E;
+  --navy-dark: #232358;
+  --ink: #1F2937;
+  --body: #4B5563;
+  --muted: #9CA3AF;
+  --line: #E5E7EB;
+  --line-dark: #D1D5DB;
+  --hover: #F9FAFB;
+  --white: #FFFFFF;
+}
+
+/* --- Container --- */
+.fys { margin-top: 20px; }
+
+/* --- Trigger — soft navy strip --- */
+.fys-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: #EFF0F9;
+  border: 1px solid #DCDEF0;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 12px 16px;
+  font-family: var(--fys-font);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  transition: background .18s, border-color .18s;
+}
+.fys-trigger svg { flex: none; }
+.fys-trigger .fys-caret {
+  margin-left: auto;
+  transition: transform .25s ease;
+}
+.fys.is-open .fys-trigger .fys-caret { transform: rotate(180deg); }
+.fys-trigger:hover { background: #E6E8F6; border-color: #C9CCE8; }
+.fys-trigger:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+
+/* --- Panel (grid collapse) --- */
+.fys-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .35s ease;
+}
+.fys.is-open .fys-panel { grid-template-rows: 1fr; }
+.fys-panel-inner { overflow: hidden; }
+.fys-card {
+  margin-top: 16px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 32px 24px;
+}
+
+/* --- Progress stepper --- */
+.fys-stepper {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 6px;
+}
+.fys-stepper::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  right: 6px;
+  height: 2px;
+  background: var(--line);
+}
+.fys-stepper .fys-track {
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  height: 2px;
+  background: var(--navy);
+  width: 0;
+  transition: width .4s ease;
+}
+.fys-step-btn {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  background: none;
+  border: none;
+  cursor: default;
+  padding: 0;
+  text-align: left;
+  font-family: var(--fys-font);
+}
+.fys-step-btn:last-child {
+  flex: 0;
+  align-items: flex-end;
+  text-align: right;
+}
+.fys-step-btn .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--line-dark);
+  position: relative;
+  z-index: 1;
+  transition: background .25s, transform .25s;
+}
+.fys-step-btn .lbl {
+  font-size: 11px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  transition: color .25s;
+}
+.fys-step-btn.is-done .dot,
+.fys-step-btn.is-active .dot { background: var(--navy); }
+.fys-step-btn.is-active .dot { transform: scale(1.15); }
+.fys-step-btn.is-active .lbl,
+.fys-step-btn.is-done .lbl { color: var(--ink); }
+.fys-step-btn.is-done { cursor: pointer; }
+.fys-step-btn.is-done:hover .lbl { color: var(--navy); }
+.fys-step-btn.is-done:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --- Screens --- */
+.fys-screens { position: relative; margin-top: 26px; }
+.fys-screen { display: none; }
+.fys-screen.is-active {
+  display: block;
+  animation: fysIn .3s ease;
+}
+@keyframes fysIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fys-screen.is-active { animation: none; }
+  .fys-panel { transition: none; }
+  .fys-stepper .fys-track { transition: none; }
+}
+
+.fys-h {
+  font-family: var(--fys-font);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.fys-sub {
+  font-size: 14px;
+  color: var(--body);
+  margin-top: 3px;
+}
+
+/* --- Number spinner inputs --- */
+.fys-inputs {
+  display: flex;
+  gap: 28px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.fys-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fys-field-lbl {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.fys-spin {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;
+  background: var(--white);
+  overflow: hidden;
+}
+.fys-spin button {
+  width: 44px;
+  border: none;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 19px;
+  color: var(--body);
+  font-family: var(--fys-font);
+  transition: background .15s, color .15s;
+}
+.fys-spin button:hover { background: var(--hover); color: var(--ink); }
+.fys-spin button:active { background: #F3F4F6; }
+.fys-spin button:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
+.fys-spin input {
+  width: 84px;
+  border: none;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  text-align: center;
+  font-family: var(--fys-font);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 12px 0;
+  background: var(--white);
+}
+.fys-spin input:focus { outline: none; background: var(--hover); }
+.fys-spin input::-webkit-outer-spin-button,
+.fys-spin input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.fys-spin input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+/* --- Build cards --- */
+.fys-builds {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.fys-build {
+  flex: 1;
+  min-width: 180px;
+  background: var(--white);
+  border: 1px solid var(--line-dark);
+  border-radius: 10px;
+  padding: 16px 16px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--fys-font);
+  transition: border-color .18s, box-shadow .18s;
+}
+.fys-build:hover { border-color: var(--navy); }
+.fys-build:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.fys-build.is-selected { border-color: var(--navy); box-shadow: 0 0 0 1px var(--navy); }
+.fys-build .b-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+.fys-build .b-desc { font-size: 13.5px; color: var(--body); margin-top: 2px; }
+.fys-build svg { display: block; margin-bottom: 11px; }
+.fys-build svg path { stroke: var(--line-dark); transition: stroke .18s; }
+.fys-build.is-selected svg path,
+.fys-build:hover svg path { stroke: var(--navy); }
+
+/* --- Actions row --- */
+.fys-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 26px;
+}
+.fys-continue {
+  font-family: var(--fys-font);
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: #fff;
+  background: var(--navy);
+  border: none;
+  border-radius: 999px;
+  padding: 13px 36px;
+  cursor: pointer;
+  transition: background .18s;
+}
+.fys-continue:hover { background: var(--navy-dark); }
+.fys-continue:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; }
+.fys-back {
+  font-family: var(--fys-font);
+  font-size: 14.5px;
+  color: var(--body);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.fys-back:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.fys-back:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
+
+/* --- Result screen --- */
+.fys-result { text-align: center; padding-top: 4px; }
+.fys-badge {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--fys-font);
+  font-size: 34px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px auto 16px;
+  animation: fysBadge .45s cubic-bezier(.2,.9,.3,1.2);
+}
+@keyframes fysBadge {
+  from { transform: scale(.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .fys-badge { animation: none; } }
+.fys-result-h {
+  font-family: var(--fys-font);
+  font-size: 19px;
+  font-weight: 600;
+}
+.fys-result-h span { color: var(--navy); }
+
+/* answer chips (show your inputs with edit pen) */
+.fys-answers {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.fys-answer {
+  font-family: var(--fys-font);
+  font-size: 13.5px;
+  color: var(--body);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 15px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.fys-answer:hover { border-color: var(--navy); color: var(--ink); }
+.fys-answer:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.fys-answer svg { vertical-align: -2px; margin-left: 6px; }
+
+/* slim fit note */
+.fys-slim-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  text-align: left;
+  background: #F4F4FB;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  color: var(--navy);
+}
+.fys-slim-note svg { flex: none; }
+
+/* result actions */
+.fys-result-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.fys-exchange { font-size: 13px; color: var(--muted); margin-top: 16px; }
+.fys-support { font-size: 13px; color: var(--muted); margin-top: 5px; }
+.fys-support a { color: var(--body); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.fys-support a:hover { color: var(--navy); }
+.fys-startover {
+  font-family: var(--fys-font);
+  font-size: 14.5px;
+  color: var(--body);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 6px 2px;
+}
+.fys-startover:hover { color: var(--navy); }
+.fys-startover:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
+
+/* --- Privacy line --- */
+.fys-privacy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.fys-privacy svg { flex: none; }
+
+/* --- Wrapper margin above buy buttons --- */
+.fys-buy-buttons-wrap {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* --- Crosswalk refiner (optional, on result screen) --- */
+.fys-crosswalk {
+  margin-top: 18px;
+  text-align: left;
+}
+.fys-crosswalk-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fys-font);
+  font-size: 13.5px;
+  color: var(--body);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .15s;
+}
+.fys-crosswalk-toggle:hover { color: var(--navy); }
+.fys-crosswalk-toggle:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
+.fys-crosswalk-caret { transition: transform .25s ease; flex: none; }
+.fys-crosswalk.is-open .fys-crosswalk-caret { transform: rotate(180deg); }
+.fys-crosswalk-body {
+  margin-top: 14px;
+  padding: 16px;
+  background: #F9FAFB;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.fys-crosswalk-group { margin-bottom: 14px; }
+.fys-crosswalk-group:last-of-type { margin-bottom: 0; }
+.fys-crosswalk-lbl {
+  display: block;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* --- Pill buttons --- */
+.fys-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.fys-pill {
+  font-family: var(--fys-font);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--body);
+  background: var(--white);
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.fys-pill:hover { border-color: var(--navy); color: var(--ink); }
+.fys-pill:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.fys-pill.is-selected {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+/* --- Crosswalk note --- */
+.fys-crosswalk-note {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--navy);
+  background: #EFF0F9;
+  border-radius: 8px;
+  padding: 10px 14px;
+  line-height: 1.45;
+}
+.fys-crosswalk-note b { font-weight: 600; }
+
+/* --- Mobile --- */
+@media (max-width: 520px) {
+  .fys-card { padding: 22px 18px 20px; }
+  .fys-inputs { gap: 18px; }
+  .fys-spin input { width: 70px; }
+  .fys-builds { flex-direction: column; }
+  .fys-build { min-width: 0; }
+  .fys-step-btn .lbl { font-size: 9.5px; letter-spacing: .09em; }
+  .fys-actions { justify-content: space-between; }
+  .fys-continue { padding: 12px 28px; }
+  .fys-crosswalk-body { padding: 12px; }
+  .fys-pill { padding: 6px 13px; font-size: 12.5px; }
+}
+

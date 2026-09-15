@@ -1,0 +1,169 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_page_title": false,
+        "full_width": true
+      }
+    },
+    "custom_liquid_nJMhJW": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        ".fully-spaced-row--medium {margin-top: -10px !important; margin-bottom: 0 !important;}",
+        "@media (max-width: 767px) {.custom-html-Header {padding: 10px 10px !important; } .custom-html-Header p {font-size: 14px !important; }}"
+      ],
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": true,
+        "code": "<div class=\"custom-html-Header\" style=\"\n  background-color: #201747;\n  padding: 16px 20px;\n  text-align: center;\n\">\n  <p style=\"\n    margin: 0;\n    color: #ffffff;\n    font-family: 'Generis Sans W01 Bold', sans-serif;\n    font-size: 22px;\n  \">\n    Built for Everyday Hustle – Premium Heavyweight Denim\n  </p>\n</div>"
+      }
+    },
+    "hero_landing_fMWJzj": {
+      "type": "hero-landing",
+      "name": "Hero Landing Section",
+      "settings": {
+        "background_image": "shopify://shop_images/AANI5102_copy.png",
+        "subheading": "1k+ 5-star reviews",
+        "heading": "A CLASSIC CAPSULE CRAFTED FOR YOU",
+        "button_text": "Get Your Denims Now",
+        "button_link": "#shopify-section-template--19186168463512__custom_collection_denim_7fAJXt"
+      }
+    },
+    "customer_reviews_slider_dyxmpt": {
+      "type": "customer-reviews-slider",
+      "blocks": {
+        "review_eyNnLW": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Ellipse_1.png",
+            "name": "Hrithik R.",
+            "review": "Great quality and clean zip detail."
+          }
+        },
+        "review_7BMYbe": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11289.png",
+            "name": "Samar S.",
+            "review": "Comfortable, fits well, modern look."
+          }
+        },
+        "review_3D89E6": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11291_1583de5a-7d03-4cda-867d-5411b59010d7.png",
+            "name": "Ayaan D.",
+            "review": "Love the contrast zip. Stylish cut."
+          }
+        }
+      },
+      "block_order": [
+        "review_eyNnLW",
+        "review_7BMYbe",
+        "review_3D89E6"
+      ],
+      "name": "Customer Review Slider",
+      "settings": {
+        "main_class": "customer-review-slider-1",
+        "title": "Customer Stories"
+      }
+    },
+    "custom_collection_denim_7fAJXt": {
+      "type": "Custom-Collection-Denim",
+      "name": "Custom Collection Grid",
+      "settings": {
+        "section_heading": "",
+        "collection": "denim-fusion-kurta"
+      }
+    },
+    "responsive_banner_image_BCCgmM": {
+      "type": "responsive-banner-image",
+      "name": "Responsive Banner Image",
+      "settings": {
+        "desktop_image": "shopify://shop_images/All_images_2.png",
+        "mobile_image": "shopify://shop_images/Group_11350.png",
+        "alt_text": "Denim"
+      }
+    },
+    "denim_in_action_YjPjcF": {
+      "type": "denim-in-action",
+      "name": "Denim In Action",
+      "settings": {
+        "background_image": "shopify://shop_images/Denim_Background.jpg",
+        "heading": "SEE THE DENIM IN ACTION",
+        "description": "<p>Soft to the touch, strong in character. Our denim blends deep indigo hues with a lived-in feel that moves with your rhythm. Effortless style, timeless texture.</p>",
+        "video_file": "https://cdn.shopify.com/videos/c/o/v/2f7c11ec04de44379c11ce8d5f5e31b8.mp4",
+        "video_thumbnail": "shopify://shop_images/AANI4977_copy_1.png"
+      }
+    },
+    "customer_reviews_slider_FkXAmn": {
+      "type": "customer-reviews-slider",
+      "blocks": {
+        "review_4Q6CPN": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11315.png",
+            "name": "Ishaan M.",
+            "review": "Fabric feels nice. Cuffs well done."
+          }
+        },
+        "review_VTLWqp": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11317.png",
+            "name": "Neerav J.",
+            "review": "Perfect for weekend casual wear."
+          }
+        },
+        "review_3aQYcx": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11319.png",
+            "name": "Kunal P.",
+            "review": "Loved the simplicity and fit."
+          }
+        },
+        "review_BK8efJ": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify://shop_images/Group_11291_1583de5a-7d03-4cda-867d-5411b59010d7.png",
+            "name": "Ayaan D.",
+            "review": "Love the contrast zip. Stylish cut."
+          }
+        }
+      },
+      "block_order": [
+        "review_4Q6CPN",
+        "review_VTLWqp",
+        "review_3aQYcx",
+        "review_BK8efJ"
+      ],
+      "name": "Customer Review Slider",
+      "settings": {
+        "main_class": "customer-review-slider-2",
+        "title": "What Our Customers Say"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_nJMhJW",
+    "hero_landing_fMWJzj",
+    "customer_reviews_slider_dyxmpt",
+    "custom_collection_denim_7fAJXt",
+    "responsive_banner_image_BCCgmM",
+    "denim_in_action_YjPjcF",
+    "customer_reviews_slider_FkXAmn"
+  ]
+}

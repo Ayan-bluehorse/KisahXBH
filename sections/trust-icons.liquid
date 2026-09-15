@@ -1,0 +1,301 @@
+<div class="pop-trust-icon-sec">
+ <div class="trust-icons-sec page-width">
+  {% for block in section.blocks %}
+   <div class="icons-sec-pad" id="{{ block.id }}">
+    {% if  block.settings.icon != blank %}
+     <div class="icon-border-sec" >
+       <img src="{{ block.settings.icon | image_url }}" width="{{ block.settings.icon.width }}" height="{{ block.settings.icon.height }}" alt="{{ block.settings.icon.alt }}">
+      </div>
+      {% endif %}
+      <p class="click-eve">{{ block.settings.text }}</p>
+       <div class="pop-details-sec" id="pop-details-{{ block.id }}">
+       <div class="close-svg-part">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 15 15" fill="none"  class="close-svg">
+          <path d="M1 14.1528L14.1529 0.999885" stroke="black" stroke-linecap="round"/>
+          <path d="M1 1.15283L14.1529 14.3058" stroke="black" stroke-linecap="round"/>
+         </svg>
+         </div>
+        <div class="pop-up-cont-wrap">
+          <h5>{{ block.settings.head }}</h5>
+          <p>{{ block.settings.pop-text }}</p>
+        </div>
+       </div>
+    </div> 
+  {% endfor %}
+</div>
+</div>  
+
+<style>
+  
+#shopify-section-{{section.id}}{
+    padding-top: {{ section.settings.desk-padding-top }}px;
+    padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+    background: {{ section.settings.bg-color | default:"#F3F3F3" }};
+}
+#shopify-section-{{section.id}} .pop-trust-icon-sec{
+    position:relative;
+}
+#shopify-section-{{section.id}} .trust-icons-sec{
+    display:flex;
+    justify-content:center;
+    gap: 7.2%;/*10%*/
+    padding:15px 10px;
+    position:relative;
+    margin:0 auto;
+  }
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad{
+    display:flex;
+    flex-direction:column;
+    text-align:center;
+    cursor: pointer;
+   
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad p{
+    margin: 10px 0 0 0;
+    font-family: Generis Sans W01 Bold !important;/*GenerisSans W01 Regular*/
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 17.65px;
+    text-align: center;
+    color:#000000;
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad .icon-border-sec {
+    border-radius:100px;
+   /* background: linear-gradient(69.64deg, #B9B7D4 10.01%, #EDECFF 99.4%);*/
+    width:130px;
+    height:130px;
+    position:relative;
+   /* box-shadow: 0px 1px 3px 0px #0000004D;*/
+
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad img{
+   /* max-width:155px;*/
+    max-width:100px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+}
+#shopify-section-{{section.id}} .pop-details-sec{
+     position:absolute;
+     top:57%;
+     left:50%;
+     transform:translate(-50%, -50%);
+     background:#ffffff;
+     border-radius:10px;  
+}
+#shopify-section-{{section.id}} .pop-details-sec{
+       width:300px;
+       padding:10px 10px 40px 10px;
+       display:none;
+       z-index:99;
+} 
+#shopify-section-{{section.id}} .pop-details-sec.active{
+      display:block;
+} 
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap{
+     padding: 10px 25px 30px 10px;
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap h5{
+      font-family: Generis Sans W01 Bold;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 17.74px;
+      text-align: center;
+      color:#000000;
+      margin:10px 0 20px 0;
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap p{
+     font-family: GenerisSans W01 Regular;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 17.65px;
+      text-align: left;
+      color:#000000; 
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap span{
+    font-family: Generis Sans W01 Bold;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 17.74px;
+    text-align: left;
+    color:#000000;
+}
+#shopify-section-{{section.id}} .close-svg-part{
+     border-radius:50%;
+     background:#D9D9D9;
+     width:23px;
+     float:right;
+     cursor:pointer;
+}
+@media screen and (max-width: 768px) {
+#shopify-section-{{section.id}}{
+     padding-top: {{ section.settings.mob-padding-top }}px;
+     padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+} 
+
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad p{
+      font-size: 11px;
+      line-height: 12.2px;
+}
+#shopify-section-{{section.id}} .trust-icons-sec{
+      gap:8%;
+      padding:8px 10px;
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad .icon-border-sec {
+      width:75px;
+      height:75px;
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad img{
+       /* max-width: 90px; */
+     max-width: 80px;
+      width: fit-content;
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap h5{
+    font-size: 14px;
+    line-height: 15.74px;
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap p{
+    font-size: 14px;
+    line-height: 15.74px;
+}
+#shopify-section-{{section.id}} .pop-details-sec .pop-up-cont-wrap span{
+    font-size: 14px;
+    line-height: 15.74px;
+}
+}
+@media screen and (max-width: 400px) {
+#shopify-section-{{section.id}} .trust-icons-sec{
+     gap:7%;
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad .icon-border-sec {
+      width:60px;
+      height:60px;
+}
+#shopify-section-{{section.id}} .trust-icons-sec .icons-sec-pad img{
+       /* max-width:80px; */
+       max-width:60px;
+}
+}
+</style>
+
+<script>
+
+  window.kisahWhenJQueryReady(function($) {
+    let c;
+  $(".icons-sec-pad").click(function(){
+    $(".pop-details-sec").hide();
+    var id = $(this).closest(".icons-sec-pad").attr("id");
+    c= $("#pop-details-" + id).show();
+  });
+  $(document).on('click', '.close-svg-part', function(){
+    if (c) {
+      c.hide();
+    }
+  });
+});
+   
+ 
+</script>
+
+
+{% schema %}
+  {
+    "name": "Trust Icons",
+    "settings": [
+      {
+        "type": "color",
+         "id": "bg-color",
+          "label": "Background color"
+      },
+       {
+        "type": "header",
+         "content": "SECTION PADDING FOR DESKTOP"
+     },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+      
+    ],
+    "blocks":[
+     {
+       "type": "icon-with-popup",
+        "name":"Icon with popup",
+       "settings": [
+         {
+           "type": "image_picker",
+            "id": "icon",
+             "label": "Icon image"
+         },
+         {
+           "type": "text",
+            "id": "text",
+             "label": "Text"
+         },
+         {
+           "type": "header",
+            "content": "Poup Info"
+         },
+         {
+           "type": "text",
+            "id": "head",
+             "label": "Popup Heading"
+         },
+         {
+           "type": "textarea",
+            "id": "pop-text",
+            "label": "Popup text"
+         }
+       
+       ]
+       
+     } 
+   ],
+    "presets": [
+      {
+        "name": "Trust Icons"
+      }
+    ]
+  }
+{% endschema %}

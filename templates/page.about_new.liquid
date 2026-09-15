@@ -1,0 +1,17 @@
+{% layout 'theme' %}
+
+{{ 'page_about_new.css' | asset_url | stylesheet_tag }}
+
+<div class="about-mainsections">
+
+  {% section 'about-banner' %}
+
+  {% section 'vision-and-mission' %}
+
+  {% section 'featured-items' %}
+
+  {% section 'craft' %}
+
+  {% section 'process-items' %}
+  
+</div>

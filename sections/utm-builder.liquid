@@ -1,0 +1,121 @@
+{{ 'utm-builder.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'utm-builder.js' | asset_url }}" defer></script>
+
+<div
+  class="utm-builder-section"
+  data-utm-builder
+  data-default-url="{{ section.settings.default_url | escape }}"
+  id="utm-builder-{{ section.id }}"
+>
+  <header class="utmb-header">
+    <div class="utmb-header__brand">
+      <div class="utmb-header__icon" aria-hidden="true">🔗</div>
+      <div>
+        <h1 class="utmb-header__title">{{ section.settings.heading | default: 'Kisah UTM Builder' }}</h1>
+        <p class="utmb-header__subtitle">
+          {{ section.settings.subheading | default: 'Internal tool · Enforces naming conventions' }}
+        </p>
+      </div>
+    </div>
+    <button type="button" class="utmb-btn-reset" data-action="reset">↺ Reset</button>
+  </header>
+
+  <div class="utmb-main">
+    <div class="utmb-guidelines">
+      <strong>Naming Rules:</strong>&nbsp;
+      All lowercase · <code>_</code> between buckets ·
+      <code>-</code> within a bucket ·
+      No spaces · No special chars&nbsp;
+      <code>&amp; ( ) + / | % , ? "</code>
+    </div>
+
+    <section class="utmb-card" aria-labelledby="utmb-dest-{{ section.id }}">
+      <div class="utmb-card__head">
+        <span class="utmb-card__icon" aria-hidden="true">🌐</span>
+        <h2 class="utmb-card__title" id="utmb-dest-{{ section.id }}">Destination URL</h2>
+      </div>
+      <div class="utmb-field">
+        <label class="utmb-field__label utmb-field__label--required" for="utmb-url-{{ section.id }}">Website URL</label>
+        <p class="utmb-field__hint">Landing page URL — ? vs &amp; handled automatically</p>
+        <input
+          type="text"
+          class="utmb-input utmb-input--mono"
+          id="utmb-url-{{ section.id }}"
+          data-field="url"
+          placeholder="https://kisah.in/collections/sherwani"
+          value="{{ section.settings.default_url | escape }}"
+        >
+      </div>
+    </section>
+
+    <section class="utmb-card" aria-labelledby="utmb-source-{{ section.id }}">
+      <div class="utmb-card__head">
+        <span class="utmb-card__icon" aria-hidden="true">📡</span>
+        <h2 class="utmb-card__title" id="utmb-source-{{ section.id }}">Source &amp; Medium</h2>
+      </div>
+      <div class="utmb-grid-3">
+        <div class="utmb-field">
+          <label class="utmb-field__label utmb-field__label--required">Source Bucket</label>
+          <select class="utmb-select" data-field="bucket" aria-label="Source bucket"></select>
+        </div>
+        <div class="utmb-field">
+          <label class="utmb-field__label utmb-field__label--required">utm_source</label>
+          <div data-mount="source-other"></div>
+        </div>
+        <div class="utmb-field">
+          <label class="utmb-field__label utmb-field__label--required">utm_medium</label>
+          <div data-mount="medium"></div>
+        </div>
+      </div>
+      <div class="utmb-preview-inline" data-preview="source-medium" hidden></div>
+    </section>
+
+    <div data-mount="campaign"></div>
+    <div data-mount="content"></div>
+
+    <div class="utmb-final" data-panel="final">
+      <div class="utmb-final__head">
+        <h3 class="utmb-final__title" data-final="title">⏳ Fill required fields above</h3>
+        <button type="button" class="utmb-btn-copy" data-action="copy" hidden>📋 Copy URL</button>
+      </div>
+      <div class="utmb-final-url" data-final="url">Your UTM URL will appear here…</div>
+      <div class="utmb-final-params" data-final="params" hidden></div>
+    </div>
+
+    <p class="utmb-footer-note">
+      Kisah Internal Tool · UTM Guidelines v1 · lowercase · hyphens within · underscores between
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "UTM Builder",
+  "class": "section-utm-builder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Kisah UTM Builder"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Internal tool · Enforces naming conventions"
+    },
+    {
+      "type": "text",
+      "id": "default_url",
+      "label": "Default destination URL",
+      "default": "https://kisah.in"
+    }
+  ],
+  "presets": [
+    {
+      "name": "UTM Builder"
+    }
+  ]
+}
+{% endschema %}

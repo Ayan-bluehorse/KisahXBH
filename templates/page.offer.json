@@ -1,0 +1,147 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": false
+      }
+    },
+    "banner_with_text_g4F9wA": {
+      "type": "banner-with-text",
+      "blocks": {
+        "slide_banner_znGxaV": {
+          "type": "slide_banner",
+          "disabled": true,
+          "settings": {
+            "desk-img": "shopify://shop_images/1st_Purchase_Dsk.jpg",
+            "mob-img": "shopify://shop_images/1st_Purchase_Dsk.jpg",
+            "link": "",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
+        "slide_banner_bURxdd": {
+          "type": "slide_banner",
+          "disabled": true,
+          "settings": {
+            "desk-img": "shopify://shop_images/Extra_Dsk.jpg",
+            "mob-img": "shopify://shop_images/Extra_Dsk.jpg",
+            "link": "",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
+        "slide_banner_9faTre": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/kisha-banner.png",
+            "mob-img": "shopify://shop_images/kisha-banner.png",
+            "link": "shopify://collections/all",
+            "button-name": "",
+            "button-link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_banner_znGxaV",
+        "slide_banner_bURxdd",
+        "slide_banner_9faTre"
+      ],
+      "settings": {
+        "whats-app-link": "",
+        "desk-padding-top": 0,
+        "desk-padding-bottom": 16,
+        "mob-padding-top": 0,
+        "mob-padding-bottom": 16
+      }
+    },
+    "offer_details_BzWTth": {
+      "type": "offer-details",
+      "blocks": {
+        "offer_box_LeL48d": {
+          "type": "offer-box",
+          "settings": {
+            "img": "shopify://shop_images/discount_2.png",
+            "off-text": "Extra off . Use copoun code during checkout"
+          }
+        },
+        "offer_box_MpiGEJ": {
+          "type": "offer-box",
+          "settings": {
+            "img": "shopify://shop_images/discount_2.png",
+            "off-text": "Extra 5% off on prepaid orders"
+          }
+        },
+        "offer_box_PEC8kT": {
+          "type": "offer-box",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/discount_2.png",
+            "off-text": "Buy one Get  one offers"
+          }
+        },
+        "offer_box_MtQmVr": {
+          "type": "offer-box",
+          "settings": {
+            "img": "shopify://shop_images/discount_2.png",
+            "off-text": "Season offers"
+          }
+        },
+        "offer_box_4aLxQb": {
+          "type": "offer-box",
+          "settings": {
+            "img": "shopify://shop_images/discount_2.png",
+            "off-text": "Festival offers"
+          }
+        }
+      },
+      "block_order": [
+        "offer_box_LeL48d",
+        "offer_box_MpiGEJ",
+        "offer_box_PEC8kT",
+        "offer_box_MtQmVr",
+        "offer_box_4aLxQb"
+      ],
+      "disabled": true,
+      "settings": {
+        "bg-color": "#e3b7b7",
+        "box-bg": "#d9d9d9",
+        "desk-padding-top": 31,
+        "desk-padding-bottom": 30,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 16
+      }
+    },
+    "offer_subcribe_tXiK3j": {
+      "type": "offer-subcribe",
+      "disabled": true,
+      "settings": {
+        "img": "shopify://shop_images/KISAH_4414_1.png",
+        "head": "subcribe",
+        "text": "<p>\nSubscribe to our weekly newsletter and get early access to new products and discount promo codes</p>",
+        "bg-color": "",
+        "desk-padding-top": 16,
+        "desk-padding-bottom": 16,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "banner_with_text_g4F9wA",
+    "offer_details_BzWTth",
+    "offer_subcribe_tXiK3j"
+  ]
+}

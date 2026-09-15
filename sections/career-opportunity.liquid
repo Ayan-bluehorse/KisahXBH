@@ -1,0 +1,227 @@
+<style>
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.desk-padding-top}}px;
+  padding-bottom:{{section.settings.desk-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .career-main-head h2{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    font-family: 'Generis Sans W01 Bold';
+    margin-bottom: 35px;
+}
+#shopify-section-{{section.id}} .career-blocks-wrap{
+     display:flex;
+     flex-wrap:wrap;
+     gap:75px;
+     justify-content:center;
+}
+#shopify-section-{{section.id}} .career-opportunity{
+     width:45%;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding:45px;
+    position:relative;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .icon-part img{
+     max-width:90px;
+     margin-bottom:15px;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .text-content-wrapping span{
+    display:block;
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;  
+    opacity: 0.8;
+    margin-bottom:20px;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .text-content-wrapping p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+    opacity: 0.8;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .down-arrow-svg{
+    width: 32px;
+    height: 32px;
+    background: #201747;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    position:absolute;
+    bottom:-15px;
+    display:none;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .down-arrow-svg svg{
+     margin:0 auto;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+  padding-top:{{section.settings.mob-padding-top}}px;
+  padding-bottom:{{section.settings.mob-padding-bottom}}px;
+}
+#shopify-section-{{section.id}} .career-blocks-wrap{
+    gap:50px;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .icon-part img{
+     max-width:75px;
+}
+#shopify-section-{{section.id}} .career-main-head h2{
+    font-size: 22px;
+    line-height: 24px;
+     margin-bottom: 25px;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .text-content-wrapping p{
+    font-size: 16px;
+    line-height: 18px;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .text-content-wrapping span{
+    font-size: 18px;
+    line-height: 20px;
+}
+#shopify-section-{{section.id}} .career-opportunity{
+     width:100%;
+}
+#shopify-section-{{section.id}} .career-opportunity .content-wrapping .down-arrow-svg{
+     display:flex;
+}
+}
+</style>
+
+
+<div class="container">
+<div class="career-main-head">
+  <h2>{{ section.settings.head }}</h2>
+</div>
+<div class="career-blocks-wrap">
+{% for block in section.blocks %}
+<div class="career-opportunity">
+  <div class="content-wrapping">
+      <div class="icon-part">
+        {% render 'image',
+          image:block.settings.icon,
+          width:'90'
+        %}
+        </div>
+        <div class="text-content-wrapping">
+          <span>{{ block.settings.title }}</span>
+          <p>{{ block.settings.text }}</p>
+        </div>
+       <div class="down-arrow-svg">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="21" viewBox="0 0 16 21" fill="none">
+         <path d="M9 1C9 0.447715 8.55228 0 8 0C7.44772 0 7 0.447715 7 1L9 1ZM7.29289 20.7071C7.68342 21.0976 8.31658 21.0976 8.70711 20.7071L15.0711 14.3431C15.4616 13.9526 15.4616 13.3195 15.0711 12.9289C14.6805 12.5384 14.0474 12.5384 13.6569 12.9289L8 18.5858L2.34315 12.9289C1.95262 12.5384 1.31946 12.5384 0.928932 12.9289C0.538408 13.3195 0.538408 13.9526 0.928932 14.3431L7.29289 20.7071ZM7 1L7 20H9L9 1L7 1Z" fill="white"/>
+         </svg>
+       </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "career opportunity",
+    "settings": [
+      {
+        "type": "text",
+         "id": "head",
+          "label": "Heading"
+      },
+       {
+      "type": "header",
+     "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+    ],
+    "blocks": [
+      {
+        "type": "grid-blocks",
+         "name":"Grid blocks",
+        "settings": [
+          {
+            "type":"image_picker",
+            "id": "icon",
+            "label": "icon"
+          },
+          {
+            "type": "text",
+             "id": "title",
+              "label": "title"
+          },
+          {
+            "type": "text",
+             "id": "text",
+              "label": "text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "career opportunity"
+      }
+    ]
+  }
+{% endschema %}

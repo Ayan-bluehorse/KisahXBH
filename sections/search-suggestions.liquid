@@ -1,0 +1,83 @@
+{%- liquid
+  assign _ps_terms = ''
+  if predictive_search
+    assign _ps_terms = predictive_search.terms | default: ''
+  endif
+-%}
+{% capture override_handle %}{% render 'collection-search-override-handle', terms: _ps_terms %}{% endcapture %}
+{%- liquid
+  assign override_handle = override_handle | strip
+  assign override_coll = blank
+  assign show_override_suggestions = false
+  if override_handle != blank
+    assign override_coll = collections[override_handle]
+    if override_coll
+      assign show_override_suggestions = true
+    endif
+  endif
+  assign show_suggestions_shell = false
+  if predictive_search and predictive_search.performed
+    assign show_suggestions_shell = true
+  endif
+  if show_override_suggestions
+    assign show_suggestions_shell = true
+  endif
+  assign show_query_suggestions = false
+  if predictive_search and predictive_search.performed
+    if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0
+      assign show_query_suggestions = true
+    endif
+  endif
+-%}
+{%- if show_suggestions_shell -%}
+  <div class="search-suggestions-wrapper">
+    <div class="search-suggestions">
+      {%- if show_override_suggestions -%}
+        {%- assign override_sugg_shown = 0 -%}
+        {%- for product in override_coll.products -%}
+          {%- if product.available -%}
+            {%- unless product.tags contains 'no-search' -%}
+              {%- assign override_sugg_shown = override_sugg_shown | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if override_sugg_shown > 0 -%}
+          <span class="search-suggestions__heading" role="heading" aria-level="2">
+            {{- override_coll.title | escape -}}:
+          </span>
+          <ul class="search-suggestions__results-list search-suggestions__results-list--products">
+            {%- assign override_sugg_shown = 0 -%}
+            {%- for product in override_coll.products -%}
+              {%- if product.available -%}
+                {%- unless product.tags contains 'no-search' -%}
+                  <li class="search-suggestions__list-item search-suggestions__list-item--product">
+                    <a href="{{ product.url }}" class="search-suggestions__item">{{ product.title | escape }}</a>
+                  </li>
+                  {%- assign override_sugg_shown = override_sugg_shown | plus: 1 -%}
+                  {%- if override_sugg_shown >= 8 -%}{%- break -%}{%- endif -%}
+                {%- endunless -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      {%- endif -%}
+      {%- if show_query_suggestions -%}
+        <span class="search-suggestions__heading" role="heading" aria-level="2">
+        {{- 'general.search.suggestions' | t -}}:
+        </span>
+        <ul class="search-suggestions__results-list">
+          {%- for query in predictive_search.resources.queries -%}
+            <li class="search-suggestions__list-item">
+              <a href="{{ query.url }}" class="search-suggestions__item">{{ query.styled_text }}</a>
+            </li>
+          {%- endfor -%}
+          {%- for collection in predictive_search.resources.collections -%}
+            <li class="search-suggestions__list-item search-suggestions__list-item--collection">
+              <a href="{{ collection.url }}" class="search-suggestions__item">{{ collection.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

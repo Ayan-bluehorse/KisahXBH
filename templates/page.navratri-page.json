@@ -1,0 +1,309 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "navratri_bar_Aiyi8E": {
+      "type": "navratri-bar",
+      "name": "Navratri Bar",
+      "settings": {
+        "announcement_text": "Navratri Celebration is Live, Check it Out!",
+        "link": ""
+      }
+    },
+    "navratri_banner_jFyJhL": {
+      "type": "navratri-banner",
+      "blocks": {
+        "slide_X3zpaC": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/new_navratri_web_banner.png",
+            "mobile_image": "shopify://shop_images/new_mobile_version.png",
+            "alt_text": "Navratri Banner",
+            "link": "#shop-by-navratri"
+          }
+        }
+      },
+      "block_order": [
+        "slide_X3zpaC"
+      ],
+      "name": "Navratri Banner Section",
+      "settings": {}
+    },
+    "navratri_celebrate_RwMrbJ": {
+      "type": "navratri-celebrate",
+      "blocks": {
+        "color_card_VKCpMJ": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/ORANGE.png",
+            "link": "https://kisah.in/collections/orange"
+          }
+        },
+        "color_card_tKTzbY": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/WHITE.png",
+            "link": "https://kisah.in/collections/grey"
+          }
+        },
+        "color_card_WRiqUX": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/BLACK.png",
+            "link": "https://kisah.in/collections/black"
+          }
+        },
+        "color_card_W8k7Ey": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/BLUE.png",
+            "link": "https://kisah.in/collections/blue"
+          }
+        },
+        "color_card_nXKMyz": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/YELLOW.png",
+            "link": "https://kisah.in/collections/yellow"
+          }
+        },
+        "color_card_gHmDaG": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/PINK.png",
+            "link": "https://kisah.in/collections/pink"
+          }
+        },
+        "color_card_Kkcze4": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/RED.png",
+            "link": "https://kisah.in/collections/red"
+          }
+        },
+        "color_card_p4F6x6": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/PURPLE.png",
+            "link": "https://kisah.in/collections/purple"
+          }
+        },
+        "color_card_dwNjLf": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/GREEN.png",
+            "link": "https://kisah.in/collections/green"
+          }
+        }
+      },
+      "block_order": [
+        "color_card_VKCpMJ",
+        "color_card_tKTzbY",
+        "color_card_WRiqUX",
+        "color_card_W8k7Ey",
+        "color_card_nXKMyz",
+        "color_card_gHmDaG",
+        "color_card_Kkcze4",
+        "color_card_p4F6x6",
+        "color_card_dwNjLf"
+      ],
+      "name": "Navratri Celebrate",
+      "settings": {
+        "section_heading": "Celebrate endless joy in every color of Navratri"
+      }
+    },
+    "navratri_ensemble_QnyB9d": {
+      "type": "navratri-ensemble",
+      "blocks": {
+        "color_card_KaaNdK": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_01_FESTIVE_FIRST_IMPRESSIONS.png",
+            "link": "https://kisah.in/collections/first-impression"
+          }
+        },
+        "color_card_eCMtzT": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_02_GARBA_EDIT.png",
+            "link": "https://kisah.in/collections/garba-edit"
+          }
+        },
+        "color_card_8QiK3K": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_03_SMART_REPEATABLE.png",
+            "link": "https://kisah.in/collections/smart-repeatable"
+          }
+        },
+        "color_card_BREAqF": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_04_THE_PRINT_PARADE.png",
+            "link": "https://kisah.in/collections/print-parade"
+          }
+        },
+        "color_card_8ipqMK": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_05_SMART_SPENDS.png",
+            "link": "https://kisah.in/collections/smart-spends"
+          }
+        },
+        "color_card_VrBdYh": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_06_THE_EMBROIREDED_EDIT.png",
+            "link": "https://kisah.in/collections/drama"
+          }
+        },
+        "color_card_tzYLkW": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_07_PUJA_TO_PARTY.png",
+            "link": "https://kisah.in/collections/puja-to-party"
+          }
+        },
+        "color_card_jzDKVX": {
+          "type": "color_card",
+          "settings": {
+            "image": "shopify://shop_images/03_CLX_08_FESTIVE_CAPSULE_WARDROBE.png",
+            "link": "https://kisah.in/collections/festive-capsule"
+          }
+        }
+      },
+      "block_order": [
+        "color_card_KaaNdK",
+        "color_card_eCMtzT",
+        "color_card_8QiK3K",
+        "color_card_BREAqF",
+        "color_card_8ipqMK",
+        "color_card_VrBdYh",
+        "color_card_tzYLkW",
+        "color_card_jzDKVX"
+      ],
+      "name": "Navratri Ensemble",
+      "settings": {
+        "section_heading": "Get your Navratri ensemble here"
+      }
+    },
+    "navratri_carousel_fg4i8z": {
+      "type": "navratri-carousel",
+      "blocks": {
+        "review_CMartR": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-2.png",
+            "author": "Customer Name",
+            "text": "This is a sample review.",
+            "stars": 5
+          }
+        },
+        "review_cpVh8H": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-1.png",
+            "author": "Customer Name",
+            "text": "This is a sample review.",
+            "stars": 5
+          }
+        },
+        "review_fwCyJJ": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-3.png",
+            "author": "Customer Name",
+            "text": "This is a sample review.",
+            "stars": 5
+          }
+        }
+      },
+      "block_order": [
+        "review_CMartR",
+        "review_cpVh8H",
+        "review_fwCyJJ"
+      ],
+      "disabled": true,
+      "name": "Navratri Reviews",
+      "settings": {
+        "heading": "Navratri Vibes, Kisah Style"
+      }
+    },
+    "17569632230962093e": {
+      "type": "apps",
+      "blocks": {
+        "quinn_shoppable_videos_app_cards_block_E7dgh3": {
+          "type": "shopify://apps/quinn-shoppable-videos/blocks/app-cards-block/150d2781-732b-4020-a9fb-1368e974e6bb",
+          "settings": {
+            "layer_number": 1,
+            "card_margins_desktop": "0",
+            "card_margins_mobile": "0",
+            "custom_metaobject_handle": "null",
+            "heading": "<p>The Navratri Edit, Shop by Video</p>",
+            "heading_alignment": "center",
+            "heading_font_size_desktop": "16px",
+            "heading_letter_spacing_desktop": "normal",
+            "heading_font_size_mobile": "16px",
+            "heading_letter_spacing_mobile": "normal",
+            "heading_line_height_desktop": "1.2",
+            "heading_line_height_mobile": "1.2",
+            "heading_font_weight_desktop": "400",
+            "heading_font_weight_mobile": "400",
+            "heading_font": "sans_serif_n4",
+            "heading_color": "#000000",
+            "heading_background_color": "#ffffff",
+            "heading_padding": "0px",
+            "heading_margin": "0px",
+            "subheading": "",
+            "subheading_alignment": "center",
+            "subheading_font": "sans_serif_n4",
+            "subheading_color": "#000000",
+            "subheading_background_color": "#ffffff",
+            "subheading_padding": "0px",
+            "subheading_margin": "0px"
+          }
+        }
+      },
+      "block_order": [
+        "quinn_shoppable_videos_app_cards_block_E7dgh3"
+      ],
+      "settings": {
+        "full_width": true
+      }
+    },
+    "products_by_collection_wz7gp3": {
+      "type": "products-by-collection",
+      "name": "Product By Collection",
+      "settings": {
+        "section_heading": "Shop By Navratri Edition",
+        "collection": "navratri-kurta-for-men",
+        "section_id": "shop-by-navratri"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "navratri_bar_Aiyi8E",
+    "navratri_banner_jFyJhL",
+    "navratri_celebrate_RwMrbJ",
+    "navratri_ensemble_QnyB9d",
+    "navratri_carousel_fg4i8z",
+    "17569632230962093e",
+    "products_by_collection_wz7gp3"
+  ]
+}

@@ -1,0 +1,285 @@
+{%- comment -%} <script type="module" src="{{ 'store-locator-map.min.js' | asset_url }}"></script> {%- endcomment -%}
+
+<script>
+  var infowindows = [];
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 12.971599, lng: 77.594566 },
+      zoom: 12,
+      mapTypeId: 'roadmap',
+      zoomControl: true,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: true,
+      rotateControl: true,
+      fullscreenControl: true
+    });
+    console.log(map, 'map');
+      // { "name": "Store 1", "address": "123 Main St, City", "lat": 34.0522, "lng": -118.2437 },
+      // { "name": "Store 2", "address": "456 Elm St, City", "lat": 34.0522, "lng": -118.2507 },
+    
+    var storeData = [
+      {%- for block in section.blocks -%}
+        {%- if block.settings.code != blank and block.settings.title != blank and block.settings.address != blank -%}
+          {%- unless forloop.first -%},{%- endunless -%}
+          {
+            "Location": {{ block.settings.code | replace: ' ', '_' | json }},
+            "name": {{ block.settings.title | json }},
+            "address": {{ block.settings.address | newline_to_br | json }},
+            "phone": {{ block.settings.phone | json }},
+            "lat": Number({{ block.settings.lat | json }}),
+            "lng": Number({{ block.settings.long | json }})
+            {%- if block.settings.hours != blank -%}
+              ,"hours": {{ block.settings.hours | newline_to_br | json }}
+            {%- endif -%}
+            {%- if block.settings.details != blank -%}
+              ,"details": {{ block.settings.details | newline_to_br | json }}
+            {%- endif -%}
+            ,"url": {{ block.settings.url | newline_to_br | json | default: '"#"' }}
+            ,"code": {{ block.settings.code | json }}
+            ,"id": Number({{ forloop.index | json }})
+          }
+        {%- endif -%}
+      {%- endfor -%}
+    ];
+    console.log(storeData, 'storeData');
+    var markers = [];
+    
+    // Specify the path to your custom icon
+     var customIcon = 'https://cdn.shopify.com/s/files/1/0404/0196/1115/files/marker.png?v=1703226706';
+    
+    // Create markers and add to the map
+    storeData.forEach(function(store, index) {
+      var marker = new google.maps.Marker({
+        position: { lat: store.lat, lng: store.lng },
+        map: map,
+        title: store.name,
+        // icon: {
+        //   url: customIcon,
+        //   scaledSize: new google.maps.Size(40, 64) // Adjust the size as needed
+        // }
+      });
+      // Add marker to the array for later reference
+      markers.push(marker);
+
+      // Optionally, add an info window with additional information
+      var infowindow = new google.maps.InfoWindow({
+        content: '<strong>' + store.name + '</strong><br>' + store.address
+      });
+      // Add info to the array for later reference
+      infowindows.push(infowindow);
+
+      marker.addListener('click', function() {
+        // Close any open info windows
+        closeAllInfoWindows();
+        
+        // Open the current info window
+        infowindow.open(map, marker);
+
+        // Zoom in when the marker is clicked
+        map.setZoom(15);
+        map.setCenter(marker.getPosition());
+      });
+      console.log(store, 'store');
+    });
+ 
+    // Attach click event listeners to the list items
+    var listItems = document.querySelectorAll('.store-list-item');
+    listItems.forEach(function(item, index) {
+      item.addEventListener('click', function() {
+        // Trigger click event on the corresponding marker
+        google.maps.event.trigger(markers[index], 'click');
+      });
+    });
+
+  }
+
+  function closeAllInfoWindows() {
+    infowindows.forEach(function(infowindow) {
+      infowindow.close();
+    });
+  }
+</script>
+
+<div class="container section-stack">
+  <h2 class="h4">Find a Bliss Store near you</h2>
+  <div class="store-locator-row">
+    <div class="store-locator-content">
+      <div id="store-list" class="v-stack gap-3">
+        <!-- Each list item corresponds to a store -->
+        {%- for block in section.blocks -%}
+        {%- if block.settings.code != blank and block.settings.title != blank and block.settings.address != blank -%}
+          <div class="store-list-item">
+            <div class="store-list-box" data-marker-id="{{ forloop.index }}">
+              <ul class="v-stack gap-3">
+                <li><h3 class="h6">{{ block.settings.title }}</h3></li>
+                {%- if block.settings.address != blank -%}
+                  <li>{%- render 'icon' with 'location' -%}<p class="store-address">{{ block.settings.address }}</p></li>
+                {%- endif -%}
+                {%- if block.settings.hours != blank -%}
+                  <li>{%- render 'icon' with 'time' -%}<p class="store-hours">{{ block.settings.hours }}</p></li>
+                {%- endif -%}
+                {%- if block.settings.phone != blank -%}
+                  <li>{%- render 'icon' with 'phone' -%}<p class="store-phone"><a class="store__number_link" href="tel: {{ block.settings.phone }}">{{ block.settings.phone }}</a></p></li>
+                {%- endif -%}
+              </ul>
+            </div>
+            <div class="store-url">
+              <a class="button button--xl" href="{{ block.settings.url | default: '"#"' }}" target="_blank">Get Directions</a>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- endfor -%}
+        <!-- Add more store list items as needed -->
+      </div>
+    </div>
+    <div class="store-locator-map">
+      <div id="map"></div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  #shopify-section-{{ section.id }} {
+    padding-top: 30px;
+    padding-bottom: 40px;
+  }
+  #shopify-section-{{ section.id }} #map {
+    height: 500px;
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .store-locator-row {
+    display: flex;
+    gap: 20px;
+    height: 500px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .store-locator-content {
+    width: 30%;
+    height: 100%;
+    overflow-y: auto;
+  }
+  #shopify-section-{{ section.id }} .store-locator-map {
+    width: 70%;
+  }
+
+  /* Custom styling for the scrollbar */
+  #shopify-section-{{ section.id }} .store-locator-content::-webkit-scrollbar {
+    width: 8px; /* Set the width of the scrollbar */
+  }
+  #shopify-section-{{ section.id }} .store-locator-content::-webkit-scrollbar-thumb {
+    background-color: #888; /* Set the color of the scrollbar thumb */
+    border-radius: 4px; /* Set the border radius of the scrollbar thumb */
+  }
+  
+  #shopify-section-{{ section.id }} .store-list-item {
+    padding: 15px 15px;
+    border: 1px solid rgb(var(--text-color) / .12);
+  }
+  #shopify-section-{{ section.id }} .store-list-box {
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .store-list-box ul li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  #shopify-section-{{ section.id }} .store-url .button {
+    width: 100%;
+    border-radius: 0;
+    padding: 10px;
+    margin-top: 15px;
+  }
+  @media screen and (max-width: 1024px){
+    #shopify-section-{{ section.id }} .store-locator-content {
+      width: 40%;
+    }
+  }
+  @media screen and (max-width: 699px){
+    #shopify-section-{{ section.id }} .store-list-box {
+      cursor: unset;
+    }
+    #shopify-section-{{ section.id }} .store-locator-row {
+      display: block;
+      flex-wrap: wrap;
+      gap: 0;
+      height: unset;
+      overflow: unset;
+    }
+    #shopify-section-{{ section.id }} .store-locator-content {
+      width: 100%;
+    }
+  }
+</style>
+
+{%- schema %}
+  {
+    "name": "Store Locations Map",
+    "class": "hidden-section",
+    "blocks": [
+      {
+        "type": "location",
+        "name": "Store Location",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Store Name"
+          },
+          {
+            "type": "text",
+            "id": "code",
+            "label": "Location Code",
+            "info": "Must match the code set by RX"
+          },
+          {
+            "type": "textarea",
+            "id": "address",
+            "label": "Address"
+          },
+          {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone"
+          },
+          {
+            "type": "textarea",
+            "id": "hours",
+            "label": "Opening Hours"
+          },
+          {
+            "type": "textarea",
+            "id": "details",
+            "label": "Details"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Related Page"
+          },
+          {
+            "type": "header",
+            "content": "Location",
+            "info": "For info on getting lat/long values, see [here](https://support.google.com/maps/answer/18539)"
+          },
+          {
+            "type": "text",
+            "id": "lat",
+            "label": "Latitude"
+          },
+          {
+            "type": "text",
+            "id": "long",
+            "label": "Longitude"
+          }
+        ]
+      }
+    ],
+  "presets": [
+    {
+      "name":"Store Locations Map"
+    }
+  ]
+  }
+{% endschema -%}

@@ -1,0 +1,304 @@
+<style>
+  #cart-chiplet {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    background: white;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    z-index: 8000;
+    font-family: sans-serif;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    width: 70%;
+    justify-content: space-between;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5), 1px 2px 2px 2px rgba(0, 0, 0, 0.5);
+    max-width: 225px;
+    cursor: pointer;
+    user-select: none;
+  }
+  #cart-chiplet > img:nth-child(3n+1) {
+    display: none;
+  }
+  #cart-chiplet .cart-close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: normal;
+    z-index: 10;
+  }
+
+  #cart-chiplet img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 6px;
+    pointer-events: none;
+  }
+
+  #cart-chiplet .cart-text {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    pointer-events: none;
+  }
+
+  #cart-chiplet .cart-title {
+    font-family: 'Generis Sans W01 Bold';
+    color: #000;
+    line-height: normal;
+  }
+
+  #cart-chiplet .cart-items {
+    color: #aaa;
+    font-size: 12px;
+  }
+
+  #cart-chiplet .cart-arrow {
+    background: black;
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 35px;
+    margin-left: auto;
+  }
+
+  #cart-chiplet .cart-arrow img {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  #cart-chiplet.hidden {
+    display: none;
+  }
+
+  #cart-chiplet .cart-close span {
+    position: relative;
+    top: -2px;
+    pointer-events: none;
+  }
+  .cp-cartchip-overlay.visible {
+    position: fixed;
+    z-index: 7999;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.45);
+    display: block;
+  }
+</style>
+
+<div id="cart-chiplet" class="hidden">
+  <span class="cart-close" title="Close">
+    <span>&times;</span>
+  </span>
+  <img width="400" height="400" loading="lazy" src="" alt="Cart item" id="cart-product-img">
+  <div class="cart-text">
+    <div class="cart-title">View Cart</div>
+    <div class="cart-items" id="cart-items-count">0 Items</div>
+  </div>
+  <div class="cart-arrow">
+    {{ 'Chevron_right.png' | file_url | img_tag }}
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* -----------------------
+     COOKIE HELPERS
+  ------------------------*/
+  function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + (hours * 60 * 60 * 1000));
+    document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/`;
+  }
+  function getCookie(name) {
+    const m = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+    return m ? m[2] : null;
+  }
+  function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  }
+
+  /* -----------------------
+     OPEN CART DRAWER
+  ------------------------*/
+  function openCartDrawer() {
+    if (window.OPEN_CART && typeof window.OPEN_CART === 'function') {
+      window.OPEN_CART();
+      return;
+    }
+    if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') {
+      window.Rebuy.SmartCart.show();
+      return;
+    }
+    document.body.classList.add('rebuy-cart-visible');
+    const cartLink = document.querySelector('a.cart-link, .cart-link, .header__icon--cart, button.cart-icon-bubble, [data-cart-drawer-trigger]');
+    if (cartLink) {
+      cartLink.click();
+    }
+    window.dispatchEvent(new CustomEvent('rebuy:cart-show'));
+    window.dispatchEvent(new CustomEvent('rebuy:smartcart:open'));
+    window.dispatchEvent(new CustomEvent('helium:cart-drawer:open'));
+  }
+
+  /* -----------------------
+     TRACK LAST CART COUNT
+  ------------------------*/
+  let lastCartCount = null; // MUST start as null
+
+  /* -----------------------
+     MAIN UPDATE FUNCTION
+  ------------------------*/
+  function updateCartChiplet() {
+    fetch('/cart.json')
+      .then(res => res.json())
+      .then(data => {
+        const chiplet = document.getElementById('cart-chiplet');
+        if (!chiplet) return;
+
+        let overlay = document.querySelector('.cp-cartchip-overlay');
+        if (!overlay) {
+          document.body.insertAdjacentHTML('beforeend', '<div class="cp-cartchip-overlay"></div>');
+          overlay = document.querySelector('.cp-cartchip-overlay');
+        }
+
+        const count = data.item_count;
+
+        /* FIRST TIME: Initialize lastCartCount */
+        if (lastCartCount === null) lastCartCount = count;
+
+        /* 🔥 Detect NEW Item Added */
+        if (count > lastCartCount) {
+          deleteCookie("cp_cartchiplet_closed_24h");
+        }
+
+        lastCartCount = count;
+
+        /* ❌ Cart empty */
+        if (count === 0) {
+          chiplet.classList.add('hidden');
+          overlay.classList.remove('visible');
+          deleteCookie("cp_cartchiplet_closed_24h");
+          return;
+        }
+
+        /* ❌ User closed earlier (24 hours block) */
+        if (getCookie("cp_cartchiplet_closed_24h") === "true") {
+          chiplet.classList.add('hidden');
+          overlay.classList.remove('visible');
+          return;
+        }
+
+        /* ✅ UPDATE CONTENT */
+        const firstItem = data.items[0];
+        if (firstItem) {
+          document.getElementById('cart-items-count').textContent =
+            count + ' Item' + (count > 1 ? 's' : '');
+          if (firstItem.image) {
+            document.getElementById('cart-product-img').src = firstItem.image;
+          }
+        }
+
+        /* SHOW CHIPLET */
+        chiplet.classList.remove('hidden');
+        overlay.classList.add('visible');
+      })
+      .catch(err => {
+        console.error('Error updating cart chiplet:', err);
+      });
+  }
+
+  /* -----------------------
+     INIT ON PAGE LOAD
+  ------------------------*/
+  document.addEventListener('DOMContentLoaded', function () {
+    updateCartChiplet(); // run on load
+
+    /* -----------------------
+       ⭐ LISTEN FOR ADD TO CART ⭐
+    ------------------------*/
+    const CART_EVENTS = [
+      "cart:updated",
+      "cart:change",
+      "cart:itemAdded",
+      "cart:itemAdding",
+      "product:added",
+      "product:add",
+      "ajaxProduct:added",
+      "ajaxCart:updated",
+      "ajaxify:cart:refresh",
+      "rebuy:cart-change"
+    ];
+
+    CART_EVENTS.forEach(eventName => {
+      document.addEventListener(eventName, function () {
+        updateCartChiplet();
+      });
+    });
+
+    /* Fallback 2-second polling */
+    setInterval(updateCartChiplet, 2000);
+
+    /* -----------------------
+       CLICK HANDLERS
+    ------------------------*/
+    document.addEventListener('click', function (e) {
+      const closeBtn = e.target.closest('.cart-close');
+      const overlayClick = e.target.closest('.cp-cartchip-overlay');
+      const chipletClick = e.target.closest('#cart-chiplet');
+
+      /* 1. Close button or overlay clicked -> hide + 24hr cookie */
+      if (closeBtn || overlayClick) {
+        const chiplet = document.getElementById('cart-chiplet');
+        const overlay = document.querySelector('.cp-cartchip-overlay');
+
+        if (chiplet) chiplet.classList.add('hidden');
+        if (overlay) overlay.classList.remove('visible');
+
+        /* ⭐ Set cookie ONLY if not already set */
+        if (!getCookie("cp_cartchiplet_closed_24h")) {
+          setCookie("cp_cartchiplet_closed_24h", "true", 24);
+        }
+        return;
+      }
+
+      /* 2. Chiplet clicked -> hide chiplet & open cart drawer */
+      if (chipletClick) {
+        const chiplet = document.getElementById('cart-chiplet');
+        const overlay = document.querySelector('.cp-cartchip-overlay');
+
+        if (chiplet) chiplet.classList.add('hidden');
+        if (overlay) overlay.classList.remove('visible');
+
+        openCartDrawer();
+      }
+    });
+
+  });
+
+})();
+</script>

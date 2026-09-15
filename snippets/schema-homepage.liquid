@@ -1,0 +1,70 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "Kisah",
+  "description": "Discover Kisah’s curated collection of men’s ethnic wear. Shop sherwanis, kurtas, and Indo-western styles that blend tradition with contemporary elegance.",
+  "image": "https://kisah.in/cdn/shop/files/Group_63_1.png",
+  "url": "https://kisah.in/",
+  "address": [
+    {
+      "@type": "PostalAddress",
+      "streetAddress": "Kisah Apparel Private Limited, P62, 3rd Lane, Sector B, Metropolitan Housing Society",
+      "addressLocality": "Kolkata",
+      "addressRegion": "Kolkata",
+      "postalCode": "700105",
+      "addressCountry": "IN"
+    }
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "email": "support@kisah.in",
+      "url": "https://kisah.in/",
+      "contactType": "Customer Service",
+      "areaServed": "India"
+    }
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "Kisah"
+  },
+  "sameAs": [
+    "https://www.instagram.com/kisah_in/-/",
+    "https://www.facebook.com/kisahapparels/",
+    "https://www.youtube.com/channel/UCt0IIVc8kUoK3nrSkFbgdVw/",
+    "https://api.whatsapp.com/send?phone=918100993481&text=Hi"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "name": "Kisah",
+  "url": "https://kisah.in/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://kisah.in/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebPage",
+  "name": {{ page_title | json }},
+  "url": {{ request.origin | append: request.path | json }},
+  "description": {{ page_description | json }},
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://kisah.in/"
+  }
+}
+</script>

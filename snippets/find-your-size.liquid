@@ -1,0 +1,267 @@
+{% comment %}
+  Find Your Size — PDP inline sizing widget (v3 final design)
+  Parameters:
+    - product {Object} — the current product
+
+  Dependencies:
+    - assets/find-your-size.css
+    - assets/find-your-size.js
+{% endcomment %}
+
+{%- liquid
+  assign has_size_option = false
+  for option in product.options
+    assign option_down = option | downcase
+    if option_down == 'size'
+      assign has_size_option = true
+      break
+    endif
+  endfor
+
+  assign is_kids_product = false
+  assign vendor_down = product.vendor | downcase
+  assign type_down = product.type | downcase
+  
+  if vendor_down contains 'kids' or type_down contains 'kids'
+    assign is_kids_product = true
+  endif
+
+  for tag in product.tags
+    assign tag_down = tag | downcase
+    if tag_down contains 'kids'
+      assign is_kids_product = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_size_option and is_kids_product == false -%}
+
+{%- comment -%} Build list of available size values from product variants {%- endcomment -%}
+{%- liquid
+  assign size_option_index = nil
+  for option in product.options
+    assign opt_down = option | downcase
+    if opt_down == 'size'
+      assign size_option_index = forloop.index0
+      break
+    endif
+  endfor
+
+  assign available_sizes = ''
+  if size_option_index != nil
+    for variant in product.variants
+      assign size_val = variant.options[size_option_index]
+      if variant.available
+        if available_sizes == ''
+          assign available_sizes = size_val
+        else
+          assign available_sizes = available_sizes | append: '|||' | append: size_val
+        endif
+      endif
+    endfor
+  endif
+  assign sizes_array = available_sizes | split: '|||' | uniq
+-%}
+
+{{ 'find-your-size.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Paste your Google Apps Script Web App URL below after deploying
+  (see setup steps in scripts/find-your-size-google-sheets.gs).
+{%- endcomment -%}
+{%- assign fys_sheets_endpoint = 'https://script.google.com/macros/s/AKfycbwf2YwO34Hb9rGOWaIU_4Ireu170EKpZ0QaT-d1M2QEtUOMhT6slU-e-I4GjKMA-E8/exec' -%}
+
+{%- if customer -%}
+<script>
+  window.__fys_customer_id = {{ customer.id | json }};
+  window.__fys_customer_name = {{ customer.name | json }};
+  window.__fys_customer_email = {{ customer.email | json }};
+</script>
+{%- else -%}
+<script>
+  window.__fys_customer_id = '';
+  window.__fys_customer_name = '';
+  window.__fys_customer_email = '';
+</script>
+{%- endif -%}
+
+<div
+  data-fys-container
+  data-product-id="{{ product.id }}"
+  data-product-title="{{ product.title | escape }}"
+  data-product-url="{{ product.url }}"
+  data-product-handle="{{ product.handle }}"
+  data-available-sizes='[{%- for s in sizes_array -%}"{{ s | escape }}"{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]'
+  data-whatsapp-number="918100993481"
+  data-log-endpoint="{{ fys_sheets_endpoint }}"
+>
+
+  <!-- ======= FIND YOUR SIZE — widget ======= -->
+  <div class="fys" id="fys-{{ product.id }}">
+
+    <button class="fys-trigger" id="fysTrigger-{{ product.id }}" aria-expanded="false" aria-controls="fysPanel-{{ product.id }}">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>
+      </svg>
+      <span>Not sure of your size?&nbsp;→</span>
+      <svg class="fys-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+
+    <div class="fys-panel" id="fysPanel-{{ product.id }}">
+      <div class="fys-panel-inner">
+        <div class="fys-card">
+
+          <!-- stepper -->
+          <div class="fys-stepper" data-fys-stepper>
+            <div class="fys-track" data-fys-track></div>
+            <button class="fys-step-btn" data-step="0" tabindex="-1"><span class="dot"></span><span class="lbl">Height</span></button>
+            <button class="fys-step-btn" data-step="1" tabindex="-1"><span class="dot"></span><span class="lbl">Weight</span></button>
+            <button class="fys-step-btn" data-step="2" tabindex="-1"><span class="dot"></span><span class="lbl">Build</span></button>
+            <button class="fys-step-btn" data-step="3" tabindex="-1"><span class="dot"></span><span class="lbl">Your Size</span></button>
+          </div>
+
+          <div class="fys-screens">
+
+            <!-- STEP 1 · HEIGHT -->
+            <section class="fys-screen" data-screen="0">
+              <h3 class="fys-h">Your height</h3>
+              <p class="fys-sub">Use the arrows, or tap a number to type it in.</p>
+              <div class="fys-inputs">
+                <div class="fys-field">
+                  <span class="fys-field-lbl">Feet</span>
+                  <div class="fys-spin">
+                    <button type="button" data-spin="feet" data-dir="-1" aria-label="Decrease feet">−</button>
+                    <input type="number" data-fys-feet value="5" min="4" max="7" inputmode="numeric" aria-label="Height in feet">
+                    <button type="button" data-spin="feet" data-dir="1" aria-label="Increase feet">+</button>
+                  </div>
+                </div>
+                <div class="fys-field">
+                  <span class="fys-field-lbl">Inches</span>
+                  <div class="fys-spin">
+                    <button type="button" data-spin="inch" data-dir="-1" aria-label="Decrease inches">−</button>
+                    <input type="number" data-fys-inch value="8" min="0" max="11" inputmode="numeric" aria-label="Height in inches">
+                    <button type="button" data-spin="inch" data-dir="1" aria-label="Increase inches">+</button>
+                  </div>
+                </div>
+              </div>
+              <div class="fys-actions">
+                <button class="fys-continue" data-next>Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP 2 · WEIGHT -->
+            <section class="fys-screen" data-screen="1">
+              <h3 class="fys-h">Your weight</h3>
+              <p class="fys-sub">Roughly is fine — it only helps us suggest better.</p>
+              <div class="fys-inputs">
+                <div class="fys-field">
+                  <span class="fys-field-lbl">Weight (kg)</span>
+                  <div class="fys-spin">
+                    <button type="button" data-spin="kg" data-dir="-1" aria-label="Decrease weight">−</button>
+                    <input type="number" data-fys-kg value="70" min="35" max="160" inputmode="numeric" aria-label="Weight in kilograms">
+                    <button type="button" data-spin="kg" data-dir="1" aria-label="Increase weight">+</button>
+                  </div>
+                </div>
+              </div>
+              <div class="fys-actions">
+                <button class="fys-back" data-back>← Back</button>
+                <button class="fys-continue" data-next>Continue</button>
+              </div>
+            </section>
+
+            <!-- STEP 3 · BUILD -->
+            <section class="fys-screen" data-screen="2">
+              <h3 class="fys-h">How would you describe your build?</h3>
+              <p class="fys-sub">Pick whichever feels closest — this settles it.</p>
+              <div class="fys-builds" role="radiogroup" aria-label="Build">
+                <button class="fys-build" data-build="slim" role="radio" aria-checked="false">
+                  <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M8 22 V10 Q8 4 17 4 Q26 4 26 10 V22" stroke-linecap="round"/></svg>
+                  <div class="b-name">Slim</div>
+                  <div class="b-desc">Fitted through chest &amp; shoulders</div>
+                </button>
+                <button class="fys-build" data-build="regular" role="radio" aria-checked="false">
+                  <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M5 22 V9 Q5 3 17 3 Q29 3 29 9 V22" stroke-linecap="round"/></svg>
+                  <div class="b-name">Regular</div>
+                  <div class="b-desc">Average build</div>
+                </button>
+                <button class="fys-build" data-build="broad" role="radio" aria-checked="false">
+                  <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M3 22 V8 Q3 2 17 2 Q31 2 31 8 V22" stroke-linecap="round"/></svg>
+                  <div class="b-name">Broad</div>
+                  <div class="b-desc">Broader shoulders / heavier-set</div>
+                </button>
+              </div>
+              <div class="fys-actions">
+                <button class="fys-back" data-back>← Back</button>
+              </div>
+            </section>
+
+            <!-- STEP 4 · RESULT -->
+            <section class="fys-screen fys-result" data-screen="3">
+              <div class="fys-badge" data-fys-badge>40</div>
+              <h3 class="fys-result-h">Your recommended size is <span data-fys-size-label>M — 40</span></h3>
+
+              <div class="fys-answers" data-fys-answers></div>
+
+              <div class="fys-slim-note" data-fys-slim-note hidden>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Prefer a closer fit? Size <b data-fys-slim-size></b> will sit slimmer on you.</span>
+              </div>
+
+              <!-- Crosswalk refiner (optional) -->
+              <div class="fys-crosswalk" data-fys-crosswalk>
+                <button type="button" class="fys-crosswalk-toggle" data-fys-crosswalk-toggle>
+                  Not sure of his measurements?
+                  <svg class="fys-crosswalk-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="fys-crosswalk-body" data-fys-crosswalk-body hidden>
+                  <div class="fys-crosswalk-group">
+                    <span class="fys-crosswalk-lbl">Your usual kurta size</span>
+                    <div class="fys-pills" data-fys-kurta-pills>
+                      <button type="button" class="fys-pill" data-kurta="S">S</button>
+                      <button type="button" class="fys-pill" data-kurta="M">M</button>
+                      <button type="button" class="fys-pill" data-kurta="L">L</button>
+                      <button type="button" class="fys-pill" data-kurta="XL">XL</button>
+                      <button type="button" class="fys-pill" data-kurta="XXL">XXL</button>
+                    </div>
+                  </div>
+                  <div class="fys-crosswalk-group">
+                    <span class="fys-crosswalk-lbl">Your slim-fit formal shirt size</span>
+                    <div class="fys-pills" data-fys-shirt-pills>
+                      <button type="button" class="fys-pill" data-shirt="39">39</button>
+                      <button type="button" class="fys-pill" data-shirt="40">40</button>
+                      <button type="button" class="fys-pill" data-shirt="42">42</button>
+                      <button type="button" class="fys-pill" data-shirt="44">44</button>
+                    </div>
+                  </div>
+                  <p class="fys-crosswalk-note" data-fys-crosswalk-note hidden></p>
+                </div>
+              </div>
+
+              <div class="fys-result-actions">
+                <button class="fys-continue" data-fys-use-size>Select this size</button>
+                <button class="fys-startover" data-fys-start-over>Start over</button>
+              </div>
+
+              <p class="fys-exchange">Free size exchange within 7 days if it's not right.</p>
+              <p class="fys-support">Still unsure? <a data-fys-support-link>Reach out to support</a></p>
+            </section>
+
+          </div><!-- /screens -->
+
+          <div class="fys-privacy">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>So we can suggest your size — never shared, never sold.</span>
+          </div>
+
+        </div><!-- /card -->
+      </div>
+    </div><!-- /panel -->
+  </div><!-- /fys -->
+
+</div>
+
+<script src="{{ 'find-your-size.js' | asset_url }}" defer></script>
+
+{%- endif -%}

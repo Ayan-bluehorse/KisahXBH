@@ -1,0 +1,699 @@
+<div class="new-home-page-banner wedding-banner-wrapper">
+    <div class="banner-image-sec">
+         {% for block in section.blocks %}
+            {% assign first = forloop.first %}
+               
+           <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
+            {% if block.settings.button-link != blank %}
+                       <a href="{{ block.settings.button-link }}" class="overlay_link"></a>
+                     {% endif %} 
+           <div class="desk-mob-img-wrap">
+               {% if block.settings.link != blank %}
+                  <a href="{{ block.settings.link }}" aria-label="Banner Url">
+              {% endif %}
+               {% if block.settings.mob-img != blank %}
+              <img
+               src="{{ block.settings.mob-img | image_url: width: 800 }}"
+                  srcset="
+                {{ block.settings.mob-img | image_url: width: 320 }} 320w,
+                {{ block.settings.mob-img | image_url: width: 420 }} 420w,
+                {{ block.settings.mob-img | image_url: width: 600 }} 600w"
+                 sizes="(max-width: 768px) 100vw"
+                  width="420"
+                 height="auto"
+                 alt="{{ block.settings.mob-img.alt | escape }}"
+                class="mob-img"
+                loading="eager"
+                 fetchpriority="high"
+                />
+          {% endif %}
+          
+           {% if block.settings.desk-img != blank %}
+            <img
+               src="{{ block.settings.desk-img | image_url: width: 2000 }}"
+               srcset="
+                 {{ block.settings.desk-img | image_url: width: 800 }} 800w,
+                 {{ block.settings.desk-img | image_url: width: 1000 }} 1000w,
+                 {{ block.settings.desk-img | image_url: width: 1400 }} 1400w"
+                 sizes="(min-width: 769px) 100vw"
+                 width="1000"
+                 height="auto"
+                 alt="{{ block.settings.desk-img.alt | escape }}"
+                 class="desk-img"
+                 loading="eager"
+                fetchpriority="high"
+             />
+            {% endif %}
+                {% if block.settings.link != blank %}
+                 </a>
+                 {% endif %}
+                   <div class="butn-para-content position-{{block.settings.position}} mob-pos-{{ block.settings.mob-position }}">
+                 <div class="button-with-content">
+                   <div class="hide-mobile-cont">
+                     <p>{{ block.settings.sub-head}}</p>
+                     <h2>{{ block.settings.head }}</h2>
+                     <p class="sub-para">{{ block.settings.content }}</p>
+                   </div>
+                    <div class="content-bannner-link" id="no-{{block.id}}">
+                      {% if block.settings.button-link != blank %}
+                      <a href="{{ block.settings.button-link }}">{{block.settings.button-name }}</a>
+                      {% endif %}
+                     </div>
+                 </div>
+              </div> 
+             </div>
+             <div class="content-bannner-link mob-link" id="no-{{block.id}}">
+                       {% if block.settings.button-link != blank %}
+                       <a href="{{ block.settings.button-link }}">{{block.settings.button-name }}</a>
+                     {% endif %}    
+               </div>
+               <style>
+             #block-{{block.id}}.wrapping-content{
+                 position:relative;
+            } 
+             #block-{{block.id}} .desk-mob-img-wrap{
+                 position:relative;
+            } 
+                  {% comment %} #block-{{block.id}} .butn-para-content{
+                    display:none;
+                  } {% endcomment %}
+             #block-{{block.id}} .butn-para-content.position-left{
+                   display:flex;
+                   justify-content:flex-start;
+                   width:100%;
+                   position:absolute;
+                   top:70px; 
+                   z-index:9999;
+                   padding: 1rem 1rem 1rem 6.2rem;
+             }
+              #block-{{block.id}} .butn-para-content.position-right{
+                   display:flex;
+                   justify-content:flex-end;
+                   width:100%;
+                   position:absolute;
+                   top:70px; 
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             }
+             #block-{{block.id}} .butn-para-content.position-bottom{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   width:100%;
+                   position:absolute;
+                   bottom:50px;
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             } 
+              #block-{{block.id}} .butn-para-content.position-top{
+                   display:flex;
+                   align-items:flex-start;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             }
+             #block-{{block.id}} .button-with-content .hide-mobile-cont {
+                  max-width: 42rem;
+                  display:flex;
+                  flex-direction:column;
+                  position:relative;
+             } 
+            
+           #block-{{block.id}} .button-with-content p{
+                  font-size: 36px;
+                  font-weight: 400;
+                  line-height: 41.41px;
+                  text-align: left;
+                  color:#ffffff;
+                  margin:0;
+           }
+           #block-{{block.id}} .content-bannner-link{ 
+                  max-width: 42rem;
+                  margin-top:30px;
+                  position:absolute;
+                  bottom:20px;
+                  left:50%;
+                  transform:translate(-50%, -42px);
+           }
+
+           .wedding-banner-wrapper .wrapping-content a.overlay_link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+            @media screen and (max-width:768px){
+              /* #block-{{block.id}} .butn-para-content.position-top, #block-{{block.id}} .butn-para-content.position-bottom,#block-{{block.id}} .butn-para-content.position-right,
+              #block-{{block.id}} .butn-para-content.position-left{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   width:100%;
+                   position:absolute;
+                   bottom:-1%;
+                   left:58%;
+                   top:unset;
+                   transform:translate(-50%, -50%);
+                   z-index:9999;
+                   padding: 1rem 6.2rem 1rem 1rem;
+             } */
+               #block-{{block.id}} .butn-para-content.mob-pos-top{
+                   display:flex;
+                   align-items:flex-start;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+              #block-{{block.id}} .butn-para-content.mob-pos-center{
+                   display:flex;
+                   align-items:center;
+                   justify-content:center;
+                   position:absolute;
+                   top:50px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+                 
+              #block-{{block.id}} .butn-para-content.mob-pos-bottom{
+                   display:flex;
+                   align-items:flex-end;
+                   justify-content:center;
+                   position:absolute;
+                   bottom:75px; 
+                   z-index:9999;
+                   width:100%;
+                   padding: 1rem 1rem 1rem 1rem;
+               }
+             .butn-para-content.mob-pos-bottom .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:37%;
+                   transform:translate(-50%,-50%);
+            }
+            .butn-para-content.mob-pos-top .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:13%;
+                   transform:translate(-50%,-50%);
+              }
+              .butn-para-content.mob-pos-center .content-bannner-link{
+                   position:fixed;
+                   bottom:3%;
+                   left:63%;
+                   transform:translate(-50%,-50%);
+             }
+            
+            }
+           </style> 
+           </div>
+         {% endfor %}
+     </div>
+     {% if section.settings.whats-icon != blank %}
+      <div class="icon-pos-part">
+      <a href="{{  }}">
+        <img src="{{ section.settings.whats-icon | image_url}}" width="auto" height="auto">
+        </a>
+     </div>
+      {% endif %}
+    <div class="icon-width">
+      {% if section.settings.gift-icon != blank %}
+      <div class="icons-part">
+        <a href="#gift-form">
+          <img src="{{ section.settings.gift-icon | image_url }}" width="auto" height="auto">
+         </a>
+      </div>
+      {% endif %}
+   </div>
+</div>
+
+
+<style>
+#shopify-section-{{section.id}} {
+   padding-top: {{ section.settings.desk-padding-top }}px;
+   padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+      display:none;
+}
+#shopify-section-{{section.id}} .slick-dotted.slick-slider{
+      margin-bottom: 0px;/*10px*/
+}
+/* #shopify-section-{{section.id}} .content-bannner-link.mob-link{
+      display:none;
+} */
+{% comment %} #shopify-section-{{section.id}} .butn-para-content{
+     display:none !important;
+} {% endcomment %}
+#shopify-section-{{section.id}} .new-home-page-banner {
+       position:relative; 
+      overflow:hidden;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec{
+        /* position:relative; */
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 41.41px;
+        text-align: left;
+        color:#ffffff;
+        margin:0;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .desk-img{
+       width:100%;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+  width:100%;
+  /* height: 70vh; */
+}
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content .sub-para{
+      align-self:flex-end;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+      font-family: Westack;
+      font-size: 96px;
+      font-weight: 400;
+      line-height: 110.44px;
+      text-align: left;
+      color:#ffffff;
+      margin:0;
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+      color:#fff;
+      background:#201747;
+      box-shadow: 0px 4px 8px 3px #00000026;
+      padding:8px 20px;
+      border-radius:50px;
+      font-size:16px;
+      line-height:17.74px
+
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part{
+      position:fixed;
+      right: 10%;
+      bottom: 50px;
+      z-index:999;
+      display:none;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-width{
+      position:fixed;
+      left: 10%;
+      bottom: 65px;
+      max-width:50px;
+      z-index:999;
+      display:none;
+
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icons-part{
+      background:#ffffff;
+      padding: 7px 8px 1px;
+      box-shadow: 0px 1px 3px 0px #0000004D;
+      border-radius:100px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part img{
+       max-width:50px;
+}
+#shopify-section-{{section.id}} .icons-part img{
+       max-width:30px; 
+}
+#shopify-section-{{ section.id }} .slick-dots{
+        bottom:8px;
+}
+#shopify-section-{{ section.id }} .slick-dots li.slick-active button:before {
+        color:#ffffff !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li {
+         width:13px !important;
+         height:13px !important;
+         margin:0;
+         color:#A3A3A3;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next{
+     right:12px;
+     z-index:100;
+     top:50%;
+     transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+        
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev{
+       left:6px;
+       z-index:100;
+       top:50%;
+       transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+} 
+@media screen and (max-width:1440px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 28px;
+        line-height: 30.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+          font-size: 84px;
+          line-height: 90.44px;
+}
+
+}
+
+@media screen and (max-width:1220px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+      font-size: 28px;
+      line-height: 26.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+      font-size: 72px;
+      line-height: 89.44px;
+}
+
+}
+@media screen and (max-width:1100px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+        font-size: 64px;
+        line-height: 79.44px;
+}
+}
+@media screen and (max-width:900px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content p{
+        font-size: 20px;
+        line-height: 24.41px;
+} 
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1 h2{
+        font-size: 60px;
+        line-height: 63.44px;
+}
+
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}}{
+     padding-top: {{ section.settings.mob-padding-top }}px;
+     padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+} 
+#shopify-section-{{section.id}} .content-bannner-link{
+         display:none;
+  }
+#shopify-section-{{section.id}} .content-bannner-link.mob-link{
+         display:block;
+         bottom: 42px;
+         left: 50%;
+         position: absolute;
+         transform: translateX(-50%);
+        
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .mob-img{
+          display:block;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .banner-image-sec .desk-img{
+         display:none;
+}
+
+#shopify-section-{{section.id}} .icons-part img{
+          max-width:25px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+          font-size:12px;
+          line-height:17.74px;
+          padding: 10px 18px;
+}
+
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part{
+           right: 40px; 
+           bottom: 41px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-width{  
+            left: 40px;
+            bottom: 55px;
+}
+#shopify-section-{{section.id}} .new-home-page-banner .icon-pos-part img{
+            max-width:45px;
+}
+#shopify-section-{{section.id}} .content-bannner-link.mobile-link{
+           position:absolute;
+           bottom:-141%;
+           left:11%;
+           transform:translate(-50%, -50%);
+           display:block;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+      width: 25px;
+      height: 30px
+
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        width: 25px;
+        height: 30px;
+}  
+}
+@media screen and (max-width:400px){
+#shopify-section-{{section.id}} .new-home-page-banner .button-with-content h1{
+        font-size: 50px;
+        line-height: 60.44px;
+}
+}
+@media screen and (max-width:375px){
+#shopify-section-{{section.id}} .new-home-page-banner .content-bannner-link a{
+   padding: 7px 10px;
+}
+}
+</style>
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+  function initializeSlick() {
+    var slickOptions = {
+      dots: true,  
+      infinite: false,
+      speed: 500,
+      autoplay:true,
+     autoplaySpeed:3000,
+    };
+
+    // Initialize or reinitialize the Slick slider
+    var $slider = $('#shopify-section-{{ section.id }} .banner-image-sec');
+    if ($slider.hasClass('slick-initialized')) {
+      $slider.slick('unslick');
+    }
+    $slider.slick(slickOptions);
+  }
+
+  // Initial check
+  initializeSlick();
+
+  // Check on window resize
+  $(window).resize(function() {
+    initializeSlick();
+  });
+});
+
+</script>
+
+
+{% schema %}
+  {
+    "name": "Wedding Banner",
+    "settings": [
+      {
+        "type": "image_picker",
+         "id":"gift-icon",
+          "label": "Gift icon"
+      },
+      {
+        "type": "image_picker",
+         "id" :"whats-icon",
+         "label": "Whats app icon"
+      },
+      {
+        "type": "url",
+         "id": "whats-app-link",
+          "label": "whats app link"
+      },
+      {
+        "type": "header",
+         "content": "SECTION PADDING FOR DESKTOP"
+     },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+    ],
+    "blocks": [
+      {
+        "type": "slide_banner",
+        "name": "Slide Banner",
+        "settings":[
+    {
+        "type": "text",
+         "id":"sub-head",
+         "label":"sub Heading"
+        
+      },
+     {
+      "type": "select",
+      "id": "position",
+      "label": "Content Positions",
+      "options": [
+    {
+      "value": "right",
+      "label": "Right"
+    },
+    {
+      "value": "left",
+      "label": "Left"
+    },
+    {
+      "value": "bottom",
+      "label": "Bottom"
+    },
+    {
+      "value": "top",
+      "label": "Top"
+    }
+  ],
+   "default": "left"
+    },
+    {
+      "type": "header",
+       "content":"Mobile Content positions"
+    },
+    {
+      "type": "select",
+      "id": "mob-position",
+      "label": "Mobile Content Positions",
+      "options": [
+    {
+      "value": "top",
+      "label": "Top"
+    },
+    {
+      "value": "center",
+      "label": "Center"
+    },
+    {
+      "value": "bottom",
+      "label": "Bottom"
+    }
+    
+  ],
+   "default": "top"
+    },
+
+      {
+        "type": "text",
+         "id":"head",
+         "label":"Heading"
+        
+      },
+      {
+        "type": "text",
+         "id":"content",
+         "label":"Text"
+        
+      },
+    
+       {
+         "type": "image_picker",
+          "id": "desk-img",
+           "label": "Desktop Image"
+       },
+        {
+          "type": "image_picker",
+           "id" :"mob-img",
+            "label":"Mobile Image"
+        },
+        {
+          "type": "url",
+           "id" :"link",
+            "label":"Banner Link"
+        } ,
+           {
+        "type": "text",
+         "id":"button-name",
+         "label":"Button Name"
+        
+      },
+      {
+        "type": "url",
+         "id":"button-link",
+         "label":"Button link"
+      }
+      ]    
+      }
+    ],
+    "presets": [
+      {
+        "name": "Wedding Banner"
+      }
+    ]
+  }
+{% endschema %}

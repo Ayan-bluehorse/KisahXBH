@@ -1,0 +1,56 @@
+{%- comment -%}
+  Brand rating pill(s), rendered directly under the product price row.
+
+  Content is entirely metaobject driven. The product metafield
+  custom.product_brand_rating holds a list of `product_brand_rating` entries and
+  each entry renders one pill:
+
+    icon    - Image (File)      the brand logo shown at the far left
+    text    - Rich text         the label incl. its own separator, e.g. "Brand Rating  -"
+    svg     - Image (File)      the rating symbol, e.g. the star
+    number  - Decimal / Integer the rating value, e.g. 4.1
+    subtext - Single line text  the trailing note incl. brackets, e.g. "(98k)"
+
+  When a product has no entries the block falls back to the handles listed in its
+  `fallback_handles` setting. Nothing renders without either.
+
+  Accepts:
+    block   - {Object} the `brand-rating` section block (required)
+    product - {Object} the product (required)
+
+  Usage:
+    {%- render 'brand-rating', block: br_block, product: product -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign br_items = product.metafields.custom.product_brand_rating.value
+  assign br_handles = ''
+  if br_items == blank and block.settings.fallback_handles != blank
+    assign br_handles = block.settings.fallback_handles | split: ','
+  endif
+
+  assign br_bg = block.settings.background_color | default: '#FFF3DA'
+  assign br_fg = block.settings.text_color | default: '#1F1F1F'
+-%}
+
+{%- if br_items != blank or br_handles != blank -%}
+  {%- capture br_pills -%}
+    {%- if br_items != blank -%}
+      {%- for entry in br_items -%}
+        {%- render 'brand-rating-pill', entry: entry, background_color: br_bg, text_color: br_fg -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for handle in br_handles -%}
+        {%- assign br_handle = handle | strip -%}
+        {%- assign entry = shop.metaobjects.product_brand_rating[br_handle] -%}
+        {%- if entry != blank -%}
+          {%- render 'brand-rating-pill', entry: entry, background_color: br_bg, text_color: br_fg -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if br_pills != blank -%}
+    <div class="brand-rating" {{ block.shopify_attributes }}>{{ br_pills }}</div>
+  {%- endif -%}
+{%- endif -%}

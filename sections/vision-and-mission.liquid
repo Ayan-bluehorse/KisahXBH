@@ -1,0 +1,86 @@
+<section class="about-mainsection about-visionmission-section">
+  <div class="container">
+    <div class="cp-cols-group visionmission-cols-group">
+      <div class="cp-col visionmission-img-group">
+        {% if section.settings.image %}
+          <img
+            src="{{ section.settings.image | image_url }}"
+            alt="{{ section.settings.image_alt | default: 'Vision and Mission Image' }}"
+            width="530"
+            height="518"
+            loading="lazy"
+          />
+        {% else %}
+          <img
+            src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/vision-and-mission-image.jpg?v=1750683401"
+            alt="Vision and Mission Image"
+            width="530"
+            height="518"
+            loading="lazy"
+          />
+        {% endif %}
+      </div>
+      <div class="cp-col visionmission-content-group">
+        {% for block in section.blocks %}
+          <div class="visionmission-text-item">
+            {{ block.settings.text_content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About - Vision & Mission",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Vision Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image Alt Text",
+      "default": "Vision and Mission Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vision_item",
+      "name": "Vision/Mission Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text_content",
+          "label": "Text",
+          "default": "<h5>To inspire consumers to stand out and explore bold, <strong>experimental ways of dressing</strong>, expressing their unique identity at every occasion.</h5>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 2,
+  "presets": [
+    {
+      "name": "About - Vision & Mission",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "vision_item",
+          "settings": {
+            "text_content": "<h5>To inspire consumers to stand out and explore bold, <strong>experimental ways of dressing</strong>, expressing their unique identity at every occasion.</h5>"
+          }
+        },
+        {
+          "type": "vision_item",
+          "settings": {
+            "text_content": "<h5>To continuously deliver <strong>aspirational fashion</strong> & trend-setting styles, helping consumers redefine how they dress for life’s special moments.</h5>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

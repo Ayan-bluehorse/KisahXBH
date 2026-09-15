@@ -1,0 +1,648 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "wedding_banner_YnJmK7": {
+      "type": "wedding-banner",
+      "blocks": {
+        "slide_banner_6r3x39": {
+          "type": "slide_banner",
+          "settings": {
+            "sub-head": "",
+            "position": "left",
+            "mob-position": "center",
+            "head": "Wedding Collection",
+            "content": "Explore Kisah's Exclusive Wedding Collection for Every Ceremony",
+            "desk-img": "shopify://shop_images/Mask_group_39.jpg",
+            "mob-img": "shopify://shop_images/Kisah_Day2__247_1.jpg",
+            "link": "",
+            "button-name": "Shop Now",
+            "button-link": "shopify://collections/wedding"
+          }
+        }
+      },
+      "block_order": [
+        "slide_banner_6r3x39"
+      ],
+      "name": "Wedding Banner",
+      "settings": {
+        "whats-app-link": "",
+        "desk-padding-top": 0,
+        "desk-padding-bottom": 0,
+        "mob-padding-top": 0,
+        "mob-padding-bottom": 0
+      }
+    },
+    "slide_images_RJCrQd": {
+      "type": "slide-images",
+      "blocks": {
+        "slide_images_nwrybe": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237833_1.png",
+            "link": "shopify://collections/cocktail",
+            "text": ""
+          }
+        },
+        "slide_images_tQU7We": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237820.png",
+            "link": "shopify://collections/mehendi",
+            "text": ""
+          }
+        },
+        "slide_images_KgjUey": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237828_3.png",
+            "link": "shopify://collections/sangeet",
+            "text": ""
+          }
+        },
+        "slide_images_Y4ajFt": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237822.png",
+            "link": "shopify://collections/wedding",
+            "text": ""
+          }
+        },
+        "slide_images_AqwMt9": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237823.png",
+            "link": "shopify://collections/haldi",
+            "text": ""
+          }
+        },
+        "slide_images_TjeYLj": {
+          "type": "slide-images",
+          "settings": {
+            "img": "shopify://shop_images/Group_237814.png",
+            "link": "shopify://collections/reception",
+            "text": ""
+          }
+        },
+        "slide_images_n36fem": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/After_party.jpg",
+            "link": "https://kisah.in/collections/cocktail",
+            "text": ""
+          }
+        },
+        "slide_images_PXKfyT": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Outdoor.jpg",
+            "link": "https://kisah.in/collections/outdoor-wedding",
+            "text": ""
+          }
+        },
+        "slide_images_QnqBrB": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Puja.jpg",
+            "link": "shopify://collections/puja-ready",
+            "text": ""
+          }
+        },
+        "slide_images_MGJQi9": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Baarat.jpg",
+            "link": "https://kisah.in/cdn/shop/files/Baarat.jpg?v=1730090374",
+            "text": ""
+          }
+        },
+        "slide_images_PqcmRd": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Sangeet.jpg",
+            "link": "shopify://collections/sangeet",
+            "text": ""
+          }
+        },
+        "slide_images_VHFT9R": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Mehendi.jpg",
+            "link": "shopify://collections/mehendi",
+            "text": ""
+          }
+        },
+        "slide_images_JzrWjV": {
+          "type": "slide-images",
+          "disabled": true,
+          "settings": {
+            "img": "shopify://shop_images/Haldi.jpg",
+            "link": "shopify://collections/haldi",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_images_nwrybe",
+        "slide_images_tQU7We",
+        "slide_images_KgjUey",
+        "slide_images_Y4ajFt",
+        "slide_images_AqwMt9",
+        "slide_images_TjeYLj",
+        "slide_images_n36fem",
+        "slide_images_PXKfyT",
+        "slide_images_QnqBrB",
+        "slide_images_MGJQi9",
+        "slide_images_PqcmRd",
+        "slide_images_VHFT9R",
+        "slide_images_JzrWjV"
+      ],
+      "settings": {
+        "head": "Shop by Occasion",
+        "sub_head": "Discover the perfect attire for every celebration",
+        "bg-color": "#fff2ea",
+        "head-color": "#101828",
+        "desk-padding-top": 50,
+        "desk-padding-bottom": 80,
+        "mob-padding-top": 20,
+        "mob-padding-bottom": 10
+      }
+    },
+    "wedding_catogery_grid_yPRXHb": {
+      "type": "wedding-catogery-grid",
+      "blocks": {
+        "category_item_gxepTe": {
+          "type": "category_item",
+          "settings": {
+            "collection": "kurta-jacket-set",
+            "collection_title": "Kurta Jacket Set",
+            "image": "shopify://shop_images/Mask_group_4.png"
+          }
+        },
+        "category_item_fVrxNc": {
+          "type": "category_item",
+          "settings": {
+            "collection": "kurta-sets",
+            "collection_title": "Kurta Set",
+            "image": "shopify://shop_images/Mask_group_2.png"
+          }
+        },
+        "category_item_cYKgT3": {
+          "type": "category_item",
+          "settings": {
+            "collection": "indowestern-sets",
+            "collection_title": "Indowestern Set",
+            "image": "shopify://shop_images/Mask_group_3.png"
+          }
+        },
+        "category_item_4bLT43": {
+          "type": "category_item",
+          "settings": {
+            "collection": "kurta",
+            "collection_title": "Kurta",
+            "image": "shopify://shop_images/Mask_group_6_da36610f-1f2f-470f-91c1-4cc108fa9998.png"
+          }
+        },
+        "category_item_kffFti": {
+          "type": "category_item",
+          "settings": {
+            "collection": "nehru-jackets",
+            "collection_title": "Nehru Jacket",
+            "image": "shopify://shop_images/Mask_group_8_a7c6b236-c804-4b06-b772-d3ee7c06e6a8.png"
+          }
+        },
+        "category_item_nTMUtW": {
+          "type": "category_item",
+          "settings": {
+            "collection": "jodhpuri-bandhgala",
+            "collection_title": "Jodhpuri",
+            "image": "shopify://shop_images/Mask_group_5_779b0a53-2ea1-402a-af06-fb7d99b97e92.png"
+          }
+        },
+        "category_item_PiP4BC": {
+          "type": "category_item",
+          "settings": {
+            "collection": "short-kurta",
+            "collection_title": "Short Kurta",
+            "image": "shopify://shop_images/Mask_group_9_74a27734-feb0-4880-ab46-66feb819b582.png"
+          }
+        },
+        "category_item_CyGEGU": {
+          "type": "category_item",
+          "settings": {
+            "collection": "sherwani-achkans",
+            "collection_title": "Sherwani & Achkans",
+            "image": "shopify://shop_images/Mask_group_7.png"
+          }
+        }
+      },
+      "block_order": [
+        "category_item_gxepTe",
+        "category_item_fVrxNc",
+        "category_item_cYKgT3",
+        "category_item_4bLT43",
+        "category_item_kffFti",
+        "category_item_nTMUtW",
+        "category_item_PiP4BC",
+        "category_item_CyGEGU"
+      ],
+      "name": "Shop by Category",
+      "settings": {
+        "heading": "Shop by Category",
+        "subheading": "Curated collections for the modern groom",
+        "background_color": "#fff2ea"
+      }
+    },
+    "why_kisah_zM3h6m": {
+      "type": "why-kisah",
+      "blocks": {
+        "benefit_mrXHVU": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Container_9.png",
+            "title": "Super-Fast Delivery",
+            "text": "Pan-India shipping powered by our agile, multi-warehouse network."
+          }
+        },
+        "benefit_P8HJhy": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Container_10.png",
+            "title": "Returns Made Simple",
+            "text": "Easy exchanges, stress-free returns & refunds."
+          }
+        },
+        "benefit_69M8MT": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Container_11.png",
+            "title": "Modern Meets Tradition",
+            "text": "Sleek silhouettes crafted for today’s festive mood."
+          }
+        },
+        "benefit_BXMLac": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shopify://shop_images/Container_12.png",
+            "title": "Fits That Feel Right",
+            "text": "From XS to XXL—celebration wear that fits every body, flawlessly."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_mrXHVU",
+        "benefit_P8HJhy",
+        "benefit_69M8MT",
+        "benefit_BXMLac"
+      ],
+      "name": "Why Kisah Section",
+      "settings": {
+        "section_class": "",
+        "heading": "Why Kisah?",
+        "subheading": "Where tradition meets contemporary elegance"
+      }
+    },
+    "wedding_tab_collection_9Mkid3": {
+      "type": "wedding-tab-collection",
+      "blocks": {
+        "collection_bwUqph": {
+          "type": "collection",
+          "settings": {
+            "categories": "Wedding",
+            "collection": "wedding"
+          }
+        }
+      },
+      "block_order": [
+        "collection_bwUqph"
+      ],
+      "name": "Collection Grid",
+      "settings": {
+        "show": false,
+        "show-arrows": true,
+        "show-dots": false,
+        "head": "Shop by Wedding Edition",
+        "sub-head": "",
+        "btn-name": "See all",
+        "bg-color": "",
+        "head-color": "",
+        "grid": 15,
+        "desk-padding-top": 50,
+        "desk-padding-bottom": 70,
+        "mob-padding-top": 39,
+        "mob-padding-bottom": 30
+      }
+    },
+    "afterparty_lookbook_CVfaUc": {
+      "type": "afterparty-lookbook",
+      "blocks": {
+        "lookbook_item_yXCJGb": {
+          "type": "lookbook_item",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_10_90406f90-e6dd-4273-94a9-e7618a336101.png",
+            "product_handle": "ka-0863-5654-t303-men-wine-embellished-kurta-bomber-jacket-trouser-set-with-sequence",
+            "product_title": ""
+          }
+        },
+        "lookbook_item_GGXfjQ": {
+          "type": "lookbook_item",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_11_0249eb96-cd56-4cad-b044-268466bf9ee0.png",
+            "product_handle": "black-cotton-silk-floral-embroidered-kurta-ka-1200",
+            "product_title": ""
+          }
+        },
+        "lookbook_item_QCVheD": {
+          "type": "lookbook_item",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_12_d3cfebf3-02df-4db6-8dcc-467d70c07d9a.png",
+            "product_handle": "navy-blue-poly-silk-jacquard-bandhgala-trouser-set-ka-9040-g1206",
+            "product_title": ""
+          }
+        },
+        "lookbook_item_qqqAAU": {
+          "type": "lookbook_item",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_13_1bb846f3-caa5-477c-a61a-6d391b1c558d.png",
+            "product_handle": "black-embroidered-silk-blend-kurta-ka-1204",
+            "product_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "lookbook_item_yXCJGb",
+        "lookbook_item_GGXfjQ",
+        "lookbook_item_QCVheD",
+        "lookbook_item_qqqAAU"
+      ],
+      "name": "Afterparty Lookbook",
+      "settings": {
+        "heading": "Afterparty Lookbook",
+        "background_color": "#fff2ea"
+      }
+    },
+    "wedding_testimonials_jcQGGL": {
+      "type": "wedding-testimonials",
+      "blocks": {
+        "testimonial_eUVDip": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/cs-1.jpg",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_ekVqcc": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Rectangle_80.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_YHQdNM": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_15_0161cbbd-7180-480b-822a-b207f73e6d9a.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_tP7GtW": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_16_39197fb0-2823-434a-ab3d-6122a060758f.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_ED6XUC": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Ordered these outfits for my cousin's mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_17_ec6310d3-7804-464a-8d33-6e172560629a.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_zeVFkU": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad! \"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_18_70fd7d7f-7226-4040-ab7f-4b72e1ad6645.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_c4nmW3": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.\"",
+            "author": "",
+            "author-place": "Author's plac",
+            "image": "shopify://shop_images/Mask_group_19_b76835fc-ed00-406f-a28e-48a3940b4e40.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_z7XaJz": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Picked these sherwanis for the wedding day and they were a hit. The fit was right, very comfortable throughout, and we received many compliments.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_20_feb4c7e6-6f65-4955-9290-325d89afd652.png",
+            "image_caption": "",
+            "link": ""
+          }
+        },
+        "testimonial_AqLnmH": {
+          "type": "testimonial",
+          "settings": {
+            "star_rating": 0,
+            "testimonial": "\"Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.\"",
+            "author": "",
+            "author-place": "",
+            "image": "shopify://shop_images/Mask_group_21_3e3e3978-8c0f-4c52-a57d-d6d243f9039f.png",
+            "image_caption": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_eUVDip",
+        "testimonial_ekVqcc",
+        "testimonial_YHQdNM",
+        "testimonial_tP7GtW",
+        "testimonial_ED6XUC",
+        "testimonial_zeVFkU",
+        "testimonial_c4nmW3",
+        "testimonial_z7XaJz",
+        "testimonial_AqLnmH"
+      ],
+      "name": "Wedding Testimonials",
+      "settings": {
+        "section_class": "",
+        "head": "Customer Stories",
+        "head-color": "#101828",
+        "title": "Hear from grooms who celebrated their special day with Kisah",
+        "text_caps": false,
+        "quote_text_size": 16,
+        "quote_text_size_mobile": 14,
+        "image_shape": "natural",
+        "color_scheme": "default",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "desk-padding-top": 50,
+        "desk-padding-bottom": 73,
+        "mob-padding-top": 30,
+        "mob-padding-bottom": 30
+      }
+    },
+    "dulhe_toli_section_GVDh3D": {
+      "type": "dulhe-toli-section",
+      "blocks": {
+        "quinn_shoppable_videos_app_cards_block_E4FriA": {
+          "type": "shopify://apps/quinn-shoppable-videos/blocks/app-cards-block/150d2781-732b-4020-a9fb-1368e974e6bb",
+          "settings": {
+            "layer_number": 1,
+            "card_margins_desktop": "0",
+            "card_margins_mobile": "0",
+            "custom_metaobject_handle": "null",
+            "heading": "",
+            "heading_alignment": "center",
+            "heading_font_size_desktop": "16px",
+            "heading_letter_spacing_desktop": "normal",
+            "heading_font_size_mobile": "16px",
+            "heading_letter_spacing_mobile": "normal",
+            "heading_line_height_desktop": "1.2",
+            "heading_line_height_mobile": "1.2",
+            "heading_font_weight_desktop": "400",
+            "heading_font_weight_mobile": "400",
+            "heading_font": "sans_serif_n4",
+            "heading_color": "#000000",
+            "heading_background_color": "#ffffff",
+            "heading_padding": "0px",
+            "heading_margin": "0px",
+            "subheading": "",
+            "subheading_alignment": "center",
+            "subheading_font": "sans_serif_n4",
+            "subheading_color": "#000000",
+            "subheading_background_color": "#ffffff",
+            "subheading_padding": "0px",
+            "subheading_margin": "0px"
+          }
+        }
+      },
+      "block_order": [
+        "quinn_shoppable_videos_app_cards_block_E4FriA"
+      ],
+      "name": "Dulhe Ki Toli",
+      "settings": {
+        "background_image": "shopify://shop_images/Group_237824.png",
+        "heading_image": "shopify://shop_images/image-removebg-preview_1_1_c1739a43-da4b-40fc-b1ca-1943b19b0d1d.png",
+        "section_title": ""
+      }
+    },
+    "1763464387ecf6470d": {
+      "type": "apps",
+      "blocks": {
+        "quinn_shoppable_videos_app_cards_block_RajmYQ": {
+          "type": "shopify://apps/quinn-shoppable-videos/blocks/app-cards-block/150d2781-732b-4020-a9fb-1368e974e6bb",
+          "settings": {
+            "layer_number": 1,
+            "card_margins_desktop": "0",
+            "card_margins_mobile": "0",
+            "custom_metaobject_handle": "null",
+            "heading": "",
+            "heading_alignment": "center",
+            "heading_font_size_desktop": "16px",
+            "heading_letter_spacing_desktop": "normal",
+            "heading_font_size_mobile": "16px",
+            "heading_letter_spacing_mobile": "normal",
+            "heading_line_height_desktop": "1.2",
+            "heading_line_height_mobile": "1.2",
+            "heading_font_weight_desktop": "400",
+            "heading_font_weight_mobile": "400",
+            "heading_font": "sans_serif_n4",
+            "heading_color": "#000000",
+            "heading_background_color": "#ffffff",
+            "heading_padding": "0px",
+            "heading_margin": "0px",
+            "subheading": "",
+            "subheading_alignment": "center",
+            "subheading_font": "sans_serif_n4",
+            "subheading_color": "#000000",
+            "subheading_background_color": "#ffffff",
+            "subheading_padding": "0px",
+            "subheading_margin": "0px"
+          }
+        }
+      },
+      "block_order": [
+        "quinn_shoppable_videos_app_cards_block_RajmYQ"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "wedding_banner_YnJmK7",
+    "slide_images_RJCrQd",
+    "wedding_catogery_grid_yPRXHb",
+    "why_kisah_zM3h6m",
+    "wedding_tab_collection_9Mkid3",
+    "afterparty_lookbook_CVfaUc",
+    "wedding_testimonials_jcQGGL",
+    "dulhe_toli_section_GVDh3D",
+    "1763464387ecf6470d"
+  ]
+}

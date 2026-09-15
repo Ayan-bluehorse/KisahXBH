@@ -1,0 +1,296 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": false,
+        "full_width": true
+      }
+    },
+    "store_locator_section": {
+      "type": "store-locator-page",
+      "blocks": {
+        "store_kol_gariahat": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/Gariahat.png",
+            "name": "Gariahat",
+            "city": "Kolkata",
+            "is_coming_soon": false,
+            "address": "191/1 Rash Behari Avenue, opposite Spencer's Gariahat, Kolkata, West Bengal 700029",
+            "phone": "+916289300120",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
+            "city_lat": "22.5186",
+            "city_lng": "88.3644"
+          }
+        },
+        "store_kol_lake_mall": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "name": "Lake Mall",
+            "city": "Kolkata",
+            "is_coming_soon": false,
+            "address": "3rd Floor, 10A Rash Behari Avenue, Lake Market, Kalighat, Kolkata, West Bengal 700029",
+            "phone": "+919230647537",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
+            "city_lat": "22.5163",
+            "city_lng": "88.3491"
+          }
+        },
+        "store_kol_lindsay": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/lindsay_street.jpg",
+            "name": "Lindsay Street",
+            "city": "Kolkata",
+            "is_coming_soon": false,
+            "address": "Shop No 4, Premises No 20, Chowringhee Road, Kolkata, West Bengal 700087",
+            "phone": "+919230374678",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
+            "city_lat": "22.5601",
+            "city_lng": "88.3518"
+          }
+        },
+        "store_kol_allenby": {
+          "type": "store",
+          "settings": {
+            "name": "Allenby Road",
+            "city": "Kolkata",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "22.5367",
+            "city_lng": "88.3512"
+          }
+        },
+        "store_blr_indiranagar": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/blr_store_image.jpg",
+            "name": "Indiranagar",
+            "city": "Bangalore",
+            "is_coming_soon": false,
+            "address": "Ground Floor, Shreyas Plaza Commercial Complex, 100 Feet Road, Indiranagar, Bengaluru, Karnataka 560038",
+            "phone": "+919230647534",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
+            "city_lat": "12.9716",
+            "city_lng": "77.6412"
+          }
+        },
+        "store_blr_phoenix": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/phoenix_store.png",
+            "name": "Phoenix Marketcity",
+            "city": "Bangalore",
+            "is_coming_soon": false,
+            "address": "S-50 on the Second Floor, Phoenix Marketcity, Bangalore East Mahadevpura, Nr. Krishanrajpuram flyover, Bengaluru 560048",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://www.google.com/maps/place/Phoenix+Market+City,+Devasandra+Industrial+Estate,+Mahadevapura,+Bengaluru,+Karnataka+560048/@12.9969953,77.6941613,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae110b020b972b:0x6a82edb8daff233d!8m2!3d12.9969953!4d77.6967362!16s%2Fg%2F12hks66tc?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
+            "city_lat": "12.9959",
+            "city_lng": "77.6963"
+          }
+        },
+        "store_blr_jayanagar": {
+          "type": "store",
+          "settings": {
+            "name": "Jaya Nagar",
+            "city": "Bangalore",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "12.9308",
+            "city_lng": "77.5838"
+          }
+        },
+        "store_blr_commercial": {
+          "type": "store",
+          "settings": {
+            "name": "Commercial Street",
+            "city": "Bangalore",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "12.9822",
+            "city_lng": "77.6083"
+          }
+        },
+        "store_hyd_sarath": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "name": "Sarath City Mall",
+            "city": "Hyderabad",
+            "is_coming_soon": false,
+            "address": "SP-03, Third Floor, Sarath City Capital Mall, Whitefields, HITEC City, Hyderabad, Telangana 500084",
+            "phone": "+919230647536",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
+            "city_lat": "17.4563",
+            "city_lng": "78.3662"
+          }
+        },
+        "store_hyd_himayat": {
+          "type": "store",
+          "settings": {
+            "name": "Himayat Nagar",
+            "city": "Hyderabad",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "17.4042",
+            "city_lng": "78.4878"
+          }
+        },
+        "store_mum_malad": {
+          "type": "store",
+          "settings": {
+            "image": "shopify://shop_images/malad_store.png",
+            "name": "Infiniti Mall",
+            "city": "Mumbai",
+            "is_coming_soon": false,
+            "address": "No.SF224B, Second Floor, New Link Road, Malad, Mindspace, Malad West, Mumbai, Maharashtra 400064",
+            "phone": "",
+            "hours_label": "11:00 AM – 10:00 PM · All days",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "maps_url": "https://www.google.com/maps/place/Infiniti+Mall+-+Malad+West/@19.184753,72.8341927,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b6ee06ebad2b:0x9c288235c433657d!8m2!3d19.184753!4d72.8341927!16s%2Fg%2F11dfjxxdbn?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
+            "city_lat": "19.1843",
+            "city_lng": "72.8347"
+          }
+        },
+        "store_gur_m3m": {
+          "type": "store",
+          "settings": {
+            "name": "Jewel M3M Mall",
+            "city": "Gurgaon",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "28.4595",
+            "city_lng": "77.0266"
+          }
+        },
+        "store_jai_pacific": {
+          "type": "store",
+          "settings": {
+            "name": "Pacific Mall",
+            "city": "Jaipur",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "26.9124",
+            "city_lng": "75.7873"
+          }
+        },
+        "store_viz_inorbit": {
+          "type": "store",
+          "settings": {
+            "name": "Inorbit Vizag",
+            "city": "Vishakhapatnam",
+            "is_coming_soon": true,
+            "address": "",
+            "phone": "",
+            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "open_time": "10:30 AM",
+            "close_time": "09:30 PM",
+            "maps_url": "",
+            "city_lat": "17.6868",
+            "city_lng": "83.2185"
+          }
+        }
+      },
+      "block_order": [
+        "store_kol_gariahat",
+        "store_kol_lake_mall",
+        "store_kol_lindsay",
+        "store_kol_allenby",
+        "store_blr_indiranagar",
+        "store_blr_phoenix",
+        "store_blr_jayanagar",
+        "store_blr_commercial",
+        "store_hyd_sarath",
+        "store_hyd_himayat",
+        "store_mum_malad",
+        "store_gur_m3m",
+        "store_jai_pacific",
+        "store_viz_inorbit"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "heading": "Store Locator",
+        "subheading": "",
+        "open_heading": "Open Now",
+        "soon_heading": "Opening Soon",
+        "empty_message": "No stores match your search.",
+        "enable_search": true,
+        "enable_geo": true,
+        "enable_lead_capture": true,
+        "not_in_city_title": "Not in your city yet?",
+        "not_in_city_desc": "Tell us where you are. It’s the only way we hear about the cities we haven’t picked.",
+        "not_in_city_cta": "Tell Us",
+        "google_form_url": "https://docs.google.com/forms/d/1D_IHN5sLwqo8bpLgqt6PuTqcn0qGY8vFF6Wdyncte-I/viewform",
+        "padding_top_desktop": 35,
+        "padding_bottom_desktop": 70,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 40
+      }
+    }
+  },
+  "order": [
+    "main",
+    "store_locator_section"
+  ]
+}

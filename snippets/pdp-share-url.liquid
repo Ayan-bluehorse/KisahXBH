@@ -1,0 +1,15 @@
+{%- comment -%}
+  Product share path with PDP UTM parameters.
+  Usage: {% capture pdp_share_url %}{% render 'pdp-share-url', product: product, channel: 'whatsapp' %}{% endcapture %}
+{%- endcomment -%}
+{%- liquid
+  assign pdp_path = product.url
+  assign channel_source = channel | default: 'share'
+  assign utm_str = 'utm_source=' | append: channel_source | append: '&utm_medium=social_share&utm_campaign=share'
+  if pdp_path contains '?'
+    assign pdp_path = pdp_path | append: '&' | append: utm_str
+  else
+    assign pdp_path = pdp_path | append: '?' | append: utm_str
+  endif
+-%}
+{{- pdp_path -}}

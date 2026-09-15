@@ -1,0 +1,14 @@
+{%- comment -%}
+  Outputs "1" when terms match size-inclusive keywords (plus size, extended size, big size, or whole-word "plus").
+  Used with {% capture %} to set a boolean in parent templates. Collection: size-inclusive.
+{%- endcomment -%}
+{%- liquid
+  assign q = terms | downcase | strip | replace: '-', ' '
+  assign q = q | replace: '  ', ' '
+  assign pad = q | prepend: ' ' | append: ' '
+  assign m = false
+  if pad contains ' plus size ' or pad contains ' extended size ' or pad contains ' big size ' or pad contains ' plus '
+    assign m = true
+  endif
+-%}
+{%- if m -%}1{%- endif -%}

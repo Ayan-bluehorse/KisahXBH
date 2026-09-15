@@ -1,0 +1,121 @@
+<style>
+#shopify-section-{{section.id}} #create-customer .title{
+    font-family: 'Gabarito';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    text-transform: capitalize;
+    color: #000000;
+    margin: 0 0 8px 0;
+}
+#shopify-section-{{section.id}} #create-customer label{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: rgba(0, 0, 0, 0.83)
+}
+#shopify-section-{{section.id}} #create-customer .input-row input{
+    padding: 8px 0;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 0.5px solid #000000;
+    border-radius: 5px                                                             
+}
+#shopify-section-{{section.id}} #create-customer .btn{
+    background: #201747;
+    box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 50px;
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    text-transform: capitalize;
+    padding: 10px 40px;
+    display: block;
+    margin: 0 auto
+}
+#shopify-section-{{section.id}} #create-customer form .lightly-spaced-row-above{
+    margin-top: 3rem;
+}
+#shopify-section-{{section.id}} #create-customer .note{
+    margin: 20px 0;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #343434;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} #create-customer .title{
+    font-size: 22px;
+    line-height: 26px;
+}
+#shopify-section-{{section.id}} #create-customer label{
+    font-size: 14px;
+    line-height: 16px;
+  
+}
+}
+</style>
+
+<div class="container fully-spaced-row">
+  <div class="small-form account-form" data-cc-animate>
+    <div id="customer">
+      <!-- Create Customer -->
+      <div id="create-customer">
+        <div class="page-header">
+          <h2 class="title">{{ 'customer.register.title' | t }}</h2>
+        </div>
+
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+
+          <div class="input-row">
+           <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label> 
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+            <input type="email" value="" name="customer[email]" id="email" class="large" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+          </div>
+
+          <div class="lightly-spaced-row-above">
+          {%- comment -%}  <button class="btn" type="submit">{{ 'customer.register.submit' | t }}</button>{%- endcomment -%}
+            <button class="btn" type="submit">Sign Up</button>
+            <span class="note">
+              {{ 'customer.register.have_account' | t }}
+              <a href="{{ routes.account_login_url }}" class="underline">{{ 'customer.register.log_in' | t }}</a>
+            </span>
+          </div>
+        {% endform %}
+      </div><!-- /#create-customer -->
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer register"
+}
+{% endschema %}

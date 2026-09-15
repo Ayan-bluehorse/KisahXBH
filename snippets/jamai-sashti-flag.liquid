@@ -1,0 +1,14 @@
+{%- comment -%}
+  Outputs "1" when terms match Jamai Sashti keywords (common spellings).
+  Collection: jamai-sashti-ethincwear-for-men
+{%- endcomment -%}
+{%- liquid
+  assign q = terms | downcase | strip | replace: '-', ' '
+  assign q = q | replace: '  ', ' '
+  assign pad = q | prepend: ' ' | append: ' '
+  assign m = false
+  if pad contains ' jamai sasthi ' or pad contains ' jamai sashti '
+    assign m = true
+  endif
+-%}
+{%- if m -%}1{%- endif -%}

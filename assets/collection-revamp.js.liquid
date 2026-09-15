@@ -1,0 +1,1726 @@
+{% comment %} theme-check-disable LiquidHTMLSyntaxError {% endcomment %}
+
+(function () {
+  if (window.innerWidth >= 768) return;
+  if (window.__COLLECTION_REVAMP_INITED__) return;
+  window.__COLLECTION_REVAMP_INITED__ = true;
+  (function injectCSS() {
+    const css = `
+.product-block .quickbuy-container .inner .product-column-right .product-meta-select-container {
+  display: none !important;
+}
+
+.product-block .quickbuy-container .inner .title_share_button .desk-hide-share {
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  top: 43px;
+  display: none;
+}
+
+.product-block .quickbuy-container .inner .title_share_button.active .desk-hide-share {
+  display: block;
+}
+
+.product-block .quickbuy-container .inner .desk-hide-share ul.desk-share {
+  align-items: center;
+  background: #201747;
+  border-radius: 50px;
+  gap: 8px;
+  display: flex;
+  list-style: none;
+  width: fit-content;
+  padding: 6px 11px 3px 10px;
+}
+
+.product-block .quickbuy-container .inner .desk-hide-share a {
+  width: 27px;
+  display: block;
+}
+
+.product-block .quickbuy-container .inner .desk-share-soicial-icons .desk-share .svg-container-class .native-share-img {
+  width: 23px;
+  display: block;
+}
+
+.CP_show-more-btn {
+  padding: 14px 40px;
+  font-size: 16px;
+  background-color: #201747;
+  color: #fff;
+  border: none;
+  display: inline-block;
+  border-radius: 50px;
+}
+
+/*
+.pagination {
+  display: none;
+}
+  */
+
+.CP_loading {
+  color: #000;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.CP-banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.CP-banner img {
+  width: 100%;
+  height: 100%;
+}
+
+.CP-banner .CP-banner-title {
+  position: absolute;
+  bottom: 10px;
+  color: #ffffff;
+  font-weight: 400;
+  font-family: "Generis Sans W01 Bold";
+}
+
+.CP-side-widget {
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  background-color: #ffffff;
+  padding: 4px 6px;
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-size: 14px;
+  border-radius: 8px 0 0 8px;
+  z-index: 999;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.CP-chip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+.CP-chip-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 4px;
+}
+
+.CP-default-price {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.CP-last-price {
+  text-decoration-color: #acacac !important;
+  color: #acacac !important;
+  font-size: 12px !important;
+}
+
+.CP-current-price {
+  font-size: 15px;
+  font-weight: 400;
+  color: #1e1e1e;
+}
+
+.CP-discount {
+  font-size: 10px !important;
+  color: #ff0606 !important;
+}
+
+.CP-action-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 4px;
+  margin-top: 8px;
+}
+
+.product-block .snap_dp_list {
+  padding: 0px 4px;
+  margin-block: 6px;
+  display: none;
+}
+
+.CP-quick-view-btn {
+  padding: 6px 2px;
+  background-color: #ffffff;
+  color: #1e1e1e;
+  border: 0.5px solid #1e1e1e;
+  border-radius: 17px;
+  font-size: 10px;
+  width: 48%;
+  transition: background-color 0.3s ease;
+}
+
+.CP-atc-btn {
+  padding: 6px 2px;
+  background-color: #201747;
+  color: #ffffff;
+  border: none;
+  border-radius: 17px;
+  font-size: 10px;
+  width: 48%;
+  transition: background-color 0.3s ease;
+}
+
+.CP-ribbon-tag {
+  background-color: #201747;
+  color: #fff;
+  top: 10px;
+  left: 0px;
+  font-weight: bold;
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  padding: 2px 14px;
+  display: inline-block;
+  position: absolute;
+  font-size: 10px;
+  clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);
+  width: fit-content;
+  z-index: 9;
+}
+
+.wishlist-hero-custom-button {
+  padding: 0 !important;
+}
+
+.product-block .inner a.product-link {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.wishlist-hero-custom-button button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.wishlist-hero-custom-button svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.product-block__image-dots {
+  background: #1e1e1e;
+  opacity: 60%;
+  padding: 2px 2px;
+  border-radius: 7px;
+  color: #c3c3c3;
+}
+
+.product-block__image-dots div {
+  background: #c3c3c3;
+  opacity: 1 !important;
+}
+
+/* .CP-scroll-icon { display: none !important; opacity: 0 !important; } */
+
+.CP-ratings {
+  opacity: 60%;
+  color: #ffffff;
+  background-color: #1e1e1e;
+}
+
+.CP-PLP-swiper-dots {
+  background: #1e1e1e;
+  opacity: 60%;
+  padding: 2px 2px;
+  border-radius: 7px;
+  color: #c3c3c3;
+}
+
+.CP-PLP-swiper-dots div {
+  background: #c3c3c3;
+}
+
+.filter-container .filter-group.filter-group--availability,
+.filter-container .filter-shade,
+filter-container.filter-container .filter-group toggle-target.filter-group__heading,
+header.filters__heading,
+.filters .close-container,
+.filter-container .filter-shade {
+  display: none !important;
+}
+
+.filter-container .filters form#CollectionFilterForm,
+filter-container.filter-container .filter-group {
+  border: none !important;
+}
+
+filter-container.filter-container form#CollectionFilterForm .filter-group:not(.open) { display:none; }
+
+form#CollectionFilterForm {
+  margin-top: 0 !important;
+}
+
+.filter-container .filters {
+  visibility: visible !important;
+  transform: none !important;
+  position: sticky !important;
+  /*top: 98px !important;*/
+  top: 102px !important;
+  z-index: 99;
+  bottom: auto !important;
+}
+
+body .filter-group .toggle-target-container {
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+  max-height: calc(100vh - 150px);
+  overflow: auto;
+}
+
+.topFilterWrap {
+  border-top: 0.4px solid #bbbbbb;
+  border-bottom: 0.4px solid #bbbbbb;
+  padding: 10px 8px;
+  position: sticky;
+  margin: 0 -16px 20px;
+  width: calc(100% + 32px);
+  top: 52px;
+  z-index: 99;
+  background: #fff;
+}
+
+.filtrBx {
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  padding-right: 80px;
+  padding-left: 8px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.filtrBx::-webkit-scrollbar {
+  display: none;
+}
+
+.filterHead {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  padding: 6px 8px;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+  padding-right: 20px;
+  border: 0.4px solid #bbbbbb;
+  color: #000;
+}
+
+.filterHead img.dwn {
+  width: 11px;
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  top: 0.5px;
+  transition: all 0.4s;
+}
+
+.filterHead.open img.dwn {
+  transform: rotate(-180deg);
+  top: 0;
+}
+
+.filtrBx>img {
+  width: 16px;
+  margin-right: 10px;
+}
+
+.topFilterWrap .mobileSort {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: auto;
+  height: 100%;
+  background: #fff;
+  padding: 0 10px;
+  border-width: 0.2px;
+  border-style: solid;
+  border-color: #bbbbbb;
+  box-shadow: -2px 0px 3px 0px #0000001f;
+  display: flex;
+  align-items: center;
+  border-radius: 12px 0 0 12px;
+}
+
+.filter-container .filters .filter-group.filter-group--applied {
+  margin: 0;
+}
+
+.filter-container .filters .filter-group.filter-group--applied .filter-group__heading {
+  justify-content: center;
+  padding: 5px 10px 10px;
+}
+
+.utility-bar button.link-dropdown__button.has-motion,
+.utility-bar .utility-bar__centre,
+.utility-bar .utility-bar__left {
+  display: none;
+}
+
+div#sy-whatshelp,
+div#bottom-top,
+.col-title {
+  display: none !important;
+}
+
+.utility-bar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.filter-container .filter-group.filter-group--availability.showDwn {
+  display: block !important;
+  margin-bottom: 10px !important;
+}
+
+.utility-bar__right.filSortWrappr .link-dropdown__button[aria-expanded="true"]+.link-dropdown__options {
+  transform: translateY(-90%) !important;
+}
+
+.product-block .quickbuy-container .inner .zoom-icon {
+  display: none !important;
+}
+
+.product-block .quickbuy-container .inner {
+  padding-bottom: 20px;
+  padding-top: 0;
+}
+
+h1.product-title {
+  font-size: 18px;
+}
+
+.quickbuy-container.use-color-scheme {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10000;
+  max-height: 100dvh;
+  overflow-y: auto;
+  display: none;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.3);
+  height: 100dvh !important;
+}
+
+.quickbuy-container.use-color-scheme .inner {
+  max-width: 90vw;
+  margin: 20px auto;
+  background: #fff;
+}
+
+.quickbuy-container .trust-icons_container {
+  margin-top: 15px;
+}
+
+.quickbuy-container .close-detail {
+  z-index: 6;
+  background: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 8%;
+  top: 28px;
+}
+
+buy-buttons.buy-buttons-row.block {
+  margin-bottom: 0;
+}
+
+.quickbuy-container .CP-qv-sticky-container {
+  position: sticky !important;
+  bottom: 10px !important;
+  background-color: #fff !important;
+}
+
+.quickbuy-container .CP-atc-sticky-container {
+  position: sticky !important;
+  bottom: 10px !important;
+  background-color: #fff !important;
+}
+
+product-form.js-product.product-info.quickbuy-content {
+  margin-bottom: 0;
+}
+
+.product-form .quantity-submit-row .quantity-submit-row__submit button[type="submit"] {
+  margin-bottom: 0 !important;
+}
+
+.product-form .quantity-submit-row .quantity-submit-row__submit {
+  margin-bottom: 0;
+}
+.option-selector__btns {
+  padding-right: 50px;
+}
+      .trust-icons_container>:nth-child(1) span {
+        width: 100% !important;
+    }
+.product-form .input-row {
+  margin-bottom: 0 !important;
+  overflow: hidden;
+}
+
+.product-form .option-selector {
+  margin-bottom: 0;
+}
+
+.product-form .quantity-submit-row .quantity-submit-row__submit {
+  margin-top: 0;
+}
+
+.quickbuy-container.use-color-scheme.CP-quickbuy-open {
+  display: block;
+}
+
+.quickbuy-container.use-color-scheme.CP-quickbuy-closed {
+  display: none;
+}
+
+.image-slider-nav button {
+  position: absolute;
+  bottom: 40%;
+  transform: translateY(-50%);
+  background: #1e1e1e;
+  opacity: 60%;
+  border: none;
+  padding: 10px;
+  border-radius: 2px;
+  display: none;
+}
+
+.image-slider-nav .nav-left {
+  left: 10px;
+}
+
+.image-slider-nav .nav-right {
+  right: 10px;
+}
+
+.image-slider-nav svg {
+  width: 5px !important;
+  height: 10px !important;
+}
+
+.breadcrumbs-collection {
+  display: none !important;
+}
+
+.trust-icons_container> :nth-child(1) span {
+  width: 100%;
+}
+
+.quickbuy-container .main-image a.rating {
+  display: none !important;
+}
+  body .product-block .product-block__title {
+    font-weight: 500 !important;
+}
+    .CP-ratings svg, .CP-ratings svg path {
+    stroke: rgb(254 162 2);
+    width: 8px;
+    fill: rgb(254 162 2);
+    height: 8px;
+}
+    body:has(.filter-group.open) .filter-group.filter-group--applied { display:none; }
+    body:has(.CP_KI_PLP_15-scroll-wrapper) .filter-container .filters {
+      top: 200px !important;
+  }
+  @media(max-width:999.98px) {
+    .filter-container.filter-container--mobile-initialised .filters {
+      margin-left: -15px;
+      margin-right: -15px;
+      width: auto !important;
+      min-width: 100% !important;
+    }
+  }
+`;
+    const style = document.createElement("style");
+    style.textContent = css;
+    document.head.appendChild(style);
+  })();
+  /* ===================== /INLINE CSS ===================== */
+
+  /* ========== tiny delegate helper (no theme dependency needed) ========== */
+  function onDelegate(root, type, selector, handler) {
+    root.addEventListener(type, function (e) {
+      const el = e.target.closest(selector);
+      if (el && root.contains(el)) handler(e, el);
+    });
+  }
+
+  /* ========== element-ready via MutationObserver (no rAF/interval) ========== */
+  (function (win) {
+    var listeners = [], doc = win.document, MutationObserver = win.MutationObserver || win.WebKitMutationObserver, observer;
+    function ready(selector, fn) {
+      listeners.push({ selector, fn });
+      if (!observer) {
+        observer = new MutationObserver(check);
+        observer.observe(doc.documentElement, { childList: true, subtree: true });
+      }
+      check();
+    }
+    function check() {
+      for (var i = 0; i < listeners.length; i++) {
+        var listener = listeners[i];
+        var elements = doc.querySelectorAll(listener.selector);
+        for (var j = 0; j < elements.length; j++) {
+          var el = elements[j];
+          if (!el._eleReadyCalled) {
+            el._eleReadyCalled = true;
+            listener.fn.call(el, el);
+          }
+        }
+      }
+    }
+    win.eleReady = ready;
+  })(this);
+
+  /* ---------------- Banner logic ---------------- */
+  (function insertBannerForURL() {
+    const bannerMap = {
+      mehendi: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      haldi: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      reception: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      sangeet: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      wedding: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      festival: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      kids: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      am25: "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "eid-1": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "sherwani-sets": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "jacket-jacket-set": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "kurta-sets": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "fusion-wear": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "dulhe-ki-toli": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "bougee-1": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814",
+      "best-sellers": "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814"
+    };
+    const fallbackImage = "https://cdn.shopify.com/s/files/1/0496/1003/1256/files/banner.png?v=1749015814";
+    const titleEl = document.querySelector(".col-title");
+    const titleText = titleEl ? titleEl.innerText : "";
+    const currentURL = location.href;
+    let img = fallbackImage;
+    for (const key in bannerMap) {
+      if (currentURL.includes(key)) { img = bannerMap[key]; break; }
+    }
+    const banner = `
+      <div class="CP-banner">
+        <img alt="banner" loading="eager" width="400" height="400" loading="lazy" src="${img}" />
+        <div class="CP-banner-title">${titleText}</div>
+      </div>`;
+    const nav = document.querySelector(".breadcrumbs-collection");
+    if (nav) nav.insertAdjacentHTML("beforebegin", banner);
+  })();
+
+  /* ---------------- Side widget (only if nodes exist now) ---------------- */
+  (function initSideWidgetIfReady() {
+    const whatsappIcon = document.querySelector("#sy-whatshelp a");
+    const scrollIcon = document.querySelector("#bottom-top");
+    if (!whatsappIcon && !scrollIcon) return;
+
+    const sideWidget = document.createElement("div");
+    sideWidget.className = "CP-side-widget";
+    sideWidget.innerHTML = `
+      <div class="CP-chip-item">
+        <img width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Whatsapp.png?v=1749018004" alt="WhatsApp" class="CP-chip-icon CP-whatsapp" />
+        <span>Chat</span>
+      </div>
+      <div class="CP-chip-item">
+        <img width="400" height="400" loading="lazy" src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Up_arrow.png?v=1749018004" alt="Top" class="CP-chip-icon CP-top" />
+        <span>Top</span>
+      </div>`;
+    document.body.appendChild(sideWidget);
+    if (scrollIcon) scrollIcon.classList.add("CP-scroll-icon");
+
+    sideWidget.querySelector(".CP-whatsapp")?.addEventListener("click", () => whatsappIcon?.click());
+    sideWidget.querySelector(".CP-top")?.addEventListener("click", () => scrollIcon?.click());
+  })();
+
+  /* ---------------- Fetch product tags for badges ---------------- */
+  const productMap = {};
+  let firstTilesInit = true;
+  const fetchProductsPromise = (function () {
+    const jsonURL = `${location.pathname.replace(/\/$/, "")}/products.json?limit=500`;
+    return fetch(jsonURL)
+      .then((res) => res.json())
+      .then((data) => {
+        (data.products || []).forEach((p) => { productMap[p.handle] = { tags: p.tags || [] }; });
+      })
+      .catch((err) => console.error("Product JSON fetch failed:", err));
+  })();
+
+  const badgeMap = {
+    "clearance sale": "On Sale",
+    "New Arrivals": "New Arrival",
+    "best seller": " Best Seller",
+  };
+
+  /* ---------------- Product tile enhancements ---------------- */
+  function initTile(productBlock) {
+    const detail = productBlock.querySelector(".product-block__detail");
+    if (detail) detail.style.position = "inherit";
+
+    const ratings = productBlock.querySelector(".rating span");
+    const svg = `<svg width="10" height="11" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1.33875 7L1.9075 4.41184L0 2.67105L2.52 2.44079L3.5 0L4.48 2.44079L7 2.67105L5.0925 4.41184L5.66125 7L3.5 5.62763L1.33875 7Z" fill="white"></path>
+</svg>`;
+    if (ratings) {
+      ratings.classList.add("CP-ratings");
+      const existingSvg = ratings.querySelector("svg");
+      if (existingSvg) existingSvg.outerHTML = svg;
+    }
+
+    const dots = productBlock.querySelector(".product-block__image-dots");
+    if (dots) {
+      dots.classList.add("CP-PLP-swiper-dots");
+      dots.querySelectorAll("div").forEach((d) => d.classList.remove("product-block__image-dot--more"));
+    }
+
+    const imageWrap = productBlock.querySelector(".image-label-wrap");
+    const images = imageWrap ? imageWrap.querySelectorAll(".product-block__image") : [];
+    let currentIndex = 0;
+    images.forEach((img, idx) => img.classList.toggle("product-block__image--active", idx === 0));
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "image-slider-nav";
+    wrapper.innerHTML = `
+      <button class="nav-left" aria-label="Previous">
+        <svg width="2" height="4" viewBox="0 0 4 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.583338 3L3.08334 0.5L3.66667 1.08333L1.75001 3L3.66667 4.91667L3.08334 5.5L0.583338 3Z" fill="white"></path>
+        </svg>
+      </button>
+      <button class="nav-right" aria-label="Next">
+        <svg width="2" height="4" viewBox="0 0 4 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.41668 3L0.916677 0.5L0.333344 1.08333L2.25001 3L0.333344 4.91667L0.916677 5.5L3.41668 3Z" fill="white"></path>
+        </svg>
+      </button>`;
+    const imageContainer = productBlock.querySelector(".image-cont");
+    if (imageContainer) imageContainer.appendChild(wrapper);
+
+    function showImage(idx) {
+      images.forEach((img, i) => img.classList.toggle("product-block__image--active", i === idx));
+    }
+    wrapper.querySelector(".nav-left")?.addEventListener("pointerdown", () => {
+      if (!images.length) return;
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+    wrapper.querySelector(".nav-right")?.addEventListener("pointerdown", () => {
+      if (!images.length) return;
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    const wishlistButton = productBlock.querySelector(".wishlist-hero-custom-button");
+    if (wishlistButton) {
+      wishlistButton.style.top = "8px";
+      wishlistButton.style.padding = "2px";
+      wishlistButton.style.background = "#FFFFFF";
+      wishlistButton.style.setProperty("right", "8px", "important");
+    }
+
+    const actionButtons = `
+      <div class="CP-action-btn"> 
+        <button class="CP-quick-view-btn"><svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000"><path d="M440.39-440.39H185.87v-79.22h254.52V-774.7h79.22v255.09H774.7v79.22H519.61v254.52h-79.22v-254.52Z"/></svg></button>
+      </div>`;
+    const priceBlock = productBlock.querySelector(".product-price");
+    const productTitle = productBlock.querySelector(".product-block__title");
+    if (priceBlock && productTitle) {
+      const clonePriceBlock = priceBlock.cloneNode(true);
+      clonePriceBlock.querySelector(".price__default")?.classList.add("CP-default-price");
+      const currentPrice = clonePriceBlock.querySelector(".price__current");
+      if (currentPrice) {
+        currentPrice.classList.add("CP-current-price");
+        // currentPrice.textContent = currentPrice.textContent.replace("₹", "Rs.");
+      }
+      clonePriceBlock.querySelector(".price__was")?.classList.add("CP-last-price");
+      clonePriceBlock.querySelector(".product-label--sale span")?.classList.add("CP-discount");
+      productTitle.insertAdjacentElement("beforebegin", clonePriceBlock);
+      priceBlock.style.display = "none";
+      productTitle.style.padding = "0px 4px";
+      clonePriceBlock.style.padding = "0px 4px";
+    }
+
+    const snapList = productBlock.querySelector(".product-block .image-cont");
+    if (snapList) {
+      snapList.insertAdjacentHTML("beforeend", actionButtons);
+    }
+
+
+
+    // Badge by tag
+    const link = productBlock.querySelector("a.product-link");
+    const href = link ? link.getAttribute("href") : null;
+    const handleMatch = href && href.match(/\/products\/([a-zA-Z0-9\-]+)/);
+    if (handleMatch) {
+      const handle = handleMatch[1];
+      const productData = productMap[handle];
+      if (productData && productData.tags) {
+        const matchedTag = Object.keys(badgeMap).find((tag) => productData.tags.includes(tag));
+        const matchedBadge = matchedTag ? badgeMap[matchedTag] : null;
+        if (matchedBadge) {
+          const tile = link.closest(".image-cont");
+          if (tile && !tile.querySelector(".CP-ribbon-tag")) {
+            const badge = document.createElement("div");
+            badge.className = "CP-ribbon-tag";
+            badge.textContent = matchedBadge;
+            tile.appendChild(badge);
+          }
+        }
+      }
+    }
+  }
+
+  // Initialize product tiles (works for current and future blocks)
+  eleReady(".product-grid .product-block", function (block) {
+    const run = () => initTile(block);
+    if (firstTilesInit) {
+      fetchProductsPromise.then(() => { run(); firstTilesInit = false; }).catch(run);
+    } else {
+      run();
+    }
+  });
+
+  /* ---------------- Show More pagination ---------------- */
+  /*
+  eleReady(".pagination", function (paginationEl) {
+    const productGrid = document.querySelector(".product-grid");
+    if (!productGrid) return;
+
+    const paginationContainer = `
+      <div class="CP_pagination-container">
+        <button class="CP_show-more-btn">Show More</button>
+      </div>`;
+    const loadingContainer = `<div class="CP_loading" style="display:none">Loding...</div>`;
+
+    paginationEl.insertAdjacentHTML("beforebegin", paginationContainer);
+    paginationEl.insertAdjacentHTML("beforebegin", loadingContainer);
+
+    const loadingIndicator = document.querySelector(".CP_loading");
+    const showMoreBtn = document.querySelector(".CP_show-more-btn");
+    const baseUrl = location.origin;
+    const pathName = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get("page")) || 1;
+
+    function canShowMore(docToCheck) {
+      const nums = docToCheck.querySelectorAll(".pagination__number");
+      const last = nums[nums.length - 1];
+      const lastPage = last ? parseInt(last.textContent.trim()) : 1;
+      return currentPage < lastPage;
+    }
+
+    // Reset Filter Group
+    function resetFilterGroupHiddenState() {
+      // Re-hide ALL filter groups and headings, unless you want specific panels open
+      document.querySelectorAll('form#CollectionFilterForm .filter-group__heading').forEach(head => {
+        head.classList.add('toggle-target-toggler--is-hidden');
+        head.classList.remove('is-active', 'open', 'toggle-target--active');
+        head.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('form#CollectionFilterForm .filter-group__items').forEach(group => {
+        group.classList.add('toggle-target--hidden');
+        group.style.display = '';
+      });
+    }
+
+    showMoreBtn.style.display = canShowMore(document) ? "inline-block" : "none";
+
+    showMoreBtn.addEventListener("click", async () => {
+      const nextPage = currentPage + 1;
+      const nextURL = `${baseUrl}${pathName}?page=${nextPage}`;
+      loadingIndicator.style.display = "block";
+      showMoreBtn.style.display = "none";
+
+      try {
+        const res = await fetch(nextURL);
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const newGrid = doc.querySelector(".product-grid");
+        if (newGrid) {
+          const newProducts = newGrid.querySelectorAll("product-block, .product-block");
+          newProducts.forEach((p) => productGrid.appendChild(p));
+          currentPage++;
+          const s = new URLSearchParams(window.location.search);
+          s.set("page", String(currentPage));
+          const q = s.toString();
+          const newHistoryURL = q ? `${pathName}?${q}` : pathName;
+          window.history.pushState({}, "", newHistoryURL);
+          showMoreBtn.style.display = canShowMore(doc) ? "inline-block" : "none";
+        } else {
+          showMoreBtn.style.display = "none";
+        }
+        // .CP_show-more-btn handler, after products append:
+        resetFilterGroupHiddenState();
+      } catch (e) {
+        console.error("Error loading next page products:", e);
+      } finally {
+        loadingIndicator.style.display = "none";
+      }
+    });
+  });
+  */
+
+  /* ---------------- Quick View + ATC open (delegate; no DOMContentLoaded) ---------------- */
+  const hasThemeDelegate = typeof window.theme === "object" && typeof theme.addDelegateEventListener === "function";
+  const delegate = hasThemeDelegate
+    ? (sel, handler) => theme.addDelegateEventListener(document, "click", sel, handler)
+    : (sel, handler) => onDelegate(document, "click", sel, (evt, el) => handler(evt, el));
+
+  function attachQuickHandler(selector) {
+    delegate(selector, (evt, delEl) => {
+      evt.preventDefault();
+      const block = delEl.closest(".product-block");
+      const productUrl = block?.querySelector("a")?.getAttribute("href");
+      if (!productUrl) return;
+
+      // If theme.quickbuy not ready, just go to PDP
+      if (!window.theme || !theme.quickbuy) {
+        location.href = productUrl;
+        return;
+      }
+
+      const slider = delEl.closest(".collection-slider");
+      let quickbuyCont, detailCont;
+
+      if (slider) {
+        const sliderRow = slider.closest(".collection-slider-row");
+        if (!sliderRow || !sliderRow.querySelector(".quickbuy-container")) return;
+        quickbuyCont = sliderRow.querySelector(".quickbuy-container");
+      } else {
+        theme.quickbuy.setBlockHeights(block);
+        quickbuyCont = block.querySelector(".quickbuy-container");
+        quickbuyCont?.classList.add("CP-quickbuy-open");
+        quickbuyCont?.classList.remove("CP-quickbuy-closed");
+      }
+      if (!quickbuyCont) return;
+      detailCont = quickbuyCont.querySelector(".inner");
+      block.classList.add("expanded");
+
+      quickbuyCont.dispatchEvent(new CustomEvent("on:quickbuy:before-open", { bubbles: true }));
+
+      // close other expanded siblings in grid
+      if (!slider) {
+        [...block.parentElement.children].forEach((el) => {
+          if (el !== block && el.classList.contains("expanded")) {
+            theme.quickbuy.contractDetail(el, true);
+          }
+        });
+      } else {
+        const other = Array.from(slider.querySelectorAll(".product-block.expanded")).filter((el) => el !== block);
+        other.forEach((el) => el.classList.remove("expanded"));
+      }
+
+      if (detailCont) detailCont.innerHTML = '<div class="loading-spinner"></div>';
+
+      fetch(productUrl, { method: "get" })
+        .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))
+        .then((html) => {
+          const tmpl = document.createElement("template");
+          tmpl.innerHTML = html;
+          const newDetail = tmpl.content.querySelector(".quickbuy-content")?.cloneNode(true);
+          if (!newDetail) return;
+
+          newDetail.querySelectorAll(".more").forEach((el) => (el.href = productUrl));
+          newDetail.querySelectorAll(".product-title").forEach((el) => {
+            el.innerHTML = `<a href="">${el.innerHTML}</a>`;
+            el.firstElementChild.href = productUrl;
+          });
+          newDetail.querySelectorAll(".show-gallery").forEach((el) => { el.classList.remove("show-gallery"); el.href = productUrl; });
+          newDetail.querySelectorAll(".not-in-quickbuy").forEach((el) => el.remove());
+          newDetail.querySelectorAll(".only-in-quickbuy").forEach((el) => el.classList.remove("only-in-quickbuy"));
+          newDetail.querySelectorAll(".sticky-content-container").forEach((el) => el.classList.remove("sticky-content-container"));
+          newDetail.querySelectorAll("pickup-availability").forEach((el) => el.remove());
+          newDetail.querySelectorAll('variant-picker[data-update-url="true"]').forEach((el) => { el.dataset.updateUrl = false; });
+          newDetail.querySelectorAll("noscript").forEach((el) => el.remove());
+          newDetail.querySelectorAll(".media-gallery .main-image carousel-slider").forEach((el) => el.classList.remove("mobile-only"));
+          newDetail.querySelectorAll(".product-media-collage").forEach((el) => el.remove());
+          newDetail.querySelectorAll(".media-gallery .thumbnails").forEach((el) => el.classList.remove("mobile-only"));
+          [
+            "media-gallery--layout-carousel-beside",
+            "media-gallery--layout-columns-1",
+            "media-gallery--layout-columns-2",
+            "media-gallery--layout-collage-1",
+            "media-gallery--layout-collage-2",
+          ].forEach((cl) => {
+            newDetail.querySelectorAll(`.${cl}`).forEach((el) => {
+              el.classList.remove(cl);
+              el.classList.add("media-gallery--layout-carousel-under");
+            });
+          });
+
+          // external resources
+          tmpl.content.querySelectorAll('.section-main-product link[rel="stylesheet"]').forEach((el) => {
+            const href = el.getAttribute("href");
+            if (href && !document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
+              document.head.insertAdjacentHTML("beforeend", el.outerHTML);
+            }
+          });
+          tmpl.content.querySelectorAll(".section-main-product script[src]").forEach((el) => {
+            const src = el.getAttribute("src");
+            if (src && !document.querySelector(`script[src="${src}"]`)) {
+              const s = document.createElement("script");
+              s.src = src; s.defer = true; document.head.appendChild(s);
+            }
+          });
+
+          if (detailCont) {
+            detailCont.innerHTML = "";
+            detailCont.appendChild(newDetail);
+          }
+
+          quickbuyCont.dispatchEvent(new CustomEvent("on:quickbuy:after-open", { bubbles: true }));
+
+          // share handlers
+          const mobBtn = document.querySelector(".mob-share-product-button");
+          if (mobBtn) {
+            mobBtn.addEventListener("click", function mobShare() {
+              this.classList.toggle("active");
+              document.querySelector(".title_share_button")?.classList.toggle("active");
+            });
+          }
+          document.querySelectorAll(".svg-container-class .native-share-img").forEach((btn) => {
+            btn.addEventListener("click", function () {
+              if (navigator.share) {
+                navigator.share({ title: document.title, text: "Check out this link", url: location.href })
+                  .catch((e) => console.log("Error sharing", e));
+              }
+            });
+          });
+
+          // sticky containers
+          const sizeContainer  = document.querySelector(".product-block .quickbuy-container .variant-size-chart");
+          const atcContainer   = document.querySelector(".product-block .quickbuy-container buy-buttons.buy-buttons-row.block");
+          const priceContainer = document.querySelector(".product-block .quickbuy-container .price-container");
+
+          const stickyClass = selector === ".CP-quick-view-btn" ? "CP-qv-sticky-container" : "CP-atc-sticky-container";
+          if (!quickbuyCont.querySelector(`.${stickyClass}`)) {
+            const sticky = document.createElement("div");
+            sticky.className = stickyClass;
+            if (sizeContainer) sticky.appendChild(sizeContainer);
+            if (atcContainer)  sticky.appendChild(atcContainer);
+            if (priceContainer && sticky.children.length > 0) {
+              priceContainer.parentElement.insertBefore(sticky, priceContainer.nextSibling);
+            }
+          }
+
+          // Hide extras for ATC flow
+          if (selector === ".CP-atc-btn") {
+            const trust = document.querySelector(".quickbuy-container .trust-icons_container");
+            if (trust) trust.style.display = "none";
+            const linkText = document.querySelector(".quickbuy-container .link-text");
+            if (linkText) linkText.style.display = "none";
+            const viewDetails = document.querySelector(".quickbuy-container .lightish-spaced-row-above");
+            if (viewDetails) viewDetails.style.display = "none";
+          }
+        });
+
+      // close button
+      const closeButton = quickbuyCont.querySelector(".close-detail");
+      if (closeButton) {
+        closeButton.removeAttribute("tabindex");
+        closeButton.addEventListener("pointerdown", function () {
+          quickbuyCont.classList.remove("CP-quickbuy-open");
+        });
+      }
+
+      // scroll position
+      const offsetFn = (theme && typeof theme.stickyHeaderHeight === "function") ? theme.stickyHeaderHeight() : 0;
+      const scrollOffset = -120 - offsetFn;
+      const top = (theme && typeof theme.getOffsetTopFromDoc === "function")
+        ? theme.getOffsetTopFromDoc(quickbuyCont) + scrollOffset
+        : (quickbuyCont.getBoundingClientRect().top + window.scrollY + scrollOffset);
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  }
+
+  attachQuickHandler(".CP-quick-view-btn");
+  attachQuickHandler(".CP-atc-btn");
+
+  /* ---------------- Filters & Sort helpers ---------------- */
+  eleReady("div#sort-dropdown-heading", function (el) {
+    if (!window.jQuery) return;
+    jQuery(el).closest(".utility-bar__right").addClass("filSortWrappr");
+  });
+
+eleReady("filter-container.filter-container .filter-group toggle-target.filter-group__heading", function (filTtl) {
+  if (!window.jQuery) return;
+
+  // --- CREATE TOP FILTER WRAP IF NOT EXIST ---
+  if (jQuery(".topFilterWrap").length == 0) {
+    jQuery(filTtl).closest("filter-container.filter-container").before(`
+      <div class="topFilterWrap">
+        <div class="filtrBx">
+          <img width="400" height="400" loading="lazy" src="//useruploads.visualwebsiteoptimizer.com/useruploads/1019323/images/451ba9da5784e3a67649321f605bae9a_filltr.png" alt="filltrIcon">
+        </div>
+        <div class="page-category__filter__nav__item mobileSort">
+          Sort
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="icon feather feather-chevron-down" aria-hidden="true" focusable="false" role="presentation">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </div>
+      </div>`);
+  }
+
+  // --- CREATE INDIVIDUAL FILTER HEADS BASED ON FILTER GROUP TITLES ---
+  var filTxt = jQuery(filTtl).text().trim();
+  jQuery('.topFilterWrap .filtrBx .filterHead[dataTxt="' + filTxt + '"]').remove();
+  jQuery(".topFilterWrap .filtrBx").append(
+    '<div class="filterHead" dataTxt="' + filTxt + '">' +
+      filTxt +
+      '<img class="dwn" src="{{ "product_select_arrow.svg" | asset_url }}"></div>'
+  );
+
+  // --- ENSURE AVAILABILITY FILTER ALWAYS EXISTS ---
+  if (jQuery(".availability").length == 0) {
+    jQuery(".topFilterWrap .filtrBx").append(
+      '<div class="filterHead availability">Availability <img class="dwn" src="{{ "product_select_arrow.svg" | asset_url }}"></div>'
+    );
+  } else {
+    jQuery(".availability").appendTo(".topFilterWrap .filtrBx");
+  }
+
+  // ============================================================
+  // ✅ NEW LOGIC: ADD/REMOVE ACTIVE CLASS ON FILTER SELECTION
+  // ============================================================
+
+  // 1️⃣ — WHENEVER USER SELECTS/DESELECTS A FILTER VALUE
+  jQuery(document).on("change", ".filter-group input[type='checkbox'], .filter-group input[type='radio']", function () {
+    const $group = jQuery(this).closest(".filter-group");
+    const groupLabel = $group.find(".filter-group__heading__text").text().trim();
+    const $filterHead = jQuery('.filterHead[dataTxt="' + groupLabel + '"]');
+
+    // If any option in this group is checked → add active
+    const anyChecked = $group.find("input:checked").length > 0;
+    $filterHead.toggleClass("active", anyChecked);
+  });
+
+  // 2️⃣ — ON INITIAL LOAD / AJAX RELOAD, SYNC STATES
+  function syncFilterHeadStates() {
+    jQuery(".filter-group").each(function () {
+      const groupLabel = jQuery(this).find(".filter-group__heading__text").text().trim();
+      const $filterHead = jQuery('.filterHead[dataTxt="' + groupLabel + '"]');
+      const anyChecked = jQuery(this).find("input:checked").length > 0;
+      $filterHead.toggleClass("active", anyChecked);
+    });
+  }
+
+  // Initial sync when filters first appear
+  syncFilterHeadStates();
+
+  // 3️⃣ — MONITOR FILTER AREA FOR AJAX UPDATES
+  const targetNode = document.querySelector(".filters__inner");
+  if (targetNode) {
+    const observer = new MutationObserver(() => {
+      syncFilterHeadStates();
+    });
+    observer.observe(targetNode, { childList: true, subtree: true });
+  }
+});
+
+
+  eleReady(".mobileSort", function (mobSort) {
+    if (!window.jQuery) return;
+    jQuery(mobSort).click(function () {
+      if (jQuery(".utility-bar span.utility-bar__item.desktop-only.special div#sort-dropdown-options .sort-by-title").length == 0) {
+        setTimeout(function () {
+          jQuery(".utility-bar .filSortWrappr button.link-dropdown__button")[0]?.click();
+        }, 400);
+      } else {
+        jQuery(".utility-bar span.utility-bar__item.desktop-only.special div#sort-dropdown-options .sort-by-title").click();
+      }
+      setTimeout(function () {
+        jQuery("form#CollectionFilterForm .filter-group toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)").click();
+      }, 300);
+    });
+  });
+
+  /*
+  eleReady(".filterHead", function (filHead) {
+    if (!window.jQuery) return;
+    jQuery(filHead).click(function () {
+      jQuery(this).siblings().removeClass("open");
+      jQuery(this).toggleClass("open");
+      var filIndex = jQuery(this).index();
+      filIndex = filIndex - 1;
+
+      jQuery("form#CollectionFilterForm .filter-group ").eq(0).click();
+
+      jQuery("form#CollectionFilterForm .filter-group")
+        .eq(filIndex).siblings()
+        .find("toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)")
+        .click();
+
+      jQuery("form#CollectionFilterForm .filter-group")
+        .eq(filIndex)
+        .find("toggle-target.filter-group__heading")
+        .click();
+
+      if (jQuery(this).hasClass("availability")) {
+        jQuery(".filter-group.filter-group--availability").toggleClass("showDwn");
+      } else {
+        jQuery(".filter-group.filter-group--availability").removeClass("showDwn");
+      }
+    });
+  });
+  */
+ /*
+  eleReady(".filterHead", function (filHead) {
+    if (!window.jQuery) return;
+
+    jQuery(filHead).click(function () {
+      jQuery(this).siblings().removeClass("open");
+      jQuery(this).toggleClass("open");
+
+      // Get and trim 'datatxt' attribute
+      var filTxt = (jQuery(this).attr("datatxt") || "").trim();
+
+      // Find matching .filter-group using trimmed 'data-filter-wrap'
+      var matchedGroup = null;
+      jQuery("form#CollectionFilterForm .filter-group").each(function () {
+        var filterWrap = (jQuery(this).attr("data-filter-wrap") || "").trim();
+        if (filterWrap === filTxt) {
+          matchedGroup = jQuery(this);
+          return false; // Break loop on match
+        }
+      });
+
+      if (matchedGroup) {
+        // Optional: You can toggle the heading inside the matched group as needed
+        // matchedGroup.find(".filter-group__heading").toggleClass("open");
+
+        matchedGroup.siblings().find(".toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)").click();
+        matchedGroup.find(".toggle-target.filter-group__heading").click();
+      }
+
+      // Original index logic (if you still want to use it with fallback)
+      // var filIndex = jQuery(this).index();
+      // filIndex = filIndex - 1;
+      // jQuery("form#CollectionFilterForm .filter-group ").eq(0).click();
+      // jQuery("form#CollectionFilterForm .filter-group")
+      //   .eq(filIndex).siblings()
+      //   .find("toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)")
+      //   .click();
+      // jQuery("form#CollectionFilterForm .filter-group")
+      //   .eq(filIndex)
+      //   .find("toggle-target.filter-group__heading")
+      //   .click();
+
+      if (jQuery(this).hasClass("availability")) {
+        jQuery(".filter-group.filter-group--availability").toggleClass("showDwn");
+      } else {
+        jQuery(".filter-group.filter-group--availability").removeClass("showDwn");
+      }
+    });
+  });
+  */
+  function deleteCookie(name, path = '/', domain = '') {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=' + path + (domain ? '; domain=' + domain : '');
+  }
+
+
+  // ------------- Filter JS (updated) new filter functionality -------------
+// - Allows multiple filter groups to stay open
+// - Prevents auto-submit/auto-close when a single filter is clicked
+// - Adds an "Apply Filters" button so user can select many filters then submit
+// ------------------------------------------------
+
+eleReady(".filterHead", function (filHead) {
+  if (!window.jQuery) return;
+
+  jQuery(filHead)
+    .off("click.cpFilter")
+    .on("click.cpFilter", function () {
+      var $this = jQuery(this);
+      var filTxt = ($this.attr("datatxt") || "").trim();
+      var isOpen = $this.hasClass("open");
+
+      // --- Close all first (accordion behavior) ---
+      jQuery(".filterHead").removeClass("open");
+      jQuery("form#CollectionFilterForm .filter-group").each(function () {
+        jQuery(this).removeClass("open");
+        jQuery(this)
+          .find(".filter-group__heading")
+          .addClass("toggle-target-toggler--is-hidden");
+        jQuery(this)
+          .find(".filter-group__items")
+          .addClass("toggle-target--hidden");
+      });
+
+      // --- Open the clicked one (if it was not already open) ---
+      if (!isOpen) {
+        $this.addClass("open");
+
+        jQuery("form#CollectionFilterForm .filter-group").each(function () {
+          var filterWrap = (jQuery(this).attr("data-filter-wrap") || "").trim();
+          if (filterWrap === filTxt) {
+            jQuery(this).addClass("open");
+            jQuery(this)
+              .find(".filter-group__heading")
+              .removeClass("toggle-target-toggler--is-hidden");
+            jQuery(this)
+              .find(".filter-group__items")
+              .removeClass("toggle-target--hidden");
+          }
+        });
+      }
+
+      // --- Availability toggle logic ---
+      if ($this.hasClass("availability")) {
+        jQuery(".filter-group.filter-group--availability").toggleClass("showDwn");
+      } else {
+        jQuery(".filter-group.filter-group--availability").removeClass("showDwn");
+      }
+
+      deleteCookie("selectSize");
+
+      // --- Show/hide Apply controls based on open state ---
+      var openGroups = jQuery("form#CollectionFilterForm .filter-group.open").length;
+      toggleApplyControls(openGroups > 0);
+    });
+});
+
+// URL change observer (unchanged)
+(function onUrlChange() {
+  if (!window.jQuery) return;
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+      lastUrl = url;
+      setTimeout(function () {
+        jQuery(
+          "form#CollectionFilterForm .filter-group toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)"
+        ).click();
+      }, 600);
+    }
+  }).observe(document, { subtree: true, childList: true });
+})();
+
+// ----------------- Prevent auto-submit + Add Apply button -----------------
+(function preventAutoSubmitAndAddApplyBtn() {
+  if (!window.jQuery) return;
+  var form = document.getElementById("CollectionFilterForm");
+  if (!form) return;
+
+  // --- Add actions container ---
+  var actionsContainer = form.querySelector(".filter-actions");
+  if (!actionsContainer) {
+    actionsContainer = document.createElement("div");
+    actionsContainer.className = "filter-actions";
+    actionsContainer.style.marginTop = "10px";
+    actionsContainer.style.display = "none";
+    form.appendChild(actionsContainer);
+  }
+
+  // --- Apply button ---
+  var applyBtn = form.querySelector(".apply-filters-btn");
+  if (!applyBtn) {
+    applyBtn = document.createElement("button");
+    applyBtn.type = "button";
+    applyBtn.className = "btn apply-filters-btn";
+    applyBtn.textContent = "Apply Filters";
+    actionsContainer.appendChild(applyBtn);
+  }
+
+  // --- Clear button ---
+  var clearBtn = form.querySelector(".clear-filters-btn");
+  if (!clearBtn) {
+    clearBtn = document.createElement("a");
+    clearBtn.href = window.location.pathname;
+    clearBtn.className = "clear-filters-btn";
+    clearBtn.textContent = "Clear";
+    clearBtn.style.marginLeft = "8px";
+    actionsContainer.appendChild(clearBtn);
+  }
+
+  // --- Toggle Apply Controls visibility ---
+  window.toggleApplyControls = function (show) {
+    actionsContainer.style.display = show ? "flex" : "none";
+  };
+
+  function hideApplyControls() {
+    actionsContainer.style.display = "none";
+  }
+
+  // --- Prevent auto-submit (for multi-select) ---
+  form.addEventListener(
+    "change",
+    function (e) {
+      var t = e.target;
+      if (!t) return;
+      var isFilterInput =
+        t.matches(".filter-group__checkbox") ||
+        t.matches('input[name^="filter"]') ||
+        t.matches('input[type="checkbox"]') ||
+        t.matches('input[type="radio"]') ||
+        t.matches("select") ||
+        t.matches('input[name*="price"]');
+      if (isFilterInput) {
+        try {
+          if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+        } catch (err) {}
+        e.stopPropagation();
+        toggleApplyControls(true);
+        updatePriceFilterHeadState();
+      }
+    },
+    true
+  );
+
+  // --- Apply Filters ---
+  applyBtn.addEventListener("click", function () {
+    hideApplyControls();
+    form.submit();
+    updatePriceFilterHeadState();
+  });
+
+  // --- Clear Filters ---
+  clearBtn.addEventListener("click", function (ev) {
+    ev.preventDefault();
+    var clearUrlInput = form.querySelector('input[name="clear_url"]');
+    if (clearUrlInput && clearUrlInput.value) {
+      window.location.href = clearUrlInput.value;
+      return;
+    }
+    window.location.href = window.location.pathname;
+  });
+
+  // --- Show Apply when clicking label ---
+  form.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".filter-group__item")) {
+      toggleApplyControls(true);
+    }
+  });
+
+  // ✅ --- Price Range Active Logic ---
+  function updatePriceFilterHeadState() {
+    var minInput = form.querySelector('input[name*="price.gte"]');
+    var maxInput = form.querySelector('input[name*="price.lte"]');
+    var hasValue =
+      (minInput && minInput.value.trim() !== "") ||
+      (maxInput && maxInput.value.trim() !== "");
+
+    jQuery(".filterHead").each(function () {
+      var $head = jQuery(this);
+      var dataTxt = ($head.attr("datatxt") || "").trim().toLowerCase();
+      if (dataTxt === "price" || dataTxt === "price range") {
+        $head.toggleClass("active", hasValue);
+      }
+    });
+  }
+
+  // Detect input typing
+  form.addEventListener("input", function (e) {
+    if (e.target.matches('input[name*="price"]')) {
+      updatePriceFilterHeadState();
+    }
+  });
+
+  // Run once on load
+  document.addEventListener("DOMContentLoaded", updatePriceFilterHeadState);
+  document.addEventListener("shopify:section:load", updatePriceFilterHeadState);
+  document.addEventListener("ajaxCollectionContentUpdated", updatePriceFilterHeadState);
+})();
+
+
+
+  // ------------- Filter JS (updated) new filter functionality end -------------
+
+
+  // eleReady(".filterHead", function (filHead) {
+  //   if (!window.jQuery) return;
+
+  //   jQuery(filHead).click(function () {
+  //     var $this = jQuery(this);
+  //     var filTxt = ($this.attr("datatxt") || "").trim();
+
+  //     // Check if this filterHead is already open
+  //     var isOpen = $this.hasClass("open");
+
+  //     // Close all filterHeads except this one if opening, or all if closing
+  //     jQuery(".filterHead").not($this).removeClass("open");
+
+  //     if (isOpen) {
+  //       // Close this filterHead and hide its filter group
+  //       $this.removeClass("open");
+
+  //       jQuery("form#CollectionFilterForm .filter-group").each(function () {
+  //         var filterWrap = (jQuery(this).attr("data-filter-wrap") || "").trim();
+  //         if (filterWrap === filTxt) {
+  //           jQuery(this).removeClass("open");
+  //           jQuery(this).find(".filter-group__heading").addClass("toggle-target-toggler--is-hidden");
+  //           jQuery(this).find(".filter-group__items").addClass("toggle-target--hidden");
+  //         }
+  //       });
+  //     } else {
+  //       // Open this filterHead
+  //       $this.addClass("open");
+
+  //       // Close all groups
+  //       jQuery("form#CollectionFilterForm .filter-group").each(function () {
+  //         jQuery(this).removeClass("open");
+  //         jQuery(this).find(".filter-group__heading").addClass("toggle-target-toggler--is-hidden");
+  //         jQuery(this).find(".filter-group__items").addClass("toggle-target--hidden");
+  //       });
+
+  //       // Open matched filter group
+  //       jQuery("form#CollectionFilterForm .filter-group").each(function () {
+  //         var filterWrap = (jQuery(this).attr("data-filter-wrap") || "").trim();
+  //         if (filterWrap === filTxt) {
+  //           jQuery(this).addClass("open");
+  //           jQuery(this).find(".filter-group__heading").removeClass("toggle-target-toggler--is-hidden");
+  //           jQuery(this).find(".filter-group__items").removeClass("toggle-target--hidden");
+  //         }
+  //       });
+  //     }
+
+  //     // Availability toggle as before
+  //     if ($this.hasClass("availability")) {
+  //       jQuery(".filter-group.filter-group--availability").toggleClass("showDwn");
+  //     } else {
+  //       jQuery(".filter-group.filter-group--availability").removeClass("showDwn");
+  //     }
+
+  //     // delete cookies
+  //     deleteCookie('selectSize');
+
+  //   });
+  // });
+
+
+
+
+  // URL change observer → reopen filter heads
+  (function onUrlChange() {
+    if (!window.jQuery) return;
+    let lastUrl = location.href;
+    new MutationObserver(() => {
+      const url = location.href;
+      if (url !== lastUrl) {
+        lastUrl = url;
+        setTimeout(function () {
+          jQuery("form#CollectionFilterForm .filter-group toggle-target.filter-group__heading:not(.toggle-target-toggler--is-hidden)").click();
+        }, 600);
+      }
+    }).observe(document, { subtree: true, childList: true });
+  })();
+})();
+
+
+
+
+
+(function () {
+  const s = document.createElement('style');
+  s.textContent = `html.has-qv-open,html.has-qv-open body{overflow:hidden !important;touch-action:none}`;
+  document.head.appendChild(s);
+
+  const toggle = () => {
+    const open = !!document.querySelector('.quickbuy-container.CP-quickbuy-open');
+    document.documentElement.classList.toggle('has-qv-open', open);
+  };
+  new MutationObserver(toggle).observe(document.body, {
+    childList: true, subtree: true, attributes: true, attributeFilter: ['class']
+  });
+  document.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.quickbuy-container .close-detail')) { setTimeout(toggle, 0); }
+    const qb = e.target.closest('.quickbuy-container');
+    if (qb && !e.target.closest('.quickbuy-container .inner')) { setTimeout(toggle, 0); }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setTimeout(toggle, 0); });
+  window.addEventListener('popstate', toggle);
+  window.addEventListener('pageshow', toggle);
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== FIX: Force-close all filter groups after filter/apply/URL changes ===== */
+// (function () {
+//   if (window.innerWidth >= 768) return; 
+//   function collapseAllGroups() {
+//     try {
+//       document.querySelectorAll('form#CollectionFilterForm toggle-target.filter-group__heading')
+//         .forEach(function (head) {
+//           var sel = head.getAttribute('data-toggle-target');
+//           if (!sel) return;
+//           document.querySelectorAll(sel).forEach(function (panel) {
+//             panel.classList.add('toggle-target', 'toggle-target--hidden');
+//             panel.style.display = '';
+//           });
+//           head.classList.remove('is-active', 'open', 'toggle-target--active');
+//           head.setAttribute('aria-expanded', 'false');
+//         });
+//       var avail = document.querySelector('.filter-group.filter-group--availability');
+//       if (avail) avail.classList.remove('showDwn');
+//       document.querySelectorAll('.topFilterWrap .filtrBx .filterHead').forEach(function (pill) {
+//         pill.classList.remove('open');
+//       });
+//     } catch (e) { /* no-op */ }
+//   }
+//   function onReady(cb) {
+//     var t = setInterval(function () {
+//       if (document.querySelector('form#CollectionFilterForm')) {
+//         clearInterval(t); cb();
+//       }
+//     }, 80);
+//   }
+//   onReady(function () {
+//     collapseAllGroups();
+//     document.addEventListener('change', function (e) {
+//       var inFilters = e.target.closest('form#CollectionFilterForm');
+//       if (inFilters) {
+//         setTimeout(collapseAllGroups, 600);
+//       }
+//     }, true);
+//     document.addEventListener('click', function (e) {
+//       if (e.target.closest('.filter-group__applied-item, .filter-group__clear-link')) {
+//         setTimeout(collapseAllGroups, 600);
+//       }
+//     }, true);
+//     var root = document.querySelector('.filters') || document.body;
+//     var mo = new MutationObserver(function () {
+//       clearTimeout(mo._t);
+//       mo._t = setTimeout(collapseAllGroups, 300);
+//     });
+//     mo.observe(root, { childList: true, subtree: true });
+//     var lastHref = location.href;
+//     var urlMo = new MutationObserver(function () {
+//       if (location.href !== lastHref) {
+//         lastHref = location.href;
+//         setTimeout(collapseAllGroups, 600);
+//       }
+//     });
+//     urlMo.observe(document, { childList: true, subtree: true });
+
+//     window.addEventListener('popstate', function () {
+//       setTimeout(collapseAllGroups, 600);
+//     });
+//   });
+// })();
+
+/* ===== UPDATED FIX: Keep filter groups open until Apply Filters click ===== */
+(function () {
+  if (window.innerWidth >= 768) return; // run only on mobile
+
+  function collapseAllGroups() {
+    try {
+      document.querySelectorAll('form#CollectionFilterForm toggle-target.filter-group__heading')
+        .forEach(function (head) {
+          var sel = head.getAttribute('data-toggle-target');
+          if (!sel) return;
+          document.querySelectorAll(sel).forEach(function (panel) {
+            panel.classList.add('toggle-target', 'toggle-target--hidden');
+            panel.style.display = '';
+          });
+          head.classList.remove('is-active', 'open', 'toggle-target--active');
+          head.setAttribute('aria-expanded', 'false');
+        });
+      var avail = document.querySelector('.filter-group.filter-group--availability');
+      if (avail) avail.classList.remove('showDwn');
+      document.querySelectorAll('.topFilterWrap .filtrBx .filterHead').forEach(function (pill) {
+        pill.classList.remove('open');
+      });
+    } catch (e) { /* no-op */ }
+  }
+
+  function onReady(cb) {
+    var t = setInterval(function () {
+      if (document.querySelector('form#CollectionFilterForm')) {
+        clearInterval(t);
+        cb();
+      }
+    }, 80);
+  }
+
+  onReady(function () {
+    // Initially collapse all groups when page loads
+    collapseAllGroups();
+
+    // ---- REMOVE: auto-close on every filter change ----
+    // Instead of collapsing immediately, just mark filters changed
+    var filtersChanged = false;
+
+    document.addEventListener('change', function (e) {
+      var inFilters = e.target.closest('form#CollectionFilterForm');
+      if (inFilters) {
+        filtersChanged = true;
+        // Do NOT collapse here — wait for Apply click
+      }
+    }, true);
+
+    // ---- Keep panel open when user clears or removes a tag ----
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.filter-group__applied-item, .filter-group__clear-link')) {
+        filtersChanged = true;
+        // Don’t collapse immediately
+      }
+    }, true);
+
+    // ---- Only collapse after user clicks "Apply Filters" button ----
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.apply-filters-btn');
+      if (btn) {
+        setTimeout(collapseAllGroups, 600);
+        filtersChanged = false;
+      }
+    });
+
+    // ---- Keep filters open after URL change (like via AJAX or Shopify filter load) ----
+    // Disable mutation-based collapse
+    /*
+    var root = document.querySelector('.filters') || document.body;
+    var mo = new MutationObserver(function () {
+      clearTimeout(mo._t);
+      mo._t = setTimeout(collapseAllGroups, 300);
+    });
+    mo.observe(root, { childList: true, subtree: true });
+    */
+
+    // ---- Keep filters open after popstate navigation ----
+    window.addEventListener('popstate', function () {
+      // Don’t auto-collapse — user might navigate back to filters
+    });
+  });
+})();

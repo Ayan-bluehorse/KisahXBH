@@ -1,0 +1,76 @@
+{{ 'navratri.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'navratri.js' | asset_url }}" defer></script>
+
+<section class="cp-color-grid-ensemble">
+  {% if section.settings.section_heading != blank %}
+    <h2 class="cp-color-grid-heading-ensemble">{{ section.settings.section_heading }}</h2>
+  {% endif %}
+
+  <div class="page-container">
+  <div class="cp-color-grid-wrapper-ensemble">
+    {% for block in section.blocks %}
+      <div class="cp-color-card-ensemble">
+        {% if block.settings.image != blank %}
+          <div class="cp-color-image-ensemble">
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="cp-color-link-ensemble">
+                <img width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy" src="{{ block.settings.image | image_url }}" alt="Navratri Color Card">
+              </a>
+            {% else %}
+              <img width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy" src="{{ block.settings.image | image_url }}" alt="Navratri Color Card">
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  </div>
+  
+</section>
+
+{% schema %}
+{
+  "name": "Navratri Ensemble",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Get your Navratri ensemble here"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "color_card",
+      "name": "Color Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Ensemble",
+      "blocks": [
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" },
+        { "type": "color_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

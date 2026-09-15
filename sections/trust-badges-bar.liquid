@@ -1,0 +1,350 @@
+{% comment %}
+  Trust Badges Bar — horizontal icon + text badges with vertical dividers.
+  Desktop: single row with dividers. Mobile: 2×2 grid, no dividers.
+  Fully self-contained, all styles scoped to avoid conflicts.
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="trust-badges-bar" id="trust-badges-bar-{{ section.id }}">
+    <div class="trust-badges-bar__grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-badges-bar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="trust-badges-bar__icon">
+              <img
+                src="{{ block.settings.icon | image_url: width: 100 }}"
+                alt="{{ block.settings.line_1 | escape }}"
+                loading="lazy"
+                width="48"
+                height="48"
+              >
+            </div>
+          {%- endif -%}
+          <div class="trust-badges-bar__text">
+            {%- if block.settings.line_1 != blank -%}
+              <span class="trust-badges-bar__line1">{{ block.settings.line_1 }}</span>
+            {%- endif -%}
+            {%- if block.settings.line_2 != blank -%}
+              <span class="trust-badges-bar__line2">{{ block.settings.line_2 }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+        {%- unless forloop.last -%}
+          <span class="trust-badges-bar__divider"></span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  /* ===== SECTION WRAPPER ===== */
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.desk_padding_top }}px;
+    padding-bottom: {{ section.settings.desk_padding_bottom }}px;
+  }
+
+  /* ===== GRID ===== */
+  #shopify-section-{{ section.id }} .trust-badges-bar__grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: {{ section.settings.section_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ===== ITEM ===== */
+  #shopify-section-{{ section.id }} .trust-badges-bar__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.item_padding_y }}px 12px;
+    gap: 8px;
+  }
+
+  /* ===== ICON ===== */
+  #shopify-section-{{ section.id }} .trust-badges-bar__icon {
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .trust-badges-bar__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* ===== TEXT ===== */
+  #shopify-section-{{ section.id }} .trust-badges-bar__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+  #shopify-section-{{ section.id }} .trust-badges-bar__line1 {
+    font-size: {{ section.settings.line1_size }}px;
+    font-weight: {{ section.settings.line1_weight }};
+    line-height: 1.3;
+  }
+  #shopify-section-{{ section.id }} .trust-badges-bar__line2 {
+    font-size: {{ section.settings.line2_size }}px;
+    font-weight: {{ section.settings.line2_weight }};
+    line-height: 1.3;
+  }
+
+  /* ===== DIVIDER ===== */
+  #shopify-section-{{ section.id }} .trust-badges-bar__divider {
+    width: {{ section.settings.divider_thickness }}px;
+    align-self: stretch;
+    background-color: {{ section.settings.divider_color }};
+    flex-shrink: 0;
+  }
+
+  /* ===== RESPONSIVE — MOBILE 2×2 GRID ===== */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.mob_padding_top }}px;
+      padding-bottom: {{ section.settings.mob_padding_bottom }}px;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__item {
+      padding: 16px 10px;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__divider {
+      display: none;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__icon {
+      width: {{ section.settings.icon_size | minus: 8 }}px;
+      height: {{ section.settings.icon_size | minus: 8 }}px;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__line1 {
+      font-size: {{ section.settings.line1_size | minus: 2 }}px;
+    }
+    #shopify-section-{{ section.id }} .trust-badges-bar__line2 {
+      font-size: {{ section.settings.line2_size | minus: 2 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust Badges Bar",
+  "tag": "section",
+  "class": "trust-badges-bar-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F5F0EB"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Icon Size",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "line1_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Line 1 Font Size",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "line1_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Line 1 Font Weight",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "line2_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Line 2 Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "line2_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Line 2 Font Weight",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "range",
+      "id": "divider_thickness",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Divider Thickness",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "item_padding_y",
+      "min": 4,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Vertical Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "min": 600,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Section Max Width",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "line_1",
+          "label": "Line 1 (Bold)",
+          "default": "48Hrs."
+        },
+        {
+          "type": "text",
+          "id": "line_2",
+          "label": "Line 2",
+          "default": "Delivery"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges Bar",
+      "blocks": [
+        { "type": "badge", "settings": { "line_1": "48Hrs.", "line_2": "Delivery" } },
+        { "type": "badge", "settings": { "line_1": "Cash", "line_2": "On Delivery" } },
+        { "type": "badge", "settings": { "line_1": "7 Days", "line_2": "Return & Exchange" } },
+        { "type": "badge", "settings": { "line_1": "Money", "line_2": "Back Guarantee" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

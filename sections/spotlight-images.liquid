@@ -1,0 +1,283 @@
+<div class="spotlight-images">
+  <h2>{{ section.settings.head }}</h2>
+ <div class="flex-images-part flex-images-part-slider">
+    {% for block in section.blocks %}
+     <div class="side-img slick-slide">
+       <div class="image-wrapping-inner">
+        {% if  block.settings.left-img != blank %}
+          <img src="{{ block.settings.left-img | image_url }}" width="auto" height="auto">
+         {% endif %}
+       </div>
+      </div>
+      {% endfor %}
+   </div>
+</div>
+
+
+
+<style>
+#shopify-section-{{section.id}} {
+       padding-top: {{ section.settings.desk-padding-top }}px;
+       padding-bottom: {{ section.settings.desk-padding-bottom }}px; 
+       background:{{section.settings.bg-color}};
+} 
+#shopify-section-{{section.id}} .spotlight-images{
+       max-width:900px;
+       margin:0 auto;
+}
+#shopify-section-{{section.id}} .spotlight-images h2{
+      font-family: Gabarito;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 57.6px;
+      text-align: center;
+      text-transform: uppercase;
+      color:{{ section.settings.head-color | default:"#201747" }};
+      margin-botton:15px;
+}
+ #shopify-section-{{section.id}} .spotlight-images .flex-images-part{
+       display:flex;
+       justify-content:center;
+       gap:3px;
+} 
+#shopify-section-{{section.id}} .spotlight-images .side-img{
+       height:auto;
+}
+#shopify-section-{{section.id}} .spotlight-images .image-wrapping-inner{
+       margin:10px 7px;
+       max-width:292px; 
+}
+#shopify-section-{{section.id}} .spotlight-images .image-wrapping-inner img{
+       object-fit: contain;
+ }
+#shopify-section-{{section.id}} .slick-slider .slick-slide { 
+       transition: all 400ms ease;
+}
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{  
+       position:absolute;
+       max-width:76px;
+       top:5px;
+       right:7px;
+}
+#shopify-section-{{section.id}} .side-img.slick-slide.slick-current.slick-active.slick-center{
+        opacity: 1;
+        transform: scale(1.06); 
+}
+@media screen and (max-width:810px){
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .left-design{  
+       max-width:66px;     
+}
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{ 
+        max-width:66px; 
+}
+}
+
+@media screen and (max-width:736px){
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .left-design{  
+       max-width:65px;     
+}
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{ 
+        max-width:65px; 
+}
+}
+@media screen and (max-width:680px){
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .left-design{  
+         max-width:57px;
+      
+}
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{ 
+         max-width:57px; 
+}
+}
+@media screen and (max-width:590px){
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .left-design{  
+         max-width:52px;
+         top: 4px;
+         left: 6px;
+  }
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{ 
+          max-width:52px;
+          top: 4px;
+          right: 6px;
+}
+}
+@media screen and (max-width:590px){
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .left-design{  
+         max-width:50px;
+}
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .main-img .right-design{ 
+          max-width:50px;
+}
+}
+@media screen and (max-width:380px){
+#shopify-section-{{section.id}} .side-img.slick-slide.slick-current.slick-active.slick-center{
+         /* margin-left:21px;
+         margin-right:21px; */
+         transform: scale(1.1);
+} 
+}
+@media screen and (max-width:400px){
+ #shopify-section-{{section.id}} .side-img.slick-slide.slick-current.slick-active.slick-center{
+         /* margin-left:10px;
+         margin-right:21px; */
+         transform: scale(1.1);
+} 
+#shopify-section-{{section.id}} .spotlight-images .flex-images-part .side-img{ 
+         max-width:250px;     
+} 
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+      padding-top: {{ section.settings.mob-padding-top }}px;
+      padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .spotlight-images h2{
+        font-size: 28px;
+        line-height: 33.6px;
+}
+#shopify-section-{{section.id}} .spotlight-images .image-wrapping-inner{
+       margin:16px 7px;
+      
+}
+}
+</style>
+
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+
+ $('#shopify-section-{{section.id}} .flex-images-part').slick({
+    centerMode: true,
+    slidesToShow: 1,
+    variableWidth: true,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    responsive: [
+      {
+        breakpoint: 901,
+        settings: {
+          centerPadding: '150px',
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          centerPadding: '100px',
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 601,
+        settings: {
+          centerPadding: '50px',
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 501,
+        settings: {
+          centerPadding: '40px',
+          slidesToShow: 1
+        }
+      }
+  ]
+ });
+
+
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Spotlight Images",
+    "settings": [
+      {
+        "type": "text",
+         "id": "head",
+         "label": "Heading"
+      },
+      
+      
+    
+       {
+         "type": "color",
+          "id": "bg-color",
+          "label": "Background color"
+      },
+      {
+         "type": "color",
+         "id": "head-color",
+          "label": "Heading color"
+      },
+      
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+      },
+     {
+          "type": "range",
+          "id": "desk-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+     },
+    {
+          "type": "range",
+          "id": "desk-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    },
+    {
+          "type": "header",
+          "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+         "name":"Image",
+         "settings": [
+          {
+            "type": "image_picker",
+             "id":"left-img",
+            "label": "Left Image"
+       }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Spotlight Images"
+      }
+    ]
+  }
+{% endschema %}

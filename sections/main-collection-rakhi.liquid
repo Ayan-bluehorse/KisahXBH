@@ -1,0 +1,1835 @@
+<style>
+#shopify-section-{{section.id}} .col-title{
+     font-family:'Generis Sans W01 Regular';
+     font-style: normal;
+     font-weight: 600;
+     font-size: 24px;
+     line-height: 26px;
+     color: #000000;
+     opacity: 0.8;
+     margin: 0 0 5px 0;
+ }
+#shopify-section-{{section.id}} .product-grid{
+    column-gap:15px;
+    row-gap:0px;
+}
+#shopify-section-{{section.id}} .product-block__title{
+  font-family: 'Generis Sans W01 Bold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 18px;
+  color: #000000;
+  opacity: 0.8;
+ 
+}
+#shopify-section-{{section.id}} .col-description{
+     margin-bottom:30px;
+     margin-top:12px;
+}
+#shopify-section-{{section.id}} .col-description p{
+    margin:0;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+#shopify-section-{{section.id}} .close-container{
+      display:none;
+}
+#shopify-section-{{section.id}} .link-dropdown__button-text{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 23px;
+    color: #000000;
+    opacity: 0.8
+}
+/* #shopify-section-{{section.id}} .image-label-wrap .product-label-container {
+    display: none;
+} */
+#shopify-section-{{section.id}} .product-block .collection-tag-label{
+     position:absolute;
+     top:15px;
+     right:0;
+     background: linear-gradient(90deg, #A68811 -15.48%, #C1A01E 49.84%, #836900 116.67%);
+     border-radius: 50px 0px 0px 50px;
+}
+#shopify-section-{{section.id}} .product-block .product-block__position-badge{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  {% comment %} background: #000; {% endcomment %}
+  background: #808080;
+  color: #fff;
+  font-family: 'Generis Sans W01 Bold', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 999px;
+  pointer-events: none;
+      display: none;
+}
+#shopify-section-{{section.id}} .product-block .collection-tag-label span{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    opacity: 0.8;
+    padding: 3px 5px 4px 12px;;
+    display:block;
+}
+ #shopify-section-{{section.id}} .product-label-container {
+     position:unset;
+     margin-inline-end:0.5rem;
+} 
+#shopify-section-{{section.id}} .no-js-hidden .product-label--sale span {
+    font-family:'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color:#ff0606;
+    /* opacity: 0.8; */
+    padding:0;
+    background:none;
+    vertical-align:unset;
+    display:block;
+    text-transform:uppercase;
+}
+#shopify-section-{{section.id}} .link-dropdown__button[aria-expanded="true"]{
+    background:#201747;
+    height:auto;
+}
+#shopify-section-{{section.id}} .link-dropdown__button[aria-expanded="true"] .link-dropdown__button-text{
+    color:#ffffff;
+}
+#shopify-section-{{section.id}} .link-dropdown__button[aria-expanded="true"] .link-dropdown__button-icon svg {
+    color:#ffffff;
+}
+#shopify-section-{{section.id}} .text-overlay__inner{
+      display:none;
+ }
+#shopify-section-{{section.id}} .breadcrumbs-collection{
+     display:flex;
+     margin-bottom:20px;
+     margin-top:10px;
+}
+#shopify-section-{{section.id}} .breadcrumbs-collection .divider{
+     list-style-type:none;
+     margin:0 5px;
+}
+#shopify-section-{{section.id}} .utility-bar__left .btn-icon{
+      order:2;
+      margin-left:15px;
+ }
+#shopify-section-{{section.id}} .utility-bar__left span{
+      font-family:'Generis Sans W01 Bold';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 21px;
+      line-height: 26px;
+      color: #000000;
+      opacity: 0.8;
+}
+#shopify-section-{{section.id}} .page-header--with-background{
+     margin-bottom:0;
+}
+#shopify-section-{{section.id}} .toggle-btn{
+      height:2.6rem;
+      width:170px;
+      padding:2px 20px;
+}
+#shopify-section-{{section.id}} .utility-bar__right .utility-bar__item {
+      border: 1px solid #000000;
+      border-radius: 10px;
+      width:190px;
+      height:2.6rem;
+      padding:2px 20px;
+      display:flex;
+      align-items:center;
+}
+#shopify-section-{{section.id}} .utility-bar__right .utility-bar__item.special {
+      background:#201747;
+      border-radius:0;
+}
+#shopify-section-{{section.id}} .product-block__detail .price__current{
+      font-family: 'Generis Sans W01 Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 18px;
+      color: #000000;
+      opacity: 0.8;
+}
+#shopify-section-{{section.id}} .product-block__detail .price__was{
+      font-family: 'Generis Sans W01 Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 18px;
+      color: rgba(52, 52, 52, 0.69);
+      opacity: 0.8;
+      text-decoration: line-through;
+      text-decoration-color: rgba(255, 0, 0, 1);
+}
+#shopify-section-{{section.id}} .price .price-label--sold-out{
+      font-family: 'Generis Sans W01 Regular';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 18px;
+      color: #000000;
+      opacity: 0.8;
+}
+#shopify-section-{{section.id}} .product-block__detail .product-price--block .coupon-price{
+    margin-inline-start: var(--product-block-price-item-margin-start);
+    margin-inline-end: var(--product-block-price-item-margin-end);
+      font-family: 'Generis Sans W01 Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 18px;
+      color: #000000;
+      opacity: 0.8;
+}
+/* #shopify-section-{{section.id}} .utility-bar__centre{
+      display:none;
+} */
+#shopify-section-{{section.id}} .sort-by-title {
+      display:none;
+}
+
+#shopify-section-{{section.id}} .link-dropdown{
+      width:100%;
+}
+#shopify-section-{{section.id}} .link-dropdown__options{
+     top:32px;
+     background:#F3F3F3;
+     padding-top:0;
+     z-index:30;
+    
+}
+#shopify-section-{{section.id}} .link-dropdown--right-aligned .link-dropdown__options{
+      right:unset;
+      bottom:0;
+      left: -22px;
+      width:192px;
+      min-width:unset;
+}
+#shopify-section-{{section.id}} .link-dropdown__options .link-dropdown__link:not(:last-child){
+    border-bottom:0.5px solid rgba(52, 52, 52, 0.83);
+}
+#shopify-section-{{section.id}} .link-dropdown__options .link-dropdown__link{
+   background:#F3F3F3;
+   font-family: 'Generis Sans W01 Regular';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 15px;
+   color: #000000;
+   padding: 15px 30px;
+
+}
+#shopify-section-{{section.id}} .link-dropdown__options .link-dropdown__link--active{
+    background:#ffffff;
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .link-dropdown .link-dropdown__button.has-motion{
+    width:100% !important; 
+}
+#shopify-section-{{section.id}} .filter-group__heading__text{
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000; 
+}
+#shopify-section-{{section.id}} .filter-group__item .filter-group__item__text{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+#shopify-section-{{section.id}} #CollectionFilterForm{
+   border-top: 1px solid rgba(0, 0, 0, 0.3);
+   margin-top: 10px;
+}
+#shopify-section-{{section.id}} #CollectionFilterForm .filter-group{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+#shopify-section-{{section.id}} .filter-container--side .filter-group__item{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+}
+#shopify-section-{{section.id}} #CollectionFilterForm .filter-group__heading {
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+#shopify-section-{{section.id}} .utility-bar__left .toggle-btn .toggle-btn__chevron svg{
+    transform: rotate(90deg);
+}
+#shopify-section-{{section.id}} .utility-bar__left .toggle-btn--revealed-desktop .toggle-btn__chevron svg{
+    transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .filters__heading-text{
+    Font-size: 18px;
+    text-transform: uppercase;
+    font-family: 'Generis Sans W01 Bold';
+}
+
+#shopify-section-{{section.id}} .mobile-whishlist{
+     display:none;
+}
+#shopify-section-{{section.id}} .quickbuy-container .product-price--large .price__default {
+  position:relative;
+}
+#shopify-section-{{section.id}} .quickbuy-container .product-label-container{
+  position:absolute;
+  top: 9.5px;
+  right: -80px;
+  bottom:unset;
+  left:unset;
+}
+#shopify-section-{{section.id}} .utility-bar__centre .utility-bar__item {
+    font-size: 16px;
+    line-height: 18px;
+    font-family: 'Generis Sans W01 Bold';
+    color: #000000;
+}
+#shopify-section-{{section.id}} .btn--large{
+    /* box-shadow: 0 4px 8px 3px #00000026, 0 1px 3px #0000004d; */
+    border-radius: 50px;
+    color: #fff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    font-family: Generis Sans W01 Bold;
+    text-transform: capitalize;
+    min-height: 40px;
+    padding: 0 25px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #201747;
+    width:100%;
+    margin:12px 0;
+}
+/* #shopify-section-{{ section.id }} .product-block {
+  height: 100%; 
+}
+#shopify-section-{{ section.id }} .product-block .block-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+    justify-content: end;
+}
+#shopify-section-{{ section.id }} .product-block .block-inner-inner{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    align-items:stretch
+}
+#shopify-section-{{ section.id }} .product-block .image-cont{
+    overflow:unset;
+    height:100%;
+    margin:unset;
+}
+#shopify-section-{{ section.id }} .product-block__detail{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content:space-between;
+    padding-top:10px;
+}
+#shopify-section-{{ section.id }} .product-block product-form.js-product{
+   width:100%;
+   margin-top:8px;
+}
+#shopify-section-{{ section.id }} .product-block .product-block__detail .inner{
+    margin:0;
+    width:100%;
+} */
+@media screen and (min-width:768.1px){
+#shopify-section-{{section.id}} .filter-group__clear-row.mob-show{
+    display:none;
+}
+
+#shopify-section-{{section.id}} .filter-group__clear-row{
+    display:block;
+}
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} .utility-bar__centre{
+     order:2;
+}
+#shopify-section-{{section.id}} .utility-bar__centre .utility-bar__item {
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    margin:0;
+    padding-left:5px;
+}
+#shopify-section-{{section.id}} .col-description{
+     text-align:center;
+     margin-bottom:15px;
+}
+#shopify-section-{{section.id}} .text-overlay{
+   padding:0;
+ }
+#shopify-section-{{section.id}} .img-fill .theme-img {
+   position:unset;
+   object-fit:contain;
+}
+#shopify-section-{{section.id}} .breadcrumbs-collection{
+     margin-bottom:10px;
+}
+/* #shopify-section-{{section.id}} .desktop-whishlist{
+     display:none;
+} */
+#shopify-section-{{section.id}} .mobile-whishlist{
+     display:block;
+}
+#shopify-section-{{section.id}} .mobile-whishlist .wishlist-hero-custom-button {
+     right:5px !important;
+}
+/* #shopify-section-{{section.id}} .product-label-container {
+     display:none;
+} */
+#shopify-section-{{section.id}} .col-description p{
+     font-size: 14px;
+     line-height: 16px;
+}
+#shopify-section-{{section.id}} .filters__close.desk-version{
+    display:none;
+}
+#shopify-section-{{section.id}} .filter-group--applied .filter-group__clear-link{
+     display:none;
+}
+#shopify-section-{{section.id}} #CollectionFilterForm .filter-group{
+     margin-bottom:0
+}
+#shopify-section-{{section.id}} .filter-group .toggle-target-container{
+     padding:20px 4rem;
+     background:#ffffff;
+} 
+#shopify-section-{{section.id}} .close-container{
+      display:block;
+      background:#201747;
+      padding: 15px 0;
+      position: sticky;
+      top: 100%;
+}
+#shopify-section-{{section.id}} .close-container .filters__close{
+     width:50%;
+     text-align:center;
+     
+}
+ #shopify-section-{{section.id}} .filter-group__heading__text{
+     width:50%;
+     text-align:center;
+ }
+#shopify-section-{{section.id}} .filter-group__heading__indicator{
+     width:50%;
+     text-align:center;
+}
+#shopify-section-{{section.id}} .utility-bar__right{
+     order:1;
+     width:35%;
+     justify-content:center;
+     flex:unset;
+    
+}
+#shopify-section-{{section.id}} .utility-bar__left{
+     order:3;
+     width:35%;
+     flex:unset;
+     justify-content:center;
+}
+#shopify-section-{{section.id}} .link-dropdown__button-icon{
+    left:50px;
+    top:55%;
+    right:unset
+}
+#shopify-section-{{section.id}} .desktop-mob-show {
+    display: block !important;
+}
+#shopify-section-{{section.id}} .utility-bar__right .utility-bar__item.special {
+      background:#201747;
+      border-radius:20px;
+}
+#shopify-section-{{section.id}} .link-dropdown__button-icon svg {
+      color:#ffffff;
+}
+#shopify-section-{{section.id}} .product-grid{
+     column-gap:8px;
+}
+#shopify-section-{{section.id}} .utility-bar__right .mobile-only {  
+     display:none;
+}
+#shopify-section-{{section.id}} .utility-bar{
+    background:#201747;
+    border-radius:20px;
+    position:fixed;
+    left:50%;
+    transform:translate(-50%);
+    z-index:999;
+    min-width:85%;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    padding:3px 0 ;
+    bottom:0;
+}
+
+#shopify-section-{{section.id}} .utility-bar__right .utility-bar__item {
+    border:0;
+    border-radius:0;
+    width:unset;
+    height: unset; 
+    padding: 0;
+}
+#shopify-section-{{section.id}} .link-dropdown .link-dropdown__button.has-motion{
+    width:unset !important;
+   
+} 
+#shopify-section-{{section.id}} .utility-bar__left .btn-icon svg path{
+    fill:#ffffff;
+}
+#shopify-section-{{section.id}} .col-title{
+   text-align:center;
+   font-size:16px;
+   line-height:18px;
+}
+
+#shopify-section-{{section.id}} .filter-container .filters {
+     bottom:0; 
+     left: 0;
+     transform: translateY(100%);
+     top:unset;
+     right:unset;
+     padding:0; 
+     background: #F3F3F3;
+     height:90%;
+     width: 100%; 
+     overflow-y: scroll;
+     overflow-x:hidden;
+}
+#shopify-section-{{section.id}} .filter-container.filter-container--show-filters-mobile .filters {
+     transform: translateY(-3%);
+} 
+#shopify-section-{{section.id}} .sort-by-title {
+    display: flex; 
+    background: #201747;
+    padding: 15px 30px;
+    align-items: center;
+   
+}
+#shopify-section-{{section.id}} .infinite-scroll-sentinel {
+  min-height: 24px;
+}
+#shopify-section-{{section.id}} .infinite-scroll-sentinel.is-loading {
+  min-height: 70px;
+  padding: 1rem 0;
+}
+#shopify-section-{{section.id}} .infinite-scroll-loading {
+  text-align: center;
+  padding: 0.5rem;
+}
+#shopify-section-{{section.id}} .infinite-scroll-spinner {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 0.5rem;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: infinite-scroll-spin 0.8s linear infinite;
+}
+@keyframes infinite-scroll-spin {
+  to { transform: rotate(360deg); }
+}
+#shopify-section-{{section.id}} .link-dropdown--right-aligned .link-dropdown__options {
+    right:unset;
+}
+#shopify-section-{{section.id}} .sort-by-title p{
+    font-family:'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin:0;
+}
+#shopify-section-{{section.id}} .sort-by-title svg{
+    width:20px;
+    height:20px;
+    margin-left:auto;
+}
+#shopify-section-{{section.id}} .toggle-btn{
+    width:unset; 
+    height:unset;
+    padding:0;
+    border:0;
+    border-radius:0;
+}
+#shopify-section-{{section.id}} .utility-bar__right .link-dropdown__button-text{
+    font-size:16px;
+    color:#ffffff;
+    opacity:1;
+    
+}
+#shopify-section-{{section.id}} .utility-bar__left span{
+     font-size:16px;
+     color:#ffffff;
+     opacity:1;
+    
+}
+#shopify-section-{{section.id}} .link-dropdown .link-dropdown__button {
+    height:auto;
+    padding:0;
+}
+#shopify-section-{{section.id}} .cc-animate-init.cc-animate-in{
+   position:relative;
+}
+#shopify-section-{{section.id}} .utility-bar__right .link-dropdown__options{
+  transition: all 300ms ease;
+  visibility:hidden;
+  opacity:0;
+  height: auto;
+  width: 100vw;
+  position: fixed;
+  bottom: unset;
+  top: unset;
+  left: -28px;
+  right: 0;
+  overflow: visible;
+  
+  transform: translateY(200%);
+}  
+#shopify-section-{{section.id}} .link-dropdown__button[aria-expanded=true] + .link-dropdown__options {
+
+  visibility:visible;
+  opacity:1;  
+  transform: translateY(-79%);
+  left:-9%;
+}
+ 
+#shopify-section-{{section.id}} .filters__heading{
+     background:#201747;
+     padding: 15px 0 10px;
+     margin:0;
+}
+#shopify-section-{{section.id}} .filters__heading .filters__heading-text{
+      color:#ffffff;
+      Font-size: 18px;
+      text-transform: uppercase;
+      font-family:'Generis Sans W01 Bold';
+       width:50%;
+      text-align:center;
+}
+#shopify-section-{{section.id}} .filters__heading .filter-group__clear-row{
+      width: 50%;
+      margin: 0 auto;
+      text-align: center;
+}
+#shopify-section-{{section.id}} .filters__heading .filter-group__clear-row a{
+      color:#ffffff;
+      Font-size: 18px;
+      text-transform: uppercase;
+      font-family:'Generis Sans W01 Bold';
+}
+
+#shopify-section-{{section.id}} .filters__inner .filter-group.filter-group--applied{
+     padding-left:20px;
+}
+
+#shopify-section-{{section.id}} .close-container .filters__close{ 
+     color:#ffffff;
+     Font-size: 18px;
+     text-transform: uppercase;
+     width:45%;
+     display:block;
+     text-align:center;
+     font-style: normal;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 20px;
+     font-family:'Generis Sans W01 Bold';
+    
+}
+#shopify-section-{{section.id}} .link-dropdown{
+     position:unset;
+}
+#shopify-section-{{section.id}} .product-block__title{
+      font-size:14px;
+      line-height:16px;
+      padding-right: 30px;
+}
+ #shopify-section-{{section.id}} toggle-target {
+       padding:10px 0;
+       width: 100%;
+       background: #F3F3F3;
+}
+#shopify-section-{{section.id}} .product-block__detail .price__current{
+      font-size: 14px;
+      line-height: 16px;
+}
+#shopify-section-{{section.id}} .product-block__detail .product-price--block .coupon-price{
+      font-size: 14px;
+      line-height: 16px;
+}
+#shopify-section-{{section.id}} .product-block__detail .price__was{
+      font-size: 14px;
+      line-height: 16px;
+}
+#shopify-section-{{section.id}} .product-label > span {
+      font-size: 16px;
+      line-height: 18px;
+}
+#shopify-section-{{section.id}} .price .price-label--sold-out{
+     font-size: 14px;
+    line-height: 16px;
+}
+}
+@media screen and (max-width:420px){
+  #shopify-section-{{section.id}} .product-block .collection-tag-label span{
+  padding: 3px 3px 3px 9px;
+  font-size:9px;
+}
+}
+@media screen and (max-width:375px){
+#shopify-section-{{section.id}} .product-block__detail .price__current{
+      font-size: 12px;
+      line-height: 14px;
+}
+#shopify-section-{{section.id}} .product-block__detail .product-price--block .coupon-price{
+      font-size: 12px;
+      line-height: 14px;
+}
+#shopify-section-{{section.id}} .product-block__detail .price__was{
+      font-size: 12px;
+      line-height: 14px;
+}
+#shopify-section-{{section.id}} .product-label > span {
+      font-size: 12px;
+      line-height: 14px;
+}
+#shopify-section-{{section.id}} .utility-bar{
+     min-width:95%;
+}
+#shopify-section-{{section.id}} .link-dropdown__button[aria-expanded=true] + .link-dropdown__options {
+  left:-2.5%;
+}
+}
+
+
+
+#shopify-section-{{ section.id }} .stock-sort-item {
+  display: contents;
+}
+
+#shopify-section-{{ section.id }} .low-stock-product-grid:empty {
+  display: none;
+}
+
+#shopify-section-{{ section.id }} .low-stock-product-grid {
+  margin-top: 40px;
+  overflow-anchor: none;
+}
+
+#shopify-section-{{ section.id }} .low-stock-product-grid[hidden] {
+  display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  #shopify-section-{{ section.id }} .low-stock-product-grid {
+    margin-top: 28px;
+  }
+}
+</style>
+
+
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div data-section-id="{{ section.id }}" class="section-{{ section.id }}-padding" data-cc-animate>
+
+{%- liquid
+  assign gift_product_handle = section.settings.gift_box_product
+  assign gift_box_product = all_products[gift_product_handle]
+  if gift_box_product == blank or gift_box_product.id == blank
+    assign gift_box_product = section.settings.gift_box_product
+  endif
+-%}
+
+{{ 'rakhi-gifting.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'rakhi-gifting.js' | asset_url }}" defer></script>
+<script src="{{ 'rakhi-analytics.js' | asset_url }}" defer></script>
+
+<div class="rakhi-gifting-app" id="rakhi-gifting-app" data-gift-variant-id="{{ gift_box_product.first_available_variant.id }}">
+  {% if section.settings.rakhi_heading != blank or section.settings.rakhi_subheading != blank %}
+    <div class="container">
+      <div class="rakhi-section-header" style="padding-top:20px;text-align:center;">
+        {% if section.settings.rakhi_heading != blank %}
+          <h2 style="font-family:'Generis Sans W01 Bold'; font-size:32px;margin:0;">{{ section.settings.rakhi_heading }}</h2>
+        {% endif %}
+        {% if section.settings.rakhi_subheading != blank %}
+          <p style="font-size:16px; margin-top:5px;">{{ section.settings.rakhi_subheading }}</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="rakhi-gift-banner clickable-banner" style="margin-top:20px;margin-bottom:30px; cursor:pointer;" onclick="RakhiGifting.openGiftModal()">
+    {% assign desktop_banner = section.settings.rakhi_banner_image | default: gift_box_product.featured_image %}
+    {% assign mobile_banner = section.settings.rakhi_mobile_banner_image | default: desktop_banner %}
+    
+    {% if desktop_banner != blank %}
+      <img src="{{ desktop_banner | image_url }}" alt="Rakhi Gift Box" class="rakhi-banner-desktop" />
+    {% endif %}
+    {% if mobile_banner != blank %}
+      <img src="{{ mobile_banner | image_url }}" alt="Rakhi Gift Box" class="rakhi-banner-mobile" />
+    {% endif %}
+    {% if desktop_banner == blank and mobile_banner == blank %}
+      <div class="rakhi-box"></div>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    <div class="rakhi-tabs" style="justify-content:center; margin-bottom:20px;">
+      <span>SHOP BY</span>
+      <a href="/collections/rakhi-collection" class="{% if collection.handle == 'rakhi-collection' %}active{% endif %}" style="display:inline-block; border:1px solid #111; padding:8px 24px; text-decoration:none; color:inherit; font-weight:bold; border-radius:20px; margin:0 5px;">Men</a>
+      <a href="/collections/kids-rakhi-collection" class="{% if collection.handle == 'kids-rakhi-collection' %}active{% endif %}" style="display:inline-block; border:1px solid #111; padding:8px 24px; text-decoration:none; color:inherit; font-weight:bold; border-radius:20px; margin:0 5px;">Kids</a>
+    </div>
+  </div>
+
+  <style>
+    .rakhi-tabs a.active {
+      background-color: #111;
+      color: #fff !important;
+    }
+  </style>
+
+  {% comment %} Modals Container {% endcomment %}
+  <div id="rakhi-modal" class="rakhi-modal">
+    <div class="rakhi-modalbox">
+      <button class="rakhi-close" onclick="RakhiGifting.closeModal()">×</button>
+      
+      {% comment %} Gift Popup {% endcomment %}
+      <div id="rakhi-gift-popup" class="rakhi-giftPopup" style="display: none;">
+        <div class="rakhi-eyebrow">THE KISAH RAKHI GIFT BOX</div>
+        <h2>How many Gift Boxes?</h2>
+        <p class="rakhi-modalIntro">Each box is ₹999 and includes the pre-filled festive essentials shown above. The kurta is selected separately and charged at its product price.</p>
+
+        <div class="rakhi-boxCounter">
+          <div>
+            <strong>Number of Gift Boxes</strong>
+            <span>₹999 per box · Add as many as you need</span>
+          </div>
+          <div class="rakhi-counter">
+            <button id="rakhi-minusBox" onclick="RakhiGifting.changeBoxes(-1)">−</button>
+            <b id="rakhi-boxCount">0</b>
+            <button onclick="RakhiGifting.changeBoxes(1)">+</button>
+          </div>
+        </div>
+
+        <div class="rakhi-giftTotal">
+          <div>
+            <span>Gift Boxes</span>
+            <strong id="rakhi-giftTotalPrice">₹0</strong>
+            <small>+ price of the kurta(s) you choose</small>
+          </div>
+          <button id="rakhi-continue-btn" class="rakhi-continueBtn" onclick="RakhiGifting.continueGift()">CONTINUE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.RakhiCollectionData = {
+    giftBoxPrice: {{ gift_box_product.price | default: 99900 | divided_by: 100 }}
+  };
+</script>
+
+
+{%- liquid
+  if section.settings.show_image_behind_heading and collection.image
+    assign header_image_enabled = true
+  else
+    assign header_image_enabled = false
+  endif
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+
+  assign show_filters = section.settings.enable_filtering
+  if collection.filters == empty
+    assign show_filters = false
+  endif
+-%}
+
+{%- liquid
+  assign related_collections_count = 0
+  if section.settings.related_collections != empty
+    for loop_collection in section.settings.related_collections
+      unless loop_collection.handle == collection.handle
+        assign related_collections_count = related_collections_count | plus: 1
+      endunless
+    endfor
+  endif
+-%}
+
+  
+  
+  
+{%- if related_collections_count > 0 -%}
+  {% capture related_collection_html %}
+    {% if section.settings.related_collections_style == 'buttons' %}
+      <div class="container{% if header_image_enabled %} container--not-mobile{% endif %} lightish-spaced-row-above">
+      {% comment %}  <related-collection-link-buttons class="related-collection-links related-collection-links--buttons align-center kmk{% if header_image_enabled %} image-overlay__over{% endif %}" data-expander-btn-text="{{ 'sections.collection.view_all_related_collections' | t }}">
+          {%- for loop_collection in section.settings.related_collections -%}
+            {%- unless loop_collection.handle == collection.handle -%}
+              <a class="btn btn--tertiary" href="{{ loop_collection.url }}">{{ loop_collection.title | escape }}</a>
+            {%- endunless -%}
+          {%- endfor -%}
+        </related-collection-link-buttons> {% endcomment %}
+      </div>
+    {% else %}
+      {% unless section.settings.rel_coll_gall_full_width %}
+        <div class="container container--not-mobile lightish-spaced-row-above lightish-spaced-row-above--not-mobile{% if section.settings.rel_coll_grid_mobile == 'hide' %} desktop-only{% endif %}">
+      {% endunless %}
+      <div class="
+        gallery
+        gallery--height-adapt
+        gallery--grid-desktop-{{ related_collections_count | at_most: 4 }}
+        gallery--grid-mobile-{{ section.settings.rel_coll_grid_mobile }}
+        {%- if section.settings.rel_coll_grid_mobile != 'hide' -%}
+          {%- assign rel_coll_grid_mobile_int = section.settings.rel_coll_grid_mobile | plus: 0 -%}
+          {%- if related_collections_count > rel_coll_grid_mobile_int %} gallery--mobile-carousel{% endif %}
+        {%- endif -%}
+        {%- if section.settings.rel_coll_gall_enable_margin %} gallery--with-margins{% endif %}
+        related-collection-links
+        related-collection-links--gallery
+        {%- if section.settings.rel_coll_gall_full_width %} related-collection-links--is-full-width{% endif %}
+        {%- if header_image_enabled %} related-collection-links--under-image-header{% endif %}
+        {%- if section.settings.rel_coll_grid_mobile == 'hide' %} desktop-only{% endif %}">
+        <carousel-slider class="carousel{% if section.settings.rel_coll_gall_mobile_layout == 'hide' %} desktop-only{% endif %}" inactive>
+          <div class="slider slider--no-scrollbar" id="slider-{{ section.id }}">
+            <div class="slider__grid">
+              {%- for loop_collection in section.settings.related_collections -%}
+                {%- unless loop_collection.handle == collection.handle -%}
+                  <div class="slider__item
+                      gallery__item
+                      image-overlay
+                      image-overlay--bg-{{ section.settings.rel_coll_gall_overlay_style }}
+                      image-overlay--edge-boxes
+                      {% unless section.settings.rel_coll_gall_full_width and section.settings.rel_coll_gall_enable_margin == false %}image-overlay--edge-boxes--pad-to-corner{% endunless %}
+                      ">
+                    <a class="image-overlay__image-link" href="{{ loop_collection.url }}">
+                      <div class="image-overlay__image gallery__image img-stretch">
+                        {%- liquid
+                          if loop_collection.featured_image
+                            assign rel_coll_image = loop_collection.featured_image
+                          else
+                            assign rel_coll_image = false
+                          endif
+                          assign custom_aspect_ratio = section.settings.rel_coll_gall_aspect_ratio | times: 1.0
+                        -%}
+                        {%- if rel_coll_image -%}
+                          {%- liquid
+                            assign desktop_image_cols = section.settings.grid | at_most: section.blocks.size
+                          -%}
+                          {%- render 'image' with rel_coll_image, custom_aspect_ratio: custom_aspect_ratio, custom_crop: section.settings.image_position, size_cols_mobile: section.settings.rel_coll_grid_mobile, size_cols_desktop: desktop_image_cols -%}
+                        {%- else -%}
+                          <div class="placeholder-image dark">
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
+                      </div>
+
+                      <div class="text-overlay text-overlay--v-{{ section.settings.rel_coll_gall_text_alignment | split: ' ' | first }} text-overlay--h-{{ section.settings.rel_coll_gall_text_alignment | split: ' ' | last }} image-overlay__over">
+                        <div class="text-overlay__inner">
+                          <div class="text-overlay__text">
+                            <h2 class="text-overlay__title h4">{{ loop_collection.title | escape }}</h2>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+          </div>
+          <div class="slider-nav slider-nav--floating desktop-only no-js-hidden">
+            <button type="button" class="slider-nav__btn has-ltr-icon" name="prev" aria-controls="slider-{{ section.id }}">
+              <span class="visually-hidden">{{ 'general.slider.previous' | t }}</span>
+              {%- render 'icon-chevron-left', stroke_width: 1.3 -%}
+            </button>
+            <button type="button" class="slider-nav__btn has-ltr-icon" name="next" aria-controls="slider-{{ section.id }}">
+              <span class="visually-hidden">{{ 'general.slider.next' | t }}</span>
+              {%- render 'icon-chevron-right', stroke_width: 1.3 -%}
+            </button>
+          </div>
+        </carousel-slider>
+      </div>
+      {% unless section.settings.rel_coll_gall_full_width %}
+        </div>
+      {% endunless %}
+    {% endif %}
+  {% endcapture %}
+{%- endif -%}
+
+{% if header_image_enabled %}
+  {%- liquid
+    assign show_header = false
+    if section.settings.show_title
+      assign show_header = true
+    endif
+    if related_collections_count > 0 and section.settings.related_collections_style == 'buttons'
+      assign show_header = true
+    endif
+  -%}
+  {%- if show_header -%}
+    <div class="page-header page-header--with-background img-fill image-overlay image-overlay--bg-{{ section.settings.overlay_style }} page-header--padded-{{ section.settings.heading_image_height }}">
+      <div class="image-overlay__image">
+        {%- render 'image' with collection.image, loading: 'eager', fetchpriority: 'high' -%}
+      </div>
+      <div class="text-overlay text-overlay--inline text-overlay--v-center text-overlay--h-center image-overlay__over" data-cc-animate data-cc-animate-delay="0.2s">
+        <div class="text-overlay__inner">
+          <div class="text-overlay__text">
+            {%- if section.settings.show_title -%}
+              <h1 class="text-overlay__title super-large-text">{{ collection.title | escape }}</h1>
+            {%- endif -%}
+
+            {%- if related_collections_count > 0 and section.settings.related_collections_style == 'buttons' -%}
+              {{ related_collection_html }}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{% else %}
+  {{ related_collection_html }}
+  {%- liquid
+    assign show_header = false
+    if section.settings.show_title
+      assign show_header = true
+    endif
+  -%}
+  {%- if show_header -%}
+    <div class="page-header page-header--with-upper-spacing">
+      <div class="container">
+        
+        {%- if section.settings.show_title -%}
+          <h1 class="pagetitle h3">{{ collection.title | escape }}</h1>
+        {%- endif -%}
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+  {%- if related_collections_count > 0 and header_image_enabled and section.settings.related_collections_style != 'buttons' -%}
+    {{ related_collection_html }}
+  {%- endif -%}
+
+  <div id="rakhi-collection-grid" class="container{% if settings.use_fullwidth_layout %} container--no-max{% endif %}{% if show_header == false %} lightly-spaced-row-above{% endif %}">
+       <nav class="breadcrumbs-collection" aria-label="{{ breadcrumbs_title }}">
+         <li class="breadcrumbs-list__item">
+         <a class="breadcrumbs-list__link" href="{{ routes.root_url }}">Home</a> 
+        </li>
+         <li class="divider">
+           /
+         </li>
+        <li class="breadcrumbs-list__item">
+          <a class="breadcrumbs-list__link" href="{{ routes.collections_url }}/{{ collection.handle }}" aria-current="page">{{ collection.title | escape }}</a>
+        </li>
+     </nav>
+    {% assign col_desc_lower = collection.description | downcase %}
+    {% if col_desc_lower contains '<h1' %}
+      <div class="col-title">
+        {{ collection.title }}
+      </div>
+    {% else %}
+      <h1 class="col-title">
+        {{ collection.title }}
+      </h1>
+    {% endif %}
+    <div class="col-description">
+      {{ collection.description }}
+    </div>
+    
+    <div class="utility-bar active" data-ajax-container data-ajax-scroll-to>
+      <div class="utility-bar__left" >
+        {% if section.settings.show_sort or show_filters %}
+        <a href="#" class="toggle-btn utility-bar__item{% if section.settings.collapse_tag_sidebar_by_default == false %} toggle-btn--revealed-desktop{% endif %}{% if show_filters == false %} mobile-only{% endif %}" data-toggle-filters>
+            <span class="btn-icon">{% render 'icon-filter' %}</span>
+           {%- comment  -%}  <span>{{ 'products.filtering.filter' | t }}</span> {%- endcomment  -%}  
+              <span>Filters</span>
+            {% liquid
+              assign filter_count = 0
+              for filter in collection.filters
+                assign filter_count = filter_count | plus: filter.active_values.size
+                if filter.type == 'price_range'
+                  if filter.min_value.value != nil or filter.max_value.value != nil
+                    assign filter_count = filter_count | plus: 1
+                  endif
+                endif
+              endfor
+            %}
+            {% if filter_count > 0 %}
+              <span class="toggle-btn__count">({{ filter_count }})</span>
+            {% endif %}
+            <span class="toggle-btn__chevron has-motion has-ltr-icon">{% render 'icon-chevron-right', stroke_width: 1.3 %}</span>
+          </a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_total and collection.products_count > 0 %}
+        {% liquid
+          assign visible_products_count = 0
+          for prod in collection.products
+            assign av = prod.variants | where: 'available', true | size
+            if av > 0
+              assign visible_products_count = visible_products_count | plus: 1
+            endif
+          endfor
+        %}
+        <div class="utility-bar__centre">
+          <div class="utility-bar__item" data-collection-count-item data-all-count="{{ collection.products_count }}">
+            {%- if collection.products_count <= section.settings.coll_num_per_page_int and visible_products_count > 0 -%}
+              {{ 'sections.collection.product_count' | t: count: visible_products_count }}
+            {%- else -%}
+              {{ 'sections.collection.product_count' | t: count: collection.products_count }}
+            {%- endif -%}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="utility-bar__right">
+        {% if section.settings.show_sort %}
+          <div class="desktop-mob-show">
+          <span class="utility-bar__item desktop-only">
+            <link-dropdown class="link-dropdown link-dropdown--right-aligned">
+              <div class="visually-hidden" id="sort-dropdown-heading">{{ 'products.sorting.sort_by_label' | t | escape }}</div>
+              <button class="link-dropdown__button has-motion" aria-expanded="false" aria-controls="sort-dropdown-options" aria-describedby="sort-dropdown-heading">
+                <span class="link-dropdown__button-text">
+                  {%- for option in collection.sort_options -%}
+                    {%- if current_sort == option.value -%}
+                       {% comment %}{{ option.name | escape }} {% endcomment %}
+                       Sort by 
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </span>
+                <span class="link-dropdown__button-icon has-motion">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
+              </button>
+              <div class="link-dropdown__options" id="sort-dropdown-options">
+               <div class="sort-by-title">
+                 <p>sort by</p> 
+                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                 <g clip-path="url(#clip0_126_8232)">
+                <path d="M12.5 25C19.4036 25 25 19.4036 25 12.5C25 5.59644 19.4036 0 12.5 0C5.59644 0 0 5.59644 0 12.5C0 19.4036 5.59644 25 12.5 25Z" fill="#D9D9D9"></path>
+                <mask id="mask0_126_8232MobileNav" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="15">
+                <path d="M20 5H5V20H20V5Z" fill="white"></path>
+                </mask>
+                <g mask="url(#mask0_126_8232)">
+                <path d="M6 19.1528L19.1529 5.99988" stroke="#201747" stroke-linecap="round"></path>
+                <path d="M6 6.15283L19.1529 19.3058" stroke="#201747" stroke-linecap="round"></path>
+                </g>
+                </g>
+                <defs>
+                <clipPath id="clip0_126_8232MobileNav">
+                <rect width="25" height="25" fill="white"></rect>
+                </clipPath>
+                </defs>
+                </svg>
+               </div>
+                {%- for option in collection.sort_options -%}
+            
+                  {%- liquid
+                    if section.settings.sort_show_featured == false and option.value == 'manual' and collection.default_sort_by != 'manual'
+                      continue
+                    endif
+                    if section.settings.sort_show_best == false and option.value == 'best-selling' and collection.default_sort_by != 'best-selling'
+                      continue
+                    endif
+                    if section.settings.sort_show_alpha == false and option.value == 'title-ascending' and collection.default_sort_by != 'title-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_alpha == false and option.value == 'title-descending' and collection.default_sort_by != 'title-descending'
+                      continue
+                    endif
+                    if section.settings.sort_show_price == false and option.value == 'price-ascending' and collection.default_sort_by != 'price-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_price == false and option.value == 'price-descending' and collection.default_sort_by != 'price-descending'
+                      continue
+                    endif
+                    if section.settings.sort_show_date == false and option.value == 'created-ascending' and collection.default_sort_by != 'created-ascending'
+                      continue
+                    endif
+                    if section.settings.sort_show_date == false and option.value == 'created-descending' and collection.default_sort_by != 'created-descending'
+                      continue
+                    endif
+                  -%}   
+                  <a href="{{ request.path | sort_by: option.value | escape }}" class="link-dropdown__link{% if current_sort == option.value %} link-dropdown__link--active{% endif %}">{% if option.name =='Date, new to old' %} New Arrivals{% else %}{{ option.name | escape }}{% endif %}</a>
+                {%- endfor -%}
+              </div>
+            </link-dropdown>
+          </span>
+          </div>
+        {% endif %}
+        <span class="utility-bar__item mobile-only">
+          <div class="layout-switchers">
+            <a class="layout-switch layout-switch--two-columns{% if settings.prod_thumb_mob_per_row == '2' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.grid_layout' | t }}">{%- render 'icon-grid', stroke_width: 1.3 -%}</a>
+            <a class="layout-switch layout-switch--one-column{% if settings.prod_thumb_mob_per_row == '1' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.list_layout' | t }}">{%- render 'icon-box', stroke_width: 1.3 -%}</a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
+      {% if section.settings.show_sort or show_filters %}
+        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort %}
+      {% endif %}
+
+      <div class="filters-adjacent collection-listing" data-ajax-container>
+        {% if collection.products.size == 0 %}
+          <h5 class="align-centre fully-spaced-row">{{ 'sections.collection.empty' | t }}</h5>
+        {% else %}
+          {% paginate collection.products by 24 %}
+            <div
+              id="product-grid"
+              class="product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}"
+              data-primary-product-grid
+              data-current-page="{{ paginate.current_page }}"
+              data-total-pages="{{ paginate.pages }}"
+              {% if paginate.next %}data-next-page-url="{{ paginate.next.url | escape }}"{% endif %}
+            >
+              {%- liquid
+                if settings.prod_thumb_shape == 'portrait-23'
+                  assign chosen_aspect_ratio = 0.67
+                elsif settings.prod_thumb_shape == 'portrait-45'
+                  assign chosen_aspect_ratio = 0.8
+                elsif settings.prod_thumb_shape == 'square'
+                  assign chosen_aspect_ratio = 1.0
+                elsif settings.prod_thumb_shape == 'landscape-54'
+                  assign chosen_aspect_ratio = 1.25
+                elsif settings.prod_thumb_shape == 'landscape-32'
+                  assign chosen_aspect_ratio = 1.50
+                elsif settings.prod_thumb_shape == 'tallest'
+                  assign chosen_aspect_ratio = 99
+                else
+                  assign chosen_aspect_ratio = 0
+                endif
+
+                assign collection_product_index = paginate.current_offset
+                assign collection_products_total = paginate.items
+              -%}
+
+              {% for product in collection.products %}
+                {%- liquid
+                  assign total_variants = product.variants.size
+                  assign available_variants = product.variants | where: 'available', true | size
+                -%}
+
+                {% if available_variants > 0 %}
+                  {% assign prioritised_loading = false %}
+
+                  {% if forloop.index0 < section.settings.grid %}
+                    {% assign prioritised_loading = true %}
+                  {% endif %}
+
+                  {% assign collection_product_index = collection_product_index | plus: 1 %}
+
+                  <div
+                    class="stock-sort-item"
+                    data-stock-sort-item
+                    data-available-variants="{{ available_variants }}"
+                    data-total-variants="{{ total_variants }}"
+                  >
+                    {% render 'product-block',
+                      product: product,
+                      custom_aspect_ratio: chosen_aspect_ratio,
+                      animate: false,
+                      prioritised_loading: prioritised_loading,
+                      product_index: collection_product_index,
+                      products_total: collection_products_total
+                    %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            {% render 'infinite-scroll', paginate: paginate %}
+            <div
+              id="low-stock-product-grid-{{ section.id }}"
+              class="product-grid low-stock-product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}"
+              data-low-stock-product-grid
+              hidden
+            ></div>
+          {% endpaginate %}
+        {% endif %}
+      </div>
+    </filter-container>
+  </div>
+
+  {% if collection.description != blank and section.settings.coll_desc_pos == 'below' %}
+    <div class="container container--reading-width fully-spaced-row" data-cc-animate>
+      <div class="rte cf">{{ collection.description }}</div>
+    </div>
+  {% endif %}
+</div>
+
+
+{% schema %}
+{
+  "name": "Rakhi Collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rakhi Settings"
+    },
+    {
+      "type": "text",
+      "id": "rakhi_heading",
+      "label": "Rakhi Heading",
+      "default": "Shop the celebration"
+    },
+    {
+      "type": "textarea",
+      "id": "rakhi_subheading",
+      "label": "Rakhi Subheading",
+      "default": "Choose a kurta or make it gift-ready with a KISAH Gift Box."
+    },
+    {
+      "type": "product",
+      "id": "gift_box_product",
+      "label": "Gift Box Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "rakhi_banner_image",
+      "label": "Desktop Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "rakhi_mobile_banner_image",
+      "label": "Mobile Banner Image"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_behind_heading",
+      "label": "Show collection image behind title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_image_height",
+      "label": "Heading image height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Compact"
+        },
+        {
+          "value": "medium",
+          "label": "Small"
+        },
+        {
+          "value": "large",
+          "label": "Medium"
+        },
+        {
+          "value": "huge",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "id": "overlay_style",
+      "type": "select",
+      "label": "Overlay style",
+      "default": "shadow",
+      "options": [
+        {
+          "value": "full",
+          "label": "Tint"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        },
+        {
+          "value": "shadow",
+          "label": "Text shadow"
+        },
+        {
+          "value": "full image-overlay--bg-shadow",
+          "label": "Text shadow and tint"
+        },
+        {
+          "value": "no_background",
+          "label": "No background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "coll_desc_pos",
+      "label": "Description position",
+      "default": "above",
+      "options": [
+        {
+          "value": "above",
+          "label": "Below collection title"
+        },
+        {
+          "value": "below",
+          "label": "Below products"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "coll_num_per_page_int",
+      "min": 16,
+      "max": 50,
+      "step": 2,
+      "label": "Number of products to show per page",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "label": "Products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show product vendors",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_total",
+      "label": "Show product total",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "info": "[Customize filters](/admin/menus)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_tag_sidebar_by_default",
+      "label": "Collapse filter column",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "collapse_filters_method",
+      "label": "Filter row collapse",
+      "default": "over-12",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "over-6",
+          "label": "Over 6 items"
+        },
+        {
+          "value": "over-12",
+          "label": "Over 12 items"
+        },
+        {
+          "value": "over-18",
+          "label": "Over 18 items"
+        },
+        {
+          "value": "all",
+          "label": "All rows"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_counts",
+      "label": "Show filter counts",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_disabled_filters",
+      "label": "Show filters with zero results",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_apply_hide_unavailable",
+      "label": "On selecting a filter, automatically apply 'Hide out of stock'",
+      "default": false,
+      "info": "Requires Availability filter to be enabled"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_filter",
+      "label": "Enable stick on scroll",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "filter_two_columns",
+      "label": "Two column filter values",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort",
+      "label": "Show sorting dropdown",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_featured",
+      "label": "Enable order: Featured",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_best",
+      "label": "Enable order: Best selling",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_alpha",
+      "label": "Enable order: Alphabetical",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_price",
+      "label": "Enable order: Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_show_date",
+      "label": "Enable order: Date added",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "The collection's default sort order will always show."
+    },
+    {
+      "type": "header",
+      "content": "Related collections / Subcollections"
+    },
+    {
+      "type": "paragraph",
+      "content": "Show links to other collections at the top of the page. Use a metafield to change which links show on each collection page. [Read more](https://cleancanvas.co.uk/support/symmetry/related-collections)"
+    },
+    {
+      "type": "collection_list",
+      "id": "related_collections",
+      "label": "Collections"
+    },
+    {
+      "type": "select",
+      "id": "related_collections_style",
+      "label": "Related collections style",
+      "default": "buttons",
+      "options": [
+        {
+          "value": "buttons",
+          "label": "Buttons"
+        },
+        {
+          "value": "gallery",
+          "label": "Gallery"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Related collections gallery layout"
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_gall_aspect_ratio",
+      "label": "Image shape",
+      "default": "1",
+      "options": [
+        {
+          "value": "2",
+          "label": "Landscape (2x1)"
+        },
+        {
+          "value": "1.5",
+          "label": "Landscape (6x4)"
+        },
+        {
+          "value": "1.25",
+          "label": "Landscape (5x4)"
+        },
+        {
+          "value": "1",
+          "label": "Square (1x1)"
+        },
+        {
+          "value": "0.8",
+          "label": "Portrait (4x5)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image alignment",
+      "info": "Used to keep the subject of your image in view",
+      "default": "center center",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top left"
+        },
+        {
+          "value": "top center",
+          "label": "Top center"
+        },
+        {
+          "value": "top right",
+          "label": "Top right"
+        },
+        {
+          "value": "center left",
+          "label": "Middle left"
+        },
+        {
+          "value": "center center",
+          "label": "Middle center"
+        },
+        {
+          "value": "center right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom right"
+        }
+      ]
+    },
+    {
+      "id": "rel_coll_gall_enable_margin",
+      "type": "checkbox",
+      "label": "Add spacing around images",
+      "default": true
+    },
+    {
+      "id": "rel_coll_gall_full_width",
+      "type": "checkbox",
+      "label": "Full page width",
+      "default": false
+    },
+    {
+      "id": "rel_coll_gall_overlay_style",
+      "type": "select",
+      "label": "Overlay style",
+      "default": "shadow",
+      "options": [
+        {
+          "value": "full",
+          "label": "Tint"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        },
+        {
+          "value": "shadow",
+          "label": "Text shadow"
+        },
+        {
+          "value": "full image-overlay--bg-shadow",
+          "label": "Text shadow and tint"
+        },
+        {
+          "value": "no_background",
+          "label": "No background"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_gall_text_alignment",
+      "label": "Text overlay position",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top left"
+        },
+        {
+          "value": "top center",
+          "label": "Top center"
+        },
+        {
+          "value": "top right",
+          "label": "Top right"
+        },
+        {
+          "value": "center center",
+          "label": "Middle"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "rel_coll_grid_mobile",
+      "label": "Images per row - mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "hide",
+          "label": "Hide"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type":"text",
+       "id": "alert-text",
+       "label": "stock alert",
+      "default":"Only few left"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

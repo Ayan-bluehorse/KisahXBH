@@ -1,0 +1,290 @@
+{% comment %}
+Footer SEO section with:
+- SEO content
+- Popular Searches
+- Best-selling products table (collection only)
+{% endcomment %}
+
+<section class="container footer-seo-wrapper" aria-label="SEO Footer">
+  <div class="footer-seo-grid {% if template.name == 'index' %}homepage-layout{% endif %}">
+
+    <!-- LEFT COLUMN -->
+    <div class="footer-left">
+
+      <div class="welcome-outer" id="welcomeOuter-{{ section.id }}">
+
+        {% if template.name == 'index' %}
+          {% assign seo_heading = section.settings.home_seo_heading %}
+          {% assign seo_richtext = section.settings.home_seo_description %}
+          {% assign popular_searches = section.settings.home_popular_searches %}
+
+        {% elsif template.name == 'collection' %}
+          {% assign seo_heading = collection.metafields.custom.footer_seo_heading %}
+          {% assign seo_richtext = collection.metafields.custom.footer_seo_content %}
+          {% assign popular_searches = collection.metafields.custom.popular_searches %}
+
+        {% elsif template.name == 'product' %}
+          {% assign seo_heading = product.metafields.custom.footer_seo_heading %}
+          {% assign seo_richtext = product.metafields.custom.footer_seo_description %}
+        {% endif %}
+
+        {% if seo_heading != blank %}
+          <h2 class="section-heading">
+            {{ seo_heading.value | default: seo_heading }}
+          </h2>
+        {% endif %}
+
+        {% if seo_richtext != blank %}
+          <span class="description">
+            {% if seo_richtext contains '<p>' or seo_richtext contains '<div>' %}
+              {{ seo_richtext | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' | replace: '<H1', '<h2' | replace: '</H1>', '</h2>' }}
+            {% else %}
+              {{ seo_richtext | metafield_tag | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' | replace: '<H1', '<h2' | replace: '</H1>', '</h2>' }}
+            {% endif %}
+          </span>
+        {% endif %}
+
+      </div>
+
+      {% assign seo_richtext_value = seo_richtext.value | default: seo_richtext %}
+      {% if seo_richtext_value != blank %}
+        <button
+          id="toggleButton-{{ section.id }}"
+          class="button-link-black link-text-14"
+          type="button"
+          aria-expanded="false"
+          aria-controls="welcomeOuter-{{ section.id }}"
+        >
+          Show More
+        </button>
+      {% endif %}
+
+      {% if popular_searches != blank %}
+        <div class="popular-searches">
+          <h6>Popular Searches</h6>
+          {{ popular_searches }}
+        </div>
+      {% endif %}
+
+    </div>
+
+    <!-- RIGHT COLUMN (COLLECTION ONLY) -->
+    {% if template.name == 'collection' %}
+      <div class="footer-right">
+        <h6>Best Sellers</h6>
+        <table class="best-seller-table">
+          <tbody>
+            {% for product in collection.products limit: 10 %}
+              <tr>
+                <td class="product-title-cell">
+                  <a href="{{ product.url }}">
+                    {{ product.title }}
+                  </a>
+                </td>
+                <td class="price-cell">
+                  {{ product.price | money }}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+.footer-seo-grid {
+  display: flex;
+  gap: 0px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom:50px;
+}
+
+.footer-seo-grid.homepage-layout {
+  display: block;
+  gap: 0;
+}
+
+.footer-left {
+  width: 60%;
+  padding-left:20px;
+  box-sizing:border-box;
+}
+
+.footer-right {
+  width: 40%;
+}
+
+.homepage-layout .footer-left{
+  width:100%;
+}
+
+@media (max-width: 768px) {
+  .footer-seo-grid {
+    flex-direction: column;
+  }
+
+  .footer-left,
+  .footer-right {
+    width: 100%;
+  }
+}
+
+.section-heading {
+  padding-bottom: 3px;
+  font-weight: 600;
+  font-family: Gabarito;
+}
+
+.description {
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  text-overflow: ellipsis;
+}
+
+.description.expanded {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.description a {
+  text-decoration: none;
+  color: #000;
+}
+
+.popular-searches {
+  margin-top: 24px;
+}
+
+.popular-searches h6 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.popular-searches h4{
+  font-size:18px;
+  margin-bottom:0px;
+  margin-top:20px;
+}
+
+.popular-searches ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popular-searches ul li {
+  display: inline;
+  margin-right: 6px;
+}
+
+.popular-searches ul li:not(:last-child)::after {
+  content: "|";
+  margin-left: 6px;
+}
+
+.popular-searches ul li a {
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+.best-seller-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.best-seller-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.product-title-cell {
+  width: 70%;
+}
+
+.price-cell {
+  width: 30%;
+  text-align: right;
+  white-space: nowrap;
+  padding-left: 12px;
+}
+
+.best-seller-table a {
+  text-decoration: none;
+  color: #000;
+}
+
+.button-link-black {
+  cursor: pointer;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid #000;
+  border-radius: 40px;
+  padding: 5px 20px;
+  color: #000;
+  text-align: center;
+  text-transform: capitalize;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var toggleButton = document.getElementById('toggleButton-{{ section.id }}');
+  var description = document.querySelector('#welcomeOuter-{{ section.id }} .description');
+  var contentWrapper = document.getElementById('welcomeOuter-{{ section.id }}');
+
+  if (!toggleButton || !description || !contentWrapper) return;
+
+  var expanded = false;
+
+  toggleButton.addEventListener('click', function () {
+    expanded = !expanded;
+
+    description.classList.toggle('expanded', expanded);
+    toggleButton.textContent = expanded ? 'Show Less' : 'Show More';
+    toggleButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+    if (!expanded) {
+      contentWrapper.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Footer-SEO",
+  "settings": [
+    {
+      "type": "text",
+      "id": "home_seo_heading",
+      "label": "Homepage SEO Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "home_seo_description",
+      "label": "Homepage SEO Description"
+    },
+    {
+      "type": "html",
+      "id": "home_popular_searches",
+      "label": "Homepage Popular Searches"
+    }
+  ],
+  "presets": [
+    { "name": "Footer SEO (Advanced)" }
+  ]
+}
+{% endschema %}

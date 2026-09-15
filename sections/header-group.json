@@ -1,0 +1,366 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_FnUk96": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "<a href=\"/collections/website-exclusives\" title=\"Website Exclusives\">Shop website exclusives now.</a>",
+            "show_countdown": false,
+            "hide_on_end": false,
+            "end_date": "",
+            "end_time": "",
+            "number_font": "base",
+            "countdown_separator": "box"
+          }
+        },
+        "announcement-1": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "<strong>Free deck of playing cards on orders above ₹5000</strong>",
+            "show_countdown": false,
+            "hide_on_end": false,
+            "end_date": "",
+            "end_time": "",
+            "number_font": "base",
+            "countdown_separator": "box"
+          }
+        },
+        "announcement_Uea8CU": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "Order now to get it before diwali",
+            "show_countdown": false,
+            "hide_on_end": false,
+            "end_date": "",
+            "end_time": "",
+            "number_font": "base",
+            "countdown_separator": "box"
+          }
+        },
+        "announcement-2": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "NAV15 - 15% off ₹5000+ on Navratri Collection",
+            "show_countdown": false,
+            "hide_on_end": false,
+            "end_date": "",
+            "end_time": "",
+            "number_font": "base",
+            "countdown_separator": "box"
+          }
+        },
+        "announcement_Ut9yj9": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "Get<strong> flat Rs 100 cashback</strong> on your first ever transaction via<strong> MobiKwik UPI</strong>. Valid on transactions <strong>above Rs. 1299.</strong>",
+            "show_countdown": false,
+            "hide_on_end": false,
+            "end_date": "",
+            "end_time": "",
+            "number_font": "base",
+            "countdown_separator": "box"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_FnUk96",
+        "announcement-1",
+        "announcement_Uea8CU",
+        "announcement-2",
+        "announcement_Ut9yj9"
+      ],
+      "settings": {
+        "announcement_bar_col": "#201747",
+        "announcement_text_col": "#ffffff",
+        "message_font_size": 14,
+        "show_social_icons": false,
+        "menu": "",
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
+    },
+    "custom_liquid_apndLF": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": true,
+        "code": "{% if request.path contains '/denim-fusion-kurta' %}\n  <div class=\"custom-html-Header\" style=\"\n    background-color: #201747;\n    padding: 16px 20px;\n    text-align: center;\n  \">\n    <p style=\"\n      margin: 0;\n      color: #ffffff;\n      font-family: 'Generis Sans W01 Bold', sans-serif;\n      font-size: 22px;\n    \">\n      Built for Everyday Hustle – Premium Heavyweight Denim\n    </p>\n  </div>\n  <style>\n    @media (max-width: 767px) {\n      .custom-html-Header {\n        padding: 10px 10px !important;\n        padding-top: 20px !important;\n      }\n      .custom-html-Header p {\n        font-size: 14px !important;\n      }\n    }\n  </style>\n{% endif %}"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "menu_image_b8hfUM": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Diwali Puja",
+            "menu_image": "shopify://shop_images/Group_6_2.jpg"
+          }
+        },
+        "menu_image_zhR9kE": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Diwali Party",
+            "menu_image": "shopify://shop_images/Group_7.jpg"
+          }
+        },
+        "menu_image_PACTRh": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Hungama collection",
+            "menu_image": "shopify://shop_images/Group_8.jpg"
+          }
+        },
+        "menu_image_mdcf9W": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Mehendi",
+            "menu_image": "shopify://shop_images/Group_4.jpg"
+          }
+        },
+        "menu_image_djLwBw": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Haldi",
+            "menu_image": "shopify://shop_images/Group_5.jpg"
+          }
+        },
+        "menu_image_h4nzyY": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Reception",
+            "menu_image": "shopify://shop_images/Group_6_3.jpg"
+          }
+        },
+        "menu_image_dp3a9j": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Sangeet",
+            "menu_image": "shopify://shop_images/Group_3.jpg"
+          }
+        },
+        "menu_image_6YzqUB": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Wedding",
+            "menu_image": "shopify://shop_images/Group_2_1.jpg"
+          }
+        },
+        "menu_image_H7Fa3r": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Festive",
+            "menu_image": "shopify://shop_images/Group_1.jpg"
+          }
+        },
+        "menu_image_iXiXwz": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Indowestern Sets",
+            "menu_image": "shopify://shop_images/Group_237793.jpg"
+          }
+        },
+        "menu_image_BgcNjW": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Kurta Sets",
+            "menu_image": "shopify://shop_images/Group_237800_1.jpg"
+          }
+        },
+        "menu_image_kgjKFP": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Jodhpuri",
+            "menu_image": "shopify://shop_images/Group_237797.jpg"
+          }
+        },
+        "menu_image_jBVawH": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Kurta Jacket Set",
+            "menu_image": "shopify://shop_images/Group_237794.jpg"
+          }
+        },
+        "menu_image_XY3abf": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Sherwani & Achkans",
+            "menu_image": "shopify://shop_images/Group_237798.jpg"
+          }
+        },
+        "menu_image_46gQwg": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Nehru Jacket",
+            "menu_image": "shopify://shop_images/Group_237799.jpg"
+          }
+        },
+        "menu_image_7E7jXi": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Short Kurta",
+            "menu_image": "shopify://shop_images/kaaaa.jpg"
+          }
+        },
+        "menu_image_qci3aW": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Kurta",
+            "menu_image": "shopify://shop_images/Group_237795.jpg"
+          }
+        },
+        "menu_image_3eyUeG": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Dulhe Ki Toli",
+            "menu_image": "shopify://shop_images/Group_6_1_ddb2e58c-c684-439e-a59d-dfda046e7341.jpg"
+          }
+        },
+        "menu_image_YxLxBU": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Bougee",
+            "menu_image": "shopify://shop_images/Group_5_2.jpg"
+          }
+        },
+        "menu_image_9HqU3g": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Shor Collection",
+            "menu_image": "shopify://shop_images/Group_9.jpg"
+          }
+        },
+        "menu_image_QJAARr": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Wedding Core",
+            "menu_image": "shopify://shop_images/Wedding_Core.jpg"
+          }
+        },
+        "menu_image_fjEhDc": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Cocktail",
+            "menu_image": "shopify://shop_images/Cocktail.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "menu_image_b8hfUM",
+        "menu_image_zhR9kE",
+        "menu_image_PACTRh",
+        "menu_image_mdcf9W",
+        "menu_image_djLwBw",
+        "menu_image_h4nzyY",
+        "menu_image_dp3a9j",
+        "menu_image_6YzqUB",
+        "menu_image_H7Fa3r",
+        "menu_image_iXiXwz",
+        "menu_image_BgcNjW",
+        "menu_image_kgjKFP",
+        "menu_image_jBVawH",
+        "menu_image_XY3abf",
+        "menu_image_46gQwg",
+        "menu_image_7E7jXi",
+        "menu_image_qci3aW",
+        "menu_image_3eyUeG",
+        "menu_image_YxLxBU",
+        "menu_image_9HqU3g",
+        "menu_image_QJAARr",
+        "menu_image_fjEhDc"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/Group_63_1.png",
+        "logo_img_width_int": 150,
+        "mobile_logo_img_width_int": 100,
+        "logo_h2": true,
+        "enable_sticky": true,
+        "enable_transparent": false,
+        "transparent_color": "#ffffff",
+        "transparent_logo": "shopify://shop_images/Group_63_1.png",
+        "menu_linklist": "new-version-menu",
+        "menu_layout": "inline-menu-center",
+        "nav_featured_link": "Sale",
+        "menu_linklist_mobile": "new-version-menu",
+        "mobile_expand_with_entire_link": false,
+        "enable_mobile_promo_carousel": true,
+        "enable_nav_mob_products": false,
+        "nav_mob_products_title": "Best Sellers",
+        "nav_mob_products_collection": "",
+        "enable_search": true,
+        "search_recommendations_title": "",
+        "search_recommendations_menu": "",
+        "icon_strategy": "icons_only",
+        "cart_icon": "bag"
+      }
+    },
+    "store-messages": {
+      "type": "store-messages",
+      "blocks": {
+        "1601308104445": {
+          "type": "message",
+          "settings": {
+            "heading": "",
+            "subheading": "Free shipping on orders over $100",
+            "link_url": ""
+          }
+        },
+        "1601308125690": {
+          "type": "message",
+          "settings": {
+            "heading": "",
+            "subheading": "Free Click & Collect to US stores*",
+            "link_url": ""
+          }
+        },
+        "1601308127822": {
+          "type": "message",
+          "settings": {
+            "heading": "",
+            "subheading": "Free and easy domestic returns",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "1601308104445",
+        "1601308125690",
+        "1601308127822"
+      ],
+      "disabled": true,
+      "settings": {
+        "head_not_home_only": true,
+        "head_not_col_bg": "#f4f6f8",
+        "head_not_col_txt1": "#171717",
+        "head_not_col_txt2": "#4c4c4b",
+        "head_not_mob_show": true,
+        "head_not_mob_text": "Free shipping on orders over $100",
+        "head_not_mob_url": ""
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "custom_liquid_apndLF",
+    "header",
+    "store-messages"
+  ]
+}

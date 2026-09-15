@@ -1,0 +1,409 @@
+ {% assign metaProduct = product.metafields.custom.bundle_product.value %}
+ {% assign metacurrent_variant = metaProduct.selected_or_first_available_variant %}
+ {% assign currProductprice = product.price   %}
+ {% assign metaproprice =  metaProduct.price %}
+ {% assign totalPrice = currProductprice | plus: metaproprice %}
+ {% assign curproCom =  product.compare_at_price  %}
+ {% assign metaproComp =  metaProduct.compare_at_price %}
+ {% assign totalComp = metaproComp | plus: curproCom %}
+ {% if metaProduct != blank %}
+<style>
+#shopify-section-{{section.id}} {
+   padding-top: {{ section.settings.desk-padding-top }}px;
+   padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec{
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   gap:20px;
+   max-width: 1150px;
+   margin: 0 auto;
+
+}
+#shopify-section-{{section.id}} .bundle-product-sec .image-only-wrapp{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details{
+    width:20%;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details h3{
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 27px;
+    text-align: center;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details span{
+    text-align:center;
+    display:block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: center;
+    color: #000000;
+    font-family: 'Generis Sans W04 Medium';
+}
+#shopify-section-{{section.id}} .bundle-product-sec .products_image-wrap{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    width:80%;
+    margin-left: 20px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container{
+     display:flex;
+     flex-direction:column;
+     gap:10px;
+     width:50%;
+     margin-left:20px;
+     margin-top:auto;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .current-product-details{
+    display:flex;
+    /* align-items:center; */
+    /* gap:10px; */
+} 
+#shopify-section-{{section.id}} .bundle-product-sec .current-product-details p{
+     margin:0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    max-width: 200px;
+    padding-right: 10px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .second-product-details{
+    display:flex;
+    /* align-items:center; */
+     /* gap:10px; */
+} 
+#shopify-section-{{section.id}} .bundle-product-sec .second-product-details p{
+    margin:0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    max-width: 200px;
+    padding-right: 10px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container .offer-text-detail {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center; 
+    color: rgba(52, 52, 52, 0.83);
+    background: #E3B7B7;
+    border-radius: 50px;
+    padding: 4px 15px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price__default{
+     display:flex;
+     align-items:center;
+     flex-wrap:wrap;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price .price__current{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #1E1E1E;
+     margin-left:15px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price .price__was{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #1E1E1E;
+    text-decoration: line-through;
+    text-decoration-color: #ff0000;
+    margin-left:15px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price{
+     display:flex;
+     align-items:center;
+     margin:10px 0;
+     flex-wrap:wrap;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .metapro-price-container{
+      display:flex;
+      align-items:center;
+    
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .total-price-text{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #1E1E1E;
+    max-width:200px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .total-cur-price{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #1E1E1E;
+     margin-left:15px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .comapare-total-price{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #1E1E1E;
+    text-decoration: line-through;
+    text-decoration-color: #ff0000;
+     margin-left:15px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container .bundle-anchor-tag{
+    background: #313248;
+    border-radius: 50px;
+    color: #ffffff;
+    text-align: center;
+    padding: 8px 35px;
+    display:block;
+    width:fit-content;
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+   
+}
+
+@media (max-width: 1000px){
+#shopify-section-{{section.id}} .bundle-product-sec{
+   flex-direction:column;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container .offer-percentage-container{
+    text-align:center;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details{
+    width:100%;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .products_image-wrap{
+    flex-direction:column;
+    width:100%;
+    margin:0;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container{
+    width:100%;
+    margin:0 auto;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price__default{
+     gap:unset;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price .price__was{
+    font-size: 16px;
+    line-height: 18px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .price .price__current{
+    font-size: 16px;
+    line-height: 18px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .second-product-details{
+     justify-content:center;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .second-product-details p{
+    font-size: 16px;
+    line-height: 18px; 
+}
+#shopify-section-{{section.id}} .bundle-product-sec .current-product-details{
+    justify-content:center;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .current-product-details p{
+     font-size: 16px;
+     line-height: 18px; 
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price{
+     justify-content:center;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .total-price-text{
+    font-size: 16px;
+    line-height: 18px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .total-cur-price{
+    font-size: 16px;
+    line-height: 18px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .total-price .comapare-total-price{
+    font-size: 16px;
+    line-height: 18px;  
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details span{
+    font-size: 14px;
+    line-height: 24px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .section-offer-details h3{
+    font-size: 22px;
+    line-height: 24px; 
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container .offer-text-detail {
+    font-size: 14px;
+    line-height: 16px;
+}
+#shopify-section-{{section.id}} .bundle-product-sec .product-details-container .bundle-anchor-tag{
+    margin:0 auto;
+    font-size: 16px;
+    line-height: 18px;
+    background:#201747;
+}
+}
+@media screen and (max-width:767px){
+#shopify-section-{{section.id}} {
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+}
+</style>
+
+<div class="container">
+<div class="bundle-product-sec">
+  <div class="section-offer-details">
+    <h3>{{ section.settings.head }}</h3>
+     {{ section.settings.text }}
+  </div>
+   <div class="products_image-wrap">
+     
+     <div class="image-only-wrapp">
+       <div class="current-product-image-details">
+        <img src="{{ product.featured_image | image_url }}" width="210px" height="auto">
+      </div>
+        {% if metaProduct != blank %}
+       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <line y1="10.5" x2="22" y2="10.5" stroke="black"/>
+          <line x1="10.5" y1="22" x2="10.5" stroke="black"/>
+       </svg>
+       
+       <div class="second-pro-details">
+          <div class="metapro-imag">
+            <img src="{{ metaProduct.featured_image | image_url  }}"  width="210px" height="auto">
+         </div>
+        </div>
+        {% endif %}
+      </div>
+        
+  <div class="product-details-container">
+      <div class="offer-percentage-container">
+        <span class="offer-text-detail">{{ section.settings.percent }}</span>
+      </div>
+        <div class="current-product-details">
+          <p>{{ product.title }}</p>
+           {% render 'price' %} 
+        </div>
+       {% if metaProduct != blank %}
+          <div class="second-product-details">
+             <p>{{ metaProduct.title }}</p>
+              {% render 'price', product:metaProduct ,  for_variant_picker: true, current_variant: metacurrent_variant %}
+          </div>
+          {% endif %}
+           <div class="total-price">
+            <span class="total-price-text">Total price:</span> 
+            <div class="metapro-price-container">
+              <div class="total-cur-price">
+              {{ totalPrice  | money }}
+              </div>
+              <div class="comapare-total-price">
+                {{ totalComp | money }}
+              </div>
+            </div>
+          </div>
+       <a href="{{  }}" class="bundle-anchor-tag">Add selected to cart</a>
+      </div>
+   </div>
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Bundle Product",
+    "settings": [
+      {
+        "type": "text",
+         "id": "percent",
+         "label": "Offer text"
+      },
+      {
+        "type": "text",
+         "id": "head",
+         "label": "Heading"
+      },
+      {
+        "type": "textarea",
+         "id": "text",
+         "label": "textarea"
+      },
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+    ],
+    "presets": [
+      {
+        "name": "Bundle Product"
+      }
+    ]
+  }
+  
+{% endschema %}

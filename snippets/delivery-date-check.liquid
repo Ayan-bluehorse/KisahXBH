@@ -1,0 +1,581 @@
+<style>
+  /* .delivery-date-check {
+    padding: 30px 35px 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #e2e2e2;
+  } */
+  .delivery-date-check .title {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .delivery-date-check .sub_title {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #535252;
+    margin-bottom: 15px;
+  }
+  .delivery-date-check .sub_title p {
+    margin: 0;
+  }
+  .delivery-date-check .sub_title span {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #080340;
+  }
+  .delivery-date-check .delivery-form {
+    overflow: hidden;
+    max-width:80%;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #000000;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    min-height:40px;
+  }
+  .delivery-date-check .delivery-form .zipcode_input {
+    width: 100%;
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    padding:12px 10px 12px 24px;
+    border:none;
+  }
+  .delivery-date-check .delivery-form .zipcode_input:hover {
+    border-color: #b5b6b7;
+  }
+  .delivery-date-check .delivery-form .zipcode_input:focus-visible {
+    outline: unset;
+    outline-offset: unset;
+    box-shadow: unset;
+  }
+  .delivery-date-check .delivery-form .zipcode_btn {
+    font-size: 18px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 35px;
+    z-index: 2;
+    color: #201747;
+    font-family: 'Generis Sans W04 Medium';
+    font-style: normal;
+    min-width: 120px;
+    min-height: 40px;
+    border:none;
+    background:#ffffff;
+  }
+  .delivery-date-check .alert-msg .error-msg {
+    font-size: 12px;
+    line-height: 12px;
+    color: #e53d3d;
+    margin-bottom: 10px;
+    text-align: left;
+    font-family: Generis Sans W04 Medium;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+  }
+ .delivery-date-check .delivery-form-result {
+    font-family: Generis Sans W04 Medium;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000;
+ }
+   
+  .delivery-date-check .result_title {
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #000000;
+    width: 100%;
+    display: block;
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+  }
+  .delivery-date-check .delivery_status {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #E3B7B7;
+    font-family: 'Generis Sans W01 Regular';
+
+  }
+  .delivery-date-check .delivery_date {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+    color: #E3B7B7;
+    font-family: 'Generis Sans W01 Regular';
+
+  }
+  .delivery-date-check .delivery-notes {
+    display: flex;
+    align-items: center;
+  }
+  .delivery-date-check .delivery-notes svg {
+    width: 30px;
+    margin-right: 15px;
+  }
+  .delivery-date-check .delivery-notes p {
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0;
+  }
+  .delivery-form-result .delvery-date-details{
+     display:flex;
+     gap:20px;
+     align-items: center;
+  }
+  .delivery-form-result .delvery-date-details p{
+    font-family: Generis Sans W04 Medium !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000;
+    margin:0;
+  }
+  
+  @media only screen and (max-width: 749px){
+    
+    .delivery-date-check .title {
+      font-size: 16px;
+      line-height: 18px;
+    }
+    .delivery-date-check .sub_title {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .delivery-date-check .sub_title span {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .delivery-date-check .delivery-form .zipcode_input {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+    .delivery-form-result .delvery-date-details p{
+        font-size: 16px;
+        line-height: 18px;
+      
+    }
+    .delivery-date-check .delivery-form .zipcode_btn {
+      font-size: 14px;
+      line-height: 18px;
+      font-weight: 400;
+      border: 1px solid #212b36;
+      box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.15);
+      border-radius: 50px;
+      background:#201747;
+      color:#ffffff;
+      min-width: 110px;
+      min-height: 30px;
+    }
+    .delivery-date-check .result_title {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .delivery-date-check .delivery_status {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .delivery-date-check .delivery_date {
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .delivery-date-check .delivery-notes p {
+      font-size: 12px;
+      line-height: 15px;
+    }
+    .delivery-date-check .delivery-form {
+      margin-bottom:20px;
+      max-width:100%;
+    }
+    .delivery-date-check .alert-msg .error-msg {
+    font-size: 16px;
+    line-height: 18px;
+  }
+ .delivery-date-check .delivery-form-result {
+    font-size: 16px;
+    line-height: 18px;
+
+ }
+  }
+  @media only screen and (max-width: 350px){
+    .delivery-date-check .result_title {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    .delivery-date-check .delivery_status {
+      font-size: 12px;
+      line-height: 10px;
+    }
+    .delivery-date-check .delivery_date {
+      font-size: 12px;
+      line-height: 10px;
+    }
+    .delivery-date-check .delivery-form .zipcode_input{
+       padding:12px 10px 12px 9px;
+    }
+  }
+</style>
+
+<div class="delivery-date-check">
+  {%- if block.settings.title != blank -%}<h2 class="title">{{ block.settings.title }}</h2>{%- endif -%}
+  {%- if block.settings.sub_title != blank -%}<div class="sub_title">{{ block.settings.sub_title }}</div>{%- endif -%}
+  <div class="delivery-form">
+    <input type="text" class="zipcode_input" id="zipcode" placeholder="{{ block.settings.input_text }}" name="zip_code">
+    <input id="pincode-btn" class="zipcode_btn check_btn" type="button" value="{{ block.settings.button_text }}">
+  </div>
+  <div class="alert-msg"></div>
+  <div class="delivery-form-result">
+   {%- comment -%} <div class="delivery-form-item">
+      <span class="result_title">Delivery Status:</span>
+      <span class="delivery_status"></span>
+    </div>
+     <div class="delivery-form-item">
+      <span class="result_title">Expected Date:</span>
+      <span class="delivery_date"></span>
+    </div> {%- endcomment -%}
+  </div>
+  
+  {%- if block.settings.notes != blank -%}
+    <div class="delivery-notes">
+      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21">
+        <g id="Group_18891" data-name="Group 18891" transform="translate(0.5 0.5)">
+          <path id="Path_7906" data-name="Path 7906" d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" transform="translate(-2 -2)" stroke="#fff" stroke-width="1"></path>
+          <rect id="Rectangle_6083" data-name="Rectangle 6083" width="2.5" height="8" transform="translate(9 8)" stroke="#fff" stroke-width="1"></rect>
+          <rect id="Rectangle_6084" data-name="Rectangle 6084" width="2.5" height="2.5" transform="translate(9 4)" stroke="#fff" stroke-width="1"></rect>
+        </g>
+      </svg>
+      {{ block.settings.notes }}
+    </div>
+  {% endif %}
+</div>
+
+
+<script>
+  // window.kisahWhenJQueryReady(function($) {
+  //  function checkBtn(){
+  //  $(document).on('click', '.check_btn', function(e){
+  //   e.preventDefault();
+  //   let drop_pincode = $(this).siblings('#zipcode').val();
+    
+  //   if(validatePincode(drop_pincode)){
+  //     // auth username and apikey
+  //     const username = 'Kisah';
+  //     const apiKey = 'd522f99a-07e8-4b87-8172-1d93a4f27969';
+
+  //     // All Product Pickup Store Pincodes
+  //     const pincode_list = ['743502','421101','122413','560067'];
+      
+  //     // Endpoint URL
+  //     const url = 'https://ds.clickpost.in/api/v2/predicted_sla_api/?username=' + username + '&key=' + apiKey + '&check_drop_pincode_validity=true';
+      
+  //     // Request headers with the API key
+  //     const headers = {
+  //       'accept': 'application/json',
+  //       'content-type': 'application/json'
+  //     };
+
+  //     // Create Fetch Option Based on the  Pickup Pincode
+  //     const options = pincode_list.map(pincode => {
+  //       return {
+  //         method: 'POST',
+  //         headers: headers,
+  //         body: JSON.stringify([{"pickup_pincode": pincode,"drop_pincode": drop_pincode}])
+  //         }
+  //     });
+  
+  //     fetchMultipleData(url, options)
+  //       .then(dataArray => {
+  //           // console.log('All data fetched:', dataArray);
+          
+  //           // Check if any object has success: false
+  //           const hasError = dataArray.some(obj => !obj.meta.success);
+  //           if (hasError) {
+  //               $('.delivery-form-result').html('Not Available');
+  //               $('.delivery_date').html('');
+  //               $('.alert-msg').html(`<p class="error-msg">Invalid drop pincode.</p>`);
+  //               return null;
+  //           }
+
+  //           const getSmallestPredictedSlaMax = (data) => {
+  //               return data.reduce((minObj, currentObj) => {
+  //                   const currentSlaMax = currentObj.result[0].predicted_sla_max;
+  //                   const minSlaMax = minObj.result[0].predicted_sla_max;
+                  
+  //                   if (currentSlaMax === null) return minObj; // Ignore null values
+  //                   if (minSlaMax === null) return currentObj; // If minSlaMax is null, use currentObj
+            
+  //                   return currentSlaMax < minSlaMax ? currentObj : minObj;
+  //               });
+  //           }
+
+  //           // get Smallest Expected date
+  //           const smallestSlaMaxObject = getSmallestPredictedSlaMax(dataArray);
+  //           // console.log(smallestSlaMaxObject);
+          
+  //           const expectedDate = addDaysToDate(smallestSlaMaxObject.result[0].predicted_sla_max);
+  //           // console.log(`Day: ${expectedDate.day}, Month: ${expectedDate.month}, Year: ${expectedDate.year}`);
+
+  //           // You can now use the dataArray as needed
+  //           if(smallestSlaMaxObject.meta.success){
+  //             // $('.delivery_status').html('Available');
+  //             $('.delivery-form-result').html(`<div class="delvery-date-details"><img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/delivery-truck_1.png?v=1721130179" width="30px" height="auto"><P>Estimated delivery between ${expectedDate.curdayName} , ${expectedDate.curDate} ${expectedDate.month} to, ${expectedDate.deldayName} ${expectedDate.day} ${expectedDate.month}</p></div>`);
+  //             // $('.delivery_date').html(expectedDate.day +' , '+ expectedDate.month +' '+ expectedDate.year);
+  //             $('.alert-msg').html('');
+  //             $('#pincode-btn').removeClass("check_btn");
+  //             $('#pincode-btn').addClass("clear_btn");
+  //            $('#pincode-btn').val('change');
+  //             clearValue()
+  //           }
+  //       });
+      
+  //   }else {
+  //     $('.delivery-form-result').html('');
+  //     $('.delivery_date').html('');
+  //     $('.alert-msg').html(`<p class="error-msg">Invalid pincode. Please enter a valid 6-digit pincode.</p>`);
+  //   }
+
+  //  });
+  //  }
+  // // Pincode validation
+  // function validatePincode(pincode) {
+  //   // Regular expression to match a 6-digit pincode
+  //   const pincodePattern = /^[0-9]{6}$/;
+  //   return pincodePattern.test(pincode);
+  // }
+
+  // // Give Number to get Date Format
+  // function addDaysToDate(days) {
+  //   // Get the current date
+   
+  //   const currentDate = new Date();
+    
+  //   const dayNames = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+  //   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  //   const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+  //   const curdayName = dayNames[currentDate.getDay()];
+  //   const deldayName = dayNames[(currentDate.getDay() + days) % 7 ];
+  //   console.log(deldayName, 'deldayName');
+  //   const curDate= currentDate.getDate();
+  //   console.log(curDate, 'curDate');
+  //   // Add the specified number of days
+  //   currentDate.setDate(currentDate.getDate() + days);
+   
+  //   // Extract the day, month, and year
+  //   const day = currentDate.getDate();
+  //   const month = monthNames[currentDate.getMonth()]; // Months are zero-based, so add 1
+  //   const year = currentDate.getFullYear();
+    
+
+  //   return { day, month, year,curdayName, deldayName,curDate };
+  // }
+
+  // // Fetch Response Data
+  // async function fetchData(url, option) {
+  //     const response = await fetch(url, option);
+  //     if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     return response.json();
+  // }
+
+  // // Fetch Multiple Data Option
+  // async function fetchMultipleData(url, options) {
+  //     try {
+  //         const fetchPromises = options.map(option => fetchData(url, option));
+  //         const results = await Promise.all(fetchPromises);
+
+  //         const dataArray = [];
+  //         results.forEach(result => {
+  //             dataArray.push(result);
+  //         });
+
+  //         return dataArray;
+  //     } catch (error) {
+  //         console.error('Error fetching data:', error);
+  //     }
+  // }
+  // function clearValue(){
+  //   let clear = document.querySelector('.clear_btn');
+  //   let check_btn = document.querySelector('#pincode-btn');
+  //   if(clear){
+  //     clear.addEventListener('click',(e)=>{
+  //       let userInput = document.querySelector('#zipcode');
+  //       userInput.value="";
+  //        clear.classList.remove('clear_btn')
+  //        check_btn.classList.add('check_btn')
+  //       e.preventDefault();
+  //       checkBtn();
+  //     })
+  //   }
+   
+
+  // }
+  // checkBtn();
+  // });   
+
+
+
+  window.kisahWhenJQueryReady(function($) {
+  function checkBtn() {
+    $(document).on('click', '.check_btn', function(e) {
+      e.preventDefault();
+      let dropPincode = $(this).siblings('#zipcode').val();
+
+      if (validatePincode(dropPincode)) {
+        const username = 'Kisah';
+        const apiKey = 'd522f99a-07e8-4b87-8172-1d93a4f27969';
+        const pincodeList = ['743502', '421101', '122413', '560067'];
+        const url = `https://ds.clickpost.in/api/v2/predicted_sla_api/?username=${username}&key=${apiKey}&check_drop_pincode_validity=true`;
+
+        const headers = {
+          'accept': 'application/json',
+          'content-type': 'application/json'
+        };
+
+        const options = pincodeList.map(pincode => ({
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify([{ "pickup_pincode": pincode, "drop_pincode": dropPincode }])
+        }));
+        
+
+        fetchMultipleData(url, options)
+          .then(dataArray => {
+            if (dataArray.some(obj => !obj.meta.success)) {
+              updateUIForInvalidPincode();
+              return;
+            }
+
+            const smallestSlaMaxObject = getSmallestPredictedSlaMax(dataArray);
+            const expectedDate = addDaysToDate(smallestSlaMaxObject.result[0].predicted_sla_max);
+        
+            if (smallestSlaMaxObject.meta.success) {
+              updateUIForValidPincode(expectedDate);
+              toggleButton();
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            updateUIForFetchError();
+          });
+      } else {
+        updateUIForInvalidPincode();
+      }
+    });
+  }
+
+  function validatePincode(pincode) {
+    const pincodePattern = /^[0-9]{6}$/;
+    return pincodePattern.test(pincode);
+  }
+
+  function addDaysToDate(days) {
+    const currentDate = new Date();
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const curdayName = dayNames[currentDate.getDay()];
+    const deldayName = dayNames[(currentDate.getDay() + days) % 7];
+    const curDate = currentDate.getDate();
+
+    currentDate.setDate(currentDate.getDate() + days);
+    const day = currentDate.getDate();
+    const month = monthNames[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    return { day, month, year, curdayName, deldayName, curDate };
+  }
+
+  async function fetchData(url, option) {
+    const response = await fetch(url, option);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  }
+
+  async function fetchMultipleData(url, options) {
+    try {
+      const fetchPromises = options.map(option => fetchData(url, option));
+      console.log(fetchPromises, 'fetchPromises');
+      return await Promise.all(fetchPromises);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  }
+
+  function getSmallestPredictedSlaMax(data) {
+    return data.reduce((minObj, currentObj) => {
+      const currentSlaMax = currentObj.result[0].predicted_sla_max;
+      const minSlaMax = minObj.result[0].predicted_sla_max;
+
+      if (currentSlaMax === null) return minObj; // Ignore null values
+      if (minSlaMax === null) return currentObj; // If minSlaMax is null, use currentObj
+
+      return currentSlaMax < minSlaMax ? currentObj : minObj;
+    });
+  }
+
+  function updateUIForInvalidPincode() {
+    $('.delivery-form-result').html('Not Available');
+    $('.delivery_date').html('');
+    $('.alert-msg').html('<p class="error-msg">Invalid drop pincode.</p>');
+  }
+
+  function updateUIForValidPincode(expectedDate) {
+    $('.delivery-form-result').html(`<div class="delvery-date-details"><img src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/delivery-truck_1.png?v=1721130179" width="30px" height="auto"><p>Estimated delivery between ${expectedDate.curdayName}, ${expectedDate.curDate} ${expectedDate.month} to ${expectedDate.deldayName}, ${expectedDate.day} ${expectedDate.month}</p></div>`);
+    $('.alert-msg').html('');
+  }
+
+  function updateUIForFetchError() {
+    $('.delivery-form-result').html('Error fetching data');
+    $('.alert-msg').html('<p class="error-msg">Unable to fetch delivery details. Please try again later.</p>');
+  }
+
+  function clearValue() {
+    $('#zipcode').val("");
+  }
+
+  function toggleButton() {
+    const button = $('#pincode-btn');
+    if (button.hasClass('check_btn')) {
+      button.removeClass('check_btn').addClass('clear_btn').val('change');
+    } else {
+      button.removeClass('clear_btn').addClass('check_btn').val('Check');
+      clearValue();
+    }
+  }
+
+  $(document).on('click', '.clear_btn', function(e) {
+    e.preventDefault();
+    toggleButton();
+  });
+
+  checkBtn();
+});
+
+</script>

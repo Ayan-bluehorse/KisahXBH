@@ -1,0 +1,950 @@
+<style>
+/* Popup overlay */
+.ss-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+}
+
+/* Popup box */
+.ss-box {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px 22px 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .25);
+  position: relative;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Close button */
+.ss-close {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  background: none;
+  border: 0;
+  font-size: 24px;
+  line-height: 1;
+  color: #201747;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+}
+.ss-close:hover {
+  background: #f0f0f5;
+}
+
+/* Title */
+.ss-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: #201747;
+  font-family: inherit;
+}
+
+/* Subhead bar with Current selection & Size Chart link */
+.ss-subhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 0 4px;
+  font-size: 14px;
+}
+.ss-current {
+  color: #555;
+  font-weight: 500;
+}
+.ss-current span {
+  color: #201747;
+  font-weight: 700;
+}
+
+.ss-size-chart-trigger {
+  background: none;
+  border: 0;
+  color: #201747;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ss-size-chart-trigger:hover {
+  color: #000;
+}
+
+/* Pills grid */
+.ss-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+/* Pills */
+.ss-pill {
+  border: 1px solid #201747;
+  background: #fff;
+  color: #201747;
+  border-radius: 24px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.ss-pill:hover {
+  background: #f4f4f8;
+}
+
+.ss-pill.ss-active {
+  background: #201747;
+  color: #fff;
+  font-weight: 700;
+}
+
+.ss-pill.ss-hidden {
+  display: none !important;
+}
+
+/* Show More button */
+.ss-show-more {
+  border: 1px solid #201747;
+  background: #fff;
+  color: #201747;
+  border-radius: 24px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .15s;
+}
+.ss-show-more:hover {
+  background: #f4f4f8;
+}
+
+/* -------------------------------------------------------------
+   SIZE TRACKER / RECOMMENDER ACCORDION ("Not sure of your size?")
+-------------------------------------------------------------- */
+.ss-tracker {
+  border: 1px solid #dce2f0;
+  border-radius: 12px;
+  background: #f8faff;
+  margin: 14px 0 16px;
+  text-align: left;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.ss-tracker.open {
+  border-color: #201747;
+  background: #fff;
+}
+
+.ss-tracker-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #201747;
+  gap: 8px;
+}
+.ss-tracker-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ss-tracker-toggle-left svg {
+  flex-shrink: 0;
+  color: #201747;
+}
+.ss-tracker-chevron {
+  transition: transform .25s ease;
+}
+.ss-tracker.open .ss-tracker-chevron {
+  transform: rotate(180deg);
+}
+
+.ss-tracker-content {
+  display: none;
+  padding: 0 14px 14px;
+  border-top: 1px solid #eef2fa;
+}
+.ss-tracker.open .ss-tracker-content {
+  display: block;
+}
+
+/* Stepper inside modal */
+.ss-stepper-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0 14px;
+  position: relative;
+}
+.ss-step-item {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8c93a8;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  flex: 1;
+}
+.ss-step-item.active {
+  color: #201747;
+}
+.ss-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d8deeb;
+  margin: 0 auto 4px;
+}
+.ss-step-item.active .ss-step-dot {
+  background: #201747;
+  transform: scale(1.2);
+}
+
+/* Stepper Screens */
+.ss-screen {
+  display: none;
+}
+.ss-screen.active {
+  display: block;
+}
+
+.ss-screen-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #201747;
+  margin: 0 0 10px;
+}
+
+.ss-input-group {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.ss-spin-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #c8d1e3;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.ss-spin-btn {
+  background: #f0f3fa;
+  border: none;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #201747;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.ss-spin-btn:hover {
+  background: #e2e8f5;
+}
+.ss-spin-input {
+  width: 68px;
+  height: 38px;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #201747;
+  -moz-appearance: textfield;
+  padding: 0 6px;
+}
+.ss-weight-spin .ss-spin-input {
+  width: 84px;
+}
+.ss-spin-input::-webkit-outer-spin-button,
+.ss-spin-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.ss-field-lbl {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.ss-chips-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.ss-chip-opt {
+  border: 1px solid #c8d1e3;
+  background: #fff;
+  color: #201747;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .15s;
+}
+.ss-chip-opt.active {
+  background: #201747;
+  color: #fff;
+  border-color: #201747;
+}
+
+.ss-next-step-btn {
+  background: #201747;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Result box */
+.ss-result-card {
+  text-align: center;
+  padding: 12px;
+  background: #f0f4ff;
+  border-radius: 10px;
+  border: 1px solid #cbd8f5;
+}
+.ss-result-badge {
+  display: inline-block;
+  background: #201747;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 4px 16px;
+  border-radius: 20px;
+  margin: 6px 0;
+}
+.ss-result-desc {
+  font-size: 12px;
+  color: #444;
+  margin-bottom: 10px;
+}
+.ss-apply-reco-btn {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+}
+.ss-apply-reco-btn:hover {
+  background: #218838;
+}
+
+/* Main Confirmation CTA */
+.ss-cta {
+  width: 100%;
+  background: #201747;
+  color: #fff;
+  border: 0;
+  padding: 13px 14px;
+  border-radius: 28px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  cursor: pointer;
+  transition: background .15s;
+  font-family: inherit;
+}
+.ss-cta:hover {
+  background: #150f33;
+}
+
+/* -------------------------------------------------------------
+   SIZE CHART DRAWER / MODAL
+-------------------------------------------------------------- */
+.ss-chart-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 16px;
+}
+.ss-chart-box {
+  background: #fff;
+  border-radius: 14px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 22px;
+  position: relative;
+  text-align: left;
+}
+.ss-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.ss-chart-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #201747;
+  font-weight: 700;
+}
+.ss-chart-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.ss-chart-tab-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #201747;
+  background: #fff;
+  color: #201747;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ss-chart-tab-btn.active {
+  background: #201747;
+  color: #fff;
+}
+.ss-chart-table-wrap {
+  overflow-x: auto;
+}
+.ss-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: center;
+}
+.ss-chart-table th {
+  background: #f5f6fa;
+  color: #201747;
+  padding: 8px 6px;
+  border: 1px solid #e0e3ec;
+  font-weight: 700;
+}
+.ss-chart-table td {
+  padding: 7px 6px;
+  border: 1px solid #e0e3ec;
+  color: #333;
+}
+.ss-chart-table tr:nth-child(even) {
+  background: #fafbfe;
+}
+
+body.ss-lock { 
+  overflow: hidden !important; 
+  position: fixed; 
+  width: 100%; 
+}
+</style>
+
+<!-- ==============================================================
+     COLLECTION SIZE SELECTOR MODAL
+============================================================== -->
+<div id="ss-modal" class="ss-overlay" style="display:none" aria-hidden="true">
+  <div class="ss-box" role="dialog" aria-modal="true" aria-labelledby="ss-title">
+    <button class="ss-close" type="button" aria-label="Close">&times;</button>
+    
+    <!-- Headline without 'mens' -->
+    <h3 id="ss-title" class="ss-title">
+      {% if collection.handle == 'kids' %}
+        Choose your preferred size kids
+      {% else %}
+        Choose your preferred size
+      {% endif %}
+    </h3>
+
+    <!-- Subhead with Selection & Size Chart Trigger -->
+    <div class="ss-subhead">
+      <div class="ss-current">Size: <span id="ss-current-label">—</span></div>
+      <button type="button" class="ss-size-chart-trigger" id="ss-open-chart">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 12h20M7 12v-3M12 12v-4M17 12v-3M3 7h18a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/>
+        </svg>
+        Size Chart
+      </button>
+    </div>
+
+    <!-- Size Pills Grid -->
+    <div class="ss-grid" role="group" aria-label="Sizes">
+      {% if collection.handle == 'kids' %}
+        {% assign kid_size_map = "3-4 Years:4,5-6 Years:6,7-8 Years:8,9-10 Years:10,11-12 Years:12" | split: "," %}
+        {%- for pair in kid_size_map -%}
+          {%- assign p = pair | split: ":" -%}
+          <button type="button" class="ss-pill" data-num="{{ p[0] }}" data-label="{{ p[1] }}" aria-pressed="false">
+            {{ p[0] }}
+          </button>
+        {%- endfor -%}
+      {% else %}
+        {%- assign size_map = "XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56" | split: "," -%}
+        {%- for pair in size_map -%}
+          {%- assign p = pair | split: ":" -%}
+          <button type="button" class="ss-pill" data-num="{{ p[0] }}" data-label="{{ p[1] }}" aria-pressed="false">
+            {{ p[0] }} - {{ p[1] }}
+          </button>
+        {%- endfor -%}
+      {% endif %}
+
+      <!-- Show More button -->
+      <button id="ss-show-more" class="ss-show-more" type="button">Show More</button>
+    </div>
+
+    <!-- ==========================================================
+         SIZE TRACKER ("Not sure of your size?")
+    ========================================================== -->
+    <div class="ss-tracker" id="ss-tracker">
+      <button type="button" class="ss-tracker-toggle" id="ss-tracker-toggle">
+        <div class="ss-tracker-toggle-left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>
+          </svg>
+          <span>Not sure of your size?&nbsp;→</span>
+        </div>
+        <svg class="ss-tracker-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
+
+      <div class="ss-tracker-content">
+        <!-- Stepper -->
+        <div class="ss-stepper-steps">
+          <button type="button" class="ss-step-item active" data-step="0"><div class="ss-step-dot"></div>Height</button>
+          <button type="button" class="ss-step-item" data-step="1"><div class="ss-step-dot"></div>Weight</button>
+          <button type="button" class="ss-step-item" data-step="2"><div class="ss-step-dot"></div>Build</button>
+          <button type="button" class="ss-step-item" data-step="3"><div class="ss-step-dot"></div>Your Size</button>
+        </div>
+
+        <!-- Step 0: Height -->
+        <div class="ss-screen active" data-screen="0">
+          <div class="ss-screen-title">Select your height</div>
+          <div class="ss-input-group">
+            <div>
+              <span class="ss-field-lbl">Feet</span>
+              <div class="ss-spin-box">
+                <button type="button" class="ss-spin-btn" data-spin="feet" data-dir="-1">−</button>
+                <input type="number" id="ss-feet" class="ss-spin-input" value="5" min="4" max="7">
+                <button type="button" class="ss-spin-btn" data-spin="feet" data-dir="1">+</button>
+              </div>
+            </div>
+            <div>
+              <span class="ss-field-lbl">Inches</span>
+              <div class="ss-spin-box">
+                <button type="button" class="ss-spin-btn" data-spin="inch" data-dir="-1">−</button>
+                <input type="number" id="ss-inch" class="ss-spin-input" value="8" min="0" max="11">
+                <button type="button" class="ss-spin-btn" data-spin="inch" data-dir="1">+</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="ss-next-step-btn" data-next="1">Next: Weight →</button>
+        </div>
+
+        <!-- Step 1: Weight -->
+        <div class="ss-screen" data-screen="1">
+          <div class="ss-screen-title">Select your weight (kg)</div>
+          <div class="ss-input-group">
+            <div>
+              <span class="ss-field-lbl">Kilograms (kg)</span>
+              <div class="ss-spin-box ss-weight-spin">
+                <button type="button" class="ss-spin-btn" data-spin="kg" data-dir="-2">−</button>
+                <input type="number" id="ss-kg" class="ss-spin-input" value="70" min="40" max="140">
+                <button type="button" class="ss-spin-btn" data-spin="kg" data-dir="2">+</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="ss-next-step-btn" data-next="2">Next: Build →</button>
+        </div>
+
+        <!-- Step 2: Build -->
+        <div class="ss-screen" data-screen="2">
+          <div class="ss-screen-title">How do you prefer your fit?</div>
+          <div class="ss-chips-row">
+            <button type="button" class="ss-chip-opt" data-build="slim">Slim</button>
+            <button type="button" class="ss-chip-opt active" data-build="regular">Regular</button>
+            <button type="button" class="ss-chip-opt" data-build="broad">Relaxed</button>
+          </div>
+          <button type="button" class="ss-next-step-btn" data-next="3">Calculate Size 🎯</button>
+        </div>
+
+        <!-- Step 3: Result -->
+        <div class="ss-screen" data-screen="3">
+          <div class="ss-result-card">
+            <div>Your Recommended Size:</div>
+            <div class="ss-result-badge" id="ss-reco-badge">L - 42</div>
+            <div class="ss-result-desc" id="ss-reco-desc">Based on 5'8", 70kg, Regular fit</div>
+            <button type="button" class="ss-apply-reco-btn" id="ss-apply-reco-btn">✓ Apply Recommended Size</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Select Button -->
+    <button id="ss-confirm" class="ss-cta" type="button">SELECT</button>
+  </div>
+</div>
+
+<!-- ==============================================================
+     SIZE CHART MODAL
+============================================================== -->
+<div id="ss-chart-modal" class="ss-chart-modal" style="display:none;" aria-hidden="true">
+  <div class="ss-chart-box">
+    <div class="ss-chart-header">
+      <h3>Kisah Size Chart</h3>
+      <button class="ss-close" id="ss-close-chart" type="button">&times;</button>
+    </div>
+
+    <div class="ss-chart-tabs">
+      <button type="button" class="ss-chart-tab-btn active" data-tab="mens">Men's Sizes</button>
+      <button type="button" class="ss-chart-tab-btn" data-tab="kids">Kid's Sizes</button>
+    </div>
+
+    <!-- Men's Size Table -->
+    <div id="ss-tab-mens" class="ss-chart-table-wrap">
+      <table class="ss-chart-table">
+        <thead>
+          <tr>
+            <th>SIZE</th>
+            <th>CHEST (IN)</th>
+            <th>WAIST (IN)</th>
+            <th>SHOULDER (IN)</th>
+            <th>LENGTH (IN)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>XS - 36</td><td>36"</td><td>32"</td><td>17.5"</td><td>40"</td></tr>
+          <tr><td>S - 38</td><td>38"</td><td>34"</td><td>18.0"</td><td>41"</td></tr>
+          <tr><td>M - 40</td><td>40"</td><td>36"</td><td>18.5"</td><td>42"</td></tr>
+          <tr><td>L - 42</td><td>42"</td><td>38"</td><td>19.0"</td><td>43"</td></tr>
+          <tr><td>XL - 44</td><td>44"</td><td>40"</td><td>19.5"</td><td>44"</td></tr>
+          <tr><td>XXL - 46</td><td>46"</td><td>42"</td><td>20.0"</td><td>45"</td></tr>
+          <tr><td>3XL - 48</td><td>48"</td><td>44"</td><td>20.5"</td><td>45"</td></tr>
+          <tr><td>4XL - 50</td><td>50"</td><td>46"</td><td>21.0"</td><td>46"</td></tr>
+          <tr><td>5XL - 52</td><td>52"</td><td>48"</td><td>21.5"</td><td>46"</td></tr>
+          <tr><td>6XL - 54</td><td>54"</td><td>50"</td><td>22.0"</td><td>47"</td></tr>
+          <tr><td>7XL - 56</td><td>56"</td><td>52"</td><td>22.5"</td><td>47"</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Kids Size Table -->
+    <div id="ss-tab-kids" class="ss-chart-table-wrap" style="display:none;">
+      <table class="ss-chart-table">
+        <thead>
+          <tr>
+            <th>SIZE</th>
+            <th>AGE GROUP</th>
+            <th>CHEST (IN)</th>
+            <th>WAIST (IN)</th>
+            <th>SHOULDER (IN)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>4</td><td>3-4 Years</td><td>22"</td><td>21"</td><td>10.5"</td></tr>
+          <tr><td>6</td><td>5-6 Years</td><td>25"</td><td>23"</td><td>11.0"</td></tr>
+          <tr><td>8</td><td>7-8 Years</td><td>27"</td><td>26"</td><td>11.5"</td></tr>
+          <tr><td>10</td><td>9-10 Years</td><td>30"</td><td>28"</td><td>12.0"</td></tr>
+          <tr><td>12</td><td>11-12 Years</td><td>32"</td><td>31"</td><td>12.5"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================================
+     UNIFIED JAVASCRIPT LOGIC
+============================================================== -->
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  const modal = $('#ss-modal');
+  const chartModal = $('#ss-chart-modal');
+  const curLabel = $('#ss-current-label');
+  const showMoreBtn = $('#ss-show-more');
+  const confirmBtn = $('#ss-confirm');
+
+  if (!modal) return;
+
+  const collectionHandle = (window.collectionHandle || window.location.pathname.split('/collections/')[1]?.split('/')[0] || '').toLowerCase();
+  const isKids = collectionHandle === 'kids';
+
+  const lock = on => document.body.classList.toggle('ss-lock', on);
+  const show = () => { modal.style.display = 'flex'; modal.setAttribute('aria-hidden', 'false'); lock(true); };
+  const hide = () => { modal.style.display = 'none'; modal.setAttribute('aria-hidden', 'true'); lock(false); };
+
+  // 1. Initial Show More & Pills handling
+  const pills = $$('.ss-pill');
+  if (pills.length > 5) {
+    for (let i = 5; i < pills.length; i++) {
+      pills[i].classList.add('ss-hidden');
+    }
+    showMoreBtn.style.display = 'inline-block';
+  } else {
+    showMoreBtn.style.display = 'none';
+  }
+
+  showMoreBtn.addEventListener('click', () => {
+    $$('.ss-pill.ss-hidden').forEach(pill => pill.classList.remove('ss-hidden'));
+    showMoreBtn.style.display = 'none';
+  });
+
+  // Select pill function
+  function selectPill(b) {
+    if (!b) return;
+    $$('.ss-pill').forEach(pill => {
+      pill.classList.remove('ss-active');
+      pill.setAttribute('aria-pressed', 'false');
+    });
+    b.classList.remove('ss-hidden');
+    b.classList.add('ss-active');
+    b.setAttribute('aria-pressed', 'true');
+    curLabel.textContent = isKids ? b.dataset.num : `${b.dataset.num} - ${b.dataset.label}`;
+  }
+
+  // Handle pill click
+  modal.querySelector('.ss-grid')?.addEventListener('click', e => {
+    const b = e.target.closest('.ss-pill');
+    if (b) selectPill(b);
+  });
+
+  // Initialize active from storage or default to first
+  const saved = (localStorage.getItem('preferredSizeNum') || '').trim();
+  let initialized = false;
+  if (saved) {
+    const p = $(`.ss-pill[data-num="${saved}"]`) || $(`.ss-pill[data-label="${saved}"]`);
+    if (p) {
+      selectPill(p);
+      initialized = true;
+    }
+  }
+  if (!initialized && pills.length > 0) {
+    selectPill(pills[0]);
+  }
+
+  // 2. Size Tracker / Recommender logic
+  const tracker = $('#ss-tracker');
+  const trackerToggle = $('#ss-tracker-toggle');
+  let selectedBuild = 'regular';
+
+  trackerToggle?.addEventListener('click', () => {
+    tracker.classList.toggle('open');
+  });
+
+  // Stepper navigation
+  const setStep = stepIdx => {
+    $$('.ss-step-item').forEach((btn, idx) => btn.classList.toggle('active', idx === stepIdx));
+    $$('.ss-screen').forEach((scr, idx) => scr.classList.toggle('active', idx === stepIdx));
+  };
+
+  $$('.ss-step-item').forEach((btn, idx) => {
+    btn.addEventListener('click', () => setStep(idx));
+  });
+
+  $$('.ss-next-step-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextIdx = parseInt(btn.dataset.next, 10);
+      if (nextIdx === 3) calculateRecommendation();
+      setStep(nextIdx);
+    });
+  });
+
+  // Spinners (+/-)
+  $$('.ss-spin-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.spin;
+      const dir = parseInt(btn.dataset.dir, 10);
+      const input = $(`#ss-${type}`);
+      if (!input) return;
+      let val = (parseInt(input.value, 10) || 0) + dir;
+      const min = parseInt(input.min, 10);
+      const max = parseInt(input.max, 10);
+      if (val < min) val = min;
+      if (val > max) val = max;
+      input.value = val;
+    });
+  });
+
+  // Build chips
+  $$('.ss-chip-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.ss-chip-opt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedBuild = btn.dataset.build;
+    });
+  });
+
+  // Size calculation algorithm
+  function calculateRecommendation() {
+    const feet = parseInt($('#ss-feet')?.value || 5, 10);
+    const inch = parseInt($('#ss-inch')?.value || 8, 10);
+    const kg = parseInt($('#ss-kg')?.value || 70, 10);
+
+    const hCm = (feet * 12 + inch) * 2.54;
+    const chest = 30.53 + (-0.06684 * hCm) + (0.26733 * kg);
+    const raw = 9.6504 + (0.77847 * chest);
+
+    const thresholds = { slim: 0.65, regular: 0.50, broad: 0.35 };
+    const threshold = thresholds[selectedBuild] || 0.5;
+    const lower = Math.floor(raw / 2) * 2;
+    const frac = (raw - lower) / 2;
+    let recSizeNum = frac >= threshold ? lower + 2 : lower;
+    recSizeNum = Math.max(36, Math.min(56, recSizeNum));
+
+    const sizeNames = {
+      36: 'XS', 38: 'S', 40: 'M', 42: 'L', 44: 'XL',
+      46: 'XXL', 48: '3XL', 50: '4XL', 52: '5XL', 54: '6XL', 56: '7XL'
+    };
+    const sizeName = sizeNames[recSizeNum] || 'M';
+    const labelText = `${sizeName} - ${recSizeNum}`;
+
+    $('#ss-reco-badge').textContent = labelText;
+    $('#ss-reco-desc').textContent = `Based on ${feet}'${inch}", ${kg}kg, ${selectedBuild.toUpperCase()} fit`;
+
+    // Apply button inside result card
+    $('#ss-apply-reco-btn').onclick = () => {
+      const matchPill = $(`.ss-pill[data-label="${recSizeNum}"]`) || $(`.ss-pill[data-num="${sizeName}"]`);
+      if (matchPill) {
+        selectPill(matchPill);
+      }
+      tracker.classList.remove('open');
+    };
+  }
+
+  // 3. Size Chart Modal logic
+  $('#ss-open-chart')?.addEventListener('click', () => {
+    chartModal.style.display = 'flex';
+    chartModal.setAttribute('aria-hidden', 'false');
+  });
+
+  $('#ss-close-chart')?.addEventListener('click', () => {
+    chartModal.style.display = 'none';
+    chartModal.setAttribute('aria-hidden', 'true');
+  });
+
+  chartModal?.addEventListener('click', e => {
+    if (e.target === chartModal) {
+      chartModal.style.display = 'none';
+    }
+  });
+
+  $$('.ss-chart-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.ss-chart-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      $('#ss-tab-mens').style.display = tab === 'mens' ? 'block' : 'none';
+      $('#ss-tab-kids').style.display = tab === 'kids' ? 'block' : 'none';
+    });
+  });
+
+  // 4. Modal persistence & close
+  function closeAndPersist() {
+    localStorage.setItem('ssModalSelected', '1');
+    if (isKids) localStorage.setItem('ssModalKidsShown', '1');
+    hide();
+  }
+
+  modal.addEventListener('click', e => { if (e.target === modal) closeAndPersist(); });
+  $('.ss-close')?.addEventListener('click', closeAndPersist);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.style.display === 'flex') closeAndPersist();
+  });
+
+  // 5. Apply selection to collection filter
+  confirmBtn?.addEventListener('click', () => {
+    const active = $('.ss-pill.ss-active');
+    if (active) {
+      const num = (active.dataset.num || '').trim();
+      const label = (active.dataset.label || '').trim();
+      localStorage.setItem('preferredSizeNum', num);
+      if (label) localStorage.setItem('preferredSizeLabel', label);
+
+      const sizeContainer = document.querySelector('#CollectionFilterForm .filter-group[data-filter-wrap="Size"]');
+      if (sizeContainer) {
+        const val = (label || num || '').toLowerCase();
+        sizeContainer.querySelectorAll('label.filter-group__item').forEach(labelEl => {
+          const input = labelEl.querySelector('.filter-group__checkbox');
+          if (!input) return;
+          const inputVal = (input.value || '').toLowerCase();
+          if (inputVal.includes(val) && !input.checked) {
+            input.click();
+            labelEl.classList.add('filter-group__item--active');
+          }
+        });
+      }
+    }
+
+    // Mobile apply button
+    const applyBtn = $('form#CollectionFilterForm .filter-actions>.apply-filters-btn');
+    if (applyBtn && window.innerWidth <= 960) {
+      applyBtn.click();
+    }
+
+    closeAndPersist();
+  });
+
+  // Decide whether to show on load: only show once per user session
+  const globalSelected = localStorage.getItem('ssModalSelected') === '1';
+  const kidsShown = localStorage.getItem('ssModalKidsShown') === '1';
+  const shouldShow = isKids ? !kidsShown : !globalSelected;
+
+  if (shouldShow) {
+    show();
+  } else {
+    hide();
+  }
+})();
+</script>

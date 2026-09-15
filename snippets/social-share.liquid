@@ -1,0 +1,91 @@
+{%- comment -%}
+  Parameters:
+  - share_title {String} - Title of the shared page.
+  - share_url {String} - Permalink of the shared page.
+  - share_image {Object} - Image for the shared page (optional).
+  - share_twitter {Boolean} - Show Twitter icon/link (optional, default is true).
+  - share_facebook {Boolean} - Show Facebook icon/link (optional, default is true).
+  - share_pinterest {Boolean} - Show Pinterest icon/link (optional, default is true).
+
+  Usage:
+  {% render 'social-share',
+    share_title: article.title,
+    share_url: article.url,
+    share_image: article.image,
+    share_facebook: false
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  assign raw_share_url = share_url | default: product.url | default: request.path
+  assign cleaned_path = raw_share_url
+  if cleaned_path contains 'utm_source='
+    assign split_q = cleaned_path | split: '?'
+    assign base_p = split_q[0]
+    assign q_part = split_q[1]
+    if q_part != blank
+      assign q_params = q_part | split: '&'
+      assign kept_params = ''
+      for q in q_params
+        unless q contains 'utm_'
+          if kept_params == ''
+            assign kept_params = q
+          else
+            assign kept_params = kept_params | append: '&' | append: q
+          endif
+        endunless
+      endfor
+      if kept_params != ''
+        assign cleaned_path = base_p | append: '?' | append: kept_params
+      else
+        assign cleaned_path = base_p
+      endif
+    else
+      assign cleaned_path = base_p
+    endif
+  endif
+
+  if cleaned_path contains 'http://' or cleaned_path contains 'https://'
+    assign base_full_url = cleaned_path
+  else
+    assign base_full_url = shop.url | append: cleaned_path
+  endif
+
+  if base_full_url contains '?'
+    assign q_sep = '&'
+  else
+    assign q_sep = '?'
+  endif
+
+  assign share_title_val = share_title | default: product.title | default: page_title | strip | escape
+  assign share_title_encoded = share_title_val | url_param_escape
+
+  assign share_twitter_url = base_full_url | append: q_sep | append: 'utm_source=twitter&utm_medium=social_share&utm_campaign=share'
+  assign share_facebook_url = base_full_url | append: q_sep | append: 'utm_source=facebook&utm_medium=social_share&utm_campaign=share'
+  assign share_pinterest_url = base_full_url | append: q_sep | append: 'utm_source=pinterest&utm_medium=social_share&utm_campaign=share'
+-%}
+<ul class="social inline-flex flex-wrap">
+  {%- unless share_twitter == false -%}
+    <li>
+      <a class="social__link flex items-center justify-center" href="//twitter.com/intent/tweet?text={{ share_title_encoded }}&amp;url={{ share_twitter_url | url_encode }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_twitter' | t }}">
+        {% render 'icon-twitter' %}
+      </a>
+    </li>
+  {%- endunless -%}
+
+  {%- unless share_facebook == false -%}
+    <li>
+      <a class="social__link flex items-center justify-center" href="//www.facebook.com/sharer.php?u={{ share_facebook_url | url_encode }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_facebook' | t }}">
+        {% render 'icon-facebook' %}
+      </a>
+    </li>
+  {%- endunless -%}
+
+  {% unless share_pinterest == false or share_image == blank -%}
+    <li>
+      <a class="social__link flex items-center justify-center" href="//pinterest.com/pin/create/button/?url={{ share_pinterest_url | url_encode }}&amp;media={{ share_image | image_url: width: 1000 | url_encode }}&amp;description={{ share_title_encoded }}" target="_blank" rel="noopener" title="{{ 'general.social.share_on_pinterest' | t }}">
+        {% render 'icon-pinterest' %}
+      </a>
+    </li>
+  {%- endunless %}
+</ul>

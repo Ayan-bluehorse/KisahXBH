@@ -1,0 +1,268 @@
+<section id="shopify-section-{{ section.id }}" class="why-kisah-section {{ section.settings.section_class }}">
+  <div class="container">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="wk-heading">{{ section.settings.heading }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="27" viewBox="0 0 22 27" fill="none">
+<path d="M4.31041 1.00024C4.03731 2.09682 3.2097 5.1217 2.65726 8.02453C2.10485 10.6501 1.69105 12.4418 1.41588 13.7494C1.27726 14.3743 1.1407 14.9205 1 16.3109" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+<path d="M5.96484 17.5523C6.92488 17.2792 10.2187 15.0861 13.0594 13.3502C15.6147 11.7632 17.2699 10.5218 18.3706 9.76457C18.9251 9.41698 19.4713 9.14387 20.8617 8.03491" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+<path d="M6.37891 25.4145C6.65199 25.4145 8.97754 25.4145 12.5611 25.3462C13.9597 25.2779 14.5059 25.1414 15.6749 25.071C16.8439 25.0007 18.6191 25.0007 20.4481 25.0007" stroke="#D5B54D" stroke-width="2" stroke-linecap="round"/>
+</svg>
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="wk-subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="wk-grid">
+      {% for block in section.blocks %}
+        <div class="wk-card">
+          
+          {% if block.settings.icon %}
+            <div class="wk-icon">
+              <img width="{{ block.settings.icon.width }}" height="{{ block.settings.icon.height }}" loading="lazy" src="{{ block.settings.icon | image_url: width: 80 }}" alt="{{ block.settings.title }}">
+            </div>
+          {% endif %}
+
+          {% if block.settings.icon_wedding2 %}
+            <div class="wk-icon wedding_lp_2">
+              <img width="{{ block.settings.icon_wedding2.width }}" height="{{ block.settings.icon_wedding2.height }}" loading="lazy" src="{{ block.settings.icon_wedding2 | image_url: width: 80 }}" alt="{{ block.settings.title }}">
+            </div>
+          {% endif %}
+
+
+
+          <h3 class="wk-card-title">{{ block.settings.title }}</h3>
+          <p class="wk-card-text">{{ block.settings.text }}</p>
+          
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<style>
+.why-kisah-section {
+    background: #201747;
+    padding: 40px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.why-kisah-section .container {
+    max-width: 1280px;
+}
+
+.wk-heading {
+    font-size: 48px;
+    line-height: 48px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 14px;
+    font-family: Playfair Display !important;
+    text-align: center;
+}
+
+.wk-subheading {
+    color: #d8d8d8;
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 25.4px;
+    font-family: Manrope !important;
+    text-align: center;
+}
+
+/* GRID */
+.wk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.wk-icon {
+    text-align: center;
+}
+
+.wk-heading svg {
+  display:none;
+}
+
+/* CARD */
+.wk-card {
+    padding: 32.8px 24px 57.35px;
+    transition: all 0.3s ease;
+    background: #201747;
+    box-shadow: -6px -7px 8px #251A52, 6px 6px 8px #1B143C;
+    text-align: center;
+}
+
+.wk-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.wk-icon img {
+    width: 64px;
+    height: 64px;
+  margin-bottom: 23.8px;
+}
+
+.wk-icon.wedding_lp_2 {
+  display:none;
+}
+
+.wk-card-title {
+    font-size: 20px;
+    color: #D4AF37;
+    line-height: 28px;
+    font-family: Manrope !important;
+    max-width: 70%;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+.wk-card-text {
+    font-size: 14px;
+    color: #FFFFFF;
+    line-height: 22.8px;
+    font-family: Manrope !important;
+    margin: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .wk-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wk-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    row-gap: 25px;
+  }
+
+.why-kisah-section .container {
+    max-width: 1280px;
+}
+
+.wk-icon {
+    text-align: center;
+}
+
+.wk-heading {
+    font-size: 24px;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+.why-kisah-section {
+    padding: 30px 0 21px;
+}
+
+.wk-subheading {
+    font-size: 14px;
+    line-height: normal;
+    margin-bottom: 17px;
+}
+
+.wk-card {
+    padding: 0;
+    box-shadow: none;
+}
+
+.why-kisah-section .container {
+    padding: 0 25px;
+}
+
+.wk-icon img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+}
+
+.wk-card-title {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: normal;
+    margin-bottom: 5px;
+}
+
+.wk-card-text {
+    font-size: 12px;
+    line-height: 19px;
+}
+
+}
+
+    
+</style>
+
+
+{% schema %}
+{
+  "name": "Why Kisah",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Kisah?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Where tradition meets contemporary elegance"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_wedding2",
+          "label": "Wedding 2 Icon Image",
+          "info": "This image used on wedding lp page 2"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Craftsmanship"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Every piece is meticulously crafted by skilled artisans using traditional techniques passed down through generations."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Why Kisah Section"
+    }
+  ]
+}
+{% endschema %}
+

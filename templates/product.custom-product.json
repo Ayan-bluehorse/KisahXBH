@@ -1,0 +1,659 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-custom",
+      "blocks": {
+        "text_with_icon_tags_kp1": {
+          "type": "text-with-icon-tags",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_mob_fb": true,
+            "show_mob_insta": true,
+            "show_mob_print": true,
+            "show_mob_whatsapp": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false,
+            "enable_product_reviews_by_price": true
+          }
+        },
+        "brand_rating": {
+          "type": "brand-rating",
+          "settings": {
+            "fallback_handles": "",
+            "background_color": "#FFF3DA",
+            "text_color": "#1F1F1F"
+          }
+        },
+        "vendor": {
+          "type": "vendor",
+          "disabled": true,
+          "settings": {}
+        },
+        "divider": {
+          "type": "divider",
+          "disabled": true,
+          "settings": {
+            "show_in_quickbuy": false
+          }
+        },
+        "product_select_b88prX": {
+          "type": "product-select",
+          "settings": {
+            "product_select_title": "Color"
+          }
+        },
+        "meta_information_cA633H": {
+          "type": "meta-information",
+          "settings": {
+            "meta-img": "shopify://shop_images/lamb_1.png",
+            "meta-text": "#201747",
+            "meta-bg": "#d2cbfc"
+          }
+        },
+        "variant-picker": {
+          "type": "variant-picker",
+          "settings": {
+            "show_single": false,
+            "select_first_variant": true,
+            "selector_style": "listed",
+            "enable_dynamic_availability": true,
+            "enable_size_chart": true,
+            "size_chart_variant": "Size",
+            "size_chart_page": "",
+            "model_size_info": ""
+          }
+        },
+        "offer_box_YYqAET": {
+          "type": "offer_box",
+          "settings": {
+            "tag": "",
+            "icon": "shopify://shop_images/discount_2.png",
+            "title": "Offers",
+            "text": "Use code FIRSTBUY10 to avail extra 10% discount on your first purchase"
+          }
+        },
+        "custom_liquid_b4f6NA": {
+          "type": "custom-liquid",
+          "settings": {
+            "custom_liquid": "{%- if product.tags contains 'preorder' or product.metafields.custom.ready_to_dispatch_dispatch_in_30_days != blank -%} \n\n\n<p class=\"efjhhehehee\">This product is made to order and will be delivered within 30 days.</p>\n<style>p.efjhhehehee {\n    text-transform: capitalize;\n    font-weight: 600;\n}</style>\n\n{% endif %}",
+            "show_in_quickbuy": false
+          }
+        },
+        "buy-buttons": {
+          "type": "buy-buttons",
+          "settings": {
+            "show_quantity_selector": false,
+            "enable_payment_button": false,
+            "show_backorder_text": false,
+            "show_pickup_availability": true,
+            "show_gift_card_recipient": false,
+            "show_fb": true,
+            "show_insta": true,
+            "show_print": true,
+            "show_whatsapp": true,
+            "show_help_chat": true,
+            "help_text": "For help with sizing, delivery or anything else,",
+            "help_link_text": "Chat with us",
+            "help_whatsapp_number": "916289902520",
+            "help_whatsapp_message": "Hi"
+          }
+        },
+        "recommendation_PrFffR": {
+          "type": "recommendation",
+          "settings": {
+            "recommendation_title": "More ways to style"
+          }
+        },
+        "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt": {
+          "type": "shopify://apps/pre-order-restock-notifier/blocks/back_in_stock_notifier/1fadf77e-ebd8-4e68-90cb-f24d97d07bde",
+          "settings": {
+            "notify_btn_text": "Notify Me",
+            "notify_btn_backColor": "#000000",
+            "notify_btn_textColor": "#ffffff",
+            "notify_btn_borderColor": "#000000",
+            "notify_btn_border_radius": 2,
+            "notify_btn_border_size": 1,
+            "notify_btn_position_desktop": "other",
+            "notify_btn_position_mobile": "other",
+            "hide_buy_now_btn": false,
+            "notify_btn_fullwidth": true
+          }
+        },
+        "preorderoffer_box_Rht83D": {
+          "type": "preorderoffer_box",
+          "settings": {
+            "title": "",
+            "text": "\"Pre-book now and enjoy an exclusive flat <b>5% off</b> with code <b>DENIM5!</b>\nSecure your favourites today!\nProducts will be delivered by <b>12th June 2025</b>\n*terms and conditions apply\""
+          }
+        },
+        "preorderoffer_box_1_hkthjE": {
+          "type": "preorderoffer_box_1",
+          "disabled": true,
+          "settings": {
+            "title_1": "",
+            "text_1": "\"Pre-book now and enjoy an exclusive flat <b>5% off </b>with code <b>DKT5OFF!</b><br>\nOffer applicable on pre-paid orders only<br>\nSecure your favourites today!<br>\nProducts will be delivered by <b>30th January 2025</b><br>\n*terms and conditions apply\""
+          }
+        },
+        "preorderoffer_box_2_rHfGRg": {
+          "type": "preorderoffer_box_2",
+          "disabled": true,
+          "settings": {
+            "title_2": "",
+            "text_2": "\"Pre-book now and enjoy an exclusive flat <b>5% off </b> with code <b>DKT5OFF!</b><br>\nOffer applicable on pre-paid orders only\nSecure your favourites today!<br>\nProducts will be delivered by <b>7th February 2025</b><br>\n*terms and conditions apply\""
+          }
+        },
+        "preorderoffer_box_3_7UbWN6": {
+          "type": "preorderoffer_box_3",
+          "disabled": true,
+          "settings": {
+            "title_3": "",
+            "text_3": "\"Pre-book now and enjoy an exclusive flat <b>5% off</b> with code <b>DKT5OFF!</b><br>\nOffer applicable on pre-paid orders only\nSecure your favourites today!<br>\nProducts will be delivered by <b>31st January 2025</b><br>\n*terms and conditions apply\""
+          }
+        },
+        "estimated_delivery_date_cp_clickpost_edd_AJ3qJt": {
+          "type": "shopify://apps/estimated-delivery-date-cp/blocks/clickpost-edd/052d4955-0ec2-4e86-8e1f-f971acb44560",
+          "settings": {
+            "heading": "Check Estimated Delivery",
+            "color": "#263238",
+            "submit_color": "#ffffff",
+            "submit": "Check",
+            "edd_icon": "shopify://shop_images/delivery-truck_1.png",
+            "edd_text": "Estimated delivery by",
+            "edd_color": "#3ea36a",
+            "fail_color": "#ff0000",
+            "cod_icon": "shopify://shop_images/delivery-truck_1.png",
+            "cod_text": "Cash on delivery",
+            "unservicable_text": "Pincode not servicable",
+            "cod": false,
+            "date_range": false,
+            "only_min": true,
+            "month": false,
+            "placeholder": "Enter your pincode",
+            "date_format": "1",
+            "enable_countdown": false,
+            "invalid_text": "Please enter a valid pincode",
+            "extra_text": "",
+            "max_date_additional_text": "",
+            "helping_text": "",
+            "padding_top": 0,
+            "padding_bottom": 0
+          }
+        },
+        "trust_icons_mobile_kp1": {
+          "type": "trust-icons-mobile",
+          "settings": {
+            "heading": "Shop with Confidence",
+            "icon1": "shopify://shop_images/Screenshot_2026-08-27_153237-removebg-preview.png",
+            "text1": "Cash on\ndelivery",
+            "icon2": "shopify://shop_images/Screenshot_2026-08-27_153232-removebg-preview.png",
+            "text2": "7 days return\nand exchange",
+            "icon3": "shopify://shop_images/Screenshot_2026-08-27_152916-removebg-preview.png",
+            "text3": "Money back\nguarantee",
+            "text4": ""
+          }
+        },
+        "trust_icons_LymzYd": {
+          "type": "trust-icons",
+          "settings": {
+            "icon1": "shopify://shop_images/express_1.png",
+            "text1": "2 days delivery",
+            "icon2": "shopify://shop_images/cash-on-delivery_2.png",
+            "text2": "Cash on delivery",
+            "icon3": "shopify://shop_images/return-box_1.png",
+            "text3": "7 days return and exchange",
+            "icon4": "shopify://shop_images/cashback.png",
+            "text4": "Money back guarantee"
+          }
+        },
+        "links_Ch9pzh": {
+          "type": "links",
+          "settings": {
+            "text": "<p>Click here to see our <a href=\"https://kisah.in/pages/shipping-returns\" target=\"_blank\" title=\"https://kisah.in/pages/shipping-returns\">return policy</a> and <a href=\"https://kisah.in/pages/shipping-and-delivery\" target=\"_blank\" title=\"https://kisah.in/pages/shipping-and-delivery\">shipping policy</a></p>"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "show_in_quickbuy": false
+          }
+        },
+        "helium_analytics_ai_agent_helium_embed_product_bottom_wHFUQb": {
+          "type": "shopify://apps/helium-analytics-ai-agent/blocks/helium-embed_product-bottom/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_REUDXR": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "text_with_icon_tags_kp1",
+        "title",
+        "price",
+        "brand_rating",
+        "vendor",
+        "divider",
+        "product_select_b88prX",
+        "meta_information_cA633H",
+        "variant-picker",
+        "offer_box_YYqAET",
+        "custom_liquid_b4f6NA",
+        "buy-buttons",
+        "recommendation_PrFffR",
+        "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt",
+        "preorderoffer_box_Rht83D",
+        "preorderoffer_box_1_hkthjE",
+        "preorderoffer_box_2_rHfGRg",
+        "preorderoffer_box_3_7UbWN6",
+        "estimated_delivery_date_cp_clickpost_edd_AJ3qJt",
+        "trust_icons_mobile_kp1",
+        "trust_icons_LymzYd",
+        "links_Ch9pzh",
+        "description",
+        "helium_analytics_ai_agent_helium_embed_product_bottom_wHFUQb",
+        "judge_me_reviews_preview_badge_REUDXR"
+      ],
+      "settings": {
+        "show_contains": true,
+        "contains_icon": "shopify://shop_images/Screenshot_2026-08-28_113105-removebg-preview.png",
+        "contains_default_tab": "",
+        "contains_text": "Contains",
+        "show_breadcrumbs": true,
+        "show_location_underneath": false,
+        "inventory_transfers_enable": true,
+        "kid-size-image": "shopify://shop_images/vector_2-01_1_1_1.png",
+        "size-image": "shopify://shop_images/output-onlinepngtools.png",
+        "sizechart_help_icon": "shopify://shop_images/ic_baseline-whatsapp.png",
+        "sizechart_help_whatsapp": "",
+        "enable_sticky_columns": false,
+        "gallery_size": "medium",
+        "gallery_layout": "carousel-beside",
+        "enable_zoom": true,
+        "show_alt_text": true,
+        "alt_text_icon": "",
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "enable_media_grouping": true,
+        "media_grouping_option": "Color,Colour,Couleur,Farbe"
+      }
+    },
+    "bundleproduct_DxCWND": {
+      "type": "bundleproduct",
+      "disabled": true,
+      "settings": {
+        "percent": "5% off",
+        "head": "Complete the look",
+        "text": "<span><strong>Pair it together</strong><br><strong>Frequently bought together</strong><br><strong>Save 5%</strong> when buy it together</span>",
+        "desk-padding-top": 0,
+        "desk-padding-bottom": 20,
+        "mob-padding-top": 0,
+        "mob-padding-bottom": 16
+      }
+    },
+    "cp_review_slider_NUtQCW": {
+      "type": "cp-review-slider",
+      "blocks": {
+        "slide_aEtJBf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Chai_Kurta_Crisp_Vibes_Soft_...Outfit-_kisah_inLocation-_thetivoli.newdelhi_TheFormalEdit.jpg",
+            "link": "shopify://products/ka-0825-5648-t301-men-off-white-embroidered-chikankari-kurta-jacket-trouser-set",
+            "text": "Gave me a super refined vibe, honestly the best pick for formal events"
+          }
+        },
+        "slide_3MzpjN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/trend_viral_ootd_insta_instapic_instaf_1.jpg",
+            "link": "shopify://products/kisah-men-multi-abstract-kurta-ka-1025",
+            "text": "Never thougtht i'd rock prints like this but damn, lowkey obsessed"
+          }
+        },
+        "slide_7cxiMd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Wearing_kisah_in_......._traditional_kurtaset_kisah_wedding_traditionallook_fashion.jpg",
+            "link": "shopify://products/kisah-men-cream-printed-with-ikat-design-kurta-trouser-set-ka-0317-t301",
+            "text": "Perfect haldi look for me, didn’t wanna go all yellow but this gave the best balance with comfort"
+          }
+        },
+        "slide_M4eFeY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/There_is_nothing_like_the_elegance_and_grace_of_ethnic_wear._theguyonroads_ethnicformen_elega.jpg",
+            "link": "shopify://products/kisah-men-multi-printed-floral-kurta-jacket-trouser-set-ka-0866-5119-t301",
+            "text": "This has turned into my fav ethnic look"
+          }
+        },
+        "slide_c6CXmW": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/724a6a615698740246bc95755a47d1a5.jpg",
+            "link": "shopify://products/kisah-men-green-jacquard-kurta-jacket-churidar-set-with-ethnic-motifs-ka-0160-5428-e101",
+            "text": "Thanks for making me become the most well-dressed in my group."
+          }
+        },
+        "slide_WCq9xw": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/The_month_of_festivities_greetings_to_fashion_fittings_August_had_it_all_Wrapped_in_new_look_1.jpg",
+            "link": "https://kisah.in/products/kisah-men-mustard-printed-kurta-jacket-trouser-set-ka-1068-5631-t301?_pos=1&_sid=f3f4560d1&_ss=r",
+            "text": "The fit is clean, fabric is soft af and styling it was also very easy. Totally worth it!"
+          }
+        },
+        "slide_N3Aaa7": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Traditional_yet_trendy_Redefine_ethnic_fashion_with_Kisah_s_stunning_collection.Outfit_kisah_in.jpg",
+            "link": "https://kisah.in/products/kisah-men-black-kurta-bandhgala-trouser-set-ka-0863-9021-t303",
+            "text": "Black ethnic wear >>> can’t go wrong, this one became my instant fav out of all outfits"
+          }
+        },
+        "slide_aepw8w": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/The_month_of_festivities_greetings_to_fashion_fittings_August_had_it_all_Wrapped_in_new_look_1.jpg",
+            "link": "https://kisah.in/products/ka-1070-5633-e101-men-white-printed-floral-kurta-front-open-jacket-churidar-set?_pos=8&_sid=7df084552&_ss=r",
+            "text": "Loved how comfy yet classy this kurta set felt, pastel shade with the jacket literally made me stand out all evening."
+          }
+        },
+        "slide_cj4Jkc": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Flute_Flex_....._krishna_janmashtami_bollwood_explorepage_janmashtami_kurtapajama_ethn.jpg",
+            "link": "https://kisah.in/products/kisah-mens-navy-blue-kurta-trouser-set-ka-0833-t306?_pos=7&_sid=0760269ed&_ss=r",
+            "text": "Honestly this kurta made me feel like Krishna. Everybody appricieted my outfit. Def recommending this outfit."
+          }
+        },
+        "slide_z3LF8q": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/When_the_bride_says_ethnic_you_don_t_argue_you_deliver_kisah_in_Straight_outta_Sujata_s_wedd.jpg",
+            "link": "https://kisah.in/products/kisah-men-mauve-kurta-jacket-trouser-set-ka-0994-5590-t301?_pos=8&_sid=6c828540e&_ss=r",
+            "text": "Wore it for a friends sangeet and sab bolre the ‘bhai tu toh dulha lagra’"
+          }
+        },
+        "slide_njJbgr": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/A_Beautiful_Dump_for_my_Beautiful_Souls.jpg",
+            "link": "https://kisah.in/products/ka-0673-d101?_pos=87&_sid=37a76bbba&_ss=r",
+            "text": "Wore this for my grah pravesh. Loved the fit and comfort"
+          }
+        },
+        "slide_MAAy8J": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/collaboration_with_FirstcryIndiaFestival_fun_has_just_begun_and_the_most_beautiful_festival_wh.jpg",
+            "link": "https://kisah.in/products/kisah-boys-multi-printed-abstract-kurta-pyjama-set-kk-1026-kc105?_pos=6&_sid=761988e85&_ss=r",
+            "text": "My kids looked so adorable in these kurtas, got endless compliments from everyone. Superrrr cute"
+          }
+        }
+      },
+      "block_order": [
+        "slide_aEtJBf",
+        "slide_3MzpjN",
+        "slide_7cxiMd",
+        "slide_M4eFeY",
+        "slide_c6CXmW",
+        "slide_WCq9xw",
+        "slide_N3Aaa7",
+        "slide_aepw8w",
+        "slide_cj4Jkc",
+        "slide_z3LF8q",
+        "slide_njJbgr",
+        "slide_MAAy8J"
+      ],
+      "name": "CP Review Slider",
+      "settings": {
+        "heading": "#SpottedInKisah"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "title": "You may also like",
+        "show_vendor": false,
+        "grid": 4
+      }
+    },
+    "17195539445e36f021": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_UMUh8w": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_UMUh8w"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    },
+    "1769847277a8abb1ca": {
+      "type": "apps",
+      "blocks": {
+        "helium_analytics_ai_agent_product_recommendation_Ad37HK": {
+          "type": "shopify://apps/helium-analytics-ai-agent/blocks/product-recommendation/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+          "settings": {
+            "template_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "strategy_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "use_shop_metafield": true,
+            "heading": "Recommended Products",
+            "heading_color": "#000000",
+            "font_family": "inherit",
+            "heading_font_family": "inherit",
+            "heading_alignment": "left",
+            "heading_size": 32,
+            "heading_size_mobile": 24,
+            "heading_font_weight": "900",
+            "heading_transform": "none",
+            "header_margin_bottom": 30,
+            "limit": 24,
+            "hide_if_below_min_products": false,
+            "min_products_threshold": 4,
+            "lane_limit": 250,
+            "columns_desktop": 4,
+            "columns_mobile": 2,
+            "grid_gap": 20,
+            "layout_mode": "grid",
+            "slider_item_width": 280,
+            "slider_card_width_mobile": 40,
+            "tag_groups_layout": "stacked",
+            "card_mode": "default",
+            "enable_infinite_scroll": false,
+            "infinite_scroll_step": 30,
+            "enable_cutsize_filter": true,
+            "cutsize_threshold": 50,
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "grid_selector": ".product-grid, ul.product-grid, #product-grid, .grid",
+            "card_selector": "[data-product-id], .product-card, li",
+            "search_section_id": "main-search",
+            "search_cards_per_page": 4,
+            "enable_oos_nudge": false,
+            "enable_oos_modal": false,
+            "oos_modal_title": "You May Also Like",
+            "oos_modal_title_size": 24,
+            "oos_modal_subtitle": "<p>We found some great alternatives for you.</p>",
+            "oos_modal_subtitle_size": 16,
+            "oos_modal_max_width": 900,
+            "oos_modal_max_height_desktop": 90,
+            "oos_modal_max_height_mobile": 95
+          }
+        }
+      },
+      "block_order": [
+        "helium_analytics_ai_agent_product_recommendation_Ad37HK"
+      ],
+      "disabled": true,
+      "settings": {
+        "full_width": false
+      }
+    },
+    "apps_UKL7EG": {
+      "type": "apps",
+      "blocks": {
+        "helium_analytics_ai_agent_product_recommendation_EeA98P": {
+          "type": "shopify://apps/helium-analytics-ai-agent/blocks/product-recommendation/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+          "disabled": true,
+          "settings": {
+            "template_id": "visual_similarity",
+            "strategy_id": "",
+            "use_shop_metafield": true,
+            "heading": "Recommended Products",
+            "heading_color": "#000000",
+            "font_family": "inherit",
+            "heading_font_family": "inherit",
+            "heading_alignment": "left",
+            "heading_size": 32,
+            "heading_size_mobile": 24,
+            "heading_font_weight": "900",
+            "heading_transform": "none",
+            "header_margin_bottom": 30,
+            "limit": 24,
+            "hide_if_below_min_products": false,
+            "min_products_threshold": 4,
+            "lane_limit": 250,
+            "columns_desktop": 4,
+            "columns_mobile": 2,
+            "grid_gap": 20,
+            "layout_mode": "grid",
+            "slider_item_width": 280,
+            "slider_card_width_mobile": 40,
+            "tag_groups_layout": "stacked",
+            "card_mode": "default",
+            "enable_infinite_scroll": true,
+            "infinite_scroll_step": 30,
+            "enable_cutsize_filter": true,
+            "cutsize_threshold": 50,
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "grid_selector": ".product-grid, ul.product-grid, #product-grid, .grid",
+            "card_selector": "[data-product-id], .product-card, li",
+            "search_section_id": "main-search",
+            "search_cards_per_page": 4,
+            "enable_oos_nudge": false,
+            "enable_oos_modal": false,
+            "oos_modal_title": "You May Also Like",
+            "oos_modal_title_size": 24,
+            "oos_modal_subtitle": "<p>We found some great alternatives for you.</p>",
+            "oos_modal_subtitle_size": 16,
+            "oos_modal_max_width": 900,
+            "oos_modal_max_height_desktop": 90,
+            "oos_modal_max_height_mobile": 95
+          }
+        }
+      },
+      "block_order": [
+        "helium_analytics_ai_agent_product_recommendation_EeA98P"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    },
+    "apps_UFMwwi": {
+      "type": "apps",
+      "blocks": {
+        "helium_analytics_ai_agent_product_recommendation_i9yd7V": {
+          "type": "shopify://apps/helium-analytics-ai-agent/blocks/product-recommendation/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+          "settings": {
+            "template_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "strategy_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "use_shop_metafield": false,
+            "heading": "Recommended Products",
+            "heading_color": "#000000",
+            "font_family": "inherit",
+            "heading_font_family": "inherit",
+            "heading_alignment": "left",
+            "heading_size": 32,
+            "heading_size_mobile": 24,
+            "heading_font_weight": "inherit",
+            "heading_transform": "none",
+            "header_margin_bottom": 30,
+            "limit": 4,
+            "hide_if_below_min_products": false,
+            "min_products_threshold": 4,
+            "lane_limit": 500,
+            "columns_desktop": 4,
+            "columns_mobile": 2,
+            "grid_gap": 20,
+            "layout_mode": "grid",
+            "slider_item_width": 280,
+            "slider_card_width_mobile": 40,
+            "tag_groups_layout": "stacked",
+            "card_mode": "helium_card",
+            "enable_infinite_scroll": false,
+            "infinite_scroll_step": 25,
+            "enable_cutsize_filter": true,
+            "cutsize_threshold": 50,
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "grid_selector": ".product-grid, ul.product-grid, #product-grid, .grid",
+            "card_selector": "[data-product-id], .product-card, li",
+            "search_section_id": "main-search",
+            "search_cards_per_page": 4,
+            "enable_oos_nudge": false,
+            "enable_oos_modal": false,
+            "oos_modal_title": "You May Also Like",
+            "oos_modal_title_size": 24,
+            "oos_modal_subtitle": "<p>We found some great alternatives for you.</p>",
+            "oos_modal_subtitle_size": 16,
+            "oos_modal_max_width": 900,
+            "oos_modal_max_height_desktop": 90,
+            "oos_modal_max_height_mobile": 95
+          }
+        }
+      },
+      "block_order": [
+        "helium_analytics_ai_agent_product_recommendation_i9yd7V"
+      ],
+      "settings": {
+        "full_width": false
+      }
+    },
+    "custom_liquid_TCcGEx": {
+      "type": "custom-liquid",
+      "name": "Custom Liquid",
+      "settings": {
+        "full_width": true,
+        "code": "<script>\n\n(function () {\n  if (window.innerWidth >= 768) return;\n  // Use a different global flag to avoid conflict if both scripts somehow load (though unlikely on same page)\n  if (window.__PDP_REVAMP_INITED__) return;\n  window.__PDP_REVAMP_INITED__ = true;\n\n  (function injectCSS() {\n    const css = `\n.product-block .quickbuy-container .inner .product-column-right .product-meta-select-container {\n  display: none !important;\n}\n\n.product-block .quickbuy-container .inner .title_share_button .desk-hide-share {\n  position: absolute;\n  right: 0;\n  z-index: 99;\n  top: 43px;\n  display: none;\n}\n\n.product-block .quickbuy-container .inner .title_share_button.active .desk-hide-share {\n  display: block;\n}\n\n.product-block .quickbuy-container .inner .desk-hide-share ul.desk-share {\n  align-items: center;\n  background: #201747;\n  border-radius: 50px;\n  gap: 8px;\n  display: flex;\n  list-style: none;\n  width: fit-content;\n  padding: 6px 11px 3px 10px;\n}\n\n.product-block .quickbuy-container .inner .desk-hide-share a {\n  width: 27px;\n  display: block;\n}\n\n.product-block .quickbuy-container .inner .desk-share-soicial-icons .desk-share .svg-container-class .native-share-img {\n  width: 23px;\n  display: block;\n}\n\n.CP_loading {\n  color: #000;\n  text-align: center;\n  margin: 1rem 0;\n}\n\n.CP-default-price {\n  display: flex;\n  flex-direction: row-reverse;\n}\n\n.CP-last-price {\n  text-decoration-color: #acacac !important;\n  color: #acacac !important;\n  font-size: 12px !important;\n}\n\n.CP-current-price {\n  font-size: 15px;\n  font-weight: 400;\n  color: #1e1e1e;\n}\n\n.CP-discount {\n  font-size: 10px !important;\n  color: #ff0606 !important;\n}\n\n.CP-action-btn {\n  width: 100%;\n  display: flex;\n  justify-content: space-between;\n  padding: 0px 4px;\n  margin-top: 8px;\n}\n\n.product-block .snap_dp_list {\n  padding: 0px 4px;\n  margin-block: 6px;\n  display: none;\n}\n\n.CP-quick-view-btn {\n  padding: 6px 2px;\n  background-color: #ffffff;\n  color: #1e1e1e;\n  border: 0.5px solid #1e1e1e;\n  border-radius: 17px;\n  font-size: 10px;\n  width: 48%;\n  transition: background-color 0.3s ease;\n}\n\n.CP-atc-btn {\n  padding: 6px 2px;\n  background-color: #201747;\n  color: #ffffff;\n  border: none;\n  border-radius: 17px;\n  font-size: 10px;\n  width: 48%;\n  transition: background-color 0.3s ease;\n}\n\n.CP-ribbon-tag {\n  background-color: #201747;\n  color: #fff;\n  top: 10px;\n  left: 0px;\n  font-weight: bold;\n  font-family: \"Generis Sans W01 Bold\", sans-serif;\n  padding: 2px 14px;\n  display: inline-block;\n  position: absolute;\n  font-size: 10px;\n  clip-path: polygon(0 0, 100% 0, 80% 100%, 0 100%);\n  width: fit-content;\n  z-index: 9;\n}\n\n.wishlist-hero-custom-button {\n  padding: 0 !important;\n}\n\n.product-block .inner a.product-link {\n  display: flex;\n  flex-direction: column;\n  flex: auto;\n}\n\n.wishlist-hero-custom-button button {\n  display: flex !important;\n  justify-content: center !important;\n  align-items: center !important;\n}\n\n.wishlist-hero-custom-button svg {\n  width: 16px !important;\n  height: 16px !important;\n}\n\n.product-block__image-dots {\n  background: #1e1e1e;\n  opacity: 60%;\n  padding: 2px 2px;\n  border-radius: 7px;\n  color: #c3c3c3;\n}\n\n.product-block__image-dots div {\n  background: #c3c3c3;\n  opacity: 1 !important;\n}\n\n.CP-ratings {\n  opacity: 60%;\n  color: #ffffff;\n  background-color: #1e1e1e;\n}\n\n.CP-PLP-swiper-dots {\n  background: #1e1e1e;\n  opacity: 60%;\n  padding: 2px 2px;\n  border-radius: 7px;\n  color: #c3c3c3;\n}\n\n.CP-PLP-swiper-dots div {\n  background: #c3c3c3;\n}\n\n.product-block .quickbuy-container .inner .zoom-icon {\n  display: none !important;\n}\n\n.product-block .quickbuy-container .inner {\n  padding-bottom: 20px;\n  padding-top: 0;\n}\n\nh1.product-title {\n  font-size: 18px;\n}\n\n.quickbuy-container.use-color-scheme {\n  position: fixed;\n  left: 0;\n  right: 0;\n  top: 0;\n  z-index: 10000;\n  max-height: 100dvh;\n  overflow-y: auto;\n  display: none;\n  margin: 0 auto;\n  background: rgba(0, 0, 0, 0.3);\n  height: 100dvh !important;\n}\n\n.quickbuy-container.use-color-scheme .inner {\n  max-width: 90vw;\n  margin: 20px auto;\n  background: #fff;\n}\n\n.quickbuy-container .trust-icons_container {\n  margin-top: 15px;\n}\n\n.quickbuy-container .close-detail {\n  z-index: 6;\n  background: #fff;\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  padding: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  right: 8%;\n  top: 28px;\n}\n\nbuy-buttons.buy-buttons-row.block {\n  margin-bottom: 0;\n}\n\n.quickbuy-container .CP-qv-sticky-container {\n  position: sticky !important;\n  bottom: 10px !important;\n  background-color: #fff !important;\n}\n\n.quickbuy-container .CP-atc-sticky-container {\n  position: sticky !important;\n  bottom: 10px !important;\n  background-color: #fff !important;\n}\n\nproduct-form.js-product.product-info.quickbuy-content {\n  margin-bottom: 0;\n}\n\n.product-form .quantity-submit-row .quantity-submit-row__submit button[type=\"submit\"] {\n  margin-bottom: 0 !important;\n}\n\n.product-form .quantity-submit-row .quantity-submit-row__submit {\n  margin-bottom: 0;\n}\n.option-selector__btns {\n  padding-right: 50px;\n}\n      .trust-icons_container>:nth-child(1) span {\n        width: 100% !important;\n    }\n.product-form .input-row {\n  margin-bottom: 0 !important;\n  overflow: hidden;\n}\n\n.product-form .option-selector {\n  margin-bottom: 0;\n}\n\n.product-form .quantity-submit-row .quantity-submit-row__submit {\n  margin-top: 0;\n}\n\n.quickbuy-container.use-color-scheme.CP-quickbuy-open {\n  display: block;\n}\n\n.quickbuy-container.use-color-scheme.CP-quickbuy-closed {\n  display: none;\n}\n\n.image-slider-nav button {\n  position: absolute;\n  bottom: 40%;\n  transform: translateY(-50%);\n  background: #1e1e1e;\n  opacity: 60%;\n  border: none;\n  padding: 10px;\n  border-radius: 2px;\n  display: none;\n}\n\n.image-slider-nav .nav-left {\n  left: 10px;\n}\n\n.image-slider-nav .nav-right {\n  right: 10px;\n}\n\n.image-slider-nav svg {\n  width: 5px !important;\n  height: 10px !important;\n}\n\n.trust-icons_container> :nth-child(1) span {\n  width: 100%;\n}\n\n.quickbuy-container .main-image a.rating {\n  display: none !important;\n}\n  body .product-block .product-block__title {\n    font-weight: 500 !important;\n}\n    .CP-ratings svg, .CP-ratings svg path {\n    stroke: rgb(254 162 2);\n    width: 8px;\n    fill: rgb(254 162 2);\n    height: 8px;\n}\n`;\n    const style = document.createElement(\"style\");\n    style.textContent = css;\n    document.head.appendChild(style);\n  })();\n\n  /* ========== tiny delegate helper (no theme dependency needed) ========== */\n  function onDelegate(root, type, selector, handler) {\n    root.addEventListener(type, function (e) {\n      const el = e.target.closest(selector);\n      if (el && root.contains(el)) handler(e, el);\n    });\n  }\n\n  /* ========== element-ready via MutationObserver (no rAF/interval) ========== */\n  (function (win) {\n    var listeners = [], doc = win.document, MutationObserver = win.MutationObserver || win.WebKitMutationObserver, observer;\n    function ready(selector, fn) {\n      listeners.push({ selector, fn });\n      if (!observer) {\n        observer = new MutationObserver(check);\n        observer.observe(doc.documentElement, { childList: true, subtree: true });\n      }\n      check();\n    }\n    function check() {\n      for (var i = 0; i < listeners.length; i++) {\n        var listener = listeners[i];\n        var elements = doc.querySelectorAll(listener.selector);\n        for (var j = 0; j < elements.length; j++) {\n          var el = elements[j];\n          if (!el._eleReadyCalled) {\n            el._eleReadyCalled = true;\n            listener.fn.call(el, el);\n          }\n        }\n      }\n    }\n    win.eleReady = ready;\n  })(this);\n\n  /* ---------------- Product tile enhancements ---------------- */\n  function initTile(productBlock) {\n    const detail = productBlock.querySelector(\".product-block__detail\");\n    if (detail) detail.style.position = \"inherit\";\n\n    const ratings = productBlock.querySelector(\".rating span\");\n    const svg = `<svg width=\"10\" height=\"11\" viewBox=\"0 0 7 7\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path d=\"M1.33875 7L1.9075 4.41184L0 2.67105L2.52 2.44079L3.5 0L4.48 2.44079L7 2.67105L5.0925 4.41184L5.66125 7L3.5 5.62763L1.33875 7Z\" fill=\"white\"></path>\n</svg>`;\n    if (ratings) {\n      ratings.classList.add(\"CP-ratings\");\n      const existingSvg = ratings.querySelector(\"svg\");\n      if (existingSvg) existingSvg.outerHTML = svg;\n    }\n\n    const dots = productBlock.querySelector(\".product-block__image-dots\");\n    if (dots) {\n      dots.classList.add(\"CP-PLP-swiper-dots\");\n      dots.querySelectorAll(\"div\").forEach((d) => d.classList.remove(\"product-block__image-dot--more\"));\n    }\n\n    const imageWrap = productBlock.querySelector(\".image-label-wrap\");\n    const images = imageWrap ? imageWrap.querySelectorAll(\".product-block__image\") : [];\n    let currentIndex = 0;\n    images.forEach((img, idx) => img.classList.toggle(\"product-block__image--active\", idx === 0));\n\n    const wrapper = document.createElement(\"div\");\n    wrapper.className = \"image-slider-nav\";\n    wrapper.innerHTML = `\n      <button class=\"nav-left\" aria-label=\"Previous\">\n        <svg width=\"2\" height=\"4\" viewBox=\"0 0 4 6\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path d=\"M0.583338 3L3.08334 0.5L3.66667 1.08333L1.75001 3L3.66667 4.91667L3.08334 5.5L0.583338 3Z\" fill=\"white\"></path>\n        </svg>\n      </button>\n      <button class=\"nav-right\" aria-label=\"Next\">\n        <svg width=\"2\" height=\"4\" viewBox=\"0 0 4 6\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path d=\"M3.41668 3L0.916677 0.5L0.333344 1.08333L2.25001 3L0.333344 4.91667L0.916677 5.5L3.41668 3Z\" fill=\"white\"></path>\n        </svg>\n      </button>`;\n    const imageContainer = productBlock.querySelector(\".image-cont\");\n    if (imageContainer) imageContainer.appendChild(wrapper);\n\n    function showImage(idx) {\n      images.forEach((img, i) => img.classList.toggle(\"product-block__image--active\", i === idx));\n    }\n    wrapper.querySelector(\".nav-left\")?.addEventListener(\"pointerdown\", () => {\n      if (!images.length) return;\n      currentIndex = (currentIndex - 1 + images.length) % images.length;\n      showImage(currentIndex);\n    });\n    wrapper.querySelector(\".nav-right\")?.addEventListener(\"pointerdown\", () => {\n      if (!images.length) return;\n      currentIndex = (currentIndex + 1) % images.length;\n      showImage(currentIndex);\n    });\n\n    const wishlistButton = productBlock.querySelector(\".wishlist-hero-custom-button\");\n    if (wishlistButton) {\n      wishlistButton.style.top = \"8px\";\n      wishlistButton.style.padding = \"2px\";\n      wishlistButton.style.background = \"#FFFFFF\";\n      wishlistButton.style.setProperty(\"right\", \"8px\", \"important\");\n    }\n\n    const actionButtons = `\n      <div class=\"CP-action-btn\"> \n        <button class=\"CP-quick-view-btn\"><svg xmlns=\"http://www.w3.org/2000/svg\" height=\"48px\" viewBox=\"0 -960 960 960\" width=\"48px\" fill=\"#000000\"><path d=\"M440.39-440.39H185.87v-79.22h254.52V-774.7h79.22v255.09H774.7v79.22H519.61v254.52h-79.22v-254.52Z\"/></svg></button>\n      </div>`;\n    const priceBlock = productBlock.querySelector(\".product-price\");\n    const productTitle = productBlock.querySelector(\".product-block__title\");\n    if (priceBlock && productTitle) {\n      const clonePriceBlock = priceBlock.cloneNode(true);\n      clonePriceBlock.querySelector(\".price__default\")?.classList.add(\"CP-default-price\");\n      const currentPrice = clonePriceBlock.querySelector(\".price__current\");\n      if (currentPrice) {\n        currentPrice.classList.add(\"CP-current-price\");\n      }\n      const saleLabel = clonePriceBlock.querySelector(\".product-label--sale span\") || clonePriceBlock.querySelector(\".product-label--sale\");\n      if (saleLabel) saleLabel.classList.add(\"CP-discount\");\n      productTitle.insertAdjacentElement(\"beforebegin\", clonePriceBlock);\n      priceBlock.style.display = \"none\";\n      productTitle.style.padding = \"0px 4px\";\n      clonePriceBlock.style.padding = \"0px 4px\";\n    }\n\n    const snapList = productBlock.querySelector(\".image-cont\");\n    if (snapList) {\n      snapList.insertAdjacentHTML(\"beforeend\", actionButtons);\n    }\n  }\n\n\n  /* ---------------- Quick View + ATC open (delegate; no DOMContentLoaded) ---------------- */\n  const hasThemeDelegate = typeof window.theme === \"object\" && typeof theme.addDelegateEventListener === \"function\";\n  const delegate = hasThemeDelegate\n    ? (sel, handler) => theme.addDelegateEventListener(document, \"click\", sel, handler)\n    : (sel, handler) => onDelegate(document, \"click\", sel, (evt, el) => handler(evt, el));\n\n  function attachQuickHandler(selector) {\n    delegate(selector, (evt, delEl) => {\n      evt.preventDefault();\n      const block = delEl.closest(\".product-block\");\n      const productUrl = block?.querySelector(\"a\")?.getAttribute(\"href\");\n      if (!productUrl) return;\n\n      // If theme.quickbuy not ready, just go to PDP\n      if (!window.theme || !theme.quickbuy) {\n        location.href = productUrl;\n        return;\n      }\n\n      const slider = delEl.closest(\".collection-slider\");\n      let quickbuyCont, detailCont;\n\n      if (slider) {\n        const sliderRow = slider.closest(\".collection-slider-row\");\n        if (!sliderRow || !sliderRow.querySelector(\".quickbuy-container\")) return;\n        quickbuyCont = sliderRow.querySelector(\".quickbuy-container\");\n      } else {\n        theme.quickbuy.setBlockHeights(block);\n        \n        // Try to find existing container in block or check if we moved it to body\n        quickbuyCont = block.querySelector(\".quickbuy-container\");\n        \n        // If not in block, check if we previously moved it to body and it belongs to this block\n        if (!quickbuyCont) {\n             // We need a way to identify the specific quickbuy container for this block if it's in body.\n             // But simpler: we stored _originalParent. We can search body for one that has _originalParent === block\n             const moved = Array.from(document.body.children).find(el => el.classList.contains('quickbuy-container') && el._originalParent === block);\n             if (moved) quickbuyCont = moved;\n        }\n\n        if (quickbuyCont && quickbuyCont.parentElement !== document.body) {\n             quickbuyCont._originalParent = block; // Store the block as original parent\n             document.body.appendChild(quickbuyCont);\n        }\n\n        quickbuyCont?.classList.add(\"CP-quickbuy-open\");\n        quickbuyCont?.classList.remove(\"CP-quickbuy-closed\");\n      }\n      if (!quickbuyCont) return;\n      detailCont = quickbuyCont.querySelector(\".inner\");\n      block.classList.add(\"expanded\");\n\n      quickbuyCont.dispatchEvent(new CustomEvent(\"on:quickbuy:before-open\", { bubbles: true }));\n\n      // close other expanded siblings in grid\n      if (!slider) {\n        [...block.parentElement.children].forEach((el) => {\n          if (el !== block && el.classList.contains(\"expanded\")) {\n            theme.quickbuy.contractDetail(el, true);\n          }\n        });\n      } else {\n        const other = Array.from(slider.querySelectorAll(\".product-block.expanded\")).filter((el) => el !== block);\n        other.forEach((el) => el.classList.remove(\"expanded\"));\n      }\n\n      if (detailCont) detailCont.innerHTML = '<div class=\"loading-spinner\"></div>';\n\n      fetch(productUrl, { method: \"get\" })\n        .then((r) => (r.ok ? r.text() : Promise.reject(r.status)))\n        .then((html) => {\n          const tmpl = document.createElement(\"template\");\n          tmpl.innerHTML = html;\n          const newDetail = tmpl.content.querySelector(\".quickbuy-content\")?.cloneNode(true);\n          if (!newDetail) return;\n\n          newDetail.querySelectorAll(\".more\").forEach((el) => (el.href = productUrl));\n          newDetail.querySelectorAll(\".product-title\").forEach((el) => {\n            el.innerHTML = `<a href=\"\">${el.innerHTML}</a>`;\n            el.firstElementChild.href = productUrl;\n          });\n          newDetail.querySelectorAll(\".show-gallery\").forEach((el) => { el.classList.remove(\"show-gallery\"); el.href = productUrl; });\n          newDetail.querySelectorAll(\".not-in-quickbuy\").forEach((el) => el.remove());\n          newDetail.querySelectorAll(\".only-in-quickbuy\").forEach((el) => el.classList.remove(\"only-in-quickbuy\"));\n          newDetail.querySelectorAll(\".sticky-content-container\").forEach((el) => el.classList.remove(\"sticky-content-container\"));\n          newDetail.querySelectorAll(\"pickup-availability\").forEach((el) => el.remove());\n          newDetail.querySelectorAll('variant-picker[data-update-url=\"true\"]').forEach((el) => { el.dataset.updateUrl = false; });\n          newDetail.querySelectorAll(\"noscript\").forEach((el) => el.remove());\n          newDetail.querySelectorAll(\".media-gallery .main-image carousel-slider\").forEach((el) => el.classList.remove(\"mobile-only\"));\n          newDetail.querySelectorAll(\".product-media-collage\").forEach((el) => el.remove());\n          newDetail.querySelectorAll(\".media-gallery .thumbnails\").forEach((el) => el.classList.remove(\"mobile-only\"));\n          [\n            \"media-gallery--layout-carousel-beside\",\n            \"media-gallery--layout-columns-1\",\n            \"media-gallery--layout-columns-2\",\n            \"media-gallery--layout-collage-1\",\n            \"media-gallery--layout-collage-2\",\n          ].forEach((cl) => {\n            newDetail.querySelectorAll(`.${cl}`).forEach((el) => {\n              el.classList.remove(cl);\n              el.classList.add(\"media-gallery--layout-carousel-under\");\n            });\n          });\n\n          // external resources\n          tmpl.content.querySelectorAll('.section-main-product link[rel=\"stylesheet\"]').forEach((el) => {\n            const href = el.getAttribute(\"href\");\n            if (href && !document.querySelector(`link[rel=\"stylesheet\"][href=\"${href}\"]`)) {\n              document.head.insertAdjacentHTML(\"beforeend\", el.outerHTML);\n            }\n          });\n          tmpl.content.querySelectorAll(\".section-main-product script[src]\").forEach((el) => {\n            const src = el.getAttribute(\"src\");\n            if (src && !document.querySelector(`script[src=\"${src}\"]`)) {\n              const s = document.createElement(\"script\");\n              s.src = src; s.defer = true; document.head.appendChild(s);\n            }\n          });\n\n          if (detailCont) {\n            detailCont.innerHTML = \"\";\n            detailCont.appendChild(newDetail);\n          }\n\n          quickbuyCont.dispatchEvent(new CustomEvent(\"on:quickbuy:after-open\", { bubbles: true }));\n\n          // share handlers\n          const mobBtn = document.querySelector(\".mob-share-product-button\");\n          if (mobBtn) {\n            mobBtn.addEventListener(\"click\", function mobShare() {\n              this.classList.toggle(\"active\");\n              document.querySelector(\".title_share_button\")?.classList.toggle(\"active\");\n            });\n          }\n          document.querySelectorAll(\".svg-container-class .native-share-img\").forEach((btn) => {\n            btn.addEventListener(\"click\", function () {\n              if (navigator.share) {\n                navigator.share({ title: document.title, text: \"Check out this link\", url: location.href })\n                  .catch((e) => console.log(\"Error sharing\", e));\n              }\n            });\n          });\n\n          // sticky containers\n          const sizeContainer  = document.querySelector(\".product-block .quickbuy-container .variant-size-chart\");\n          const atcContainer   = document.querySelector(\".product-block .quickbuy-container buy-buttons.buy-buttons-row.block\");\n          const priceContainer = document.querySelector(\".product-block .quickbuy-container .price-container\");\n\n          const stickyClass = selector === \".CP-quick-view-btn\" ? \"CP-qv-sticky-container\" : \"CP-atc-sticky-container\";\n          if (!quickbuyCont.querySelector(`.${stickyClass}`)) {\n            const sticky = document.createElement(\"div\");\n            sticky.className = stickyClass;\n            if (sizeContainer) sticky.appendChild(sizeContainer);\n            if (atcContainer)  sticky.appendChild(atcContainer);\n            if (priceContainer && sticky.children.length > 0) {\n              priceContainer.parentElement.insertBefore(sticky, priceContainer.nextSibling);\n            }\n          }\n\n          // Hide extras for ATC flow\n          if (selector === \".CP-atc-btn\") {\n            const trust = document.querySelector(\".quickbuy-container .trust-icons_container\");\n            if (trust) trust.style.display = \"none\";\n            const linkText = document.querySelector(\".quickbuy-container .link-text\");\n            if (linkText) linkText.style.display = \"none\";\n            const viewDetails = document.querySelector(\".quickbuy-container .lightish-spaced-row-above\");\n            if (viewDetails) viewDetails.style.display = \"none\";\n          }\n        });\n\n      // close button\n      const closeButton = quickbuyCont.querySelector(\".close-detail\");\n      if (closeButton) {\n        closeButton.removeAttribute(\"tabindex\");\n        // Ensure we don't stack listeners\n        closeButton.onclick = function () {\n          quickbuyCont.classList.remove(\"CP-quickbuy-open\");\n          // Move back after a short delay to allow for any closing animations\n          setTimeout(() => {\n             if (quickbuyCont._originalParent) {\n                 quickbuyCont._originalParent.appendChild(quickbuyCont);\n             }\n          }, 300);\n        };\n      }\n\n      // scroll position\n      const offsetFn = (theme && typeof theme.stickyHeaderHeight === \"function\") ? theme.stickyHeaderHeight() : 0;\n      const scrollOffset = -120 - offsetFn;\n      // If moved to body, we might not need this scroll adjustment the same way, or use 0\n      const top = (quickbuyCont.getBoundingClientRect().top + window.scrollY + scrollOffset);\n      // For fixed modal, we might not need to scroll body, but if we do:\n      // window.scrollTo({ top, behavior: \"smooth\" });\n    });\n  }\n\n  // Monitor for new product-lists as requested\n  eleReady(\".product-list\", function (list) {\n      list.querySelectorAll(\".product-block\").forEach(initTile);\n      new MutationObserver((mutations) => {\n          for (const m of mutations) {\n              for (const n of m.addedNodes) {\n                  if (n.nodeType === 1) {\n                      if (n.classList.contains(\"product-block\")) {\n                          initTile(n);\n                      }\n                      if (n.querySelectorAll) {\n                          n.querySelectorAll(\".product-block\").forEach(initTile);\n                      }\n                  }\n              }\n          }\n      }).observe(list, { childList: true });\n  });\n\n  attachQuickHandler(\".CP-quick-view-btn\");\n  attachQuickHandler(\".CP-atc-btn\");\n\n})();\n\n(function () {\n  const s = document.createElement('style');\n  s.textContent = `html.has-qv-open,html.has-qv-open body{overflow:hidden !important;touch-action:none}`;\n  document.head.appendChild(s);\n\n  const toggle = () => {\n    const open = !!document.querySelector('.quickbuy-container.CP-quickbuy-open');\n    document.documentElement.classList.toggle('has-qv-open', open);\n  };\n  new MutationObserver(toggle).observe(document.body, {\n    childList: true, subtree: true, attributes: true, attributeFilter: ['class']\n  });\n  document.addEventListener('pointerdown', (e) => {\n    if (e.target.closest('.quickbuy-container .close-detail')) { setTimeout(toggle, 0); }\n    const qb = e.target.closest('.quickbuy-container');\n    if (qb && !e.target.closest('.quickbuy-container .inner')) { setTimeout(toggle, 0); }\n  });\n  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setTimeout(toggle, 0); });\n  window.addEventListener('popstate', toggle);\n  window.addEventListener('pageshow', toggle);\n})();\n\n\n</script>\n<style>\n.helium-pulse  .desktop-whishlist , .helium-pulse  .mobile_wishlist {\nvisibility:hidden;\n}\n@media screen and (min-width: 768px){\n.quickbuy-toggle {\ndisplay:none !important;\n}\n}\n\n@media screen and (max-width: 768px){\n[data-helium-name=\"product-item\"]{\n--h-card-width: 35vw !important;\n}\n}\nproduct-form .rebuy-widget-container{\ndisplay:none;\n}\n.container{\npadding-left:8px;\npadding-right:8px;\n}\n\n</style>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "bundleproduct_DxCWND",
+    "cp_review_slider_NUtQCW",
+    "related-products",
+    "17195539445e36f021",
+    "1769847277a8abb1ca",
+    "apps_UKL7EG",
+    "apps_UFMwwi",
+    "custom_liquid_TCcGEx"
+  ]
+}

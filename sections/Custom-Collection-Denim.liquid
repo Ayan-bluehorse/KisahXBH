@@ -1,0 +1,322 @@
+<style>
+.custom-collection-section {
+  padding: 0px 20px;
+  max-width: 1320px;
+  margin: auto;
+}
+.custom-collection-heading {
+  margin-bottom: 30px;
+  color: var(--text-default, #000);
+  font-family: 'Generis Sans W01 Bold';
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 120%;
+  text-transform: uppercase;
+  text-align: start;
+}
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.collection-card {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #F8F8F8;
+  box-shadow: 0px 1px 2px 0px #BDBDBD;
+}
+.collection-card .swiper {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  position: relative;
+}
+.custom-collection-section .swiper-slide {
+  width: 100% !important;
+  text-align: center;
+}
+.slide-img {
+  width: 100%;
+  height: auto;
+  max-height: 347px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.custom-collection-section .swiper-button-prev, .custom-collection-section .swiper-button-next {
+    color: #fff;
+    padding: 5px;
+    top: 50%;
+    width: 25px;
+    height: 25px;
+    border-radius: 2px;
+    background: black;
+}
+.custom-collection-section .swiper-button-prev::after,
+.custom-collection-section .swiper-button-next::after {
+  font-size: 10px;
+  font-weight: bolder;
+}
+.custom-collection-section .swiper-button-prev {
+  left: 2px;
+}
+.custom-collection-section .swiper-button-next {
+  right: 2px;
+}
+.custom-collection-section .product-title {
+  color: #1E1E1E;
+  font-family: 'Generis Sans W01 Bold';
+  font-size: 18.5px;
+  font-weight: 400;
+  text-transform: capitalize;
+      line-height: 20px;
+}
+.custom-collection-section  .product-title a {
+  color: #1E1E1E;
+  font-family: 'Generis Sans W01 Bold';
+  font-size: 16.5px;
+  font-weight: 400;
+  text-transform: capitalize;
+  }
+.custom-collection-section .product-price {
+  margin-top: 12px;
+  color: #1E1E1E;
+  font-family: 'Generis Sans W01 Bold';
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.product-price span.price {
+  font-family: 'Generis Sans W01 Bold';
+}
+.compare-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 5px;
+}
+.custom-collection-section .product-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    flex-direction: column;
+    gap: 8px;
+}
+.custom-collection-section  .rebuy-product-options {
+    width: 100%;
+}
+.buy-now-button {
+    padding: 3px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 33px;
+    background: #201747;
+    color: #FFF;
+    font-family: 'Generis Sans W01 Bold';
+    font-size: 18px;
+    width: 100%;
+}
+.rebuy-product-options select {
+  width: 100%;
+  min-width: 100%;
+  border-radius: 24px;
+  padding: 6px 12px;
+  border: 1px solid #201747;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: none;
+}
+
+
+@media (max-width: 767px) {
+  .custom-collection-section {
+    padding: 0px 10px;
+  }
+  .custom-collection-heading {
+    font-size: 21px;
+    margin-bottom: 24px;
+  }
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .collection-card {
+    padding: 5px;
+  }
+  .slide-img {
+    max-height: 260px;
+    border-radius: 5px;
+  }
+  .product-title {
+    font-size: 14.5px;
+  }
+  .product-price span.price {
+    font-size: 14px;
+  }
+  .custom-collection-section .product-price {
+  margin-top: 0px;
+}
+  .product-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+  .buy-now-button {
+    width: 100%;
+    font-size: 14px;
+  }
+  .rebuy-product-options select {
+    width: 100%;
+  }
+  .custom-collection-section .product-title a {
+    font-size: 14.5px;
+}
+  .custom-collection-section .product-title {
+    line-height: 16px;
+}
+  .custom-collection-section .product-title {
+    margin: 0;
+  }
+  .custom-collection-section .swiper-button-prev {
+  left: 0px;
+}
+  .custom-collection-section .swiper-button-next {
+    right: 0px;
+}
+  .custom-collection-section .swiper-button-prev, .custom-collection-section .swiper-button-next {
+    width: 15px;
+    height: 20px;
+}
+}
+</style>
+
+
+
+<div class="custom-collection-section page-width">
+  <h2 class="custom-collection-heading">{{ section.settings.section_heading }}</h2>
+  <div class="collection-grid">
+    {% assign products = section.settings.collection.products %}
+    {% for product in products %}
+      <div class="collection-card" data-product-id="{{ product.id }}">
+        <!-- Image & Slider -->
+        <a href="{{ product.url }}">
+          <div class="swiper product-swiper">
+            <div class="swiper-wrapper">
+              {% for media in product.media %}
+                {% if media.media_type == 'image' %}
+                  <div class="swiper-slide">
+                    {{ media | image_url: width: 600 | image_tag: class: 'slide-img' }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </a>
+
+        <!-- Product Info -->
+        <div class="product-details">
+          <p class="product-price">
+            {% if product.compare_at_price > product.price %}
+              <span class="compare-price">{{ product.compare_at_price | money }}</span>
+            {% endif %}
+            <span class="price">{{ product.price | money }}</span>
+          </p>
+
+          <p class="product-title"><a href="{{ product.url }}">{{ product.title }}</a></p>
+
+          <div class="product-actions">
+            <div class="rebuy-product-options">
+              <select class="rebuy-select" title="Select product variant">
+                {% for variant in product.variants %}
+                  <option value="{{ variant.id }}">{{ variant.title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button class="buy-now-button add-to-cart-btn" data-product-id="{{ product.id }}">
+              Add to Bag
+            </button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+window.kisahWhenSwiperReady(function(Swiper) {
+  document.querySelectorAll('.product-swiper').forEach((el) => {
+    new Swiper(el, {
+      slidesPerView: 1,
+      loop: true,
+      navigation: {
+        nextEl: el.querySelector('.swiper-button-next'),
+        prevEl: el.querySelector('.swiper-button-prev'),
+      },
+    });
+  });
+
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const card = this.closest('.collection-card');
+      const variantId = card.querySelector('.rebuy-select').value;
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      })
+      .then(() => {
+        document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+        document.querySelector('button.cart-icon-bubble, .cart-link, .header__icon--cart')?.click();
+      });
+    });
+  });
+});
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const savedVariants = JSON.parse(localStorage.getItem('selectedVariants') || '{}');
+
+  document.querySelectorAll('.collection-card').forEach(card => {
+    const productId = card.dataset.productId;
+    const select = card.querySelector('.rebuy-select');
+
+    if (savedVariants[productId]) {
+      const matchingOption = select.querySelector(`option[value="${savedVariants[productId]}"]`);
+      if (matchingOption) {
+        select.value = savedVariants[productId];
+      }
+    }
+    select.addEventListener('change', () => {
+      const selectedVariant = select.value;
+      savedVariants[productId] = selectedVariant;
+      localStorage.setItem('selectedVariants', JSON.stringify(savedVariants));
+    });
+  });
+});
+
+</script>
+
+{% schema %}
+{
+  "name": "Custom Collection Grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Shop By Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Collection Grid"
+    }
+  ]
+}
+{% endschema %}

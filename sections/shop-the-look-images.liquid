@@ -1,0 +1,519 @@
+<div class="shop-the-look container">
+  <div class="head-part">
+     <h2>{{ section.settings.head }}</h2>
+  </div>
+  <div class="content-wrapping-products">
+    {% for block in section.blocks %}
+    <div class="slide">
+      <div class="product-img-cont-container">
+        {% if block.settings.media_type == 'video' %}
+        {% comment %}<div class="video-container-wrap">
+          {% if block.settings.video != blank %}
+          {{ block.settings.video | video_tag: autoplay: true, loop: true, muted:false, controls: true, class:'lazy section-video js-video'  }}
+          {% endif %}
+          </div> {% endcomment %}
+
+                   {% if block.settings.video != blank %}
+                     <div class="video-container-wrap">
+                        {% comment %}
+                          {{ block.settings.video_url_mp4 | video_tag: image_size: '300x', controls: section.settings.video_controls, autoplay: section.settings.video_autoplay, loop: section.settings.video_loop, muted: section.settings.video_muted, playsinline: true, preload: 'metadata', class: 'section-video js-video', title: block.settings.description }}
+                        {% endcomment %} 
+                        {%- assign videos = block.settings.video -%}
+                        <video class="lazy section-video js-video" playsinline 
+                          {% if section.settings.video_controls %}controls{% endif %} 
+                          {% if section.settings.video_autoplay %}autoplay{% endif %} 
+                          {% if section.settings.video_loop %}loop{% endif %} 
+                          {% if section.settings.video_muted %}muted{% endif %} 
+                          title="{{ block.settings.description }}"
+                          preload="metadata" poster="{{ videos.preview_image.src | image_url: width:videos.preview_image.width }}" controls controlsList="nodownload">
+                          <source data-src="{{ videos.sources[1].url }}" type="video/mp4">
+                        </video>
+                     </div>
+                      {% endif %}
+          
+          {% elsif block.settings.media_type == 'image' %}
+         <div class="product-images-wrap">
+           {% if block.settings.img != blank %}
+             <img src="{{ block.settings.img |image_url }}" width="auto" height="auto">
+            {% endif %}
+         </div>
+        {% endif %}
+        {% if block.settings.product != blank %}
+         <div class="product-detail-block">
+         {% render 'shop-look-product-block' product:block.settings.product %}
+         </div>
+        {% endif %}
+      </div>
+    </div>  
+    {% endfor %}
+  </div>
+  {% if section.settings.url != blank  %}
+  <a href="{{ section.settings.url }}" class="shop-btn">{{ section.settings.btn-name }}</a>
+  {% endif %}
+</div>
+
+
+
+<style>
+#shopify-section-{{section.id}} {
+       padding-top: {{ section.settings.desk-padding-top }}px;
+       padding-bottom: {{ section.settings.desk-padding-bottom }}px; 
+       background:{{section.settings.bg-color}};
+       overflow:hidden;
+} 
+#shopify-section-{{section.id}} .shop-the-look{
+     margin:0 auto;
+}
+#shopify-section-{{section.id}} .shop-the-look .head-part h2 {
+      font-family: Gabarito;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 57.6px;
+      text-align: center;
+      text-transform: uppercase;
+      color:{{ section.settings.head-color | default:"#201747" }};
+}
+/* #shopify-section-{{section.id}} .shop-the-look .content-wrapping-products{
+     padding:0 25px;
+} */
+  
+#shopify-section-{{section.id}} .shop-the-look .product-img-cont-container{
+      padding-right:8px;
+}
+#shopify-section-{{section.id}} .shop-the-look .price__from{
+      display:none;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block{
+       position:relative;
+}
+#shopify-section-{{section.id}} .shop-the-look .video-container-wrap{
+        position: relative;
+        padding-bottom: 176.20%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%; 
+        /* background: #000; */
+}
+ #shopify-section-{{section.id}} .shop-the-look .video-container-wrap video{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+} 
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .block-inner-inner{
+       display:flex;
+       align-items:flex-end;
+       border: 0.5px solid #000000;
+       margin-top:5px;
+
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .block-inner-inner .image-cont{
+        max-width:75px;
+        padding:5px;
+}
+#shopify-section-{{section.id}} .shop-the-look .shop-btn{
+      background: #201747;
+      box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+      border-radius: 50px;
+      font-family: 'Generis Sans W01 Bold';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 20px;
+      text-align: center;
+      color: #FFFFFF;
+      width: fit-content;
+      display: block;
+      padding: 6px 15px;
+      margin:0 auto;
+      margin-top: 32px;/*20px*/
+      text-transform: uppercase;
+} 
+#shopify-section-{{section.id}} .product-block .image-cont{
+        margin:unset;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-block__detail{
+      margin-bottom: 8px;
+      width:calc(100% - 75px)
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .product-block__title{
+      font-family: 'Generis Sans W01 Bold';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #000000;
+      max-width:185px;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__default{
+      flex-direction:column;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__current{
+      font-family: 'Generis Sans W01 Bold';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #000000;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__default .price__from{
+      display:none;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-img-cont-container .image-page-button{
+       display:none;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-img-cont-container .quickbuy-toggle{
+       display:none;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__was{
+      font-family: 'Generis Sans W01 Regular';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 15px;
+      color: rgba(52, 52, 52, 0.69);
+      text-decoration: line-through;
+      text-decoration-color: rgba(255, 0, 0, 1);
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .image-label-wrap .product-label-container{
+        display:none; 
+}
+  
+#shopify-section-{{section.id}} .price-label.price-label--sale{
+        display:none;
+}
+#shopify-section-{{section.id}} .product-block .image-label-wrap{
+        position:unset;
+}
+#shopify-section-{{section.id}} .product-block .product-block__detail .product-price{
+          position:relative
+}
+#shopify-section-{{section.id}} .product-block .product-block__detail .product-label-container{
+         position:unset;
+          /* margin-left:58px;  */
+         left: unset!important;
+         right:59px;
+         top:10px;
+        align-self:end;
+} 
+#shopify-section-{{section.id}} .product-block .product-block__detail .product-label-container .product-label--new-in{
+      display:none;
+}
+#shopify-section-{{section.id}} .product-block .product-block__detail .product-label-container span{
+        background: #E3B7B7;
+        border-radius: 50px;
+        font-family: 'Generis Sans W01 Bold';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 11px;
+        text-align: center;
+        color: rgba(52, 52, 52, 0.83);
+         padding:2px 3px;
+}
+#shopify-section-{{section.id}} .product-block__image-dots{
+         display:none;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+   
+}
+#shopify-section-{{section.id}} .product-block__detail .product-price--block .price-label {
+    display: none;
+}
+
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .shop-the-look .content-wrapping-products{
+     padding:0;
+}
+#shopify-section-{{section.id}} .shop-the-look .head-part h2 {
+        font-size: 28px;
+        line-height: 33.6px;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__was{
+        font-size: 12px;
+        line-height: 14px;
+       
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .product-block__title{
+        font-size: 12px;
+        line-height: 14px;
+}
+#shopify-section-{{section.id}} .shop-the-look .product-detail-block .price__current{
+        font-size: 12px;
+        line-height: 14px;
+}
+#shopify-section-{{section.id}} .slick-next.slick-arrow{
+     right: -13px;
+     z-index:999;
+}
+#shopify-section-{{section.id}} .slick-prev.slick-arrow{
+    left: -12px;
+    z-index:999;
+}  
+#shopify-section-{{section.id}} .shop-the-look .shop-btn {
+    font-size: 14px;
+    line-height: 16px;
+}
+}
+</style>
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+
+    $('#shopify-section-{{ section.id }} .content-wrapping-products').slick({
+    dots: false,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4.5,
+    slidesToScroll: 2,
+
+    responsive: [
+        {
+
+          breakpoint: 1100,
+          settings: {
+              slidesToShow: 2.5,
+              slidesToScroll: 2,
+              infinite: true,
+            
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1.5,
+            slidesToScroll: 2
+          }
+        },
+       {
+          breakpoint:500,
+          settings: {
+            slidesToShow: 1.2,
+            slidesToScroll: 2
+          }
+        },
+       {
+         breakpoint:375,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 2
+          }
+        }
+    ]
+  });
+
+document.addEventListener("DOMContentLoaded", function() {
+ let lazyVideos = [...document.querySelectorAll("video.lazy")]
+ 
+ if ("IntersectionObserver" in window) {
+   let lazyVideoObserver = new IntersectionObserver(function(entries) {
+     entries.forEach(function(video) {
+       if (video.isIntersecting) {
+         for (let source in video.target.children) {
+           let videoSource = video.target.children[source];
+           if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+             videoSource.src = videoSource.dataset.src;
+           }
+         }
+
+         video.target.load();
+         video.target.classList.remove("lazy");
+         lazyVideoObserver.unobserve(video.target);
+       }
+     });
+   });
+
+   if(lazyVideos){
+     lazyVideos.forEach(function(lazyVideo) {
+       lazyVideoObserver.observe(lazyVideo);
+     });
+   }
+ }
+});
+  
+
+});
+</script>
+
+{% schema %}
+  {
+    "name": "Shop the look images",
+    "settings": [
+      {
+        "type":"text",
+         "id":"head",
+         "label":"Heading"
+      },
+       {
+         "type": "color",
+          "id": "bg-color",
+          "label": "Background color"
+      },
+      {
+         "type": "color",
+         "id": "head-color",
+          "label": "Heading color"
+      },
+      {
+        "type":"url",
+         "id":"url",
+         "label":"Button Link"
+      },
+      {
+        "type": "header",
+        "content": "VIDEO OPTION"
+      },
+      {
+        "type": "checkbox",
+        "id": "video_controls",
+        "label": "Video Controls",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "video_autoplay",
+        "label": "Video Autoplay",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "video_loop",
+        "label": "Video Loop",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "video_muted",
+        "label": "Video Muted",
+        "default": true,
+        "info": "When using the Video sound autoplay will be not work."
+      },
+      {
+        "type":"text",
+         "id":"btn-name",
+         "label":"Button Name"
+      },
+       {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+      },
+     {
+          "type": "range",
+          "id": "desk-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+     },
+    {
+          "type": "range",
+          "id": "desk-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    },
+    {
+          "type": "header",
+          "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    }
+      
+    ],
+    "blocks":[
+      {
+        "type":"product-image",
+         "name":"Product Image",
+        "settings":[
+            {
+            "type": "select",
+            "id": "media_type",
+            "label": "Media Type",
+          "options": [
+           {
+              "value": "image",
+              "label": "Image"
+         },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+         "default": "image"
+       },
+          
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Product Image"
+         },
+          {
+            "type": "video",
+            "id": "video",
+            "label": "Product video"
+           },
+          {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+         }
+          
+        ]
+      }
+    ],
+    "presets":[
+      {
+        "name":"Shop the look images"
+      }
+    ]
+  }
+{% endschema %}

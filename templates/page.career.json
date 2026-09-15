@@ -1,0 +1,128 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": true,
+        "full_width": false
+      }
+    },
+    "breadcrumbs_RDJ8LX": {
+      "type": "breadcrumbs",
+      "settings": {
+        "desk-padding-top": 10,
+        "desk-padding-bottom": 0,
+        "mob-padding-top": 10,
+        "mob-padding-bottom": 0
+      }
+    },
+    "career_opportunity_rXKXzx": {
+      "type": "career-opportunity",
+      "blocks": {
+        "grid_blocks_MrRwPC": {
+          "type": "grid-blocks",
+          "settings": {
+            "icon": "shopify://shop_images/group-chat.png",
+            "title": "Meet Us",
+            "text": "Kisah cares about the integrity and security of your personal information. However, we cannot guarantee that unauthorized third parties will never be able to defeat our security measures or use your personal information for improper purposes. You acknowledge that you provide your personal information at your own risk."
+          }
+        },
+        "grid_blocks_xDNCPg": {
+          "type": "grid-blocks",
+          "settings": {
+            "icon": "shopify://shop_images/opportunities.png",
+            "title": "Your possibilities",
+            "text": "Kisah cares about the integrity and security of your personal information. However, we cannot guarantee that unauthorized third parties will never be able to defeat our security measures or use your personal information for improper purposes. You acknowledge that you provide your personal information at your own risk."
+          }
+        },
+        "grid_blocks_FpWHpN": {
+          "type": "grid-blocks",
+          "settings": {
+            "icon": "shopify://shop_images/question.png",
+            "title": "Recruitment FAQs",
+            "text": "Kisah cares about the integrity and security of your personal information. However, we cannot guarantee that unauthorized third parties will never be able to defeat our security measures or use your personal information for improper purposes. You acknowledge that you provide your personal information at your own risk."
+          }
+        },
+        "grid_blocks_y4wGVF": {
+          "type": "grid-blocks",
+          "settings": {
+            "icon": "shopify://shop_images/vacancy_1_1.png",
+            "title": "Open positions",
+            "text": "Kisah cares about the integrity and security of your personal information. However, we cannot guarantee that unauthorized third parties will never be able to defeat our security measures or use your personal information for improper purposes. You acknowledge that you provide your personal information at your own risk."
+          }
+        }
+      },
+      "block_order": [
+        "grid_blocks_MrRwPC",
+        "grid_blocks_xDNCPg",
+        "grid_blocks_FpWHpN",
+        "grid_blocks_y4wGVF"
+      ],
+      "settings": {
+        "head": "CAREER OPPORTUNITIES",
+        "desk-padding-top": 16,
+        "desk-padding-bottom": 16,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 16
+      }
+    },
+    "career_form_aWEAJB": {
+      "type": "career-form",
+      "blocks": {
+        "text_AAf9Me": {
+          "type": "text",
+          "settings": {
+            "name": "First Name *",
+            "last-name": "Last Name *"
+          }
+        },
+        "email_E6WLnK": {
+          "type": "email",
+          "settings": {
+            "email-label": "Email Address *",
+            "file-label": "Resume (.pdf and max of 4 mb)"
+          }
+        },
+        "textarea_Tzw94d": {
+          "type": "textarea",
+          "settings": {
+            "text-area": "Cover Letter"
+          }
+        }
+      },
+      "block_order": [
+        "text_AAf9Me",
+        "email_E6WLnK",
+        "textarea_Tzw94d"
+      ],
+      "disabled": true,
+      "settings": {
+        "head": "Want to Contact us",
+        "btn-name": "Submit",
+        "img": "shopify://shop_images/success_1.png",
+        "pop-head": "Thanks for Submitting!",
+        "pop-text": "Your message has been sent! we will be in touch and contact you soon",
+        "desk-padding-top": 16,
+        "desk-padding-bottom": 16,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "breadcrumbs_RDJ8LX",
+    "career_opportunity_rXKXzx",
+    "career_form_aWEAJB"
+  ]
+}

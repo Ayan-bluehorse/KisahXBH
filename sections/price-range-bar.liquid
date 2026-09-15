@@ -1,0 +1,299 @@
+{% comment %}
+  Price Range Bar — clickable horizontal partitions with vertical dividers.
+  Fully self-contained, all styles scoped to avoid conflicts.
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="price-range-bar" id="price-range-bar-{{ section.id }}">
+    <div class="price-range-bar__grid">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="price-range-bar__item"
+          {{ block.shopify_attributes }}
+          {% if block.settings.link == blank %}
+            onclick="return false;"
+          {% endif %}
+        >
+          {%- if block.settings.line_1 != blank -%}
+            <span class="price-range-bar__line1">{{ block.settings.line_1 }}</span>
+          {%- endif -%}
+          {%- if block.settings.line_2 != blank -%}
+            <span class="price-range-bar__line2">{{ block.settings.line_2 }}</span>
+          {%- endif -%}
+        </a>
+        {%- unless forloop.last -%}
+          <span class="price-range-bar__divider"></span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  /* ===== SECTION WRAPPER ===== */
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.desk_padding_top }}px;
+    padding-bottom: {{ section.settings.desk_padding_bottom }}px;
+  }
+
+  /* ===== GRID ===== */
+  #shopify-section-{{ section.id }} .price-range-bar__grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: {{ section.settings.section_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ===== ITEM ===== */
+  #shopify-section-{{ section.id }} .price-range-bar__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: {{ section.settings.text_color }};
+    padding: {{ section.settings.item_padding_y }}px 12px;
+    transition: opacity 0.25s ease;
+    gap: 2px;
+    cursor: pointer;
+  }
+  #shopify-section-{{ section.id }} .price-range-bar__item:hover {
+    opacity: 0.65;
+  }
+
+  /* ===== TEXT ===== */
+  #shopify-section-{{ section.id }} .price-range-bar__line1 {
+    font-size: {{ section.settings.line1_size }}px;
+    font-weight: {{ section.settings.line1_weight }};
+    line-height: 1.3;
+  }
+  #shopify-section-{{ section.id }} .price-range-bar__line2 {
+    font-size: {{ section.settings.line2_size }}px;
+    font-weight: {{ section.settings.line2_weight }};
+    line-height: 1.3;
+  }
+
+  /* ===== DIVIDER ===== */
+  #shopify-section-{{ section.id }} .price-range-bar__divider {
+    width: 2px;
+    align-self: stretch;
+    background-color: {{ section.settings.divider_color }};
+    flex-shrink: 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.mob_padding_top }}px;
+      padding-bottom: {{ section.settings.mob_padding_bottom }}px;
+    }
+    #shopify-section-{{ section.id }} .price-range-bar__grid {
+      padding: 0 10px;
+    }
+    #shopify-section-{{ section.id }} .price-range-bar__item {
+      padding: {{ section.settings.item_padding_y | times: 0.7 | round }}px 6px;
+    }
+    #shopify-section-{{ section.id }} .price-range-bar__line1 {
+      font-size: {{ section.settings.line1_size | minus: 2 }}px;
+    }
+    #shopify-section-{{ section.id }} .price-range-bar__line2 {
+      font-size: {{ section.settings.line2_size | minus: 2 }}px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #shopify-section-{{ section.id }} .price-range-bar__line1 {
+      font-size: {{ section.settings.line1_size | minus: 4 }}px;
+    }
+    #shopify-section-{{ section.id }} .price-range-bar__line2 {
+      font-size: {{ section.settings.line2_size | minus: 4 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Price Range Bar",
+  "tag": "section",
+  "class": "price-range-bar-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F5F0EB"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "line1_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Line 1 Font Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "line1_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Line 1 Font Weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "line2_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Line 2 Font Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "line2_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Line 2 Font Weight",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "item_padding_y",
+      "min": 4,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Item Vertical Padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "min": 600,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Section Max Width",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "price_item",
+      "name": "Price Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "line_1",
+          "label": "Line 1",
+          "default": "Under"
+        },
+        {
+          "type": "text",
+          "id": "line_2",
+          "label": "Line 2",
+          "default": "₹ 2.5K"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Price Range Bar",
+      "blocks": [
+        { "type": "price_item", "settings": { "line_1": "Under", "line_2": "₹ 2.5K" } },
+        { "type": "price_item", "settings": { "line_1": "Under", "line_2": "₹ 8K" } },
+        { "type": "price_item", "settings": { "line_1": "Under", "line_2": "₹ 15K" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1007 @@
+{%- comment -%}
+  Shop the Edit — product grid section
+  - Uses the theme's standard product-block snippet for product cards
+  - Includes the same CSS as collection pages for identical card styling
+  - Data source: Collection picker, OR manual Product blocks (blocks override collection)
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign s = section.settings
+
+  assign show_filters = s.enable_filters
+  assign filter_source = s.filter_source
+
+  if section.blocks.size > 0
+    assign use_blocks = true
+  else
+    assign use_blocks = false
+  endif
+
+  comment
+    Convert image_ratio setting to a numeric aspect ratio for product-block
+  endcomment
+  if s.image_ratio == '1/1'
+    assign chosen_aspect_ratio = 1.0
+  elsif s.image_ratio == '3/4'
+    assign chosen_aspect_ratio = 0.75
+  elsif s.image_ratio == '4/5'
+    assign chosen_aspect_ratio = 0.8
+  elsif s.image_ratio == '2/3'
+    assign chosen_aspect_ratio = 0.67
+  else
+    assign chosen_aspect_ratio = 0.75
+  endif
+
+  assign columns_desktop_num = s.columns_desktop | plus: 0
+-%}
+
+<style>
+  /* ======================================================
+     Section-level styles (background, padding, etc.)
+     ====================================================== */
+  #shop-edit-{{ sid }} {
+    --ste-bg: {{ s.color_background }};
+    --ste-ink: {{ s.color_ink }};
+    --ste-red: {{ s.color_accent }};
+    --ste-sand: {{ s.color_sand }};
+    --ste-stone: {{ s.color_stone }};
+    --ste-white: {{ s.color_white }};
+
+    background: var(--ste-bg);
+    color: var(--ste-ink);
+    padding-top: {{ s.padding_top }}px;
+    padding-bottom: {{ s.padding_bottom }}px;
+    overflow-x: hidden;
+  }
+  #shop-edit-{{ sid }} button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  #shop-edit-{{ sid }} button.CP-quick-view-btn { background-color: #ffffff !important; border: 0.5px solid #1e1e1e !important; }
+
+  /* ======================================================
+     Header row
+     ====================================================== */
+  #shop-edit-{{ sid }} .ste-hd {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  #shop-edit-{{ sid }} .ste-eyebrow {
+    font-size: .62rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ste-red); margin: 0 0 .45rem;
+  }
+  #shop-edit-{{ sid }} .ste-title {
+    font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin: 0;
+    font-size: {% if s.heading_size == 'small' %}1.6rem{% elsif s.heading_size == 'large' %}2.6rem{% else %}2.1rem{% endif %};
+  }
+  #shop-edit-{{ sid }} .ste-title em {
+    font-style: italic; font-weight: 400;
+  }
+  #shop-edit-{{ sid }} .ste-view-link {
+    font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ste-stone); display: flex; align-items: center; gap: .35rem;
+    transition: color .2s; white-space: nowrap; text-decoration: none;
+  }
+  #shop-edit-{{ sid }} .ste-view-link::after { content: '→'; transition: transform .2s; }
+  #shop-edit-{{ sid }} .ste-view-link:hover { color: var(--ste-red); }
+  #shop-edit-{{ sid }} .ste-view-link:hover::after { transform: translateX(3px); }
+
+  /* ======================================================
+     Filter bar (desktop underline style)
+     ====================================================== */
+  #shop-edit-{{ sid }} .ste-filter-bar {
+    display: flex; overflow-x: auto; scrollbar-width: none;
+    border-bottom: 1px solid var(--ste-sand); margin-bottom: 2.5rem;
+  }
+  #shop-edit-{{ sid }} .ste-filter-bar::-webkit-scrollbar { display: none; }
+  #shop-edit-{{ sid }} .ste-fb {
+    flex-shrink: 0; padding: .75rem 1.4rem; background: none;
+    font-size: .65rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ste-stone); border-bottom: 2px solid transparent;
+    margin-bottom: -1px; white-space: nowrap; transition: all .2s; cursor: pointer;
+  }
+  #shop-edit-{{ sid }} .ste-fb:hover { color: var(--ste-ink); }
+  #shop-edit-{{ sid }} .ste-fb.on { color: var(--ste-red); border-bottom-color: var(--ste-red); }
+  #shop-edit-{{ sid }} .ste-fb-cnt {
+    margin-left: auto; align-self: center; font-size: .6rem; color: var(--ste-stone);
+    padding-right: .5rem; flex-shrink: 0;
+  }
+
+  /* ======================================================
+     Product grid — matches collection page gap/spacing
+     ====================================================== */
+  #shop-edit-{{ sid }} .product-grid {
+    column-gap: 15px;
+    row-gap: 8px;
+  }
+
+  /* ======================================================
+     Product card wrapper (for filter/see-more visibility)
+     ====================================================== */
+  #shop-edit-{{ sid }} .ste-card-wrap {
+    display: contents; /* Allows grid to directly layout the inner .product-block and collapse if hidden */
+  }
+  #shop-edit-{{ sid }} .ste-card-wrap.ste-hidden { display: none !important; }
+
+  /* ======================================================
+     Product block styles — ported from collection page
+     These ensure identical look: fonts, sizes, colors, labels
+     ====================================================== */
+  #shop-edit-{{ sid }} .product-block__title {
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+    width: 75%;
+    min-height: 36px;
+  }
+  #shop-edit-{{ sid }} .product-block__title span {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #shop-edit-{{ sid }} .product-block .collection-tag-label {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background: linear-gradient(90deg, #A68811 -15.48%, #C1A01E 49.84%, #836900 116.67%);
+    border-radius: 50px 0px 0px 50px;
+  }
+  #shop-edit-{{ sid }} .product-block .product-block__position-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: #808080;
+    color: #fff;
+    font-family: 'Generis Sans W01 Bold', sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 999px;
+    pointer-events: none;
+    display: none;
+  }
+  #shop-edit-{{ sid }} .product-block .collection-tag-label span {
+    font-family: 'Generis Sans W01 Bold';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 12px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    opacity: 0.8;
+    padding: 3px 5px 4px 12px;
+    display: block;
+  }
+  #shop-edit-{{ sid }} .product-label-container {
+    position: unset;
+    margin-inline-end: 0.5rem;
+  }
+  #shop-edit-{{ sid }} .no-js-hidden .product-label--sale span {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ff0606;
+    padding: 0;
+    background: none;
+    vertical-align: unset;
+    display: block;
+    text-transform: uppercase;
+  }
+  #shop-edit-{{ sid }} .product-block__detail .price__current {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+  }
+  #shop-edit-{{ sid }} .product-block__detail .price__was {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: rgba(52, 52, 52, 0.69);
+    opacity: 0.8;
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 0, 0, 1);
+  }
+  #shop-edit-{{ sid }} .price .price-label--sold-out {
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+  }
+  #shop-edit-{{ sid }} .product-block__detail .product-price--block .coupon-price {
+    margin-inline-start: var(--product-block-price-item-margin-start);
+    margin-inline-end: var(--product-block-price-item-margin-end);
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.8;
+  }
+  #shop-edit-{{ sid }} .mobile-whishlist {
+    display: none;
+  }
+
+  /* Image container — allow rating badge to overflow */
+  #shop-edit-{{ sid }} .product-block .image-cont {
+    overflow: unset;
+  }
+
+  /* Rating badge positioning */
+  #shop-edit-{{ sid }} .product-block a.rating {
+    position: absolute;
+    bottom: -33px;
+    z-index: 1;
+    display: block;
+    width: 50px;
+    right: 10px;
+    height: 20px;
+    text-align: right;
+  }
+  #shop-edit-{{ sid }} .product-block a.rating span.text-sm.CP-ratings {
+    font-size: 12px;
+    display: flex;
+    gap: 4px;
+    color: #1E1E1E;
+    font-weight: 400;
+    font-family: "Generis Sans W01 Bold";
+    padding: 0;
+    right: 0;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  /* Product detail bottom margin */
+  #shop-edit-{{ sid }} .product-grid .product-block__detail {
+    margin-bottom: 10px;
+  }
+
+  /* Product block border */
+  #shop-edit-{{ sid }} .product-grid .product-block {
+    border: 1px solid #EEEEEE;
+  }
+
+  /* Product-price ordering & alignment */
+  #shop-edit-{{ sid }} .product-price--block .price {
+    align-items: center;
+  }
+  #shop-edit-{{ sid }} .product-price--block .product-label-container {
+    margin: 0 !important;
+  }
+  #shop-edit-{{ sid }} .product-price--block .price__default > span.price__current {
+    margin-right: 0;
+  }
+  #shop-edit-{{ sid }} .product-price--block .price__default > span.price__was {
+    margin-right: 4px;
+  }
+  #shop-edit-{{ sid }} .product-price--block .price > .price__default > span.price__was:empty {
+    display: none;
+  }
+  #shop-edit-{{ sid }} .product-price--block .price .product-label-container span.product-label {
+    margin: 0;
+    margin-left: 3px;
+  }
+  #shop-edit-{{ sid }} .product-price--block .product-label-container > span.product-label {
+    font-family: 'Generis Sans W01 Regular';
+  }
+
+  /* Image dots — collection pill style */
+  #shop-edit-{{ sid }} .product-block__image-dots {
+    padding: 2px 4px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+  #shop-edit-{{ sid }} .product-block__image-dot {
+    margin-right: 0 !important;
+  }
+
+  /* Wishlist desktop positioning */
+  #shop-edit-{{ sid }} .desktop-whishlist.desktop_wishlist .wishlisthero-floating {
+    left: auto !important;
+    right: 0 !important;
+  }
+  #shop-edit-{{ sid }} .desktop-whishlist.desktop_wishlist .wishlisthero-floating button svg path {
+    fill: #fff;
+    stroke: #fff;
+  }
+
+  /* Wishlist detail background */
+  #shop-edit-{{ sid }} .product-block__detail .wishlist-hero-custom-button {
+    background: none !important;
+  }
+
+  #shop-edit-{{ sid }} .btn--large {
+    border-radius: 50px;
+    color: #fff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    font-family: Generis Sans W01 Bold;
+    text-transform: capitalize;
+    min-height: 40px;
+    padding: 0 25px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #201747;
+    width: 100%;
+    margin: 12px 0;
+  }
+
+  /* ======================================================
+     See more button
+     ====================================================== */
+  #shop-edit-{{ sid }} .ste-see-more-wrap { padding: 2rem 0 0; text-align: center; }
+  #shop-edit-{{ sid }} .ste-see-more-btn {
+    display: inline-block; padding: .85rem 4rem;
+    border: 1.5px solid var(--ste-ink); background: none; color: var(--ste-ink);
+    font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    transition: all .2s; cursor: pointer;
+  }
+  #shop-edit-{{ sid }} .ste-see-more-btn:hover { background: var(--ste-ink); color: var(--ste-white); }
+  #shop-edit-{{ sid }} .ste-see-more-btn.ste-gone { display: none; }
+
+  /* ======================================================
+     Desktop — title/price padding & dots (min-width: 769px)
+     ====================================================== */
+  @media (min-width: 769px) {
+    #shop-edit-{{ sid }} .product-block .product-block__title {
+      padding: 0 10px;
+    }
+    #shop-edit-{{ sid }} .product-block .snap_dp_list {
+      padding: 0 10px;
+    }
+    #shop-edit-{{ sid }} .product-block .product-price--block {
+      padding: 0 10px;
+      margin: 5px 0;
+    }
+    /* Desktop dots — dark pill background */
+    #shop-edit-{{ sid }} .image-cont--with-secondary-image .product-block__image-dots {
+      display: flex !important;
+      background: #1e1e1e;
+      opacity: 60%;
+      padding: 2px 2px;
+      border-radius: 7px;
+      color: #c3c3c3;
+    }
+    /* Quickbuy button always visible */
+    #shop-edit-{{ sid }} .product-block .image-cont .btn.quickbuy-toggle {
+      visibility: visible;
+      opacity: 1;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      transition: background-color .3s ease;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 0;
+      left: auto;
+    }
+    #shop-edit-{{ sid }} .product-block .image-cont .btn.quickbuy-toggle svg {
+      fill: #000;
+      width: 20px;
+      height: 20px;
+    }
+    /* Desktop price current margin */
+    #shop-edit-{{ sid }} .product-price--block .price__default > span.price__current {
+      margin-right: 5px !important;
+    }
+  }
+
+  /* ======================================================
+     Reveal on scroll
+     ====================================================== */
+  #shop-edit-{{ sid }} .ste-rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  #shop-edit-{{ sid }} .ste-rv.ste-in { opacity: 1; transform: none; }
+
+  /* ======================================================
+     Mobile — matches collection page mobile styles
+     ====================================================== */
+  @media (max-width: 768px) {
+    #shop-edit-{{ sid }} .ste-hd { margin-bottom: 1.2rem; }
+    #shop-edit-{{ sid }} .ste-title {
+      font-size: {% if s.heading_size == 'small' %}1.15rem{% elsif s.heading_size == 'large' %}1.7rem{% else %}1.45rem{% endif %};
+    }
+    #shop-edit-{{ sid }} .ste-filter-bar { margin-bottom: 1.2rem; }
+    #shop-edit-{{ sid }} .ste-fb { padding: .6rem .9rem; font-size: .58rem; }
+    #shop-edit-{{ sid }} .ste-fb-cnt { font-size: .54rem; padding-right: .3rem; }
+    #shop-edit-{{ sid }} .ste-see-more-wrap { padding: 1.1rem 0 1.4rem; }
+    #shop-edit-{{ sid }} .ste-see-more-btn { width: 100%; padding: .82rem; font-size: .66rem; }
+
+    /* Product block mobile — ported from collection page */
+    #shop-edit-{{ sid }} .mobile-whishlist {
+      display: block;
+    }
+    #shop-edit-{{ sid }} .mobile-whishlist .wishlist-hero-custom-button {
+      right: 5px !important;
+    }
+    #shop-edit-{{ sid }} .product-grid {
+      column-gap: 8px;
+    }
+    #shop-edit-{{ sid }} .product-block__title {
+      font-size: 12px !important;
+      line-height: 16px;
+      padding-right: 30px;
+    }
+    #shop-edit-{{ sid }} .product-block__detail .price__current {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    #shop-edit-{{ sid }} .product-block__detail .product-price--block .coupon-price {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    #shop-edit-{{ sid }} .product-block__detail .price__was {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    #shop-edit-{{ sid }} .product-label > span {
+      font-size: 16px;
+      line-height: 18px;
+    }
+    #shop-edit-{{ sid }} .price .price-label--sold-out {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+  @media screen and (max-width: 420px) {
+    #shop-edit-{{ sid }} .product-block .collection-tag-label span {
+      padding: 3px 3px 3px 9px;
+      font-size: 9px;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    #shop-edit-{{ sid }} .product-block__detail .price__current {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    #shop-edit-{{ sid }} .product-block__detail .product-price--block .coupon-price {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    #shop-edit-{{ sid }} .product-block__detail .price__was {
+      font-size: 12px;
+      line-height: 14px;
+    }
+    #shop-edit-{{ sid }} .product-label > span {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+</style>
+
+<section id="shop-edit-{{ sid }}" data-section-id="{{ sid }}">
+  <div class="container">
+    <div class="ste-hd ste-rv">
+    <div>
+      {%- if s.eyebrow != blank -%}<p class="ste-eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+      <h2 class="ste-title">{{ s.heading }} {% if s.heading_accent != blank %}<em>{{ s.heading_accent }}</em>{% endif %}</h2>
+    </div>
+    {%- if s.show_view_all and s.view_all_link != blank -%}
+      <a href="{{ s.view_all_link }}" class="ste-view-link">{{ s.view_all_label | default: 'View All' }}</a>
+    {%- endif -%}
+  </div>
+
+  {%- liquid
+    assign products = ''
+    if use_blocks
+      assign product_list = section.blocks
+    else
+      assign product_list = s.collection.products
+    endif
+
+    assign total_count = 0
+    if use_blocks
+      assign total_count = section.blocks.size
+    else
+      if s.collection != blank
+        assign total_count = s.collection.products.size
+      endif
+    endif
+  -%}
+
+  {%- if show_filters and total_count > 0 -%}
+    <div class="ste-filter-bar">
+      <button class="ste-fb on" data-filter="all">All Styles</button>
+      {%- assign seen_types = '' -%}
+      {%- if use_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            if filter_source == 'tag'
+              assign p = block.settings.product
+              if p != blank
+                for tag in p.tags
+                  assign tag_key = tag | append: '|'
+                  if seen_types contains tag_key
+                    continue
+                  endif
+                  assign seen_types = seen_types | append: tag_key
+                  echo '<button class="ste-fb" data-filter="' | append: tag | append: '">' | append: tag | append: '</button>'
+                endfor
+              endif
+            else
+              assign p = block.settings.product
+              assign type_label = block.settings.type_override | default: p.type
+              if type_label != blank
+                assign type_key = type_label | append: '|'
+                unless seen_types contains type_key
+                  assign seen_types = seen_types | append: type_key
+                  echo '<button class="ste-fb" data-filter="' | append: type_label | append: '">' | append: type_label | append: '</button>'
+                endunless
+              endif
+            endif
+          -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in s.collection.products -%}
+          {%- liquid
+            if filter_source == 'tag'
+              for tag in product.tags
+                assign tag_key = tag | append: '|'
+                if seen_types contains tag_key
+                  continue
+                endif
+                assign seen_types = seen_types | append: tag_key
+                echo '<button class="ste-fb" data-filter="' | append: tag | append: '">' | append: tag | append: '</button>'
+              endfor
+            else
+              assign type_label = product.type
+              if type_label != blank
+                assign type_key = type_label | append: '|'
+                unless seen_types contains type_key
+                  assign seen_types = seen_types | append: type_key
+                  echo '<button class="ste-fb" data-filter="' | append: type_label | append: '">' | append: type_label | append: '</button>'
+                endunless
+              endif
+            endif
+          -%}
+        {%- endfor -%}
+      {%- endif -%}
+      <span class="ste-fb-cnt" data-count>{{ total_count }} {{ total_count | pluralize: 'piece', 'pieces' }}</span>
+    </div>
+  {%- endif -%}
+
+  <div class="template-collection">
+    <div class="product-grid product-grid--per-row-{{ s.columns_desktop }} product-grid--per-row-mob-{{ s.columns_mobile }}" data-grid>
+      {%- liquid
+        assign index = 0
+        assign initial_count = s.initial_visible_count
+      -%}
+
+      {%- if use_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign p = block.settings.product
+            if p == blank
+              continue
+            endif
+            assign index = index | plus: 1
+            assign card_type = block.settings.type_override | default: p.type
+            if filter_source == 'tag'
+              assign filter_val = p.tags | join: ','
+            else
+              assign filter_val = card_type
+            endif
+            assign is_hidden = false
+            if index > initial_count
+              assign is_hidden = true
+            endif
+            assign prioritised_loading = false
+            if index <= columns_desktop_num
+              assign prioritised_loading = true
+            endif
+          -%}
+          <div class="ste-card-wrap{% if is_hidden %} ste-hidden{% endif %}" data-type="{{ filter_val | escape }}" {{ block.shopify_attributes }}>
+            {% render 'product-block',
+              product: p,
+              custom_aspect_ratio: chosen_aspect_ratio,
+              animate: true,
+              prioritised_loading: prioritised_loading,
+              grid: columns_desktop_num
+            %}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- if s.collection != blank -%}
+          {%- for p in s.collection.products limit: s.max_products -%}
+            {%- liquid
+              assign index = index | plus: 1
+              assign card_type = p.type
+              if filter_source == 'tag'
+                assign filter_val = p.tags | join: ','
+              else
+                assign filter_val = card_type
+              endif
+              assign is_hidden = false
+              if index > initial_count
+                assign is_hidden = true
+              endif
+              assign prioritised_loading = false
+              if index <= columns_desktop_num
+                assign prioritised_loading = true
+              endif
+            -%}
+            <div class="ste-card-wrap{% if is_hidden %} ste-hidden{% endif %}" data-type="{{ filter_val | escape }}">
+              {% render 'product-block',
+                product: p,
+                custom_aspect_ratio: chosen_aspect_ratio,
+                animate: true,
+                prioritised_loading: prioritised_loading,
+                grid: columns_desktop_num
+              %}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <p style="grid-column: 1/-1; padding: 2rem 0; color: var(--ste-stone); font-size:.8rem;">
+            Select a collection, or add Product blocks, in the section settings to display items here.
+          </p>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if s.show_see_more and total_count > initial_count -%}
+    <div class="ste-see-more-wrap">
+      <button type="button" class="ste-see-more-btn" data-see-more>
+        {{ s.see_more_label | default: 'See All Styles' }} ↓
+      </button>
+    </div>
+  {%- endif -%}
+
+  <script defer src="{{ 'collection-revamp.js' | asset_url }}"></script>
+</section>
+
+<script>
+(function () {
+  var root = document.getElementById('shop-edit-{{ sid }}');
+  if (!root) return;
+
+  /* Reveal on scroll */
+  var revealEls = root.querySelectorAll('.ste-rv');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) entry.target.classList.add('ste-in');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    revealEls.forEach(function (el) { obs.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('ste-in'); });
+  }
+
+  /* Filter buttons */
+  var filterBtns = root.querySelectorAll('.ste-fb');
+  var cards = root.querySelectorAll('[data-grid] .ste-card-wrap');
+  var countEl = root.querySelector('[data-count]');
+  var seeMoreBtn = root.querySelector('[data-see-more]');
+  var initialCount = {{ s.initial_visible_count }};
+
+  function applyFilter(type) {
+    var visibleIndex = 0;
+    cards.forEach(function (card) {
+      var cardTypes = (card.getAttribute('data-type') || '').split(',');
+      var show = type === 'all' || cardTypes.indexOf(type) !== -1;
+      if (show) {
+        visibleIndex++;
+        var withinInitial = !seeMoreBtn || seeMoreBtn.classList.contains('ste-gone') || visibleIndex <= initialCount;
+        card.style.display = withinInitial ? '' : 'none';
+        if (!withinInitial) card.classList.add('ste-hidden'); else card.classList.remove('ste-hidden');
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    if (countEl) {
+      var shown = type === 'all' ? cards.length : Array.prototype.filter.call(cards, function (c) {
+        return (c.getAttribute('data-type') || '').split(',').indexOf(type) !== -1;
+      }).length;
+      countEl.textContent = shown + (shown === 1 ? ' piece' : ' pieces');
+    }
+  }
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(function (b) { b.classList.remove('on'); });
+      btn.classList.add('on');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+
+  /* See all */
+  if (seeMoreBtn) {
+    seeMoreBtn.addEventListener('click', function () {
+      cards.forEach(function (card) { card.classList.remove('ste-hidden'); card.style.display = ''; });
+      seeMoreBtn.classList.add('ste-gone');
+    });
+  }
+
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Shop the Edit",
+  "tag": "section",
+  "class": "section-shop-the-edit",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Shop the Edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "26 Styles."
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading — italic accent phrase",
+      "default": "One Collection."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"View All\" link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All link"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pick a collection below, or add Product blocks — if you add Product blocks, they override the collection."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products from collection",
+      "min": 4,
+      "max": 48,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "initial_visible_count",
+      "label": "Initially visible products",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_see_more",
+      "label": "Show \"See All\" button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "see_more_label",
+      "label": "\"See All\" button label",
+      "default": "See All Styles"
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filters",
+      "label": "Enable filter bar",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "filter_source",
+      "label": "Filter by",
+      "options": [
+        { "value": "product_type", "label": "Product type" },
+        { "value": "tag", "label": "Tag" }
+      ],
+      "default": "product_type"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns — desktop",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_tablet",
+      "label": "Columns — tablet",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns — mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "3/4", "label": "Portrait (3:4)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "2/3", "label": "Tall (2:3)" }
+      ],
+      "default": "3/4"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background",
+      "default": "#F0ECE6"
+    },
+    {
+      "type": "color",
+      "id": "color_ink",
+      "label": "Ink (text / buttons)",
+      "default": "#0D0C0A"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent (eyebrow / hover)",
+      "default": "#8B1A1A"
+    },
+    {
+      "type": "color",
+      "id": "color_sand",
+      "label": "Sand (grid lines / borders)",
+      "default": "#DDD5C8"
+    },
+    {
+      "type": "color",
+      "id": "color_stone",
+      "label": "Stone (secondary text)",
+      "default": "#7A7068"
+    },
+    {
+      "type": "color",
+      "id": "color_white",
+      "label": "White (card background)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_warm",
+      "label": "Warm (image placeholder)",
+      "default": "#F5F1EB"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "type_override",
+          "label": "Type label override",
+          "info": "Optional — overrides the product's type for the label and filter group."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the Edit",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}

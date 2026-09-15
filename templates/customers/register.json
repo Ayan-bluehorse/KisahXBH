@@ -1,0 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs_cTHbHD": {
+      "type": "breadcrumbs",
+      "settings": {
+        "desk-padding-top": 16,
+        "desk-padding-bottom": 0,
+        "mob-padding-top": 16,
+        "mob-padding-bottom": 0
+      }
+    },
+    "main": {
+      "type": "main-register",
+      "settings": {}
+    }
+  },
+  "order": [
+    "breadcrumbs_cTHbHD",
+    "main"
+  ]
+}

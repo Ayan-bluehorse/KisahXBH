@@ -1,0 +1,32 @@
+{{ 'navratri.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'navratri.js' | asset_url }}" defer></script>
+
+<a href="{{ section.settings.link }}" class="cp-navratri-bar">
+  <div class="cp-navratri-bar__content">
+      {{ section.settings.announcement_text }}
+  </div>
+</a>
+
+{% schema %}
+{
+  "name": "Navratri Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Navratri Celebration is Live, Check it Out!"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Bar"
+    }
+  ]
+}
+{% endschema %}

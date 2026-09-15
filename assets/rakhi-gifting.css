@@ -1,0 +1,365 @@
+/* Rakhi Gifting CSS */
+.rakhi-gifting-app {
+  max-width: 100%;
+  margin: auto;
+  background: white;
+  min-height: auto;
+  font-family: inherit;
+}
+
+.rakhi-section-header {
+  padding: 22px 16px;
+  text-align: left;
+}
+
+.rakhi-section-header h2 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.rakhi-section-header p {
+  margin: 8px 0 0;
+  color: #555;
+}
+
+.rakhi-gift-banner.clickable-banner {
+  /* margin: 20px 0 30px; */
+  width: 100%;
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.rakhi-gift-banner.clickable-banner:hover {
+  opacity: 0.95;
+}
+
+.rakhi-banner-desktop {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rakhi-banner-mobile {
+  width: 100%;
+  height: auto;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .rakhi-gift-banner.clickable-banner {
+    /* margin: 16px 0 30px; */
+  }
+  .rakhi-banner-desktop {
+    display: none;
+  }
+  .rakhi-banner-mobile {
+    display: block;
+  }
+}
+
+.rakhi-box {
+  width: 90px;
+  height: 65px;
+  background: #faf4eb;
+  border: 2px solid #9d866f;
+  position: relative;
+}
+
+.rakhi-box:before {
+  content: "";
+  position: absolute;
+  left: 38px;
+  width: 10px;
+  height: 65px;
+  background: #b99b7d;
+}
+
+.rakhi-box:after {
+  content: "";
+  position: absolute;
+  top: 26px;
+  width: 90px;
+  height: 10px;
+  background: #b99b7d;
+}
+
+.rakhi-copy {
+  padding: 40px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.rakhi-copy small {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #999;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rakhi-copy h3 {
+  font-size: 28px;
+  margin: 0 0 12px 0;
+  color: #111;
+  font-family: "Georgia", serif;
+  font-weight: 400;
+}
+
+.rakhi-copy p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+  margin: 0 0 16px 0;
+}
+
+.rakhi-items {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 16px;
+}
+
+.rakhi-price {
+  font-size: 18px;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+.rakhi-price small {
+  font-size: 11px;
+  font-weight: 400;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+.rakhi-btn-small {
+  background: #111;
+  color: white;
+  border: 0;
+  padding: 12px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.1s ease;
+  width: fit-content;
+  margin-top: 6px;
+}
+
+.rakhi-btn-small:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.rakhi-btn-small:active {
+  transform: translateY(0);
+}
+
+.rakhi-tabs {
+  padding: 10px 16px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  margin-bottom: 10px;
+}
+
+.rakhi-tabs span {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #666;
+  font-weight: 500;
+}
+
+.rakhi-tabs a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 24px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.rakhi-tabs a:hover {
+  border-color: #111;
+}
+
+.rakhi-tabs a.active {
+  background: #111;
+  color: #fff !important;
+  border-color: #111;
+}
+
+/* Custom grids removed, using native collection grid */
+
+/* Modals */
+.rakhi-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999999;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.rakhi-modal.on {
+  display: flex;
+}
+
+.rakhi-modalbox {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 12px 12px 0 0;
+}
+
+.rakhi-close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Gift Popup specific */
+.rakhi-giftPopup {
+  padding: 28px 20px 22px;
+}
+
+.rakhi-eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #98623d;
+}
+
+.rakhi-giftPopup h2 {
+  font-size: 32px;
+  margin: 14px 0;
+}
+
+.rakhi-modalIntro {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #666;
+  margin: 0 0 20px;
+}
+
+.rakhi-boxCounter {
+  border: 1px solid #d9cfc4;
+  padding: 18px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rakhi-boxCounter strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.rakhi-boxCounter span {
+  display: block;
+  color: #777;
+  font-size: 10px;
+}
+
+.rakhi-counter {
+  display: flex;
+  align-items: center;
+  border: 1px solid #c9c1ba;
+  height: 48px;
+  min-width: 132px;
+}
+
+.rakhi-counter button {
+  width: 43px;
+  height: 46px;
+  border: 0;
+  background: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.rakhi-counter b {
+  width: 44px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.rakhi-giftTotal {
+  border-top: 1px solid #ddd;
+  margin-top: 22px;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.rakhi-giftTotal span {
+  font-size: 13px;
+  display: block;
+}
+
+.rakhi-giftTotal strong {
+  font-size: 28px;
+  display: block;
+  margin-top: 3px;
+}
+
+.rakhi-giftTotal small {
+  font-size: 10px;
+  color: #777;
+  display: block;
+  margin-top: 3px;
+}
+
+.rakhi-continueBtn {
+  height: 48px;
+  background: #111;
+  color: #fff;
+  border: 0;
+  padding: 0 22px;
+  font-size: 11px;
+  letter-spacing: 0.7px;
+  cursor: pointer;
+}
+
+.rakhi-continueBtn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Toast */
+.rakhi-addedToast {
+  display: none;
+  position: fixed;
+/* Loader */
+.rakhi-loader {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+}

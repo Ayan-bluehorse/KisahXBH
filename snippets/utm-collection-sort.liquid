@@ -1,0 +1,28 @@
+{%- comment -%}
+  Auto-sorts collection pages when visitors land with UTM campaign parameters.
+  Fully dynamic across ALL collections with zero hardcoding.
+{%- endcomment -%}
+<script>
+  (function() {
+    try {
+      if (!window.location.search) return;
+      var params = new URLSearchParams(window.location.search);
+      var hasUtm = params.has('utm_source') || params.has('utm_medium') || params.has('utm_campaign') || params.has('utm_sort');
+      
+      if (hasUtm && !params.has('sort_by')) {
+        var targetSort = params.get('utm_sort') || params.get('sort') || 'best-selling';
+        if (targetSort === 'newest') targetSort = 'created-descending';
+        if (targetSort === 'price-low') targetSort = 'price-ascending';
+        if (targetSort === 'price-high') targetSort = 'price-descending';
+        if (targetSort === 'featured') targetSort = 'manual';
+
+        params.delete('utm_sort');
+        params.delete('sort');
+        params.set('sort_by', targetSort);
+
+        var newUrl = window.location.pathname + '?' + params.toString() + window.location.hash;
+        window.location.replace(newUrl);
+      }
+    } catch(e) {}
+  })();
+</script>

@@ -1,0 +1,310 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": false,
+        "full_width": true
+      }
+    },
+    "store_locator_page": {
+      "type": "store-locator-page",
+      "blocks": {
+        "store_gariahat": {
+          "type": "store",
+          "settings": {
+            "heading": "Gariahat Store - Kolkata",
+            "city": "Kolkata",
+            "area": "Gariahat",
+            "image": "shopify://shop_images/Gariahat.png",
+            "address": "194E, Rash Behari Avenue, opposite Spencer's Gariahat, Kolkata, West Bengal 700029",
+            "phn_number": "6289300120",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_indiranagar": {
+          "type": "store",
+          "settings": {
+            "heading": "Indiranagar Store - Bangalore",
+            "city": "Bangalore",
+            "area": "Indiranagar",
+            "image": "shopify://shop_images/blr_store_image.jpg",
+            "address": "Kisah, No 2012, Ground Floor , Shreyas Plaza Commercial Complex, 100 Feet Road, Indiranagar, Bengaluru, Karnataka, 560038",
+            "phn_number": "9230647534",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_lake_mall": {
+          "type": "store",
+          "settings": {
+            "heading": "Lake Mall Store - Kolkata",
+            "city": "Kolkata",
+            "area": "Lake Mall",
+            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "address": "3rd floor, 104, Rash Behari Ave, Lake Market, Kalighat, Kolkata, West Bengal 700029",
+            "phn_number": "9230647537",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "https://www.google.com/maps/place/Lake+Mall/@22.5163473,88.3490737,17z/data=!3m1!4b1!4m6!3m5!1s0x3a027781aba713e5:0xf8f1cead924ae1a4!8m2!3d22.5163473!4d88.3490737!16s%2Fg%2F11h3ctsk5h?entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_lindsay": {
+          "type": "store",
+          "settings": {
+            "heading": "Lindsay Street Store - Kolkata",
+            "city": "Kolkata",
+            "area": "Lindsay Street",
+            "image": "shopify://shop_images/lindsay_street.jpg",
+            "address": "Shop No -1, Premises No - 20 , Chowringhee Road , Kolkata - 700020",
+            "phn_number": "9230374678",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "https://maps.app.goo.gl/QSNU7YKdcSgBnrmB9",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_metropolitan": {
+          "type": "store",
+          "settings": {
+            "heading": "Metropolitan Store - Kolkata",
+            "city": "Kolkata",
+            "area": "Metropolitan",
+            "image": "shopify://shop_images/metropolitan_shop_image.png",
+            "address": "P, 62, Metropolitan Co-Operative Housing Society Limited, Tangra, Kolkata, West Bengal 700105",
+            "phn_number": "8583913793",
+            "time": "10:30 AM to 7:00 PM",
+            "openday": "Monday - Saturday",
+            "button_link": "https://www.google.com/maps/place/Kisah/@22.5538648,88.4053381,17z/data=!3m1!4b1!4m6!3m5!1s0x3a0277236c4db5b9:0x1770b70dffde4a11!8m2!3d22.5538648!4d88.4053381!16s%2Fg%2F11f359pfzy?entry=ttu&g_ep=EgoyMDI1MDQwNy4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_sarath": {
+          "type": "store",
+          "settings": {
+            "heading": "Sarath City Mall Store - Hyderabad",
+            "city": "Hyderabad",
+            "area": "Sarath City Mall",
+            "image": "shopify://shop_images/sarath_city_image.jpg",
+            "address": "3F-104- Third Floor, Sarath City Capital Mall Gachibowli - Miyapur Rd, Whitefields, HITEC City, Kondapur, Hyderabad- 500084",
+            "phn_number": "9230647536",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "https://maps.app.goo.gl/sreLdbpP1jMvTQHj7",
+            "open_new_tab": true,
+            "coming_soon": false
+          }
+        },
+        "store_allenby": {
+          "type": "store",
+          "settings": {
+            "heading": "Allenby Road - Kolkata",
+            "city": "Kolkata",
+            "area": "Allenby Road",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_himayat": {
+          "type": "store",
+          "settings": {
+            "heading": "Himayat Nagar - Hyderabad",
+            "city": "Hyderabad",
+            "area": "Himayat Nagar",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_phoenix": {
+          "type": "store",
+          "settings": {
+            "heading": "Phoenix Market City - Bangalore",
+            "city": "Bangalore",
+            "area": "Phoenix Market City",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_jayanagar": {
+          "type": "store",
+          "settings": {
+            "heading": "Jaya Nagar - Bangalore",
+            "city": "Bangalore",
+            "area": "Jaya Nagar",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_dn_regalia": {
+          "type": "store",
+          "settings": {
+            "heading": "DN Regallia - Bhubaneswar",
+            "city": "Bhubaneswar",
+            "area": "DN Regallia",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_jewel_m3m": {
+          "type": "store",
+          "settings": {
+            "heading": "Jewel M3M Mall - Gurgaon",
+            "city": "Gurgaon",
+            "area": "Jewel M3M Mall",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_pacific": {
+          "type": "store",
+          "settings": {
+            "heading": "Pacific Mall - Jaipur",
+            "city": "Jaipur",
+            "area": "Pacific Mall",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_infinity": {
+          "type": "store",
+          "settings": {
+            "heading": "Infinity Malad - Mumbai",
+            "city": "Mumbai",
+            "area": "Infinity Malad",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_commercial": {
+          "type": "store",
+          "settings": {
+            "heading": "Commercial Street - Bangalore",
+            "city": "Bangalore",
+            "area": "Commercial Street",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        },
+        "store_inorbit": {
+          "type": "store",
+          "settings": {
+            "heading": "Inorbit Vizag - Vishakhapatnam",
+            "city": "Vishakhapatnam",
+            "area": "Inorbit Vizag",
+            "address": "Coming soon",
+            "phn_number": "",
+            "time": "10:30 AM to 9:00 PM",
+            "openday": "Open All Days",
+            "button_link": "",
+            "open_new_tab": true,
+            "coming_soon": true
+          }
+        }
+      },
+      "block_order": [
+        "store_gariahat",
+        "store_indiranagar",
+        "store_lake_mall",
+        "store_lindsay",
+        "store_metropolitan",
+        "store_sarath",
+        "store_allenby",
+        "store_himayat",
+        "store_phoenix",
+        "store_jayanagar",
+        "store_dn_regalia",
+        "store_jewel_m3m",
+        "store_pacific",
+        "store_infinity",
+        "store_commercial",
+        "store_inorbit"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "heading": "STORE LOCATOR",
+        "subheading": "Find a KISAH store near you. Visit us in-store for the complete experience.",
+        "search_placeholder": "Search city or store",
+        "view_all_label": "View all →",
+        "show_cta": true,
+        "cta_text": "Can't find a store near you? We're adding more stores across India.",
+        "cta_button_label": "Stay Updated →",
+        "cta_button_link": "https://forms.gle/wofY9vL16DC3TN9R6",
+        "cta_new_tab": true,
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 48,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 32
+      }
+    }
+  },
+  "order": [
+    "main",
+    "store_locator_page"
+  ]
+}

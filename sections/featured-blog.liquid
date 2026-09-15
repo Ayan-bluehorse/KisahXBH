@@ -1,0 +1,307 @@
+<style>
+#shopify-section-{{section.id}} .article-list{
+  gap:30px;
+}
+#shopify-section-{{section.id}} .article-list .article{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    width:30.33%;
+    padding:10px 10px 20px 10px;
+}
+#shopify-section-{{section.id}} .article-list .article__inner{
+    position:relative;
+}
+#shopify-section-{{section.id}} .article-list .article__inner h3{
+    font-style: normal; 
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #000000;
+    font-family: 'Generis Sans W04 Medium';
+ }
+#shopify-section-{{section.id}} .article-list .article__inner .rte{
+    margin-bottom:0;
+}
+#shopify-section-{{section.id}} .article-list .article__inner .rte span{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+    letter-spacing: 0;
+}
+#shopify-section-{{section.id}} .article-list .article__inner .meta .iconmeta.time{
+    font-family: 'Generis Sans W01 Regular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
+    color: #000000;
+}
+#shopify-section-{{section.id}} .article-list .article__inner .meta{
+  margin-top:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+#shopify-section-{{section.id}} .article-list .article__inner .meta .blog_share_svg svg{
+  width:25px;
+}
+#shopify-section-{{section.id}} .article__inner .blog-share{
+    background:#201747;
+    border-radius:50px;
+    padding:10px 8px;
+    position:absolute;
+    bottom:40px;
+    right:0;
+    opacity:0;
+    visibility:hidden;
+  }
+#shopify-section-{{section.id}} .article-list.article-layout--columns.article-layout--one-row .article:nth-child(3){
+    display:block;
+}
+#shopify-section-{{section.id}} .article.active .blog-share{
+   opacity:1;
+   visibility:visible;
+}
+@media screen and (max-width:768px){
+ #shopify-section-{{section.id}} .article-list{
+   display:flex;
+   flex-direction:column;
+ }
+#shopify-section-{{section.id}} .article-list .article{
+    width:100%;
+}
+}
+</style>
+
+
+{%- assign blog = blogs[section.settings.blog] -%}
+<div class="{% if section.settings.color_scheme != 'default' %}use-color-scheme use-color-scheme--{{ section.settings.color_scheme }} fully-padded-row--medium{% else %}fully-spaced-row--medium{% endif %}">
+  <div class="container blog-row">
+    {% unless blog.empty? %}
+
+      <h2 class="hometitle h4 align-center"><a href="{{ blog.url }}" data-cc-animate>{{ section.settings.title | escape }}</a></h2>
+
+      {% if blog.articles.size == 0 %}
+
+        <p class="align-center" data-cc-animate>{{ 'onboarding.blog.empty' | t }}</p>
+
+      {% else %}
+
+        <div class="article-list kmk article-layout--columns article-layout--one-row">
+          {% for article in blog.articles limit: section.settings.post_limit %}
+          <div class="article" data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
+             
+            <div class="article__inner">
+               <h3><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+              {% if article.image %}
+                <div class="article-image">
+                  <a href="{{ article.url }}">
+                    {%- render 'image' with article.image, sizes: '(min-width: 1024px) 440px, (min-width: 768px) 50vw, 100vw', custom_aspect_ratio: section.settings.crop_ratio -%}
+                  </a>
+                </div>
+              {% endif %}
+
+             {% comment %} <h3><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>{% endcomment %}
+
+              {%- if section.settings.show_excerpts -%}
+                <div class="rte">
+                  {%- if article.excerpt.size > 0 -%}
+                    {{ article.excerpt }}
+                  {%- else -%}
+                    {{ article.content | strip_html | truncatewords: 30 }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <div class="meta">
+                <span class="iconmeta time">
+                  {% if section.settings.show_date %}
+                 {%- comment -%}  {{ article.published_at | time_tag: format: 'date' }} {% endcomment %}
+                      {{ article.published_at | date: " %Y-%m-%d " }}
+                  {% endif %}
+                  {% if section.settings.show_author %}
+                    {% if section.settings.show_date %}&mdash;{% endif %}
+                    <span class="author">{{ article.author }}</span>
+                  {% endif %}
+                </span>
+                <div class="blog_share_svg">
+                {% render 'share-svg' %}
+               </div> 
+              </div>
+                {% render 'mobile-soical-share'
+                  shareurl:blog.url,
+                 shareimage:article.image,
+                 share_title:blog.title,
+                 unique_id:"blog-share"
+               %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    {% else %}
+
+      <h2 class="hometitle h4 align-center">{{ section.settings.title | escape }}</h2>
+
+      <div class="article-list article-layout--columns article-layout--one-row">
+        {% for i in (1..section.settings.post_limit) %}
+        <div class="article">
+          <div class="article__inner">
+            <div class="article-image">
+              <div class="placeholder-image">{{ 'image' | placeholder_svg_tag }}</div>
+            </div>
+
+            <h3>{{ 'onboarding.article.title' | t }}</h3>
+
+            {%- if section.settings.show_excerpts -%}
+              <div class="rte">
+                {{ 'onboarding.article.excerpt' | t }}
+              </div>
+            {%- endif -%}
+
+            <div class="meta">
+              <span class="iconmeta time">
+                {% if section.settings.show_date %}
+                  {{ 'now' | time_tag: format: 'date' }}
+                {% endif %}
+                {% if section.settings.show_author %}
+                  {% if section.settings.show_date %}&mdash;{% endif %}
+                  <span class="author">{{ 'onboarding.article.author' | t }}</span>
+                {% endif %}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    {% endunless %}
+  </div>
+</div>
+
+<script>
+ let clickSvg = document.querySelectorAll('#shopify-section-{{ section.id }} .blog_share_svg svg');
+  console.log(clickSvg, 'ddd');
+   let article = document.querySelectorAll('#shopify-section-{{ section.id }} .article');
+   console.log(article, 'darticle');
+   clickSvg.forEach( function(clickBtn, index){
+   clickBtn.addEventListener('click',()=>{
+      article[index].classList.toggle('active');
+   }); 
+ });
+</script>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "class": "section-featured-blog",
+  "disabled_on": {
+    "groups": [
+      "aside"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Blog posts"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": "Posts",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpts",
+      "label": "Show excerpt",
+      "info": "Change excerpts by editing your blog posts. [Learn more](https://help.shopify.com/en/manual/online-store/blogs/writing-blogs#display-an-excerpt-from-a-blog-post)",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "crop_ratio",
+      "label": "Image aspect ratio",
+      "options": [
+        {
+          "value": "",
+          "label": "Natural (no crop)"
+        },
+        {
+          "value": "0.67",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "1.0",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "1.33",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1.78",
+          "label": "Wide (16:9)"
+        }
+      ],
+      "default": "1.78"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

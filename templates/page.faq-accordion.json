@@ -1,0 +1,567 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs_ERx8HT": {
+      "type": "breadcrumbs",
+      "settings": {
+        "desk-padding-top": 10,
+        "desk-padding-bottom": 0,
+        "mob-padding-top": 10,
+        "mob-padding-bottom": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_page_title": true,
+        "full_width": true
+      }
+    },
+    "accordion_dB6AkR": {
+      "type": "accordion",
+      "blocks": {
+        "faq_MpznXC": {
+          "type": "faq",
+          "settings": {
+            "head": "Deliveries & Shipment",
+            "question": "How do I place an order?",
+            "answer": "<p><span style=\"font-weight: 400;\">(i) Add the item to your shopping cart.</span></p>\n<p><span style=\"font-weight: 400;\">(ii) Continue to shop or buy the desired item.</span></p>\n<p><span style=\"font-weight: 400;\">(iii) Once your selection is complete click on the checkout & pay icon.</span></p>\n<p><span style=\"font-weight: 400;\">(iv) Select your payment mode.</span></p>\n<p><span style=\"font-weight: 400;\">(v) Once the payment is done you will receive a confirmation email that your order has been placed on the registered email address given at the time of sign up.</span></p>",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_dNpr9p": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Can I change the shipping address of the order?",
+            "answer": "Yes, you can change the shipping address of your order only before it is billed or shipped. No changes can be done post order shipment.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_EAPC3G": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What if I am not available when the order is delivered?",
+            "answer": "As a policy, our courier partners will always call/text message you before delivery to check your availability. However, in case the order arrives when you are not available, it will be re-dispatched after your confirmation.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_tcfdG6": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Can you arrange the delivery on priority or expedited delivery since I am leaving the country?",
+            "answer": "We always try to deliver the order at the earliest, but we would not be able to accommodate any special requests during the sale period. We commit to try our best.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_zDBUzQ": {
+          "type": "faq",
+          "settings": {
+            "head": "Orders",
+            "question": "Do you offer made-to-order service?",
+            "answer": "<p><span style=\"font-weight: 400;\">Kisah offers ready-to-wear products in standard sizes. For further assistance get in touch with our Customer Care Team at </span><span style=\"font-weight: 400;\">– <meta charset=\"utf-8\"> <a data-mce-fragment=\"1\" href=\"mailto:support@kisah.in\" data-mce-href=\"mailto:support@kisah.in\">support@kisah.in</a></span></p>",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_UANERw": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What happens if a wrong product was delivered?",
+            "answer": "<p><span style=\"font-weight: 400;\">In the unlikely event that it so happens that the product you paid for is not the one you received then contact our team at <meta charset=\"utf-8\"> <a data-mce-fragment=\"1\" href=\"mailto:support@kisah.in\" data-mce-href=\"mailto:support@kisah.in\">support@kisah.in</a></span><span style=\"font-weight: 400;\">. </span><span style=\"font-weight: 400;\">within 24 hours of delivery. They will guide you and make sure you get your ordered item at the earliest.</span></p>",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_PzXK6b": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What happens if a product I ordered is out of stock?",
+            "answer": "If a product is out of stock, you will be informed when you add it to your Shopping Cart or at Checkout. In rare cases, if the product is out of stock after your order is confirmed, we will initiate order cancellation and refund the amount or offer an exchange of products of the same value.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_WW7JAq": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "If I have received a damaged item during the Sale, would you offer to replace this item?",
+            "answer": "We will offer a replacement of the same item if we have available stock at the time. The customer has to intimate our team within 48 hours of delivery of the product.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_LtMbQz": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Do you have alteration facilities?",
+            "answer": "No, we do not provide any alteration facilities. Kindly go through the size chart before placing your order.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_xzmGbk": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "If I place an order now, can you arrange the delivery after a period of time?",
+            "answer": "As long as the payment is made at the time of placing an order, we can ship it at a later time if the request is feasible for us. For further assistance get in touch with us at - <a data-mce-fragment=\"1\" href=\"mailto:support@kisah.in\" data-mce-href=\"mailto:support@kisah.in\">support@kisah.in</a>",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_fN6VbD": {
+          "type": "faq",
+          "settings": {
+            "head": "Returns & Exchanges",
+            "question": "Do you accept returns and refunds?",
+            "answer": "We will accept returns and exchange for 7 days from the date of delivery.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_CNPQHV": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How can I cancel my order?",
+            "answer": "You may cancel your order within 24 hours of placing one. Once shipped, your order cannot be cancelled. For prepaid orders, your money will get refunded within 7-8 business days to your source payment option.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_xfpta4": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": " How will the customer receive the refund?",
+            "answer": "Please check the Return Policy.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_peieEd": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What is your Exchange policy?",
+            "answer": "We only accept exchange if – \n<ol>\n<li><span style=\"font-weight: 400;\">i) The product is incorrect from the one you ordered or saw on the website.</span></li>\n<li><span style=\"font-weight: 400;\">ii) The product has genuine manufacturing defects or has defects.</span></li>\n</ol>\n<p><b> *Image and video of the defect is mandatory for products in such cases.</b></p>",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_743yA4": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Can I return or exchange items bought on sale?",
+            "answer": "We do not exchange or accept returns of items bought on sale unless the products received are damaged or the incorrect size got shipped.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_EMkWcd": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Do you offer Partial Cash on Delivery (Partial COD)?",
+            "answer": "We might offer Partial COD in select PIN codes and on select products. A small upfront amount is paid online, with the balance due in cash at delivery. This is subject to internal checks. The upfront fee is non-refundable in case of an RTO.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_HFykLd": {
+          "type": "faq",
+          "settings": {
+            "head": "Payment & Security",
+            "question": "What are the online payment options available on your website?",
+            "answer": "We accept all Debit/Credit cards and Internet banking services of all major banks.We also accept wallet payments.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_CArqjJ": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Do you provide Cash on Delivery (COD) service?",
+            "answer": "Yes, we provide Cash on Delivery service at select locations. Please enter your PIN code during the checkout page to confirm your area eligibilty.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_hHPReY": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "My transaction failed, I received a payment gateway error message. Please help.",
+            "answer": "Sorry, that shouldn’t have happened; it could be due to some technical glitch. Try retrying and if  it continues then feel free to get in touch with our Customer Care Team and the will try to complete your order.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_ALNXtV": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What happens if my credit/debit has been compromised while making online payment?",
+            "answer": "We do not store/retain any of your credit/debit card information. If you suspect that something is not right then contact your bank immediately.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_RqycJW": {
+          "type": "faq",
+          "settings": {
+            "head": "Quick Guide to Men’s Ethnic Fashion",
+            "question": "How to look tall in ethnic wear for men?",
+            "answer": "Choose outfits with vertical design elements like a straight-cut long kurta for men, tonal layering, and minimal contrast between top and bottom. Monochrome looks, high-waist trousers, and streamlined silhouettes create an elongated appearance. Avoid bulky layers and oversized prints that visually shorten your frame.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_HkmiXq": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How do I choose the right colour for my ethnic outfit based on my skin tone?",
+            "answer": "For warm skin tones, earthy shades like olive, maroon, and gold work beautifully. Cooler tones pair well with navy, emerald, and charcoal. Neutral tones such as beige, ivory, and pastels flatter most complexions. They offer a refined and balanced look for both day and evening events.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_NUHwiK": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What are the latest trends in men’s ethnic and Indo-Western fashion?",
+            "answer": "Current trends include textured fabrics, asymmetrical kurtas, <a href=\"https://kisah.in/collections/jodhpuri-bandhgala\">men's bandhgala suits</a> with modern tailoring, and fusion pairings like bomber jackets with traditional wear. Muted pastels, jewel tones, and minimal embroidery are popular, along with layered looks that blend traditional craftsmanship with contemporary silhouettes.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_enhNVV": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How can I transition my ethnic outfit from day events to evening celebrations?",
+            "answer": "Start with a light kurta or Indo Western dress for men for daytime and elevate it for the evening by adding a structured jacket, dupatta, or statement accessory. Swap casual footwear like polished mojaris or dress shoes to instantly create a more refined, celebration-ready appearance.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_GeWzCt": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What should I look for when buying premium men’s ethnic wear online?",
+            "answer": "Check fabric quality, detailed size guides, and close-up images of stitching and embellishments. Look for breathable materials, clear return policies, and customer reviews. Premium <a href=\"https://kisah.in/\">men's ethnic wear</a> should offer both comfort and craftsmanship, ensuring a polished look and long-lasting value.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_cNzkmz": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What is the best ethnic outfit for a groom’s brother or wedding guest?",
+            "answer": "A bandhgala set, kurta jacket ensemble, or Indo-Western dhoti set offers the perfect balance of elegance and individuality. These styles in <a href=\"https://kisah.in/collections/wedding\">wedding wear for men</a> stand out without overshadowing the groom, providing a refined yet festive look suitable for ceremonies, receptions, and celebratory gatherings.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_qVm6kz": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Which men’s ethnic outfit looks best for tall and slim body types?",
+            "answer": "Layered outfits, like kurta jacket for men, bandhgalas, and textured Indo-Western ensembles, suit tall, slim frames well. These styles add structure and visual balance. Opt for slightly heavier fabrics and subtle patterns to create depth without overpowering your natural silhouette.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_WbyUX3": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What are the must-have ethnic outfits for every man’s wardrobe?",
+            "answer": "Every man should own a classic kurta set, a statement bandhgala or Jodhpuri suit, and a versatile <a href=\"https://kisah.in/collections/indowestern-sets\">Indo Western suit for men</a>. These essentials ensure your preparation for festive occasions, weddings, and formal gatherings with a stylish and culturally rooted look.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_y9CVMD": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How do I choose the right ethnic wear for different occasions?",
+            "answer": "For casual gatherings, opt for simple kurta sets or light Indo-Western styles. Weddings and receptions call for Jodhpuri bandhgala suits, sherwani-inspired outfits, or layered looks. Festivals suit vibrant colours and textured fabrics. Always consider event formality, season, and personal comfort when choosing.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_iT7TD9": {
+          "type": "faq",
+          "settings": {
+            "head": "Men’s Occasion Wear Guide",
+            "question": "How can I layer Indo-Western outfits for a modern ethnic look?",
+            "answer": "Start with a well-fitted kurta or mid-length kurta and add a structured jacket, <a href=\"https://kisah.in/collections/nehru-jackets\">nehru jacket</a>, or an asymmetrical shrug. Choose contrasting yet complementary textures like silk with jacquard. Keep the bottom streamlined with tailored trousers or dhotis to maintain a sharp, contemporary silhouette.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_x4UBeR": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How do I style a kurta pajama with a jacket for a wedding guest look?",
+            "answer": "Choose a normal kurta pajama set for men and elevate it with a richly textured or embroidered jacket. Opt for deep shades like wine, navy, or emerald for festive appeal. Complete the look with mojaris or polished loafers and a subtle brooch for added elegance.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_WXdPbY": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Are Indo-Western kurta sets suitable for formal evening events?",
+            "answer": "Yes, the Indo Western suit for men works beautifully on formal evenings when you style it with structured jackets, minimal embroidery, and darker colour palettes. Fabrics like silk blends or jacquard add sophistication. Tailored trousers and refined footwear help maintain a polished, occasion-appropriate appearance.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_JefUbK": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Can I wear a sequinned kurta or an embroidered jacket for cocktail night?",
+            "answer": "Absolutely. Cocktail nights are perfect for subtle glamour. Pair a <a href=\"https://kisah.in/collections/cocktail\">men's party wear kurta</a> with sleek trousers, or style a minimalist kurta with a heavily embroidered jacket. Keep accessories understated and opt for clean, modern footwear to balance shine with sophistication.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_kM4Ent": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Which trousers or dhotis go best with Indo-Western kurtas?",
+            "answer": "Tapered trousers, ankle-length pants, and structured dhotis pairs best with an Indo Western kurta set for men. These bottoms create a contemporary edge while maintaining traditional charm. Choose neutral shades for versatility or tonal matches to create a streamlined, elongated silhouette for festive and formal occasions.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_pjMwPV": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How can I make a kurta pajama look more formal with layering?",
+            "answer": "Add a tailored jacket, bandhgala, or Nehru vest in a premium fabric to instantly elevate the <a href=\"https://kisah.in/collections/kurta\">traditional kurta for men</a>. Stick to rich, solid colours with minimal detailing. Finish with formal footwear and a pocket square to create a refined, event-ready look.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_kcA3Y9": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Should I wear printed or solid kurtas for mehndi ceremonies?",
+            "answer": "Both work well, but printed kurtas add a playful, festive vibe ideal for daytime mehndi events. A <a href=\"https://kisah.in/collections/mehendi\">mens kurta for mehndi</a> in bright or pastel shades offers a clean, elegant look. Choose lightweight fabrics and comfortable fits to stay stylish throughout the celebration.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_f4HPfd": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "How do I keep my mehndi outfit stylish yet comfortable?",
+            "answer": "Opt for breathable fabrics like cotton-silk blends or lightweight jacquard. Choose relaxed silhouettes and minimal layering. Bright colours or subtle prints in mehndi dress for men keep it festive, while comfortable footwear and easy-to-move-in bottoms ensure you enjoy the event without feeling restricted.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_hzaiCX": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "Can sherwanis be styled in an Indo-Western way?",
+            "answer": "Yes, sherwanis can be modernised by pairing them with tailored trousers instead of traditional churidars. Add minimalist accessories and sleek footwear for a contemporary touch. Choosing textured fabrics and subtle detailing in <a href=\"https://kisah.in/collections/sherwani-achkans\">sherwani set for men</a> helps maintain tradition while embracing a refined Indo-Western aesthetic.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        },
+        "faq_RA4edr": {
+          "type": "faq",
+          "settings": {
+            "head": "",
+            "question": "What's the difference between Indo-Western and sherwani?",
+            "answer": "A sherwani for men is a traditional, long, structured outfit typically worn for weddings and formal ceremonies. Indo-Western wear blends traditional Indian elements with modern silhouettes, such as jackets, trousers, or asymmetrical kurtas, offering a versatile, contemporary style suitable for various occasions.",
+            "desk-padding-top": 16,
+            "desk-padding-bottom": 16,
+            "mob-padding-top": 16,
+            "mob-padding-bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "faq_MpznXC",
+        "faq_dNpr9p",
+        "faq_EAPC3G",
+        "faq_tcfdG6",
+        "faq_zDBUzQ",
+        "faq_UANERw",
+        "faq_PzXK6b",
+        "faq_WW7JAq",
+        "faq_LtMbQz",
+        "faq_xzmGbk",
+        "faq_fN6VbD",
+        "faq_CNPQHV",
+        "faq_xfpta4",
+        "faq_peieEd",
+        "faq_743yA4",
+        "faq_EMkWcd",
+        "faq_HFykLd",
+        "faq_CArqjJ",
+        "faq_hHPReY",
+        "faq_ALNXtV",
+        "faq_RqycJW",
+        "faq_HkmiXq",
+        "faq_NUHwiK",
+        "faq_enhNVV",
+        "faq_GeWzCt",
+        "faq_cNzkmz",
+        "faq_qVm6kz",
+        "faq_WbyUX3",
+        "faq_y9CVMD",
+        "faq_iT7TD9",
+        "faq_x4UBeR",
+        "faq_WXdPbY",
+        "faq_JefUbK",
+        "faq_kM4Ent",
+        "faq_pjMwPV",
+        "faq_kcA3Y9",
+        "faq_f4HPfd",
+        "faq_hzaiCX",
+        "faq_RA4edr"
+      ],
+      "settings": {}
+    },
+    "176950797387418105": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_1c26a8b_3UmgXf": {
+          "type": "ai_gen_block_1c26a8b",
+          "settings": {
+            "desktop_height": 50,
+            "mobile_height": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_1c26a8b_3UmgXf"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "breadcrumbs_ERx8HT",
+    "main",
+    "accordion_dB6AkR",
+    "176950797387418105"
+  ]
+}

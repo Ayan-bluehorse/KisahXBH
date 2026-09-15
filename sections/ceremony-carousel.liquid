@@ -1,0 +1,727 @@
+{% comment %}
+  Ceremony Carousel — image carousel with overlay labels, dots, and arrows.
+  Uses Slick (globally loaded in theme.liquid). All styles scoped to avoid conflicts.
+{% endcomment %}
+
+<div class="ceremony-carousel-section" id="ceremony-carousel-{{ section.id }}" data-mobile-layout="{{ section.settings.mobile_layout }}">
+  {%- if section.settings.subheading != blank or section.settings.heading != blank -%}
+    <div class="ceremony-carousel__header">
+      {%- if section.settings.subheading != blank -%}
+        <p class="ceremony-carousel__subheading" style="color: {{ section.settings.subheading_color }};">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ceremony-carousel__heading" style="color: {{ section.settings.heading_color }};">
+          {{ section.settings.heading | replace: '<p>', '' | replace: '</p>', '' }}
+        </h2>
+      {%- endif -%}
+      <div class="ceremony-carousel__divider" style="background-color: {{ section.settings.divider_color }};"></div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="ceremony-carousel__slider">
+      {%- for block in section.blocks -%}
+        <div class="ceremony-carousel__slide" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}" class="ceremony-carousel__card" aria-label="{{ block.settings.title | escape | default: 'Carousel Link' }}" {% if block.settings.link == blank %}onclick="return false;"{% endif %}>
+            <div class="ceremony-carousel__image-wrapper">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 400 }}"
+                  srcset="{{ block.settings.image | image_url: width: 200 }} 200w,
+                         {{ block.settings.image | image_url: width: 300 }} 300w,
+                         {{ block.settings.image | image_url: width: 400 }} 400w,
+                         {{ block.settings.image | image_url: width: 500 }} 500w,
+                         {{ block.settings.image | image_url: width: 600 }} 600w"
+                  sizes="(max-width: 480px) 70vw, (max-width: 768px) 45vw, 25vw"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  class="ceremony-carousel__img"
+                >
+              {%- else -%}
+                <div class="ceremony-carousel__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <div class="ceremony-carousel__overlay">
+                  <span class="ceremony-carousel__title">{{ block.settings.title }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  /* ===== SECTION WRAPPER ===== */
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.desk_padding_top }}px;
+    padding-bottom: {{ section.settings.desk_padding_bottom }}px;
+    overflow: hidden;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  /* ===== HEADER ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 28px;
+    padding: 0 20px;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__subheading {
+    font-size: 0.75em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+    font-weight: 400;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__heading {
+    margin: 0;
+    font-size: 1.8em;
+    line-height: 1.25;
+  }
+
+  /* ===== DIVIDER ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__divider {
+    width: 44px;
+    height: 1px;
+    margin: 16px auto 0;
+  }
+
+  /* ===== SLIDER WRAPPER ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__slider {
+    max-width: var(--page-container-width, 1480px);
+    margin: 0 auto;
+    padding: 0 var(--container-pad-x, 20px);
+  }
+
+  /* ===== SLIDE ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__slide {
+    padding: 0 6px;
+    outline: none;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* ===== IMAGE ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_radius }}px;
+    background-color: #eee;
+    aspect-ratio: 3 / 4;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__card:hover .ceremony-carousel__img {
+    transform: scale(1.04);
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__placeholder svg {
+    width: 60%;
+    height: auto;
+    opacity: 0.35;
+  }
+
+  /* ===== BOTTOM OVERLAY (title) ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(42, 31, 20, 0.72));
+    padding: 32px 14px 16px;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__title {
+    font-size: 1.15rem;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== SLICK ARROWS ===== */
+  #shopify-section-{{ section.id }} .slick-prev,
+  #shopify-section-{{ section.id }} .slick-next {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.9);
+    cursor: pointer;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+  }
+  #shopify-section-{{ section.id }} .slick-prev:hover,
+  #shopify-section-{{ section.id }} .slick-next:hover {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  #shopify-section-{{ section.id }} .slick-prev {
+    left: 8px;
+  }
+  #shopify-section-{{ section.id }} .slick-next {
+    right: 8px;
+  }
+  #shopify-section-{{ section.id }} .slick-prev:before,
+  #shopify-section-{{ section.id }} .slick-next:before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
+    opacity: 1;
+  }
+  #shopify-section-{{ section.id }} .slick-prev:before {
+    transform: rotate(-135deg);
+    margin-left: 3px;
+  }
+  #shopify-section-{{ section.id }} .slick-next:before {
+    transform: rotate(45deg);
+    margin-right: 3px;
+  }
+  #shopify-section-{{ section.id }} .slick-disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* ===== SLICK DOTS ===== */
+  #shopify-section-{{ section.id }} .slick-dots {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 24px 0 0 !important;
+    position: relative !important;
+    bottom: auto !important;
+    width: auto !important;
+  }
+  #shopify-section-{{ section.id }} .slick-dots li {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0;
+    width: auto !important;
+    height: auto !important;
+  }
+  #shopify-section-{{ section.id }} .slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: {{ section.settings.dots_inactive_color }};
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  #shopify-section-{{ section.id }} .slick-dots li button:before {
+    display: none;
+  }
+  #shopify-section-{{ section.id }} .slick-dots li.slick-active button {
+    background: {{ section.settings.dots_active_color }};
+    transform: scale(1.35);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.mob_padding_top }}px;
+      padding-bottom: {{ section.settings.mob_padding_bottom }}px;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__header {
+      margin-bottom: 20px;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__heading {
+      font-size: 1.4em;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__subheading {
+      font-size: 0.65em;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__overlay {
+      padding: 24px 10px 12px;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__title {
+      font-size: 0.9rem;
+    }
+    #shopify-section-{{ section.id }} .ceremony-carousel__label {
+      font-size: 0.6em;
+      padding: 5px 10px;
+    }
+  }
+
+  /* ===== MOBILE LAYOUT: 2-Column Grid ===== */
+  @media screen and (max-width: 768px) {
+    /* Remove section-level side padding so grid is full-bleed */
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .ceremony-carousel__slider {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .ceremony-carousel__slide {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .ceremony-carousel__card {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .ceremony-carousel__image-wrapper {
+      border-radius: 0;
+      margin: 0;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .slick-prev,
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .slick-next,
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .slick-dots,
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .slick-list,
+    .ceremony-carousel-section[data-mobile-layout="grid_2"] .slick-track {
+      display: none !important;
+    }
+  }
+
+  /* ===== MOBILE LAYOUT: 3-Column Grid ===== */
+  @media screen and (max-width: 768px) {
+    /* Remove section-level side padding so grid is full-bleed */
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .ceremony-carousel__slider {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .ceremony-carousel__slide {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .ceremony-carousel__card {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .ceremony-carousel__image-wrapper {
+      border-radius: 0;
+      margin: 0;
+    }
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .slick-prev,
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .slick-next,
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .slick-dots,
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .slick-list,
+    .ceremony-carousel-section[data-mobile-layout="grid_3"] .slick-track {
+      display: none !important;
+    }
+  }
+
+  /* ===== MOBILE LAYOUT: Carousel — keep Slick, just style smaller ===== */
+  @media screen and (max-width: 768px) {
+    .ceremony-carousel-section[data-mobile-layout="carousel"] .ceremony-carousel__slider {
+      padding: 0 10px !important;
+    }
+    .ceremony-carousel-section[data-mobile-layout="carousel"] .ceremony-carousel__slide {
+      padding: 0 4px;
+    }
+  }
+</style>
+
+<script>
+window.kisahWhenJQueryReady(function($) {
+
+  (function() {
+    var MOBILE_BP = 768;
+    var sectionEl = document.getElementById('ceremony-carousel-{{ section.id }}');
+    var mobileLayout = sectionEl ? sectionEl.getAttribute('data-mobile-layout') : 'grid_2';
+    var $slider = null;
+
+    function isMobile() {
+      return window.innerWidth <= MOBILE_BP;
+    }
+
+    function initSlick(forMobile) {
+      $slider = $('#shopify-section-{{ section.id }} .ceremony-carousel__slider');
+      if ($slider.length === 0 || $slider.hasClass('slick-initialized')) return;
+
+      var config = {
+        dots: true,
+        arrows: {{ section.settings.show_arrows }},
+        infinite: true,
+        speed: 500,
+        slidesToShow: {{ section.settings.slides_desktop }},
+        slidesToScroll: 1,
+        autoplay: {{ section.settings.autoplay }},
+        autoplaySpeed: {{ section.settings.autoplay_speed | times: 1000 }},
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      };
+
+      /* When mobile layout is "carousel", add a mobile breakpoint to Slick */
+      if (mobileLayout === 'carousel') {
+        config.responsive.push({
+          breakpoint: MOBILE_BP + 1,
+          settings: {
+            slidesToShow: {{ section.settings.slides_mobile }},
+            slidesToScroll: 1,
+            arrows: false,
+            dots: true
+          }
+        });
+      }
+
+      $slider.slick(config);
+    }
+
+    function destroySlick() {
+      $slider = $('#shopify-section-{{ section.id }} .ceremony-carousel__slider');
+      if ($slider.length && $slider.hasClass('slick-initialized')) {
+        $slider.slick('unslick');
+      }
+    }
+
+    function handleView() {
+      if (isMobile()) {
+        if (mobileLayout === 'carousel') {
+          /* Keep carousel alive on mobile */
+          initSlick(true);
+        } else {
+          /* Grid modes — destroy Slick so CSS grid takes over */
+          destroySlick();
+        }
+      } else {
+        initSlick(false);
+      }
+    }
+
+    /* Debounced resize handler */
+    var resizeTimer;
+    $(window).on('resize.ceremonyCarousel{{ section.id }}', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(handleView, 150);
+    });
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(handleView, 100);
+    } else {
+      $(document).ready(handleView);
+    }
+
+    /* Re-init on Shopify theme editor section select */
+    if (Shopify && Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function(e) {
+        if (e.target.querySelector('.ceremony-carousel__slider')) {
+          /* Re-read the attribute in case settings changed */
+          var freshEl = document.getElementById('ceremony-carousel-{{ section.id }}');
+          mobileLayout = freshEl ? freshEl.getAttribute('data-mobile-layout') : 'grid_2';
+          setTimeout(handleView, 200);
+        }
+      });
+    }
+  })();
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Ceremony Carousel",
+  "tag": "section",
+  "class": "ceremony-carousel-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "SHOP BY CEREMONY"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Every <em>Ritual</em>, Every Look</p>"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#8B7355"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#8B7355"
+    },
+    {
+      "type": "header",
+      "content": "Section Style"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F5F0EB"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Card Corner Radius",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Dots"
+    },
+    {
+      "type": "color",
+      "id": "dots_active_color",
+      "label": "Active Dot Color",
+      "default": "#8B7355"
+    },
+    {
+      "type": "color",
+      "id": "dots_inactive_color",
+      "label": "Inactive Dot Color",
+      "default": "#D4C9BC"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "label": "Slides per View (Desktop)",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Speed",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile Layout Mode",
+      "info": "Choose how this section displays on mobile devices.",
+      "options": [
+        {
+          "value": "grid_2",
+          "label": "2-Column Grid"
+        },
+        {
+          "value": "grid_3",
+          "label": "3-Column Grid"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel (swipeable)"
+        }
+      ],
+      "default": "grid_2"
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Slides per View (Mobile)",
+      "info": "Only applies when Mobile Layout is set to Carousel.",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Desktop Padding"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title on Image",
+          "info": "Shown at the bottom of the image (e.g. Wedding)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ceremony Carousel",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Wedding"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Sangeet"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Mehendi"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Haldi"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

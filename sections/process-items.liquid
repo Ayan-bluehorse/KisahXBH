@@ -1,0 +1,131 @@
+<section class="about-mainsection about-process-section">
+  <div class="container">
+    <div class="about-process-headings">
+      <h2>{{ section.settings.main_heading }}</h2>
+    </div>
+    <div class="about-processitems-group">
+      {% for block in section.blocks %}
+        <div class="about-process-item">
+          <div class="processitem-content-group">
+            <div class="processitem-content">
+              <h3>{{ block.settings.title }}</h3>
+              {{ block.settings.description }}
+            </div>
+          </div>
+          <div class="processitem-img-group">
+            {% if block.settings.image %}
+              <img
+                src="{{ block.settings.image | image_url }}"
+                alt="{{ block.settings.image_alt | default: 'Image' }}"
+                width="820"
+                height="534"
+                loading="lazy"
+              />
+            {% else %}
+              <img
+                src="https://cdn.shopify.com/s/files/1/0496/1003/1256/files/default-process.jpg?v=1"
+                alt="Default Image"
+                width="820"
+                height="534"
+                loading="lazy"
+              />
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% unless section.settings.hide_divider %}
+      <svg class="about-process-divider" width="828" height="18" viewBox="0 0 828 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.339746 9L9 17.6603L17.6603 9L9 0.339746L0.339746 9ZM827.66 9L819 0.339746L810.34 9L819 17.6603L827.66 9ZM9 9V10.5H819V9V7.5H9V9Z" fill="#1E1E1E"/>
+      </svg>
+    {% endunless %}
+
+    <div class="about-process-btcontent">
+      <h4>{{ section.settings.bottom__text }}</h4>
+    </div>
+  </div>
+</section>
+
+
+
+
+{% schema %}
+{
+  "name": "Process Items",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "Here’s how a Kisah piece <span>comes to life</span>"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_divider",
+      "label": "Hide Divider",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "bottom__text",
+      "label": "Bottom Text",
+      "default": "At Kisah, every garment is more than just clothing—it’s a <span>tribute</span> to craftsmanship, culture, and the individuality of the man who wears it. <span>With heart</span> in every thread and purpose in every detail, we craft not just outfits, <span>but memories</span> waiting to be made."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "process_item",
+      "name": "Process Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image Alt Text",
+          "default": "Image"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title",
+          "default": "Designing the <span>Vision</span>"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<h5>It all begins with a spark—an emotion, a memory, a mood. Our designers weave tradition with contemporary flair to craft styles that let every wearer feel truly seen.</h5>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Process Items",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "process_item",
+          "settings": {
+            "title": "Designing the <span>Vision</span>",
+            "description": "<h5>It all begins with a spark—an emotion, a memory, a mood. Our designers weave tradition with contemporary flair to craft styles that let every wearer feel truly seen.</h5>"
+          }
+        },
+        {
+          "type": "process_item",
+          "settings": {
+            "title": "Selecting the <span>Fabric</span>",
+            "description": "<h5>We treat fabric as poetry in motion. Each material is handpicked not just for its texture or sheen, but for how it breathes, flows, and embraces the body—so every garment feels as good as it looks.</h5>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

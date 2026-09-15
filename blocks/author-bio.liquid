@@ -1,0 +1,221 @@
+{% liquid
+  assign bid = block.id | replace: '_', '' | downcase
+%}
+
+{% style %}
+  .author-bio-{{ bid }} {
+    background: {{ block.settings.section_bg }};
+    padding: 40px 20px;
+  }
+
+  .author-bio-{{ bid }} .inner {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    text-align: {{ block.settings.alignment }};
+  }
+
+  .author-bio-{{ bid }} .section-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 24px;
+  }
+
+  .author-bio-{{ bid }} .card {
+    background: {{ block.settings.card_bg }};
+    border-radius: 12px;
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .author-bio-{{ bid }} .avatar {
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid {{ block.settings.avatar_border }};
+  }
+
+  .author-bio-{{ bid }} .avatar-placeholder {
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #eee;
+    border: 3px solid {{ block.settings.avatar_border }};
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .author-bio-{{ bid }} .content h3 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .author-bio-{{ bid }} .content .role {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-style: italic;
+    opacity: 0.65;
+  }
+
+  .author-bio-{{ bid }} .content .bio {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .author-bio-{{ bid }} .card {
+      flex-direction: column;
+      text-align: center;
+    }
+    .author-bio-{{ bid }} .avatar,
+    .author-bio-{{ bid }} .avatar-placeholder {
+      width: 90px;
+      height: 90px;
+    }
+    .author-bio-{{ bid }} .content {
+      text-align: center;
+    }
+  }
+{% endstyle %}
+
+<div class="author-bio-{{ bid }}" {{ block.shopify_attributes }}>
+  <div class="inner">
+    {% unless block.settings.section_title == blank %}
+      <h2 class="section-title">{{ block.settings.section_title }}</h2>
+    {% endunless %}
+
+    <div class="card">
+      {% if block.settings.avatar %}
+        <img
+          class="avatar"
+          src="{{ block.settings.avatar | image_url: width: 220 }}"
+          alt="{{ block.settings.name | escape }}"
+          width="110"
+          height="110"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="avatar-placeholder">
+          {{ 'image' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+
+      <div class="content">
+        {% unless block.settings.name == blank %}
+          <h3>{{ block.settings.name }}</h3>
+        {% endunless %}
+
+        {% unless block.settings.role == blank %}
+          <p class="role">{{ block.settings.role }}</p>
+        {% endunless %}
+
+        {% unless block.settings.bio == blank %}
+          <div class="bio">{{ block.settings.bio }}</div>
+        {% endunless %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Author Bio",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "default": "About the author"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left",   "label": "Left"   },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right"  }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 500,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "default": 900
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#f5f6f8"
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Author"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Photo"
+    },
+    {
+      "type": "color",
+      "id": "avatar_border",
+      "label": "Photo border color",
+      "default": "#dddddd"
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Jane Doe"
+    },
+    {
+      "type": "text",
+      "id": "role",
+      "label": "Role / Designation",
+      "default": "Content Writer"
+    },
+    {
+      "type": "richtext",
+      "id": "bio",
+      "label": "Bio",
+      "default": "<p>A passionate writer crafting content that connects and resonates with readers.</p>"
+    }
+  ],
+  "presets": [
+    { "name": "Author Bio" }
+  ]
+}
+{% endschema %}

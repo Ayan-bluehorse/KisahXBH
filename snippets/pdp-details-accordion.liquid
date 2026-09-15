@@ -1,0 +1,77 @@
+{%- assign m = product.metafields.custom -%}
+
+{%- assign has_specs = false -%}
+{%- if m.product_type != blank
+   or m.product_specification_ocassion != blank
+   or m.fabric != blank
+   or m.length != blank
+   or m.colour != blank
+   or m.pattern != blank
+   or m.fit != blank
+   or m.work_details != blank
+   or m.sleeve_length != blank -%}
+  {%- assign has_specs = true -%}
+{%- endif -%}
+
+{%- assign has_desc = false -%}
+{%- if product.description != blank -%}
+  {%- assign has_desc = true -%}
+{%- endif -%}
+
+<div class="pdp-accordion-group" id="pdp-accordion-group">
+  {%- if has_specs -%}
+    <details class="pdp-accordion-item" id="pdp-acc-specs">
+      <summary class="pdp-accordion-summary">
+        <span class="pdp-accordion-title">Specifications</span>
+        <span class="pdp-accordion-icon"></span>
+      </summary>
+      <div class="pdp-accordion-content">
+        <div class="pdp-specs-table">
+          {%- if m.product_type != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Product Type</span><span class="pdp-spec-val">{{ m.product_type }}</span></div>{%- endif -%}
+          {%- if m.product_specification_ocassion != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Occasion</span><span class="pdp-spec-val">{{ m.product_specification_ocassion }}</span></div>{%- endif -%}
+          {%- if m.fabric != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Fabric</span><span class="pdp-spec-val">{{ m.fabric }}</span></div>{%- endif -%}
+          {%- if m.length != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Length</span><span class="pdp-spec-val">{{ m.length }}</span></div>{%- endif -%}
+          {%- if m.colour != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Colour</span><span class="pdp-spec-val">{{ m.colour }}</span></div>{%- endif -%}
+          {%- if m.pattern != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Pattern</span><span class="pdp-spec-val">{{ m.pattern }}</span></div>{%- endif -%}
+          {%- if m.fit != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Fit</span><span class="pdp-spec-val">{{ m.fit }}</span></div>{%- endif -%}
+          {%- if m.work_details != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Work Details</span><span class="pdp-spec-val">{{ m.work_details }}</span></div>{%- endif -%}
+          {%- if m.sleeve_length != blank -%}<div class="pdp-spec-row"><span class="pdp-spec-key">Sleeve Length</span><span class="pdp-spec-val">{{ m.sleeve_length }}</span></div>{%- endif -%}
+        </div>
+      </div>
+    </details>
+  {%- endif -%}
+
+  {%- if has_desc -%}
+    <details class="pdp-accordion-item" id="pdp-acc-desc" open>
+      <summary class="pdp-accordion-summary">
+        <span class="pdp-accordion-title">Description</span>
+        <span class="pdp-accordion-icon"></span>
+      </summary>
+      <div class="pdp-accordion-content">
+        <div class="pdp-desc-body rte cf">{{ product.description }}</div>
+      </div>
+    </details>
+  {%- endif -%}
+
+  <details class="pdp-accordion-item" id="pdp-acc-ship">
+    <summary class="pdp-accordion-summary">
+      <span class="pdp-accordion-title">Shipping</span>
+      <span class="pdp-accordion-icon"></span>
+    </summary>
+    <div class="pdp-accordion-content">
+      <div class="pdp-ship-body rte cf">
+        {%- if m._shipping_return_details != blank -%}
+          {{ m._shipping_return_details }}
+        {%- else -%}
+          <p><b>Express delivery</b> is available for your convenience.<br>
+          <b>Cash on delivery</b> is available for hassle-free shopping.<br>
+          This item is eligible for return or exchange <b>within 7 days</b> of delivery.</p>
+          <p>For more information, review our <b>return policy</b> and <b>shipping policy</b></p>
+          <p><strong>Manufacturer Detail:</strong><br>
+          <strong>KISAH APPAREL PRIVATE LIMITED</strong><br>
+          P62, 3rd Lane, Sector B, Metropolitan Housing Society, Kolkata 700105</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </details>
+</div>

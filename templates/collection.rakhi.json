@@ -1,0 +1,98 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1781335749c29a9577": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_e2774c5_iiAixU": {
+          "type": "ai_gen_block_e2774c5",
+          "settings": {
+            "image_position": "center",
+            "banner_height_desktop": 600,
+            "banner_height_mobile": 300,
+            "show_overlay": true,
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "show_content": false,
+            "show_title": false,
+            "show_description": false,
+            "text_color": "#ffffff",
+            "title_size": 48,
+            "description_size": 16,
+            "text_shadow_opacity": 40,
+            "text_alignment": "center",
+            "content_horizontal_alignment": "center",
+            "content_vertical_alignment": "center"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_e2774c5_iiAixU"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-collection-rakhi",
+      "custom_css": [
+        "@media (max-width: 768px) {.lightly-spaced-row-above {padding-left: 1rem; padding-right: 1rem; }}"
+      ],
+      "settings": {
+        "rakhi_heading": "",
+        "rakhi_subheading": "",
+        "gift_box_product": "rakhi-gift-box-rakhigb-26",
+        "rakhi_banner_image": "shopify://shop_images/desktop_collection.png",
+        "rakhi_mobile_banner_image": "shopify://shop_images/mobile_collection.png",
+        "show_title": false,
+        "show_image_behind_heading": true,
+        "heading_image_height": "huge",
+        "overlay_style": "no_background",
+        "coll_desc_pos": "above",
+        "coll_num_per_page_int": 24,
+        "grid": 4,
+        "show_vendor": false,
+        "show_total": true,
+        "enable_filtering": true,
+        "collapse_tag_sidebar_by_default": true,
+        "collapse_filters_method": "all",
+        "show_filter_counts": true,
+        "show_disabled_filters": false,
+        "auto_apply_hide_unavailable": false,
+        "enable_sticky_filter": true,
+        "filter_two_columns": false,
+        "show_sort": true,
+        "sort_show_featured": true,
+        "sort_show_best": true,
+        "sort_show_alpha": true,
+        "sort_show_price": true,
+        "sort_show_date": true,
+        "related_collections": [
+          "earthy-tones"
+        ],
+        "related_collections_style": "buttons",
+        "rel_coll_gall_aspect_ratio": "1",
+        "image_position": "center center",
+        "rel_coll_gall_enable_margin": true,
+        "rel_coll_gall_full_width": false,
+        "rel_coll_gall_overlay_style": "shadow",
+        "rel_coll_gall_text_alignment": "center center",
+        "rel_coll_grid_mobile": "1",
+        "alert-text": "Only few left",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "1781335749c29a9577",
+    "main"
+  ]
+}

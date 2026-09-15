@@ -1,0 +1,314 @@
+
+<div class="trending-banner-slide">
+  {% if section.settings.head != blank %}
+  <div class="trend-sec-head">
+    <h2>{{ section.settings.head}}</h2>
+  </div>
+  {% endif %}
+  <div class="mobile-desk-slic-container">
+  <div class="banner-image-contain-wrap slider-container">
+     {% for block in section.blocks %}
+      <div class="class-container slide">
+      {% if block.settings.link != blank %}
+        <a href="{{ block.settings.link }}" aria-label="Banner Link">
+      {% endif %}
+
+  {% if block.settings.desk-img != blank %}
+    <div class="desk-banner-trend slick-slide">
+      <img
+        src="{{ block.settings.desk-img | image_url: width: 2000 }}"
+        srcset="
+          {{ block.settings.desk-img | image_url: width: 800 }} 800w,
+          {{ block.settings.desk-img | image_url: width: 1000 }} 1000w,
+          {{ block.settings.desk-img | image_url: width: 1400 }} 1400w"
+        sizes="(min-width: 769px) 100vw"
+        loading="eager"
+        width="{{ block.settings.desk-img.width }}"
+        height="{{ block.settings.desk-img.height }}"
+        alt="{{ block.settings.desk-img.alt | default: 'Banner image' }}"
+        class="desk-img slide slick"
+        fetchpriority="high"
+      />
+    </div>
+  {% endif %}
+
+  {% if block.settings.mob-img != blank %}
+    <div class="mobile-banner-trend slick-slide">
+      <img
+        src="{{ block.settings.mob-img | image_url: width: 800 }}"
+        srcset="
+          {{ block.settings.mob-img | image_url: width: 320 }} 320w,
+          {{ block.settings.mob-img | image_url: width: 420 }} 420w,
+          {{ block.settings.mob-img | image_url: width: 600 }} 600w"
+        sizes="(max-width: 768px) 100vw"
+        width="{{ block.settings.mob-img.width }}"
+        height="{{ block.settings.mob-img.height }}"
+        loading="eager"
+        alt="{{ block.settings.mob-img.alt | default: 'Mobile banner image' }}"
+        class="mob-img slide slick"
+        fetchpriority="high"
+      />
+    </div>
+  {% endif %}
+{% if block.settings.link != blank %}
+  </a>
+{% endif %}
+       </div>
+     
+     {% endfor %} 
+  </div>
+</div>
+</div>
+
+
+<style>
+#shopify-section-{{ section.id }}{
+    padding-top: {{ section.settings.desk-padding-top }}px;
+    padding-bottom: {{ section.settings.desk-padding-bottom }}px; 
+    background:{{section.settings.bg-color}};
+    overflow:hidden;
+}
+#shopify-section-{{ section.id }} .trend-sec-head h2{
+    font-family: Gabarito;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 57.6px;
+    text-align: center;
+    color:{{ section.settings.head-color | default:"#201747" }};
+    text-transform: uppercase;
+}
+#shopify-section-{{ section.id }} .bannerm-mobile-trend-cont .slick-dots{
+     
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .banner-image-contain-wrap img{
+     max-width:100%;
+     width:100%;
+}
+#shopify-section-{{ section.id }} .desk-banner-trend{
+  width:100%;
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .mob-img{
+     display:none;
+}
+ #shopify-section-{{ section.id }} .slick-dots{
+     /* display:none !important; */
+     bottom:2px;
+} 
+#shopify-section-{{ section.id }} .trending-banner-slide .banner-image-contain-wrap.slick-dotted.slick-slider {
+     margin-bottom:0 !important;
+}
+#shopify-section-{{ section.id }} .bannerm-mobile-trend-cont.slick-dotted.slick-slider{
+     margin-bottom:0 !important;
+} 
+#shopify-section-{{ section.id }} .slick-dots li.slick-active button:before {
+        color:#ffffff !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li {
+    width: 13px !important;
+    height: 13px !important;
+    margin: 0;
+    color: #A3A3A3;
+} 
+#shopify-section-{{section.id}} .slick-slider .slick-next{
+     right:12px;
+     z-index:100;
+     top:50%;
+     transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+        
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev{
+       left:6px;
+       z-index:100;
+       top:50%;
+       transform:translateY(-50%);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 35px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+} 
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+      padding-top: {{ section.settings.mob-padding-top }}px;
+      padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{ section.id }} .trend-sec-head h2{
+     font-size: 28px;
+     line-height: 33.6px;
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .banner-image-contain-wrap .desk-img{
+     display:none;
+}
+#shopify-section-{{ section.id }} .desk-banner-trend{
+ display:none;
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .mob-img{
+     display:block;
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .banner-image-contain-wrap.slick-dotted.slick-slider {
+    margin-bottom:0 !important;
+}
+#shopify-section-{{ section.id }} .trending-banner-slide .banner-image-contain-wrap .slick-dots{
+    display:none !important;
+}
+
+#shopify-section-{{ section.id }} .bannerm-mobile-trend-cont .slick-dots{
+     display:block !important;
+}
+#shopify-section-{{ section.id }} .slick-dots li{
+      margin:0 !important;
+}
+#shopify-section-{{ section.id }} .slick-dots{
+      bottom:4px;
+}
+#shopify-section-{{ section.id }} .slick-dots li button:before {
+      color:#A3A3A3 !important;
+}
+
+#shopify-section-{{ section.id }} .slick-dots li {
+       width:13px !important;
+       height:13px !important;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+      width: 25px;
+      height: 30px
+
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        width: 25px;
+        height: 30px;
+}  
+}
+</style>
+
+
+<script>
+  window.kisahWhenJQueryReady(function($) {
+  $('#shopify-section-{{ section.id }} .slider-container').slick({
+    // dots: $(window).width() < 768 ,
+     dots: true,  
+    infinite: false,
+    speed: 300
+  
+  }); 
+  });
+    
+</script>
+
+{% schema %}
+  {
+    "name": "Trend Banner images",
+    "settings": [
+      {
+        "type": "text",
+         "id": "head",
+         "label": "Heading"
+      },
+      {
+         "type": "color",
+          "id": "bg-color",
+          "label": "Background color"
+      },
+      {
+         "type": "color",
+         "id": "head-color",
+          "label": "Heading color"
+      },
+      
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+      },
+     {
+          "type": "range",
+          "id": "desk-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+     },
+    {
+          "type": "range",
+          "id": "desk-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    },
+    {
+          "type": "header",
+          "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top",
+          "default": 16
+    },
+    {
+          "type": "range",
+          "id": "mob-padding-bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom",
+          "default": 16
+    }
+    ],
+    "blocks": [
+      {
+        "type": "banner_image",
+         "name":"Banner Images",
+        "settings": [
+          {
+            "type": "image_picker",
+             "id": "desk-img",
+              "label": "Desktop image"
+          },
+          {
+            "type": "image_picker",
+             "id": "mob-img",
+              "label": "Mobile image"
+          },
+          {
+            "type": "url",
+             "id":"link",
+              "label": "Banner link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Trend Banner images"
+      }
+    ]
+  }
+{% endschema %}

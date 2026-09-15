@@ -1,0 +1,707 @@
+<div class="tab-collection container">
+  <div class="categories-collec-name">
+     <div class="head-part">
+       {% if section.settings.head != blank %}
+          <h2>{{ section.settings.head }}</h2>
+         {% endif %}
+       {% if section.settings.sub-head != blank %}
+        <p>{{ section.settings.sub-head }}</p>
+        {% endif %}
+       </div>
+     <div class="categories-list">
+       <ul>
+       {% for block in section.blocks %}
+        {% if block.settings.categories != blank %}
+        <li>
+          <a href="#" class="categories-menus" collection-id="{{ block.id }}">
+            <span>
+              {{ block.settings.categories }}
+            </span>
+           </a>
+         </li>
+        {% endif %}
+      {% endfor %}
+       </ul>
+     </div>
+   </div>
+  
+ {% for block in section.blocks %}
+   <div class="collection-con" select-id="{{ block.id }}">
+     <div class="collection-products collection-products-slider">
+       {%- assign collection = block.settings.collection -%}
+        {% for product in collection.products limit: section.settings.grid %}
+           <div class="products-img-details slick-slide">
+              <product-form class="js-product">
+          <div class="pdpform-crt">
+           <a href="{{ product.url }}">
+               {% assign media = product.featured_image %}
+               {%- render 'image' with product.featured_image, loading: 'eager', fetchpriority: 'high' -%}
+              {% comment %} <img src="{{ media | image_url  }}" width="{{ media.width }}" height="{{ media.height }}" alt="{{ media.title }}">{% endcomment %}
+               <p class="product-title">{{ product.title }}</p> 
+                <div class="product-price">
+                {%- render 'price', product: product, use_variant: true, for_variant_picker: true, show_badges: true, price_class: 'price--large' -%}
+                </div>
+               {% render 'wishlisthero-collection-product' with product: product %}
+            </a>
+
+             {%- assign product_form_id = 'product-form-' | append: product.id -%} 
+         {% liquid 
+          assign current_variant = product.selected_or_first_available_variant
+           unless product.has_only_default_variant
+            for block in section.blocks
+              if block.type == 'variant-picker' and block.settings.select_first_variant == false and product.variants.size > 1
+                assign current_variant = product.selected_variant | default: false
+              endif
+            endfor
+          endunless %} 
+             {% form 'product', product, id: product_form_id, class: 'form js-product-form', data-product-id: product.id %}
+                <input type="hidden" name="id" value="{{ current_variant.id }}" disabled>
+                {% if product.available %}
+                  {%- liquid
+                    assign gift_card_recipient_feature_active = false
+                    if block.settings.show_gift_card_recipient and product.gift_card?
+                      assign gift_card_recipient_feature_active = true
+                    endif
+
+                    assign enable_dynamic_payment_button = false
+                    if block.settings.enable_payment_button and product.selling_plan_groups == empty and gift_card_recipient_feature_active == false
+                      unless product.template_suffix contains 'preorder'
+                        assign enable_dynamic_payment_button = true
+                      endunless
+                    endif
+                  -%}
+
+                  {% if gift_card_recipient_feature_active %}
+                    {% render 'gift-card-recipient', section: section %}
+                  {% endif %}
+
+                  <div class="quantity-submit-row  {% if enable_dynamic_payment_button %}has-spb{% endif %}">
+                    {% if block.settings.show_quantity_selector %}
+                      <label class="label" for="quantity">{{ 'products.product.quantity' | t }}</label>
+                      <quantity-wrapper class="quantity-wrapper">
+                        <a href="#" data-quantity="down" aria-label="{{ 'cart.items.decrease_quantity' | t }}">{% render 'icon-minus' %}</a>
+                        <input aria-label="{{ 'products.product.quantity' | t }}" id="quantity" type="number" name="quantity" value="1" />
+                        <a href="#" data-quantity="up" aria-label="{{ 'cart.items.increase_quantity' | t }}">{% render 'icon-plus' %}</a>
+                      </quantity-wrapper>
+                    {% endif %}
+
+                    <div class="quantity-submit-row__submit ">
+                      <div class="js-form-error" role="alert" hidden></div>
+
+                      {%- capture add_to_cart_text -%}
+                        {%- if product.template_suffix contains 'preorder' -%}
+                          {{- 'products.product.preorder' | t -}}
+                        {%- else -%}
+                          {{- 'products.product.add_to_cart' | t -}}
+                        {%- endif -%}
+                      {%- endcapture -%}
+                      <button class="btn btn--large add-to-cart" type="submit" name="add" data-add-to-cart-text="{{ add_to_cart_text | escape }}"{% if product.available == false %} disabled{% endif %}>
+                        {%- if product.selected_or_first_available_variant.available or product.selected_or_first_available_variant == false -%}
+                          {{- add_to_cart_text -}}
+                          {% render 'cart-bag' %}
+                        {%- else -%}
+                          {{- 'products.variant.no_stock' | t -}}
+                        {%- endif -%}
+                      </button>
+                    </div>
+                    {% if enable_dynamic_payment_button %}
+                      <script class="dynamic-payment-button-template" type="text/template">
+                        {{ form | payment_button }}
+                      </script>
+                    {% endif %}
+
+                    {% if block.settings.show_backorder_text %}
+                      {% render 'backorder', product: product, variant: product.selected_or_first_available_variant %}
+                    {% endif %}
+                  </div>
+
+                {% else %}
+                  <div class="quantity-submit-row">
+                    <div class="quantity-submit-row__submit">
+                      <button class="btn btn--large" name="add" type="submit" disabled>
+                        {{- 'products.variant.no_stock' | t -}}
+                      </button>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endform %}
+              
+           </div>
+          </product-form> 
+            </div> 
+          {% endfor %}
+        <div class="last-slide-button">
+           <a href="{{ collection.url }}" class="collection-link">Shop All</a>
+         </div>
+      </div>
+     {% if section.settings.btn-name != blank %}
+      <a href="{{ collection.url }}" class="collection-link">{{ section.settings.btn-name }}</a>
+      {% endif %}
+   </div>
+{% endfor %}
+</div>
+
+<style>
+/* Slick Css Start */
+#shopify-section-{{section.id}} .slick-dots li {
+    background: #eaeaea;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+#shopify-section-{{section.id}} .slick-dots li.slick-active {
+    background: #201747;
+}
+#shopify-section-{{section.id}} .slick-list{
+  margin-right:-10px;
+}
+/* Slick Css End */
+
+#shopify-section-{{section.id}} {
+      padding-top: {{ section.settings.desk-padding-top }}px;
+      padding-bottom: {{ section.settings.desk-padding-bottom }}px;
+      background:{{section.settings.bg-color}};
+} 
+#shopify-section-{{section.id}} .collection-con{
+      display:none;
+}
+#shopify-section-{{section.id}} .tab-collection{
+        margin:0 auto;
+}
+/* #shopify-section-{{section.id}} .head-part{
+       padding:0 20px;
+} */
+#shopify-section-{{section.id}} .head-part h2{
+      font-family: Gabarito;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 30.6px;
+      text-transform: uppercase;
+      color:{{ section.settings.head-color | default:"#201747" }};
+      margin-bottom:5px;
+}
+#shopify-section-{{section.id}} .head-part p{
+      font-family: Generis Sans W01 Regular;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 18.47px;
+      margin:0;
+      color:#000000;
+}
+/* #shopify-section-{{section.id}} .slick-dotted.slick-slider{
+      margin-bottom:0;
+} */
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name{
+       display:flex;
+       margin-bottom: 8px;/*20px*/
+       padding:0 10px;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list{
+       width:100%;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list ul{
+        justify-content: center;
+        display: flex;
+        gap: 50px;/*30px*/
+        flex: 1;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-link{
+        font-family: Generis Sans W01 Bold;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 19.96px;
+        text-align: center;
+        color:#ffffff;
+        background: #201747;
+        box-shadow: 0px 1px 3px 0px #0000004D;
+        max-width:fit-content;
+        display:block;
+        margin:0 auto;
+        padding:8px 20px;
+        border-radius:50px;
+        white-space:nowrap;
+        margin-top:20px;
+        text-transform: capitalize;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name li{
+         margin-bottom:8px;
+}
+
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus{
+          border-radius:50px;
+          border: 0.5px solid #000000;
+          padding: 8px 25px;
+          display:block;
+          color:#000000;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus span{
+          font-family: Generis Sans W01 Bold;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 19.96px;
+          text-align: center; 
+          white-space:nowrap;
+          color:#000000;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus.active span {
+           color:#ffffff;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus.active{
+         color:#ffffff;
+         background:#201747;
+         box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details {
+         position:relative;
+         margin-right:10px;
+         display:flex;
+         /* justify-content:space-between; */
+         flex-direction:column;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .product-label-container{
+         /* display:none; */
+         position:unset;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .product-title {
+        font-family: Generis Sans W01 Bold !important;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 17.74px;
+        text-align: left;
+        color:#000000;
+        margin: 9px 0 0 0;/*5px 0 0 0*/
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__current{
+        color:#000000;
+        font-family:Generis Sans W01 Regular;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 17.65px;
+        text-align: left;
+        margin-right:7px;
+        opacity: 0.8;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__was{
+        text-decoration: line-through;
+        text-decoration-color:rgba(255, 0, 0, 1);
+        opacity: 0.8px !important;
+        color:#000000;
+        font-family: Generis Sans W01 Regular;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 17.65px;
+        text-align: left;
+        opacity: 0.8;
+}
+#shopify-section-{{section.id}}  .collection-products .slick-dots li button{
+        display:none;
+}
+#shopify-section-{{section.id}} .slick-slider .slick-next:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+        transform: rotate(180deg);
+}
+#shopify-section-{{section.id}} .slick-slider .slick-prev:before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 37px;
+        background-position: center;
+        background-size: contain;
+        opacity: 1;
+        background-image: url(https://cdn.shopify.com/s/files/1/0496/1003/1256/files/fi-rr-angle-right.png?v=1715866691);
+}
+#shopify-section-{{section.id}} .slick-track {
+  align-items: stretch;
+  display: flex; 
+}
+
+#shopify-section-{{section.id}} .slick-slide {
+  align-items: stretch; 
+  height: auto 
+}
+#shopify-section-{{section.id}} .btn--large{
+    /* box-shadow: 0 4px 8px 3px #00000026, 0 1px 3px #0000004d; */
+    border-radius: 50px;
+    color: #fff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    font-family: Generis Sans W01 Bold;
+    text-transform: capitalize;
+    min-height: 40px;
+    padding: 0 25px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #201747;
+    width:100%;
+    margin:12px 0;
+}
+#shopify-section-{{section.id}} .price{
+     display:flex;
+     align-items:center;
+     flex-wrap:wrap;
+     gap:6px;
+}
+#shopify-section-{{section.id}} .pdpform-crt{
+     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#shopify-section-{{section.id}} product-form form{
+    width:100%;
+}
+#shopify-section-{{section.id}} product-form.js-product {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: self-end;
+}
+#shopify-section-{{section.id}} .custom-select__listbox{
+     max-height:5rem
+}
+/* #shopify-section-{{section.id}} .custom-select__listbox{
+     top:-50px;
+} */
+#shopify-section-{{section.id}} .last-slide-button{
+   margin:auto 0;
+}
+#shopify-section-{{section.id}} .last-slide-button .collection-link{
+    margin:0 auto;
+}
+@media screen and (max-width:768px){
+#shopify-section-{{section.id}} {
+        padding-top: {{ section.settings.mob-padding-top }}px;
+        padding-bottom: {{ section.settings.mob-padding-bottom }}px;
+}
+#shopify-section-{{section.id}} .btn--large{
+    font-size: 14px;
+    line-height: 16px;
+    min-height:30px;
+}
+#shopify-section-{{section.id}} .btn--large svg{
+    width:15px;
+    height:15px;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-con{
+          padding:0;
+}
+ #shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus{
+         padding: 5px 17px
+} 
+#shopify-section-{{section.id}} .slick-next.slick-arrow{
+       right: -3px;
+       z-index:999;
+}
+#shopify-section-{{section.id}} .slick-prev.slick-arrow{
+        left: -12px;
+        z-index:999;
+}  
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus span{
+        font-size: 14px;
+        line-height: 15.53px;
+}
+{% if section.settings.show != false %}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list{
+        display:none;
+}
+{% endif %}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list ul{
+   /* gap:10px; */
+     gap:40px;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-link{
+          font-size: 16px;
+          line-height: 17.74px;
+          margin-top:10px;
+          /* padding: 12px 22px; */
+          padding: 9px 19px;
+}
+#shopify-section-{{section.id}} .head-part h2{
+          font-size: 16px;
+          line-height: 18.6px;      
+}
+#shopify-section-{{section.id}} .head-part p{
+          font-size: 14px;
+          line-height: 16.6px;  
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name{
+          flex-direction:column;  
+          margin-bottom:10px;
+          padding: 0;
+} 
+}
+@media screen and (max-width:600px){
+  #shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list ul{
+    gap:30px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /* justify-content: space-around; */
+  }
+}
+@media screen and (max-width:430px){
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus span{
+          font-size: 14px;
+          line-height: 15.53px;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name{
+           gap:12px;  
+}
+}
+@media screen and (max-width:875px){
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .product-title {
+          font-size: 14px;
+          line-height: 16.74px; 
+          margin: 6px 0 0;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__was{
+          font-size: 14px;
+          line-height: 16.74px;
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__current{
+          font-size: 14px;
+          line-height: 16.65px;
+          margin-right:10px;
+}
+}
+@media screen and (max-width:375px){
+/* #shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__was{
+          font-size: 10px;
+          line-height: 12.74px;    
+}
+#shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .price__current{
+          font-size: 10px;
+          line-height: 12.65px;
+}  */
+#shopify-section-{{section.id}} .btn--large{
+   font-size:12px;
+   line-height:14px;
+   padding:0 20px;
+}
+#shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-menus{
+          padding:3px 16px;
+}
+#shopify-section-{{section.id}} .slick-arrow{
+          top:37%;
+}
+/* #shopify-section-{{section.id}} .tab-collection .categories-collec-name .categories-list{
+         gap:3px;
+} */
+ #shopify-section-{{section.id}} .tab-collection .collection-products .products-img-details .product-title {
+          font-size: 13px;
+          line-height: 15.74px; 
+} 
+}
+</style>
+
+<script defer>
+window.kisahWhenJQueryReady(function($) {
+ $('#shopify-section-{{ section.id }} .collection-products').slick({
+    dots: {{ section.settings.show-dots }},
+    infinite: false,
+    speed: 300,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    arrows:{{section.settings.show-arrows}},
+    onComplete:function(){
+     $('#shopify-section-{{ section.id }} .collection-products').slick("refresh");
+    },
+    responsive: [
+        {
+
+          breakpoint: 1100,
+          settings: {
+              slidesToShow: 3.4,
+              slidesToScroll: 2,
+              infinite: true,
+            
+          }
+        },
+        {
+
+          breakpoint: 768,
+          settings: {
+              slidesToShow: 2.4,
+              slidesToScroll: 2,
+              infinite: true,
+            
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+       
+    ]
+  });
+
+  setTimeout(function () {
+    $('#shopify-section-{{ section.id }} .categories-collec-name li:first-child a.categories-menus').trigger('click');
+  }, 200);
+
+  $( "#shopify-section-{{ section.id }} .categories-collec-name .categories-menus" ).click(function(e) {
+    e.preventDefault();
+    $('.collection-products-slider').slick('refresh');
+    $( '#shopify-section-{{ section.id }} .categories-collec-name .categories-menus').removeClass('active');
+    $( this ).addClass('active');
+    var currentProduct = $( this ).attr('collection-id');
+    var selectProduct = '[select-id="'+ currentProduct +'"]';
+    $("#shopify-section-{{ section.id }} .collection-con").hide();
+    $(selectProduct).fadeIn('fast');
+    $(selectProduct).find('.collection-products-slider').slick('refresh');
+    
+  });
+    
+  });
+</script>
+
+
+
+
+{% schema %}
+  {
+    "name": "Tab collection",
+    "settings": [
+      {
+        "type": "checkbox",
+         "id": "show",
+          "label": "Show category on mobile"
+      },
+      {
+        "type": "checkbox",
+         "id": "show-arrows",
+          "label": "Show Slide Arrows"
+      },
+      {
+        "type": "checkbox",
+         "id": "show-dots",
+          "label": "Show Slide Dots",
+          "default":false
+      },
+      {
+        "type": "text",
+         "id": "head",
+          "label": "Heading"
+      },
+      {
+        "type": "text",
+         "id": "sub-head",
+          "label": "Sub Heading"
+      },
+      {
+        "type": "text",
+         "id": "btn-name",
+          "label": "Button Name"
+      },
+      {
+         "type": "color",
+          "id": "bg-color",
+          "label": "Background color"
+      },
+      {
+         "type": "color",
+         "id": "head-color",
+          "label": "Heading color"
+      },
+      {
+        "type": "range",
+        "id": "grid",
+        "label": "No Products show",
+        "min": 2,
+        "max": 15,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "SECTION PADDING FOR DESKTOP"
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desk-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "SECTION PADDING FOR MOBILE"
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mob-padding-bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    }
+      
+    ],
+    "blocks":[
+      {
+        "type": "collection",
+        "name":"Collection",
+        "settings":[
+          {
+            "type": "text",
+             "id":"categories",
+             "label": "Categories"
+          },
+          {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+       }
+        ]
+      }
+    ],
+    
+    "presets": [
+      {
+        "name": "Tab collection"
+      }
+    ]
+    
+  }
+{% endschema %}
