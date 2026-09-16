@@ -126,7 +126,7 @@
     return type.indexOf('kurta') !== -1;
   }
 
-  function stockTier(item) {
+  {% comment %} function stockTier(item) {
     var available = parseInt(item.getAttribute('data-available-variants'), 10);
     var total = parseInt(item.getAttribute('data-total-variants'), 10);
 
@@ -143,6 +143,30 @@
     }
 
     return 'low';
+  } {% endcomment %}
+
+    function stockRank(item) {
+    var available = parseInt(item.getAttribute('data-available-variants'), 10);
+    var total = parseInt(item.getAttribute('data-total-variants'), 10);
+    var sizeS = item.getAttribute('data-size-s-available') === 'true';
+    var sizeM = item.getAttribute('data-size-m-available') === 'true';
+    var sizeL = item.getAttribute('data-size-l-available') === 'true';
+    var sizeXL = item.getAttribute('data-size-xl-available') === 'true';
+
+    if (
+      Number.isFinite(available) &&
+      Number.isFinite(total) &&
+      total > 0 &&
+      available === total
+    ) {
+      return 0;
+    }
+
+    if (sizeS && sizeM && sizeL && sizeXL) return 1;
+    if (sizeS && sizeM && sizeL) return 2;
+    if (sizeM && sizeL) return 3;
+    if (sizeM) return 4;
+    return 5;
   }
 
   function parseSectionResponse(html, gridSelector, sectionId) {
@@ -259,6 +283,30 @@
       pendingPrimaryTail = null;
     }
 
+
+
+     function sortGridBySizeRank() {
+      var items = directStockItems(grid);
+      var keyed = [];
+      for (var i = 0; i < items.length; i++) {
+        keyed.push({
+          item: items[i],
+          rank: stockRank(items[i]),
+          index: i
+        });
+      }
+      keyed.sort(function (a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return a.index - b.index;
+      });
+      var sortedFragment = document.createDocumentFragment();
+      for (var j = 0; j < keyed.length; j++) {
+        keyed[j].item.setAttribute('data-stock-rank', String(keyed[j].rank));
+        sortedFragment.appendChild(keyed[j].item);
+      }
+      grid.appendChild(sortedFragment);
+    }
+
     function distributeItems(items) {
       restorePendingTail();
 
@@ -276,6 +324,7 @@
       }
 
       grid.appendChild(fragment);
+      sortGridBySizeRank();
       return appendedItems;
     }
 
