@@ -126,7 +126,7 @@
     return type.indexOf('kurta') !== -1;
   }
 
-  function stockTier(item) {
+  {% comment %} function stockTier(item) {
     var available = parseInt(item.getAttribute('data-available-variants'), 10);
     var total = parseInt(item.getAttribute('data-total-variants'), 10);
 
@@ -143,6 +143,88 @@
     }
 
     return 'low';
+  } {% endcomment %}
+
+
+     function chipKey(el) {
+    return (el.textContent || '').toLowerCase().replace(/\s+/g, '');
+  }
+
+  function inStockChips(item) {
+    var chips = item.querySelectorAll('.product-block-options__item');
+    var keys = [];
+
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].classList.contains('product-block-options__item--unavailable')) continue;
+      var t = chipKey(chips[i]);
+      if (t) keys.push(t);
+    }
+
+    return keys;
+  }
+
+  function hasSize(keys, letter) {
+    for (var i = 0; i < keys.length; i++) {
+      var t = keys[i];
+      if (letter === 's') {
+        if (t === 's' || t.indexOf('s-') === 0 || /^s\d/.test(t)) return true;
+      } else if (letter === 'm') {
+        if (t === 'm' || t.indexOf('m-') === 0 || /^m\d/.test(t)) return true;
+      } else if (letter === 'l') {
+        if (t === 'l' || t.indexOf('l-') === 0 || /^l\d/.test(t)) return true;
+      } else if (letter === 'xl') {
+        if (t === 'xl' || t.indexOf('xl-') === 0 || t.indexOf('xl') === 0) return true;
+      }
+    }
+    return false;
+  }
+
+  function allDisplayedSizesInStock(item) {
+    var chips = item.querySelectorAll('.product-block-options__item');
+    if (!chips.length) return false;
+
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].classList.contains('product-block-options__item--unavailable')) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function sizeFromChipText(t) {
+    t = (t || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (t.indexOf('xs') === 0 || t === '36') return 'xs';
+    if (t.indexOf('xxl') === 0 || t.indexOf('3xl') === 0 || t.indexOf('4xl') === 0 || t.indexOf('5xl') === 0) return 'xxl';
+    if (t.indexOf('xl') === 0 || t === '44') return 'xl';
+    if (t.indexOf('s') === 0 || t === '38') return 's';
+    if (t.indexOf('m') === 0 || t === '40') return 'm';
+    if (t.indexOf('l') === 0 || t === '42') return 'l';
+    return '';
+  }
+
+  function stockRank(item) {
+    var chips = item.querySelectorAll('.product-block__size-chip');
+    var inStock = { s: false, m: false, l: false, xl: false };
+    var anyOos = false;
+    var chipCount = 0;
+
+    for (var i = 0; i < chips.length; i++) {
+      var size = sizeFromChipText(chips[i].textContent);
+      if (!size) continue;
+      chipCount += 1;
+      if (chips[i].classList.contains('product-block__size-chip--oos')) {
+        anyOos = true;
+      } else {
+        inStock[size] = true;
+      }
+    }
+
+    if (chipCount > 0 && !anyOos) return 0;
+    if (inStock.s && inStock.m && inStock.l && inStock.xl) return 1;
+    if (inStock.s && inStock.m && inStock.l) return 2;
+    if (inStock.m && inStock.l) return 3;
+    if (inStock.m) return 4;
+    return 5;
   }
 
   function parseSectionResponse(html, gridSelector, sectionId) {
@@ -259,23 +341,40 @@
       pendingPrimaryTail = null;
     }
 
-    function distributeItems(items) {
-      restorePendingTail();
 
+
+
+      function sortGridBySizeRank() {
+      var items = directStockItems(grid);
+      var keyed = [];
+      for (var i = 0; i < items.length; i++) {
+        keyed.push({
+          item: items[i],
+          rank: stockRank(items[i]),
+          index: i
+        });
+      }
+      keyed.sort(function (a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return a.index - b.index;
+      });
+      var sortedFragment = document.createDocumentFragment();
+      for (var j = 0; j < keyed.length; j++) {
+        keyed[j].item.setAttribute('data-stock-rank', String(keyed[j].rank));
+        sortedFragment.appendChild(keyed[j].item);
+      }
+      grid.appendChild(sortedFragment);
+    }
+      function distributeItems(items) {
+      restorePendingTail();
       var fragment = document.createDocumentFragment();
       var appendedItems = [];
-
       for (var i = 0; i < items.length; i++) {
-        var item = items[i];
-        var tier = stockTier(item);
-
-        item.setAttribute('data-stock-tier', tier === 'remove' ? 'primary' : tier);
-
-        fragment.appendChild(item);
-        appendedItems.push(item);
+        fragment.appendChild(items[i]);
+        appendedItems.push(items[i]);
       }
-
       grid.appendChild(fragment);
+      sortGridBySizeRank();
       return appendedItems;
     }
 
