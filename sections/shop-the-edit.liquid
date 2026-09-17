@@ -54,8 +54,7 @@
     padding-bottom: {{ s.padding_bottom }}px;
     overflow-x: hidden;
   }
-  #shop-edit-{{ sid }} button { font-family: inherit; cursor: pointer; border: none; background: none; }
-  #shop-edit-{{ sid }} button.CP-quick-view-btn { background-color: #ffffff !important; border: 0.5px solid #1e1e1e !important; }
+  #shop-edit-{{ sid }} .ste-filter-bar button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
   /* ======================================================
      Header row
@@ -119,6 +118,64 @@
   #shopify-section-{{ section.id }} .product-block__title span,
   #shop-edit-{{ sid }} .product-block__title span {
     font-family: 'Generis Sans W01 Bold', sans-serif !important;
+  }
+
+  /* ======================================================
+     Quick View Button & Modal Container
+     ====================================================== */
+  #shop-edit-{{ sid }} .product-block .image-cont .btn.quickbuy-toggle {
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    transition: background-color .3s ease;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 0;
+    left: auto;
+    z-index: 2;
+  }
+  #shop-edit-{{ sid }} .product-block .image-cont .btn.quickbuy-toggle svg {
+    fill: #000;
+    width: 20px;
+    height: 20px;
+  }
+  #shop-edit-{{ sid }} .quickbuy-container .btn--large {
+    border-radius: 50px;
+    color: #fff !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    font-family: 'Generis Sans W01 Bold', sans-serif;
+    text-transform: capitalize;
+    min-height: 40px;
+    padding: 0 25px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #201747 !important;
+    width: 100%;
+    margin: 12px 0;
+    cursor: pointer;
+  }
+  #shop-edit-{{ sid }} .quickbuy-container .product-price--large .price__default {
+    position: relative;
+  }
+  #shop-edit-{{ sid }} .quickbuy-container .product-label-container {
+    position: absolute;
+    top: 9.5px;
+    right: -80px;
+    bottom: unset;
+    left: unset;
   }
 
   /* ======================================================
