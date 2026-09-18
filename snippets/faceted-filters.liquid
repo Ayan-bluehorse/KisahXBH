@@ -1,264 +1,337 @@
 {%- comment -%}
+  Kisah Faceted Filters Bottom Sheet Snippet
   Parameters:
   - filter_context {Collection|Search} - Object containing filters.
   - clear_url {String} - The URL to clear all filters.
   - current_sort {SortOption} - The sort option the current product grid is sorted by.
-
-  Example usage:
-  {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort %}
 {%- endcomment -%}
 
-<a class="filter-shade" href="#" data-toggle-filters></a>
-<div class="filters{% if section.settings.enable_filtering == false or filter_context.filters == empty %} mobile-only{% endif %}" data-auto-apply-hide-unavailable="{{ section.settings.auto_apply_hide_unavailable }}">
-  <div class="filters__inner{% if section.settings.enable_sticky_filter %} sticky-content-container{% endif %}" data-ajax-container>
-    <header class="filters__heading">
-      <div class="filters__heading-text heading-font h4">{{ 'products.filtering.title' | t }}</div>
-      <a class="filters__close desk-version" href="#" data-toggle-filters aria-label="{{ 'accessibility.close' | t }}">
-        {%- render 'icon-close', stroke_width: 1.3 -%}
-      </a>
-      <div class="filter-group__clear-row mob-show">
-              <a class="filter-group__clear-link" href="{{ clear_url }}">{{ 'products.filtering.clear_all' | t }}</a>
-      </div>
-    </header>
+<link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}">
+<script src="{{ 'collection-filter-sheet.js' | asset_url }}" defer></script>
 
-    {%- if section.settings.enable_filtering and filter_context.filters != empty -%}
-      {% capture active_filters_html %}
-        <div class="filter-group filter-group--applied">
-          <div class="filter-group__heading">
-            <div class="filter-group__heading__text">{{ 'products.filtering.applied_filters' | t }}</div>
-          </div>
-          <div class="filter-group__items">
-            {%- for filter in filter_context.filters -%}
-              {%- for value in filter.active_values -%}
-                {%- if value.param_name != 'filter.v.availability' -%}
-                  <a class="filter-group__applied-item" href="{{ value.url_to_remove }}">
-                    <span class="filter-group__applied-item__text">
-                      {% if filter.type == 'boolean' %}
-                        {{ filter.label | escape }}:
-                      {% endif %}
-                      {{ value.label | escape }}
-                    </span>
-                    <span class="filter-group__applied-item__icon">{% render 'icon-close', stroke_width: 1.3 %}</span>
-                  </a>
-                {%- endif -%}
-              {%- endfor -%}
+{%- liquid
+  assign is_single_category = false
+  assign coll_handle = collection.handle | downcase
+  if collection.all_types.size == 1 or coll_handle contains 'kurta' or coll_handle contains 'nehru' or coll_handle contains 'jacket' or coll_handle contains 'indowestern' or coll_handle contains 'bandhgala' or coll_handle contains 'sherwani'
+    assign is_single_category = true
+  endif
 
-              {%- if filter.type == 'price_range' -%}
-                {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
-                  <a class="filter-group__applied-item" href="{{ filter.url_to_remove }}">
-                    <span class="filter-group__applied-item__text">
-                      {% if filter.min_value.value %}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{% endif %} - {% if filter.max_value.value %}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{% endif %}
-                    </span>
-                    <span class="filter-group__applied-item__icon">{% render 'icon-close', stroke_width: 1.3 %}</span>
-                  </a>
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-            <div class="filter-group__clear-row">
-              <a class="filter-group__clear-link" href="{{ clear_url }}">{{ 'products.filtering.clear_all' | t }}</a>
-            </div>
-          </div>
-        </div>
-      {% endcapture %}
-      {%- if active_filters_html contains 'filter-group__applied-item' -%}
-        {{ active_filters_html }}
-      {%- endif -%}
-    {%- endif -%}
+  assign total_active_count = 0
+  for filter in filter_context.filters
+    if filter.param_name == 'filter.v.availability'
+      continue
+    endif
+    assign total_active_count = total_active_count | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != nil or filter.max_value.value != nil
+        assign total_active_count = total_active_count | plus: 1
+      endif
+    endif
+  endfor
+-%}
 
-    <form id="CollectionFilterForm">
-      {%- comment -%}
-        Preserve automatic vendor/type collections & sorting
-      {%- endcomment -%}
+<!-- Background Scrim -->
+<div class="kisah-scrim" id="kisahScrim"></div>
+
+<!-- Bottom Sheet Filter Drawer -->
+<aside class="kisah-sheet" id="kisahSheet" role="dialog" aria-modal="true" aria-label="Filter" data-open="0">
+  <div class="kisah-sheet__grab" id="kisahGrab"><i></i></div>
+  <div class="kisah-sheet__head">
+    <div class="kisah-sheet__title">FILTER</div>
+    <button class="kisah-sheet__close" id="kisahCloseFilter" type="button" aria-label="Close filters">&times;</button>
+  </div>
+
+  <div class="kisah-sheet__body" id="kisahSheetBody">
+    <form id="CollectionFilterForm" method="get" action="{{ filter_context.url | default: collection.url | default: routes.search_url }}">
+      <input type="hidden" name="filter.v.availability" value="1">
       {%- if filter_context.current_vendor or filter_context.current_type -%}
         <input type="hidden" name="q" value="{{ filter_context.current_vendor }}{{ filter_context.current_type }}">
       {%- endif -%}
-      {%- comment -%}
-        Preserve search terms
-      {%- endcomment -%}
       {%- if filter_context.terms -%}
         <input type="hidden" name="q" value="{{ filter_context.terms | escape }}">
       {%- endif -%}
-
-      {%- if section.settings.enable_filtering -%}
-        {%- for filter in filter_context.filters -%}
-          {%- if filter.param_name == 'filter.v.availability' -%}
-            <div class="filter-group filter-group--availability">
-              <div class="filter-toggle filter-toggle--inline">
-                <span class="filter-toggle__group-label">{{ 'products.filtering.out_of_stock_label' | t }}</span>
-                <div class="filter-toggle__options">
-                  <label class="filter-toggle__input-label">
-                    <input class="filter-toggle__input"
-                      id="Filter-{{ filter.param_name }}-1"
-                      type="radio"
-                      name="{{ filter.param_name }}"
-                      value=""
-                      {% if filter.active_values == empty %}checked{% endif %}>
-                    <span class="filter-toggle__input-label-text">{{ 'products.filtering.show_label' | t }}</span>
-                  </label>
-                  <label class="filter-toggle__input-label">
-                    <input class="filter-toggle__input"
-                      id="Filter-{{ filter.param_name }}-2"
-                      type="radio"
-                      name="{{ filter.param_name }}"
-                      value="1"
-                      {% if filter.active_values != empty and filter.active_values.first.value == '1' %}checked{% endif %}>
-                      <span class="filter-toggle__input-label-text">{{ 'products.filtering.hide_label' | t }}</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-          {%- elsif filter.type == 'boolean' or filter.type == 'list' or filter.type == 'price_range' -%}
-            {%- liquid
-              if filter.type == 'price_range'
-                assign filter_values_to_show_count = 1
-              elsif section.settings.show_disabled_filters
-                assign filter_values_to_show_count = filter.values.size
-              else
-                assign filter_values_to_show_count = 0
-                for value in filter.values
-                  if value.count > 0 or value.active
-                    assign filter_values_to_show_count = filter_values_to_show_count | plus: 1
-                  endif
-                endfor
-              endif
-
-              if settings.swatch_enabled and settings.enable_filter_swatches and settings.swatch_option_name contains filter.label and filter.type == "list"
-                assign filter_group_is_swatch = true
-              else
-                assign filter_group_is_swatch = false
-              endif
-
-              if section.settings.collapse_filters_method == 'all'
-                assign collapse_filters = true
-              elsif section.settings.collapse_filters_method == 'none'
-                assign collapse_filters = false
-              elsif section.settings.collapse_filters_method contains 'over-'
-                assign limit = section.settings.collapse_filters_method | split: '-' | last | plus: 0
-                if filter_values_to_show_count > limit
-                  assign collapse_filters = true
-                else
-                  assign collapse_filters = false
-                endif
-              endif
-
-              if filter.active_values.size > 0
-                assign collapse_filters = false
-              elsif filter.type == 'price_range'
-                if filter.min_value.value != nil or filter.max_value.value != nil
-                  assign collapse_filters = false
-                endif
-              endif
-            -%}
-            {%- if filter_values_to_show_count > 0 -%}
-              <div class="filter-group{% if filter_group_is_swatch %} filter-group--swatch filter-group--layout-{{ settings.filter_swatch_layout }}{% elsif section.settings.filter_two_columns %}{% if filter.type == 'boolean' or filter.type == 'list' %} filter-group--layout-two-column{% endif %}{% endif %}"
-                  data-filter-wrap="{{ filter.label | escape }}">
-                <toggle-target role="button" tabindex="0" class="filter-group__heading{% if collapse_filters %} toggle-target-toggler--is-hidden{% endif %}" data-toggle-target=".filter-group--{{ forloop.index | plus: 1 }}">
-                  <div class="filter-group__heading__text">{{ filter.label | escape }}</div>
-                  <span class="filter-group__heading__indicator">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
-                </toggle-target>
-                <div class="filter-group__items filter-group--{{ forloop.index | plus: 1 }} toggle-target{% if collapse_filters %} toggle-target--hidden{% endif %}">
-                  <div class="toggle-target-container">
-                    {% case filter.type %}
-                    {% when 'boolean' or 'list' %}
-                      {%- for value in filter.values -%}
-                        {%- if section.settings.show_disabled_filters or value.count > 0 or value.active -%}
-                          <label class="filter-group__item{% if value.active %} filter-group__item--active{% endif %}{% if value.count == 0 and value.active == false %} filter-group__item--disabled{% endif %}" data-tag="{{ value.label | handle }}"{% if filter_group_is_swatch %} data-swatch="{{ value.label | replace: '"', '' | downcase }}"{% endif %}>
-                            <input class="filter-group__checkbox"
-                              id="Filter-{{ value.param_name }}-{{ value.value | handle }}"
-                              type="checkbox"
-                              name="{{ value.param_name }}"
-                              value="{{ value.value | escape }}"
-                              {% if value.active %}checked{% endif %}
-                              {% if value.count == 0 and value.active == false %}disabled{% endif %}>
-
-                            <span class="filter-group__item__text">
-                              {{ value.label | escape }}
-                              {% unless filter_group_is_swatch %}
-                                <svg class="filter-tick" role="presentation" viewBox="0 0 20 20"><path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path></svg>
-                              {% endunless %}
-                            </span>
-                            {% if section.settings.show_filter_counts and filter_group_is_swatch == false %}
-                              <span class="filter-group__item__count">{{ value.count }}</span>
-                            {% endif %}
-                          </label>
-                        {%- endif -%}
-                      {%- endfor -%}
-
-                    {% when 'price_range' %}
-                      {% render 'price-range', filter: filter %}
-
-                    {% endcase %}
-                  </div>
-                </div>
-              </div>
-            {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
+      {%- if current_sort -%}
+        <input type="hidden" name="sort_by" value="{{ current_sort }}">
       {%- endif -%}
 
-     {% comment %} {% if section.settings.show_sort %}
-        <div class="filter-group mobile-only">
-          <toggle-target role="button" tabindex="0" class="filter-group__heading" data-toggle-target=".filter-group--sort">
-            <div class="filter-group__heading__text">{{ 'products.sorting.sort_by_label' | t }}</div>
-            <span class="filter-group__heading__indicator">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
-          </toggle-target>
-          <div class="filter-group__items filter-group--sort toggle-target">
-            <div class="toggle-target-container">
-              {%- for option in filter_context.sort_options -%}
+      {%- if section.settings.enable_filtering and filter_context.filters != empty -%}
+        {%- for filter in filter_context.filters -%}
+          {%- liquid
+            assign f_label = filter.label | downcase
+            assign f_param = filter.param_name | downcase
+            # Skip Availability filter from drawer as it is automatic
+            if filter.param_name == 'filter.v.availability'
+              continue
+            endif
+
+            # Skip Product Type filter on specific category collections
+            if is_single_category and f_param contains 'product_type' or is_single_category and f_label contains 'product type'
+              continue
+            endif
+
+            # Determine facet type & key
+            assign facet_key = 'list'
+            if f_label contains 'size' or f_param contains 'size'
+              assign facet_key = 'size'
+            elsif f_label contains 'color' or f_label contains 'colour' or f_param contains 'colour' or f_param contains 'color'
+              assign facet_key = 'colour'
+            elsif filter.type == 'price_range' or f_label contains 'price'
+              assign facet_key = 'price'
+            elsif f_label contains 'type'
+              assign facet_key = 'type'
+            elsif f_label contains 'occasion'
+              assign facet_key = 'occasion'
+            elsif f_label contains 'fabric'
+              assign facet_key = 'fabric'
+            elsif f_label contains 'pattern'
+              assign facet_key = 'pattern'
+            endif
+
+            assign active_summary = ''
+            for val in filter.active_values
+              if active_summary == ''
+                assign active_summary = val.label
+              else
+                assign active_summary = active_summary | append: ', ' | append: val.label
+              endif
+            endfor
+            if filter.type == 'price_range'
+              if filter.min_value.value != nil or filter.max_value.value != nil
+                assign min_m = filter.min_value.value | default: 0 | money
+                assign max_m = filter.max_value.value | default: filter.range_max | money
+                assign active_summary = min_m | append: ' - ' | append: max_m
+              endif
+            endif
+
+            assign is_open = false
+            if filter.active_values.size > 0
+              assign is_open = true
+            elsif filter.type == 'price_range'
+              if filter.min_value.value != nil or filter.max_value.value != nil
+                assign is_open = true
+              endif
+            elsif facet_key == 'size'
+              assign is_open = true
+            endif
+          -%}
+
+          <section class="kisah-sec" data-key="{{ facet_key }}" data-open="{% if is_open %}1{% else %}0{% endif %}">
+            <button class="kisah-sec__hd" type="button" aria-expanded="{% if is_open %}true{% else %}false{% endif %}">
+              <span class="kisah-sec__name">{{ filter.label }}</span>
+              <span class="kisah-sec__sum">{{ active_summary }}</span>
+              <svg class="kisah-sec__chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div class="kisah-sec__body">
+              {%- if facet_key == 'size' -%}
+                <!-- Size Chips -->
+                <div class="kisah-chiprow">
+                  {%- for value in filter.values -%}
+                    {%- liquid
+                      assign is_disabled = false
+                      if value.count == 0 and value.active == false
+                        assign is_disabled = true
+                      endif
+                    -%}
+                    <label class="kisah-chip{% if is_disabled %} is-disabled{% endif %}" data-on="{% if value.active %}1{% else %}0{% endif %}">
+                      <input type="checkbox"
+                             name="{{ value.param_name }}"
+                             value="{{ value.value | escape }}"
+                             data-label="{{ value.label | escape }}"
+                             data-count="{{ value.count }}"
+                             data-initial-count="{{ value.count }}"
+                             data-initial-disabled="{% if is_disabled %}1{% else %}0{% endif %}"
+                             {% if value.active %}checked{% endif %}
+                             {% if is_disabled %}disabled{% endif %}>
+                      <span>{{ value.label }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+
+              {%- elsif facet_key == 'colour' -%}
+                <!-- Colour Swatches -->
+                <div class="kisah-swrow">
+                  {%- for value in filter.values -%}
+                    {%- liquid
+                      assign is_disabled = false
+                      if value.count == 0 and value.active == false
+                        assign is_disabled = true
+                      endif
+
+                      assign val_down = value.label | downcase
+                      assign swatch_color = '#ccc'
+                      if val_down contains 'black'
+                        assign swatch_color = '#181721'
+                      elsif val_down contains 'blue' or val_down contains 'blie' or val_down contains 'navy'
+                        assign swatch_color = '#2b3f73'
+                      elsif val_down contains 'maroon' or val_down contains 'wine'
+                        assign swatch_color = '#6b2231'
+                      elsif val_down contains 'pink'
+                        assign swatch_color = '#d99aad'
+                      elsif val_down contains 'multi'
+                        assign swatch_color = 'linear-gradient(135deg,#c16452 0%,#d3b25e 34%,#4a7a5e 67%,#3b3f78 100%)'
+                      elsif val_down contains 'cream' or val_down contains 'beige' or val_down contains 'fawn'
+                        assign swatch_color = '#e6dbc6'
+                      elsif val_down contains 'purple' or val_down contains 'lilac' or val_down contains 'violet' or val_down contains 'mauve'
+                        assign swatch_color = '#6f5a92'
+                      elsif val_down contains 'green' or val_down contains 'olive' or val_down contains 'mint' or val_down contains 'sage'
+                        assign swatch_color = '#3f6b52'
+                      elsif val_down contains 'yellow' or val_down contains 'gold' or val_down contains 'mustard'
+                        assign swatch_color = '#d6ac48'
+                      elsif val_down contains 'grey' or val_down contains 'gray'
+                        assign swatch_color = '#8c8b93'
+                      elsif val_down contains 'white' or val_down contains 'off white' or val_down contains 'ivory'
+                        assign swatch_color = '#f6f4ef'
+                      elsif val_down contains 'orange' or val_down contains 'rust' or val_down contains 'peach'
+                        assign swatch_color = '#d46c43'
+                      elsif val_down contains 'red'
+                        assign swatch_color = '#a82c2c'
+                      elsif val_down contains 'brown'
+                        assign swatch_color = '#593e2b'
+                      endif
+                    -%}
+                    <label class="kisah-sw{% if is_disabled %} is-disabled{% endif %}" data-on="{% if value.active %}1{% else %}0{% endif %}">
+                      <input type="checkbox"
+                             name="{{ value.param_name }}"
+                             value="{{ value.value | escape }}"
+                             data-label="{{ value.label | escape }}"
+                             data-count="{{ value.count }}"
+                             data-initial-count="{{ value.count }}"
+                             data-initial-disabled="{% if is_disabled %}1{% else %}0{% endif %}"
+                             {% if value.active %}checked{% endif %}
+                             {% if is_disabled %}disabled{% endif %}>
+                      <i style="background: {{ swatch_color }};"></i>
+                      <em>{{ value.label | replace: ' & ', '<br>& ' }}<b class="kisah-sw-count"> {{ value.count }}</b></em>
+                    </label>
+                  {%- endfor -%}
+                </div>
+
+              {%- elsif filter.type == 'price_range' or facet_key == 'price' -%}
+                <!-- Dual Handle Price Range Slider -->
                 {%- liquid
-                  if section.settings.sort_show_featured == false and option.value == 'manual' and collection.default_sort_by != 'manual'
-                    continue
+                  assign p_min = 0
+                  assign raw_max = filter.range_max | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
+                  assign p_max = raw_max | divided_by: 100 | plus: 1 | times: 100
+                  if p_max <= 0
+                    assign p_max = 15000
                   endif
-                  if section.settings.sort_show_best == false and option.value == 'best-selling' and collection.default_sort_by != 'best-selling'
-                    continue
+                  if filter.min_value.value
+                    assign cur_lo = filter.min_value.value | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
+                  else
+                    assign cur_lo = p_min
                   endif
-                  if section.settings.sort_show_alpha == false and option.value == 'title-ascending' and collection.default_sort_by != 'title-ascending'
-                    continue
-                  endif
-                  if section.settings.sort_show_alpha == false and option.value == 'title-descending' and collection.default_sort_by != 'title-descending'
-                    continue
-                  endif
-                  if section.settings.sort_show_price == false and option.value == 'price-ascending' and collection.default_sort_by != 'price-ascending'
-                    continue
-                  endif
-                  if section.settings.sort_show_price == false and option.value == 'price-descending' and collection.default_sort_by != 'price-descending'
-                    continue
-                  endif
-                  if section.settings.sort_show_date == false and option.value == 'created-ascending' and collection.default_sort_by != 'created-ascending'
-                    continue
-                  endif
-                  if section.settings.sort_show_date == false and option.value == 'created-descending' and collection.default_sort_by != 'created-descending'
-                    continue
+                  if filter.max_value.value
+                    assign cur_hi = filter.max_value.value | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
+                  else
+                    assign cur_hi = p_max
                   endif
                 -%}
-                <label class="filter-group__item{% if current_sort == option.value %} filter-group__item--active{% endif %}">
-                  <input class="filter-group__checkbox"
-                    id="Filter-Sort-{{ option.value }}"
-                    type="radio"
-                    name="sort_by"
-                    value="{{ option.value }}"
-                      {% if current_sort == option.value %}checked{% endif %} 
- -->
-                  <span class="filter-group__item__text">
-                    {{ option.name | escape }}
-                    <svg class="filter-tick" role="presentation" viewBox="0 0 20 20"><path d="M8.315 13.859l-3.182-3.417a.506.506 0 0 1 0-.684l.643-.683a.437.437 0 0 1 .642 0l2.22 2.393 4.942-5.327a.436.436 0 0 1 .643 0l.643.684a.504.504 0 0 1 0 .683l-5.91 6.35a.437.437 0 0 1-.642 0"></path></svg>
-                  </span>
-                </label>
-              {%- endfor -%}
+                <div class="kisah-rng">
+                  <div class="kisah-rng__vals">
+                    <div class="kisah-rng__val" id="kisahRngLoV">₹{{ cur_lo }}</div>
+                    <div class="kisah-rng__to">to</div>
+                    <div class="kisah-rng__val" id="kisahRngHiV">₹{{ cur_hi }}</div>
+                  </div>
+                  <div class="kisah-rng__track">
+                    <div class="kisah-rng__rail"></div>
+                    <div class="kisah-rng__fill" id="kisahRngFill"></div>
+                    <input type="range" id="kisahRngLo"
+                           {% if filter.min_value.value %}name="{{ filter.min_value.param_name }}"{% endif %}
+                           data-name="{{ filter.min_value.param_name }}"
+                           min="{{ p_min }}" max="{{ p_max }}" step="100"
+                           value="{{ cur_lo }}" aria-label="Minimum price">
+                    <input type="range" id="kisahRngHi"
+                           {% if filter.max_value.value %}name="{{ filter.max_value.param_name }}"{% endif %}
+                           data-name="{{ filter.max_value.param_name }}"
+                           min="{{ p_min }}" max="{{ p_max }}" step="100"
+                           value="{{ cur_hi }}" aria-label="Maximum price">
+                  </div>
+                  <div class="kisah-rng__ends">
+                    <span>₹{{ p_min }}</span>
+                    <span>₹{{ p_max }}</span>
+                  </div>
+                </div>
+
+              {%- else -%}
+                <!-- Standard List Checkboxes (Product Type, Occasion, Fabric, Pattern) -->
+                <div class="kisah-list">
+                  {%- for value in filter.values -%}
+                    {%- liquid
+                      assign is_disabled = false
+                      if value.count == 0 and value.active == false
+                        assign is_disabled = true
+                      endif
+                    -%}
+                    <label class="kisah-row{% if is_disabled %} is-disabled{% endif %}" data-on="{% if value.active %}1{% else %}0{% endif %}">
+                      <input type="checkbox"
+                             name="{{ value.param_name }}"
+                             value="{{ value.value | escape }}"
+                             data-label="{{ value.label | escape }}"
+                             data-count="{{ value.count }}"
+                             data-initial-count="{{ value.count }}"
+                             data-initial-disabled="{% if is_disabled %}1{% else %}0{% endif %}"
+                             {% if value.active %}checked{% endif %}
+                             {% if is_disabled %}disabled{% endif %}>
+                      <span class="kisah-box">
+                        <svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg>
+                      </span>
+                      <span class="kisah-row__l">{{ value.label }}</span>
+                      <span class="kisah-row__c">{{ value.count }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
             </div>
-          </div>
-        </div>
-      {% endif %}{% endcomment %}
-      <noscript>
-        <button type="submit" class="btn">{{ 'products.filtering.apply' | t }}</button>
-      </noscript>
-      <div class="filter-actions" style="margin-top: 10px; display: flex;" bis_skin_checked="1"><button type="button" class="btn apply-filters-btn">Apply Filters</button><a href="{{ routes.all_products_collection_url }}" class="clear-filters-btn" style="margin-left: 8px;">Clear</a></div>
+          </section>
+        {%- endfor -%}
+      {%- endif -%}
     </form>
   </div>
-    <div class="close-container">
-      <a class="filters__close" href="#" data-toggle-filters aria-label="{{ 'accessibility.close' | t }}">
-       Close
-      </a>
+
+  <div class="kisah-sheet__foot">
+    {%- liquid
+      assign clean_clear_url = clear_url | default: collection.url
+      if clean_clear_url contains '?'
+        unless clean_clear_url contains 'filter.v.availability=1'
+          assign clean_clear_url = clean_clear_url | append: '&filter.v.availability=1'
+        endunless
+      else
+        assign clean_clear_url = clean_clear_url | append: '?filter.v.availability=1'
+      endif
+    -%}
+    <button class="kisah-btn kisah-btn--ghost" id="kisahClearAll" type="button" data-clear-url="{{ clean_clear_url }}">Clear all</button>
+    {% liquid
+      assign display_count = total_count | default: filter_context.results_count | default: filter_context.products_count | default: collection.products_count
+    %}
+    <button class="kisah-btn kisah-btn--solid" id="kisahApplyBtn" type="button" data-initial-count="{{ display_count }}">
+      Show {{ display_count }} styles
+    </button>
+  </div>
+</aside>
+
+<!-- Sort Modal Drawer for Mobile -->
+<div class="kisah-sort-modal" id="kisahSortModal" data-open="0" role="dialog" aria-label="Sort By">
+  <div class="kisah-sheet__head">
+    <div class="kisah-sheet__title">SORT BY</div>
+    <button class="kisah-sheet__close" id="kisahCloseSort" type="button" aria-label="Close sort">&times;</button>
+  </div>
+  <div class="kisah-sheet__body">
+    <div class="kisah-list">
+      {%- for option in filter_context.sort_options -%}
+        <a href="{{ request.path | sort_by: option.value | escape }}"
+           class="kisah-row"
+           data-on="{% if current_sort == option.value %}1{% else %}0{% endif %}"
+           style="text-decoration: none;">
+          <span class="kisah-row__l">
+            {% if option.name == 'Date, new to old' %}New Arrivals{% else %}{{ option.name | escape }}{% endif %}
+          </span>
+          {% if current_sort == option.value %}
+            <span class="kisah-box" style="background: var(--kisah-ink); border-color: var(--kisah-ink);">
+              <svg viewBox="0 0 24 24" style="opacity: 1;"><path d="m5 13 4 4L19 7"/></svg>
+            </span>
+          {% endif %}
+        </a>
+      {%- endfor -%}
+    </div>
   </div>
 </div>
