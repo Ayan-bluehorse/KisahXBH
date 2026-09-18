@@ -209,12 +209,29 @@
               {%- elsif filter.type == 'price_range' or facet_key == 'price' -%}
                 <!-- Dual Handle Price Range Slider -->
                 {%- liquid
-                  assign p_min = 0
                   assign raw_max = filter.range_max | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
                   assign p_max = raw_max | divided_by: 100 | plus: 1 | times: 100
                   if p_max <= 0
                     assign p_max = 15000
                   endif
+
+                  # Calculate minimum price from products in collection/search
+                  assign min_cents = filter.range_max
+                  for product in filter_context.products
+                    if product.price_min and product.price_min > 0 and product.price_min < min_cents
+                      assign min_cents = product.price_min
+                    elsif product.price and product.price > 0 and product.price < min_cents
+                      assign min_cents = product.price
+                    endif
+                  endfor
+
+                  if min_cents == filter.range_max or min_cents == nil or min_cents <= 0
+                    assign p_min = 0
+                  else
+                    assign raw_min = min_cents | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
+                    assign p_min = raw_min | divided_by: 100 | times: 100
+                  endif
+
                   if filter.min_value.value
                     assign cur_lo = filter.min_value.value | money_without_currency | remove: ' ' | remove: "'" | remove: ',' | split: '.' | first | plus: 0
                   else

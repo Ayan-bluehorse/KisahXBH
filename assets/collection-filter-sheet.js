@@ -196,6 +196,37 @@
           triggerDynamicCountUpdate();
         });
         updateSlider();
+
+        // Refine true global minimum price from collection products.json
+        const formAction = filterForm.getAttribute('action') || window.location.pathname;
+        if (formAction && formAction.indexOf('/collections/') >= 0) {
+          const collPath = formAction.split('?')[0].replace(/\/$/, '');
+          fetch(`${collPath}/products.json?limit=1&sort_by=price-ascending`)
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+              if (data && data.products && data.products.length > 0) {
+                let trueMin = parseFloat(data.products[0].variants[0].price);
+                data.products[0].variants.forEach((v) => {
+                  const p = parseFloat(v.price);
+                  if (p > 0 && p < trueMin) trueMin = p;
+                });
+                if (trueMin > 0) {
+                  const roundedMin = Math.floor(trueMin / 100) * 100;
+                  const currentMinBound = parseFloat(minInput.min) || 0;
+                  if (roundedMin < currentMinBound || currentMinBound === 0) {
+                    minInput.min = roundedMin;
+                    if (!minInput.hasAttribute('name') || parseFloat(minInput.value) < roundedMin) {
+                      minInput.value = roundedMin;
+                    }
+                    const endsMin = rngWrap.querySelector('.kisah-rng__ends span:first-child');
+                    if (endsMin) endsMin.textContent = '₹' + roundedMin.toLocaleString('en-IN');
+                    updateSlider();
+                  }
+                }
+              }
+            })
+            .catch(() => {});
+        }
       }
     }
 
