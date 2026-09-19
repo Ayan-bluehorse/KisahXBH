@@ -98,7 +98,12 @@
 
 <script>
 (function () {
-  'use strict';
+  if (!window.location.search.includes('filter.v.availability')) {
+    var _sp = new URLSearchParams(window.location.search);
+    _sp.set('filter.v.availability', '1');
+    window.location.replace(window.location.pathname + '?' + _sp.toString());
+    return;
+  }
 
   if (window.__kisahInfiniteScrollManager) {
     window.__kisahInfiniteScrollManager.boot();
@@ -342,6 +347,9 @@
     function buildSectionUrl(pageUrl) {
       var url = new URL(pageUrl, window.location.origin);
       url.searchParams.set('section_id', sectionId);
+      if (!url.searchParams.has('filter.v.availability')) {
+        url.searchParams.set('filter.v.availability', '1');
+      }
       return url.toString();
     }
 
