@@ -196,10 +196,10 @@
     var nextUrl = root.getAttribute('data-next-url');
     var currentPage = parseInt(root.getAttribute('data-current-page'), 10) || 1;
     var pages = parseInt(root.getAttribute('data-pages'), 10) || 1;
-    var minimumLoaderMs = parseInt(
-      root.getAttribute('data-min-loader-ms'),
-      10
-    ) || 1200;
+    var rawMinMs = root.getAttribute('data-min-loader-ms');
+    var minimumLoaderMs = (rawMinMs !== null && !isNaN(parseInt(rawMinMs, 10)))
+      ? parseInt(rawMinMs, 10)
+      : 0;
     var hasNextPage = Boolean(nextUrl) || currentPage < pages;
     var isLoading = false;
     var observer = null;
@@ -315,12 +315,14 @@
         appendedItems.push(item);
       }
 
+      // Prioritize full stock first, then broken/cutsize second in visible grid
       grid.appendChild(primaryFragment);
-      lowStockGrid.appendChild(lowFragment);
+      grid.appendChild(lowFragment);
       syncPrimaryTail();
 
       return appendedItems;
     }
+
 
     function setLowStockVisibility(visible) {
       lowStockGrid.hidden = !visible;
@@ -539,7 +541,7 @@
               root.isConnected &&
               sentinel.getBoundingClientRect().top <= window.innerHeight
             ) {
-              loadNextPage(Boolean(targetProductId));
+              loadNextPage(true);
             }
           });
         })
