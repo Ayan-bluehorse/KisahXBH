@@ -9,71 +9,6 @@
  */
 {
   "sections": {
-    "navratri_banner": {
-      "type": "navratri-banner",
-      "blocks": {
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "alt_text": "Kisah Navratri Banner",
-            "kicker": "KISAH NAVRATRI EDIT",
-            "heading": "The circle awaits you.<br>Lock in your fit",
-            "subtitle": "",
-            "button_text": "SHOP NOW",
-            "button_link": "shopify://collections/all",
-            "full_slide_link": false
-          }
-        },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "alt_text": "Kisah Navratri Collection",
-            "kicker": "COLOURS OF CELEBRATION",
-            "heading": "Crafted For The<br>9 Nights Of Garba",
-            "subtitle": "",
-            "button_text": "SHOP NOW",
-            "button_link": "shopify://collections/all",
-            "full_slide_link": false
-          }
-        },
-        "slide_3": {
-          "type": "slide",
-          "settings": {
-            "alt_text": "Kisah Navratri Collection",
-            "kicker": "NEW FESTIVE ARRIVALS",
-            "heading": "Elevate Your Look<br>This Festive Season",
-            "subtitle": "",
-            "button_text": "SHOP NOW",
-            "button_link": "shopify://collections/all",
-            "full_slide_link": false
-          }
-        }
-      },
-      "block_order": [
-        "slide_1",
-        "slide_2",
-        "slide_3"
-      ],
-      "settings": {
-        "content_align": "center",
-        "content_position": "bottom",
-        "overlay_opacity": 80,
-        "autoplay": true,
-        "autoplay_speed": 4,
-        "transition_effect": "fade",
-        "show_dots": true,
-        "show_scroll_down": false,
-        "scroll_target": "#shopify-section-navratri_collection_header",
-        "kicker_color": "#b88a2b",
-        "heading_color": "#ffffff",
-        "btn_text_color": "#ffffff",
-        "btn_border_color": "#fffffff2",
-        "btn_bg_color": "#1d070a38",
-        "btn_hover_bg": "#ffffff",
-        "btn_hover_text": "#18120f",
-        "dot_active_color": "#ffffff"
-      }
-    },
     "navratri_collection_header": {
       "type": "navratri-collection-header",
       "blocks": {
@@ -336,7 +271,6 @@
     }
   },
   "order": [
-    "navratri_banner",
     "navratri_collection_header",
     "navratri_products_puja",
     "navratri_gateway",
