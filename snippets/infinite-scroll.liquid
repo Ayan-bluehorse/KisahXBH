@@ -21,7 +21,7 @@
   data-section-id="{{ section.id }}"
   data-current-page="{{ paginate.current_page }}"
   data-pages="{{ paginate.pages }}"
-  data-min-loader-ms="0"
+  data-min-loader-ms="1200"
   {% if paginate.next %}data-next-url="{{ paginate.next.url | escape }}"{% endif %}
 >
   <div
@@ -121,23 +121,52 @@
     return items;
   }
 
-  function stockTier(item) {
-    var available = parseInt(
-      item.getAttribute('data-available-variants'),
-      10
-    );
+  function isKurtaType(item) {
+    var type = (item.getAttribute('data-product-type') || '').toLowerCase().trim();
+    return type.indexOf('kurta') !== -1;
+  }
+
+  {% comment %} function stockTier(item) {
+    var available = parseInt(item.getAttribute('data-available-variants'), 10);
     var total = parseInt(item.getAttribute('data-total-variants'), 10);
 
     if (
       !Number.isFinite(available) ||
       !Number.isFinite(total) ||
-      available <= 0 ||
       total <= 0
     ) {
-      return 'remove';
+      return 'primary';
     }
 
-    return available * 2 >= total ? 'primary' : 'low';
+    if (available / total >= 0.5) {
+      return 'primary';
+    }
+
+    return 'low';
+  } {% endcomment %}
+
+    function stockRank(item) {
+    var available = parseInt(item.getAttribute('data-available-variants'), 10);
+    var total = parseInt(item.getAttribute('data-total-variants'), 10);
+    var sizeS = item.getAttribute('data-size-s-available') === 'true';
+    var sizeM = item.getAttribute('data-size-m-available') === 'true';
+    var sizeL = item.getAttribute('data-size-l-available') === 'true';
+    var sizeXL = item.getAttribute('data-size-xl-available') === 'true';
+
+    if (
+      Number.isFinite(available) &&
+      Number.isFinite(total) &&
+      total > 0 &&
+      available === total
+    ) {
+      return 0;
+    }
+
+    if (sizeS && sizeM && sizeL && sizeXL) return 1;
+    if (sizeS && sizeM && sizeL) return 2;
+    if (sizeM && sizeL) return 3;
+    if (sizeM) return 4;
+    return 5;
   }
 
   function parseSectionResponse(html, gridSelector, sectionId) {
@@ -199,7 +228,7 @@
     var minimumLoaderMs = parseInt(
       root.getAttribute('data-min-loader-ms'),
       10
-    ) || 1200;
+    ) || 0;
     var hasNextPage = Boolean(nextUrl) || currentPage < pages;
     var isLoading = false;
     var observer = null;
@@ -208,7 +237,7 @@
     var retryTimer = null;
     var targetProductId = getTargetProductId();
 
-    if (!grid || !lowStockGrid || !loader || !sentinel) {
+    if (!grid || !loader || !sentinel) {
       console.warn('Infinite scroll: required collection elements were not found.');
       return;
     }
@@ -254,77 +283,56 @@
       pendingPrimaryTail = null;
     }
 
-    function trueLowStockCount() {
-      var items = directStockItems(lowStockGrid);
-      var count = 0;
 
+
+     function sortGridBySizeRank() {
+      var items = directStockItems(grid);
+      var keyed = [];
       for (var i = 0; i < items.length; i++) {
-        if (items[i].getAttribute('data-stock-tier') === 'low') {
-          count += 1;
-        }
+        keyed.push({
+          item: items[i],
+          rank: stockRank(items[i]),
+          index: i
+        });
       }
-
-      return count;
-    }
-
-    function syncPrimaryTail() {
-      restorePendingTail();
-
-      if (!usesTwoMobileColumns()) return;
-
-      var primaryItems = directStockItems(grid);
-      var shouldBufferTail =
-        primaryItems.length > 0 &&
-        primaryItems.length % 2 === 1 &&
-        (hasNextPage || trueLowStockCount() > 0);
-
-      if (!shouldBufferTail) return;
-
-      pendingPrimaryTail = primaryItems[primaryItems.length - 1];
-      pendingPrimaryTail.setAttribute('data-primary-tail-buffer', 'true');
-      lowStockGrid.insertBefore(
-        pendingPrimaryTail,
-        lowStockGrid.firstChild
-      );
+      keyed.sort(function (a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return a.index - b.index;
+      });
+      var sortedFragment = document.createDocumentFragment();
+      for (var j = 0; j < keyed.length; j++) {
+        keyed[j].item.setAttribute('data-stock-rank', String(keyed[j].rank));
+        sortedFragment.appendChild(keyed[j].item);
+      }
+      grid.appendChild(sortedFragment);
     }
 
     function distributeItems(items) {
       restorePendingTail();
 
-      var primaryFragment = document.createDocumentFragment();
-      var lowFragment = document.createDocumentFragment();
+      var fragment = document.createDocumentFragment();
       var appendedItems = [];
 
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
         var tier = stockTier(item);
 
-        if (tier === 'remove') {
-          item.remove();
-          continue;
-        }
+        item.setAttribute('data-stock-tier', tier === 'remove' ? 'primary' : tier);
 
-        item.setAttribute('data-stock-tier', tier);
-
-        if (tier === 'primary') {
-          primaryFragment.appendChild(item);
-        } else {
-          lowFragment.appendChild(item);
-        }
-
+        fragment.appendChild(item);
         appendedItems.push(item);
       }
 
-      grid.appendChild(primaryFragment);
-      lowStockGrid.appendChild(lowFragment);
-      syncPrimaryTail();
-
+      grid.appendChild(fragment);
+      sortGridBySizeRank();
       return appendedItems;
     }
 
     function setLowStockVisibility(visible) {
-      lowStockGrid.hidden = !visible;
-      lowStockGrid.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      if (lowStockGrid) {
+        lowStockGrid.hidden = !visible;
+        lowStockGrid.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      }
     }
 
     function setLoaderState(state, label) {
@@ -383,6 +391,7 @@
       var countEl = scope ? scope.querySelector('[data-collection-count-item]') : document.querySelector('[data-collection-count-item]');
       if (!countEl) return;
       var count = grid ? grid.querySelectorAll('.product-block').length : 0;
+      count += lowStockGrid ? lowStockGrid.querySelectorAll('.product-block').length : 0;
       if (count > 0) {
         countEl.textContent = count + (count === 1 ? ' product' : ' products');
       }
@@ -398,21 +407,8 @@
         observer = null;
       }
 
-      restorePendingTail();
-
-      if (lowStockGrid) {
-        var lowItems = directStockItems(lowStockGrid);
-        if (lowItems.length > 0) {
-          var fragment = document.createDocumentFragment();
-          for (var i = 0; i < lowItems.length; i++) {
-            fragment.appendChild(lowItems[i]);
-          }
-          grid.appendChild(fragment);
-        }
-        setLowStockVisibility(false);
-      }
-
       setLoaderState(false);
+      setLowStockVisibility(true);
       scrollToTargetIfAvailable();
       updateProductCount();
     }
@@ -575,10 +571,6 @@
 
       if (!target || !target.closest) return;
 
-      if (target.closest('.layout-switch')) {
-        requestAnimationFrame(syncPrimaryTail);
-      }
-
       if (
         root.getAttribute('data-load-error') === 'true' &&
         target.closest('[data-infinite-scroll-loader]')
@@ -589,7 +581,11 @@
     }
 
     setLowStockVisibility(false);
-    distributeItems(directStockItems(grid));
+    try {
+      distributeItems(directStockItems(grid));
+    } finally {
+      grid.setAttribute('data-stock-sorted', 'true');
+    }
 
     if (!hasNextPage) {
       finishPagination();
@@ -598,10 +594,6 @@
 
     setLoaderState(true, 'Loading more products...');
     scope.addEventListener('click', handleSectionClick);
-    window.addEventListener('resize', function () {
-      if (!root.isConnected) return;
-      requestAnimationFrame(syncPrimaryTail);
-    }, { passive: true });
 
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver(function (entries) {
@@ -612,7 +604,7 @@
           }
         }
       }, {
-        rootMargin: '0px',
+        rootMargin: '400px 0px 400px 0px',
         threshold: 0
       });
 
@@ -625,7 +617,7 @@
 
         ticking = true;
         requestAnimationFrame(function () {
-          if (sentinel.getBoundingClientRect().top <= window.innerHeight) {
+          if (sentinel.getBoundingClientRect().top <= (window.innerHeight + 400)) {
             loadNextPage(false);
           }
           ticking = false;
@@ -668,7 +660,7 @@
   }
 
   window.__kisahInfiniteScrollManager = { boot: boot };
-  document.addEventListener('click', storeProductHash, true);
+  document.addEventListener('click', storeProductHash, { passive: true });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -676,11 +668,9 @@
     boot();
   }
 
-  if ('MutationObserver' in window) {
-    new MutationObserver(boot).observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-  }
+  document.addEventListener('shopify:section:load', boot);
+  document.addEventListener('shopify:section:select', boot);
+  document.addEventListener('facet-filter:applied', boot);
+  document.addEventListener('collection:reloaded', boot);
 })();
 </script>
