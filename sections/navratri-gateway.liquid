@@ -1,0 +1,187 @@
+{%- style -%}
+  #navratri-gateway-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#faf6f0' }};
+  }
+  #navratri-gateway-{{ section.id }} .cp-navratri-gateway__title {
+    color: {{ section.settings.text_color | default: '#111111' }};
+  }
+  #navratri-gateway-{{ section.id }} .cp-navratri-gateway__subtitle,
+  #navratri-gateway-{{ section.id }} .cp-navratri-gateway__kicker {
+    color: {{ section.settings.sub_color | default: '#c9a96e' }};
+  }
+{%- endstyle -%}
+
+<section class="cp-navratri-gateway" id="navratri-gateway-{{ section.id }}">
+  <div class="cp-navratri-container">
+    <!-- Header: centered, no filter -->
+    <div class="cp-navratri-gateway__header cp-navratri-gateway__header--centered">
+      {%- if section.settings.kicker != blank -%}
+        <span class="cp-navratri-gateway__kicker">{{ section.settings.kicker }}</span>
+      {%- endif -%}
+      <h2 class="cp-navratri-gateway__title">{{ section.settings.title | default: 'WHAT ARE YOU DRESSING FOR?' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="cp-navratri-gateway__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Occasion Tiles: 3x3 on desktop, 2x2 on mobile -->
+    <div class="cp-navratri-gateway__grid">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="cp-navratri-gateway__card" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: '/collections/all' }}" class="cp-navratri-gateway__card-link">
+              <div class="cp-navratri-gateway__media">
+                {%- if block.settings.image != blank -%}
+                  <img 
+                    src="{{ block.settings.image | image_url: width: 800 }}" 
+                    alt="{{ block.settings.title | escape }}" 
+                    loading="lazy"
+                    class="cp-navratri-gateway__img">
+                {%- else -%}
+                  <div class="cp-navratri-gateway__placeholder">
+                    {{ 'collection-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+                <div class="cp-navratri-gateway__overlay"></div>
+                
+                <!-- Bottom Overlaid Glass Button with 2 lines of text -->
+                <div class="cp-navratri-gateway__overlay-content">
+                  <span class="cp-navratri-gateway__card-title">{{ block.settings.title }}</span>
+                  {%- if block.settings.subtitle != blank -%}
+                    <span class="cp-navratri-gateway__card-sub">{{ block.settings.subtitle }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Mockup Default 4 Occasion Cards -->
+        {%- assign occ_cards = "DANDIYA DHAMAL:SHOP THE SILHOUETTE →:#garba-dandiya,PUJA & RITUAL:COMPLETE THE LOOK →:#puja-aarti,PANDAL HOPPING:LAYER THE LOOK →:#festive-party,FESTIVE EVENING:FINISH THE FIT →:#casual-hangout" | split: "," -%}
+        {%- for item in occ_cards -%}
+          {%- assign parts = item | split: ":" -%}
+          <div class="cp-navratri-gateway__card">
+            <a href="{{ parts[2] }}" class="cp-navratri-gateway__card-link">
+              <div class="cp-navratri-gateway__media">
+                <div class="cp-navratri-gateway__placeholder">
+                  {{ 'collection-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
+                </div>
+                <div class="cp-navratri-gateway__overlay"></div>
+                <div class="cp-navratri-gateway__overlay-content">
+                  <span class="cp-navratri-gateway__card-title">{{ parts[0] }}</span>
+                  <span class="cp-navratri-gateway__card-sub">{{ parts[1] }}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var gatewayLinks = document.querySelectorAll('#navratri-gateway-{{ section.id }} .cp-navratri-gateway__card-link');
+    gatewayLinks.forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var targetHref = link.getAttribute('href');
+        if (targetHref && targetHref.startsWith('#') && targetHref.length > 1) {
+          var targetEl = document.querySelector(targetHref);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Navratri Gateway",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "WHAT ARE YOU DRESSING FOR?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Different nights. Different plans. Same Dhoom Squad."
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subheading Color",
+      "default": "#c9a96e"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pick_card",
+      "name": "Occasion Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Occasion Title",
+          "default": "DANDIYA DHAMAL"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Action / Subtitle",
+          "default": "SHOP THE SILHOUETTE →"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Destination Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Gateway",
+      "blocks": [
+        { "type": "pick_card", "settings": { "title": "DANDIYA DHAMAL", "subtitle": "SHOP THE SILHOUETTE →", "link": "#garba-dandiya" } },
+        { "type": "pick_card", "settings": { "title": "PUJA & RITUAL", "subtitle": "COMPLETE THE LOOK →", "link": "#puja-aarti" } },
+        { "type": "pick_card", "settings": { "title": "PANDAL HOPPING", "subtitle": "LAYER THE LOOK →", "link": "#festive-party" } },
+        { "type": "pick_card", "settings": { "title": "FESTIVE EVENING", "subtitle": "FINISH THE FIT →", "link": "#casual-hangout" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,327 @@
+{%- style -%}
+  #navratri-categories-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#faf6f0' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__title {
+    color: {{ section.settings.text_color | default: '#111111' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__subtitle,
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__kicker {
+    color: {{ section.settings.sub_color | default: '#c9a96e' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__item {
+    border-color: {{ section.settings.border_color | default: '#ded2ca' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__media {
+    background-color: {{ section.settings.card_bg_color | default: '#EDE8DF' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__footer {
+    border-top-color: {{ section.settings.border_color | default: '#ded2ca' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__name {
+    color: {{ section.settings.label_color | default: '#18120f' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__arrow {
+    color: {{ section.settings.label_color | default: '#18120f' }};
+  }
+{%- endstyle -%}
+
+<section class="cp-navratri-categories" id="navratri-categories-{{ section.id }}">
+  <div class="cp-navratri-container">
+    <div class="cp-navratri-categories__header">
+      <div class="cp-navratri-categories__title-wrap">
+        {%- if section.settings.kicker != blank -%}
+          <span class="cp-navratri-categories__kicker">{{ section.settings.kicker }}</span>
+        {%- endif -%}
+        <h2 class="cp-navratri-categories__title">{{ section.settings.title | default: 'SHOP BY CATEGORY' }}</h2>
+        {%- if section.settings.subtitle != blank -%}
+          <p class="cp-navratri-categories__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_colour_filter -%}
+        <div class="cp-navratri-colour-chip-group" data-colour-dropdown>
+          <span class="cp-navratri-colour-label">COLOUR</span>
+          <div class="cp-navratri-colour-dots-row">
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #8E2424;" data-colour-val="wine-maroon-purple" title="Wine & Maroon"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F3B36;" data-colour-val="green" title="Green & Emerald"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F1D33;" data-colour-val="navy-brown-black" title="Navy & Black"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #C2A676;" data-colour-val="yellow-orange" title="Mustard & Gold"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #EAE5D9;" data-colour-val="white-cream" title="Ivory & Cream"></button>
+          </div>
+
+          <div class="cp-navratri-colour-select-wrap">
+            <button type="button" class="cp-navratri-colour-select-btn" data-colour-trigger aria-expanded="false">
+              <span data-colour-label>All</span>
+              <svg class="cp-dropdown-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="cp-navratri-colour-chip-menu" data-colour-menu>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="navy-brown-black">Navy, Brown & Black</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="wine-maroon-purple">Wine, Maroon & Purple</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="white-cream">White & Cream</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="yellow-orange">Yellow & Orange</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="pastels">Pastels</button>
+              <button type="button" class="cp-navratri-colour-clear" data-colour-clear>Clear filter</button>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Category Items Track with Edge Arrows -->
+    <div class="cp-navratri-categories__track-wrap">
+      <div class="cp-navratri-categories__grid cp-navratri-categories__grid--{{ section.settings.columns_desktop | default: '3' }}" id="categories-track-{{ section.id }}">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="cp-navratri-categories__item" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.link | default: '/collections/all' }}" class="cp-navratri-categories__link">
+                <div class="cp-navratri-categories__media">
+                  {%- if block.settings.image != blank -%}
+                    <img 
+                      src="{{ block.settings.image | image_url: width: 800 }}" 
+                      alt="{{ block.settings.title | escape }}" 
+                      loading="lazy"
+                      class="cp-navratri-categories__img">
+                  {%- else -%}
+                    <div class="cp-navratri-categories__placeholder">
+                      {{ 'product-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+                <div class="cp-navratri-categories__footer">
+                  <span class="cp-navratri-categories__name">{{ block.settings.title }}</span>
+                  <svg class="cp-navratri-categories__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Fallback 3 Categories -->
+          {%- assign cat_titles = "MIRRORWORK,PRINTS,JACQUARD & TEXTURED" | split: "," -%}
+          {%- assign cat_links = "/collections/kurta-sets,/collections/indowestern-sets,/collections/short-kurta" | split: "," -%}
+          {%- for title in cat_titles -%}
+            {%- assign cat_idx = forloop.index | minus: 1 -%}
+            <div class="cp-navratri-categories__item">
+              <a href="{{ cat_links[cat_idx] }}" class="cp-navratri-categories__link">
+                <div class="cp-navratri-categories__media">
+                  <div class="cp-navratri-categories__placeholder">
+                    {{ 'product-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
+                  </div>
+                </div>
+                <div class="cp-navratri-categories__footer">
+                  <span class="cp-navratri-categories__name">{{ title }}</span>
+                  <svg class="cp-navratri-categories__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      {%- assign block_count = section.blocks.size -%}
+      {%- if block_count == 0 -%}{%- assign block_count = 3 -%}{%- endif -%}
+      {%- if block_count > 1 -%}
+        <div class="cp-navratri-categories__dots cp-navratri-categories__dots--{{ section.id }}" aria-label="Slide indicators">
+          {%- for i in (1..block_count) -%}
+            <button type="button" class="cp-navratri-categories__dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    function initCategoryDots() {
+      var track = document.getElementById('categories-track-{{ section.id }}');
+      var dotsWrap = document.querySelector('.cp-navratri-categories__dots--{{ section.id }}');
+      if (!track || !dotsWrap) return;
+      var dots = dotsWrap.querySelectorAll('.cp-navratri-categories__dot');
+      var items = track.querySelectorAll('.cp-navratri-categories__item');
+      if (!dots.length || !items.length) return;
+
+      function updateActiveDot() {
+        var trackRect = track.getBoundingClientRect();
+        var trackCenter = trackRect.left + trackRect.width / 2;
+        var closestIdx = 0;
+        var minDistance = Infinity;
+
+        items.forEach(function(item, idx) {
+          var itemRect = item.getBoundingClientRect();
+          var itemCenter = itemRect.left + itemRect.width / 2;
+          var distance = Math.abs(trackCenter - itemCenter);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestIdx = idx;
+          }
+        });
+
+        dots.forEach(function(d, i) {
+          d.classList.toggle('is-active', i === closestIdx);
+        });
+      }
+
+      dots.forEach(function(dot, idx) {
+        dot.addEventListener('click', function() {
+          if (items[idx]) {
+            items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            setTimeout(updateActiveDot, 350);
+          }
+        });
+      });
+
+      var ticking = false;
+      track.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateActiveDot();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateActiveDot();
+      window.addEventListener('resize', updateActiveDot);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCategoryDots);
+    } else {
+      initCategoryDots();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Navratri Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "SHOP BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Explore our signature styles for every celebration."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_colour_filter",
+      "label": "Show Colour Filter Dropdown",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#faf6f0"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subheading Color",
+      "default": "#c9a96e"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#EDE8DF"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Category Label Color",
+      "default": "#18120f"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card Border Color",
+      "default": "#ded2ca"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" },
+        { "value": "6", "label": "6 Columns" }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_item",
+      "name": "Category Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "KURTA"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Categories",
+      "blocks": [
+        { "type": "category_item", "settings": { "title": "KURTA" } },
+        { "type": "category_item", "settings": { "title": "KURTA SETS" } },
+        { "type": "category_item", "settings": { "title": "SHORT KURTA" } },
+        { "type": "category_item", "settings": { "title": "BOTTOMWEAR" } },
+        { "type": "category_item", "settings": { "title": "FATHER/SON" } },
+        { "type": "category_item", "settings": { "title": "KIDS/PLUS" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,363 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "navratri_banner": {
+      "type": "navratri-banner",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_06_19_AM.png",
+            "mobile_image": "shopify://shop_images/navratri-slide-1.png",
+            "alt_text": "Kisah Navratri Banner",
+            "kicker": "KISAH NAVRATRI EDIT",
+            "heading": "The circle awaits you.<br>Lock in your fit",
+            "subtitle": "",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/all",
+            "full_slide_link": false
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_08_40_AM.png",
+            "mobile_image": "shopify://shop_images/navratri-slide-3.png",
+            "alt_text": "Kisah Navratri Collection",
+            "kicker": "COLOURS OF CELEBRATION",
+            "heading": "Crafted For The<br>9 Nights Of Garba",
+            "subtitle": "",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/all",
+            "full_slide_link": false
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_07_25_AM.png",
+            "mobile_image": "shopify://shop_images/navratri-slide-2.png",
+            "alt_text": "Kisah Navratri Collection",
+            "kicker": "NEW FESTIVE ARRIVALS",
+            "heading": "Elevate Your Look<br>This Festive Season",
+            "subtitle": "",
+            "button_text": "SHOP NOW",
+            "button_link": "shopify://collections/all",
+            "full_slide_link": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "content_align": "center",
+        "content_position": "bottom",
+        "overlay_opacity": 80,
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "transition_effect": "fade",
+        "show_dots": true,
+        "show_scroll_down": false,
+        "scroll_target": "#shopify-section-navratri_collection_header",
+        "kicker_color": "#b88a2b",
+        "heading_color": "#ffffff",
+        "btn_text_color": "#ffffff",
+        "btn_border_color": "#fffffff2",
+        "btn_bg_color": "#1d070a38",
+        "btn_hover_bg": "#ffffff",
+        "btn_hover_text": "#18120f",
+        "dot_active_color": "#ffffff"
+      }
+    },
+    "navratri_collection_header": {
+      "type": "navratri-collection-header",
+      "blocks": {
+        "pill_1": {
+          "type": "pill",
+          "settings": {
+            "title": "DANDIYA & GARBA",
+            "link": "#garba-dandiya",
+            "is_active": false
+          }
+        },
+        "pill_2": {
+          "type": "pill",
+          "settings": {
+            "title": "POOJA & AARTI",
+            "link": "#pooja-aarti",
+            "is_active": false
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "title": "PANDAL HOPPING",
+            "link": "#pandal-hopping",
+            "is_active": false
+          }
+        },
+        "pill_4": {
+          "type": "pill",
+          "settings": {
+            "title": "FESTIVE EVENING PARTIES",
+            "link": "#festive-evening-parties",
+            "is_active": false
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4"
+      ],
+      "settings": {
+        "kicker": "",
+        "heading": "Navratri Kurtas & Festive Wear for Men",
+        "highlight_text": "Festive Wear for Men",
+        "subtitle": "",
+        "bg_color": "#fffaf2",
+        "heading_color": "#18120f",
+        "sub_color": "#8a6d58",
+        "pill_bg_color": "#ffffff",
+        "pill_text_color": "#18120f",
+        "pill_border_color": "#b9aaa1"
+      }
+    },
+    "navratri_products_puja": {
+      "type": "navratri-product-carousel",
+      "settings": {
+        "anchor_id": "puja-aarti",
+        "kicker": "",
+        "title": "TOP NAVRATRI PICKS",
+        "subtitle": "",
+        "collection": "kurta-sets",
+        "products": [],
+        "show_view_all": true,
+        "view_all_link": "",
+        "view_all_text": "SEE MORE NAVRATRI STYLES",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_gateway": {
+      "type": "navratri-gateway",
+      "blocks": {
+        "pick_1": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/download.webp",
+            "title": "Kurta & Short Kurta",
+            "subtitle": "SHOP THE SILHOUETTE →",
+            "link": "https://kisah.in/collections/kurta-short-kurta"
+          }
+        },
+        "pick_2": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/download_1.webp",
+            "title": "Nehru Jackets",
+            "subtitle": "LAYER THE LOOK →",
+            "link": "https://kisah.in/collections/nehru-jackets"
+          }
+        },
+        "pick_3": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/download_3.webp",
+            "title": "Kids",
+            "subtitle": "SHOP LITTLE LOOKS →",
+            "link": "https://kisah.in/collections/kids"
+          }
+        },
+        "pick_4": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/download_2.webp",
+            "title": "Kurta Sets",
+            "subtitle": "COMPLETE THE LOOK →",
+            "link": "https://kisah.in/collections/kurta-sets"
+          }
+        }
+      },
+      "block_order": [
+        "pick_1",
+        "pick_2",
+        "pick_3",
+        "pick_4"
+      ],
+      "settings": {
+        "kicker": "",
+        "title": "SHOP BY CATEGORY",
+        "subtitle": "",
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_categories": {
+      "type": "navratri-categories",
+      "blocks": {
+        "cat_1": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/KA-1098.webp",
+            "title": "MIRRORWORK",
+            "link": "shopify://collections/kurta-sets"
+          }
+        },
+        "cat_2": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/KA-0837-D117.webp",
+            "title": "PRINTS",
+            "link": "/collections/indowestern-sets"
+          }
+        },
+        "cat_3": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/KA-7200-T303-01.webp",
+            "title": "JACQUARD & TEXTURED",
+            "link": "/collections/short-kurta"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3"
+      ],
+      "settings": {
+        "kicker": "",
+        "title": "SHOP BY STYLE",
+        "subtitle": "",
+        "show_colour_filter": false,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b",
+        "card_bg_color": "#ede8df",
+        "label_color": "#111111",
+        "border_color": "#ded2ca",
+        "columns_desktop": "3"
+      }
+    },
+    "navratri_products_festive": {
+      "type": "navratri-product-carousel",
+      "settings": {
+        "anchor_id": "festive-party",
+        "kicker": "",
+        "title": "EVERY BODY FITS. PLUS SIZES",
+        "subtitle": "",
+        "collection": "haldi",
+        "products": [],
+        "show_view_all": true,
+        "view_all_link": "",
+        "view_all_text": "SEE MORE PLUS-SIZE STYLES",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_products_casual": {
+      "type": "navratri-product-carousel",
+      "settings": {
+        "anchor_id": "garba-dandiya",
+        "kicker": "",
+        "title": "DANDIYA & GARBA",
+        "subtitle": "",
+        "collection": "kurta-sets",
+        "products": [],
+        "show_view_all": true,
+        "view_all_link": "/collections/short-kurta",
+        "view_all_text": "SEE ALL DANDIYA & GARBA",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_products_garba": {
+      "type": "navratri-product-carousel",
+      "settings": {
+        "anchor_id": "pooja-aarti",
+        "kicker": "",
+        "title": "POOJA & AARTI",
+        "subtitle": "",
+        "collection": "mehendi",
+        "products": [],
+        "show_view_all": false,
+        "view_all_link": "",
+        "view_all_text": "SEE ALL POOJA & AARTI",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_product_carousel_Ry3j8N": {
+      "type": "navratri-product-carousel",
+      "name": "Navratri Product Grid",
+      "settings": {
+        "anchor_id": "pandal-hopping",
+        "kicker": "",
+        "title": "PANDAL HOPPING",
+        "subtitle": "",
+        "collection": "new-arrivals",
+        "products": [],
+        "show_view_all": true,
+        "view_all_link": "",
+        "view_all_text": "SEE ALL PANDAL HOPPING",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    },
+    "navratri_product_carousel_4reCPr": {
+      "type": "navratri-product-carousel",
+      "name": "Navratri Product Grid",
+      "settings": {
+        "anchor_id": "festive-evening-parties",
+        "kicker": "",
+        "title": "FESTIVE EVENING PARTIES",
+        "subtitle": "",
+        "collection": "minimal-edit",
+        "products": [],
+        "show_view_all": true,
+        "view_all_link": "",
+        "view_all_text": "SEE ALL FESTIVE EVENING PARTIES",
+        "max_products": 8,
+        "bg_color": "#ffffff",
+        "text_color": "#111111",
+        "sub_color": "#b88a2b"
+      }
+    }
+  },
+  "order": [
+    "navratri_banner",
+    "navratri_collection_header",
+    "navratri_products_puja",
+    "navratri_gateway",
+    "navratri_categories",
+    "navratri_products_festive",
+    "navratri_products_casual",
+    "navratri_products_garba",
+    "navratri_product_carousel_Ry3j8N",
+    "navratri_product_carousel_4reCPr"
+  ]
+}

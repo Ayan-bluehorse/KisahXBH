@@ -97,6 +97,9 @@
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
   {{ 'collections.css' | asset_url | stylesheet_tag }}
+  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' -%}
+    {{ 'navratri.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
 
   {%- if settings.swatch_enabled and settings.swatch_value_list != blank -%}
     <link rel="stylesheet" href="{{ 'swatches.css' | asset_url }}" media="print" onload="this.media='all'">

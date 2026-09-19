@@ -143,6 +143,9 @@
     initWidget(containers[ci]);
   }
 
+  // Expose for dynamic use (e.g. navratri quick view popup)
+  window.__fysInitWidget = initWidget;
+
   function initWidget(root) {
     var productId     = root.getAttribute('data-product-id');
     var productTitle  = root.getAttribute('data-product-title');

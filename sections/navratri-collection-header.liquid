@@ -1,0 +1,251 @@
+{%- style -%}
+  #navratri-head-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#fffaf2' }};
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__title {
+    color: {{ section.settings.heading_color | default: '#18120f' }};
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__highlight {
+    font-style: italic;
+    display: inline;
+    color: #d8a852 !important;
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__kicker,
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__subtitle {
+    color: {{ section.settings.sub_color | default: '#8a6d58' }};
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill {
+    color: {{ section.settings.pill_text_color | default: '#18120f' }} !important;
+    background-color: {{ section.settings.pill_bg_color | default: '#ffffff' }} !important;
+    border-color: {{ section.settings.pill_border_color | default: '#b9aaa1' }} !important;
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill span {
+    color: {{ section.settings.pill_text_color | default: '#18120f' }} !important;
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill:hover,
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill.is-active {
+    color: #ffffff !important;
+    background-color: #18120f !important;
+    border-color: #18120f !important;
+  }
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill:hover span,
+  #navratri-head-{{ section.id }} .cp-navratri-collection-head__pill.is-active span {
+    color: #ffffff !important;
+  }
+{%- endstyle -%}
+
+<section class="cp-navratri-collection-head" id="navratri-head-{{ section.id }}">
+  <div class="cp-navratri-container cp-navratri-collection-head__container">
+    
+    {%- if section.settings.kicker != blank -%}
+      <span class="cp-navratri-collection-head__kicker">{{ section.settings.kicker }}</span>
+    {%- endif -%}
+
+    {%- assign raw_heading = section.settings.heading | default: "Navratri Kurtas & Festive Wear for Men" -%}
+    {%- assign highlight_query = section.settings.highlight_text -%}
+
+    {%- if highlight_query != blank and raw_heading contains highlight_query -%}
+      {%- assign highlight_replacement = '<span class="cp-navratri-collection-head__highlight">' | append: highlight_query | append: '</span>' -%}
+      {%- assign raw_heading = raw_heading | replace: highlight_query, highlight_replacement -%}
+    {%- elsif raw_heading contains '<em>' -%}
+      {%- assign raw_heading = raw_heading | replace: '<em>', '<span class="cp-navratri-collection-head__highlight">' | replace: '</em>', '</span>' -%}
+    {%- endif -%}
+
+    <h1 class="cp-navratri-collection-head__title">{{ raw_heading }}</h1>
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="cp-navratri-collection-head__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="cp-navratri-collection-head__pills-row">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.title != blank -%}
+            <a 
+              href="{{ block.settings.link | default: '#' }}" 
+              class="cp-navratri-collection-head__pill{% if block.settings.is_active %} is-active{% endif %}" 
+              {{ block.shopify_attributes }}
+              data-pill-link
+            >
+              <span>{{ block.settings.title }}</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <a href="#garba-dandiya" class="cp-navratri-collection-head__pill" data-pill-link><span>DANDIYA & GARBA</span></a>
+        <a href="#puja-aarti" class="cp-navratri-collection-head__pill" data-pill-link><span>POOJA & AARTI</span></a>
+        <a href="#festive-party" class="cp-navratri-collection-head__pill" data-pill-link><span>PANDAL HOPPING</span></a>
+        <a href="#casual-hangout" class="cp-navratri-collection-head__pill" data-pill-link><span>FESTIVE EVENING PARTIES</span></a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    document.addEventListener('click', function (e) {
+      var pill = e.target.closest('.cp-navratri-collection-head [data-pill-link], .cp-navratri-collection-head__pill');
+      if (!pill) return;
+
+      var href = pill.getAttribute('href');
+      if (href && href.startsWith('#') && href.length > 1) {
+        var targetId = href.substring(1);
+        var target = document.getElementById(targetId) || document.querySelector('[data-anchor="' + targetId + '"]') || document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          
+          var container = pill.closest('.cp-navratri-collection-head');
+          if (container) {
+            container.querySelectorAll('.cp-navratri-collection-head__pill').forEach(function(p) {
+              p.classList.remove('is-active');
+            });
+          }
+          pill.classList.add('is-active');
+
+          var navOffset = 80;
+          var targetPos = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+          window.scrollTo({
+            top: targetPos,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Navratri Header & Pills",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker (Optional)"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Navratri Kurtas & Festive Wear for Men"
+    },
+    {
+      "type": "text",
+      "id": "highlight_text",
+      "label": "Highlight Text (Optional)",
+      "default": "Festive Wear for Men"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#FFFAF2"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#18120F"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Kicker & Accent Color",
+      "default": "#8A6D58"
+    },
+    {
+      "type": "color",
+      "id": "pill_bg_color",
+      "label": "Pill Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pill_text_color",
+      "label": "Pill Text Color",
+      "default": "#18120F"
+    },
+    {
+      "type": "color",
+      "id": "pill_border_color",
+      "label": "Pill Border Color",
+      "default": "#B9AAA1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Occasion Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Pill Label",
+          "default": "DANDIYA & GARBA"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link or #anchor",
+          "default": "/collections/all"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "Initially Active",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Header & Pills",
+      "blocks": [
+        {
+          "type": "pill",
+          "settings": {
+            "title": "DANDIYA & GARBA",
+            "link": "#garba-dandiya",
+            "is_active": false
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "title": "POOJA & AARTI",
+            "link": "#puja-aarti",
+            "is_active": false
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "title": "PANDAL HOPPING",
+            "link": "#festive-party",
+            "is_active": false
+          }
+        },
+        {
+          "type": "pill",
+          "settings": {
+            "title": "FESTIVE EVENING PARTIES",
+            "link": "#casual-hangout",
+            "is_active": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
