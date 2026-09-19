@@ -10,12 +10,8 @@
 {
   "sections": {
     "main": {
-      "type": "main-product-custom",
+      "type": "main-product",
       "blocks": {
-        "text_with_icon_tags_kp1": {
-          "type": "text-with-icon-tags",
-          "settings": {}
-        },
         "title": {
           "type": "title",
           "settings": {
@@ -30,14 +26,6 @@
           "settings": {
             "show_tax_and_shipping": false,
             "enable_product_reviews_by_price": true
-          }
-        },
-        "brand_rating": {
-          "type": "brand-rating",
-          "settings": {
-            "fallback_handles": "",
-            "background_color": "#FFF3DA",
-            "text_color": "#1F1F1F"
           }
         },
         "vendor": {
@@ -75,8 +63,7 @@
             "enable_dynamic_availability": true,
             "enable_size_chart": true,
             "size_chart_variant": "Size",
-            "size_chart_page": "",
-            "model_size_info": ""
+            "size_chart_page": ""
           }
         },
         "offer_box_YYqAET": {
@@ -106,12 +93,7 @@
             "show_fb": true,
             "show_insta": true,
             "show_print": true,
-            "show_whatsapp": true,
-            "show_help_chat": true,
-            "help_text": "For help with sizing, delivery or anything else,",
-            "help_link_text": "Chat with us",
-            "help_whatsapp_number": "916289902520",
-            "help_whatsapp_message": "Hi"
+            "show_whatsapp": true
           }
         },
         "recommendation_PrFffR": {
@@ -195,19 +177,6 @@
             "padding_bottom": 0
           }
         },
-        "trust_icons_mobile_kp1": {
-          "type": "trust-icons-mobile",
-          "settings": {
-            "heading": "Shop with Confidence",
-            "icon1": "shopify://shop_images/Screenshot_2026-08-27_153237-removebg-preview.png",
-            "text1": "Cash on\ndelivery",
-            "icon2": "shopify://shop_images/Screenshot_2026-08-27_153232-removebg-preview.png",
-            "text2": "7 days return\nand exchange",
-            "icon3": "shopify://shop_images/Screenshot_2026-08-27_152916-removebg-preview.png",
-            "text3": "Money back\nguarantee",
-            "text4": ""
-          }
-        },
         "trust_icons_LymzYd": {
           "type": "trust-icons",
           "settings": {
@@ -243,10 +212,8 @@
         }
       },
       "block_order": [
-        "text_with_icon_tags_kp1",
         "title",
         "price",
-        "brand_rating",
         "vendor",
         "divider",
         "product_select_b88prX",
@@ -262,7 +229,6 @@
         "preorderoffer_box_2_rHfGRg",
         "preorderoffer_box_3_7UbWN6",
         "estimated_delivery_date_cp_clickpost_edd_AJ3qJt",
-        "trust_icons_mobile_kp1",
         "trust_icons_LymzYd",
         "links_Ch9pzh",
         "description",
@@ -270,17 +236,11 @@
         "judge_me_reviews_preview_badge_REUDXR"
       ],
       "settings": {
-        "show_contains": true,
-        "contains_icon": "shopify://shop_images/Screenshot_2026-08-28_113105-removebg-preview.png",
-        "contains_default_tab": "",
-        "contains_text": "Contains",
         "show_breadcrumbs": true,
         "show_location_underneath": false,
         "inventory_transfers_enable": true,
         "kid-size-image": "shopify://shop_images/vector_2-01_1_1_1.png",
         "size-image": "shopify://shop_images/output-onlinepngtools.png",
-        "sizechart_help_icon": "shopify://shop_images/ic_baseline-whatsapp.png",
-        "sizechart_help_whatsapp": "",
         "enable_sticky_columns": false,
         "gallery_size": "medium",
         "gallery_layout": "carousel-beside",
