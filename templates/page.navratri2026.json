@@ -15,8 +15,6 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_06_19_AM.png",
-            "mobile_image": "shopify://shop_images/navratri-slide-1.png",
             "alt_text": "Kisah Navratri Banner",
             "kicker": "KISAH NAVRATRI EDIT",
             "heading": "The circle awaits you.<br>Lock in your fit",
@@ -29,8 +27,6 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_08_40_AM.png",
-            "mobile_image": "shopify://shop_images/navratri-slide-3.png",
             "alt_text": "Kisah Navratri Collection",
             "kicker": "COLOURS OF CELEBRATION",
             "heading": "Crafted For The<br>9 Nights Of Garba",
@@ -43,8 +39,6 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "desktop_image": "shopify://shop_images/ChatGPT_Image_Sep_9_2026_10_07_25_AM.png",
-            "mobile_image": "shopify://shop_images/navratri-slide-2.png",
             "alt_text": "Kisah Navratri Collection",
             "kicker": "NEW FESTIVE ARRIVALS",
             "heading": "Elevate Your Look<br>This Festive Season",
@@ -159,37 +153,33 @@
         "pick_1": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/download.webp",
             "title": "Kurta & Short Kurta",
             "subtitle": "SHOP THE SILHOUETTE →",
-            "link": "https://kisah.in/collections/kurta-short-kurta"
+            "link": "shopify://collections/kurta-short-kurta"
           }
         },
         "pick_2": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/download_1.webp",
             "title": "Nehru Jackets",
             "subtitle": "LAYER THE LOOK →",
-            "link": "https://kisah.in/collections/nehru-jackets"
+            "link": "shopify://collections/nehru-jackets"
           }
         },
         "pick_3": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/download_3.webp",
             "title": "Kids",
             "subtitle": "SHOP LITTLE LOOKS →",
-            "link": "https://kisah.in/collections/kids"
+            "link": "shopify://collections/kids"
           }
         },
         "pick_4": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/download_2.webp",
             "title": "Kurta Sets",
             "subtitle": "COMPLETE THE LOOK →",
-            "link": "https://kisah.in/collections/kurta-sets"
+            "link": "shopify://collections/kurta-sets"
           }
         }
       },
@@ -214,25 +204,22 @@
         "cat_1": {
           "type": "category_item",
           "settings": {
-            "image": "shopify://shop_images/KA-1098.webp",
             "title": "MIRRORWORK",
-            "link": "shopify://collections/kurta-sets"
+            "link": "shopify://collections/mirror"
           }
         },
         "cat_2": {
           "type": "category_item",
           "settings": {
-            "image": "shopify://shop_images/KA-0837-D117.webp",
             "title": "PRINTS",
-            "link": "/collections/indowestern-sets"
+            "link": "shopify://collections/printedparade"
           }
         },
         "cat_3": {
           "type": "category_item",
           "settings": {
-            "image": "shopify://shop_images/KA-7200-T303-01.webp",
             "title": "JACQUARD & TEXTURED",
-            "link": "/collections/short-kurta"
+            "link": "shopify://collections/textured-dressing"
           }
         }
       },
@@ -280,7 +267,7 @@
         "kicker": "",
         "title": "DANDIYA & GARBA",
         "subtitle": "",
-        "collection": "kurta-sets",
+        "collection": "garba-edit",
         "products": [],
         "show_view_all": true,
         "view_all_link": "/collections/short-kurta",
@@ -298,7 +285,7 @@
         "kicker": "",
         "title": "POOJA & AARTI",
         "subtitle": "",
-        "collection": "mehendi",
+        "collection": "puja-and-aarti",
         "products": [],
         "show_view_all": false,
         "view_all_link": "",
@@ -317,7 +304,7 @@
         "kicker": "",
         "title": "PANDAL HOPPING",
         "subtitle": "",
-        "collection": "new-arrivals",
+        "collection": "pandal-hopping",
         "products": [],
         "show_view_all": true,
         "view_all_link": "",
@@ -336,7 +323,7 @@
         "kicker": "",
         "title": "FESTIVE EVENING PARTIES",
         "subtitle": "",
-        "collection": "minimal-edit",
+        "collection": "evening-parties",
         "products": [],
         "show_view_all": true,
         "view_all_link": "",
