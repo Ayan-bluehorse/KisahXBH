@@ -740,6 +740,21 @@
   display: contents;
 }
 
+/* Out-of-stock cards: dimmed and slightly greyscale, still clickable */
+#shopify-section-{{ section.id }} .stock-sort-item--oos {
+  opacity: 0.55;
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos img {
+  filter: grayscale(25%);
+  transition: filter 0.3s ease;
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos:hover img {
+  filter: grayscale(0%);
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos:hover {
+  opacity: 0.75;
+}
+
 #shopify-section-{{ section.id }} .low-stock-product-grid:empty {
   display: none;
 }
@@ -1093,65 +1108,79 @@
     data-total-pages="{{ paginate.pages }}"
     {% if paginate.next %}data-next-page-url="{{ paginate.next.url | escape }}"{% endif %}
   >
+    {%- comment -%}
+      PASS 1 — In-stock products (available_variants > 0), rendered first.
+      PASS 2 — Out-of-stock products, rendered after with data-stock-tier="out-of-stock".
+      Sorting is done server-side in Liquid so no JS layout shift on first paint.
+    {%- endcomment -%}
+
+    {%- liquid
+      assign in_stock_count = 0
+    -%}
+
+    {%- comment -%}---- PASS 1: IN-STOCK ----{%- endcomment -%}
     {% for product in collection.products %}
       {%- liquid
         assign total_variants = product.variants.size
         assign available_variants = product.variants | where: 'available', true | size
-        assign size_s_available = false
-        assign size_m_available = false
-        assign size_l_available = false
-        assign size_xl_available = false
+      -%}
+      {% if available_variants > 0 %}
+        {%- liquid
+          assign size_s_available = false
+          assign size_m_available = false
+          assign size_l_available = false
+          assign size_xl_available = false
 
-        for option in product.options_with_values
-          assign option_name = option.name | downcase | strip
-          if option_name == 'size'
-            for value in option.values
-              assign size_value = value | downcase | strip
+          for option in product.options_with_values
+            assign option_name = option.name | downcase | strip
+            if option_name == 'size'
+              for value in option.values
+                assign size_value = value | downcase | strip
 
-              if size_value == 's' or size_value == 'small' or size_value == mapped_s
-                if value.available
-                  assign size_s_available = true
+                if size_value == 's' or size_value == 'small' or size_value == mapped_s
+                  if value.available
+                    assign size_s_available = true
+                  endif
                 endif
-              endif
 
-              if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
-                if value.available
-                  assign size_m_available = true
+                if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
+                  if value.available
+                    assign size_m_available = true
+                  endif
                 endif
-              endif
 
-              if size_value == 'l' or size_value == 'large' or size_value == mapped_l
-                if value.available
-                  assign size_l_available = true
+                if size_value == 'l' or size_value == 'large' or size_value == mapped_l
+                  if value.available
+                    assign size_l_available = true
+                  endif
                 endif
-              endif
 
-              if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
-                if value.available
-                  assign size_xl_available = true
+                if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
+                  if value.available
+                    assign size_xl_available = true
+                  endif
                 endif
-              endif
 
-              if size_s_available and size_m_available and size_l_available and size_xl_available
-                break
-              endif
-            endfor
-            break
+                if size_s_available and size_m_available and size_l_available and size_xl_available
+                  break
+                endif
+              endfor
+              break
+            endif
+          endfor
+
+          assign prioritised_loading = false
+          if in_stock_count < section.settings.grid
+            assign prioritised_loading = true
           endif
-        endfor
-      -%}
-
-      {%- liquid
-        assign prioritised_loading = false
-        if forloop.index0 < section.settings.grid
-          assign prioritised_loading = true
-        endif
-        assign collection_product_index = collection_product_index | plus: 1
-      -%}
+          assign in_stock_count = in_stock_count | plus: 1
+          assign collection_product_index = collection_product_index | plus: 1
+        -%}
 
         <div
           class="stock-sort-item"
           data-stock-sort-item
+          data-stock-tier="primary"
           data-available-variants="{{ available_variants }}"
           data-total-variants="{{ total_variants }}"
           data-option-name="Size"
@@ -1170,7 +1199,45 @@
             products_total: collection_products_total
           %}
         </div>
+      {% endif %}
     {% endfor %}
+
+    {%- comment -%}---- PASS 2: OUT-OF-STOCK (dimmed, at the bottom) ----{%- endcomment -%}
+    {% for product in collection.products %}
+      {%- liquid
+        assign total_variants = product.variants.size
+        assign available_variants = product.variants | where: 'available', true | size
+      -%}
+      {% if available_variants == 0 %}
+        {%- liquid
+          assign collection_product_index = collection_product_index | plus: 1
+        -%}
+
+        <div
+          class="stock-sort-item stock-sort-item--oos"
+          data-stock-sort-item
+          data-stock-tier="out-of-stock"
+          data-available-variants="0"
+          data-total-variants="{{ total_variants }}"
+          data-option-name="Size"
+          data-product-type="{{ product.type | downcase | strip | escape }}"
+          data-size-s-available="false"
+          data-size-m-available="false"
+          data-size-l-available="false"
+          data-size-xl-available="false"
+        >
+          {% render 'product-block',
+            product: product,
+            custom_aspect_ratio: chosen_aspect_ratio,
+            animate: false,
+            prioritised_loading: false,
+            product_index: collection_product_index,
+            products_total: collection_products_total
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
   </div>
 
 
@@ -1180,7 +1247,7 @@
     class="product-grid low-stock-product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}"
     data-low-stock-product-grid
     hidden
-  ></div>   
+  ></div>
         {% endif %}
       </div>
     </filter-container>
