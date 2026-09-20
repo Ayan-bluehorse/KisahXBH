@@ -21,7 +21,7 @@
   data-section-id="{{ section.id }}"
   data-current-page="{{ paginate.current_page }}"
   data-pages="{{ paginate.pages }}"
-  data-min-loader-ms="1200"
+  data-min-loader-ms="0"
   {% if paginate.next %}data-next-url="{{ paginate.next.url | escape }}"{% endif %}
 >
   <div
@@ -152,6 +152,16 @@
     var sizeM = item.getAttribute('data-size-m-available') === 'true';
     var sizeL = item.getAttribute('data-size-l-available') === 'true';
     var sizeXL = item.getAttribute('data-size-xl-available') === 'true';
+
+    // Fully out-of-stock: push to the very bottom
+    if (
+      Number.isFinite(available) &&
+      Number.isFinite(total) &&
+      total > 0 &&
+      available === 0
+    ) {
+      return 99;
+    }
 
     if (
       Number.isFinite(available) &&
@@ -315,9 +325,10 @@
 
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
-        var tier = stockTier(item);
-
-        item.setAttribute('data-stock-tier', tier === 'remove' ? 'primary' : tier);
+        // Tag in-stock vs out-of-stock for CSS/debugging
+        var available = parseInt(item.getAttribute('data-available-variants'), 10);
+        var tier = (Number.isFinite(available) && available === 0) ? 'out-of-stock' : 'primary';
+        item.setAttribute('data-stock-tier', tier);
 
         fragment.appendChild(item);
         appendedItems.push(item);

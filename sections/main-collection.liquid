@@ -1141,14 +1141,13 @@
         endfor
       -%}
 
-      {% if available_variants > 0 %}
-        {% assign prioritised_loading = false %}
-
-        {% if forloop.index0 < section.settings.grid %}
-          {% assign prioritised_loading = true %}
-        {% endif %}
-
-        {% assign collection_product_index = collection_product_index | plus: 1 %}
+      {%- liquid
+        assign prioritised_loading = false
+        if forloop.index0 < section.settings.grid
+          assign prioritised_loading = true
+        endif
+        assign collection_product_index = collection_product_index | plus: 1
+      -%}
 
         <div
           class="stock-sort-item"
@@ -1171,7 +1170,6 @@
             products_total: collection_products_total
           %}
         </div>
-      {% endif %}
     {% endfor %}
   </div>
 
