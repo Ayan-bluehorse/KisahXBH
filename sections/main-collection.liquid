@@ -1044,8 +1044,15 @@
         endif
       endfor
     -%}
+    {%- liquid
+      if filter_count == 0
+        assign collection_style_count = collection.all_products_count | default: paginate.items
+      else
+        assign collection_style_count = paginate.items
+      endif
+    -%}
     <div class="kisah-ctrl" data-ajax-container>
-      <div class="kisah-ctrl__n"><b>{{ paginate.items }}</b> styles</div>
+      <div class="kisah-ctrl__n"><b>{{ collection_style_count }}</b> styles</div>
       {%- if section.settings.show_sort -%}
         <button class="kisah-ctrl__btn" id="kisahSortBtn" type="button">
           <svg viewBox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>
@@ -1088,7 +1095,7 @@
 
     <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
       {% if section.settings.show_sort or show_filters %}
-        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort, total_count: paginate.items, in_stock_total: in_stock_total %}
+        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort, total_count: collection_style_count, in_stock_total: in_stock_total %}
       {% endif %}
 
       <div class="filters-adjacent collection-listing" data-ajax-container>
