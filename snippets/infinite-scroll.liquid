@@ -241,6 +241,7 @@
     ) || 0;
     var hasNextPage = Boolean(nextUrl) || currentPage < pages;
     var isLoading = false;
+    var oosAppended = false;
     var observer = null;
     var abortController = null;
     var pendingPrimaryTail = null;
@@ -409,6 +410,18 @@
     }
 
     function finishPagination() {
+      if (!oosAppended && window.location.search.indexOf('filter.v.availability=1') !== -1) {
+        oosAppended = true;
+        var oosUrl = new URL(window.location.href);
+        oosUrl.searchParams.set('filter.v.availability', '0');
+        oosUrl.searchParams.delete('page');
+        nextUrl = oosUrl.pathname + oosUrl.search;
+        hasNextPage = true;
+        currentPage = 1;
+        setLoaderState(true, 'Loading more products...');
+        return;
+      }
+
       hasNextPage = false;
       nextUrl = null;
       root.removeAttribute('data-next-url');

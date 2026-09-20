@@ -1,3 +1,31 @@
+{%- liquid
+  assign in_stock_total = 0
+  for f in collection.filters
+    if f.param_name == 'filter.v.availability'
+      for v in f.values
+        if v.value == '1'
+          assign in_stock_total = v.count
+        endif
+      endfor
+    endif
+  endfor
+-%}
+{%- if in_stock_total > 0 -%}
+  <script>
+    (function() {
+      try {
+        var isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+        var search = window.location.search;
+        if (!isBot && !search.includes('filter.v.availability')) {
+          var p = new URLSearchParams(search);
+          p.set('filter.v.availability', '1');
+          var newUrl = window.location.pathname + '?' + p.toString() + window.location.hash;
+          window.location.replace(newUrl);
+        }
+      } catch(e) {}
+    })();
+  </script>
+{%- endif -%}
 <style>
 #shopify-section-{{section.id}} .col-title{
      font-family:'Generis Sans W01 Regular';
@@ -1004,6 +1032,18 @@
     %}
 
     {% paginate collection.products by section.settings.coll_num_per_page_int %}
+    {%- liquid
+      assign in_stock_total = 0
+      for f in collection.filters
+        if f.param_name == 'filter.v.availability'
+          for v in f.values
+            if v.value == '1'
+              assign in_stock_total = v.count
+            endif
+          endfor
+        endif
+      endfor
+    -%}
     <div class="kisah-ctrl" data-ajax-container>
       <div class="kisah-ctrl__n"><b>{{ paginate.items }}</b> styles</div>
       {%- if section.settings.show_sort -%}
@@ -1042,13 +1082,13 @@
             </a>
           {%- endif -%}
         {%- endfor -%}
-        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}?filter.v.availability=1">Clear all</a>
+        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1{% endif %}">Clear all</a>
       </div>
     {%- endif -%}
 
     <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
       {% if section.settings.show_sort or show_filters %}
-        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort, total_count: paginate.items %}
+        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort, total_count: paginate.items, in_stock_total: in_stock_total %}
       {% endif %}
 
       <div class="filters-adjacent collection-listing" data-ajax-container>

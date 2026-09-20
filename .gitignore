@@ -4,6 +4,7 @@
 
 # Scratch and test files
 scratch/
+backup_code/
 
 # OS and editor files
 .DS_Store

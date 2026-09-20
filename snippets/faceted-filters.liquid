@@ -17,8 +17,14 @@
   endif
 
   assign total_active_count = 0
+  assign in_stock_total = 0
   for filter in filter_context.filters
     if filter.param_name == 'filter.v.availability'
+      for v in filter.values
+        if v.value == '1'
+          assign in_stock_total = v.count
+        endif
+      endfor
       continue
     endif
     assign total_active_count = total_active_count | plus: filter.active_values.size
@@ -43,7 +49,23 @@
 
   <div class="kisah-sheet__body" id="kisahSheetBody">
     <form id="CollectionFilterForm" method="get" action="{{ filter_context.url | default: collection.url | default: routes.search_url }}">
-      <input type="hidden" name="filter.v.availability" value="1">
+      {%- liquid
+        assign in_stock_avail = in_stock_total | default: 0
+        if in_stock_avail == 0 and filter_context.filters
+          for f in filter_context.filters
+            if f.param_name == 'filter.v.availability'
+              for v in f.values
+                if v.value == '1'
+                  assign in_stock_avail = v.count
+                endif
+              endfor
+            endif
+          endfor
+        endif
+      -%}
+      {%- if in_stock_avail > 0 -%}
+        <input type="hidden" name="filter.v.availability" value="1">
+      {%- endif -%}
       {%- if filter_context.current_vendor or filter_context.current_type -%}
         <input type="hidden" name="q" value="{{ filter_context.current_vendor }}{{ filter_context.current_type }}">
       {%- endif -%}
@@ -308,12 +330,14 @@
   <div class="kisah-sheet__foot">
     {%- liquid
       assign clean_clear_url = clear_url | default: collection.url
-      if clean_clear_url contains '?'
-        unless clean_clear_url contains 'filter.v.availability=1'
-          assign clean_clear_url = clean_clear_url | append: '&filter.v.availability=1'
-        endunless
-      else
-        assign clean_clear_url = clean_clear_url | append: '?filter.v.availability=1'
+      if in_stock_avail > 0
+        if clean_clear_url contains '?'
+          unless clean_clear_url contains 'filter.v.availability=1'
+            assign clean_clear_url = clean_clear_url | append: '&filter.v.availability=1'
+          endunless
+        else
+          assign clean_clear_url = clean_clear_url | append: '?filter.v.availability=1'
+        endif
       endif
     -%}
     <button class="kisah-btn kisah-btn--ghost" id="kisahClearAll" type="button" data-clear-url="{{ clean_clear_url }}">Clear all</button>
