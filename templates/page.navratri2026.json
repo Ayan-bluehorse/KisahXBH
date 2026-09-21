@@ -9,6 +9,78 @@
  */
 {
   "sections": {
+    "navratri_banner_VedJPQ": {
+      "type": "navratri-banner",
+      "blocks": {
+        "slide_4Qd7Bf": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Desktop_2_87272e55-fb6f-4244-ac62-fbd2a36e62ac.png",
+            "mobile_image": "shopify://shop_images/Mobile.png",
+            "alt_text": "",
+            "kicker": "",
+            "heading": "",
+            "subtitle": "",
+            "button_text": "",
+            "button_link": "",
+            "full_slide_link": true
+          }
+        },
+        "slide_crwnpF": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Desktop.jpg",
+            "mobile_image": "shopify://shop_images/Mobile.jpg",
+            "alt_text": "",
+            "kicker": "",
+            "heading": "",
+            "subtitle": "",
+            "button_text": "",
+            "button_link": "",
+            "full_slide_link": true
+          }
+        },
+        "slide_HWhXab": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Desktop_0f931e45-a5d8-4b4a-8304-dd9ab58764d4.jpg",
+            "mobile_image": "shopify://shop_images/Mobile_7efd11ca-4e7a-4391-a2d9-e342b7468550.jpg",
+            "alt_text": "Kisah Navratri Banner",
+            "kicker": "",
+            "heading": "",
+            "subtitle": "",
+            "button_text": "",
+            "button_link": "",
+            "full_slide_link": true
+          }
+        }
+      },
+      "block_order": [
+        "slide_4Qd7Bf",
+        "slide_crwnpF",
+        "slide_HWhXab"
+      ],
+      "name": "Navratri Hero Banner",
+      "settings": {
+        "content_align": "center",
+        "content_position": "bottom",
+        "overlay_opacity": 75,
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "transition_effect": "fade",
+        "show_dots": true,
+        "show_scroll_down": false,
+        "scroll_target": "#shopify-section-navratri_collection_header",
+        "kicker_color": "#F0CC77",
+        "heading_color": "#FFFFFF",
+        "btn_text_color": "#FFFFFF",
+        "btn_border_color": "rgba(255, 255, 255, 0.95)",
+        "btn_bg_color": "rgba(29, 7, 10, 0.22)",
+        "btn_hover_bg": "#FFFFFF",
+        "btn_hover_text": "#18120F",
+        "dot_active_color": "#FFFFFF"
+      }
+    },
     "navratri_collection_header": {
       "type": "navratri-collection-header",
       "blocks": {
@@ -289,6 +361,7 @@
     }
   },
   "order": [
+    "navratri_banner_VedJPQ",
     "navratri_collection_header",
     "navratri_products_puja",
     "navratri_gateway",

@@ -823,32 +823,6 @@
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
-        "slide_banner_dual_button_WQaTbD": {
-          "type": "slide_banner_dual_button",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/ChatGPT_Image_Aug_23_2026_10_19_26_AM.png",
-            "mob-img": "shopify://shop_images/ChatGPT_Image_Aug_23_2026_10_14_21_AM.png",
-            "button1_name": "BUILD HIS GIFT BOX",
-            "button1_link": "/collections/rakhi-collection#rakhi-gifting-app",
-            "button2_name": "SHOP RAKHI KURTAS",
-            "button2_link": "/collections/rakhi-collection#rakhi-collection-grid",
-            "desk_top_offset": 21,
-            "desk_left_offset": 18,
-            "mob_top_offset": 60
-          }
-        },
-        "slide_banner_xWViP9": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Rakhi_Web_Banner_Desktop.png",
-            "mob-img": "shopify://shop_images/Rakhi_Web_Banner_Mobile.png",
-            "link": "shopify://collections/rakhi-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
@@ -868,25 +842,11 @@
             "button-name": "",
             "button-link": ""
           }
-        },
-        "slide_banner_AKieYd": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Desktop_jpg_e16e5f97-368c-40db-850a-f5baa73766cc_1.webp",
-            "mob-img": "shopify://shop_images/Mobile_jpg_1.webp",
-            "link": "shopify://collections/summer-collection",
-            "button-name": "",
-            "button-link": ""
-          }
         }
       },
       "block_order": [
-        "slide_banner_dual_button_WQaTbD",
-        "slide_banner_xWViP9",
         "slide_banner_HbQBTL",
-        "slide_banner_FiWGha",
-        "slide_banner_AKieYd"
+        "slide_banner_FiWGha"
       ],
       "settings": {
         "whats-app-link": "",
