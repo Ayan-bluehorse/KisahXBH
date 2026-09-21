@@ -2735,3 +2735,46 @@ body.cp-qv-locked {
 div[id*="footer_seo"] {
   display: none !important;
 }
+
+/* ==========================================================================
+   NAVRATRI PRODUCT CAROUSEL — Product Card Overrides
+   Scoped to .cp-navratri-pcarousel only (does not affect rest of site)
+   ========================================================================== */
+
+/* 1. Title: max 2 lines with ellipsis */
+.cp-navratri-pcarousel .product-block__title span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+/* 2. Rating: visually move above the title using flex ordering */
+.cp-navratri-pcarousel .product-block__detail .innerer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The <a> tag holds title + price — keep it in natural flow */
+.cp-navratri-pcarousel .product-block__detail .innerer > a.product-link {
+  order: 1;
+}
+
+/* Size chips and swatches stay below title */
+.cp-navratri-pcarousel .product-block__detail .innerer > .product-block__size-chips,
+.cp-navratri-pcarousel .product-block__detail .innerer > .product-block-options {
+  order: 2;
+}
+
+/* Rating moves to the TOP (above title) */
+.cp-navratri-pcarousel .product-block__rating {
+  order: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
