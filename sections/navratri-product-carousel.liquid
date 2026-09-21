@@ -59,7 +59,28 @@
 
           assign rendered_count = 0
           assign has_products = false
-          assign lp_handles = ''
+
+          assign size_map = 'XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56' | split: ','
+          assign mapped_s = ''
+          assign mapped_m = ''
+          assign mapped_l = ''
+          assign mapped_xl = ''
+
+          for pair in size_map
+            assign p = pair | split: ':'
+            assign p_letter = p[0] | downcase | strip
+            assign p_number = p[1] | strip
+
+            if p_letter == 's'
+              assign mapped_s = p_number
+            elsif p_letter == 'm'
+              assign mapped_m = p_number
+            elsif p_letter == 'l'
+              assign mapped_l = p_number
+            elsif p_letter == 'xl'
+              assign mapped_xl = p_number
+            endif
+          endfor
 
           if section.settings.products != blank and section.settings.products.count > 0
             # Manual Product Selection: Show available stock first
@@ -68,7 +89,6 @@
               if prod.available and available_variants > 0
                 assign has_products = true
                 assign rendered_count = rendered_count | plus: 1
-                assign lp_handles = lp_handles | append: prod.handle | append: ','
                 render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
                 if rendered_count >= product_limit
                   break
@@ -82,7 +102,6 @@
                 unless prod.available and available_variants > 0
                   assign has_products = true
                   assign rendered_count = rendered_count | plus: 1
-                  assign lp_handles = lp_handles | append: prod.handle | append: ','
                   render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: false, grid: 4
                   if rendered_count >= product_limit
                     break
@@ -92,40 +111,91 @@
             endif
 
           elsif chosen_coll != blank and chosen_coll.products.size > 0
-            # PASS 1: Render available in-stock products from collection
-            for prod in chosen_coll.products
-              assign available_variants = prod.variants | where: 'available', true | size
-              if prod.available and available_variants > 0
-                assign has_products = true
-                assign rendered_count = rendered_count | plus: 1
-                assign lp_handles = lp_handles | append: prod.handle | append: ','
-                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
-                if rendered_count >= product_limit
-                  break
+            # Render products in exact order of size-availability stockRank (matching collection list page)
+            for target_rank in (0..5)
+              for prod in chosen_coll.products
+                assign total_variants = prod.variants.size
+                assign available_variants = prod.variants | where: 'available', true | size
+
+                if available_variants > 0
+                  assign cur_rank = 5
+
+                  if available_variants == total_variants and total_variants > 0
+                    assign cur_rank = 0
+                  else
+                    assign size_s_available = false
+                    assign size_m_available = false
+                    assign size_l_available = false
+                    assign size_xl_available = false
+
+                    for option in prod.options_with_values
+                      assign option_name = option.name | downcase | strip
+                      if option_name == 'size'
+                        for value in option.values
+                          assign size_value = value | downcase | strip
+
+                          if size_value == 's' or size_value == 'small' or size_value == mapped_s
+                            if value.available
+                              assign size_s_available = true
+                            endif
+                          endif
+
+                          if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
+                            if value.available
+                              assign size_m_available = true
+                            endif
+                          endif
+
+                          if size_value == 'l' or size_value == 'large' or size_value == mapped_l
+                            if value.available
+                              assign size_l_available = true
+                            endif
+                          endif
+
+                          if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
+                            if value.available
+                              assign size_xl_available = true
+                            endif
+                          endif
+
+                          if size_s_available and size_m_available and size_l_available and size_xl_available
+                            break
+                          endif
+                        endfor
+                        break
+                      endif
+                    endfor
+
+                    if size_s_available and size_m_available and size_l_available and size_xl_available
+                      assign cur_rank = 1
+                    elsif size_s_available and size_m_available and size_l_available
+                      assign cur_rank = 2
+                    elsif size_m_available and size_l_available
+                      assign cur_rank = 3
+                    elsif size_m_available
+                      assign cur_rank = 4
+                    endif
+                  endif
+
+                  if cur_rank == target_rank
+                    assign has_products = true
+                    assign rendered_count = rendered_count | plus: 1
+                    render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                    if rendered_count >= product_limit
+                      break
+                    endif
+                  endif
                 endif
+              endfor
+
+              if rendered_count >= product_limit
+                break
               endif
             endfor
 
-            # PASS 2: If show_only_available is disabled, fill remaining slots with out-of-stock items
-            if show_only_available == false and rendered_count < product_limit
-              for prod in chosen_coll.products
-                assign available_variants = prod.variants | where: 'available', true | size
-                unless prod.available and available_variants > 0
-                  assign has_products = true
-                  assign rendered_count = rendered_count | plus: 1
-                  assign lp_handles = lp_handles | append: prod.handle | append: ','
-                  render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: false, grid: 4
-                  if rendered_count >= product_limit
-                    break
-                  endif
-                endunless
-              endfor
-            endif
-
-            # Fallback: If all products in the collection are out of stock, still show them so the section is not empty
+            # Fallback: If all products in collection are out of stock, render them so section is not empty
             if rendered_count == 0
               for prod in chosen_coll.products limit: product_limit
-                assign lp_handles = lp_handles | append: prod.handle | append: ','
                 render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
               endfor
             endif
@@ -150,19 +220,8 @@
 
     <!-- Bottom View All Button -->
     {%- if show_view_all and view_link != blank -%}
-      {%- liquid
-        assign clean_handles = lp_handles | remove_last: ','
-        assign final_view_link = view_link
-        if clean_handles != blank
-          if final_view_link contains '?'
-            assign final_view_link = final_view_link | append: '&pinned=' | append: clean_handles
-          else
-            assign final_view_link = final_view_link | append: '?pinned=' | append: clean_handles
-          endif
-        endif
-      -%}
       <div class="cp-navratri-pcarousel__footer-cta">
-        <a href="{{ final_view_link }}" class="cp-navratri-pcarousel__view-all-btn" onclick="try{sessionStorage.setItem('cp_pinned_handles','{{ clean_handles }}')}catch(e){}">
+        <a href="{{ view_link }}" class="cp-navratri-pcarousel__view-all-btn">
           <span>{{ section.settings.view_all_text | default: 'VIEW ALL' }}</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
