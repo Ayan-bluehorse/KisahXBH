@@ -1297,7 +1297,7 @@
 
 .cp-navratri-categories__media {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   background-color: #ede8df;
   overflow: hidden;
   position: relative;
@@ -1578,11 +1578,11 @@
 }
 
 .cp-navratri-pcarousel .product-block__title {
-  font-family: inherit !important;
-  font-size: 14.5px !important;
-  line-height: 1.35 !important;
-  font-weight: 500 !important;
-  color: #111111 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 18px !important;
+  color: #000000;
+  opacity: 0.8 !important;
   margin-top: 8px !important;
   text-align: left !important;
   /* 2-line clamp with ellipsis */
