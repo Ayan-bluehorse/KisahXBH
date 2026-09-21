@@ -704,23 +704,30 @@
    SECTION 2: WHAT ARE YOU DRESSING FOR?
    ========================================================================== */
 .cp-navratri-gateway {
-  padding: 48px 0;
+  padding: 44px 0;
   background-color: #faf6f0;
 }
 
-.cp-navratri-gateway__header {
+.cp-navratri-gateway__header,
+.cp-navratri-gateway__header--centered {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   margin-bottom: 24px;
+  width: 100%;
 }
 
-.cp-navratri-gateway__header--centered {
+.cp-navratri-gateway__kicker {
+  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 auto 4px;
   text-align: center;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
 }
 
 .cp-navratri-gateway__title {
@@ -730,9 +737,10 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  margin: 0 auto 4px;
+  margin: 0 auto 4px !important;
   line-height: 1.2;
   text-align: center;
+  display: block;
 }
 
 .cp-navratri-gateway__subtitle {
@@ -742,6 +750,7 @@
   margin: 0 auto;
   text-transform: uppercase;
   text-align: center;
+  display: block;
 }
 
 /* COLOUR Chip with 5 visible dots + All ▾ */
@@ -844,62 +853,30 @@
   font-weight: 700;
 }
 
-/* Occasion / Shop By Category Tiles (Find Your Festive Fit) — 4 cards side by side on desktop, 2x2 on mobile */
-.cp-navratri-gateway {
-  padding: 40px 0 48px;
-  background-color: #ffffff;
-}
-
-.cp-navratri-gateway__header {
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.cp-navratri-gateway__header--centered {
-  text-align: center;
-}
-
-.cp-navratri-gateway__kicker {
-  font-family: "Generis Sans W01 Regular", sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin: 0 0 4px;
-  display: inline-block;
-}
-
-.cp-navratri-gateway__title {
-  font-family: "Generis Sans W01 Bold", sans-serif;
-  font-size: clamp(24px, 3.2vw, 36px);
-  color: #111111;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin: 0 auto 4px;
-  text-align: center;
-  display: block;
-  line-height: 1.2;
-}
-
-.cp-navratri-gateway__subtitle {
-  font-family: "Generis Sans W01 Regular", sans-serif;
-  font-size: 14px;
-  color: #c9a96e;
-  margin: 0 auto;
-  text-transform: uppercase;
-  text-align: center;
-  display: block;
-}
-
 .cp-navratri-gateway__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   width: 100%;
-  max-width: 1360px;
+  max-width: 1260px;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+.cp-navratri-gateway__grid--2 {
+  grid-template-columns: repeat(2, 1fr) !important;
+  max-width: 860px !important;
+}
+
+.cp-navratri-gateway__grid--3 {
+  grid-template-columns: repeat(3, 1fr) !important;
+  max-width: 1260px !important;
+}
+
+.cp-navratri-gateway__grid--4 {
+  grid-template-columns: repeat(4, 1fr) !important;
+  max-width: 1360px !important;
+  gap: 16px;
 }
 
 .cp-navratri-gateway__card {
@@ -1052,8 +1029,20 @@
     padding: 34px 0 40px;
   }
   .cp-navratri-gateway__grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .cp-navratri-gateway__grid--3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+  .cp-navratri-gateway__grid--2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .cp-navratri-gateway__grid--4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
   }
   .cp-navratri-gateway__overlay-content {
     bottom: 10px;
@@ -1068,10 +1057,36 @@
     padding: 28px 0 32px;
   }
 
+  .cp-navratri-gateway__header,
+  .cp-navratri-gateway__header--centered {
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .cp-navratri-gateway__title,
+  .cp-navratri-gateway__subtitle,
+  .cp-navratri-gateway__kicker {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
   .cp-navratri-gateway__grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 12px 10px !important;
+    max-width: 100% !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-1 {
+    grid-template-columns: 1fr !important;
+    max-width: 380px !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 
   .cp-navratri-gateway__card {
@@ -1103,6 +1118,16 @@
     gap: 10px 8px !important;
   }
 
+  .cp-navratri-gateway__grid--mob-1 {
+    grid-template-columns: 1fr !important;
+    max-width: 340px !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px 8px !important;
+  }
+
   .cp-navratri-gateway__overlay-content {
     bottom: 8px !important;
     left: 6px !important;
@@ -1120,21 +1145,6 @@
     font-size: 8px !important;
     letter-spacing: 0.04em !important;
   }
-}
-
-/* ==========================================================================
-   V5-1 — GATEWAY: CENTERED HEADER (NO FILTER)
-   ========================================================================== */
-.cp-navratri-gateway__header--centered {
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 24px;
-}
-
-.cp-navratri-gateway__header--centered .cp-navratri-gateway__title {
-  margin-bottom: 4px !important;
 }
 
 /* ==========================================================================
@@ -2352,15 +2362,18 @@ body.cp-qv-locked {
    RESPONSIVE ADDITIONS & FIXES — v5 WIREFRAME ALIGNMENT
    ========================================================================== */
 
-/* ── Gateway: header row stacks cleanly on tablet ── */
+/* ── Gateway: header stays centered on tablet & mobile ── */
 @media (max-width: 840px) {
-  .cp-navratri-gateway__header {
-    flex-direction: column;
-    align-items: flex-start;
+  .cp-navratri-gateway__header,
+  .cp-navratri-gateway__header--centered {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
   }
 
   .cp-navratri-colour-chip-group {
     flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
@@ -2369,13 +2382,8 @@ body.cp-qv-locked {
     padding: 28px 0 24px;
   }
 
-  .cp-navratri-gateway__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
   .cp-navratri-gateway__card {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 3 / 4.1;
   }
 }
 

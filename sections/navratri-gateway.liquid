@@ -9,6 +9,21 @@
   #navratri-gateway-{{ section.id }} .cp-navratri-gateway__kicker {
     color: {{ section.settings.sub_color | default: '#c9a96e' }};
   }
+  {%- if section.settings.card_bg_color != blank -%}
+    #navratri-gateway-{{ section.id }} .cp-navratri-gateway__card {
+      background-color: {{ section.settings.card_bg_color }};
+    }
+  {%- endif -%}
+  {%- if section.settings.border_color != blank -%}
+    #navratri-gateway-{{ section.id }} .cp-navratri-gateway__card {
+      border: 1px solid {{ section.settings.border_color }};
+    }
+  {%- endif -%}
+  {%- if section.settings.label_color != blank -%}
+    #navratri-gateway-{{ section.id }} .cp-navratri-gateway__card-title {
+      color: {{ section.settings.label_color }};
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section class="cp-navratri-gateway" id="navratri-gateway-{{ section.id }}">
@@ -24,16 +39,41 @@
       {%- endif -%}
     </div>
 
-    <!-- Occasion Tiles: 3x3 on desktop, 2x2 on mobile -->
-    <div class="cp-navratri-gateway__grid">
+    {%- assign col_desktop = section.settings.columns_desktop | default: 'auto' -%}
+    {%- if col_desktop == 'auto' -%}
+      {%- if section.blocks.size > 0 -%}
+        {%- if section.blocks.size <= 4 -%}
+          {%- assign col_desktop = '4' -%}
+        {%- else -%}
+          {%- assign col_desktop = '3' -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- assign col_desktop = '3' -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- assign col_mobile = section.settings.columns_mobile | default: '2' -%}
+
+    <!-- Occasion Tiles: Desktop {{ col_desktop }} cols (1 line for 4, 3/3 for 6), Mobile {{ col_mobile }} cols (2/2) -->
+    <div class="cp-navratri-gateway__grid cp-navratri-gateway__grid--{{ col_desktop }} cp-navratri-gateway__grid--mob-{{ col_mobile }}">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
+          {%- assign card_image = block.settings.image -%}
+          {%- if card_image == blank and block.settings.link != blank -%}
+            {%- assign col_handle = block.settings.link | split: '/collections/' | last | split: '?' | first | split: '#' | first -%}
+            {%- if collections[col_handle] != blank -%}
+              {%- if collections[col_handle].image != blank -%}
+                {%- assign card_image = collections[col_handle].image -%}
+              {%- elsif collections[col_handle].products.first.featured_image != blank -%}
+                {%- assign card_image = collections[col_handle].products.first.featured_image -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
           <div class="cp-navratri-gateway__card" {{ block.shopify_attributes }}>
             <a href="{{ block.settings.link | default: '/collections/all' }}" class="cp-navratri-gateway__card-link">
               <div class="cp-navratri-gateway__media">
-                {%- if block.settings.image != blank -%}
+                {%- if card_image != blank -%}
                   <img 
-                    src="{{ block.settings.image | image_url: width: 800 }}" 
+                    src="{{ card_image | image_url: width: 800 }}" 
                     alt="{{ block.settings.title | escape }}" 
                     loading="lazy"
                     class="cp-navratri-gateway__img">
@@ -56,8 +96,8 @@
           </div>
         {%- endfor -%}
       {%- else -%}
-        <!-- Mockup Default 4 Occasion Cards -->
-        {%- assign occ_cards = "DANDIYA DHAMAL:SHOP THE SILHOUETTE →:#garba-dandiya,PUJA & RITUAL:COMPLETE THE LOOK →:#puja-aarti,PANDAL HOPPING:LAYER THE LOOK →:#festive-party,FESTIVE EVENING:FINISH THE FIT →:#casual-hangout" | split: "," -%}
+        <!-- Mockup Default 6 Occasion Cards (3/3 on Desktop, 2/2 on Mobile) -->
+        {%- assign occ_cards = "DANDIYA & GARBA:SHOP THE SILHOUETTE →:#garba-dandiya,PUJA & RITUAL:COMPLETE THE LOOK →:#puja-aarti,PANDAL HOPPING:LAYER THE LOOK →:#pandal-hopping,FESTIVE EVENING:FINISH THE FIT →:#festive-evening-parties,PLUS SIZES:EVERY BODY FITS →:#festive-party,KIDS COLLECTION:SHOP LITTLE LOOKS →:shopify://collections/kids" | split: "," -%}
         {%- for item in occ_cards -%}
           {%- assign parts = item | split: ":" -%}
           <div class="cp-navratri-gateway__card">
@@ -140,6 +180,49 @@
       "id": "sub_color",
       "label": "Subheading Color",
       "default": "#c9a96e"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#151515"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card Border Color"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Card Label Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "options": [
+        { "value": "auto", "label": "Auto (4 in 1 line if 4 cards, 3/3 if 6 cards)" },
+        { "value": "4", "label": "4 Columns (1 line)" },
+        { "value": "3", "label": "3 Columns (3/3)" },
+        { "value": "2", "label": "2 Columns" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Mobile Columns",
+      "options": [
+        { "value": "2", "label": "2 Columns (2/2)" },
+        { "value": "1", "label": "1 Column" }
+      ],
+      "default": "2"
     }
   ],
   "blocks": [
@@ -175,11 +258,17 @@
   "presets": [
     {
       "name": "Navratri Gateway",
+      "settings": {
+        "columns_desktop": "3",
+        "columns_mobile": "2"
+      },
       "blocks": [
-        { "type": "pick_card", "settings": { "title": "DANDIYA DHAMAL", "subtitle": "SHOP THE SILHOUETTE →", "link": "#garba-dandiya" } },
-        { "type": "pick_card", "settings": { "title": "PUJA & RITUAL", "subtitle": "COMPLETE THE LOOK →", "link": "#puja-aarti" } },
-        { "type": "pick_card", "settings": { "title": "PANDAL HOPPING", "subtitle": "LAYER THE LOOK →", "link": "#festive-party" } },
-        { "type": "pick_card", "settings": { "title": "FESTIVE EVENING", "subtitle": "FINISH THE FIT →", "link": "#casual-hangout" } }
+        { "type": "pick_card", "settings": { "title": "DANDIYA & GARBA", "subtitle": "SHOP THE SILHOUETTE →", "link": "#garba-dandiya" } },
+        { "type": "pick_card", "settings": { "title": "POOJA & AARTI", "subtitle": "COMPLETE THE LOOK →", "link": "#puja-aarti" } },
+        { "type": "pick_card", "settings": { "title": "PANDAL HOPPING", "subtitle": "LAYER THE LOOK →", "link": "#pandal-hopping" } },
+        { "type": "pick_card", "settings": { "title": "FESTIVE EVENING", "subtitle": "FINISH THE FIT →", "link": "#festive-evening-parties" } },
+        { "type": "pick_card", "settings": { "title": "PLUS SIZES", "subtitle": "EVERY BODY FITS →", "link": "#festive-party" } },
+        { "type": "pick_card", "settings": { "title": "KIDS COLLECTION", "subtitle": "SHOP LITTLE LOOKS →", "link": "shopify://collections/kids" } }
       ]
     }
   ]
