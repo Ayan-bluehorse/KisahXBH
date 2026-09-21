@@ -1228,6 +1228,7 @@
           class="stock-sort-item"
           data-stock-sort-item
           data-stock-tier="primary"
+          data-product-handle="{{ product.handle }}"
           data-available-variants="{{ available_variants }}"
           data-total-variants="{{ total_variants }}"
           data-option-name="Size"
@@ -1264,6 +1265,7 @@
           class="stock-sort-item stock-sort-item--oos"
           data-stock-sort-item
           data-stock-tier="out-of-stock"
+          data-product-handle="{{ product.handle }}"
           data-available-variants="0"
           data-total-variants="{{ total_variants }}"
           data-option-name="Size"
@@ -1286,6 +1288,48 @@
     {% endfor %}
 
   </div>
+
+  <script>
+    (function() {
+      function applyLandingPageOrder() {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var pinnedStr = params.get('pinned');
+          if (!pinnedStr) {
+            pinnedStr = sessionStorage.getItem('cp_pinned_handles');
+          }
+          if (!pinnedStr) return;
+
+          var handles = pinnedStr.split(',').map(function(h) { return h.trim(); }).filter(Boolean);
+          if (!handles || handles.length === 0) return;
+
+          var grid = document.getElementById('product-grid');
+          if (!grid) return;
+
+          // Re-order matching items to the very top in the exact order they appeared on the LP
+          for (var i = handles.length - 1; i >= 0; i--) {
+            var handle = handles[i];
+            var card = grid.querySelector('.stock-sort-item[data-product-handle="' + handle + '"]') ||
+                       grid.querySelector('#jump-id' + handle);
+            if (card) {
+              var parentCard = card.closest('.stock-sort-item') || card;
+              if (parentCard && parentCard.parentElement === grid) {
+                grid.insertBefore(parentCard, grid.firstElementChild);
+              }
+            }
+          }
+        } catch(err) {
+          console.error('[Pinned Products Order Error]', err);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyLandingPageOrder);
+      } else {
+        applyLandingPageOrder();
+      }
+    })();
+  </script>
 
 
   {% render 'infinite-scroll', paginate: paginate %}

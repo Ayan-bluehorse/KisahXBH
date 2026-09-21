@@ -1582,6 +1582,25 @@
   color: #111111 !important;
 }
 
+.cp-navratri-pcarousel .product-block__size-chips {
+  padding: 0 !important;
+  margin: 6px 0 0 0 !important;
+  gap: 4px 5px !important;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"] {
+  opacity: 0.6;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"] img {
+  filter: grayscale(25%);
+  transition: filter 0.3s ease;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"]:hover img {
+  filter: grayscale(0%);
+}
+
 /* Quick Add Button (+ button) for both Product Carousel & Kids cards */
 .cp-navratri-pcarousel .product-block .image-cont .btn.quickbuy-toggle,
 .cp-navratri-kids .product-block .image-cont .btn.quickbuy-toggle {

@@ -77,6 +77,7 @@
         "view_all_link": "",
         "view_all_text": "SEE MORE NAVRATRI STYLES",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"
@@ -198,6 +199,7 @@
         "view_all_link": "",
         "view_all_text": "SEE MORE PLUS-SIZE STYLES",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"
@@ -213,9 +215,10 @@
         "collection": "garba-edit",
         "products": [],
         "show_view_all": true,
-        "view_all_link": "/collections/short-kurta",
+        "view_all_link": "",
         "view_all_text": "SEE ALL DANDIYA & GARBA",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"
@@ -234,6 +237,7 @@
         "view_all_link": "",
         "view_all_text": "SEE ALL POOJA & AARTI",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"
@@ -253,6 +257,7 @@
         "view_all_link": "",
         "view_all_text": "SEE ALL PANDAL HOPPING",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"
@@ -272,6 +277,7 @@
         "view_all_link": "",
         "view_all_text": "SEE ALL FESTIVE EVENING PARTIES",
         "max_products": 8,
+        "show_only_available": true,
         "bg_color": "#ffffff",
         "text_color": "#111111",
         "sub_color": "#b88a2b"

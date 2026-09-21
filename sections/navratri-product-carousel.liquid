@@ -52,33 +52,117 @@
       <div class="product-grid product-grid--per-row-4 product-grid--per-row-mob-2">
         {%- liquid
           assign product_limit = section.settings.max_products | default: 8
-          assign has_products = false
-
-          if section.settings.products != blank and section.settings.products.count > 0
-            assign has_products = true
-            for prod in section.settings.products limit: product_limit
-              render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
-            endfor
-          elsif chosen_coll != blank and chosen_coll.products.size > 0
-            assign has_products = true
-            for prod in chosen_coll.products limit: product_limit
-              render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
-            endfor
+          assign show_only_available = section.settings.show_only_available
+          if show_only_available == nil
+            assign show_only_available = true
           endif
 
-          unless has_products
-            for prod in collections['all'].products limit: product_limit
-              render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+          assign rendered_count = 0
+          assign has_products = false
+          assign lp_handles = ''
+
+          if section.settings.products != blank and section.settings.products.count > 0
+            # Manual Product Selection: Show available stock first
+            for prod in section.settings.products
+              assign available_variants = prod.variants | where: 'available', true | size
+              if prod.available and available_variants > 0
+                assign has_products = true
+                assign rendered_count = rendered_count | plus: 1
+                assign lp_handles = lp_handles | append: prod.handle | append: ','
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                if rendered_count >= product_limit
+                  break
+                endif
+              endif
             endfor
-          endunless
+
+            if show_only_available == false and rendered_count < product_limit
+              for prod in section.settings.products
+                assign available_variants = prod.variants | where: 'available', true | size
+                unless prod.available and available_variants > 0
+                  assign has_products = true
+                  assign rendered_count = rendered_count | plus: 1
+                  assign lp_handles = lp_handles | append: prod.handle | append: ','
+                  render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: false, grid: 4
+                  if rendered_count >= product_limit
+                    break
+                  endif
+                endunless
+              endfor
+            endif
+
+          elsif chosen_coll != blank and chosen_coll.products.size > 0
+            # PASS 1: Render available in-stock products from collection
+            for prod in chosen_coll.products
+              assign available_variants = prod.variants | where: 'available', true | size
+              if prod.available and available_variants > 0
+                assign has_products = true
+                assign rendered_count = rendered_count | plus: 1
+                assign lp_handles = lp_handles | append: prod.handle | append: ','
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                if rendered_count >= product_limit
+                  break
+                endif
+              endif
+            endfor
+
+            # PASS 2: If show_only_available is disabled, fill remaining slots with out-of-stock items
+            if show_only_available == false and rendered_count < product_limit
+              for prod in chosen_coll.products
+                assign available_variants = prod.variants | where: 'available', true | size
+                unless prod.available and available_variants > 0
+                  assign has_products = true
+                  assign rendered_count = rendered_count | plus: 1
+                  assign lp_handles = lp_handles | append: prod.handle | append: ','
+                  render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: false, grid: 4
+                  if rendered_count >= product_limit
+                    break
+                  endif
+                endunless
+              endfor
+            endif
+
+            # Fallback: If all products in the collection are out of stock, still show them so the section is not empty
+            if rendered_count == 0
+              for prod in chosen_coll.products limit: product_limit
+                assign lp_handles = lp_handles | append: prod.handle | append: ','
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+              endfor
+            endif
+          endif
+
+          # Onboarding demo fallback if neither collection nor manual products are set
+          if chosen_coll == blank and section.settings.products == blank
+            for prod in collections['all'].products
+              assign available_variants = prod.variants | where: 'available', true | size
+              if prod.available and available_variants > 0
+                assign rendered_count = rendered_count | plus: 1
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                if rendered_count >= product_limit
+                  break
+                endif
+              endif
+            endfor
+          endif
         -%}
       </div>
     </div>
 
     <!-- Bottom View All Button -->
     {%- if show_view_all and view_link != blank -%}
+      {%- liquid
+        assign clean_handles = lp_handles | remove_last: ','
+        assign final_view_link = view_link
+        if clean_handles != blank
+          if final_view_link contains '?'
+            assign final_view_link = final_view_link | append: '&pinned=' | append: clean_handles
+          else
+            assign final_view_link = final_view_link | append: '?pinned=' | append: clean_handles
+          endif
+        endif
+      -%}
       <div class="cp-navratri-pcarousel__footer-cta">
-        <a href="{{ view_link }}" class="cp-navratri-pcarousel__view-all-btn">
+        <a href="{{ final_view_link }}" class="cp-navratri-pcarousel__view-all-btn" onclick="try{sessionStorage.setItem('cp_pinned_handles','{{ clean_handles }}')}catch(e){}">
           <span>{{ section.settings.view_all_text | default: 'VIEW ALL' }}</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -166,6 +250,13 @@
       "default": 8
     },
     {
+      "type": "checkbox",
+      "id": "show_only_available",
+      "label": "Show only in-stock products",
+      "default": true,
+      "info": "When enabled, hides sold-out products and prioritizes items with available inventory"
+    },
+    {
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
@@ -190,7 +281,8 @@
       "settings": {
         "anchor_id": "garba-dandiya",
         "title": "GARBA & DANDIYA",
-        "subtitle": "Move in style with mirrorwork & vibrant festive prints"
+        "subtitle": "Move in style with mirrorwork & vibrant festive prints",
+        "show_only_available": true
       }
     }
   ]
