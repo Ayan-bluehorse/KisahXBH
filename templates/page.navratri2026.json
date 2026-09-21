@@ -233,7 +233,7 @@
         "subtitle": "",
         "collection": "puja-and-aarti",
         "products": [],
-        "show_view_all": false,
+        "show_view_all": true,
         "view_all_link": "",
         "view_all_text": "SEE ALL POOJA & AARTI",
         "max_products": 8,
