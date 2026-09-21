@@ -156,12 +156,20 @@
             "title": "JACQUARD & TEXTURED",
             "link": "shopify://collections/textured-dressing"
           }
+        },
+        "category_item_NXBdXp": {
+          "type": "category_item",
+          "settings": {
+            "title": "DUPATTA",
+            "link": "shopify://collections/dupatta-sets"
+          }
         }
       },
       "block_order": [
         "cat_1",
         "cat_2",
-        "cat_3"
+        "cat_3",
+        "category_item_NXBdXp"
       ],
       "settings": {
         "kicker": "",
