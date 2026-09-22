@@ -9,6 +9,15 @@
  */
 {
   "sections": {
+    "navratri_breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {
+        "desk-padding-top": 12,
+        "desk-padding-bottom": 12,
+        "mob-padding-top": 8,
+        "mob-padding-bottom": 8
+      }
+    },
     "navratri_collection_header": {
       "type": "navratri-collection-header",
       "blocks": {
@@ -297,6 +306,7 @@
     }
   },
   "order": [
+    "navratri_breadcrumbs",
     "navratri_collection_header",
     "navratri_products_puja",
     "navratri_gateway",

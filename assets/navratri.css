@@ -1,13 +1,56 @@
 /* ==========================================================================
    KISAH NAVRATRI FESTIVE EXPERIENCE — ACTIVE DESIGN SYSTEM & SECTIONS
-   Active sections: Banner, Collection Header, Gateway, Categories, Product Grid, Quickview
+   Typography System:
+   1. All Headings: Bodoni Moda (Google Fonts)
+   2. Rest of Site (approx. 85%): Manrope (Google Fonts)
    ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-navratri-heading: 'Bodoni Moda', Georgia, serif;
+  --font-navratri-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 
 /* ==========================================================================
    KISAH NAVRATRI LANDING EXPERIENCE — DESIGN SYSTEM
    ========================================================================== */
 
-/* Universal Kicker Typography & Spacing */
+/* Universal Base Typography: Manrope (Dominant font ~85% of site) */
+body.template-suffix-navratri2026,
+.template-suffix-navratri2026,
+.template-suffix-navratri2026 .main-content,
+.cp-navratri-banner,
+.cp-navratri-collection-head,
+.cp-navratri-gateway,
+.cp-navratri-categories,
+.cp-navratri-pcarousel,
+.cp-navratri-kids,
+.cp-navratri-wedding,
+.cp-navratri-stories,
+.cp-navratri-quickview,
+.cp-navratri-container {
+  font-family: var(--font-navratri-body), "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Breadcrumb override for Navratri LP */
+.template-suffix-navratri2026 .breadcrumb a,
+.template-suffix-navratri2026 .breadcrumb span,
+.template-suffix-navratri2026 .breadcrumbs-list__link {
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: #555555 !important;
+  opacity: 1 !important;
+}
+
+.template-suffix-navratri2026 .breadcrumb a:hover,
+.template-suffix-navratri2026 .breadcrumbs-list__link:hover {
+  color: #000000 !important;
+  text-decoration: underline !important;
+}
+
+/* Universal Kicker Typography & Spacing (Manrope — Dominant Body System) */
 .cp-navratri-hero__kicker,
 .cp-navratri-gateway__kicker,
 .cp-navratri-categories__kicker,
@@ -17,7 +60,7 @@
 .cp-navratri-wedding__kicker,
 .cp-navratri-collection-head__kicker {
   display: block;
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
@@ -67,7 +110,11 @@
   }
 }
 
-/* Universal Typography Utilities — Section Heading Font System */
+/* All Headings (Bodoni Moda — Large Hero, Campaign & Section Titles) */
+.cp-navratri-collection-head__title,
+.template-page .cp-navratri-collection-head__title,
+.cp-navratri-hero__title,
+.cp-navratri-banner__heading,
 .cp-navratri-title-serif,
 .cp-navratri-gateway__title,
 .cp-navratri-categories__title,
@@ -82,12 +129,11 @@
 .cp-navratri-searches-title,
 .cp-color-grid-heading-ensemble,
 .cp-color-grid-heading-celebrate,
-.cp-review-heading,
-.cp-navratri-collection-head__title {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+.cp-review-heading {
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   color: #111111 !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.03em !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
   text-transform: uppercase !important;
   line-height: 1.2 !important;
   margin: 0 !important;
@@ -530,10 +576,10 @@
 
 .cp-navratri-collection-head__title,
 .template-page .cp-navratri-collection-head__title {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   font-size: clamp(26px, 3.6vw, 42px) !important;
-  font-weight: 700 !important;
-  line-height: 1.12 !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
   letter-spacing: 0.02em !important;
   text-transform: uppercase !important;
   text-wrap: balance;
@@ -545,17 +591,18 @@
 .cp-navratri-collection-head__highlight,
 .template-page .cp-navratri-collection-head__highlight,
 .cp-navratri-collection-head__title .cp-navratri-collection-head__highlight {
-  font-family: inherit !important;
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   font-size: 1em !important;
-  font-weight: inherit !important;
+  font-weight: 500 !important;
   line-height: inherit !important;
   letter-spacing: inherit !important;
-  font-style: italic;
+  font-style: italic !important;
   display: inline;
   color: #d8a852 !important;
 }
 
 .cp-navratri-collection-head__subtitle {
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   margin: 0 auto 16px;
   font-size: clamp(13px, 1.1vw, 15px);
   line-height: 1.45;
@@ -720,22 +767,22 @@
 }
 
 .cp-navratri-gateway__kicker {
-  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 auto 4px;
   text-align: center;
   display: inline-block;
 }
 
 .cp-navratri-gateway__title {
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   font-size: clamp(24px, 3.2vw, 36px);
   color: #111111;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   margin: 0 auto 4px !important;
   line-height: 1.2;
@@ -744,7 +791,7 @@
 }
 
 .cp-navratri-gateway__subtitle {
-  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 14px;
   color: #c9a96e;
   margin: 0 auto;
@@ -989,7 +1036,7 @@
 }
 
 .cp-navratri-gateway__card-title {
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   color: #ffffff;
   font-size: clamp(11.5px, 1.05vw, 13.5px);
   font-weight: 700;
@@ -1002,7 +1049,7 @@
 }
 
 .cp-navratri-gateway__card-sub {
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   color: #ffffff;
   font-size: clamp(9px, 0.8vw, 10.5px);
   font-weight: 600;
@@ -1192,21 +1239,21 @@
 }
 
 .cp-navratri-categories__kicker {
-  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 4px;
   display: inline-block;
 }
 
 .cp-navratri-categories__title {
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   font-size: clamp(24px, 3.2vw, 36px);
   color: #111111;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   margin: 0 auto 4px;
   text-align: center;
@@ -1215,7 +1262,7 @@
 }
 
 .cp-navratri-categories__subtitle {
-  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 14px;
   color: #c9a96e;
   margin: 0 auto;
@@ -1468,9 +1515,9 @@
     border-radius: 2px !important;
   }
 
-  .cp-navratri-categories__media {
+  /* .cp-navratri-categories__media {
     aspect-ratio: 3 / 4 !important;
-  }
+  } */
 
   .cp-navratri-categories__footer {
     min-height: 46px;
@@ -1520,7 +1567,9 @@
 }
 
 .cp-navratri-pcarousel__kicker {
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.15em;
   color: #9e7d47;
   text-transform: uppercase;
@@ -1530,17 +1579,18 @@
 }
 
 .cp-navratri-pcarousel__title {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
   font-size: clamp(24px, 3.2vw, 36px) !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.03em !important;
+  letter-spacing: 0.02em !important;
   margin: 0 0 6px !important;
   color: #111111;
   text-align: center !important;
 }
 
 .cp-navratri-pcarousel__subtitle {
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 14px;
   color: #666666;
   margin: 0;
@@ -1579,8 +1629,8 @@
 
 .cp-navratri-pcarousel .product-block__title,
 .cp-navratri-kids .product-block__title {
-  font-family: 'Generis Sans W01 Bold', sans-serif !important;
-  font-weight: 600 !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
+  font-weight: 700 !important;
   font-size: 16px !important;
   line-height: 18px !important;
   color: #000000 !important;
@@ -1601,6 +1651,8 @@
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   line-height: 18px !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
+  font-weight: 700 !important;
 }
 
 /* Rating: hide on desktop in LP page, visible only on mobile */
@@ -1621,6 +1673,8 @@
   .cp-navratri-pcarousel .product-block__title span,
   .cp-navratri-kids .product-block__title span {
     line-height: 15px !important;
+    font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
+    font-weight: 700 !important;
   }
 
   .cp-navratri-pcarousel .product-block .image-cont,
@@ -1647,8 +1701,8 @@
     display: flex !important;
     gap: 4px !important;
     color: #1e1e1e !important;
-    font-weight: 400 !important;
-    font-family: "Generis Sans W01 Bold", sans-serif !important;
+    font-weight: 500 !important;
+    font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
     background: transparent !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -1756,7 +1810,7 @@
   background-color: transparent;
   color: #18120f !important;
   border: 1.5px solid #18120f;
-  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -1939,7 +1993,7 @@ body.cp-qv-locked {
   min-height: 320px;
   gap: 16px;
   color: #555555;
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 14px;
 }
 
@@ -2062,7 +2116,7 @@ body.cp-qv-locked {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
 }
 
 .cp-qv-ribbon strong {
@@ -2079,7 +2133,7 @@ body.cp-qv-locked {
 }
 
 .cp-qv-title {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 20px !important;
   font-weight: 700 !important;
   color: #111111 !important;
@@ -2099,14 +2153,14 @@ body.cp-qv-locked {
 }
 
 .cp-qv-price {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 22px !important;
   font-weight: 700 !important;
   color: #111111 !important;
 }
 
 .cp-qv-was-price {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 16px !important;
   color: #888888 !important;
   text-decoration: line-through !important;
@@ -2133,7 +2187,7 @@ body.cp-qv-locked {
 }
 
 .cp-qv-opt-label {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   color: #333333 !important;
@@ -2141,7 +2195,7 @@ body.cp-qv-locked {
 }
 
 .cp-qv-selected-size {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px !important;
   color: #201747 !important;
   font-weight: 600 !important;
@@ -2200,7 +2254,7 @@ body.cp-qv-locked {
   background-color: #201747 !important;
   color: #ffffff !important;
   border: none !important;
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 14px !important;
   font-weight: 700 !important;
   letter-spacing: 0.08em !important;
@@ -2271,7 +2325,7 @@ body.cp-qv-locked {
 }
 
 .cp-qv-trust-item span {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   color: #222222 !important;
@@ -2280,7 +2334,7 @@ body.cp-qv-locked {
 
 /* Policy Note */
 .cp-qv-policy {
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 12px !important;
   color: #777777 !important;
   margin: 0 !important;
@@ -2301,7 +2355,7 @@ body.cp-qv-locked {
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-family: var(--font-navratri-body), "Manrope", sans-serif !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   color: #201747 !important;
