@@ -60,6 +60,7 @@
         "pill_3",
         "pill_4"
       ],
+      "disabled": true,
       "settings": {
         "kicker": "",
         "heading": "Navratri Kurtas & Festive Wear for Men",
@@ -151,6 +152,67 @@
         "columns_mobile": "2"
       }
     },
+    "navratri_gateway_3j6f4c": {
+      "type": "navratri-gateway",
+      "blocks": {
+        "pick_card_Fw4Bqm": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Mirrorwork.jpg",
+            "title": "MIRRORWORK",
+            "subtitle": "SHOP THE SILHOUETTE →",
+            "link": "shopify://collections/mirror"
+          }
+        },
+        "pick_card_cdmgBD": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Prints.jpg",
+            "title": "PRINTS",
+            "subtitle": "COMPLETE THE LOOK →",
+            "link": "shopify://collections/printedparade"
+          }
+        },
+        "pick_card_gck4wk": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Embroidery.png",
+            "title": "PANDAL HOPPING",
+            "subtitle": "LAYER THE LOOK →",
+            "link": "shopify://collections/embroidery"
+          }
+        },
+        "pick_card_HNd8gY": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Dupatta_fe57b1fa-27dc-4686-ad66-b36c17845027.jpg",
+            "title": "DUPATTA",
+            "subtitle": "FINISH THE FIT →",
+            "link": "shopify://collections/dupatta-sets"
+          }
+        }
+      },
+      "block_order": [
+        "pick_card_Fw4Bqm",
+        "pick_card_cdmgBD",
+        "pick_card_gck4wk",
+        "pick_card_HNd8gY"
+      ],
+      "name": "Navratri Gateway",
+      "settings": {
+        "kicker": "",
+        "title": "SHOP BY STYLE",
+        "subtitle": "",
+        "bg_color": "#faf6f0",
+        "text_color": "#111111",
+        "sub_color": "#c9a96e",
+        "card_bg_color": "#151515",
+        "border_color": "",
+        "label_color": "#ffffff",
+        "columns_desktop": "auto",
+        "columns_mobile": "2"
+      }
+    },
     "navratri_categories": {
       "type": "navratri-categories",
       "blocks": {
@@ -193,6 +255,7 @@
         "cat_3",
         "category_item_NXBdXp"
       ],
+      "disabled": true,
       "settings": {
         "kicker": "",
         "title": "SHOP BY STYLE",
@@ -310,6 +373,7 @@
     "navratri_collection_header",
     "navratri_products_puja",
     "navratri_gateway",
+    "navratri_gateway_3j6f4c",
     "navratri_categories",
     "navratri_products_festive",
     "navratri_products_casual",
