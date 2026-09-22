@@ -95,11 +95,10 @@
       max-width: 100vw;
     }
   </style>
-  {%- assign cache_time = 'now' | date: '%s' -%}
-  <link rel="stylesheet" href="{{ 'main.css' | asset_url }}&t={{ cache_time }}">
-  <link rel="stylesheet" href="{{ 'collections.css' | asset_url }}&t={{ cache_time }}">
+  {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
+  {{ 'collections.css' | asset_url | stylesheet_tag }}
   {%- if template.suffix contains 'navratri' or request.path contains 'navratri' -%}
-    <link rel="stylesheet" href="{{ 'navratri.css' | asset_url }}&t={{ cache_time }}">
+    {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
   {%- if settings.swatch_enabled and settings.swatch_value_list != blank -%}
@@ -214,7 +213,7 @@
     };
   </script>
 
-  <script src="{{ 'main.js' | asset_url }}&t={{ cache_time }}" defer></script>
+  <script src="{{ 'main.js' | asset_url }}" defer></script>
 
   {%- if request.design_mode -%}
     <script src="{{ 'theme-editor.js' | asset_url }}" defer></script>
@@ -592,13 +591,13 @@
   <script defer src="{{ 'sticky-add-to-cart.js' | asset_url }}"></script>
 {% endif %}
 {%- if request.page_type == 'collection' or request.page_type == 'search' -%}
-  <script defer src="{{ 'collection-revamp.js' | asset_url }}&t={{ cache_time }}"></script> {% comment %} {% endcomment %}
+  <script defer src="{{ 'collection-revamp.js' | asset_url }}"></script> {% comment %} {% endcomment %}
 {%- endif -%}
   {% if template.name == 'index' %}
     {% render 'cart-chiplet' %}
   {% endif %}
   {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'page' or template.name == 'index' %}
-    <script defer src="{{ 'pdp-variant-size.js' | asset_url }}&t={{ cache_time }}"></script>
+    <script defer src="{{ 'pdp-variant-size.js' | asset_url }}"></script>
   {% endif %}
   <script defer src="{{ 'custom-menu.js' | asset_url }}"></script>
 
