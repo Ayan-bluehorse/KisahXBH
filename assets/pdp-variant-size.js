@@ -94,4 +94,21 @@ fieldset.option-selector label {
     apply(document);
     selectPreferredSize();
   });
+
+  // Watch for dynamically rendered cards (carousels, tabs, ajax)
+  let observerTimer = null;
+  const observer = new MutationObserver(() => {
+    if (observerTimer) return;
+    observerTimer = setTimeout(() => {
+      observerTimer = null;
+      apply(document);
+    }, 150);
+  });
+  if (document.body) {
+    observer.observe(document.body, { childList: true, subtree: true });
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  }
 })();

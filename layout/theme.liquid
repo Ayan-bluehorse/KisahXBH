@@ -596,7 +596,7 @@
   {% if template.name == 'index' %}
     {% render 'cart-chiplet' %}
   {% endif %}
-  {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' %}
+  {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'page' or template.name == 'index' %}
     <script defer src="{{ 'pdp-variant-size.js' | asset_url }}"></script>
   {% endif %}
   <script defer src="{{ 'custom-menu.js' | asset_url }}"></script>
