@@ -325,17 +325,42 @@
     function distributeItems(items) {
       restorePendingTail();
 
+      var existingHandles = {};
+      var currentItems = directStockItems(grid);
+      for (var k = 0; k < currentItems.length; k++) {
+        var h = currentItems[k].getAttribute('data-product-handle');
+        if (h) existingHandles[h] = true;
+      }
+
       var fragment = document.createDocumentFragment();
       var appendedItems = [];
 
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
-        // Tag in-stock vs out-of-stock for CSS/debugging
+        var handle = item.getAttribute('data-product-handle');
+        var isNewItem = item.parentElement !== grid;
+
+        // Skip if this product already exists in the grid
+        if (isNewItem && handle && existingHandles[handle]) {
+          continue;
+        }
+
         var available = parseInt(item.getAttribute('data-available-variants'), 10);
+
+        // When appending out-of-stock products, skip any product that still has available variants
+        if (oosAppended && isNewItem && Number.isFinite(available) && available > 0) {
+          continue;
+        }
+
+        // Tag in-stock vs out-of-stock for CSS/debugging
         var tier = (Number.isFinite(available) && available === 0) ? 'out-of-stock' : 'primary';
         item.setAttribute('data-stock-tier', tier);
         if (tier === 'out-of-stock') {
           item.classList.add('stock-sort-item--oos');
+        }
+
+        if (handle) {
+          existingHandles[handle] = true;
         }
 
         fragment.appendChild(item);
