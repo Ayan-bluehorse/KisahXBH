@@ -198,6 +198,7 @@
         "pick_card_gck4wk",
         "pick_card_HNd8gY"
       ],
+      "disabled": true,
       "name": "Navratri Gateway",
       "settings": {
         "kicker": "",
@@ -255,7 +256,6 @@
         "cat_3",
         "category_item_NXBdXp"
       ],
-      "disabled": true,
       "settings": {
         "kicker": "",
         "title": "SHOP BY STYLE",
