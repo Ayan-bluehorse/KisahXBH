@@ -42,6 +42,13 @@ body.template-suffix-navratri2026,
 }
 
 /* Breadcrumb override for Navratri LP */
+.template-suffix-navratri2026 [id*="navratri_breadcrumbs"],
+.template-suffix-navratri2026 .breadcrumbs__wrapper,
+.template-suffix-navratri2026 .breadcrumb {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
 .template-suffix-navratri2026 .breadcrumb a,
 .template-suffix-navratri2026 .breadcrumb span,
 .template-suffix-navratri2026 .breadcrumbs-list__link {
