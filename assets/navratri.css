@@ -1577,20 +1577,30 @@
   box-shadow: none !important;
 }
 
-.cp-navratri-pcarousel .product-block__title {
+.cp-navratri-pcarousel .product-block__title,
+.cp-navratri-kids .product-block__title {
+  font-family: 'Generis Sans W01 Bold', sans-serif !important;
   font-weight: 600 !important;
   font-size: 16px !important;
   line-height: 18px !important;
-  color: #000000;
+  color: #000000 !important;
   opacity: 0.8 !important;
   margin-top: 8px !important;
+  margin-bottom: 0 !important;
   text-align: left !important;
-  /* 2-line clamp with ellipsis */
+  min-height: 36px !important;
+  max-height: 36px !important;
+  overflow: hidden !important;
+}
+
+.cp-navratri-pcarousel .product-block__title span,
+.cp-navratri-kids .product-block__title span {
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   overflow: hidden !important;
-  min-height: calc(14.5px * 1.35 * 2) !important;
+  text-overflow: ellipsis !important;
+  line-height: 18px !important;
 }
 
 /* Rating: hide on desktop in LP page, visible only on mobile */
@@ -1600,6 +1610,19 @@
 }
 
 @media screen and (max-width: 768px) {
+  .cp-navratri-pcarousel .product-block__title,
+  .cp-navratri-kids .product-block__title {
+    font-size: 12px !important;
+    line-height: 15px !important;
+    min-height: 30px !important;
+    max-height: 30px !important;
+  }
+
+  .cp-navratri-pcarousel .product-block__title span,
+  .cp-navratri-kids .product-block__title span {
+    line-height: 15px !important;
+  }
+
   .cp-navratri-pcarousel .product-block .image-cont,
   .cp-navratri-kids .product-block .image-cont {
     overflow: unset !important;
