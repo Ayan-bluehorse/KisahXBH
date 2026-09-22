@@ -89,6 +89,7 @@
         "pick_1": {
           "type": "pick_card",
           "settings": {
+            "image": "shopify://shop_images/Kurta_f141844e-a988-48cc-a4aa-9096288685ff.jpg",
             "title": "Kurta & Short Kurta",
             "subtitle": "SHOP THE SILHOUETTE →",
             "link": "shopify://collections/kurta-short-kurta"
@@ -97,6 +98,7 @@
         "pick_2": {
           "type": "pick_card",
           "settings": {
+            "image": "shopify://shop_images/Nehru_Jacket.jpg",
             "title": "Nehru Jackets",
             "subtitle": "LAYER THE LOOK →",
             "link": "shopify://collections/nehru-jackets"
@@ -113,6 +115,7 @@
         "pick_4": {
           "type": "pick_card",
           "settings": {
+            "image": "shopify://shop_images/Kurta_Sets.jpg",
             "title": "Kurta Sets",
             "subtitle": "COMPLETE THE LOOK →",
             "link": "shopify://collections/kurta-sets"
