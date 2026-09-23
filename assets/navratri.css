@@ -2979,3 +2979,212 @@ body.cp-qv-locked {
 div[id*="footer_seo"] {
   display: none !important;
 }
+
+/* ==========================================================================
+   NAVRATRI CATEGORIES — Slider (matches Gateway pattern)
+   ========================================================================== */
+
+/* Track Wrap */
+.cp-navratri-categories__track-wrap {
+  position: relative;
+  padding: 0 24px;
+}
+@media (max-width: 767px) {
+  .cp-navratri-categories__track-wrap {
+    padding: 0;
+  }
+}
+
+/* Scrollable Track */
+.cp-navratri-categories__track {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.cp-navratri-categories__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each card: 4 per screen on desktop */
+.cp-navratri-categories__item {
+  flex: 0 0 calc((100% - (3 * 20px)) / 4);
+  min-width: calc((100% - (3 * 20px)) / 4);
+  max-width: calc((100% - (3 * 20px)) / 4);
+  scroll-snap-align: start;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+.cp-navratri-categories__item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+}
+
+/* Mobile: 2 per screen */
+@media (max-width: 767px) {
+  .cp-navratri-categories__item {
+    flex: 0 0 calc((100% - 12px) / 2);
+    min-width: calc((100% - 12px) / 2);
+    max-width: calc((100% - 12px) / 2);
+  }
+  .cp-navratri-categories__track {
+    gap: 12px;
+  }
+}
+
+/* Link */
+.cp-navratri-categories__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Image */
+.cp-navratri-categories__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+.cp-navratri-categories__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.cp-navratri-categories__item:hover .cp-navratri-categories__img {
+  transform: scale(1.04);
+}
+.cp-navratri-categories__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Footer */
+.cp-navratri-categories__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-top: 1px solid;
+}
+.cp-navratri-categories__name {
+  font-family: var(--font-navratri-body), "Manrope", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.cp-navratri-categories__arrow-icon {
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .cp-navratri-categories__name {
+    font-size: 11px;
+  }
+  .cp-navratri-categories__footer {
+    padding: 10px 10px;
+  }
+}
+
+/* Prev / Next Arrow Buttons */
+.cp-navratri-categories__nav-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ded2ca;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, background 0.2s, color 0.2s;
+  padding: 0;
+}
+.cp-navratri-categories__nav-arrow--prev {
+  left: -20px;
+}
+.cp-navratri-categories__nav-arrow--next {
+  right: -20px;
+}
+.cp-navratri-categories__nav-arrow.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .cp-navratri-categories__nav-arrow {
+    display: none;
+  }
+}
+
+/* Header layout */
+.cp-navratri-categories__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.cp-navratri-categories__title-wrap {
+  flex: 1;
+}
+.cp-navratri-categories__kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.cp-navratri-categories__title {
+  font-family: var(--font-navratri-heading), serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  line-height: 1.1;
+}
+.cp-navratri-categories__subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Dots */
+.cp-navratri-categories__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+.cp-navratri-categories__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.25s, background 0.25s;
+  background: #ded2ca;
+}
+.cp-navratri-categories__dot.is-active {
+  transform: scale(1.35);
+}
+

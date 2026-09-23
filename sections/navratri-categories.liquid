@@ -1,4 +1,5 @@
 {%- style -%}
+  /* Dynamic colour overrides — driven by theme editor settings */
   #navratri-categories-{{ section.id }} {
     background-color: {{ section.settings.bg_color | default: '#faf6f0' }};
   }
@@ -10,10 +11,8 @@
     color: {{ section.settings.sub_color | default: '#c9a96e' }};
   }
   #navratri-categories-{{ section.id }} .cp-navratri-categories__item {
-    border-color: {{ section.settings.border_color | default: '#ded2ca' }};
-  }
-  #navratri-categories-{{ section.id }} .cp-navratri-categories__media {
-    background-color: {{ section.settings.card_bg_color | default: '#EDE8DF' }};
+    border: 1px solid {{ section.settings.border_color | default: '#ded2ca' }};
+    background: {{ section.settings.card_bg_color | default: '#EDE8DF' }};
   }
   #navratri-categories-{{ section.id }} .cp-navratri-categories__footer {
     border-top-color: {{ section.settings.border_color | default: '#ded2ca' }};
@@ -21,8 +20,23 @@
   #navratri-categories-{{ section.id }} .cp-navratri-categories__name {
     color: {{ section.settings.label_color | default: '#18120f' }};
   }
-  #navratri-categories-{{ section.id }} .cp-navratri-categories__arrow {
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__arrow-icon {
     color: {{ section.settings.label_color | default: '#18120f' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__nav-arrow {
+    border-color: {{ section.settings.border_color | default: '#ded2ca' }};
+    color: {{ section.settings.label_color | default: '#18120f' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__nav-arrow:hover {
+    background: {{ section.settings.label_color | default: '#18120f' }};
+    color: #fff;
+    border-color: {{ section.settings.label_color | default: '#18120f' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__dot {
+    background: {{ section.settings.border_color | default: '#ded2ca' }};
+  }
+  #navratri-categories-{{ section.id }} .cp-navratri-categories__dot.is-active {
+    background: {{ section.settings.label_color | default: '#18120f' }};
   }
 {%- endstyle -%}
 
@@ -43,13 +57,12 @@
         <div class="cp-navratri-colour-chip-group" data-colour-dropdown>
           <span class="cp-navratri-colour-label">COLOUR</span>
           <div class="cp-navratri-colour-dots-row">
-            <button type="button" class="cp-navratri-quick-dot" style="background-color: #8E2424;" data-colour-val="wine-maroon-purple" title="Wine & Maroon"></button>
-            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F3B36;" data-colour-val="green" title="Green & Emerald"></button>
-            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F1D33;" data-colour-val="navy-brown-black" title="Navy & Black"></button>
-            <button type="button" class="cp-navratri-quick-dot" style="background-color: #C2A676;" data-colour-val="yellow-orange" title="Mustard & Gold"></button>
-            <button type="button" class="cp-navratri-quick-dot" style="background-color: #EAE5D9;" data-colour-val="white-cream" title="Ivory & Cream"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #8E2424;" data-colour-val="wine-maroon-purple" title="Wine &amp; Maroon"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F3B36;" data-colour-val="green" title="Green &amp; Emerald"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #0F1D33;" data-colour-val="navy-brown-black" title="Navy &amp; Black"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #C2A676;" data-colour-val="yellow-orange" title="Mustard &amp; Gold"></button>
+            <button type="button" class="cp-navratri-quick-dot" style="background-color: #EAE5D9;" data-colour-val="white-cream" title="Ivory &amp; Cream"></button>
           </div>
-
           <div class="cp-navratri-colour-select-wrap">
             <button type="button" class="cp-navratri-colour-select-btn" data-colour-trigger aria-expanded="false">
               <span data-colour-label>All</span>
@@ -58,10 +71,10 @@
               </svg>
             </button>
             <div class="cp-navratri-colour-chip-menu" data-colour-menu>
-              <button type="button" class="cp-navratri-colour-option" data-colour-val="navy-brown-black">Navy, Brown & Black</button>
-              <button type="button" class="cp-navratri-colour-option" data-colour-val="wine-maroon-purple">Wine, Maroon & Purple</button>
-              <button type="button" class="cp-navratri-colour-option" data-colour-val="white-cream">White & Cream</button>
-              <button type="button" class="cp-navratri-colour-option" data-colour-val="yellow-orange">Yellow & Orange</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="navy-brown-black">Navy, Brown &amp; Black</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="wine-maroon-purple">Wine, Maroon &amp; Purple</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="white-cream">White &amp; Cream</button>
+              <button type="button" class="cp-navratri-colour-option" data-colour-val="yellow-orange">Yellow &amp; Orange</button>
               <button type="button" class="cp-navratri-colour-option" data-colour-val="pastels">Pastels</button>
               <button type="button" class="cp-navratri-colour-clear" data-colour-clear>Clear filter</button>
             </div>
@@ -70,9 +83,18 @@
       {%- endif -%}
     </div>
 
-    <!-- Category Items Track with Edge Arrows -->
+    <!-- Slider Track with Arrows & Dots — same pattern as Navratri Gateway -->
     <div class="cp-navratri-categories__track-wrap">
-      <div class="cp-navratri-categories__grid cp-navratri-categories__grid--{{ section.settings.columns_desktop | default: '3' }}" id="categories-track-{{ section.id }}">
+
+      <!-- Prev Arrow -->
+      <button type="button" class="cp-navratri-categories__nav-arrow cp-navratri-categories__nav-arrow--prev is-hidden" id="categories-prev-{{ section.id }}" aria-label="Previous slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Scrollable Track -->
+      <div class="cp-navratri-categories__track" id="categories-track-{{ section.id }}">
         {%- if section.blocks.size > 0 -%}
           {%- for block in section.blocks -%}
             <div class="cp-navratri-categories__item" {{ block.shopify_attributes }}>
@@ -92,7 +114,7 @@
                 </div>
                 <div class="cp-navratri-categories__footer">
                   <span class="cp-navratri-categories__name">{{ block.settings.title }}</span>
-                  <svg class="cp-navratri-categories__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="cp-navratri-categories__arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
@@ -101,9 +123,9 @@
             </div>
           {%- endfor -%}
         {%- else -%}
-          <!-- Fallback 3 Categories -->
-          {%- assign cat_titles = "MIRRORWORK,PRINTS,JACQUARD & TEXTURED" | split: "," -%}
-          {%- assign cat_links = "/collections/kurta-sets,/collections/indowestern-sets,/collections/short-kurta" | split: "," -%}
+          <!-- Fallback 4 Categories -->
+          {%- assign cat_titles = "MIRRORWORK,PRINTS,JACQUARD & TEXTURED,KURTA SETS" | split: "," -%}
+          {%- assign cat_links = "/collections/kurta-sets,/collections/indowestern-sets,/collections/short-kurta,/collections/kurta-sets" | split: "," -%}
           {%- for title in cat_titles -%}
             {%- assign cat_idx = forloop.index | minus: 1 -%}
             <div class="cp-navratri-categories__item">
@@ -115,7 +137,7 @@
                 </div>
                 <div class="cp-navratri-categories__footer">
                   <span class="cp-navratri-categories__name">{{ title }}</span>
-                  <svg class="cp-navratri-categories__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="cp-navratri-categories__arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
@@ -126,8 +148,16 @@
         {%- endif -%}
       </div>
 
+      <!-- Next Arrow -->
+      <button type="button" class="cp-navratri-categories__nav-arrow cp-navratri-categories__nav-arrow--next" id="categories-next-{{ section.id }}" aria-label="Next slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Dots -->
       {%- assign block_count = section.blocks.size -%}
-      {%- if block_count == 0 -%}{%- assign block_count = 3 -%}{%- endif -%}
+      {%- if block_count == 0 -%}{%- assign block_count = 4 -%}{%- endif -%}
       {%- if block_count > 1 -%}
         <div class="cp-navratri-categories__dots cp-navratri-categories__dots--{{ section.id }}" aria-label="Slide indicators">
           {%- for i in (1..block_count) -%}
@@ -135,46 +165,82 @@
           {%- endfor -%}
         </div>
       {%- endif -%}
+
     </div>
   </div>
 </section>
 
 <script>
   (function() {
-    function initCategoryDots() {
+    function initCategorySlider() {
       var track = document.getElementById('categories-track-{{ section.id }}');
-      var dotsWrap = document.querySelector('.cp-navratri-categories__dots--{{ section.id }}');
-      if (!track || !dotsWrap) return;
-      var dots = dotsWrap.querySelectorAll('.cp-navratri-categories__dot');
-      var items = track.querySelectorAll('.cp-navratri-categories__item');
-      if (!dots.length || !items.length) return;
+      if (!track) return;
+      var wrap = track.closest('.cp-navratri-categories__track-wrap');
+      if (!wrap) return;
 
-      function updateActiveDot() {
-        var trackRect = track.getBoundingClientRect();
-        var trackCenter = trackRect.left + trackRect.width / 2;
-        var closestIdx = 0;
-        var minDistance = Infinity;
+      var prevBtn = document.getElementById('categories-prev-{{ section.id }}');
+      var nextBtn = document.getElementById('categories-next-{{ section.id }}');
+      var dotsWrap = wrap.querySelector('.cp-navratri-categories__dots--{{ section.id }}');
+      var dots = dotsWrap ? dotsWrap.querySelectorAll('.cp-navratri-categories__dot') : [];
+      var cards = track.querySelectorAll('.cp-navratri-categories__item');
 
-        items.forEach(function(item, idx) {
-          var itemRect = item.getBoundingClientRect();
-          var itemCenter = itemRect.left + itemRect.width / 2;
-          var distance = Math.abs(trackCenter - itemCenter);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestIdx = idx;
-          }
+      if (!cards.length) return;
+
+      function updateNavState() {
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+
+        if (prevBtn) {
+          prevBtn.classList.toggle('is-hidden', scrollLeft <= 4);
+        }
+        if (nextBtn) {
+          nextBtn.classList.toggle('is-hidden', scrollLeft >= maxScroll - 4);
+        }
+
+        // Dot: highlight the card closest to the left edge of the track
+        if (dots.length) {
+          var trackLeft = track.getBoundingClientRect().left;
+          var closestIdx = 0;
+          var minDist = Infinity;
+          cards.forEach(function(card, idx) {
+            var dist = Math.abs(card.getBoundingClientRect().left - trackLeft);
+            if (dist < minDist) {
+              minDist = dist;
+              closestIdx = idx;
+            }
+          });
+          dots.forEach(function(d, i) {
+            d.classList.toggle('is-active', i === closestIdx);
+          });
+        }
+      }
+
+      function getScrollStep() {
+        var card = cards[0];
+        if (!card) return 300;
+        var gap = parseFloat(window.getComputedStyle(track).gap) || 20;
+        return card.offsetWidth + gap;
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
         });
+      }
 
-        dots.forEach(function(d, i) {
-          d.classList.toggle('is-active', i === closestIdx);
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
         });
       }
 
       dots.forEach(function(dot, idx) {
         dot.addEventListener('click', function() {
-          if (items[idx]) {
-            items[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            setTimeout(updateActiveDot, 350);
+          if (cards[idx]) {
+            cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+            setTimeout(updateNavState, 350);
           }
         });
       });
@@ -183,22 +249,28 @@
       track.addEventListener('scroll', function() {
         if (!ticking) {
           window.requestAnimationFrame(function() {
-            updateActiveDot();
+            updateNavState();
             ticking = false;
           });
           ticking = true;
         }
       }, { passive: true });
 
-      updateActiveDot();
-      window.addEventListener('resize', updateActiveDot);
+      window.addEventListener('resize', updateNavState);
+      updateNavState();
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCategoryDots);
+      document.addEventListener('DOMContentLoaded', initCategorySlider);
     } else {
-      initCategoryDots();
+      initCategorySlider();
     }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target && e.target.querySelector('#navratri-categories-{{ section.id }}')) {
+        initCategorySlider();
+      }
+    });
   })();
 </script>
 
@@ -268,22 +340,6 @@
       "id": "border_color",
       "label": "Card Border Color",
       "default": "#ded2ca"
-    },
-    {
-      "type": "header",
-      "content": "Layout Settings"
-    },
-    {
-      "type": "select",
-      "id": "columns_desktop",
-      "label": "Desktop Columns",
-      "options": [
-        { "value": "2", "label": "2 Columns" },
-        { "value": "3", "label": "3 Columns" },
-        { "value": "4", "label": "4 Columns" },
-        { "value": "6", "label": "6 Columns" }
-      ],
-      "default": "3"
     }
   ],
   "blocks": [
