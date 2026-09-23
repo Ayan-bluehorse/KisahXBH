@@ -855,6 +855,7 @@
         },
         "slide_banner_NJiUWz": {
           "type": "slide_banner",
+          "disabled": true,
           "settings": {
             "desk-img": "shopify://shop_images/Desktop_99809386-dc54-4d4b-855b-903a82df0679.jpg",
             "mob-img": "shopify://shop_images/Mobile_0249e39d-0433-42b9-b2a2-66e36abb4131.jpg",
