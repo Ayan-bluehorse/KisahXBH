@@ -117,6 +117,7 @@
         "pick_3": {
           "type": "pick_card",
           "settings": {
+            "image": "shopify://shop_images/Kids.jpg",
             "title": "Kids",
             "subtitle": "",
             "link": "shopify://collections/kids"
