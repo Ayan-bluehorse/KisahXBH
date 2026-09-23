@@ -24,6 +24,14 @@
       color: {{ section.settings.label_color }};
     }
   {%- endif -%}
+
+  {%- if section.settings.columns_desktop == '3' -%}
+    #navratri-gateway-{{ section.id }} .cp-navratri-gateway__track .cp-navratri-gateway__card {
+      flex: 0 0 calc((100% - (2 * 20px)) / 3);
+      max-width: calc((100% - (2 * 20px)) / 3);
+      min-width: calc((100% - (2 * 20px)) / 3);
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section class="cp-navratri-gateway" id="navratri-gateway-{{ section.id }}">
@@ -39,103 +47,231 @@
       {%- endif -%}
     </div>
 
-    {%- assign col_desktop = section.settings.columns_desktop | default: 'auto' -%}
-    {%- if col_desktop == 'auto' -%}
-      {%- if section.blocks.size > 0 -%}
-        {%- if section.blocks.size <= 4 -%}
-          {%- assign col_desktop = '4' -%}
-        {%- else -%}
-          {%- assign col_desktop = '3' -%}
-        {%- endif -%}
-      {%- else -%}
-        {%- assign col_desktop = '3' -%}
-      {%- endif -%}
-    {%- endif -%}
-    {%- assign col_mobile = section.settings.columns_mobile | default: '2' -%}
+    <!-- Occasion Tiles Slider: 4 cards visible on desktop screen, with edge arrows & indicator dots if extra cards -->
+    <div class="cp-navratri-gateway__track-wrap">
+      <button type="button" class="cp-navratri-gateway__arrow cp-navratri-gateway__arrow--prev is-disabled" id="gateway-prev-{{ section.id }}" aria-label="Previous slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
 
-    <!-- Occasion Tiles: Desktop {{ col_desktop }} cols (1 line for 4, 3/3 for 6), Mobile {{ col_mobile }} cols (2/2) -->
-    <div class="cp-navratri-gateway__grid cp-navratri-gateway__grid--{{ col_desktop }} cp-navratri-gateway__grid--mob-{{ col_mobile }}">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- assign card_image = block.settings.image -%}
-          {%- if card_image == blank and block.settings.link != blank -%}
-            {%- assign col_handle = block.settings.link | split: '/collections/' | last | split: '?' | first | split: '#' | first -%}
-            {%- if collections[col_handle] != blank -%}
-              {%- if collections[col_handle].image != blank -%}
-                {%- assign card_image = collections[col_handle].image -%}
-              {%- elsif collections[col_handle].products.first.featured_image != blank -%}
-                {%- assign card_image = collections[col_handle].products.first.featured_image -%}
+      <div class="cp-navratri-gateway__track" id="gateway-track-{{ section.id }}">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign card_image = block.settings.image -%}
+            {%- if card_image == blank and block.settings.link != blank -%}
+              {%- assign col_handle = block.settings.link | split: '/collections/' | last | split: '?' | first | split: '#' | first -%}
+              {%- if collections[col_handle] != blank -%}
+                {%- if collections[col_handle].image != blank -%}
+                  {%- assign card_image = collections[col_handle].image -%}
+                {%- elsif collections[col_handle].products.first.featured_image != blank -%}
+                  {%- assign card_image = collections[col_handle].products.first.featured_image -%}
+                {%- endif -%}
               {%- endif -%}
             {%- endif -%}
-          {%- endif -%}
-          <div class="cp-navratri-gateway__card" {{ block.shopify_attributes }}>
-            <a href="{{ block.settings.link | default: '/collections/all' }}" class="cp-navratri-gateway__card-link">
-              <div class="cp-navratri-gateway__media">
-                {%- if card_image != blank -%}
-                  <img 
-                    src="{{ card_image | image_url: width: 800 }}" 
-                    alt="{{ block.settings.title | escape }}" 
-                    loading="lazy"
-                    class="cp-navratri-gateway__img">
-                {%- else -%}
+            <div class="cp-navratri-gateway__card" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.link | default: '/collections/all' }}" class="cp-navratri-gateway__card-link">
+                <div class="cp-navratri-gateway__media">
+                  {%- if card_image != blank -%}
+                    <img 
+                      src="{{ card_image | image_url: width: 800 }}" 
+                      alt="{{ block.settings.title | escape }}" 
+                      loading="lazy"
+                      class="cp-navratri-gateway__img">
+                  {%- else -%}
+                    <div class="cp-navratri-gateway__placeholder">
+                      {{ 'collection-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                  <div class="cp-navratri-gateway__overlay"></div>
+                  
+                  <!-- Bottom Overlaid Glass Button with 2 lines of text -->
+                  <div class="cp-navratri-gateway__overlay-content">
+                    <span class="cp-navratri-gateway__card-title">{{ block.settings.title }}</span>
+                    {%- if block.settings.subtitle != blank -%}
+                      <span class="cp-navratri-gateway__card-sub">{{ block.settings.subtitle }}</span>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Mockup Default 6 Occasion Cards -->
+          {%- assign occ_cards = "DANDIYA & GARBA:SHOP THE SILHOUETTE →:#garba-dandiya,PUJA & RITUAL:COMPLETE THE LOOK →:#puja-aarti,PANDAL HOPPING:LAYER THE LOOK →:#pandal-hopping,FESTIVE EVENING:FINISH THE FIT →:#festive-evening-parties,PLUS SIZES:EVERY BODY FITS →:#festive-party,KIDS COLLECTION:SHOP LITTLE LOOKS →:shopify://collections/kids" | split: "," -%}
+          {%- for item in occ_cards -%}
+            {%- assign parts = item | split: ":" -%}
+            <div class="cp-navratri-gateway__card">
+              <a href="{{ parts[2] }}" class="cp-navratri-gateway__card-link">
+                <div class="cp-navratri-gateway__media">
                   <div class="cp-navratri-gateway__placeholder">
                     {{ 'collection-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
                   </div>
-                {%- endif -%}
-                <div class="cp-navratri-gateway__overlay"></div>
-                
-                <!-- Bottom Overlaid Glass Button with 2 lines of text -->
-                <div class="cp-navratri-gateway__overlay-content">
-                  <span class="cp-navratri-gateway__card-title">{{ block.settings.title }}</span>
-                  {%- if block.settings.subtitle != blank -%}
-                    <span class="cp-navratri-gateway__card-sub">{{ block.settings.subtitle }}</span>
-                  {%- endif -%}
+                  <div class="cp-navratri-gateway__overlay"></div>
+                  <div class="cp-navratri-gateway__overlay-content">
+                    <span class="cp-navratri-gateway__card-title">{{ parts[0] }}</span>
+                    <span class="cp-navratri-gateway__card-sub">{{ parts[1] }}</span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        <!-- Mockup Default 6 Occasion Cards (3/3 on Desktop, 2/2 on Mobile) -->
-        {%- assign occ_cards = "DANDIYA & GARBA:SHOP THE SILHOUETTE →:#garba-dandiya,PUJA & RITUAL:COMPLETE THE LOOK →:#puja-aarti,PANDAL HOPPING:LAYER THE LOOK →:#pandal-hopping,FESTIVE EVENING:FINISH THE FIT →:#festive-evening-parties,PLUS SIZES:EVERY BODY FITS →:#festive-party,KIDS COLLECTION:SHOP LITTLE LOOKS →:shopify://collections/kids" | split: "," -%}
-        {%- for item in occ_cards -%}
-          {%- assign parts = item | split: ":" -%}
-          <div class="cp-navratri-gateway__card">
-            <a href="{{ parts[2] }}" class="cp-navratri-gateway__card-link">
-              <div class="cp-navratri-gateway__media">
-                <div class="cp-navratri-gateway__placeholder">
-                  {{ 'collection-1' | placeholder_svg_tag: 'cp-navratri-placeholder-svg' }}
-                </div>
-                <div class="cp-navratri-gateway__overlay"></div>
-                <div class="cp-navratri-gateway__overlay-content">
-                  <span class="cp-navratri-gateway__card-title">{{ parts[0] }}</span>
-                  <span class="cp-navratri-gateway__card-sub">{{ parts[1] }}</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        {%- endfor -%}
+              </a>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <button type="button" class="cp-navratri-gateway__arrow cp-navratri-gateway__arrow--next" id="gateway-next-{{ section.id }}" aria-label="Next slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      {%- assign card_count = section.blocks.size -%}
+      {%- if card_count == 0 -%}{%- assign card_count = 6 -%}{%- endif -%}
+      {%- if card_count > 1 -%}
+        <div class="cp-navratri-gateway__dots cp-navratri-gateway__dots--{{ section.id }}" aria-label="Slide indicators">
+          {%- for i in (1..card_count) -%}
+            <button type="button" class="cp-navratri-gateway__dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
   </div>
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var gatewayLinks = document.querySelectorAll('#navratri-gateway-{{ section.id }} .cp-navratri-gateway__card-link');
-    gatewayLinks.forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var targetHref = link.getAttribute('href');
-        if (targetHref && targetHref.startsWith('#') && targetHref.length > 1) {
-          var targetEl = document.querySelector(targetHref);
-          if (targetEl) {
-            e.preventDefault();
-            targetEl.scrollIntoView({ behavior: 'smooth' });
-          }
+  (function() {
+    function initGatewaySlider() {
+      var track = document.getElementById('gateway-track-{{ section.id }}');
+      if (!track) return;
+      var wrap = track.closest('.cp-navratri-gateway__track-wrap');
+      if (!wrap) return;
+
+      var prevBtn = document.getElementById('gateway-prev-{{ section.id }}');
+      var nextBtn = document.getElementById('gateway-next-{{ section.id }}');
+      var dotsWrap = wrap.querySelector('.cp-navratri-gateway__dots--{{ section.id }}');
+      var dots = dotsWrap ? dotsWrap.querySelectorAll('.cp-navratri-gateway__dot') : [];
+      var cards = track.querySelectorAll('.cp-navratri-gateway__card');
+
+      if (!cards.length) return;
+
+      function checkOverflow() {
+        var hasOverflow = track.scrollWidth > track.clientWidth + 6;
+        wrap.classList.toggle('has-overflow', hasOverflow);
+        updateNavState();
+      }
+
+      function updateNavState() {
+        var scrollLeft = track.scrollLeft;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+        
+        if (prevBtn) {
+          var isAtStart = scrollLeft <= 4;
+          prevBtn.disabled = isAtStart;
+          prevBtn.classList.toggle('is-disabled', isAtStart);
         }
+        if (nextBtn) {
+          var isAtEnd = scrollLeft >= maxScroll - 4;
+          nextBtn.disabled = isAtEnd;
+          nextBtn.classList.toggle('is-disabled', isAtEnd);
+        }
+
+        // Active dot calculation (matching Navratri categories behavior)
+        if (dots.length) {
+          var trackRect = track.getBoundingClientRect();
+          var trackCenter = trackRect.left + trackRect.width / 2;
+          var closestIdx = 0;
+          var minDistance = Infinity;
+
+          cards.forEach(function(card, idx) {
+            var cardRect = card.getBoundingClientRect();
+            var cardCenter = cardRect.left + cardRect.width / 2;
+            var distance = Math.abs(trackCenter - cardCenter);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestIdx = idx;
+            }
+          });
+
+          dots.forEach(function(d, i) {
+            d.classList.toggle('is-active', i === closestIdx);
+          });
+        }
+      }
+
+      function getScrollStep() {
+        var firstCard = cards[0];
+        if (!firstCard) return 300;
+        var style = window.getComputedStyle(track);
+        var gap = parseFloat(style.gap) || 20;
+        return firstCard.offsetWidth + gap;
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          track.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          track.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+        });
+      }
+
+      dots.forEach(function(dot, idx) {
+        dot.addEventListener('click', function() {
+          if (cards[idx]) {
+            var inlineAlign = window.innerWidth <= 768 ? 'center' : 'start';
+            cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: inlineAlign });
+            setTimeout(updateNavState, 350);
+          }
+        });
       });
+
+      var ticking = false;
+      track.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateNavState();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener('resize', checkOverflow);
+      checkOverflow();
+
+      // Smooth scroll for anchor links inside cards
+      var gatewayLinks = track.querySelectorAll('.cp-navratri-gateway__card-link');
+      gatewayLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var targetHref = link.getAttribute('href');
+          if (targetHref && targetHref.startsWith('#') && targetHref.length > 1) {
+            var targetEl = document.querySelector(targetHref);
+            if (targetEl) {
+              e.preventDefault();
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGatewaySlider);
+    } else {
+      initGatewaySlider();
+    }
+
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.target && e.target.querySelector('#navratri-gateway-{{ section.id }}')) {
+        initGatewaySlider();
+      }
     });
-  });
+  })();
 </script>
 
 {% schema %}
@@ -205,24 +341,13 @@
     {
       "type": "select",
       "id": "columns_desktop",
-      "label": "Desktop Columns",
+      "label": "Desktop Cards Visible per Screen",
       "options": [
-        { "value": "auto", "label": "Auto (4 in 1 line if 4 cards, 3/3 if 6 cards)" },
-        { "value": "4", "label": "4 Columns (1 line)" },
-        { "value": "3", "label": "3 Columns (3/3)" },
-        { "value": "2", "label": "2 Columns" }
+        { "value": "auto", "label": "4 Cards" },
+        { "value": "4", "label": "4 Cards" },
+        { "value": "3", "label": "3 Cards" }
       ],
       "default": "auto"
-    },
-    {
-      "type": "select",
-      "id": "columns_mobile",
-      "label": "Mobile Columns",
-      "options": [
-        { "value": "2", "label": "2 Columns (2/2)" },
-        { "value": "1", "label": "1 Column" }
-      ],
-      "default": "2"
     }
   ],
   "blocks": [
@@ -259,8 +384,7 @@
     {
       "name": "Navratri Gateway",
       "settings": {
-        "columns_desktop": "3",
-        "columns_mobile": "2"
+        "columns_desktop": "4"
       },
       "blocks": [
         { "type": "pick_card", "settings": { "title": "DANDIYA & GARBA", "subtitle": "SHOP THE SILHOUETTE →", "link": "#garba-dandiya" } },
