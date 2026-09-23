@@ -11,9 +11,30 @@
     }
   }
   {%- if section.settings.enable_sticky -%}
-  .section-header {
-    position: -webkit-sticky;
-    position: sticky;
+  .kisah-header-spacer {
+    display: none;
+    width: 100%;
+  }
+  .section-header.kisah-header--fixed {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    z-index: 8500;
+    background-color: var(--header-bg-col, #ffffff);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .section-header.kisah-header--fixed.kisah-header--hidden {
+    transform: translateY(-100%);
+    box-shadow: none;
+  }
+  .section-header.kisah-header--fixed.kisah-header--visible {
+    transform: translateY(0);
   }
   {%- endif -%}
   {%- if section.settings.enable_transparent and template.name == 'index' -%}
@@ -85,6 +106,107 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 </script>
+
+{%- if section.settings.enable_sticky -%}
+<script>
+(function() {
+  function initSmartStickyHeader() {
+    const header = document.querySelector('.section-header');
+    if (!header) return;
+
+    let spacer = document.getElementById('kisah-header-spacer');
+    if (!spacer) {
+      spacer = document.createElement('div');
+      spacer.id = 'kisah-header-spacer';
+      spacer.className = 'kisah-header-spacer';
+      spacer.setAttribute('aria-hidden', 'true');
+      header.insertAdjacentElement('afterend', spacer);
+    }
+
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    let ticking = false;
+    let headerHeight = header.offsetHeight || 80;
+
+    function updateHeight() {
+      if (!header.classList.contains('kisah-header--fixed')) {
+        headerHeight = header.offsetHeight || 80;
+      }
+    }
+    window.addEventListener('resize', updateHeight, { passive: true });
+
+    function onScroll() {
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+      if (currentScrollY < 0) {
+        lastScrollY = 0;
+        ticking = false;
+        return;
+      }
+
+      if (
+        document.body.classList.contains('reveal-mobile-nav') ||
+        document.body.classList.contains('show-search')
+      ) {
+        header.classList.remove('kisah-header--hidden');
+        header.classList.add('kisah-header--visible');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      const scrollDelta = currentScrollY - lastScrollY;
+      const threshold = headerHeight + 30;
+
+      if (currentScrollY <= 10) {
+        header.classList.remove('kisah-header--fixed', 'kisah-header--hidden', 'kisah-header--visible');
+        spacer.style.display = 'none';
+        spacer.style.height = '0px';
+      } else if (currentScrollY > threshold) {
+        if (!header.classList.contains('kisah-header--fixed')) {
+          header.classList.add('kisah-header--fixed');
+          spacer.style.height = headerHeight + 'px';
+          spacer.style.display = 'block';
+        }
+
+        if (Math.abs(scrollDelta) > 4) {
+          if (scrollDelta > 0) {
+            header.classList.add('kisah-header--hidden');
+            header.classList.remove('kisah-header--visible');
+          } else {
+            header.classList.remove('kisah-header--hidden');
+            header.classList.add('kisah-header--visible');
+          }
+        }
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    onScroll();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartStickyHeader);
+  } else {
+    initSmartStickyHeader();
+  }
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.target && (e.target.classList.contains('section-header') || e.target.querySelector('.section-header'))) {
+      initSmartStickyHeader();
+    }
+  });
+})();
+</script>
+{%- endif -%}
 
 {%- if template == 'gift_card' -%}
 
