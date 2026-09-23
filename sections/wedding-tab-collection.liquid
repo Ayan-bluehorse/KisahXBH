@@ -42,7 +42,7 @@
                 <div class="product-price">
                 {%- render 'price', product: product, use_variant: true, for_variant_picker: true, show_badges: true, price_class: 'price--large' -%}
                 </div>
-               {% render 'wishlisthero-collection-product' with product: product %}
+               {% render 'wishlisthero-collection-product' with product, product: product %}
             </a>
 
              {%- assign product_form_id = 'product-form-' | append: product.id -%} 
@@ -707,4 +707,14 @@ window.kisahWhenJQueryReady(function($) {
     ]
     
   }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'wishlisthero-collection-product' with product: product %}"
+  to: "{% render 'wishlisthero-collection-product' with product, product: product
+    %}"
+  position: 1919..1996
+{%- endcomment -%}

@@ -5,16 +5,10 @@
    </div>
    <div class="desktop-timeline-img">
    
-     {% render 'image',
-       image: section.settings.image,
-       width:2330px
-     %}
+     {% render 'image', image: section.settings.image, width: renamed_variable_2330px %}
      </div>
      <div class="mobile-timeline-img">
-        {% render 'image',
-       image: section.settings.mob-image,
-       width:2330px
-     %}
+        {% render 'image', image: section.settings.mob-image, width: renamed_variable_2330px %}
      </div>
 </div>
 </div>
@@ -232,4 +226,26 @@
       }
     ]
   }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'image',
+           image: section.settings.image,
+           width:2330px
+         %}
+  to: "{% render 'image', image: section.settings.image, width: renamed_variable_2330px
+    %}"
+  position: 190..273
+- from: |-
+    {% render 'image',
+           image: section.settings.mob-image,
+           width:2330px
+         %}
+  to: "{% render 'image', image: section.settings.mob-image, width: renamed_variable_2330px
+    %}"
+  position: 333..420
+{%- endcomment -%}

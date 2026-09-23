@@ -336,7 +336,7 @@
         "category_item_4Bwhmk": {
           "type": "category_item",
           "settings": {
-            "collection": "size-inclusive",
+            "collection": "plus",
             "collection_title": "",
             "image": "shopify://shop_images/PLUS_SIZE_d314ce53-4155-4cf9-819f-6ad68fd01a03.png"
           }
@@ -823,38 +823,12 @@
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
-        "slide_banner_dual_button_WQaTbD": {
-          "type": "slide_banner_dual_button",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/ChatGPT_Image_Aug_23_2026_10_19_26_AM.png",
-            "mob-img": "shopify://shop_images/ChatGPT_Image_Aug_23_2026_10_14_21_AM.png",
-            "button1_name": "BUILD HIS GIFT BOX",
-            "button1_link": "/collections/rakhi-collection#rakhi-gifting-app",
-            "button2_name": "SHOP RAKHI KURTAS",
-            "button2_link": "/collections/rakhi-collection#rakhi-collection-grid",
-            "desk_top_offset": 21,
-            "desk_left_offset": 18,
-            "mob_top_offset": 60
-          }
-        },
-        "slide_banner_xWViP9": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Rakhi_Web_Banner_Desktop.png",
-            "mob-img": "shopify://shop_images/Rakhi_Web_Banner_Mobile.png",
-            "link": "shopify://collections/rakhi-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Hero_Banner_Desktop.webp",
-            "mob-img": "shopify://shop_images/Hero_Banner_Mobile.webp",
-            "link": "shopify://pages/short-kurta",
+            "desk-img": "shopify://shop_images/Desktop_2_87272e55-fb6f-4244-ac62-fbd2a36e62ac.png",
+            "mob-img": "shopify://shop_images/Mobile.png",
+            "link": "shopify://pages/navratri-ethnic-wear-for-men",
             "button-name": "",
             "button-link": ""
           }
@@ -862,31 +836,39 @@
         "slide_banner_FiWGha": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Desktop_Version.png",
-            "mob-img": "shopify://shop_images/Mobile_Version.png",
-            "link": "shopify://pages/short-kurta",
+            "desk-img": "shopify://shop_images/Desktop.jpg",
+            "mob-img": "shopify://shop_images/Mobile.jpg",
+            "link": "shopify://pages/navratri-ethnic-wear-for-men",
             "button-name": "",
             "button-link": ""
           }
         },
-        "slide_banner_AKieYd": {
+        "slide_banner_DhgQ4b": {
           "type": "slide_banner",
-          "disabled": true,
           "settings": {
-            "desk-img": "shopify://shop_images/Desktop_jpg_e16e5f97-368c-40db-850a-f5baa73766cc_1.webp",
-            "mob-img": "shopify://shop_images/Mobile_jpg_1.webp",
-            "link": "shopify://collections/summer-collection",
+            "desk-img": "shopify://shop_images/Desktop_0f931e45-a5d8-4b4a-8304-dd9ab58764d4.jpg",
+            "mob-img": "shopify://shop_images/Mobile_7efd11ca-4e7a-4391-a2d9-e342b7468550.jpg",
+            "link": "shopify://pages/navratri-ethnic-wear-for-men",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
+        "slide_banner_NJiUWz": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/Desktop_99809386-dc54-4d4b-855b-903a82df0679.jpg",
+            "mob-img": "shopify://shop_images/Mobile_0249e39d-0433-42b9-b2a2-66e36abb4131.jpg",
+            "link": "shopify://pages/navratri-ethnic-wear-for-men",
             "button-name": "",
             "button-link": ""
           }
         }
       },
       "block_order": [
-        "slide_banner_dual_button_WQaTbD",
-        "slide_banner_xWViP9",
         "slide_banner_HbQBTL",
         "slide_banner_FiWGha",
-        "slide_banner_AKieYd"
+        "slide_banner_DhgQ4b",
+        "slide_banner_NJiUWz"
       ],
       "settings": {
         "whats-app-link": "",

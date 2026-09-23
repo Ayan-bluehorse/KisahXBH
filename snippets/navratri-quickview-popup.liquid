@@ -1,0 +1,470 @@
+{%- comment -%}
+  Navratri Quick View Popup Modal
+  Opens when customer clicks the '+' button on any product card.
+  Matches Kisah theme aesthetics (deep navy #201747, Generis Sans font, trust badges, responsive).
+{%- endcomment -%}
+
+<div class="cp-qv-modal" id="cp-qv-modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="cp-qv-backdrop" data-cp-qv-close></div>
+  <div class="cp-qv-dialog" role="document">
+    <div class="cp-qv-drag-handle"></div>
+    <button type="button" class="cp-qv-close-btn" data-cp-qv-close aria-label="Close Quick View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="cp-qv-loading" id="cp-qv-loading">
+      <div class="cp-qv-spinner"></div>
+      <p>Loading details...</p>
+    </div>
+
+    <div class="cp-qv-body" id="cp-qv-body" style="display: none;">
+      <!-- Dynamic product content injected here -->
+    </div>
+  </div>
+</div>
+
+{{ 'find-your-size.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'find-your-size.js' | asset_url }}" defer></script>
+
+<script>
+(function () {
+  // Move modal to body so it never gets clipped by section overflow
+  function ensureModalInBody() {
+    var m = document.getElementById('cp-qv-modal');
+    if (m && m.parentElement && m.parentElement !== document.body) {
+      document.body.appendChild(m);
+    }
+    return m;
+  }
+  ensureModalInBody();
+
+  if (window.__CP_NAVRATRI_QV_INIT__) return;
+  window.__CP_NAVRATRI_QV_INIT__ = true;
+
+  var currentProduct = null;
+  var selectedVariant = null;
+  var currentImgIndex = 0;
+
+  function getModal() {
+    return ensureModalInBody();
+  }
+
+  function formatMoney(cents) {
+    var val = (cents / 100).toFixed(0);
+    return 'Rs. ' + val.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function formatImgUrl(url) {
+    if (!url) return '';
+    if (url.indexOf('//') === 0) return 'https:' + url;
+    return url;
+  }
+
+  function closeModal() {
+    var modal = getModal();
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('cp-qv-locked');
+    document.body.classList.remove('cp-qv-locked');
+  }
+
+  function openModal() {
+    var modal = getModal();
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('cp-qv-locked');
+    document.body.classList.add('cp-qv-locked');
+  }
+
+  function renderGallery(images) {
+    if (!images || !images.length) return '';
+    currentImgIndex = 0;
+    var html = '<div class="cp-qv-gallery">';
+    html += '  <div class="cp-qv-main-image-wrap">';
+    html += '    <img src="' + formatImgUrl(images[0]) + '" alt="Product Image" class="cp-qv-main-image" id="cp-qv-main-img" />';
+    if (images.length > 1) {
+      html += '    <button type="button" class="cp-qv-gal-arrow cp-qv-gal-arrow--prev" id="cp-qv-prev-img" aria-label="Previous image">&#10094;</button>';
+      html += '    <button type="button" class="cp-qv-gal-arrow cp-qv-gal-arrow--next" id="cp-qv-next-img" aria-label="Next image">&#10095;</button>';
+    }
+    html += '  </div>';
+
+    if (images.length > 1) {
+      html += '  <div class="cp-qv-dots">';
+      for (var i = 0; i < Math.min(images.length, 5); i++) {
+        html += '    <span class="cp-qv-dot' + (i === 0 ? ' is-active' : '') + '" data-img-idx="' + i + '"></span>';
+      }
+      html += '  </div>';
+    }
+
+    html += '  <div class="cp-qv-ribbon">';
+    html += '    <span>🤝</span> <strong>36 people</strong> bought this product in last 30 days';
+    html += '  </div>';
+    html += '</div>';
+    return html;
+  }
+
+  function renderDetails(product) {
+    var variant = selectedVariant || product.variants[0];
+    var isSale = variant.compare_at_price && variant.compare_at_price > variant.price;
+
+    var html = '<div class="cp-qv-details">';
+    // Title
+    html += '  <h2 class="cp-qv-title">' + (product.title || '') + '</h2>';
+
+    // Price
+    html += '  <div class="cp-qv-price-row">';
+    html += '    <span class="cp-qv-price" id="cp-qv-price">' + formatMoney(variant.price) + '</span>';
+    if (isSale) {
+      html += '    <span class="cp-qv-was-price" id="cp-qv-was-price">MRP ' + formatMoney(variant.compare_at_price) + '</span>';
+    } else {
+      html += '    <span class="cp-qv-was-price" id="cp-qv-was-price" style="display:none;"></span>';
+    }
+    html += '    <span class="cp-qv-tax-text">inclusive of all taxes</span>';
+    html += '  </div>';
+
+    // Size Selection (if multiple variants)
+    var sizeOptionIndex = -1;
+    if (product.options && product.options.length) {
+      for (var oi = 0; oi < product.options.length; oi++) {
+        var optName = (product.options[oi].name || '').toLowerCase();
+        if (optName.indexOf('size') !== -1) {
+          sizeOptionIndex = oi;
+          break;
+        }
+      }
+      if (sizeOptionIndex === -1) sizeOptionIndex = 0; // default to first option
+    }
+
+    if (product.variants && product.variants.length > 1) {
+      html += '  <div class="cp-qv-options">';
+      html += '    <div class="cp-qv-opt-header">';
+      html += '      <span class="cp-qv-opt-label">SELECT SIZE:</span>';
+      html += '      <span class="cp-qv-selected-size" id="cp-qv-current-size">' + (variant.options[sizeOptionIndex] || variant.title) + '</span>';
+      html += '    </div>';
+      html += '    <div class="cp-qv-chips">';
+      
+      product.variants.forEach(function (v) {
+        var val = v.options[sizeOptionIndex] || v.title;
+        var isSelected = v.id === variant.id;
+        var isAvail = v.available;
+        var cls = 'cp-qv-chip';
+        if (isSelected) cls += ' is-selected';
+        if (!isAvail) cls += ' is-oos';
+        html += '      <button type="button" class="' + cls + '" data-variant-id="' + v.id + '"' + (!isAvail ? ' title="Out of stock"' : '') + '>';
+        html += '        ' + val;
+        html += '      </button>';
+      });
+      html += '    </div>';
+      html += '  </div>';
+      // FYS widget container — same structure as find-your-size.liquid
+      var fysId = 'fys-qv-' + product.id;
+      var fysPanelId = 'fysPanel-qv-' + product.id;
+      var availSizes = JSON.stringify(
+        product.variants
+          .filter(function(v){ return v.available; })
+          .map(function(v){ return v.title; })
+      );
+      html += '<div data-fys-container data-product-id="' + product.id + '" data-product-title="' + (product.title||'').replace(/"/g,"&quot;") + '" data-product-handle="' + product.handle + '" data-available-sizes=\'' + availSizes + '\' data-whatsapp-number="918100993481" data-log-endpoint="https://script.google.com/macros/s/AKfycbwf2YwO34Hb9rGOWaIU_4Ireu170EKpZ0QaT-d1M2QEtUOMhT6slU-e-I4GjKMA-E8/exec">';
+      html += '<div class="fys" id="' + fysId + '">';
+      html += '<button class="fys-trigger" id="fysTrigger-qv-' + product.id + '" aria-expanded="false" aria-controls="' + fysPanelId + '">';
+      html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>';
+      html += '<span>Not sure of your size?&nbsp;→</span>';
+      html += '<svg class="fys-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
+      html += '</button>';
+      html += '<div class="fys-panel" id="' + fysPanelId + '"><div class="fys-panel-inner"><div class="fys-card"><div class="fys-stepper" data-fys-stepper><div class="fys-track" data-fys-track></div><button class="fys-step-btn" data-step="0" tabindex="-1"><span class="dot"></span><span class="lbl">Height</span></button><button class="fys-step-btn" data-step="1" tabindex="-1"><span class="dot"></span><span class="lbl">Weight</span></button><button class="fys-step-btn" data-step="2" tabindex="-1"><span class="dot"></span><span class="lbl">Build</span></button><button class="fys-step-btn" data-step="3" tabindex="-1"><span class="dot"></span><span class="lbl">Your Size</span></button></div>';
+      html += '<div class="fys-screens">';
+      html += '<section class="fys-screen" data-screen="0"><h3 class="fys-h">Your height</h3><p class="fys-sub">Use the arrows, or tap a number to type it in.</p><div class="fys-inputs"><div class="fys-field"><span class="fys-field-lbl">Feet</span><div class="fys-spin"><button type="button" data-spin="feet" data-dir="-1" aria-label="Decrease feet">−</button><input type="number" data-fys-feet value="5" min="4" max="7" inputmode="numeric" aria-label="Height in feet"><button type="button" data-spin="feet" data-dir="1" aria-label="Increase feet">+</button></div></div><div class="fys-field"><span class="fys-field-lbl">Inches</span><div class="fys-spin"><button type="button" data-spin="inch" data-dir="-1" aria-label="Decrease inches">−</button><input type="number" data-fys-inch value="8" min="0" max="11" inputmode="numeric" aria-label="Height in inches"><button type="button" data-spin="inch" data-dir="1" aria-label="Increase inches">+</button></div></div></div><div class="fys-actions"><button class="fys-continue" data-next>Continue</button></div></section>';
+      html += '<section class="fys-screen" data-screen="1"><h3 class="fys-h">Your weight</h3><p class="fys-sub">Roughly is fine.</p><div class="fys-inputs"><div class="fys-field"><span class="fys-field-lbl">Weight (kg)</span><div class="fys-spin"><button type="button" data-spin="kg" data-dir="-1" aria-label="Decrease weight">−</button><input type="number" data-fys-kg value="70" min="35" max="160" inputmode="numeric" aria-label="Weight in kilograms"><button type="button" data-spin="kg" data-dir="1" aria-label="Increase weight">+</button></div></div></div><div class="fys-actions"><button class="fys-back" data-back>← Back</button><button class="fys-continue" data-next>Continue</button></div></section>';
+      html += '<section class="fys-screen" data-screen="2"><h3 class="fys-h">How would you describe your build?</h3><p class="fys-sub">Pick whichever feels closest.</p><div class="fys-builds" role="radiogroup" aria-label="Build"><button class="fys-build" data-build="slim" role="radio" aria-checked="false"><svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M8 22 V10 Q8 4 17 4 Q26 4 26 10 V22" stroke-linecap="round"/></svg><div class="b-name">Slim</div><div class="b-desc">Fitted through chest &amp; shoulders</div></button><button class="fys-build" data-build="regular" role="radio" aria-checked="false"><svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M5 22 V9 Q5 3 17 3 Q29 3 29 9 V22" stroke-linecap="round"/></svg><div class="b-name">Regular</div><div class="b-desc">Average build</div></button><button class="fys-build" data-build="broad" role="radio" aria-checked="false"><svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M3 22 V8 Q3 2 17 2 Q31 2 31 8 V22" stroke-linecap="round"/></svg><div class="b-name">Broad</div><div class="b-desc">Broader shoulders / heavier-set</div></button></div><div class="fys-actions"><button class="fys-back" data-back>← Back</button></div></section>';
+      html += '<section class="fys-screen fys-result" data-screen="3"><div class="fys-badge" data-fys-badge>40</div><h3 class="fys-result-h">Your recommended size is <span data-fys-size-label>M — 40</span></h3><div class="fys-answers" data-fys-answers></div><div class="fys-slim-note" data-fys-slim-note hidden><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span>Prefer a closer fit? Size <b data-fys-slim-size></b> will sit slimmer on you.</span></div><div class="fys-result-actions"><button class="fys-continue" data-fys-use-size>Select this size</button><button class="fys-startover" data-fys-start-over>Start over</button></div><p class="fys-exchange">Free size exchange within 7 days if it\'s not right.</p><p class="fys-support">Still unsure? <a data-fys-support-link>Reach out to support</a></p></section>';
+      html += '</div></div></div></div></div></div>';
+    }
+
+    // Add To Bag CTA Button
+    var isAvailNow = variant.available;
+    html += '  <div class="cp-qv-cta-wrap">';
+    html += '    <button type="button" class="cp-qv-atc-btn" id="cp-qv-atc-btn"' + (!isAvailNow ? ' disabled' : '') + '>';
+    html += '      <span class="cp-qv-atc-text">' + (isAvailNow ? 'ADD TO BAG' : 'SOLD OUT') + '</span>';
+    html += '      <svg class="cp-qv-bag-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
+    html += '        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>';
+    html += '        <line x1="3" y1="6" x2="21" y2="6"></line>';
+    html += '        <path d="M16 10a4 4 0 0 1-8 0"></path>';
+    html += '      </svg>';
+    html += '    </button>';
+    html += '  </div>';
+
+    // Trust Badges
+    html += '  <div class="cp-qv-trust-grid">';
+    html += '    <div class="cp-qv-trust-item">';
+    html += '      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#201747" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>';
+    html += '      <span>2 days delivery</span>';
+    html += '    </div>';
+    html += '    <div class="cp-qv-trust-item">';
+    html += '      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#201747" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>';
+    html += '      <span>Cash on delivery</span>';
+    html += '    </div>';
+    html += '    <div class="cp-qv-trust-item">';
+    html += '      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#201747" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>';
+    html += '      <span>7 days return and exchange</span>';
+    html += '    </div>';
+    html += '    <div class="cp-qv-trust-item">';
+    html += '      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#201747" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
+    html += '      <span>Money back guarantee</span>';
+    html += '    </div>';
+    html += '  </div>';
+
+    // Return & Shipping Policy
+    html += '  <p class="cp-qv-policy">Click here to see our <a href="/pages/return-exchange" target="_blank">return policy</a> and <a href="/pages/shipping-policy" target="_blank">shipping policy</a></p>';
+
+    // View Details Link
+    var prodUrl = product.url || ('/products/' + product.handle);
+    html += '  <div class="cp-qv-view-more">';
+    html += '    <a href="' + prodUrl + '" class="cp-qv-pdp-link">';
+    html += '      <span>View product details</span>';
+    html += '      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    html += '    </a>';
+    html += '  </div>';
+
+    html += '</div>';
+    return html;
+  }
+
+  function bindEvents() {
+    var modal = getModal();
+    var bodyEl = modal ? modal.querySelector('#cp-qv-body') : null;
+    if (!bodyEl) return;
+
+    // Gallery navigation
+    var prevBtn = bodyEl.querySelector('#cp-qv-prev-img');
+    var nextBtn = bodyEl.querySelector('#cp-qv-next-img');
+    var mainImg = bodyEl.querySelector('#cp-qv-main-img');
+    var dots = bodyEl.querySelectorAll('.cp-qv-dot');
+    var images = currentProduct ? currentProduct.images : [];
+
+    function setImg(idx) {
+      if (!images || !images.length) return;
+      currentImgIndex = (idx + images.length) % images.length;
+      if (mainImg) mainImg.src = formatImgUrl(images[currentImgIndex]);
+      dots.forEach(function (d, i) {
+        d.classList.toggle('is-active', i === currentImgIndex);
+      });
+    }
+
+    if (prevBtn) prevBtn.onclick = function () { setImg(currentImgIndex - 1); };
+    if (nextBtn) nextBtn.onclick = function () { setImg(currentImgIndex + 1); };
+    dots.forEach(function (dot) {
+      dot.onclick = function () {
+        var idx = parseInt(dot.getAttribute('data-img-idx'), 10);
+        setImg(idx);
+      };
+    });
+
+    // Variant / Size switching
+    var chips = bodyEl.querySelectorAll('.cp-qv-chip');
+    var priceEl = bodyEl.querySelector('#cp-qv-price');
+    var wasPriceEl = bodyEl.querySelector('#cp-qv-was-price');
+    var sizeLabel = bodyEl.querySelector('#cp-qv-current-size');
+    var atcBtn = bodyEl.querySelector('#cp-qv-atc-btn');
+    var atcText = atcBtn ? atcBtn.querySelector('.cp-qv-atc-text') : null;
+
+    chips.forEach(function (chip) {
+      chip.onclick = function () {
+        var vId = parseInt(chip.getAttribute('data-variant-id'), 10);
+        var found = currentProduct.variants.find(function (v) { return v.id === vId; });
+        if (!found) return;
+
+        selectedVariant = found;
+        chips.forEach(function (c) { c.classList.remove('is-selected'); });
+        chip.classList.add('is-selected');
+
+        // Update UI
+        if (priceEl) priceEl.textContent = formatMoney(found.price);
+        if (wasPriceEl) {
+          if (found.compare_at_price && found.compare_at_price > found.price) {
+            wasPriceEl.textContent = 'MRP ' + formatMoney(found.compare_at_price);
+            wasPriceEl.style.display = 'inline-block';
+          } else {
+            wasPriceEl.style.display = 'none';
+          }
+        }
+        if (sizeLabel) sizeLabel.textContent = chip.textContent.trim();
+
+        if (atcBtn) {
+          if (found.available) {
+            atcBtn.removeAttribute('disabled');
+            if (atcText) atcText.textContent = 'ADD TO BAG';
+          } else {
+            atcBtn.setAttribute('disabled', 'disabled');
+            if (atcText) atcText.textContent = 'SOLD OUT';
+          }
+        }
+      };
+    });
+
+    // Add To Bag AJAX
+    if (atcBtn) {
+      atcBtn.onclick = function () {
+        if (!selectedVariant || !selectedVariant.available) return;
+        if (atcBtn.disabled) return;
+
+        atcBtn.disabled = true;
+        if (atcText) atcText.textContent = 'ADDING...';
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ id: selectedVariant.id, quantity: 1 })
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('Cart error: ' + res.status);
+            return res.json();
+          })
+          .then(function (cartItem) {
+            if (atcText) atcText.textContent = '✓ ADDED!';
+            atcBtn.style.backgroundColor = '#15803d';
+
+            // Instantly update cart count badges everywhere
+            fetch('/cart.js')
+              .then(function (r) { return r.json(); })
+              .then(function (cart) {
+                var badges = document.querySelectorAll('.cart-count, [data-cart-count], .cart-link__count, .cart-count-bubble span');
+                badges.forEach(function (b) { b.textContent = cart.item_count; });
+                // Show cart count bubble if hidden
+                var bubbles = document.querySelectorAll('.cart-count-bubble');
+                bubbles.forEach(function (b) { b.style.display = ''; });
+              })
+              .catch(function () {});
+
+            // Trigger theme cart events
+            document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true, detail: cartItem }));
+            document.dispatchEvent(new CustomEvent('on:cart:add', { bubbles: true, detail: { variantId: cartItem.variant_id } }));
+
+            // Auto-close popup after 1.2s, then open cart drawer if theme uses it
+            setTimeout(function () {
+              closeModal();
+              atcBtn.style.backgroundColor = '#201747';
+              if (atcText) atcText.textContent = 'ADD TO BAG';
+              atcBtn.disabled = false;
+
+              // Open cart drawer if theme supports it
+              try {
+                var cartDrawer = document.querySelector('.js-cart-drawer');
+                if (cartDrawer && typeof cartDrawer.open === 'function') {
+                  cartDrawer.open();
+                }
+              } catch (e) {}
+            }, 1200);
+          })
+          .catch(function (err) {
+            console.error('Add to cart failed:', err);
+            if (atcText) atcText.textContent = 'TRY AGAIN';
+            atcBtn.disabled = false;
+            setTimeout(function () {
+              if (atcText) atcText.textContent = 'ADD TO BAG';
+            }, 2000);
+          });
+      };
+    }
+  }
+
+  function loadProduct(productUrl) {
+    if (!productUrl) return;
+    openModal();
+
+    var modal = getModal();
+    var loadingEl = modal ? modal.querySelector('#cp-qv-loading') : null;
+    var bodyEl = modal ? modal.querySelector('#cp-qv-body') : null;
+
+    if (loadingEl) loadingEl.style.display = 'flex';
+    if (bodyEl) {
+      bodyEl.style.display = 'none';
+      bodyEl.innerHTML = '';
+    }
+
+    // Clean URL to handle /products/handle.js
+    var cleanUrl = productUrl.split('?')[0];
+    var match = cleanUrl.match(/\/products\/([^\/\?#]+)/);
+    if (match && match[1]) {
+      cleanUrl = '/products/' + match[1] + '.js';
+    } else if (cleanUrl.indexOf('.js') === -1) {
+      cleanUrl = cleanUrl.replace(/\/$/, '') + '.js';
+    }
+
+    fetch(cleanUrl)
+      .then(function (res) {
+        if (!res.ok) throw new Error('Failed to load product JSON');
+        return res.json();
+      })
+      .then(function (product) {
+        currentProduct = product;
+        selectedVariant = product.variants && product.variants.length ? product.variants[0] : null;
+
+        var fullHtml = '<div class="cp-qv-layout">';
+        fullHtml += renderGallery(product.images);
+        fullHtml += renderDetails(product);
+        fullHtml += '</div>';
+
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (bodyEl) {
+          bodyEl.innerHTML = fullHtml;
+          bodyEl.style.display = 'block';
+          bindEvents();
+          // Init the FYS widget injected into the popup
+          var fysContainer = bodyEl.querySelector('[data-fys-container]');
+          if (fysContainer && typeof window.__fysInitWidget === 'function') {
+            window.__fysInitWidget(fysContainer);
+          }
+        }
+      })
+      .catch(function (err) {
+        console.error('Quick view error:', err);
+        // Fallback: navigate directly to product page
+        location.href = productUrl;
+      });
+  }
+
+  // Intercept '+' button clicks ONLY on Navratri sections / landing page
+  document.addEventListener('click', function (evt) {
+    var btn = evt.target.closest('.quickbuy-toggle');
+    if (!btn) return;
+
+    // Verify it is specifically within a Navratri section
+    var inNavratri = btn.closest('.cp-navratri-pcarousel, .cp-navratri-kids, [data-pcarousel], .cp-navratri-main');
+    if (!inNavratri) {
+      // Do NOT intercept on default collection, list, or search pages!
+      return;
+    }
+
+    var block = btn.closest('.product-block');
+    if (!block) return;
+
+    // Intercept and open popup modal for Navratri
+    evt.preventDefault();
+    evt.stopImmediatePropagation();
+
+    var href = btn.getAttribute('href') || (block.querySelector('a.product-link') || block.querySelector('a'))?.getAttribute('href');
+    if (href) {
+      loadProduct(href);
+    }
+  }, true); // Capture phase to prevent theme's default inline expansion on Navratri page
+
+  // Close handlers
+  document.addEventListener('click', function (evt) {
+    if (evt.target.matches('[data-cp-qv-close]') || evt.target.closest('[data-cp-qv-close]')) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape' || evt.keyCode === 27) {
+      closeModal();
+    }
+  });
+
+})();
+</script>

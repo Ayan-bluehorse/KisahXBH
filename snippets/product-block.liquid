@@ -421,14 +421,14 @@ Parameters:
         </div>
 
       <div class="desktop-whishlist mobile_wishlist">
-       {% render 'wishlisthero-collection-product' with product: product %}
+       {% render 'wishlisthero-collection-product' with product, product: product %}
       </div>
    
          
         
       </div>
       <div class="desktop-whishlist desktop_wishlist">
-       {% render 'wishlisthero-collection-product' with product: product %}
+       {% render 'wishlisthero-collection-product' with product, product: product %}
       </div>
     </div>
   </div>
@@ -442,3 +442,18 @@ Parameters:
     {%- endunless -%}
   {%- endif -%}
 </product-block>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'wishlisthero-collection-product' with product: product %}"
+  to: "{% render 'wishlisthero-collection-product' with product, product: product
+    %}"
+  position: 23433..23510
+- from: "{% render 'wishlisthero-collection-product' with product: product %}"
+  to: "{% render 'wishlisthero-collection-product' with product, product: product
+    %}"
+  position: 23622..23699
+{% endcomment %}

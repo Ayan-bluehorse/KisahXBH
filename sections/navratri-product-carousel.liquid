@@ -1,0 +1,349 @@
+{%- liquid
+  assign sid = section.id
+  assign anchor = section.settings.anchor_id
+
+  assign chosen_coll = section.settings.collection
+  assign view_link = section.settings.view_all_link
+  if view_link == blank and chosen_coll != blank
+    assign view_link = chosen_coll.url
+  elsif view_link == blank
+    assign view_link = '/collections/all'
+  endif
+
+  assign show_view_all = section.settings.show_view_all
+  if show_view_all == nil
+    assign show_view_all = true
+  endif
+-%}
+
+{%- style -%}
+  #navratri-pcarousel-{{ sid }} {
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    scroll-margin-top: 80px;
+  }
+  #navratri-pcarousel-{{ sid }} .cp-navratri-pcarousel__title {
+    color: {{ section.settings.text_color | default: '#111111' }};
+  }
+  #navratri-pcarousel-{{ sid }} .cp-navratri-pcarousel__subtitle,
+  #navratri-pcarousel-{{ sid }} .cp-navratri-pcarousel__kicker {
+    color: {{ section.settings.sub_color | default: '#666666' }};
+  }
+{%- endstyle -%}
+
+<section class="cp-navratri-pcarousel" id="navratri-pcarousel-{{ sid }}" {% if anchor != blank %}data-anchor="{{ anchor }}"{% endif %}>
+  {%- if anchor != blank -%}
+    <div id="{{ anchor }}" class="cp-navratri-anchor-point" style="position: relative; top: -80px; visibility: hidden; height: 0; width: 0;"></div>
+  {%- endif -%}
+  <div class="cp-navratri-container">
+    
+    <!-- Section Header -->
+    <div class="cp-navratri-pcarousel__header">
+      {%- if section.settings.kicker != blank -%}
+        <span class="cp-navratri-pcarousel__kicker">{{ section.settings.kicker }}</span>
+      {%- endif -%}
+      <h2 class="cp-navratri-pcarousel__title">{{ section.settings.title | default: 'COLLECTION EDIT' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="cp-navratri-pcarousel__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Product Grid (4 / 4 Desktop, 2 Mobile) -->
+    <div class="cp-navratri-pcarousel__grid-wrap">
+      <div class="product-grid product-grid--per-row-4 product-grid--per-row-mob-2">
+        {%- liquid
+          assign product_limit = section.settings.max_products | default: 8
+          assign show_only_available = section.settings.show_only_available
+          if show_only_available == nil
+            assign show_only_available = true
+          endif
+
+          assign rendered_count = 0
+          assign has_products = false
+
+          assign size_map = 'XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56' | split: ','
+          assign mapped_s = ''
+          assign mapped_m = ''
+          assign mapped_l = ''
+          assign mapped_xl = ''
+
+          for pair in size_map
+            assign p = pair | split: ':'
+            assign p_letter = p[0] | downcase | strip
+            assign p_number = p[1] | strip
+
+            if p_letter == 's'
+              assign mapped_s = p_number
+            elsif p_letter == 'm'
+              assign mapped_m = p_number
+            elsif p_letter == 'l'
+              assign mapped_l = p_number
+            elsif p_letter == 'xl'
+              assign mapped_xl = p_number
+            endif
+          endfor
+
+          if section.settings.products != blank and section.settings.products.count > 0
+            # Manual Product Selection: Show available stock first
+            for prod in section.settings.products
+              assign available_variants = prod.variants | where: 'available', true | size
+              if prod.available and available_variants > 0
+                assign has_products = true
+                assign rendered_count = rendered_count | plus: 1
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                if rendered_count >= product_limit
+                  break
+                endif
+              endif
+            endfor
+
+            if show_only_available == false and rendered_count < product_limit
+              for prod in section.settings.products
+                assign available_variants = prod.variants | where: 'available', true | size
+                unless prod.available and available_variants > 0
+                  assign has_products = true
+                  assign rendered_count = rendered_count | plus: 1
+                  render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: false, grid: 4
+                  if rendered_count >= product_limit
+                    break
+                  endif
+                endunless
+              endfor
+            endif
+
+          elsif chosen_coll != blank and chosen_coll.products.size > 0
+            # Render products in exact order of size-availability stockRank (matching collection list page)
+            for target_rank in (0..5)
+              for prod in chosen_coll.products
+                assign total_variants = prod.variants.size
+                assign available_variants = prod.variants | where: 'available', true | size
+
+                if available_variants > 0
+                  assign cur_rank = 5
+
+                  if available_variants == total_variants and total_variants > 0
+                    assign cur_rank = 0
+                  else
+                    assign size_s_available = false
+                    assign size_m_available = false
+                    assign size_l_available = false
+                    assign size_xl_available = false
+
+                    for option in prod.options_with_values
+                      assign option_name = option.name | downcase | strip
+                      if option_name == 'size'
+                        for value in option.values
+                          assign size_value = value | downcase | strip
+
+                          if size_value == 's' or size_value == 'small' or size_value == mapped_s
+                            if value.available
+                              assign size_s_available = true
+                            endif
+                          endif
+
+                          if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
+                            if value.available
+                              assign size_m_available = true
+                            endif
+                          endif
+
+                          if size_value == 'l' or size_value == 'large' or size_value == mapped_l
+                            if value.available
+                              assign size_l_available = true
+                            endif
+                          endif
+
+                          if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
+                            if value.available
+                              assign size_xl_available = true
+                            endif
+                          endif
+
+                          if size_s_available and size_m_available and size_l_available and size_xl_available
+                            break
+                          endif
+                        endfor
+                        break
+                      endif
+                    endfor
+
+                    if size_s_available and size_m_available and size_l_available and size_xl_available
+                      assign cur_rank = 1
+                    elsif size_s_available and size_m_available and size_l_available
+                      assign cur_rank = 2
+                    elsif size_m_available and size_l_available
+                      assign cur_rank = 3
+                    elsif size_m_available
+                      assign cur_rank = 4
+                    endif
+                  endif
+
+                  if cur_rank == target_rank
+                    assign has_products = true
+                    assign rendered_count = rendered_count | plus: 1
+                    render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                    if rendered_count >= product_limit
+                      break
+                    endif
+                  endif
+                endif
+              endfor
+
+              if rendered_count >= product_limit
+                break
+              endif
+            endfor
+
+            # Fallback: If all products in collection are out of stock, render them so section is not empty
+            if rendered_count == 0
+              for prod in chosen_coll.products limit: product_limit
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+              endfor
+            endif
+          endif
+
+          # Onboarding demo fallback if neither collection nor manual products are set
+          if chosen_coll == blank and section.settings.products == blank
+            for prod in collections['all'].products
+              assign available_variants = prod.variants | where: 'available', true | size
+              if prod.available and available_variants > 0
+                assign rendered_count = rendered_count | plus: 1
+                render 'product-block', product: prod, custom_aspect_ratio: 0.75, prioritised_loading: true, grid: 4
+                if rendered_count >= product_limit
+                  break
+                endif
+              endif
+            endfor
+          endif
+        -%}
+      </div>
+    </div>
+
+    <!-- Bottom View All Button -->
+    {%- if show_view_all and view_link != blank -%}
+      <div class="cp-navratri-pcarousel__footer-cta">
+        <a href="{{ view_link }}" class="cp-navratri-pcarousel__view-all-btn">
+          <span>{{ section.settings.view_all_text | default: 'VIEW ALL' }}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  {% if settings.quickbuy_style != 'off' %}
+    <div class="quickbuy-container use-color-scheme use-color-scheme--{{ settings.quickbuy_color_scheme }}">
+      <a href="#" class="close-detail" aria-label="{{ 'accessibility.close' | t }}" tabindex="-1">{% render 'icon-close', stroke_width: 1 %}</a>
+      <div class="inner"></div>
+    </div>
+  {% endif %}
+</section>
+
+{% render 'navratri-quickview-popup' %}
+
+{% schema %}
+{
+  "name": "Navratri Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Section Anchor ID (for hyperlinks)",
+      "default": "garba-dandiya",
+      "info": "e.g. garba-dandiya, puja-aarti, festive-party, casual-hangout"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker (Optional)",
+      "default": "NAVRATRI 2025"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "GARBA & DANDIYA EDIT"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Move in style with mirrorwork & vibrant prints"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Specific Products (optional override)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' Link & Button",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link (Defaults to Collection URL)"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max Products to Show",
+      "min": 4,
+      "max": 16,
+      "step": 4,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_only_available",
+      "label": "Show only in-stock products",
+      "default": true,
+      "info": "When enabled, hides sold-out products and prioritizes items with available inventory"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Heading Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subtitle Color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navratri Product Grid",
+      "settings": {
+        "anchor_id": "garba-dandiya",
+        "title": "GARBA & DANDIYA",
+        "subtitle": "Move in style with mirrorwork & vibrant festive prints",
+        "show_only_available": true
+      }
+    }
+  ]
+}
+{% endschema %}

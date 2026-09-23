@@ -1,687 +1,2756 @@
-/* main#content {
-  background-color: #F7F1DC;
-  background-image: url('https://cdn.shopify.com/s/files/1/0496/1003/1256/files/page-bg-art.jpg?v=1756968649');
-  background-repeat: repeat-y;
-  background-position: center 9%;
-  background-size: 100%;
-} */
-main#content {
-  background-color: #F7F1DC;
-  background-image: url('https://cdn.shopify.com/s/files/1/0496/1003/1256/files/page-bg-left-art.png?v=1756975376'), 
-                    url('https://cdn.shopify.com/s/files/1/0496/1003/1256/files/page-bg-right-art.png?v=1756975375');
-  background-repeat: no-repeat;
-  background-position: left 10.8%, right 10.8%;
-  background-size: 100px auto, 100px auto;
+/* ==========================================================================
+   KISAH NAVRATRI FESTIVE EXPERIENCE — ACTIVE DESIGN SYSTEM & SECTIONS
+   Active sections: Banner, Collection Header, Gateway, Categories, Product Grid, Quickview
+   ========================================================================== */
+
+/* ==========================================================================
+   KISAH NAVRATRI LANDING EXPERIENCE — DESIGN SYSTEM
+   ========================================================================== */
+
+/* Universal Kicker Typography & Spacing */
+.cp-navratri-hero__kicker,
+.cp-navratri-gateway__kicker,
+.cp-navratri-categories__kicker,
+.cp-navratri-pcarousel__kicker,
+.cp-navratri-cc__kicker,
+.cp-navratri-kids__kicker,
+.cp-navratri-wedding__kicker,
+.cp-navratri-collection-head__kicker {
+  display: block;
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+  line-height: 1.3;
 }
-@media(min-width:1441px) {
-  main#content {
-    background-position: left 15%, right 15%;
-    background-size: 150px auto, 150px auto;
+
+.cp-navratri-container {
+  width: 100%;
+  max-width: 1340px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+/* Universal section vertical rhythm — desktop: 48px, tablet: 36px, mobile: 28px */
+@media (max-width: 768px) {
+  .cp-navratri-gateway,
+  .cp-navratri-stories,
+  .cp-navratri-wedding,
+  .cp-navratri-colour-craft,
+  .cp-navratri-shop-by-colour,
+  .cp-navratri-shop-by-craft,
+  .cp-navratri-kids,
+  .cp-navratri-pcarousel,
+  .cp-navratri-collection-head {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
   }
 }
 
-/* .page-container,
-body .section-apps .quinn_cards {
-  width: 100% !important;
-  max-width: 1240px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-} */
-.page-container,
-body .section-apps .quinn_cards {
-  width: 100% !important;
-  max-width: 1320px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+@media (max-width: 480px) {
+  .cp-navratri-gateway,
+  .cp-navratri-stories,
+  .cp-navratri-wedding,
+  .cp-navratri-colour-craft,
+  .cp-navratri-shop-by-colour,
+  .cp-navratri-shop-by-craft,
+  .cp-navratri-kids,
+  .cp-navratri-pcarousel,
+  .cp-navratri-collection-head {
+    padding-top: 28px !important;
+    padding-bottom: 28px !important;
+  }
 }
 
-
-.cp-color-grid-heading-celebrate,
+/* Universal Typography Utilities — Section Heading Font System */
+.cp-navratri-title-serif,
+.cp-navratri-gateway__title,
+.cp-navratri-categories__title,
+.cp-navratri-cc__title,
+.cp-navratri-pcarousel__title,
+.cp-navratri-kids__title,
+.cp-navratri-wedding__title,
+.cp-navratri-edits__title,
+.cp-navratri-craft-intro__title,
+.cp-navratri-stories__title,
+.cp-navratri-stories__rail-heading,
+.cp-navratri-searches-title,
 .cp-color-grid-heading-ensemble,
+.cp-color-grid-heading-celebrate,
 .cp-review-heading,
-.custom-collection-heading,
-body .section-apps div[class*="quinn_card_heading"] > p {
-  color: #8E2424 !important;
-  font-family: 'Balthazar' !important;
-  font-size: 54px !important;
-  font-style: normal !important;
+.cp-navratri-collection-head__title {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  color: #111111 !important;
   font-weight: 400 !important;
-  line-height: 172.222% !important;
-  text-transform: none !important;
-  text-align: center !important;
-  letter-spacing: 0 !important;
-  background: transparent !important;
-  margin: 0 0 25px;
-}
-
-
-
-.cp-navratri-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-decoration: none;
-  padding: 10px;
-  background-color: #E5B044; 
-}
-
-.cp-navratri-bar__content {
-  text-align: center;
-  font-size: 22px;
-  font-weight: 400;
-  color: #000000; 
-  line-height: 42px;
-  font-family: "Generis Sans W01 Regular";
-}
-
-
-
-body .quinn-cards-stories-carousel-body > div {
-  margin-right: 5px !important;
-  margin-left: 5px !important;
-}
-body .quinn-cards-stories-carousel-body > div:first-child { margin-left:10px !important; }
-body .quinn-cards-stories-carousel-body > div:last-child { margin-right:10px !important; }
-
-
-
-.cp-hero-carousel {
-  position: relative;
-  overflow: hidden;
-}
-
-.cp-carousel-slide {
-  position: relative;
-  width: 100%;
-}
-
-.cp-banner-image {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-.cp-hero-carousel .slick-dots {
-  position: static !important;
-  margin: 17px 0 20px;
-}
-
-
-.slick-dots {
-  bottom: 15px;
-}
-.slick-dots li,
-.slick-dots li button {
-  width: 32px;
-  height: 16px;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-/* .slick-dots li button {
-  padding: 0;
-  margin: 0;
-} */
-.slick-dots li button:before {
-  font-size: 16px;
-  line-height: 1;
-  color: #CFCFCF;
-  opacity: 1 !important;
-  position: static;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.slick-dots li.slick-active button:before {
-  color: #656563;
-}
-
-
-.cp-color-grid-celebrate {
-  text-align: center;
-  padding: 50px 20px;
-}
-
-.cp-color-grid-heading-celebrate {
-  margin-bottom: 34px;
-}
-
-.cp-color-grid-wrapper-celebrate {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 24px;
-    column-gap: 30px;
-}
-
-.cp-color-card-celebrate {
-  position: relative;
-  max-height: 393px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cp-color-image-celebrate img {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-
-
-.cp-color-grid-ensemble {
-  text-align: center;
-  padding: 50px 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.cp-color-grid-heading-ensemble {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 34px;
-}
-
-.cp-color-grid-wrapper-ensemble {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    row-gap: 24px;
-    column-gap: 30px;
-    position: relative;
-}
-
-.cp-color-card-ensemble {
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-.cp-color-image-ensemble img {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-
-
-.cp-customer-review-wrapper {
-  padding: 20px 0px;
-  text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* .cp-review-heading {
-  margin-bottom: 21px;
-  color: #201747;
-  text-align: center;
-  font-family: Gabarito, sans-serif;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 600;
-  text-transform: uppercase;
-} */
-.cp-review-heading {
-  margin: 0 0 34px;
-}
-.cp-review-heading:before,
-.cp-review-heading:after,
-.custom-collection-heading:before,
-.custom-collection-heading:after,
-body .section-apps div[class*="quinn_card_heading"] > p:before,
-body .section-apps div[class*="quinn_card_heading"] > p:after {
-  content: "";
-  width: 65px;
-  height: 65px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-  display: inline-block;
-  vertical-align: middle;
-}
-.cp-review-heading:before,
-.custom-collection-heading:before {
-  margin-right: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='72' viewBox='0 0 80 72' fill='none'%3E%3Cpath d='M45.0755 57.717C45.0755 57.717 69.4922 53.9229 76.1798 37.9989C76.1798 37.9989 73.8239 35.2552 65.4758 37.0176C65.4758 37.0176 69.9194 34.7869 71.1418 27.6919C71.1418 27.6919 67.0826 24.8157 61.3008 28.8264C61.3008 28.8264 61.3731 18.9051 59.7194 15.8693C59.7194 15.8693 50.6608 17.9188 49.3603 23.8117C49.3603 23.8117 45.0102 20.2297 38.6671 15.8119C38.6671 15.8119 31.8934 19.4055 31.457 27.4167C31.457 27.4167 26.7868 19.0152 23.2287 16.3496C23.2287 16.3496 16.3486 25.753 17.3794 30.2795C17.3794 30.2795 12.898 28.3973 10.9085 27.5628C10.9085 27.5628 10.6328 37.982 14.4805 41.3569C14.4805 41.3569 8.66562 41.2586 7.04608 42.3343C7.04608 42.3343 20.4675 54.9929 45.0755 57.717Z' fill='%23F3857B'/%3E%3Cpath d='M38.6684 15.8107C38.6684 15.8107 32.9809 32.151 39.3522 40.6802L31.4595 27.4179C31.4595 27.4179 30.1416 22.1809 38.6684 15.8107Z' fill='%23CD5757'/%3E%3Cpath d='M19.0981 23.3949C19.0981 23.3949 21.1795 36.5602 25.6892 42.5477C30.1965 48.5364 14.4815 41.357 14.4815 41.357L10.9096 27.5629L17.3804 30.2796L19.0981 23.3949Z' fill='%23CD5757'/%3E%3C/svg%3E");
-}
-.cp-review-heading:after,
-.custom-collection-heading:after {
-  margin-left: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='72' viewBox='0 0 80 72' fill='none'%3E%3Cpath d='M45.0755 57.717C45.0755 57.717 69.4922 53.9229 76.1798 37.9989C76.1798 37.9989 73.8239 35.2552 65.4758 37.0176C65.4758 37.0176 69.9194 34.7869 71.1418 27.6919C71.1418 27.6919 67.0826 24.8157 61.3008 28.8264C61.3008 28.8264 61.3731 18.9051 59.7194 15.8693C59.7194 15.8693 50.6608 17.9188 49.3603 23.8117C49.3603 23.8117 45.0102 20.2297 38.6671 15.8119C38.6671 15.8119 31.8934 19.4055 31.457 27.4167C31.457 27.4167 26.7868 19.0152 23.2287 16.3496C23.2287 16.3496 16.3486 25.753 17.3794 30.2795C17.3794 30.2795 12.898 28.3973 10.9085 27.5628C10.9085 27.5628 10.6328 37.982 14.4805 41.3569C14.4805 41.3569 8.66562 41.2586 7.04608 42.3343C7.04608 42.3343 20.4675 54.9929 45.0755 57.717Z' fill='%23F3857B'/%3E%3Cpath d='M38.6684 15.8107C38.6684 15.8107 32.9809 32.151 39.3522 40.6802L31.4595 27.4179C31.4595 27.4179 30.1416 22.1809 38.6684 15.8107Z' fill='%23CD5757'/%3E%3Cpath d='M19.0981 23.3949C19.0981 23.3949 21.1795 36.5602 25.6892 42.5477C30.1965 48.5364 14.4815 41.357 14.4815 41.357L10.9096 27.5629L17.3804 30.2796L19.0981 23.3949Z' fill='%23CD5757'/%3E%3C/svg%3E");
-}
-body .section-apps div[class*="quinn_card_heading"] > p:before {
-  margin-right: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60' fill='none'%3E%3Cpath d='M31.6553 45.9706C31.6553 45.9706 50.0502 43.8516 55.5319 32.1239C55.5319 32.1239 53.8495 29.9963 47.5441 31.0704C47.5441 31.0704 50.9409 29.5313 52.0659 24.2556C52.0659 24.2556 49.1107 21.9814 44.6659 24.8129C44.6659 24.8129 45.0063 17.3866 43.8603 15.0625C43.8603 15.0625 37.0165 16.328 35.8683 20.6992C35.8683 20.6992 32.7167 17.8886 28.099 14.3915C28.099 14.3915 22.9195 16.8815 22.3526 22.8672C22.3526 22.8672 19.1113 16.4379 16.5143 14.3374C16.5143 14.3374 11.0947 21.1785 11.7222 24.5955C11.7222 24.5955 8.42574 23.0593 6.95956 22.3695C6.95956 22.3695 6.44448 30.1692 9.22801 32.8099C9.22801 32.8099 4.87827 32.5614 3.63361 33.3141C3.63361 33.3141 13.302 43.1972 31.6553 45.9706Z' fill='%23DCC896'/%3E%3Cpath d='M28.1015 14.3948C28.1015 14.3948 23.3562 26.4656 27.8768 33.0377L22.3569 22.8721C22.3569 22.8721 21.5276 18.9138 28.1015 14.3948Z' fill='%23CD5757'/%3E%3Cpath d='M13.2212 19.4928C13.2212 19.4928 14.3849 29.4135 17.5864 34.0332C20.7897 38.6545 9.22881 32.8116 9.22881 32.8116L6.96036 22.3711L11.723 24.5972L13.2212 19.4928Z' fill='%23CD5757'/%3E%3C/svg%3E");
-}
-body .section-apps div[class*="quinn_card_heading"] > p:after {
-  margin-left: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60' fill='none'%3E%3Cpath d='M31.6553 45.9706C31.6553 45.9706 50.0502 43.8516 55.5319 32.1239C55.5319 32.1239 53.8495 29.9963 47.5441 31.0704C47.5441 31.0704 50.9409 29.5313 52.0659 24.2556C52.0659 24.2556 49.1107 21.9814 44.6659 24.8129C44.6659 24.8129 45.0063 17.3866 43.8603 15.0625C43.8603 15.0625 37.0165 16.328 35.8683 20.6992C35.8683 20.6992 32.7167 17.8886 28.099 14.3915C28.099 14.3915 22.9195 16.8815 22.3526 22.8672C22.3526 22.8672 19.1113 16.4379 16.5143 14.3374C16.5143 14.3374 11.0947 21.1785 11.7222 24.5955C11.7222 24.5955 8.42574 23.0593 6.95956 22.3695C6.95956 22.3695 6.44448 30.1692 9.22801 32.8099C9.22801 32.8099 4.87827 32.5614 3.63361 33.3141C3.63361 33.3141 13.302 43.1972 31.6553 45.9706Z' fill='%23DCC896'/%3E%3Cpath d='M28.1015 14.3948C28.1015 14.3948 23.3562 26.4656 27.8768 33.0377L22.3569 22.8721C22.3569 22.8721 21.5276 18.9138 28.1015 14.3948Z' fill='%23CD5757'/%3E%3Cpath d='M13.2212 19.4928C13.2212 19.4928 14.3849 29.4135 17.5864 34.0332C20.7897 38.6545 9.22881 32.8116 9.22881 32.8116L6.96036 22.3711L11.723 24.5972L13.2212 19.4928Z' fill='%23CD5757'/%3E%3C/svg%3E");
-}
-
-.cp-customer-review-slider {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 1040px;
-  margin: 0 auto 20px;
-  position: relative;
-}
-
-/* .cp-review-slide {
-  width: 314px;
-  transition: opacity 0.3s ease;
-  overflow: hidden;
-} */
-
-/* .cp-customer-review-slider .slick-slide {
-  transform: scale(0.9);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.cp-customer-review-slider .slick-center {
-  transform: scale(1.05);
-} */
-
-/* .cp-customer-review-slider .slick-track {
-  display: flex;
-  flex-wrap: wrap;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
   margin: 0 !important;
 }
-.cp-customer-review-slider .slick-track:before,
-.cp-customer-review-slider .slick-track:after {
+
+/* Slider Universal Cleanup (No raw scrollbars) */
+.slick-slider,
+.slick-list,
+.slick-track {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.slick-slider::-webkit-scrollbar,
+.slick-list::-webkit-scrollbar,
+.slick-track::-webkit-scrollbar {
   display: none !important;
-}
-.cp-customer-review-slider .cp-review-slide {
-  float: none !important;
-  height: auto;
-}
-*/
-.cp-customer-review-slider .slick-list {
-  padding: 0 !important;
-}
-.cp-customer-review-slider .slick-track {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px 25px;
-  margin: 0 !important;
-}
-.cp-customer-review-slider .slick-track:before,
-.cp-customer-review-slider .slick-track:after {
-  display: none !important;
-}
-.cp-customer-review-slider .cp-review-slide {
-  float: none !important;
-  height: auto;
-  padding: 30px 10px;
-  transform: scale(1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.cp-customer-review-slider .cp-review-slide.slick-current,
-.cp-customer-review-slider .cp-review-slide.slick-current.slick-center {
-  transform: scale(1.1275);
+  width: 0 !important;
+  height: 0 !important;
 }
 
-.cp-review-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 314px;
-  min-width: 314px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.cp-review-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-  border-radius: 8px !important;
-}
-
-.cp-review-overlay {
+/* Round Slider Arrows */
+.cp-slider-arrow {
   position: absolute;
-  bottom: 10px;
-  width: 238px;
-  padding: 15px;
-  color: #fff;
-  font-family: "Generis Sans W01 Regular", sans-serif;
-  display: flex;
-  flex-direction: column;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111111;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  display: flex !important;
+  align-items: center;
   justify-content: center;
-}
-
-.cp-review-text {
-  margin-bottom: 4px;
-  color: #FFF;
-  text-align: center;
-  font-family: 'Generis Sans W01 Regular', sans-serif;
-  font-size: 19.844px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 1px;
-}
-
-.cp-review-stars {
-  margin-top: 6px;
-  display: flex;
-  justify-content: center;
-  gap: 3px;
-}
-
-.cp-star-icon {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-}
-
-
-/* .cp-review-nav-buttons {
-  display: flex;
-  justify-content: space-between;
-  max-width: 120px;
-  margin: 80px auto; 
-  position: relative;
-} */
- .cp-review-nav-buttons {
-    display: flex;
-    justify-content: center;
-    max-width: 120px;
-    margin: 37px auto 30px;
-    position: relative;
-    gap: 12px;
-}
-
-.cp-review-nav-buttons .slick-arrow {
   cursor: pointer;
-  width: 42px;
-  height: 42px;
-  color: #000000;
-  position: static;
-  inset: auto;
-  transform: none;
+  transition: all 0.2s ease;
+  padding: 0;
+  outline: none;
 }
-.cp-review-nav-buttons .slick-arrow:before,
-.cp-review-nav-buttons .slick-arrow:after {
+
+.cp-slider-arrow:hover {
+  background: #111111;
+  color: #ffffff;
+  border-color: #111111;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.cp-slider-arrow--prev {
+  left: -12px;
+}
+
+.cp-slider-arrow--next {
+  right: -12px;
+}
+
+.cp-slider-arrow.slick-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SECTION 1: HERO BANNER CAROUSEL
+   ========================================================================== */
+/* ==========================================================================
+   NAVRATRI HERO BANNER SECTION (Natural Image Dimensions, No Crop/Stretch)
+   ========================================================================== */
+.cp-navratri-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  color: #ffffff;
+  user-select: none;
+}
+
+.cp-navratri-banner .cp-navratri-banner__carousel,
+.cp-navratri-banner .slick-slider,
+.cp-navratri-banner .slick-dotted.slick-slider,
+.cp-hero-carousel .slick-dotted.slick-slider,
+.cp-navratri-banner .slick-list,
+.cp-navratri-banner .slick-track {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0px !important;
+}
+
+.cp-navratri-banner__slide {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: block;
+}
+
+.cp-navratri-banner__carousel:not(.slick-initialized)
+  .cp-navratri-banner__slide:not(:first-child) {
   display: none;
 }
-.cp-review-nav-buttons .slick-arrow svg {
-  width: 10.5px;
-  height: 21px;
-}
-.cp-review-nav-buttons .slick-prev,
-.cp-review-nav-buttons .slick-next {
+
+.cp-navratri-banner .slick-fade .slick-slide:not(.slick-current) {
+  opacity: 0;
+  pointer-events: none;
 }
 
-
-
-body .section-apps .quinn_cards {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-bottom: 20px !important;
+.cp-navratri-banner .slick-fade .slick-slide.slick-current {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-
-body .custom-collection-section {
-  padding: 0 0 70px;
-}
-body .compare-price {  
-  color: #999;
-}
-
-
-
-@media(min-width:768px) {
-  .cp-color-grid-wrapper-ensemble:before {
-    content: "";
-    position: absolute;
-    inset: auto;
-    z-index: 0;
-    top: -120px;
-    left: 80%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='225' viewBox='0 0 250 225' fill='none'%3E%3Cpath d='M39.0862 194.892C40.0562 194.836 40.85 194.077 40.9132 193.104C41.5965 182.03 57.1041 174.797 64.5565 171.322C67.0763 170.143 69.6026 168.913 72.1345 167.68C78.2242 164.713 84.5232 161.645 90.795 159.317C94.1191 158.081 97.6118 157.222 101.307 156.313C105.816 155.204 110.48 154.055 114.893 152.152C131.861 144.836 187.022 117.115 184.427 67.5231C184.372 66.4749 183.462 65.6708 182.389 65.7258C181.326 65.6983 180.494 66.6764 180.55 67.7265C183.019 114.883 129.729 141.605 113.336 148.672C109.224 150.445 104.725 151.553 100.37 152.625C96.7292 153.521 92.9641 154.445 89.4237 155.76C82.9711 158.156 76.587 161.268 70.412 164.276C67.8986 165.498 65.3946 166.719 62.8914 167.89C54.7658 171.678 37.8603 179.564 37.0357 192.884C36.9711 193.932 37.7855 194.831 38.8576 194.892C38.936 194.897 39.0122 194.897 39.0862 194.892Z' fill='%23CBC9A1'/%3E%3Cpath d='M92.3535 159.332C94.4872 159.207 96.3478 158.287 97.8873 156.597C104.462 149.381 103.388 128.688 102.93 119.85L102.848 118.218C102.763 116.401 102.665 114.599 102.57 112.808C101.494 92.7945 100.565 75.5077 115.083 60.1348C115.804 59.3708 115.77 58.1671 115.006 57.4459C114.244 56.7247 113.04 56.7607 112.319 57.5209C96.6796 74.0792 97.6955 92.9895 98.7741 113.008C98.8686 114.79 98.9658 116.586 99.0502 118.392L99.1332 120.043C99.5297 127.686 100.583 147.989 95.0785 154.032C94.2014 154.995 93.218 155.476 92.052 155.536C90.9882 155.585 90.1863 156.466 90.2284 157.515C90.2706 158.564 91.1581 159.379 92.2052 159.337C92.2567 159.337 92.3041 159.335 92.3535 159.332Z' fill='%23CBC9A1'/%3E%3Cpath d='M174.361 103.31C175.383 103.251 176.178 102.389 176.15 101.358C176.119 100.309 175.245 99.4817 174.193 99.5126C163.164 99.8286 153.613 88.6869 149.04 77.5023C148.642 76.5312 147.533 76.0626 146.558 76.4623C145.585 76.86 145.121 77.971 145.518 78.9439C150.217 90.4317 160.575 103.709 174.302 103.314C174.323 103.313 174.342 103.312 174.361 103.31Z' fill='%23CBC9A1'/%3E%3Cpath d='M176.493 67.561C176.493 67.561 157.328 57.2546 156.442 42.0739C156.442 42.0739 159.204 40.4841 165.621 44.3934C165.621 44.3934 162.582 41.2375 163.646 34.9887C163.646 34.9887 167.858 33.7905 171.484 38.8151C171.484 38.8151 174.334 30.5555 176.594 28.5207C176.594 28.5207 183.513 32.877 182.87 38.1507C182.87 38.1507 187.531 36.4501 194.088 34.6389C194.088 34.6389 198.662 39.6082 196.677 46.3888C196.677 46.3888 203.014 40.7828 206.754 39.6141C206.754 39.6141 209.706 49.438 207.529 52.8965C207.529 52.8965 211.798 52.6474 213.694 52.5367C213.694 52.5367 210.873 61.2709 206.686 62.9419C206.686 62.9419 211.541 64.5634 212.573 65.9317C212.573 65.9317 197.727 72.5105 176.493 67.561Z' fill='%23F3857B'/%3E%3Cpath d='M194.088 34.6426C194.088 34.6426 194.024 49.8787 186.237 55.0931L196.676 46.3925C196.676 46.3925 199.302 42.4297 194.088 34.6426Z' fill='%23CD5757'/%3E%3Cpath d='M208.118 46.6751C208.118 46.6751 202.532 56.9973 197.033 60.6496C191.536 64.3019 206.689 62.9414 206.689 62.9414L213.697 52.5363L207.531 52.8961L208.118 46.6751Z' fill='%23CD5757'/%3E%3Cpath d='M107.217 58.2007C107.217 58.2007 93.1192 50.6196 92.4677 39.4557C92.4677 39.4557 94.5024 38.2874 99.2188 41.1627C99.2188 41.1627 96.9843 38.8416 97.7655 34.2437C97.7655 34.2437 100.865 33.3638 103.53 37.0578C103.53 37.0578 105.627 30.9849 107.29 29.4879C107.29 29.4879 112.376 32.692 111.905 36.569C111.905 36.569 115.331 35.3196 120.154 33.9886C120.154 33.9886 123.52 37.6417 122.059 42.6299C122.059 42.6299 126.721 38.5083 129.471 37.645C129.471 37.645 131.643 44.8706 130.041 47.4155C130.041 47.4155 133.179 47.2324 134.576 47.1509C134.576 47.1509 132.501 53.5729 129.42 54.8022C129.42 54.8022 132.997 55.9935 133.751 57.0009C133.751 57.0009 122.835 61.8379 107.217 58.2007Z' fill='%235A8685'/%3E%3Cpath d='M120.159 33.9885C120.159 33.9885 120.114 45.193 114.383 49.0284L122.065 42.6277C122.065 42.6277 123.996 39.717 120.159 33.9885Z' fill='%2387AF8F'/%3E%3Cpath d='M130.478 42.84C130.478 42.84 126.367 50.4304 122.325 53.1176C118.28 55.8051 129.422 54.8045 129.422 54.8045L134.577 47.1531L130.042 47.4178L130.478 42.84Z' fill='%2387AF8F'/%3E%3Cpath d='M99.4036 99.3622C99.4036 99.3622 81.3104 82.8822 62.0345 103.261C62.0345 103.261 81.6444 117.086 99.4036 99.3622Z' fill='%23BBBA9B'/%3E%3Cpath d='M87.5564 74.5475C87.5564 74.5475 75.2337 63.2683 62.1141 77.2081C62.1141 77.2081 75.4679 86.6709 87.5564 74.5475Z' fill='%23BBBA9B'/%3E%3Cpath d='M85.2479 74.4817C85.2479 74.4817 96.1745 61.5263 81.9432 48.277C81.9432 48.277 72.8539 62.2569 85.2479 74.4817Z' fill='%23BBBA9B'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
-    width: 170px;
-    height: 170px;
-  }
-}
-@media(min-width:1441px) {
-  .cp-color-grid-wrapper-ensemble:before {
-    top: -120px;
-    width: 212px;
-    height: 212px;
-  }
-}
-
-
-
-@media(max-width:767px) {
-
-.cp-color-grid-heading-celebrate,
-.cp-color-grid-heading-ensemble,
-.cp-review-heading,
-.custom-collection-heading,
-body .section-apps div[class*="quinn_card_heading"] > p {
-  font-size: 24px !important;
-  line-height: 104.167% !important;
-  margin: 0 0 24px;
-}
-
-.cp-navratri-bar {
-  padding: 5px 10px;
-}
-.cp-navratri-bar__content {
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-}
-
-main#content {
-  background-image: none;
-}
-
-.cp-color-grid-wrapper-celebrate {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 0 auto;
-}
-.cp-color-grid-wrapper-celebrate > * {
-  flex: 0 1 calc(50% - 12px);
-}
-.cp-color-image-celebrate img {
-  border-radius: 59px 59px 10px 10px;
-}
-.cp-color-grid-wrapper-ensemble {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  row-gap: 0px;
-  column-gap: 10px;
+/* Banner Media & Image Handling */
+.cp-navratri-banner__media {
+  position: relative;
   width: 100%;
-  max-width: 350px;
-  margin: 0 auto;
+  line-height: 0;
+  overflow: hidden;
 }
-.cp-color-card-ensemble {
-    width: 44.5vw;
-    max-width: 174px;
+
+.cp-navratri-banner__img {
+  width: 100%;
+  display: block;
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .cp-navratri-banner__img--mobile {
+    display: none !important;
+  }
+  .cp-navratri-banner__img--desktop {
+    display: block !important;
+    width: 100%;
     height: auto;
-    margin: auto;
-    position: relative;
-    overflow: visible;
+    max-height: 88vh;
+    object-fit: cover;
+    object-position: top center;
+  }
 }
-.cp-color-image-ensemble { position:relative; }
-.cp-color-image-ensemble img {
-  border-radius: 53px 0;
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .cp-navratri-banner__img--desktop {
+    display: none !important;
+  }
+  .cp-navratri-banner__img--mobile {
+    display: block !important;
+    width: 100%;
+    height: auto;
+    max-height: 88vh;
+    object-fit: cover;
+    object-position: top center;
+  }
 }
-.cp-color-card-ensemble:not(:first-child):before {
-  content: "";
-  width: 113px;
-  height: 113px;
-  background-repeat: no-repeat;
-  background-position: center 20%;
-  background-size: cover;
+
+.cp-navratri-banner__placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 7.5;
+  background: radial-gradient(circle at center, #2e1017 0%, #16060a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .cp-navratri-banner__placeholder {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.cp-navratri-banner__placeholder svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.25;
+}
+
+/* Bottom Dark Contrast Gradient */
+.cp-navratri-banner__veil {
   position: absolute;
   inset: 0;
-  top: -65%;
-  bottom: auto;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.4) 82%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+/* Content Overlay */
+.cp-navratri-banner__content {
+  position: absolute;
+  z-index: 4;
+  left: 20px;
+  right: 20px;
+  bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.cp-navratri-banner__content-inner {
+  max-width: 900px;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.cp-navratri-banner__content--center {
+  align-items: center;
+  text-align: center;
+}
+.cp-navratri-banner__content--center .cp-navratri-banner__content-inner {
   margin: 0 auto;
 }
-.cp-color-card-ensemble:nth-child(odd) {
+
+.cp-navratri-banner__content--left {
+  align-items: flex-start;
+  text-align: left;
+}
+.cp-navratri-banner__content--left .cp-navratri-banner__content-inner {
+  margin-right: auto;
   margin-left: 0;
-  padding-right: 5px;
 }
-.cp-color-card-ensemble:nth-child(odd):not(:first-child):before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='153' height='153' viewBox='0 0 153 153' fill='none'%3E%3Cpath d='M61.4581 136.794C61.0045 136.516 60.6567 136.075 60.5244 135.544C55.737 116.244 72.0072 104.002 85.083 94.1705L85.626 93.7627C92.2675 88.758 97.6136 81.3779 100.676 72.9791C102.869 66.9639 104.342 53.1003 100.078 49.4046C99.2534 48.6898 99.1393 47.5082 99.8212 46.764C100.504 46.0246 101.714 45.9888 102.552 46.718C108.99 52.3048 106.482 68.5956 104.347 74.4483C101.065 83.449 95.3143 91.3751 88.1566 96.7672L87.6112 97.1755C74.6995 106.887 60.0647 117.895 64.2953 134.943C64.5461 135.959 63.9066 136.917 62.866 137.085C62.3697 137.164 61.8714 137.048 61.4581 136.794Z' fill='%23CBC9A1'/%3E%3Cpath d='M90.1776 93.5323C89.7478 93.2686 89.4342 92.8223 89.3612 92.2842C89.229 91.3289 89.8961 90.4487 90.8505 90.3179C96.5194 89.533 118.322 78.3508 120.545 73.6337C120.955 72.7616 121.995 72.3884 122.868 72.8012C123.742 73.2211 124.111 74.2541 123.7 75.1237C120.611 81.6781 97.0033 92.9907 91.3275 93.7734C90.9113 93.8312 90.5092 93.7359 90.1776 93.5323Z' fill='%23CBC9A1'/%3E%3Cpath d='M81.1308 96.2629C80.649 95.9672 80.3179 95.4427 80.298 94.8347C79.6091 74.4634 72.8413 58.57 60.1876 47.5944C59.4593 46.9632 59.3797 45.8622 60.0124 45.1348C60.6426 44.408 61.7545 44.3207 62.4734 44.9605C75.8929 56.5964 83.0639 73.337 83.7863 94.7177C83.8192 95.6816 83.066 96.4885 82.1022 96.5214C81.7451 96.5294 81.4118 96.4354 81.1308 96.2629Z' fill='%23CBC9A1'/%3E%3Cpath d='M106.72 48.4806C106.72 48.4806 115.04 43.1819 114.935 36.286C114.935 36.286 113.636 35.6608 110.864 37.6423C110.864 37.6423 112.133 36.1143 111.443 33.324C111.443 33.324 109.496 32.9235 108.025 35.3167C108.025 35.3167 106.462 31.6759 105.371 30.8298C105.371 30.8298 102.389 33.0327 102.856 35.3932C102.856 35.3932 100.693 34.782 97.666 34.1811C97.666 34.1811 95.764 36.5797 96.8892 39.5794C96.8892 39.5794 93.8349 37.2546 92.1061 36.8528C92.1061 36.8528 91.0977 41.3945 92.1986 42.8828C92.1986 42.8828 90.2581 42.916 89.398 42.9265C89.398 42.9265 90.9665 46.7817 92.9145 47.3999C92.9145 47.3999 90.773 48.2944 90.3505 48.946C90.3505 48.946 97.2836 51.4282 106.72 48.4806Z' fill='%23F3857B'/%3E%3Cpath d='M97.6641 34.1824C97.6641 34.1824 98.2051 41.0691 101.899 43.166L96.8873 39.5807C96.8873 39.5807 95.5662 37.8774 97.6641 34.1824Z' fill='%23CD5757'/%3E%3Cpath d='M91.7197 40.09C91.7197 40.09 94.5896 44.5698 97.1981 46.0397C99.8037 47.5078 92.9086 47.3989 92.9086 47.3989L89.392 42.9255L92.1927 42.8817L91.7197 40.09Z' fill='%23CD5757'/%3E%3Cpath d='M61.8542 48.6551C61.8542 48.6551 72.2937 48.6424 76.1083 42.4269C76.1083 42.4269 75.3003 41.1285 71.7022 41.3276C71.7022 41.3276 73.7015 40.6816 74.6711 37.8008C74.6711 37.8008 73.1606 36.3395 70.4872 37.6404C70.4872 37.6404 71.155 33.5036 70.6627 32.1309C70.6627 32.1309 66.7479 32.4059 65.827 34.7803C65.827 34.7803 64.2412 33.0047 61.8778 30.7517C61.8778 30.7517 58.8168 31.8168 58.1216 35.1342C58.1216 35.1342 56.7109 31.3289 55.3961 29.9856C55.3961 29.9856 51.9219 33.4685 52.0579 35.425C52.0579 35.425 50.3092 34.3518 49.533 33.8754C49.533 33.8754 48.7472 38.2078 50.1382 39.8639C50.1382 39.8639 47.7183 39.4474 46.9724 39.7921C46.9689 39.7878 51.7556 45.9374 61.8542 48.6551Z' fill='%23BBBA9B'/%3E%3Cpath d='M61.8781 30.7492C61.8781 30.7492 58.4512 37.2068 60.562 41.1757L58.1214 35.1292C58.1214 35.1292 57.9083 32.8614 61.8781 30.7492Z' fill='%235A8685'/%3E%3Cpath d='M53.2183 32.6574C53.2183 32.6574 53.2405 38.2882 54.7386 41.0806C56.2331 43.8688 50.1376 39.8618 50.1376 39.8618L49.5325 33.8733L52.0574 35.4229L53.2183 32.6574Z' fill='%235A8685'/%3E%3Cpath d='M120.732 74.7716C120.732 74.7716 132.517 71.9593 136.648 85.258C136.648 85.258 124.771 86.5722 120.732 74.7716Z' fill='%23BBBA9B'/%3E%3Cpath d='M121.755 75.4378C121.755 75.4378 119.237 63.5868 132.604 59.7443C132.604 59.7443 133.626 71.6546 121.755 75.4378Z' fill='%23BBBA9B'/%3E%3C/svg%3E");
+
+.cp-navratri-banner__content--right {
+  align-items: flex-end;
+  text-align: right;
 }
-.cp-color-card-ensemble:nth-child(even) {
+.cp-navratri-banner__content--right .cp-navratri-banner__content-inner {
+  margin-left: auto;
   margin-right: 0;
-  margin-top: -40px;
-  padding-left: 5px;
-}
-.cp-color-card-ensemble:nth-child(even):before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='196' height='202' viewBox='0 0 196 202' fill='none'%3E%3Cpath d='M86.5734 187.377C87.1015 186.9 87.2071 186.102 86.7969 185.517C82.1097 178.878 87.6518 167.637 90.3156 162.235C91.2141 160.406 92.0936 158.545 92.9743 156.68C95.0926 152.193 97.2838 147.552 99.799 143.346C101.131 141.116 102.732 139.024 104.427 136.811C106.494 134.11 108.632 131.315 110.28 128.205C116.617 116.246 135.416 75.1193 111.196 47.9812C110.684 47.4079 109.795 47.3658 109.208 47.8891C108.588 48.3606 108.561 49.301 109.074 49.8754C132.107 75.68 113.918 115.378 107.794 126.931C106.258 129.829 104.197 132.525 102.2 135.133C100.531 137.315 98.8045 139.569 97.3852 141.944C94.7977 146.271 92.5776 150.975 90.4295 155.525C89.5545 157.376 88.6837 159.221 87.7907 161.037C84.8862 166.927 78.8449 179.183 84.4814 187.17C84.9248 187.798 85.8023 187.938 86.4428 187.482C86.4898 187.448 86.533 187.413 86.5734 187.377Z' fill='%23CBC9A1'/%3E%3Cpath d='M100.695 142.641C101.857 141.591 102.498 140.213 102.603 138.542C103.05 131.405 92.9482 120.077 88.634 115.239L87.8392 114.344C86.9571 113.345 86.0752 112.36 85.1999 111.381C75.4088 100.442 66.9522 90.9936 68.1968 75.5556C68.2584 74.7886 67.687 74.1166 66.92 74.0549C66.154 73.9924 65.4829 74.5648 65.4194 75.3298C64.0779 91.959 73.3286 102.295 83.1236 113.236C83.9942 114.21 84.8733 115.192 85.7498 116.185L86.5539 117.089C90.285 121.274 100.195 132.388 99.8219 138.364C99.7627 139.316 99.4211 140.042 98.7828 140.611C98.1975 141.126 98.1433 141.997 98.6484 142.577C99.1534 143.157 100.034 143.216 100.613 142.711C100.643 142.688 100.668 142.665 100.695 142.641Z' fill='%23CBC9A1'/%3E%3Cpath d='M121.854 73.0397C122.41 72.5374 122.47 71.6805 121.981 71.1045C121.482 70.519 120.603 70.4477 120.017 70.9475C113.862 76.1849 103.297 74.1998 95.557 69.9075C94.8846 69.5351 94.0361 69.776 93.6626 70.4513C93.2892 71.1246 93.5331 71.9722 94.2064 72.3457C102.158 76.7532 114.162 79.5886 121.822 73.0687C121.834 73.0584 121.844 73.0491 121.854 73.0397Z' fill='%23CBC9A1'/%3E%3Cpath d='M106.682 51.6411C106.682 51.6411 91.0093 54.5412 83.5428 46.2758C83.5428 46.2758 84.3919 44.1011 89.8497 43.3921C89.8497 43.3921 86.6665 42.983 84.4092 38.9257C84.4092 38.9257 86.2658 36.3101 90.6412 37.5174C90.6412 37.5174 88.4818 31.4929 88.84 29.2942C88.84 29.2942 94.7896 28.6102 96.8405 31.9174C96.8405 31.9174 98.7231 28.809 101.638 24.7679C101.638 24.7679 106.529 25.5094 108.504 30.2929C108.504 30.2929 109.554 24.1848 111.154 21.8026C111.154 21.8026 117.345 26.0606 117.687 29.0345C117.687 29.0345 120.011 26.9347 121.044 26.0019C121.044 26.0019 123.437 32.2849 121.812 35.1588C121.812 35.1588 125.328 33.8592 126.545 34.1675C126.545 34.1675 121.081 44.7327 106.682 51.6411Z' fill='%23F3857B'/%3E%3Cpath d='M101.639 24.7703C101.639 24.7703 108.588 33.5025 106.531 40.0515L108.505 30.2952C108.505 30.2952 108.188 26.8276 101.639 24.7703Z' fill='%23CD5757'/%3E%3Cpath d='M115.17 25.2107C115.17 25.2107 116.712 33.6682 115.246 38.276C113.78 42.8827 121.812 35.1579 121.812 35.1579L121.044 26.001L117.687 29.0336L115.17 25.2107Z' fill='%23CD5757'/%3E%3Cpath d='M62.8181 78.0578C62.8181 78.0578 51.2892 80.1911 45.7983 74.1128C45.7983 74.1128 46.425 72.5125 50.4374 71.9925C50.4374 71.9925 48.0968 71.6912 46.4348 68.7065C46.4348 68.7065 47.8017 66.7829 51.0177 67.6711C51.0177 67.6711 49.4312 63.2406 49.6948 61.6229C49.6948 61.6229 54.0692 61.1212 55.5778 63.5518C55.5778 63.5518 56.962 61.2672 59.1069 58.2954C59.1069 58.2954 62.7044 58.839 64.1567 62.3584C64.1567 62.3584 64.9302 57.8663 66.105 56.1125C66.105 56.1125 70.6588 59.244 70.9105 61.4322C70.9105 61.4322 72.619 59.8888 73.3797 59.2017C73.3797 59.2017 75.1391 63.8214 73.943 65.9361C73.943 65.9361 76.532 64.9769 77.4246 65.2066C77.4246 65.2066 73.4071 72.9746 62.8181 78.0578Z' fill='%235A8685'/%3E%3Cpath d='M59.1092 58.2933C59.1092 58.2933 64.2207 64.7143 62.7059 69.5326L64.1591 62.3543C64.1591 62.3543 63.9276 59.8062 59.1092 58.2933Z' fill='%2387AF8F'/%3E%3Cpath d='M69.0626 58.6182C69.0626 58.6182 70.1943 64.839 69.118 68.227C68.0396 71.6168 73.9451 65.9368 73.9451 65.9368L73.3818 59.2024L70.9127 61.4329L69.0626 58.6182Z' fill='%2387AF8F'/%3E%3Cpath d='M77.227 105.152C77.227 105.152 59.3356 104.034 57.6684 124.513C57.6684 124.513 75.2092 123.419 77.227 105.152Z' fill='%23BBBA9B'/%3E%3Cpath d='M59.0819 96.4092C59.0819 96.4092 46.8714 95.6163 45.7686 109.594C45.7686 109.594 57.7353 108.877 59.0819 96.4092Z' fill='%23BBBA9B'/%3E%3Cpath d='M57.7327 97.4304C57.7327 97.4304 58.0341 85.0201 43.83 83.9769C43.83 83.9769 45.0478 96.1301 57.7327 97.4304Z' fill='%23BBBA9B'/%3E%3C/svg%3E");
-}
-.cp-hero-carousel .slick-dots { margin:20px 0 0; }
-
-
-.slick-dots { font-size:0;line-height:0; }
-.slick-dots li, .slick-dots li button { width:34px;height:14px; }
-.slick-dots li { vertical-align:top; }
-.slick-dots li button:before { font-size:14px; }
-
-
-.cp-review-heading:before,
-.cp-review-heading:after,
-.custom-collection-heading:before,
-.custom-collection-heading:after,
-body .section-apps div[class*="quinn_card_heading"] > p:before,
-body .section-apps div[class*="quinn_card_heading"] > p:after {
-  width: 32px;
-  height: 32px;
-}
-.cp-review-heading:before,
-.custom-collection-heading:before,
-body .section-apps div[class*="quinn_card_heading"] > p:before {
-  margin-right: 7px;
-}
-.cp-review-heading:after,
-.custom-collection-heading:after,
-body .section-apps div[class*="quinn_card_heading"] > p:after {
-  margin-left: 7px;
-}
-.cp-review-image-wrapper {
-  max-width: 254px;
-  min-width: 254px;
-}
-.cp-customer-review-slider .slick-track {
-  gap: 16px 16px;
-}
-.cp-customer-review-slider .cp-review-slide {
-  padding: 0 8px;
-  margin-top: 23px;
-  margin-bottom: 23px;
-}
-.cp-review-nav-buttons {
-  margin-top: 17px;
-  margin-bottom: 0;
 }
 
-
-
-body .custom-collection-section { padding-bottom:50px; }
-.collection-grid { gap:16px; }
-
-
-.cp-color-grid-celebrate,
-.cp-color-grid-ensemble {
-  padding-top: 25px;
-  padding-bottom: 25px;
+/* Kicker */
+.cp-navratri-banner__kicker {
+  display: block;
+  margin: 0 0 8px 0;
+  color: var(--navratri-kicker-color, #f0cc77);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.3;
 }
-.quinn-cards-stories-carousel-body > div > div[style*="width"] {
-  width: 42dvw !important;
-  height: 70dvw !important;
+
+/* Heading */
+.cp-navratri-banner__heading {
+  margin: 0 0 16px 0;
+  color: var(--navratri-heading-color, #ffffff);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
 }
-.quinn-cards-stories-carousel-body > div > div[style*="width"] > div, 
-.quinn-cards-stories-carousel-body > div > div[style*="width"] > div > div[style*="width"] {
-  width: 100% !important;
-  height: 100% !important;
+
+/* Subtitle */
+.cp-navratri-banner__subheading {
+  margin: -4px 0 16px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
 }
-body .custom-collection-section .collection-grid {
-  padding: 0 10px;
+
+/* CTA Button */
+.cp-navratri-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid var(--navratri-btn-border, rgba(255, 255, 255, 0.95));
+  background: var(--navratri-btn-bg, rgba(29, 7, 10, 0.22));
+  color: var(--navratri-btn-text, #ffffff);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.cp-navratri-banner__btn:hover,
+.cp-navratri-banner__btn:focus-visible {
+  background: var(--navratri-btn-hover-bg, #ffffff);
+  color: var(--navratri-btn-hover-text, #18120f);
+  border-color: var(--navratri-btn-hover-bg, #ffffff);
+  transform: translateY(-2px);
+}
+
+.cp-navratri-banner__full-link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+/* Slick Indicator Bars */
+.cp-navratri-banner .slick-dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 10;
+}
+
+.cp-navratri-banner .slick-dots li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  padding: 0;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.cp-navratri-banner .slick-dots li button {
+  font-size: 0;
+  line-height: 0;
+  display: block;
+  width: 28px;
+  height: 2px;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 1px;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.25s ease;
+}
+
+.cp-navratri-banner .slick-dots li button:before {
+  display: none;
+  content: "";
+}
+
+.cp-navratri-banner .slick-dots li.slick-active button {
+  background: var(--navratri-dot-active, #ffffff);
+  width: 28px;
+  box-shadow: none;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 767px) {
+  .cp-navratri-banner__content {
+    left: 16px;
+    right: 16px;
+    bottom: 54px;
+  }
+
+  .cp-navratri-banner__kicker {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+  }
+
+  .cp-navratri-banner__heading {
+    font-size: clamp(24px, 7.5vw, 34px);
+    line-height: 1.06;
+    margin-bottom: 14px;
+  }
+
+  .cp-navratri-banner__btn {
+    min-width: 140px;
+    min-height: 44px;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    padding: 0 20px;
+  }
+
+  .cp-navratri-banner .slick-dots {
+    bottom: 16px;
+  }
+
+  .cp-navratri-banner .slick-dots li {
+    margin: 0 4px;
+  }
+
+  .cp-navratri-banner .slick-dots li button {
+    width: 24px;
+    height: 2px;
+  }
+
+  .cp-navratri-banner .slick-dots li.slick-active button {
+    width: 24px;
+  }
+}
+
+/* ==========================================================================
+   SECTION 2: NAVRATRI COLLECTION HEADER & OCCASION PILLS
+   ========================================================================== */
+/* ==========================================================================
+   NAVRATRI COLLECTION HEADER & OCCASION PILLS SECTION
+   ========================================================================== */
+.cp-navratri-collection-head {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 32px 0 24px;
+}
+
+.cp-navratri-collection-head--bordered {
+  border-bottom: 1px solid rgba(42, 25, 18, 0.12);
+}
+
+.cp-navratri-collection-head__container {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cp-navratri-collection-head__kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.cp-navratri-collection-head__title,
+.template-page .cp-navratri-collection-head__title {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: clamp(26px, 3.6vw, 42px) !important;
+  font-weight: 700 !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+  text-wrap: balance;
+  max-width: 900px;
+  text-align: center;
+  margin: 0 0 12px !important;
+}
+
+.cp-navratri-collection-head__highlight,
+.template-page .cp-navratri-collection-head__highlight,
+.cp-navratri-collection-head__title .cp-navratri-collection-head__highlight {
+  font-family: inherit !important;
+  font-size: 1em !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  font-style: italic;
+  display: inline;
+  color: #d8a852 !important;
+}
+
+.cp-navratri-collection-head__subtitle {
+  margin: 0 auto 16px;
+  font-size: clamp(13px, 1.1vw, 15px);
+  line-height: 1.45;
+  max-width: 640px;
+}
+
+.cp-navratri-collection-head__pills-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 680px;
+  margin: 4px auto 0;
+  box-sizing: border-box;
+}
+
+.cp-navratri-collection-head__pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  height: 100%;
+  padding: 8px 10px;
+  border: 1px solid #b9aaa1;
+  border-radius: 0px;
+  text-decoration: none;
+  text-align: center;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.cp-navratri-collection-head__pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(24, 18, 15, 0.16);
+}
+
+.cp-navratri-collection-head__pill.is-active {
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(24, 18, 15, 0.22);
+}
+
+@media (max-width: 1024px) {
+  .cp-navratri-collection-head {
+    padding: 28px 0 20px;
+  }
+
+  .cp-navratri-collection-head__pills-row {
+    max-width: 100%;
+    gap: 8px;
+  }
+
+  .cp-navratri-collection-head__pill {
+    min-height: 46px;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 768px) {
+  .cp-navratri-collection-head {
+    padding: 22px 0 16px !important;
+  }
+
+  .cp-navratri-collection-head__container {
+    padding: 0 16px;
+  }
+
+  .cp-navratri-collection-head__title {
+    font-size: clamp(22px, 6.8vw, 30px) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .cp-navratri-collection-head__subtitle {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .cp-navratri-collection-head__pills-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 10px 6px;
+    margin: 0 -16px;
+    gap: 5px;
+    width: calc(100% + 32px);
+  }
+
+  .cp-navratri-collection-head__pills-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cp-navratri-collection-head__pill {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 9px;
+    font-size: 8.8px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media (max-width: 400px) {
+  .cp-navratri-collection-head__title {
+    font-size: 21px !important;
+  }
+
+  .cp-navratri-collection-head__pills-row {
+    padding: 2px 8px 6px;
+    gap: 4px;
+  }
+
+  .cp-navratri-collection-head__pill {
+    min-height: 36px;
+    padding: 0 8px;
+    font-size: 8.2px;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* ==========================================================================
+   SECTION 3: WHAT ARE YOU DRESSING FOR? (GATEWAY)
+   ========================================================================== */
+/* ==========================================================================
+   SECTION 2: WHAT ARE YOU DRESSING FOR?
+   ========================================================================== */
+.cp-navratri-gateway {
+  padding: 44px 0;
+  background-color: #faf6f0;
+}
+
+.cp-navratri-gateway__header,
+.cp-navratri-gateway__header--centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.cp-navratri-gateway__kicker {
+  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 auto 4px;
+  text-align: center;
+  display: inline-block;
+}
+
+.cp-navratri-gateway__title {
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-size: clamp(24px, 3.2vw, 36px);
+  color: #111111;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 auto 4px !important;
+  line-height: 1.2;
+  text-align: center;
+  display: block;
+}
+
+.cp-navratri-gateway__subtitle {
+  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-size: 14px;
+  color: #c9a96e;
+  margin: 0 auto;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+}
+
+/* COLOUR Chip with 5 visible dots + All ▾ */
+.cp-navratri-colour-chip-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.cp-navratri-colour-label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #222222;
+  font-weight: 700;
+}
+
+.cp-navratri-colour-dots-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cp-navratri-quick-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cp-navratri-quick-dot:hover,
+.cp-navratri-quick-dot.is-active {
+  transform: scale(1.2);
+  border-color: #111111;
+}
+
+.cp-navratri-colour-select-wrap {
+  position: relative;
+}
+
+.cp-navratri-colour-select-btn {
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: #333333;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.cp-navratri-colour-select-btn:hover {
+  border-color: #111111;
+}
+
+.cp-navratri-colour-chip-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 50;
+}
+
+.cp-navratri-colour-chip-group.is-open .cp-navratri-colour-chip-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-navratri-colour-option,
+.cp-navratri-colour-clear {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #333333;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.cp-navratri-colour-option:hover {
+  background-color: #f5f5f5;
+}
+
+.cp-navratri-colour-clear {
+  border-top: 1px solid #eeeeee;
+  color: #8e2424;
+  font-weight: 700;
+}
+
+.cp-navratri-gateway__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.cp-navratri-gateway__grid--2 {
+  grid-template-columns: repeat(2, 1fr) !important;
+  max-width: 860px !important;
+}
+
+.cp-navratri-gateway__grid--3 {
+  grid-template-columns: repeat(3, 1fr) !important;
+  max-width: 1260px !important;
+}
+
+.cp-navratri-gateway__grid--4 {
+  grid-template-columns: repeat(4, 1fr) !important;
+  max-width: 1360px !important;
   gap: 16px;
 }
 
-
+.cp-navratri-gateway__card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4.3;
+  overflow: hidden;
+  border-radius: 2px;
+  text-decoration: none;
+  background-color: #151515;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-@media(max-width:767px) and (min-width:561px) {
+.cp-navratri-gateway__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
 
-  body .custom-collection-section .collection-grid {
+.cp-navratri-gateway__card-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
+.cp-navratri-gateway__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.cp-navratri-gateway__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__img {
+  transform: scale(1.055);
+}
+
+.cp-navratri-gateway__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.35) 42%,
+    rgba(0, 0, 0, 0.05) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  border-radius: 0;
+}
+
+/* Sharp Outlined Box Button at Bottom with Frosted Glass Effect (2 Lines of Text) */
+.cp-navratri-gateway__overlay-content {
+  position: absolute;
+  bottom: 14px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  padding: 10px 10px;
+  background: rgba(22, 18, 18, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.88);
+  border-radius: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__overlay-content,
+.cp-navratri-gateway__overlay-content:hover {
+  background: rgba(22, 18, 18, 0.88);
+  border-color: #d8a852;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+.cp-navratri-gateway__card-title {
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  color: #ffffff;
+  font-size: clamp(11.5px, 1.05vw, 13.5px);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.cp-navratri-gateway__card-sub {
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  color: #ffffff;
+  font-size: clamp(9px, 0.8vw, 10.5px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  opacity: 0.95;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease,
+    color 0.25s ease;
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__card-sub {
+  opacity: 1;
+  color: #d8a852;
+}
+
+@media (max-width: 1024px) {
+  .cp-navratri-gateway {
+    padding: 34px 0 40px;
+  }
+  .cp-navratri-gateway__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
-
+  .cp-navratri-gateway__grid--3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 14px !important;
+  }
+  .cp-navratri-gateway__grid--2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .cp-navratri-gateway__grid--4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+  .cp-navratri-gateway__overlay-content {
+    bottom: 10px;
+    left: 8px;
+    right: 8px;
+    padding: 8px 6px;
+  }
 }
 
-@media(max-width:479px) {
-  
-  .quinn-cards-stories-carousel-body > div > div[style*="width"] {
-    height: 85dvw !important;
-  }
-  body .custom-collection-section .collection-grid {
-    gap: 12px 10px;
+@media (max-width: 768px) {
+  .cp-navratri-gateway {
+    padding: 28px 0 32px;
   }
 
+  .cp-navratri-gateway__header,
+  .cp-navratri-gateway__header--centered {
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+  }
+
+  .cp-navratri-gateway__title,
+  .cp-navratri-gateway__subtitle,
+  .cp-navratri-gateway__kicker {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .cp-navratri-gateway__grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px 10px !important;
+    max-width: 100% !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-1 {
+    grid-template-columns: 1fr !important;
+    max-width: 380px !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .cp-navratri-gateway__card {
+    aspect-ratio: 3 / 4.1 !important;
+  }
+
+  .cp-navratri-gateway__overlay-content {
+    bottom: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    padding: 8px 6px !important;
+    gap: 2px !important;
+  }
+
+  .cp-navratri-gateway__card-title {
+    font-size: 11.5px !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .cp-navratri-gateway__card-sub {
+    font-size: 9px !important;
+    letter-spacing: 0.05em !important;
+  }
 }
 
-@media(max-width:420px) {
-
-  .cp-color-grid-heading-celebrate,
-  .cp-color-grid-heading-ensemble,
-  .cp-review-heading,
-  .custom-collection-heading,
-  body .section-apps div[class*="quinn_card_heading"] > p {
-    font-size: 20px !important;
+@media (max-width: 480px) {
+  .cp-navratri-gateway__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px 8px !important;
   }
-  .custom-collection-heading { margin-bottom:15px; }
 
+  .cp-navratri-gateway__grid--mob-1 {
+    grid-template-columns: 1fr !important;
+    max-width: 340px !important;
+  }
+
+  .cp-navratri-gateway__grid--mob-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px 8px !important;
+  }
+
+  .cp-navratri-gateway__overlay-content {
+    bottom: 8px !important;
+    left: 6px !important;
+    right: 6px !important;
+    padding: 7px 4px !important;
+    gap: 2px !important;
+  }
+
+  .cp-navratri-gateway__card-title {
+    font-size: 10.5px !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  .cp-navratri-gateway__card-sub {
+    font-size: 8px !important;
+    letter-spacing: 0.04em !important;
+  }
 }
 
-@media(max-width:360px) {
+/* ==========================================================================
+   SECTION 4: SHOP BY CATEGORY (CATEGORIES)
+   ========================================================================== */
+/* ==========================================================================
+   SECTION 3: SHOP BY CATEGORY
+   ========================================================================== */
+.cp-navratri-categories {
+  padding: 36px 0 44px;
+  background-color: #faf6f0;
+}
 
-  .cp-color-grid-heading-celebrate,
-  .cp-color-grid-heading-ensemble,
-  .cp-review-heading,
-  .custom-collection-heading,
-  body .section-apps div[class*="quinn_card_heading"] > p {
-    font-size: 18px !important;
+.cp-navratri-categories__header {
+  text-align: center;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.cp-navratri-categories__title-wrap {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cp-navratri-categories {
+  padding: 40px 0 48px;
+  background-color: #ffffff;
+}
+
+.cp-navratri-categories__header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.cp-navratri-categories__title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cp-navratri-categories__kicker {
+  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 4px;
+  display: inline-block;
+}
+
+.cp-navratri-categories__title {
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-size: clamp(24px, 3.2vw, 36px);
+  color: #111111;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 auto 4px;
+  text-align: center;
+  display: block;
+  line-height: 1.2;
+}
+
+.cp-navratri-categories__subtitle {
+  font-family: "Generis Sans W01 Regular", sans-serif;
+  font-size: 14px;
+  color: #c9a96e;
+  margin: 0 auto;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+}
+
+.cp-navratri-categories__track-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.cp-navratri-categories__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+.cp-navratri-categories__grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 860px;
+}
+
+.cp-navratri-categories__grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1260px;
+}
+
+.cp-navratri-categories__grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1360px;
+  gap: 18px;
+}
+
+.cp-navratri-categories__grid--5,
+.cp-navratri-categories__grid--6,
+.cp-navratri-categories__grid--7 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1260px;
+  gap: 20px;
+}
+
+/* Category Card (Boxed with Border & White Background) */
+.cp-navratri-categories__item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #ded2ca;
+  border-radius: 2px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition:
+    border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-navratri-categories__item:hover {
+  border-color: #b5a498;
+  box-shadow: 0 10px 28px rgba(24, 18, 15, 0.09);
+  transform: translateY(-2px);
+}
+
+.cp-navratri-categories__link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.cp-navratri-categories__media {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: #ede8df;
+  overflow: hidden;
+  position: relative;
+  display: block;
+}
+
+.cp-navratri-categories__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cp-navratri-categories__item:hover .cp-navratri-categories__img {
+  transform: scale(1.045);
+}
+
+.cp-navratri-categories__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ede8df;
+}
+
+/* Category Bottom Box Footer (Text on Left, Arrow on Right) */
+.cp-navratri-categories__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 13px 18px;
+  background: #ffffff;
+  border-top: 1px solid #ded2ca;
+  box-sizing: border-box;
+  width: 100%;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cp-navratri-categories__name {
+  font-family: inherit;
+  font-size: clamp(12.5px, 1.15vw, 14px);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #18120f;
+  margin: 0;
+  line-height: 1.25;
+  transition: color 0.25s ease;
+}
+
+.cp-navratri-categories__arrow {
+  width: 18px;
+  height: 18px;
+  color: #18120f;
+  flex-shrink: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 0.25s ease;
+}
+
+.cp-navratri-categories__item:hover .cp-navratri-categories__name {
+  color: #8e2424;
+}
+
+.cp-navratri-categories__item:hover .cp-navratri-categories__arrow {
+  transform: translateX(5px);
+  color: #8e2424;
+}
+
+/* Category Slider Dots (Mobile) */
+.cp-navratri-categories__dots {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 4px 0;
+}
+
+.cp-navratri-categories__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background-color: #d8ceca;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    width 0.3s ease;
+}
+
+.cp-navratri-categories__dot.is-active {
+  background-color: #18120f;
+  width: 22px;
+  border-radius: 4px;
+}
+
+/* Category Slider Arrows (Hidden for 3x2 grid) */
+.cp-navratri-cat-arrow {
+  display: none !important;
+}
+
+/* Responsive Breakpoints: Tablet & Mobile */
+@media (max-width: 1024px) {
+  .cp-navratri-categories {
+    padding: 34px 0 40px;
   }
-  .cp-review-heading:before,
-  .cp-review-heading:after,
-  .custom-collection-heading:before,
-  .custom-collection-heading:after,
-  body .section-apps div[class*="quinn_card_heading"] > p:before,
-  body .section-apps div[class*="quinn_card_heading"] > p:after {
-    width: 25px;
-    height: 25px;
+  .cp-navratri-categories__grid,
+  .cp-navratri-categories__grid--3 {
+    gap: 16px;
   }
-  .cp-review-heading:before,
-  .custom-collection-heading:before,
-  body .section-apps div[class*="quinn_card_heading"] > p:before {
-    margin-right: 4px;
+  .cp-navratri-categories__footer {
+    padding: 11px 14px;
+    min-height: 48px;
   }
-  .cp-review-heading:after,
-  .custom-collection-heading:after,
-  body .section-apps div[class*="quinn_card_heading"] > p:after {
-    margin-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .cp-navratri-categories {
+    padding: 28px 0 32px;
   }
 
+  .cp-navratri-categories__header {
+    margin-bottom: 20px;
+  }
+
+  /* Smooth swipeable horizontal rail with peek for 3 cards */
+  .cp-navratri-categories__grid,
+  .cp-navratri-categories__grid--2,
+  .cp-navratri-categories__grid--3,
+  .cp-navratri-categories__grid--4,
+  .cp-navratri-categories__grid--5,
+  .cp-navratri-categories__grid--6,
+  .cp-navratri-categories__grid--7 {
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding: 4px 16px 8px !important;
+    margin: 0 -16px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .cp-navratri-categories__grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .cp-navratri-categories__item {
+    flex: 0 0 78vw !important;
+    max-width: 310px !important;
+    min-width: 250px !important;
+    width: auto !important;
+    scroll-snap-align: center !important;
+    scroll-snap-stop: normal !important;
+    border-radius: 2px !important;
+  }
+
+  .cp-navratri-categories__media {
+    aspect-ratio: 3 / 4 !important;
+  }
+
+  .cp-navratri-categories__footer {
+    min-height: 46px;
+    padding: 10px 14px;
+  }
+
+  .cp-navratri-categories__name {
+    font-size: 12px;
+    letter-spacing: 0.07em;
+  }
+
+  .cp-navratri-categories__arrow {
+    width: 15px;
+    height: 15px;
+  }
+
+  .cp-navratri-categories__dots {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cp-navratri-categories__item {
+    flex: 0 0 82vw !important;
+    max-width: 290px !important;
+    min-width: 230px !important;
+  }
+}
+
+/* ==========================================================================
+   SECTION 5: REUSABLE NAVRATRI PRODUCT GRID SECTION
+   ========================================================================== */
+/* ==========================================================================
+   REUSABLE NAVRATRI PRODUCT GRID SECTION (4/4 GRID)
+   ========================================================================== */
+.cp-navratri-pcarousel {
+  position: relative;
+  width: 100%;
+  padding: 48px 0;
+  scroll-margin-top: 80px;
+}
+
+.cp-navratri-pcarousel__header {
+  text-align: center;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+.cp-navratri-pcarousel__kicker {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #9e7d47;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+  text-align: center;
+}
+
+.cp-navratri-pcarousel__title {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: clamp(24px, 3.2vw, 36px) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+  margin: 0 0 6px !important;
+  color: #111111;
+  text-align: center !important;
+}
+
+.cp-navratri-pcarousel__subtitle {
+  font-size: 14px;
+  color: #666666;
+  margin: 0;
+  text-align: center;
+}
+
+.cp-navratri-pcarousel__grid-wrap,
+.cp-navratri-pcarousel .template-collection {
+  width: 100%;
+}
+
+.cp-navratri-pcarousel .product-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px 16px !important;
+  width: 100% !important;
+}
+
+.cp-navratri-pcarousel .product-block {
+  width: 100% !important;
+  margin-bottom: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  text-align: left !important;
+}
+
+.cp-navratri-pcarousel .product-block .block-inner,
+.cp-navratri-pcarousel .product-block .block-inner-inner,
+.cp-navratri-pcarousel .product-block .product-block__detail {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.cp-navratri-pcarousel .product-block__title {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 18px !important;
+  color: #000000;
+  opacity: 0.8 !important;
+  margin-top: 8px !important;
+  text-align: left !important;
+  /* 2-line clamp with ellipsis */
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  min-height: calc(14.5px * 1.35 * 2) !important;
+}
+
+/* Rating: reorder above title, float to right */
+.cp-navratri-pcarousel .product-block .innerer {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cp-navratri-pcarousel .product-block__rating {
+  order: -1 !important;
+  align-self: flex-end !important;
+  margin-top: 6px !important;
+  margin-bottom: 2px !important;
+}
+
+.cp-navratri-pcarousel .product-block .price__current {
+  font-weight: 600 !important;
+  color: #111111 !important;
+}
+
+.cp-navratri-pcarousel .product-block__size-chips {
+  padding: 0 !important;
+  margin: 6px 0 0 0 !important;
+  gap: 4px 5px !important;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"] {
+  opacity: 0.6;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"] img {
+  filter: grayscale(25%);
+  transition: filter 0.3s ease;
+}
+
+.cp-navratri-pcarousel .product-block[data-available="0"]:hover img {
+  filter: grayscale(0%);
+}
+
+/* Quick Add Button (+ button) for both Product Carousel & Kids cards */
+.cp-navratri-pcarousel .product-block .image-cont .btn.quickbuy-toggle,
+.cp-navratri-kids .product-block .image-cont .btn.quickbuy-toggle {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background-color: #ffffff !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 50% !important;
+  width: 35px !important;
+  height: 35px !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  right: 10px !important;
+  left: auto !important;
+  top: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 5 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  cursor: pointer !important;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease !important;
+}
+
+.cp-navratri-pcarousel .product-block .image-cont .btn.quickbuy-toggle svg,
+.cp-navratri-kids .product-block .image-cont .btn.quickbuy-toggle svg {
+  fill: #000000 !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.cp-navratri-pcarousel .product-block .image-cont .btn.quickbuy-toggle:hover,
+.cp-navratri-kids .product-block .image-cont .btn.quickbuy-toggle:hover {
+  background-color: #f7f7f7 !important;
+  transform: scale(1.06) !important;
+}
+
+.cp-navratri-pcarousel .product-block .image-cont .btn.quickbuy-toggle:active,
+.cp-navratri-kids .product-block .image-cont .btn.quickbuy-toggle:active {
+  transform: scale(0.94) !important;
+}
+
+/* Bottom CTA view all button (Single View All Button) */
+.cp-navratri-pcarousel__footer-cta {
+  text-align: center;
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.cp-navratri-pcarousel__view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 32px;
+  background-color: transparent;
+  color: #18120f !important;
+  border: 1.5px solid #18120f;
+  font-family: "Generis Sans W01 Bold", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0px !important;
+  box-sizing: border-box;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.cp-navratri-pcarousel__view-all-btn:hover {
+  background-color: #18120f;
+  color: #ffffff !important;
+  border-color: #18120f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 992px) {
+  .cp-navratri-pcarousel .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px 12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .cp-navratri-pcarousel {
+    scroll-margin-top: 60px;
+  }
+
+  .cp-navratri-pcarousel__header {
+    margin-bottom: 20px !important;
+  }
+
+  .cp-navratri-pcarousel__title {
+    line-height: 1.25 !important;
+    margin: 0 0 4px !important;
+    text-align: center !important;
+  }
+
+  .cp-navratri-pcarousel__subtitle {
+    line-height: 1.35 !important;
+    text-align: center !important;
+  }
+
+  .cp-navratri-pcarousel__footer-cta {
+    margin-top: 24px !important;
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .cp-navratri-pcarousel__view-all-btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    background-color: transparent;
+    color: #18120f !important;
+    border: 1.5px solid #18120f;
+    border-radius: 0px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cp-navratri-pcarousel .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px 8px !important;
+  }
+}
+
+/* ==========================================================================
+   SECTION 6: NAVRATRI QUICK VIEW POPUP MODAL & MOBILE BOTTOM SHEET
+   ========================================================================== */
+/* ==========================================================================
+   NAVRATRI QUICK VIEW POPUP MODAL (THEME-MATCHED LUXURY DESIGN)
+   ========================================================================== */
+
+/* Lock body scroll when modal open */
+html.cp-qv-locked,
+body.cp-qv-locked {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+/* Modal Overlay Wrapper */
+.cp-qv-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition:
+    opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.28s !important;
+}
+
+.cp-qv-modal.is-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Backdrop */
+.cp-qv-backdrop {
+  position: absolute !important;
+  inset: 0 !important;
+  background-color: rgba(15, 10, 30, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  cursor: pointer !important;
+}
+
+/* Dialog Container */
+.cp-qv-dialog {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 92vw !important;
+  max-width: 880px !important;
+  max-height: 90vh !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 26px 28px !important;
+  transform: scale(0.94) translateY(12px) !important;
+  opacity: 0 !important;
+  transition:
+    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease !important;
+}
+
+.cp-qv-modal.is-open .cp-qv-dialog {
+  transform: scale(1) translateY(0) !important;
+  opacity: 1 !important;
+}
+
+/* Close 'X' Button */
+.cp-qv-close-btn {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background: #f4f4f6 !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #222222 !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.cp-qv-close-btn:hover {
+  background-color: #e5e5ea !important;
+  transform: rotate(90deg) !important;
+}
+
+/* Loading State */
+.cp-qv-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  gap: 16px;
+  color: #555555;
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 14px;
+}
+
+.cp-qv-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(32, 23, 71, 0.15);
+  border-top-color: #201747;
+  border-radius: 50%;
+  animation: cpQvSpin 0.75s linear infinite;
+}
+
+@keyframes cpQvSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2-Column Product Layout */
+.cp-qv-layout {
+  display: flex !important;
+  gap: 28px !important;
+  align-items: flex-start !important;
+}
+
+/* Gallery (Left Column) */
+.cp-qv-gallery {
+  flex: 0 0 45% !important;
+  max-width: 45% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  position: relative !important;
+}
+
+.cp-qv-main-image-wrap {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 0.75 !important;
+  max-height: 460px !important;
+  background-color: #f7f7f7 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.cp-qv-main-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.cp-qv-gal-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 34px !important;
+  height: 34px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  font-size: 16px !important;
+  color: #111111 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  transition:
+    background-color 0.2s,
+    transform 0.15s !important;
+  z-index: 3 !important;
+}
+
+.cp-qv-gal-arrow:hover {
+  background: #ffffff !important;
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.cp-qv-gal-arrow--prev {
+  left: 10px !important;
+}
+
+.cp-qv-gal-arrow--next {
+  right: 10px !important;
+}
+
+.cp-qv-dots {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin-top: 4px !important;
+}
+
+.cp-qv-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background-color: #d1d5db !important;
+  cursor: pointer !important;
+  transition:
+    background-color 0.2s,
+    transform 0.2s !important;
+}
+
+.cp-qv-dot.is-active {
+  background-color: #201747 !important;
+  transform: scale(1.2) !important;
+}
+
+/* Social Proof Banner */
+.cp-qv-ribbon {
+  background-color: #201747 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+}
+
+.cp-qv-ribbon strong {
+  color: #ffd700 !important;
+}
+
+/* Details (Right Column) */
+.cp-qv-details {
+  flex: 1 1 54% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.cp-qv-title {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #111111 !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+  padding-right: 32px !important;
+}
+
+/* Price Row */
+.cp-qv-price-row {
+  display: flex !important;
+  align-items: baseline !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  padding-bottom: 8px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.cp-qv-price {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #111111 !important;
+}
+
+.cp-qv-was-price {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 16px !important;
+  color: #888888 !important;
+  text-decoration: line-through !important;
+  text-decoration-color: #e53e3e !important;
+}
+
+.cp-qv-tax-text {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #15803d !important;
+}
+
+/* Size Chips Options */
+.cp-qv-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.cp-qv-opt-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.cp-qv-opt-label {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #333333 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.cp-qv-selected-size {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 13px !important;
+  color: #201747 !important;
+  font-weight: 600 !important;
+}
+
+.cp-qv-chips {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.cp-qv-chip {
+  min-width: 44px !important;
+  height: 40px !important;
+  padding: 0 14px !important;
+  border-radius: 0px !important;
+  border: 1.5px solid #e2e4e8 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.cp-qv-chip:hover {
+  border-color: #201747 !important;
+}
+
+.cp-qv-chip.is-selected {
+  background-color: #201747 !important;
+  border-color: #201747 !important;
+  color: #ffffff !important;
+}
+
+.cp-qv-chip.is-oos {
+  opacity: 0.45 !important;
+  text-decoration: line-through !important;
+  cursor: not-allowed !important;
+  border-style: dashed !important;
+}
+
+/* Add To Bag Button */
+.cp-qv-cta-wrap {
+  margin-top: 4px !important;
+}
+
+.cp-qv-atc-btn,
+.template-page .cp-qv-atc-btn {
+  width: 100% !important;
+  height: 50px !important;
+  border-radius: 0px !important;
+  background-color: #201747 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 18px rgba(32, 23, 71, 0.25) !important;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s !important;
+}
+
+.cp-qv-atc-text,
+.template-page .cp-qv-atc-text,
+.cp-qv-atc-btn span,
+.template-page .cp-qv-atc-btn span {
+  color: #ffffff !important;
+  font-family: inherit !important;
+}
+
+.cp-qv-atc-btn:hover:not(:disabled) {
+  background-color: #140d33 !important;
+  box-shadow: 0 8px 24px rgba(32, 23, 71, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+.cp-qv-atc-btn:hover:not(:disabled) .cp-qv-atc-text,
+.template-page .cp-qv-atc-btn:hover:not(:disabled) .cp-qv-atc-text,
+.cp-qv-atc-btn:hover:not(:disabled) span,
+.template-page .cp-qv-atc-btn:hover:not(:disabled) span {
+  color: #ffffff !important;
+}
+
+.cp-qv-atc-btn svg,
+.template-page .cp-qv-atc-btn svg,
+.cp-qv-bag-icon {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+  flex-shrink: 0 !important;
+}
+
+.cp-qv-atc-btn:disabled {
+  opacity: 0.55 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+/* Trust Badges 2x2 Grid */
+.cp-qv-trust-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px 14px !important;
+  padding: 10px 14px !important;
+  background-color: #faf9f6 !important;
+  border-radius: 12px !important;
+  border: 1px solid #f0ede6 !important;
+  margin-top: 2px !important;
+}
+
+.cp-qv-trust-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.cp-qv-trust-item span {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #222222 !important;
+  line-height: 1.25 !important;
+}
+
+/* Policy Note */
+.cp-qv-policy {
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 12px !important;
+  color: #777777 !important;
+  margin: 0 !important;
+}
+
+.cp-qv-policy a {
+  color: #201747 !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+}
+
+/* View Details Link */
+.cp-qv-view-more {
+  margin-top: 4px !important;
+}
+
+.cp-qv-pdp-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family: "Generis Sans W01 Bold", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #201747 !important;
+  text-decoration: none !important;
+  transition:
+    color 0.15s,
+    gap 0.15s !important;
+}
+
+.cp-qv-pdp-link:hover {
+  color: #c9a96e !important;
+  gap: 9px !important;
+}
+
+/* Drag Handle for Mobile Bottom Sheet */
+.cp-qv-drag-handle {
+  display: none;
+  width: 44px;
+  height: 5px;
+  border-radius: 3px;
+  background-color: #d1d5db;
+  margin: 0 auto 14px;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVE (BOTTOM SHEET POPUP)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .cp-qv-modal {
+    align-items: flex-end !important;
+  }
+
+  .cp-qv-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 88vh !important;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 14px 18px calc(32px + env(safe-area-inset-bottom)) !important;
+    transform: translateY(100%) !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .cp-qv-modal.is-open .cp-qv-dialog {
+    transform: translateY(0) !important;
+  }
+
+  .cp-qv-drag-handle {
+    display: block !important;
+  }
+
+  .cp-qv-close-btn {
+    top: 14px !important;
+    right: 14px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .cp-qv-layout {
+    gap: 16px !important;
+    display: block !important;
+  }
+
+  .cp-qv-gallery {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .cp-qv-ribbon {
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+
+  .cp-qv-details {
+    gap: 12px !important;
+  }
+
+  .cp-qv-title {
+    font-size: 17px !important;
+    padding-right: 24px !important;
+  }
+
+  .cp-qv-price {
+    font-size: 19px !important;
+  }
+
+  .cp-qv-was-price {
+    font-size: 14px !important;
+  }
+
+  .cp-qv-chips {
+    gap: 6px !important;
+  }
+
+  .cp-qv-chip {
+    min-width: 40px !important;
+    height: 36px !important;
+    font-size: 12px !important;
+    padding: 0 10px !important;
+  }
+
+  .cp-qv-atc-btn {
+    height: 46px !important;
+    font-size: 13px !important;
+  }
+
+  .cp-qv-trust-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px 10px !important;
+    padding: 10px 12px !important;
+  }
+
+  .cp-qv-trust-item span {
+    font-size: 11px !important;
+  }
+
+  .cp-qv-trust-item svg {
+    width: 14px !important;
+    height: 14px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .cp-qv-policy {
+    font-size: 11px !important;
+  }
+
+  .cp-qv-view-more {
+    margin-top: 2px !important;
+  }
+
+  .cp-qv-pdp-link {
+    font-size: 12px !important;
+  }
+}
+
+/* ==========================================================================
+   ACTIVE RESPONSIVE ADJUSTMENTS & HELPERS
+   ========================================================================== */
+/* ==========================================================================
+   RESPONSIVE ADDITIONS & FIXES — v5 WIREFRAME ALIGNMENT
+   ========================================================================== */
+
+/* ── Gateway: header stays centered on tablet & mobile ── */
+@media (max-width: 840px) {
+  .cp-navratri-gateway__header,
+  .cp-navratri-gateway__header--centered {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .cp-navratri-colour-chip-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .cp-navratri-gateway {
+    padding: 28px 0 24px;
+  }
+
+  .cp-navratri-gateway__card {
+    aspect-ratio: 3 / 4.1;
+  }
+}
+
+/* ── Categories & Shop by Style: header styling on tablet ── */
+@media (max-width: 1024px) {
+  .cp-navratri-categories__header {
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+/* ── Section divider / spacing system ── */
+.cp-navratri-section-divider {
+  height: 1px;
+  background: #f0edea;
+  margin: 0 20px;
+}
+
+/* ── Universal: section labels & "see all" links ── */
+.cp-navratri-section-see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+  text-decoration: none;
+  border-bottom: 1px solid #111111;
+  padding-bottom: 1px;
+  transition: opacity 0.2s ease;
+}
+
+.cp-navratri-section-see-all:hover {
+  opacity: 0.6;
+}
+
+/* ── Gateway: "See all" link in header (right-aligned) ── */
+.cp-navratri-gateway__header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+/* ── Global: ensure no horizontal scroll on mobile ── */
+@media (max-width: 480px) {
+  .cp-navratri-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .cp-navratri-gateway,
+  .cp-navratri-categories,
+  .cp-navratri-festive-edits,
+  .cp-navratri-wedding,
+  .cp-navratri-trust-searches,
+  .cp-navratri-stories {
+    overflow-x: hidden;
+  }
+}
+
+/* ── Section heading utility: balanced look across all sections ── */
+.cp-navratri-section-head {
+  margin-bottom: 24px;
+}
+
+.cp-navratri-section-head h2,
+.cp-navratri-section-head h3 {
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #111111;
+  margin: 0 0 4px;
+}
+
+.cp-navratri-section-head p {
+  font-size: 13.5px;
+  color: #666666;
+  margin: 0;
+}
+
+/* ── Category section: show filter dropdown only on desktop ── */
+@media (max-width: 768px) {
+  .cp-navratri-categories__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cp-navratri-categories__header .cp-navratri-colour-chip-group {
+    display: none;
+  }
+}
+
+/* ── Vibe tabs: "See all" link after tabs row ── */
+.cp-navratri-vibe-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* ── Drop shadow on section cards ── */
+.cp-navratri-gateway__card,
+.cp-navratri-wedding-card,
+.cp-navratri-categories__media {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Print / accessibility: skip animations for reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .cp-navratri-gateway__img,
+  .cp-navratri-categories__img,
+  .cp-navratri-craft-tile img,
+  .cp-navratri-wedding-card-img,
+  .cp-navratri-story-card__img,
+  .cp-navratri-hero__cta-btn {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   FIX FOR .template-page SPAN CASCADE
+   (When Navratri sections are on /pages/..., theme forces .template-page span { color: #000 })
+   ========================================================================== */
+
+/* 1. Occasion Header Pills */
+.cp-navratri-collection-head__pill,
+.template-page .cp-navratri-collection-head__pill,
+.cp-navratri-collection-head__pill span,
+.template-page .cp-navratri-collection-head__pill span {
+  color: #18120f !important;
+}
+
+.cp-navratri-collection-head__pill:hover,
+.cp-navratri-collection-head__pill.is-active,
+.template-page .cp-navratri-collection-head__pill:hover,
+.template-page .cp-navratri-collection-head__pill.is-active {
+  background-color: #18120f !important;
+  border-color: #18120f !important;
+  color: #ffffff !important;
+}
+
+.cp-navratri-collection-head__pill:hover span,
+.cp-navratri-collection-head__pill.is-active span,
+.template-page .cp-navratri-collection-head__pill:hover span,
+.template-page .cp-navratri-collection-head__pill.is-active span {
+  color: #ffffff !important;
+}
+
+/* 2. View All Button in Product Carousels */
+.cp-navratri-pcarousel__view-all-btn,
+.template-page .cp-navratri-pcarousel__view-all-btn {
+  background-color: transparent !important;
+  color: #18120f !important;
+  border: 1.5px solid #18120f !important;
+}
+
+.cp-navratri-pcarousel__view-all-btn span,
+.template-page .cp-navratri-pcarousel__view-all-btn span {
+  color: #18120f !important;
+}
+
+.cp-navratri-pcarousel__view-all-btn svg,
+.template-page .cp-navratri-pcarousel__view-all-btn svg {
+  stroke: #18120f !important;
+  color: #18120f !important;
+}
+
+.cp-navratri-pcarousel__view-all-btn:hover,
+.template-page .cp-navratri-pcarousel__view-all-btn:hover {
+  background-color: #18120f !important;
+  border-color: #18120f !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+}
+
+.cp-navratri-pcarousel__view-all-btn:hover span,
+.template-page .cp-navratri-pcarousel__view-all-btn:hover span {
+  color: #ffffff !important;
+}
+
+.cp-navratri-pcarousel__view-all-btn:hover svg,
+.template-page .cp-navratri-pcarousel__view-all-btn:hover svg {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* 3. Gateway Silhouette Category Cards */
+.cp-navratri-gateway__card-title,
+.template-page .cp-navratri-gateway__card-title,
+.cp-navratri-gateway__card-title span,
+.template-page .cp-navratri-gateway__card-title span {
+  color: #ffffff !important;
+}
+
+.cp-navratri-gateway__card-sub,
+.template-page .cp-navratri-gateway__card-sub,
+.cp-navratri-gateway__card-sub span,
+.template-page .cp-navratri-gateway__card-sub span {
+  color: #ffffff !important;
+  opacity: 0.95;
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__overlay-content,
+.cp-navratri-gateway__overlay-content:hover,
+.template-page
+  .cp-navratri-gateway__card:hover
+  .cp-navratri-gateway__overlay-content,
+.template-page .cp-navratri-gateway__overlay-content:hover {
+  background: rgba(22, 18, 18, 0.92) !important;
+  border-color: #d8a852 !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45) !important;
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__card-title,
+.template-page
+  .cp-navratri-gateway__card:hover
+  .cp-navratri-gateway__card-title {
+  color: #ffffff !important;
+}
+
+.cp-navratri-gateway__card:hover .cp-navratri-gateway__card-sub,
+.template-page .cp-navratri-gateway__card:hover .cp-navratri-gateway__card-sub {
+  color: #d8a852 !important;
+  opacity: 1 !important;
+}
+
+/* 4. Hero Banner CTA Buttons */
+.cp-navratri-hero__cta-btn,
+.cp-navratri-hero__button,
+.cp-navratri-banner__btn,
+.template-page .cp-navratri-hero__cta-btn,
+.template-page .cp-navratri-hero__button,
+.template-page .cp-navratri-banner__btn {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+  background-color: rgba(29, 7, 10, 0.22) !important;
+}
+
+.cp-navratri-hero__cta-btn span,
+.cp-navratri-hero__button span,
+.cp-navratri-banner__btn span,
+.template-page .cp-navratri-hero__cta-btn span,
+.template-page .cp-navratri-hero__button span,
+.template-page .cp-navratri-banner__btn span {
+  color: #ffffff !important;
+}
+
+.cp-navratri-hero__cta-btn:hover,
+.cp-navratri-hero__button:hover,
+.cp-navratri-banner__btn:hover,
+.template-page .cp-navratri-hero__cta-btn:hover,
+.template-page .cp-navratri-hero__button:hover,
+.template-page .cp-navratri-banner__btn:hover {
+  background-color: #ffffff !important;
+  color: #18120f !important;
+  border-color: #ffffff !important;
+}
+
+.cp-navratri-hero__cta-btn:hover span,
+.cp-navratri-hero__button:hover span,
+.cp-navratri-banner__btn:hover span,
+.template-page .cp-navratri-hero__cta-btn:hover span,
+.template-page .cp-navratri-hero__button:hover span,
+.template-page .cp-navratri-banner__btn:hover span {
+  color: #18120f !important;
+}
+
+/* 5. Shop by Category Occasion Cards */
+.cp-navratri-categories__name,
+.template-page .cp-navratri-categories__name,
+.cp-navratri-categories__name span,
+.template-page .cp-navratri-categories__name span {
+  color: #18120f !important;
+}
+
+.cp-navratri-categories__item:hover .cp-navratri-categories__name,
+.template-page
+  .cp-navratri-categories__item:hover
+  .cp-navratri-categories__name {
+  color: #8e2424 !important;
+}
+
+.cp-navratri-categories__arrow,
+.template-page .cp-navratri-categories__arrow {
+  color: #18120f !important;
+}
+
+.cp-navratri-categories__item:hover .cp-navratri-categories__arrow,
+.template-page
+  .cp-navratri-categories__item:hover
+  .cp-navratri-categories__arrow {
+  color: #8e2424 !important;
+  stroke: #8e2424 !important;
+}
+
+/* 6. Quick View Popup Modal (Add To Bag & Selected Chips) */
+.cp-qv-atc-btn,
+.template-page .cp-qv-atc-btn {
+  background-color: #201747 !important;
+  color: #ffffff !important;
+}
+
+.cp-qv-atc-text,
+.template-page .cp-qv-atc-text,
+.cp-qv-atc-btn span,
+.template-page .cp-qv-atc-btn span {
+  color: #ffffff !important;
+  font-family: inherit !important;
+}
+
+.cp-qv-atc-btn:hover:not(:disabled) {
+  background-color: #140d33 !important;
+}
+
+.cp-qv-atc-btn:hover:not(:disabled) .cp-qv-atc-text,
+.template-page .cp-qv-atc-btn:hover:not(:disabled) .cp-qv-atc-text,
+.cp-qv-atc-btn:hover:not(:disabled) span,
+.template-page .cp-qv-atc-btn:hover:not(:disabled) span {
+  color: #ffffff !important;
+}
+
+.cp-qv-atc-btn svg,
+.template-page .cp-qv-atc-btn svg,
+.cp-qv-bag-icon {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.cp-qv-chip.is-selected,
+.template-page .cp-qv-chip.is-selected {
+  background-color: #201747 !important;
+  border-color: #201747 !important;
+  color: #ffffff !important;
+}
+
+.cp-qv-chip.is-selected span,
+.template-page .cp-qv-chip.is-selected span {
+  color: #ffffff !important;
+}
+
+/* Hide Footer SEO section on Navratri page */
+.footer-seo-wrapper,
+#shopify-section-footer_seo_C7wP3B,
+div[id*="footer_seo"] {
+  display: none !important;
 }

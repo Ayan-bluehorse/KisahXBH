@@ -1,142 +1,411 @@
-{{ 'navratri.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'navratri.js' | asset_url }}" defer></script>
+<section 
+  id="navratri-banner-{{ section.id }}" 
+  class="cp-navratri-banner cp-hero-carousel"
+  style="
+    --navratri-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --navratri-kicker-color: {{ section.settings.kicker_color | default: '#f0cc77' }};
+    --navratri-heading-color: {{ section.settings.heading_color | default: '#ffffff' }};
+    --navratri-btn-text: {{ section.settings.btn_text_color | default: '#ffffff' }};
+    --navratri-btn-bg: {{ section.settings.btn_bg_color | default: 'rgba(29, 7, 10, 0.22)' }};
+    --navratri-btn-border: {{ section.settings.btn_border_color | default: 'rgba(255, 255, 255, 0.95)' }};
+    --navratri-btn-hover-bg: {{ section.settings.btn_hover_bg | default: '#ffffff' }};
+    --navratri-btn-hover-text: {{ section.settings.btn_hover_text | default: '#18120f' }};
+    --navratri-dot-active: {{ section.settings.dot_active_color | default: '#ffffff' }};
+  "
+  data-section-id="{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-autoplay-speed="{{ section.settings.autoplay_speed | times: 1000 }}"
+  data-fade="{% if section.settings.transition_effect == 'fade' %}true{% else %}false{% endif %}"
+  data-dots="{{ section.settings.show_dots }}">
 
-<section class="cp-hero-carousel">
-  <div class="cp-carousel">
-    {% for block in section.blocks %}
-      {% if block.settings.desktop_image != blank or block.settings.mobile_image != blank %}
-        <div class="cp-carousel-slide">
-          {% if block.settings.link != blank %}
-            <a href="{{ block.settings.link }}" class="cp-banner-link">
-          {% endif %}
-              <picture>
-                {% if block.settings.mobile_image != blank %}
-                  <source 
-                    media="(max-width: 767px)" 
-                    srcset="{{ block.settings.mobile_image | image_url: width: 1000 }}">
-                {% endif %}
-                {% if block.settings.desktop_image != blank %}
-                  <img 
-                    width="{{ block.settings.desktop_image.width }}" height="{{ block.settings.desktop_image.height }}" loading="lazy" src="{{ block.settings.desktop_image | image_url: width: 2000 }}" 
-                    alt="{{ block.settings.alt_text | escape }}" 
-                    class="cp-banner-image" 
-                    loading="lazy">
-                {% endif %}
-              </picture>
-          {% if block.settings.link != blank %}
-            </a>
-          {% endif %}
+  <div class="cp-carousel cp-navratri-banner__carousel" id="cp-carousel-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="cp-carousel-slide cp-navratri-banner__slide" {{ block.shopify_attributes }} data-slide-index="{{ forloop.index0 }}">
+        <div class="cp-navratri-banner__media">
+          {%- if block.settings.desktop_image != blank or block.settings.mobile_image != blank -%}
+            {%- if block.settings.mobile_image != blank -%}
+              <img 
+                src="{{ block.settings.mobile_image | image_url: width: 1000 }}" 
+                srcset="{{ block.settings.mobile_image | image_url: width: 420 }} 420w, {{ block.settings.mobile_image | image_url: width: 640 }} 640w, {{ block.settings.mobile_image | image_url: width: 900 }} 900w, {{ block.settings.mobile_image | image_url: width: 1200 }} 1200w"
+                sizes="(max-width: 767px) 100vw, 1px"
+                alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}" 
+                class="cp-navratri-banner__img cp-navratri-banner__img--mobile" 
+                width="{{ block.settings.mobile_image.width }}"
+                height="{{ block.settings.mobile_image.height }}"
+                {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            {%- endif -%}
+
+            {%- if block.settings.desktop_image != blank -%}
+              <img 
+                src="{{ block.settings.desktop_image | image_url: width: 2200 }}" 
+                srcset="{{ block.settings.desktop_image | image_url: width: 1000 }} 1000w, {{ block.settings.desktop_image | image_url: width: 1600 }} 1600w, {{ block.settings.desktop_image | image_url: width: 2200 }} 2200w"
+                sizes="(min-width: 768px) 100vw, 1px"
+                alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}" 
+                class="cp-navratri-banner__img cp-navratri-banner__img--desktop" 
+                width="{{ block.settings.desktop_image.width }}"
+                height="{{ block.settings.desktop_image.height }}"
+                {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            {%- elsif block.settings.mobile_image != blank -%}
+              <img 
+                src="{{ block.settings.mobile_image | image_url: width: 1600 }}" 
+                alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}" 
+                class="cp-navratri-banner__img cp-navratri-banner__img--desktop" 
+                width="{{ block.settings.mobile_image.width }}"
+                height="{{ block.settings.mobile_image.height }}"
+                {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+            {%- endif -%}
+          {%- else -%}
+            <div class="cp-navratri-banner__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'cp-navratri-banner__placeholder-svg' }}
+            </div>
+          {%- endif -%}
+          <div class="cp-navratri-banner__veil"></div>
         </div>
-      {% endif %}
-    {% endfor %}
+
+        {%- if block.settings.kicker != blank or block.settings.heading != blank or block.settings.button_text != blank or block.settings.subtitle != blank -%}
+          <div class="cp-navratri-banner__content cp-navratri-banner__content--{{ section.settings.content_align }} cp-navratri-banner__content--{{ section.settings.content_position }}">
+            <div class="cp-navratri-banner__content-inner">
+              {%- if block.settings.kicker != blank -%}
+                <p class="cp-navratri-banner__kicker">{{ block.settings.kicker }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.heading != blank -%}
+                <h2 class="cp-navratri-banner__heading">
+                  {{ block.settings.heading }}
+                </h2>
+              {%- endif -%}
+
+              {%- if block.settings.subtitle != blank -%}
+                <p class="cp-navratri-banner__subheading">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.button_text != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="cp-navratri-banner__btn">
+                  {{ block.settings.button_text }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if block.settings.full_slide_link and block.settings.button_link != blank and block.settings.button_text == blank -%}
+          <a href="{{ block.settings.button_link }}" class="cp-navratri-banner__full-link" aria-label="{{ block.settings.heading | default: 'Slide link' | escape }}"></a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
   </div>
-  <!-- Scroll Down -->
-  <div id="scroll_to_collection">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_744_1060)"><path d="M23.9999 17.0001C24.0007 17.1317 23.9754 17.2621 23.9257 17.384C23.8759 17.5058 23.8026 17.6166 23.7099 17.7101C23.6169 17.8038 23.5063 17.8782 23.3845 17.929C23.2626 17.9797 23.1319 18.0059 22.9999 18.0059C22.8679 18.0059 22.7372 17.9797 22.6153 17.929C22.4935 17.8782 22.3829 17.8038 22.2899 17.7101L14.1199 9.54006C13.5574 8.97826 12.7949 8.6627 11.9999 8.6627C11.2049 8.6627 10.4424 8.97826 9.87993 9.54006L1.70994 17.7101C1.52164 17.8984 1.26624 18.0042 0.99994 18.0042C0.733639 18.0042 0.478244 17.8984 0.289941 17.7101C0.101637 17.5218 -0.00415042 17.2664 -0.00415043 17.0001C-0.00415045 16.7338 0.101637 16.4784 0.289941 16.2901L8.45993 8.12006C8.92439 7.65443 9.47614 7.285 10.0836 7.03294C10.691 6.78087 11.3423 6.65112 11.9999 6.65112C12.6576 6.65112 13.3088 6.78087 13.9163 7.03294C14.5237 7.285 15.0755 7.65443 15.5399 8.12006L23.7099 16.2901C23.8026 16.3835 23.8759 16.4943 23.9257 16.6162C23.9754 16.738 24.0007 16.8685 23.9999 17.0001Z" fill="#343434" fill-opacity="0.69"></path></g><defs><clipPath id="clip0_744_1060"><rect width="24" height="24" fill="white" transform="translate(0 24) rotate(-90)"></rect></clipPath></defs></svg>
-  </div>
+
+  {%- if section.settings.show_scroll_down -%}
+    <div id="scroll_to_collection" class="cp-navratri-banner__scroll-down" data-target="{{ section.settings.scroll_target | default: '#shopify-section-navratri_collection_header' }}" role="button" aria-label="Scroll to collection">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_744_1060)"><path d="M23.9999 17.0001C24.0007 17.1317 23.9754 17.2621 23.9257 17.384C23.8759 17.5058 23.8026 17.6166 23.7099 17.7101C23.6169 17.8038 23.5063 17.8782 23.3845 17.929C23.2626 17.9797 23.1319 18.0059 22.9999 18.0059C22.8679 18.0059 22.7372 17.9797 22.6153 17.929C22.4935 17.8782 22.3829 17.8038 22.2899 17.7101L14.1199 9.54006C13.5574 8.97826 12.7949 8.6627 11.9999 8.6627C11.2049 8.6627 10.4424 8.97826 9.87993 9.54006L1.70994 17.7101C1.52164 17.8984 1.26624 18.0042 0.99994 18.0042C0.733639 18.0042 0.478244 17.8984 0.289941 17.7101C0.101637 17.5218 -0.00415042 17.2664 -0.00415043 17.0001C-0.00415045 16.7338 0.101637 16.4784 0.289941 16.2901L8.45993 8.12006C8.92439 7.65443 9.47614 7.285 10.0836 7.03294C10.691 6.78087 11.3423 6.65112 11.9999 6.65112C12.6576 6.65112 13.3088 6.78087 13.9163 7.03294C14.5237 7.285 15.0755 7.65443 15.5399 8.12006L23.7099 16.2901C23.8026 16.3835 23.8759 16.4943 23.9257 16.6162C23.9754 16.738 24.0007 16.8685 23.9999 17.0001Z" fill="#343434" fill-opacity="0.69"></path></g><defs><clipPath id="clip0_744_1060"><rect width="24" height="24" fill="white" transform="translate(0 24) rotate(-90)"></rect></clipPath></defs></svg>
+    </div>
+  {%- endif -%}
 </section>
 
+<script>
+  (function() {
+    function initBannerCarousel() {
+      var sectionEl = document.getElementById('navratri-banner-{{ section.id }}');
+      if (!sectionEl) return;
+      var carouselEl = document.getElementById('cp-carousel-{{ section.id }}');
+      if (!carouselEl) return;
 
-<style>
-/* Arrow bounce animation */
-@keyframes bounceArrow {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(-4px);
-  }
-}
-#scroll_to_collection {
-  position: absolute;
-  inset: 0;
-  top: auto;
-  bottom: 40px;
-  cursor: pointer;
-  -webkit-font-smoothing: antialiased;
-  width: 50px;
-  height: 50px;
-  margin: 0 auto;
-  border-radius: 50px;
-  align-self: center;
-  z-index: 99;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  animation: bounceArrow 1.5s infinite;
-  user-select: none;
-  pointer-events: none;
-  color: #000000;
-  background: #ffffff;
-}
-#scroll_to_collection svg {
-  width: 35%;
-  height: auto;
-  transform: rotate(180deg);
-  margin: 5px 0 0;
-}
-#scroll_to_collection svg path {
-  fill: currentColor;
-}
-@media(max-width:767px) {
-  #scroll_to_collection {
-    width: 35px;
-    height: 35px;
-    bottom: 10px;
-  }
-}
-</style>
+      var autoplay = sectionEl.getAttribute('data-autoplay') === 'true';
+      var autoplaySpeed = parseInt(sectionEl.getAttribute('data-autoplay-speed'), 10) || 4000;
+      var useFade = sectionEl.getAttribute('data-fade') === 'true';
+      var showDots = sectionEl.getAttribute('data-dots') === 'true';
 
+      function runSlick() {
+        if (window.jQuery && jQuery.fn.slick) {
+          var $slider = jQuery(carouselEl);
+          if ($slider.hasClass('slick-initialized')) {
+            $slider.slick('unslick');
+          }
+          $slider.slick({
+            dots: showDots,
+            arrows: false,
+            infinite: true,
+            fade: useFade,
+            autoplay: autoplay,
+            autoplaySpeed: autoplaySpeed,
+            speed: useFade ? 800 : 600,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            pauseOnHover: true,
+            adaptiveHeight: false
+          });
+        }
+      }
 
+      if (window.kisahWhenJQueryReady) {
+        window.kisahWhenJQueryReady(function() {
+          runSlick();
+        });
+      } else if (window.jQuery && jQuery.fn.slick) {
+        runSlick();
+      } else {
+        document.addEventListener('DOMContentLoaded', runSlick);
+      }
+
+      // Smooth scroll button
+      var scrollBtn = sectionEl.querySelector('.cp-navratri-banner__scroll-down');
+      if (scrollBtn) {
+        scrollBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var targetSel = scrollBtn.getAttribute('data-target') || '#shopify-section-navratri_collection_header';
+          var targetEl = document.querySelector(targetSel);
+          if (!targetEl) {
+            targetEl = document.querySelector('.cp-navratri-collection-head') || document.querySelector('.cp-navratri-gateway');
+          }
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+          }
+        });
+      }
+    }
+
+    initBannerCarousel();
+
+    // Support Shopify Theme Editor dynamic reloads
+    document.addEventListener('shopify:section:load', function(e) {
+      if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+        initBannerCarousel();
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "Navratri Banner Section",
-  "settings": [],
+  "name": "Navratri Hero Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout & Position"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Vertical Content Position",
+      "options": [
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "middle", "label": "Middle" }
+      ],
+      "default": "bottom"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Bottom Gradient Dark Strength",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 75
+    },
+    {
+      "type": "header",
+      "content": "Carousel & Animation"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Autoplay Speed (Seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "transition_effect",
+      "label": "Slide Transition Effect",
+      "options": [
+        { "value": "fade", "label": "Fade" },
+        { "value": "slide", "label": "Slide" }
+      ],
+      "default": "fade"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show Slide Line Indicators",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_down",
+      "label": "Show Scroll Down Button",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "scroll_target",
+      "label": "Scroll Target Selector",
+      "default": "#shopify-section-navratri_collection_header"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "kicker_color",
+      "label": "Kicker / Eyebrow Color",
+      "default": "#F0CC77"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Button Border Color",
+      "default": "rgba(255, 255, 255, 0.95)"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background Color",
+      "default": "rgba(29, 7, 10, 0.22)"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_text",
+      "label": "Button Hover Text Color",
+      "default": "#18120F"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Active Indicator Color",
+      "default": "#FFFFFF"
+    }
+  ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide",
+      "name": "Banner Slide",
       "settings": [
         {
           "type": "image_picker",
           "id": "desktop_image",
-          "label": "Desktop Banner Image"
+          "label": "Desktop Image (e.g. 2400x1200 or any natural ratio)"
         },
         {
           "type": "image_picker",
           "id": "mobile_image",
-          "label": "Mobile Banner Image"
+          "label": "Mobile Image (e.g. 1080x1350 or any natural ratio)"
         },
         {
           "type": "text",
           "id": "alt_text",
           "label": "Image Alt Text",
-          "default": "Navratri Banner"
+          "default": "Kisah Navratri Banner"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker / Eyebrow",
+          "default": "KISAH NAVRATRI EDIT"
+        },
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The circle awaits you.<br>Lock in your fit",
+          "info": "Use <br> for intentional line break"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Label",
+          "default": "SHOP NOW"
         },
         {
           "type": "url",
-          "id": "link",
-          "label": "Link URL"
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "full_slide_link",
+          "label": "Make Whole Slide Clickable (If no button)",
+          "default": false
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Navratri Banner Section",
+      "name": "Navratri Hero Banner",
       "blocks": [
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" }
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "KISAH NAVRATRI EDIT",
+            "heading": "The circle awaits you.<br>Lock in your fit",
+            "button_text": "SHOP NOW"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "COLOURS OF CELEBRATION",
+            "heading": "Crafted For The<br>9 Nights Of Garba",
+            "button_text": "EXPLORE EDIT"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "kicker": "NEW FESTIVE ARRIVALS",
+            "heading": "Elevate Your Look<br>This Festive Season",
+            "button_text": "DISCOVER NOW"
+          }
+        }
       ]
     }
   ]
 }
 {% endschema %}
-

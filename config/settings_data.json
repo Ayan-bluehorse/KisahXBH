@@ -735,11 +735,6 @@
         "disabled": true,
         "settings": {}
       },
-      "15731092540705609947": {
-        "type": "shopify://apps/manifest-ai-chatbot/blocks/embed/cef2d5e1-cdf8-491e-bb69-d24f19b6ea44",
-        "disabled": false,
-        "settings": {}
-      },
       "9717370649079274736": {
         "type": "shopify://apps/simply-otp-login/blocks/app-embed-block/c26b7b17-273d-4800-af62-8ec88ba18251",
         "disabled": true,
@@ -764,16 +759,6 @@
           "quinn_enable_vendor_playlist": false
         }
       },
-      "3576686563519644491": {
-        "type": "shopify://apps/vwo/blocks/vwo-smartcode/2ce905b2-3842-4d20-b6b0-8c51fc208426",
-        "disabled": false,
-        "settings": {
-          "enableThemeTesting": false,
-          "vwoAccountId": "1117653",
-          "codeType": "ASYNC",
-          "settingsTolerance": 2000
-        }
-      },
       "10191866119664032810": {
         "type": "shopify://apps/zoorix-sticky-atc/blocks/zoorix-head/16cf6adc-8b22-4e73-be2b-b93c1acde1da",
         "disabled": true,
@@ -786,11 +771,6 @@
       },
       "594523509173532677": {
         "type": "shopify://apps/helium-analytics-ai-agent/blocks/init/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
-        "disabled": false,
-        "settings": {}
-      },
-      "12973772748516043749": {
-        "type": "shopify://apps/bitespeed-whatsapp-marketing/blocks/app-embed/9efdb9ca-2d01-4a12-b1ac-02679fe0f6fc",
         "disabled": false,
         "settings": {}
       },
@@ -841,11 +821,6 @@
         "disabled": true,
         "settings": {}
       },
-      "12240242835587734505": {
-        "type": "shopify://apps/flable-ai-insights-to-action/blocks/pixel/019e1746-b99b-7c53-ae45-d462bfd26007",
-        "disabled": false,
-        "settings": {}
-      },
       "yoast-seo-metatags": {
         "type": "shopify://apps/yoast-seo-seo-for-everyone/blocks/metatags/7c777011-bc88-4743-a24e-64336e1e5b46",
         "disabled": false,
@@ -858,6 +833,11 @@
           "debug": true,
           "reveal_timeout_ms": 1000
         }
+      },
+      "377650522495455440": {
+        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+        "disabled": false,
+        "settings": {}
       }
     }
   },

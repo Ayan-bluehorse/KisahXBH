@@ -1,3 +1,31 @@
+{%- liquid
+  assign in_stock_total = 0
+  for f in collection.filters
+    if f.param_name == 'filter.v.availability'
+      for v in f.values
+        if v.value == '1'
+          assign in_stock_total = v.count
+        endif
+      endfor
+    endif
+  endfor
+-%}
+{%- if in_stock_total > 0 -%}
+  <script>
+    (function() {
+      try {
+        var isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+        var search = window.location.search;
+        if (!isBot && !search.includes('filter.v.availability')) {
+          var p = new URLSearchParams(search);
+          p.set('filter.v.availability', '1');
+          var newUrl = window.location.pathname + '?' + p.toString() + window.location.hash;
+          window.location.replace(newUrl);
+        }
+      } catch(e) {}
+    })();
+  </script>
+{%- endif -%}
 <style>
 #shopify-section-{{section.id}} .col-title{
      font-family:'Generis Sans W01 Regular';
@@ -275,8 +303,8 @@
     opacity: 0.8;
 }
 #shopify-section-{{section.id}} #CollectionFilterForm{
-   border-top: 1px solid rgba(0, 0, 0, 0.3);
-   margin-top: 10px;
+   border-top: none;
+   margin-top: 0;
 }
 #shopify-section-{{section.id}} #CollectionFilterForm .filter-group{
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
@@ -740,6 +768,21 @@
   display: contents;
 }
 
+/* Out-of-stock cards: dimmed and slightly greyscale, still clickable */
+#shopify-section-{{ section.id }} .stock-sort-item--oos {
+  opacity: 0.55;
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos img {
+  filter: grayscale(25%);
+  transition: filter 0.3s ease;
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos:hover img {
+  filter: grayscale(0%);
+}
+#shopify-section-{{ section.id }} .stock-sort-item--oos:hover {
+  opacity: 0.75;
+}
+
 #shopify-section-{{ section.id }} .low-stock-product-grid:empty {
   display: none;
 }
@@ -967,149 +1010,98 @@
         {{ collection.title }}
       </h1>
     {% endif %}
-    {% comment %} <div class="col-description">
-      {{ collection.description }}
-    </div> {% endcomment %}
-    
-    <div class="utility-bar active" data-ajax-container data-ajax-scroll-to>
-      <div class="utility-bar__left" >
-        {% if section.settings.show_sort or show_filters %}
-        <a href="#" class="toggle-btn utility-bar__item{% if section.settings.collapse_tag_sidebar_by_default == false %} toggle-btn--revealed-desktop{% endif %}{% if show_filters == false %} mobile-only{% endif %}" data-toggle-filters>
-            <span class="btn-icon">{% render 'icon-filter' %}</span>
-           {%- comment  -%}  <span>{{ 'products.filtering.filter' | t }}</span> {%- endcomment  -%}  
-              <span>Filters</span>
-            {% liquid
-              assign filter_count = 0
-              for filter in collection.filters
-                assign filter_count = filter_count | plus: filter.active_values.size
-                if filter.type == 'price_range'
-                  if filter.min_value.value != nil or filter.max_value.value != nil
-                    assign filter_count = filter_count | plus: 1
-                  endif
-                endif
-              endfor
-            %}
-            {% if filter_count > 0 %}
-              <span class="toggle-btn__count">({{ filter_count }})</span>
-            {% endif %}
-            <span class="toggle-btn__chevron has-motion has-ltr-icon">{% render 'icon-chevron-right', stroke_width: 1.3 %}</span>
-          </a>
-        {% endif %}
-      </div>
 
-      {% if section.settings.show_total and collection.products_count > 0 %}
-        {% liquid
-          assign visible_products_count = 0
-          for prod in collection.products
-            if prod.available
-              assign visible_products_count = visible_products_count | plus: 1
+    {% liquid
+      assign show_filters = section.settings.enable_filtering
+      if collection.filters == empty
+        assign show_filters = false
+      endif
+
+      assign filter_count = 0
+      for filter in collection.filters
+        if filter.param_name == 'filter.v.availability'
+          continue
+        endif
+        assign filter_count = filter_count | plus: filter.active_values.size
+        if filter.type == 'price_range'
+          if filter.min_value.value != nil or filter.max_value.value != nil
+            assign filter_count = filter_count | plus: 1
+          endif
+        endif
+      endfor
+    %}
+
+    {% paginate collection.products by section.settings.coll_num_per_page_int %}
+    {%- liquid
+      assign in_stock_total = 0
+      for f in collection.filters
+        if f.param_name == 'filter.v.availability'
+          for v in f.values
+            if v.value == '1'
+              assign in_stock_total = v.count
             endif
           endfor
-        %}
-        <div class="utility-bar__centre">
-          <div class="utility-bar__item" data-collection-count-item data-all-count="{{ collection.products_count }}">
-            {%- if collection.products_count <= section.settings.coll_num_per_page_int and visible_products_count > 0 -%}
-              {{ 'sections.collection.product_count' | t: count: visible_products_count }}
-            {%- else -%}
-              {{ 'sections.collection.product_count' | t: count: collection.products_count }}
-            {%- endif -%}
-          </div>
-        </div>
-      {% endif %}
-
-      <div class="utility-bar__right">
-        {% if section.settings.show_sort %}
-          <div class="desktop-mob-show">
-          <span class="utility-bar__item desktop-only">
-            <link-dropdown class="link-dropdown link-dropdown--right-aligned">
-              <div class="visually-hidden" id="sort-dropdown-heading">{{ 'products.sorting.sort_by_label' | t | escape }}</div>
-              <button class="link-dropdown__button has-motion" aria-expanded="false" aria-controls="sort-dropdown-options" aria-describedby="sort-dropdown-heading">
-                <span class="link-dropdown__button-text">
-                  {%- for option in collection.sort_options -%}
-                    {%- if current_sort == option.value -%}
-                       {% comment %}{{ option.name | escape }} {% endcomment %}
-                       Sort by 
-                      {%- break -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </span>
-                <span class="link-dropdown__button-icon has-motion">{% render 'icon-chevron-down', stroke_width: 1.3 %}</span>
-              </button>
-              <div class="link-dropdown__options" id="sort-dropdown-options">
-               <div class="sort-by-title">
-                 <p>sort by</p> 
-                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                 <g clip-path="url(#clip0_126_8232)">
-                <path d="M12.5 25C19.4036 25 25 19.4036 25 12.5C25 5.59644 19.4036 0 12.5 0C5.59644 0 0 5.59644 0 12.5C0 19.4036 5.59644 25 12.5 25Z" fill="#D9D9D9"></path>
-                <mask id="mask0_126_8232MobileNav" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="15">
-                <path d="M20 5H5V20H20V5Z" fill="white"></path>
-                </mask>
-                <g mask="url(#mask0_126_8232)">
-                <path d="M6 19.1528L19.1529 5.99988" stroke="#201747" stroke-linecap="round"></path>
-                <path d="M6 6.15283L19.1529 19.3058" stroke="#201747" stroke-linecap="round"></path>
-                </g>
-                </g>
-                <defs>
-                <clipPath id="clip0_126_8232MobileNav">
-                <rect width="25" height="25" fill="white"></rect>
-                </clipPath>
-                </defs>
-                </svg>
-               </div>
-                {%- for option in collection.sort_options -%}
-            
-                  {%- liquid
-                    if section.settings.sort_show_featured == false and option.value == 'manual' and collection.default_sort_by != 'manual'
-                      continue
-                    endif
-                    if section.settings.sort_show_best == false and option.value == 'best-selling' and collection.default_sort_by != 'best-selling'
-                      continue
-                    endif
-                    if section.settings.sort_show_alpha == false and option.value == 'title-ascending' and collection.default_sort_by != 'title-ascending'
-                      continue
-                    endif
-                    if section.settings.sort_show_alpha == false and option.value == 'title-descending' and collection.default_sort_by != 'title-descending'
-                      continue
-                    endif
-                    if section.settings.sort_show_price == false and option.value == 'price-ascending' and collection.default_sort_by != 'price-ascending'
-                      continue
-                    endif
-                    if section.settings.sort_show_price == false and option.value == 'price-descending' and collection.default_sort_by != 'price-descending'
-                      continue
-                    endif
-                    if section.settings.sort_show_date == false and option.value == 'created-ascending' and collection.default_sort_by != 'created-ascending'
-                      continue
-                    endif
-                    if section.settings.sort_show_date == false and option.value == 'created-descending' and collection.default_sort_by != 'created-descending'
-                      continue
-                    endif
-                  -%}   
-                  <a href="{{ request.path | sort_by: option.value | escape }}" class="link-dropdown__link{% if current_sort == option.value %} link-dropdown__link--active{% endif %}">{% if option.name =='Date, new to old' %} New Arrivals{% else %}{{ option.name | escape }}{% endif %}</a>
-                {%- endfor -%}
-              </div>
-            </link-dropdown>
-          </span>
-          </div>
-        {% endif %}
-        <span class="utility-bar__item mobile-only">
-          <div class="layout-switchers">
-            <a class="layout-switch layout-switch--two-columns{% if settings.prod_thumb_mob_per_row == '2' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.grid_layout' | t }}">{%- render 'icon-grid', stroke_width: 1.3 -%}</a>
-            <a class="layout-switch layout-switch--one-column{% if settings.prod_thumb_mob_per_row == '1' %} layout-switch--active{% endif %}" href="#" aria-label="{{ 'sections.collection.list_layout' | t }}">{%- render 'icon-box', stroke_width: 1.3 -%}</a>
-          </div>
-        </span>
-      </div>
+        endif
+      endfor
+    -%}
+    {%- liquid
+      if filter_count == 0
+        assign collection_style_count = collection.all_products_count | default: paginate.items
+      else
+        assign collection_style_count = paginate.items
+      endif
+    -%}
+    <div class="kisah-ctrl" data-ajax-container>
+      <div class="kisah-ctrl__n"><b>{{ collection_style_count }}</b> styles</div>
+      {%- if section.settings.show_sort -%}
+        <button class="kisah-ctrl__btn" id="kisahSortBtn" type="button">
+          <svg viewBox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>
+          Sort
+        </button>
+      {%- endif -%}
+      {%- if section.settings.show_sort and show_filters -%}
+        <span class="kisah-ctrl__rule"></span>
+      {%- endif -%}
+      {%- if show_filters -%}
+        <button class="kisah-ctrl__btn kisah-ctrl__btn--filter" id="kisahFilterBtn" type="button" data-any="{% if filter_count > 0 %}1{% else %}0{% endif %}">
+          <svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+          Filter{% if filter_count > 0 %}<span class="kisah-ctrl__pip">{{ filter_count }}</span>{% endif %}
+        </button>
+      {%- endif -%}
     </div>
+
+    {%- if filter_count > 0 -%}
+      <div class="kisah-applied" id="kisahApplied" data-ajax-container>
+        {%- for filter in collection.filters -%}
+          {%- if filter.param_name == 'filter.v.availability' -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- for value in filter.active_values -%}
+            <a class="kisah-achip" href="{{ value.url_to_remove }}">
+              {{ value.label }}
+              <span class="close-x">&times;</span>
+            </a>
+          {%- endfor -%}
+          {%- if filter.type == 'price_range' and filter.min_value.value != nil or filter.type == 'price_range' and filter.max_value.value != nil -%}
+            <a class="kisah-achip" href="{{ filter.url_to_remove }}">
+              {{ filter.min_value.value | default: 0 | money }} - {{ filter.max_value.value | default: filter.range_max | money }}
+              <span class="close-x">&times;</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1{% endif %}">Clear all</a>
+      </div>
+    {%- endif -%}
 
     <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
       {% if section.settings.show_sort or show_filters %}
-        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort %}
+        {% render 'faceted-filters', filter_context: collection, clear_url: collection.url, current_sort: current_sort, total_count: collection_style_count, in_stock_total: in_stock_total %}
       {% endif %}
 
       <div class="filters-adjacent collection-listing" data-ajax-container>
         {% if collection.products.size == 0 %}
           <h5 class="align-centre fully-spaced-row">{{ 'sections.collection.empty' | t }}</h5>
         {% else %}
-{% paginate collection.products by section.settings.coll_num_per_page_int %}
   {%- liquid
     if settings.prod_thumb_shape == 'portrait-23'
       assign chosen_aspect_ratio = 0.67
@@ -1163,66 +1155,80 @@
     data-total-pages="{{ paginate.pages }}"
     {% if paginate.next %}data-next-page-url="{{ paginate.next.url | escape }}"{% endif %}
   >
+    {%- comment -%}
+      PASS 1 — In-stock products (available_variants > 0), rendered first.
+      PASS 2 — Out-of-stock products, rendered after with data-stock-tier="out-of-stock".
+      Sorting is done server-side in Liquid so no JS layout shift on first paint.
+    {%- endcomment -%}
+
+    {%- liquid
+      assign in_stock_count = 0
+    -%}
+
+    {%- comment -%}---- PASS 1: IN-STOCK ----{%- endcomment -%}
     {% for product in collection.products %}
       {%- liquid
         assign total_variants = product.variants.size
         assign available_variants = product.variants | where: 'available', true | size
-        assign size_s_available = false
-        assign size_m_available = false
-        assign size_l_available = false
-        assign size_xl_available = false
-
-        for option in product.options_with_values
-          assign option_name = option.name | downcase | strip
-          if option_name == 'size'
-            for value in option.values
-              assign size_value = value | downcase | strip
-
-              if size_value == 's' or size_value == 'small' or size_value == mapped_s
-                if value.available
-                  assign size_s_available = true
-                endif
-              endif
-
-              if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
-                if value.available
-                  assign size_m_available = true
-                endif
-              endif
-
-              if size_value == 'l' or size_value == 'large' or size_value == mapped_l
-                if value.available
-                  assign size_l_available = true
-                endif
-              endif
-
-              if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
-                if value.available
-                  assign size_xl_available = true
-                endif
-              endif
-
-              if size_s_available and size_m_available and size_l_available and size_xl_available
-                break
-              endif
-            endfor
-            break
-          endif
-        endfor
       -%}
-
       {% if available_variants > 0 %}
-        {% assign prioritised_loading = false %}
+        {%- liquid
+          assign size_s_available = false
+          assign size_m_available = false
+          assign size_l_available = false
+          assign size_xl_available = false
 
-        {% if forloop.index0 < section.settings.grid %}
-          {% assign prioritised_loading = true %}
-        {% endif %}
+          for option in product.options_with_values
+            assign option_name = option.name | downcase | strip
+            if option_name == 'size'
+              for value in option.values
+                assign size_value = value | downcase | strip
 
-        {% assign collection_product_index = collection_product_index | plus: 1 %}
+                if size_value == 's' or size_value == 'small' or size_value == mapped_s
+                  if value.available
+                    assign size_s_available = true
+                  endif
+                endif
+
+                if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
+                  if value.available
+                    assign size_m_available = true
+                  endif
+                endif
+
+                if size_value == 'l' or size_value == 'large' or size_value == mapped_l
+                  if value.available
+                    assign size_l_available = true
+                  endif
+                endif
+
+                if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
+                  if value.available
+                    assign size_xl_available = true
+                  endif
+                endif
+
+                if size_s_available and size_m_available and size_l_available and size_xl_available
+                  break
+                endif
+              endfor
+              break
+            endif
+          endfor
+
+          assign prioritised_loading = false
+          if in_stock_count < section.settings.grid
+            assign prioritised_loading = true
+          endif
+          assign in_stock_count = in_stock_count | plus: 1
+          assign collection_product_index = collection_product_index | plus: 1
+        -%}
 
         <div
           class="stock-sort-item"
           data-stock-sort-item
+          data-stock-tier="primary"
+          data-product-handle="{{ product.handle }}"
           data-available-variants="{{ available_variants }}"
           data-total-variants="{{ total_variants }}"
           data-option-name="Size"
@@ -1243,7 +1249,87 @@
         </div>
       {% endif %}
     {% endfor %}
+
+    {%- comment -%}---- PASS 2: OUT-OF-STOCK (dimmed, at the bottom) ----{%- endcomment -%}
+    {% for product in collection.products %}
+      {%- liquid
+        assign total_variants = product.variants.size
+        assign available_variants = product.variants | where: 'available', true | size
+      -%}
+      {% if available_variants == 0 %}
+        {%- liquid
+          assign collection_product_index = collection_product_index | plus: 1
+        -%}
+
+        <div
+          class="stock-sort-item stock-sort-item--oos"
+          data-stock-sort-item
+          data-stock-tier="out-of-stock"
+          data-product-handle="{{ product.handle }}"
+          data-available-variants="0"
+          data-total-variants="{{ total_variants }}"
+          data-option-name="Size"
+          data-product-type="{{ product.type | downcase | strip | escape }}"
+          data-size-s-available="false"
+          data-size-m-available="false"
+          data-size-l-available="false"
+          data-size-xl-available="false"
+        >
+          {% render 'product-block',
+            product: product,
+            custom_aspect_ratio: chosen_aspect_ratio,
+            animate: false,
+            prioritised_loading: false,
+            product_index: collection_product_index,
+            products_total: collection_products_total
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+
   </div>
+
+  <script>
+    (function() {
+      function applyLandingPageOrder() {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var pinnedStr = params.get('pinned');
+          if (!pinnedStr) {
+            pinnedStr = sessionStorage.getItem('cp_pinned_handles');
+          }
+          if (!pinnedStr) return;
+
+          var handles = pinnedStr.split(',').map(function(h) { return h.trim(); }).filter(Boolean);
+          if (!handles || handles.length === 0) return;
+
+          var grid = document.getElementById('product-grid');
+          if (!grid) return;
+
+          // Re-order matching items to the very top in the exact order they appeared on the LP
+          for (var i = handles.length - 1; i >= 0; i--) {
+            var handle = handles[i];
+            var card = grid.querySelector('.stock-sort-item[data-product-handle="' + handle + '"]') ||
+                       grid.querySelector('#jump-id' + handle);
+            if (card) {
+              var parentCard = card.closest('.stock-sort-item') || card;
+              if (parentCard && parentCard.parentElement === grid) {
+                grid.insertBefore(parentCard, grid.firstElementChild);
+              }
+            }
+          }
+        } catch(err) {
+          console.error('[Pinned Products Order Error]', err);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyLandingPageOrder);
+      } else {
+        applyLandingPageOrder();
+      }
+    })();
+  </script>
 
 
   {% render 'infinite-scroll', paginate: paginate %}
@@ -1252,20 +1338,20 @@
     class="product-grid low-stock-product-grid product-grid--per-row-{{ section.settings.grid }} product-grid--per-row-mob-{{ settings.prod_thumb_mob_per_row }}"
     data-low-stock-product-grid
     hidden
-  ></div>   
-{% endpaginate %}
-
+  ></div>
         {% endif %}
       </div>
-
     </filter-container>
+{% endpaginate %}
+  {% comment %}
   {% if collection.description != blank %}
       <div class="col-description col-description--bottom rte cf" data-cc-animate>
         {{ collection.description }}
     </div>
   {% endif %}
+  {% endcomment %}
 </div>
-
+</div>
 
 {% schema %}
 {

@@ -3164,6 +3164,136 @@
   }
 </style>
 
+<script>
+  window.CP_PRODUCT = {{ product | json }};
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var section = document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    var guidanceMsg = section.querySelector('.slim-fit-guidance-msg');
+    if (!guidanceMsg) return;
+
+    // Find the Size option index
+    var product = {{ product | json }};
+    var sizeOptionIndex = -1;
+    if (product.options) {
+      for (var i = 0; i < product.options.length; i++) {
+        if (product.options[i].toLowerCase() === 'size') {
+          sizeOptionIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (sizeOptionIndex === -1) return;
+
+    var triggerSizes = ['40', '42', '44'];
+
+    function checkSize(selectedOptions) {
+      var sizeValue = selectedOptions[sizeOptionIndex];
+      if (!sizeValue) {
+        guidanceMsg.style.display = 'none';
+        return;
+      }
+      // Extract numeric portion: "M - 40" → "40", or just "40"
+      var parts = sizeValue.split('-');
+      var numericPart = parts[parts.length - 1].trim();
+
+      if (triggerSizes.indexOf(numericPart) > -1) {
+        guidanceMsg.style.display = 'flex';
+      } else {
+        guidanceMsg.style.display = 'none';
+      }
+    }
+
+    section.addEventListener('on:variant:change', function(e) {
+      if (e.detail && e.detail.selectedOptions) {
+        checkSize(e.detail.selectedOptions);
+      }
+    });
+
+    // Check on page load if a size is already selected
+    var picker = section.querySelector('variant-picker');
+    if (picker) {
+      var checkedInput = picker.querySelectorAll('.option-selector[data-selector-type="listed"]');
+      if (checkedInput[sizeOptionIndex]) {
+        var checked = checkedInput[sizeOptionIndex].querySelector('input:checked');
+        if (checked) {
+          var opts = [];
+          checkedInput.forEach(function(sel) {
+            var c = sel.querySelector('input:checked');
+            opts.push(c ? c.value : null);
+          });
+          checkSize(opts);
+        }
+      }
+    }
+  });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+  	function share(){
+  		this.classList.toggle('active');
+          document.querySelector('.buy-buttons-row').classList.toggle('active');
+      }
+      function mobShare(){
+        this.classList.toggle('active');
+        document.querySelector('.title_share_button').classList.toggle('active');
+      }
+       document.querySelector('.share-product-button').addEventListener('click',  share )
+       document.querySelector('.mob-share-product-button').addEventListener('click', mobShare )
+
+  });
+   const sizedrawer = document.querySelector('.size-chart-drawer')
+    const modal = document.querySelector('.pop-up-modal');
+    const trigger = document.querySelector('.trigger-pop-up');
+    const closeButton = document.querySelector('.close-button');
+    const drawerclosebtn = document.querySelector('.size_drawer__close-btn');
+    const overlay = document.querySelector('.size-cart-drawer-overlay'); 
+    const body = document.querySelector('body');
+  
+    function toggleModal() {
+      // modal.classList.toggle('show-pop-up');
+      sizedrawer.classList.toggle('open');
+      overlay.classList.toggle('is-visible');
+      body.classList.toggle('scroll');
+    }
+
+    function windowOnClick(event) {
+      if (event.target === overlay) {
+        toggleModal();
+      }
+    }
+
+    trigger.addEventListener('click', toggleModal);
+    drawerclosebtn.addEventListener('click', toggleModal);
+    closeButton.addEventListener('click', toggleModal);
+    window.addEventListener('click', windowOnClick);
+
+
+
+  let sharebtns = document.querySelectorAll('.svg-container-class .native-share-img');
+   sharebtns.forEach((sharebtn) => {
+        sharebtn.addEventListener("click", function() {
+          nativeShare();
+        });
+      });
+    function nativeShare() {
+    navigator.share({
+      title: document.title,
+      text: 'Check out this link',
+      url: location.href,
+    })
+    .then(() => console.log('Successful share'))
+    .catch((error) => console.log('Error sharing', error));
+  }
+</script>
+
 {% schema %}
 {
   "name": "Product pages",
