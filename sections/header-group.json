@@ -308,6 +308,9 @@
         "enable_search": true,
         "search_recommendations_title": "",
         "search_recommendations_menu": "",
+        "enable_location": true,
+        "location_link": "/pages/store-locator",
+        "location_text": "Store Locator",
         "icon_strategy": "icons_only",
         "cart_icon": "bag"
       }
