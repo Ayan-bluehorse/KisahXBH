@@ -214,6 +214,21 @@ document.addEventListener("DOMContentLoaded", function () {
             </a>
           {% endif %}
           
+          {% if section.settings.enable_location %}
+            <a class="header-location-link" href="{{ section.settings.location_link | default: '/pages/store-locator' }}" aria-label="{{ section.settings.location_text | default: 'Store Locator' | escape }}" title="{{ section.settings.location_text | default: 'Store Locator' | escape }}">
+              <span class="header-location-link__text {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
+                {{- section.settings.location_text | default: 'Store Locator' -}}
+              </span>
+              <span class="header-location-link__icon">
+                {%- if section.settings.custom_location_icon != blank -%}
+                  <img src="{{ section.settings.custom_location_icon | image_url: width: 44 }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="22" height="22" loading="eager" />
+                {%- else -%}
+                  <img src="{{ 'icon-location.svg' | asset_url }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="22" height="22" class="icon-location-pin" loading="eager" />
+                {%- endif -%}
+              </span>
+            </a>
+          {% endif %}
+          
           {% if shop.customer_accounts_enabled %}
             {% if customer %}
               <a class="header-account-link" href="{{ routes.account_url }}" aria-label="{{ 'sections.header.account' | t | escape }}">
@@ -508,6 +523,34 @@ document.addEventListener("DOMContentLoaded", function () {
 .logo-area__right .show-search-link {
     margin-inline-end: 12px;
 }
+.header-location-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-end: 10px;
+  color: inherit;
+  text-decoration: none;
+  line-height: 1;
+}
+.header-location-link__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.header-location-link__icon svg,
+.header-location-link__icon img {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+@media screen and (max-width: 1700px) and (min-width: 769px) {
+  .header-location-link__icon svg,
+  .header-location-link__icon img {
+    width: 22px;
+    height: 22px;
+  }
+}
 .show-search-link__icon{
    margin: 0 0 1px;
 }
@@ -729,6 +772,20 @@ button svg:not(.feather):not(.cc-select__icon):not(.icon--full-color){
 .logo-area__right .site-header__icon.site-header__link.wishlist-hero-header-icon{
    margin-inline-end: unset !important;
 }
+.header-location-link {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+.header-location-link__icon {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
   .logo-area__right__inner{
     gap:8px;
   }
@@ -924,6 +981,33 @@ button svg:not(.feather):not(.cc-select__icon):not(.icon--full-color){
     {
       "type": "header",
       "content": "Icons"
+    },
+    {
+      "type": "header",
+      "content": "Store Locator / Location"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_location",
+      "label": "Show store locator icon",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "location_link",
+      "label": "Store locator link"
+    },
+    {
+      "type": "text",
+      "id": "location_text",
+      "label": "Store locator label",
+      "default": "Store Locator"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_location_icon",
+      "label": "Custom location icon (optional)",
+      "info": "Upload a custom icon or leave blank to use the default pin icon"
     },
     {
       "type": "select",

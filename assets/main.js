@@ -1451,7 +1451,9 @@ const FilterContainer = class extends HTMLElement {
   }
 
   checkStickyScroll() {
-    const utilityBarOffsetY = theme.getOffsetTopFromDoc(this.section.querySelector('.utility-bar'));
+    const utilityBar = this.section.querySelector('.utility-bar');
+    if (!utilityBar) return;
+    const utilityBarOffsetY = theme.getOffsetTopFromDoc(utilityBar);
     if (window.innerWidth < 768
         && this.previousScrollTop > window.scrollY
         && window.scrollY > utilityBarOffsetY) {

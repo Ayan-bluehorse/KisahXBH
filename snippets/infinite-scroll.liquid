@@ -21,7 +21,7 @@
   data-section-id="{{ section.id }}"
   data-current-page="{{ paginate.current_page }}"
   data-pages="{{ paginate.pages }}"
-  data-min-loader-ms="1200"
+  data-min-loader-ms="0"
   {% if paginate.next %}data-next-url="{{ paginate.next.url | escape }}"{% endif %}
 >
   <div
@@ -126,7 +126,7 @@
     return type.indexOf('kurta') !== -1;
   }
 
-  function stockTier(item) {
+  {% comment %} function stockTier(item) {
     var available = parseInt(item.getAttribute('data-available-variants'), 10);
     var total = parseInt(item.getAttribute('data-total-variants'), 10);
 
@@ -143,6 +143,40 @@
     }
 
     return 'low';
+  } {% endcomment %}
+
+    function stockRank(item) {
+    var available = parseInt(item.getAttribute('data-available-variants'), 10);
+    var total = parseInt(item.getAttribute('data-total-variants'), 10);
+    var sizeS = item.getAttribute('data-size-s-available') === 'true';
+    var sizeM = item.getAttribute('data-size-m-available') === 'true';
+    var sizeL = item.getAttribute('data-size-l-available') === 'true';
+    var sizeXL = item.getAttribute('data-size-xl-available') === 'true';
+
+    // Fully out-of-stock: push to the very bottom
+    if (
+      Number.isFinite(available) &&
+      Number.isFinite(total) &&
+      total > 0 &&
+      available === 0
+    ) {
+      return 99;
+    }
+
+    if (
+      Number.isFinite(available) &&
+      Number.isFinite(total) &&
+      total > 0 &&
+      available === total
+    ) {
+      return 0;
+    }
+
+    if (sizeS && sizeM && sizeL && sizeXL) return 1;
+    if (sizeS && sizeM && sizeL) return 2;
+    if (sizeM && sizeL) return 3;
+    if (sizeM) return 4;
+    return 5;
   }
 
   function parseSectionResponse(html, gridSelector, sectionId) {
@@ -168,6 +202,10 @@
 
     if (!nextUrl && grid) {
       nextUrl = grid.getAttribute('data-next-page-url');
+    }
+
+    if (nextUrl) {
+      nextUrl = nextUrl.replace(/&amp;/g, '&');
     }
 
     return {
@@ -207,6 +245,7 @@
     ) || 0;
     var hasNextPage = Boolean(nextUrl) || currentPage < pages;
     var isLoading = false;
+    var oosAppended = false;
     var observer = null;
     var abortController = null;
     var pendingPrimaryTail = null;
@@ -259,23 +298,77 @@
       pendingPrimaryTail = null;
     }
 
+
+
+     function sortGridBySizeRank() {
+      var items = directStockItems(grid);
+      var keyed = [];
+      for (var i = 0; i < items.length; i++) {
+        keyed.push({
+          item: items[i],
+          rank: stockRank(items[i]),
+          index: i
+        });
+      }
+      keyed.sort(function (a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return a.index - b.index;
+      });
+      var sortedFragment = document.createDocumentFragment();
+      for (var j = 0; j < keyed.length; j++) {
+        keyed[j].item.setAttribute('data-stock-rank', String(keyed[j].rank));
+        sortedFragment.appendChild(keyed[j].item);
+      }
+      grid.appendChild(sortedFragment);
+    }
+
     function distributeItems(items) {
       restorePendingTail();
+
+      var existingHandles = {};
+      var currentItems = directStockItems(grid);
+      for (var k = 0; k < currentItems.length; k++) {
+        var h = currentItems[k].getAttribute('data-product-handle');
+        if (h) existingHandles[h] = true;
+      }
 
       var fragment = document.createDocumentFragment();
       var appendedItems = [];
 
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
-        var tier = stockTier(item);
+        var handle = item.getAttribute('data-product-handle');
+        var isNewItem = item.parentElement !== grid;
 
-        item.setAttribute('data-stock-tier', tier === 'remove' ? 'primary' : tier);
+        // Skip if this product already exists in the grid
+        if (isNewItem && handle && existingHandles[handle]) {
+          continue;
+        }
+
+        var available = parseInt(item.getAttribute('data-available-variants'), 10);
+
+        // When appending out-of-stock products, skip any product that still has available variants
+        if (oosAppended && isNewItem && Number.isFinite(available) && available > 0) {
+          continue;
+        }
+
+        // Tag in-stock vs out-of-stock for CSS/debugging
+        var tier = (Number.isFinite(available) && available === 0) ? 'out-of-stock' : 'primary';
+        item.setAttribute('data-stock-tier', tier);
+        if (tier === 'out-of-stock') {
+          item.classList.add('stock-sort-item--oos');
+        }
+
+        if (handle) {
+          existingHandles[handle] = true;
+        }
 
         fragment.appendChild(item);
         appendedItems.push(item);
       }
 
       grid.appendChild(fragment);
+      sortGridBySizeRank();
       return appendedItems;
     }
 
@@ -349,6 +442,25 @@
     }
 
     function finishPagination() {
+      if (!oosAppended && window.location.search.indexOf('filter.v.availability=1') !== -1) {
+        oosAppended = true;
+        var oosUrl = new URL(window.location.href);
+        oosUrl.searchParams.set('filter.v.availability', '0');
+        oosUrl.searchParams.delete('page');
+        nextUrl = oosUrl.pathname + oosUrl.search;
+        hasNextPage = true;
+        currentPage = 0;
+        root.setAttribute('data-next-url', nextUrl);
+        setLoaderState(true, 'Loading more products...');
+
+        window.setTimeout(function () {
+          if (!isLoading && hasNextPage) {
+            loadNextPage(false);
+          }
+        }, 50);
+        return;
+      }
+
       hasNextPage = false;
       nextUrl = null;
       root.removeAttribute('data-next-url');
@@ -459,6 +571,11 @@
           }
 
           var incomingItems = directStockItems(result.parsed.grid);
+          if (incomingItems.length === 0) {
+            finishPagination();
+            return;
+          }
+
           var appendedItems = preserveViewportWhile(function () {
             return distributeItems(incomingItems);
           });
@@ -538,12 +655,6 @@
       grid.setAttribute('data-stock-sorted', 'true');
     }
 
-    if (!hasNextPage) {
-      finishPagination();
-      return;
-    }
-
-    setLoaderState(true, 'Loading more products...');
     scope.addEventListener('click', handleSectionClick);
 
     if ('IntersectionObserver' in window) {
@@ -576,6 +687,12 @@
       }, { passive: true });
     }
 
+    if (!hasNextPage) {
+      finishPagination();
+      return;
+    }
+
+    setLoaderState(true, 'Loading more products...');
     restoreTargetOrLoad();
   }
 

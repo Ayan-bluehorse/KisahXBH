@@ -12,10 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "text_with_icon_tags_kp1": {
-          "type": "text-with-icon-tags",
-          "settings": {}
-        },
         "title": {
           "type": "title",
           "settings": {
@@ -75,8 +71,7 @@
             "enable_dynamic_availability": true,
             "enable_size_chart": true,
             "size_chart_variant": "Size",
-            "size_chart_page": "",
-            "model_size_info": ""
+            "size_chart_page": ""
           }
         },
         "offer_box_YYqAET": {
@@ -106,12 +101,7 @@
             "show_fb": true,
             "show_insta": true,
             "show_print": true,
-            "show_whatsapp": true,
-            "show_help_chat": true,
-            "help_text": "For help with sizing, delivery or anything else,",
-            "help_link_text": "Chat with us",
-            "help_whatsapp_number": "916289902520",
-            "help_whatsapp_message": "Hi"
+            "show_whatsapp": true
           }
         },
         "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt": {
@@ -254,10 +244,8 @@
         }
       },
       "block_order": [
-        "text_with_icon_tags_kp1",
         "title",
         "price",
-        "brand_rating",
         "vendor",
         "divider",
         "product_select_b88prX",
@@ -282,17 +270,11 @@
         "judge_me_reviews_preview_badge_REUDXR"
       ],
       "settings": {
-        "show_contains": true,
-        "contains_icon": "shopify://shop_images/Screenshot_2026-08-28_113105-removebg-preview.png",
-        "contains_default_tab": "",
-        "contains_text": "Contains",
         "show_breadcrumbs": true,
         "show_location_underneath": false,
         "inventory_transfers_enable": true,
         "kid-size-image": "shopify://shop_images/vector_2-01_1_1_1.png",
         "size-image": "shopify://shop_images/output-onlinepngtools.png",
-        "sizechart_help_icon": "shopify://shop_images/ic_baseline-whatsapp.png",
-        "sizechart_help_whatsapp": "",
         "enable_sticky_columns": false,
         "gallery_size": "medium",
         "gallery_layout": "carousel-beside",

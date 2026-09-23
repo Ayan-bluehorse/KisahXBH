@@ -162,9 +162,9 @@
         "heading": "STORE LOCATOR",
         "subheading": "Find a KISAH store near you. Visit us in-store for the complete experience.",
         "padding_top_desktop": 40,
-        "padding_bottom_desktop": 45,
+        "padding_bottom_desktop": 50,
         "padding_top_mobile": 25,
-        "padding_bottom_mobile": 35
+        "padding_bottom_mobile": 30
       }
     }
   },
