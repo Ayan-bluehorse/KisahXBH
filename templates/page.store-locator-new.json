@@ -297,9 +297,9 @@
         "cta_button_link": "https://forms.gle/wofY9vL16DC3TN9R6",
         "cta_new_tab": true,
         "padding_top_desktop": 40,
-        "padding_bottom_desktop": 48,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 32
+        "padding_bottom_desktop": 45,
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 35
       }
     }
   },
