@@ -72,13 +72,6 @@
   <div class="container container--large">
     <!-- Header -->
     <header class="ksl-header">
-      {% if section.settings.show_breadcrumb %}
-        <nav class="ksl-breadcrumbs" aria-label="Breadcrumb">
-          <a href="{{ routes.root_url }}">Home</a>
-          <span class="ksl-breadcrumb-sep" aria-hidden="true">›</span>
-          <span class="ksl-breadcrumb-current">{{ page.title | default: 'Store Locator' }}</span>
-        </nav>
-      {% endif %}
       
       <h1 class="ksl-main-title">{{ section.settings.heading | default: 'Store Locator' }}</h1>
       <p class="ksl-subtitle">
@@ -348,24 +341,7 @@
     margin: 0 auto 32px;
   }
 
-  .ksl-breadcrumbs {
-    font-size: 11px;
-    color: var(--ksl-muted-text);
-    margin-bottom: 12px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .ksl-breadcrumbs a {
-    color: var(--ksl-body-text);
-    text-decoration: none;
-  }
-  .ksl-breadcrumbs a:hover {
-    color: var(--ksl-theme-navy);
-  }
-  .ksl-breadcrumb-sep {
-    margin: 0 6px;
-    color: #c4c4c4;
-  }
+
 
   .ksl-main-title {
     font-family: 'Generis Sans W01 Bold', 'Manrope', 'Gabarito', var(--font-heading-family), sans-serif;

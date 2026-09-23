@@ -118,7 +118,7 @@
           <span class="breadcrumb__current" aria-current="page">{{ collection.title | escape }}</span>
         {% endif %}
 
-      {% elsif template == 'blog' %}
+      {% elsif template contains 'blog' or template.name == 'blog' %}
         <span class="divider" aria-hidden="true">/</span>
         {% if current_tags %}
           <a href="{{ blog.url }}">{{ blog.title | escape }}</a>
@@ -128,7 +128,7 @@
           <span class="breadcrumb__current" aria-current="page">{{ blog.title | escape }}</span>
         {% endif %}
 
-      {% elsif template == 'article' %}
+      {% elsif template contains 'article' or template.name == 'article' %}
         <span class="divider" aria-hidden="true">/</span>
         <a href="{{ blog.url }}">{{ blog.title | escape }}</a>
         <span class="divider" aria-hidden="true">/</span>

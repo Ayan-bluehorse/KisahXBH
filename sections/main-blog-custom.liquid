@@ -8,22 +8,7 @@
  .template-blog .page-section-spacing{
    margin-top:8px;
  }
-  nav.breadcrumbs-blog ol.breadcrumbs-blog__list{
-    display: flex;
-    list-style: none;
-    gap: 5px;
-    margin: 0;
-    padding: 0;
-  }
-   nav.breadcrumbs-blog li a{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 15px;
-    color: #000000;
-    opacity: 0.8;
-    font-family: 'Generis Sans W01 Regular';
-   }
+
 .template-blog .majortitle{
     font-family: 'Generis Sans W01 Bold';
     font-style: normal;
@@ -126,22 +111,8 @@
 }
 </style>
 
-{%- assign breadcrumbs_title = 'general.breadcrumbs.breadcrumbs_title' | t | default: 'Breadcrumbs' -%}
 {% paginate blog.articles by 12 %}
 <div class="container">
-    <nav class="breadcrumbs-blog" aria-label="{{ breadcrumbs_title }}">
-      <ol class="breadcrumbs-blog__list">
-         <li class="breadcrumbs-list__item">
-           <a class="breadcrumbs-list__link" href="{{ routes.root_url }}">Home</a> 
-         </li>
-         <li class="divider" aria-hidden="true">
-           /
-         </li>
-         <li class="breadcrumbs-list__item" aria-current="page">
-           {{ blog.title | link_to: blog.url }}
-         </li>
-      </ol>
-    </nav>
   
   {% if section.settings.show_page_title %}
     <div class="page-header" data-cc-animate>
