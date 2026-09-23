@@ -11,6 +11,7 @@
   "sections": {
     "navratri_breadcrumbs": {
       "type": "breadcrumbs",
+      "disabled": true,
       "settings": {
         "desk-padding-top": 12,
         "desk-padding-bottom": 12,

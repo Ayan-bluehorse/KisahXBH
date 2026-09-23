@@ -19,6 +19,7 @@
     },
     "breadcrumbs_RDJ8LX": {
       "type": "breadcrumbs",
+      "disabled": true,
       "settings": {
         "desk-padding-top": 10,
         "desk-padding-bottom": 0,

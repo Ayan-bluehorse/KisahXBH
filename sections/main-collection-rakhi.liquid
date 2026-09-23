@@ -1076,17 +1076,6 @@
   {%- endif -%}
 
   <div id="rakhi-collection-grid" class="container{% if settings.use_fullwidth_layout %} container--no-max{% endif %}{% if show_header == false %} lightly-spaced-row-above{% endif %}">
-       <nav class="breadcrumbs-collection" aria-label="{{ breadcrumbs_title }}">
-         <li class="breadcrumbs-list__item">
-         <a class="breadcrumbs-list__link" href="{{ routes.root_url }}">Home</a> 
-        </li>
-         <li class="divider">
-           /
-         </li>
-        <li class="breadcrumbs-list__item">
-          <a class="breadcrumbs-list__link" href="{{ routes.collections_url }}/{{ collection.handle }}" aria-current="page">{{ collection.title | escape }}</a>
-        </li>
-     </nav>
     {% assign col_desc_lower = collection.description | downcase %}
     {% if col_desc_lower contains '<h1' %}
       <div class="col-title">

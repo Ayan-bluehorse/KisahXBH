@@ -11,6 +11,7 @@
   "sections": {
     "breadcrumbs_jdQ8HF": {
       "type": "breadcrumbs",
+      "disabled": true,
       "settings": {
         "desk-padding-top": 16,
         "desk-padding-bottom": 0,

@@ -42,18 +42,6 @@
 {%- endif -%}
 <link rel="stylesheet" href="{{ 'modal.css' | asset_url }}">
 
-{% if section.settings.show_breadcrumbs %}
-  <div
-    class="container desktop-only not-in-quickbuy"
-    data-cc-animate
-    data-cc-animate-delay="0.2s"
-    {{ template.suffix }}
-  >
-    <div class="page-header">
-      {% render 'breadcrumbs', show_next_prev: true %}
-    </div>
-  </div>
-{% endif %}
 <product-form class="js-product product-info quickbuy-content spaced-row container">
   <media-gallery
     class="media-gallery media-gallery--layout-{{ section.settings.gallery_layout }} media-gallery-size-{{ section.settings.gallery_size }} product-column-left {% if product.media.size > 1 %}has-thumbnails{% endif %}"
