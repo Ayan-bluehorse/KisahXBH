@@ -823,6 +823,16 @@
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
+        "slide_banner_Xp6ga7": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/Desktop_7fa47c45-87be-4e1c-bd48-7442d4346d61.jpg",
+            "mob-img": "shopify://shop_images/Desktop_7fa47c45-87be-4e1c-bd48-7442d4346d61.jpg",
+            "link": "shopify://pages/navratri-ethnic-wear-for-men",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
@@ -866,6 +876,7 @@
         }
       },
       "block_order": [
+        "slide_banner_Xp6ga7",
         "slide_banner_HbQBTL",
         "slide_banner_FiWGha",
         "slide_banner_DhgQ4b",
