@@ -224,6 +224,62 @@
         "columns_desktop": "auto"
       }
     },
+    "navratri_categories_Dirb4D": {
+      "type": "navratri-categories",
+      "blocks": {
+        "category_item_UJMB6z": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/Mobile_eed6af26-46a2-4509-a039-2132aa3d2f33.jpg",
+            "title": "Dandiya and Garba",
+            "link": "shopify://collections/garba-edit"
+          }
+        },
+        "category_item_FRLRMY": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/Mobile_f1a1509b-89e4-47a9-b1a0-96860b327977.jpg",
+            "title": "Puja and aarti",
+            "link": "shopify://collections/puja-and-aarti"
+          }
+        },
+        "category_item_Q9wg3c": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/Mobile_31767897-ffcf-4ee7-a14c-5c3ce58f9077.jpg",
+            "title": "Pandal Hopping",
+            "link": "shopify://collections/pandal-hopping"
+          }
+        },
+        "category_item_n6gEL9": {
+          "type": "category_item",
+          "settings": {
+            "image": "shopify://shop_images/Mobile_5d230ca7-bc23-462b-8c50-9b33412db82c.jpg",
+            "title": "Evening Parties",
+            "link": "shopify://collections/evening-parties"
+          }
+        }
+      },
+      "block_order": [
+        "category_item_UJMB6z",
+        "category_item_FRLRMY",
+        "category_item_Q9wg3c",
+        "category_item_n6gEL9"
+      ],
+      "name": "Navratri Categories",
+      "settings": {
+        "kicker": "",
+        "title": "SHOP BY OCCASION",
+        "subtitle": "",
+        "show_colour_filter": false,
+        "bg_color": "#faf6f0",
+        "text_color": "#111111",
+        "sub_color": "#c9a96e",
+        "card_bg_color": "#EDE8DF",
+        "label_color": "#18120f",
+        "border_color": "#ded2ca"
+      }
+    },
     "navratri_categories": {
       "type": "navratri-categories",
       "blocks": {
@@ -276,8 +332,7 @@
         "sub_color": "#b88a2b",
         "card_bg_color": "#ede8df",
         "label_color": "#111111",
-        "border_color": "#ded2ca",
-        "columns_desktop": "4"
+        "border_color": "#ded2ca"
       }
     },
     "navratri_products_festive": {
@@ -384,6 +439,7 @@
     "navratri_products_puja",
     "navratri_gateway",
     "navratri_gateway_3j6f4c",
+    "navratri_categories_Dirb4D",
     "navratri_categories",
     "navratri_products_festive",
     "navratri_products_casual",
