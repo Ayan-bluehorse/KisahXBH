@@ -99,7 +99,7 @@
         "pick_1": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/Kurta_f141844e-a988-48cc-a4aa-9096288685ff.jpg",
+            "image": "shopify://shop_images/Kurta_73e2e6e9-eb79-4b68-9a26-77a2c19c009d.jpg",
             "title": "Kurta & Short Kurta",
             "subtitle": "",
             "link": "shopify://collections/kurta-short-kurta"
@@ -108,7 +108,7 @@
         "pick_2": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/Nehru_Jacket.jpg",
+            "image": "shopify://shop_images/Nehru_Jacket_Set.jpg",
             "title": "Nehru Jackets",
             "subtitle": "",
             "link": "shopify://collections/nehru-jackets"
@@ -126,10 +126,19 @@
         "pick_4": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/Kurta_Sets.jpg",
+            "image": "shopify://shop_images/Kurta_Sets_0300d638-7126-4ab8-974e-1432c48e0d91.jpg",
             "title": "Kurta Sets",
             "subtitle": "",
             "link": "shopify://collections/kurta-sets"
+          }
+        },
+        "pick_card_BQWr47": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Plus.jpg",
+            "title": "plus",
+            "subtitle": "",
+            "link": "shopify://collections/plus"
           }
         }
       },
@@ -137,7 +146,8 @@
         "pick_1",
         "pick_2",
         "pick_3",
-        "pick_4"
+        "pick_4",
+        "pick_card_BQWr47"
       ],
       "settings": {
         "kicker": "",
@@ -149,8 +159,7 @@
         "card_bg_color": "#151515",
         "border_color": "",
         "label_color": "#ffffff",
-        "columns_desktop": "auto",
-        "columns_mobile": "2"
+        "columns_desktop": "auto"
       }
     },
     "navratri_gateway_3j6f4c": {
@@ -211,8 +220,7 @@
         "card_bg_color": "#151515",
         "border_color": "",
         "label_color": "#ffffff",
-        "columns_desktop": "auto",
-        "columns_mobile": "2"
+        "columns_desktop": "auto"
       }
     },
     "navratri_categories": {
