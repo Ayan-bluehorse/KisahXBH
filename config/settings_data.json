@@ -458,10 +458,10 @@
     "foot_text_col": "#5c5c5c",
     "foot_heading_col": "#171717",
     "foot_divider_col": "#efdfc7",
-    "type_heading_font": "americana_n4",
+    "type_heading_font": "bodoni_moda_n4",
     "capitalize_headings": false,
-    "type_base_font": "nunito_sans_n4",
-    "type_nav_font": "nunito_sans_n4",
+    "type_base_font": "manrope_n4",
+    "type_nav_font": "manrope_n4",
     "type_logo_font": "americana_n7",
     "font_size_heading_int": 34,
     "font_size_base_int": 15,
@@ -704,6 +704,15 @@
           "main_heading": "Here’s how a Kisah piece <span>comes to life</span>",
           "hide_divider": false,
           "bottom__text": "At Kisah, every garment is more than just clothing—it’s a <span>tribute</span> to craftsmanship, culture, and the individuality of the man who wears it. <span>With heart</span> in every thread and purpose in every detail, we craft not just outfits, <span>but memories</span> waiting to be made."
+        }
+      },
+      "breadcrumbs": {
+        "type": "breadcrumbs",
+        "settings": {
+          "desk-padding-top": 12,
+          "desk-padding-bottom": 12,
+          "mob-padding-top": 8,
+          "mob-padding-bottom": 8
         }
       }
     },
