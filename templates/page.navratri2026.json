@@ -109,7 +109,7 @@
         "pick_2": {
           "type": "pick_card",
           "settings": {
-            "image": "shopify://shop_images/Nehru_Jacket_Set.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-09-24_at_1.14.00_PM.jpg",
             "title": "Nehru Jackets",
             "subtitle": "",
             "link": "shopify://collections/nehru-jackets"
@@ -130,7 +130,7 @@
             "image": "shopify://shop_images/Kurta_Sets_0300d638-7126-4ab8-974e-1432c48e0d91.jpg",
             "title": "Kurta Sets",
             "subtitle": "",
-            "link": "shopify://collections/kurta-sets"
+            "link": "shopify://collections/kurta-jacket-set"
           }
         },
         "pick_card_BQWr47": {
@@ -190,7 +190,7 @@
             "image": "shopify://shop_images/Embroidery.png",
             "title": "PANDAL HOPPING",
             "subtitle": "LAYER THE LOOK →",
-            "link": "shopify://collections/embroideryy"
+            "link": "shopify://collections/embroidery"
           }
         },
         "pick_card_HNd8gY": {
@@ -275,7 +275,7 @@
         "bg_color": "#faf6f0",
         "text_color": "#111111",
         "sub_color": "#c9a96e",
-        "card_bg_color": "#EDE8DF",
+        "card_bg_color": "#ede8df",
         "label_color": "#18120f",
         "border_color": "#ded2ca"
       }
@@ -296,7 +296,7 @@
           "settings": {
             "image": "shopify://shop_images/Prints.jpg",
             "title": "PRINTS",
-            "link": "shopify://collections/printedparade"
+            "link": "shopify://collections/print-story"
           }
         },
         "cat_3": {
@@ -304,7 +304,7 @@
           "settings": {
             "image": "shopify://shop_images/Embroidery.png",
             "title": "embroidery",
-            "link": "shopify://collections/embroideryy"
+            "link": "shopify://collections/embroidery"
           }
         },
         "category_item_NXBdXp": {
