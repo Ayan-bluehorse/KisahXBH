@@ -330,7 +330,7 @@
   .kisah-store-locator-section {
     background-color: #ffffff;
     color: var(--ksl-dark-text);
-    font-family: inherit;
+    font-family: var(--base-font-family), sans-serif;
     padding-top: {{ section.settings.padding_top_desktop | default: 35 }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop | default: 70 }}px;
   }
@@ -344,7 +344,7 @@
 
 
   .ksl-main-title {
-    font-family: var(--base-font-family), 'Manrope', 'Gabarito', var(--font-heading-family), sans-serif;
+    font-family: var(--heading-font-family) !important;
     font-size: clamp(26px, 3.8vw, 38px);
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -505,7 +505,7 @@
     margin-bottom: 20px;
   }
   .ksl-band-title {
-    font-family: var(--base-font-family), var(--font-heading-family), sans-serif;
+    font-family: var(--base-font-family) !important;
     font-size: 18px;
     font-weight: 800;
     letter-spacing: 0.05em;
@@ -536,6 +536,7 @@
     border-bottom: 1px solid var(--ksl-card-border);
   }
   .ksl-city-title {
+    font-family: var(--base-font-family) !important;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -638,6 +639,7 @@
     flex: 1;
   }
   .ksl-store-name {
+    font-family: var(--base-font-family) !important;
     font-size: 16px;
     font-weight: 700;
     color: var(--ksl-dark-text);
@@ -783,6 +785,7 @@
     min-width: 0;
   }
   .ksl-soon-name {
+    font-family: var(--base-font-family) !important;
     font-size: 14px;
     font-weight: 700;
     color: var(--ksl-dark-text);
@@ -817,6 +820,7 @@
     margin-bottom: 30px;
   }
   .ksl-empty-title {
+    font-family: var(--base-font-family) !important;
     font-size: 15px;
     font-weight: 700;
     color: var(--ksl-dark-text);
@@ -851,6 +855,7 @@
     margin-bottom: 4px;
   }
   .ksl-lead-title {
+    font-family: var(--base-font-family) !important;
     font-size: 18px;
     font-weight: 700;
     color: var(--ksl-dark-text);
