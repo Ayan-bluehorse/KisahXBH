@@ -270,10 +270,10 @@
 
 @media screen and (max-width: 768px) {
   /* Product title - mobile spec (desktop keeps 27px / rgba(52,52,52,.83)).
-     GenerisSansW01-Heavy has no @font-face in this theme, so it falls back to
+     var(--base-font-family)W01-Heavy has no @font-face in this theme, so it falls back to
      the declared Bold face until the Heavy file is added. */
   .section-main-product .product-column-right .title-row .product-title {
-    font-family: "GenerisSansW01-Heavy", "Generis Sans W01 Bold", sans-serif;
+    font-family: var(--base-font-family)W01-Heavy", var(--base-font-family), sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
@@ -332,7 +332,7 @@
     display: inline;
   }
 
-  /* Compare-at price - mobile spec. GenerisSansW01-Medium has no @font-face in
+  /* Compare-at price - mobile spec. var(--base-font-family)W01-Medium has no @font-face in
      this theme, so it falls back to the declared Regular face. The base rule
      uses font-size !important, so this one has to as well. */
   .section-main-product
@@ -342,7 +342,7 @@
     .price__default
     .price__was {
     font-family:
-      "GenerisSansW01-Medium", "Generis Sans W01 Regular", sans-serif;
+      var(--base-font-family)W01-Medium", var(--base-font-family), sans-serif;
     font-size: 16px !important;
     font-weight: 400;
     line-height: 20px;
@@ -364,7 +364,7 @@
   }
 
   /* (inc. taxes) - main.css:28 forces a global p font-family with !important,
-     so the family here needs !important or it renders in Generis Sans. */
+     so the family here needs !important or it renders in var(--base-font-family). */
   .product-column-right .price-container .kpdp-price-row .inclusive-tax,
   .product-column-right .price-container .kpdp-price-row .inclusive-tax span {
     font-family: "Nunito Sans", sans-serif !important;
@@ -620,9 +620,9 @@
     padding-left: 25px !important;
     padding-right: 25px !important;
     border-radius: 50px;
-    /* GenerisSansW01-Bold is the Figma layer name for the face declared in
-       main.css as "Generis Sans W01 Bold" - same typeface, different spelling. */
-    font-family: "GenerisSansW01-Bold", "Generis Sans W01 Bold", sans-serif;
+    /* var(--base-font-family) is the Figma layer name for the face declared in
+       main.css as var(--base-font-family) - same typeface, different spelling. */
+    font-family: var(--base-font-family), var(--base-font-family), sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 21.45px;
@@ -1334,7 +1334,7 @@ body.kpdp-contains-open {
   line-height: 1.25;
   color: #fff;
   font-weight: 400;
-  font-family: "Nunito Sans" !important;
+  font-family: var(--base-font-family) !important;
 }
 
 .kpdp20-proof__icon {

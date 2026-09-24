@@ -485,7 +485,7 @@
         color: #ffffff !important;
         font-weight: 400 !important;
         font-size: 18px !important;
-        font-family: "Generis Sans W01 Bold" !important;
+        font-family: var(--base-font-family) !important;
       }
       .sticky-add-to-cart {
         background: transparent;
@@ -498,7 +498,7 @@
         text-transform: capitalize !important;
         font-weight: 400 !important;
         font-size: 18px !important;
-        font-family: "Generis Sans W01 Bold" !important;
+        font-family: var(--base-font-family) !important;
         padding: 0;
         letter-spacing: normal;
       }

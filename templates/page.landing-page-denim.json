@@ -26,7 +26,7 @@
       "name": "Custom Liquid",
       "settings": {
         "full_width": true,
-        "code": "<div class=\"custom-html-Header\" style=\"\n  background-color: #201747;\n  padding: 16px 20px;\n  text-align: center;\n\">\n  <p style=\"\n    margin: 0;\n    color: #ffffff;\n    font-family: 'Generis Sans W01 Bold', sans-serif;\n    font-size: 22px;\n  \">\n    Built for Everyday Hustle – Premium Heavyweight Denim\n  </p>\n</div>"
+        "code": "<div class=\"custom-html-Header\" style=\"\n  background-color: #201747;\n  padding: 16px 20px;\n  text-align: center;\n\">\n  <p style=\"\n    margin: 0;\n    color: #ffffff;\n    font-family: var(--base-font-family), sans-serif;\n    font-size: 22px;\n  \">\n    Built for Everyday Hustle – Premium Heavyweight Denim\n  </p>\n</div>"
       }
     },
     "hero_landing_fMWJzj": {

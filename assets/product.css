@@ -1,5 +1,5 @@
 .section-main-product .product-column-right .title-row .product-title {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -12,7 +12,7 @@
 }
 
 .section-main-product .breadcrumbs a.breadcrumbs-list__link {
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -22,7 +22,7 @@
 }
 
 p.child_kurta_title_custom_bs {
-    font-family: 'Generis Sans W01 Bold' !important;
+    font-family: var(--base-font-family) !important;
 }
 
 .section-main-product.page-section-spacing {
@@ -49,7 +49,7 @@ p.child_kurta_title_custom_bs {
 .section-main-product .product-column-right .price-container .price__default .price__current {
   /* order:2; */
   order: 2;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
@@ -59,7 +59,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .section-main-product .product-column-right .price-container .price__default .price__was {
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
@@ -101,7 +101,7 @@ p.child_kurta_title_custom_bs {
 .section-main-product .product-column-right .price-container .price__default .product-label-container .product-label>span {
   /* background: #E3B7B7; */
   border-radius: 50px;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -130,7 +130,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .section-main-product .product-column-right .trust-icons_container .text_with-icons span {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -161,7 +161,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .section-main-product .product-column-right .product-info-accordion .disclosure__content {
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -170,7 +170,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .section-main-product .product-column-right .product-info-accordion .disclosure__title span {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -241,12 +241,12 @@ p.child_kurta_title_custom_bs {
   text-align: left;
   margin: 0 0 5px 0;
   color: #000000;
-  font-family: 'Generis Sans W01 Bold' !important;
+  font-family: var(--base-font-family) !important;
 }
 
 .section-main-product .product-column-right .offer-box span {
   font-size: 16px;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-weight: 400;
   line-height: 17.65px;
   text-align: left;
@@ -333,7 +333,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .product-column-right .clickpost-edd__container .clickpost-edd__heading {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -355,7 +355,7 @@ p.child_kurta_title_custom_bs {
   border-radius: 50px;
   min-height: 40px;
   padding: 10px 25px;
-  font-family: 'Generis Sans W01 Regular' !important;
+  font-family: var(--base-font-family) !important;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -372,7 +372,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .product-column-right .clickpost-edd__container .clickpost-edd__submit-button {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -389,7 +389,7 @@ p.child_kurta_title_custom_bs {
 }
 
 .product-column-right .clickpost-edd__container #response-edd {
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -744,7 +744,7 @@ p.child_kurta_title_custom_bs {
 
 .offer-text-main {
   font-size: 13px;
-  font-family: Generis Sans W01 Bold;
+  font-family: var(--base-font-family);
 }
 
 .offer-terms {
@@ -791,7 +791,7 @@ display: block !important;
   color: #fff;
   font-size: 10px;
   font-weight: 600;
-  font-family: 'Generis Sans W01 Bold', sans-serif;
+  font-family: var(--base-font-family), sans-serif;
   letter-spacing: 0.1px;
   display: flex;
   align-items: center;

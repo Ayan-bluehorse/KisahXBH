@@ -7,7 +7,7 @@
 }
 .testimonial-list .subheading {
   margin-bottom: 2em;
-  font-family:'Generis Sans W01 Bold'; 
+  font-family:var(--base-font-family); 
 }
 .testimonial-list .slideshow-ctrl {
   position: static;
@@ -73,7 +73,7 @@
     transform: translateY(5px);
 }
 .testimonial__image-wrapper .product-anchor-part a{
-   font-family: Generis Sans W01 Bold;
+   font-family: var(--base-font-family);
     font-size: 18px;
     font-weight: 400;
     line-height: 19.96px;
@@ -283,7 +283,7 @@
   transition: all 750ms ease 0ms;
   opacity: 0;
   will-change: opacity, transform;
- font-family:'Generis Sans W01 Regular'; 
+ font-family:var(--base-font-family); 
 }
 
 

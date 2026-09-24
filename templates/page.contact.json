@@ -50,9 +50,9 @@
         "text_rptChr"
       ],
       "custom_css": [
-        ".majortitle.in-content.h1 {font-family: \"Generis Sans W04 Medium\"; font-style: normal; font-weight: 600; font-size: 24px; line-height: 27px; text-align: center; text-transform: uppercase; color: #000000;}",
-        "h3 {font-family: \"Generis Sans W04 Medium\"; font-style: normal; font-weight: 400; font-size: 20px; line-height: 24px; text-align: center; color: #000000;}",
-        "p {font-family: \"Generis Sans W04 Medium\"; font-style: normal; font-weight: 400; font-size: 18px; line-height: 35px; text-align: center; color: #000000;}"
+        ".majortitle.in-content.h1 {font-family: var(--base-font-family); font-style: normal; font-weight: 600; font-size: 24px; line-height: 27px; text-align: center; text-transform: uppercase; color: #000000;}",
+        "h3 {font-family: var(--base-font-family); font-style: normal; font-weight: 400; font-size: 20px; line-height: 24px; text-align: center; color: #000000;}",
+        "p {font-family: var(--base-font-family); font-style: normal; font-weight: 400; font-size: 18px; line-height: 35px; text-align: center; color: #000000;}"
       ],
       "settings": {
         "height": "medium",
@@ -64,8 +64,8 @@
     "rich_text_pFc7Nc": {
       "type": "rich-text",
       "custom_css": [
-        "h2 {font-family: \"Generis Sans W01 Bold\"; font-style: normal; font-weight: 400; font-size: 24px; line-height: 27px; text-align: center; color: #000000;}",
-        "p {font-family: \"Generis Sans W01 Bold\"; font-style: normal; font-weight: 400; font-size: 18px; line-height: 20px; text-align: center; color: #000000;}",
+        "h2 {font-family: var(--base-font-family); font-style: normal; font-weight: 400; font-size: 24px; line-height: 27px; text-align: center; color: #000000;}",
+        "p {font-family: var(--base-font-family); font-style: normal; font-weight: 400; font-size: 18px; line-height: 20px; text-align: center; color: #000000;}",
         ".fully-spaced-row--medium {margin: 0;}",
         "@media screen and (max-width: 786px) {h2 {font-size: 22px; line-height: 24px; } p {font-size: 16px; line-height: 18px; }}"
       ],

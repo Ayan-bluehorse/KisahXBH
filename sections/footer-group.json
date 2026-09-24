@@ -14,7 +14,7 @@
     "footer_seo_C7wP3B": {
       "type": "footer-seo",
       "custom_css": [
-        "h3,h4,h5 {font-family: Generis Sans W01 Regular !important;}"
+        "h3,h4,h5 {font-family: var(--base-font-family) !important;}"
       ],
       "name": "Footer SEO (Homepage/Collection/Product)",
       "settings": {

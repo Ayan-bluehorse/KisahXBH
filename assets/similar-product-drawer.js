@@ -38,7 +38,7 @@
 }
   .similar-product-text {
     font-size: 12px;
-    font-family: 'Generis Sans W01 Regular';
+    font-family: var(--base-font-family);
 }
 .zoom-icon {
   display: none;
@@ -76,7 +76,7 @@
 }
 .cp-similar-header span {
   color: #000;
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -105,7 +105,7 @@
   color: #000;
   -webkit-text-stroke-width: 0.2px;
   -webkit-text-stroke-color: #000;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -115,7 +115,7 @@
 .cp-similar-price {
   margin-top: 5px;
   color: #181818;
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -140,7 +140,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -191,7 +191,7 @@
 }
 .cp-size-header span {
   color: #000;
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-size: 22px;
   font-style: normal;
   font-weight: 400;
@@ -206,7 +206,7 @@
 .cp-size-chart-link {
   text-decoration: underline;
   color: #7A7A81;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -262,7 +262,7 @@
   width: 100%;
   border-radius: 8px;
   text-align: center;
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

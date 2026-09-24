@@ -1192,7 +1192,7 @@ const CartForm = class extends HTMLElement {
     } else if (change.decrease) {
       newQuantity -= quantityInput.step || 1;
       quantityInput.value = newQuantity;
-    } else if (change.currentValue) ;
+    } else if (change.currentValue);
 
     if (quantityInput.max && parseInt(quantityInput.value, 10) > parseInt(quantityInput.max, 10)) {
       newQuantity = quantityInput.max;

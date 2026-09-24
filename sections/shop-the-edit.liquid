@@ -117,7 +117,7 @@
   /* Ensure product block titles inherit bold font on page templates */
   #shopify-section-{{ section.id }} .product-block__title span,
   #shop-edit-{{ sid }} .product-block__title span {
-    font-family: 'Generis Sans W01 Bold', sans-serif !important;
+    font-family: var(--base-font-family), sans-serif !important;
   }
 
   /* ======================================================
@@ -154,7 +154,7 @@
     font-size: 16px;
     line-height: 18px;
     text-align: center;
-    font-family: 'Generis Sans W01 Bold', sans-serif;
+    font-family: var(--base-font-family), sans-serif;
     text-transform: capitalize;
     min-height: 40px;
     padding: 0 25px;

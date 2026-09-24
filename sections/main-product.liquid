@@ -121,7 +121,7 @@
         <style>
           .media-gallery .main-image{position:relative}
           .kpdp20-proof{position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;background:#201747;padding:6px 12px}
-          .kpdp20-proof__text{margin:0;display:flex;align-items:center;gap:5px;font-size:12px;line-height:1.25;color:#fff;font-weight:400;font-family: "Nunito Sans" !important;}
+          .kpdp20-proof__text{margin:0;display:flex;align-items:center;gap:5px;font-size:12px;line-height:1.25;color:#fff;font-weight:400;font-family: var(--base-font-family) !important;}
           .kpdp20-proof__icon{width:16px;height:16px;display:inline-block}
           .kpdp20-proof__count{font-weight:700}
         </style>
@@ -621,7 +621,7 @@
               <div class="child-product-selector input-row js-product" style="margin-top:20px; border-top: 1px solid #e2e2e2; padding-top:20px;">
                 
 
-                <p class="child_kurta_title_custom_bs" style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: 'Generis Sans W01 Bold' !important;">Also Add: {{ child_kurta.title }}</p>
+                <p class="child_kurta_title_custom_bs" style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: var(--base-font-family) !important;">Also Add: {{ child_kurta.title }}</p>
                 <div class="price-container" {{ block.shopify_attributes }}>
                  <div class="product-info__price product-price product-price--large">
                 {% render 'price',
@@ -1904,7 +1904,7 @@ console.log({{ product | json }}, "PDP JSON");
       align-items:center;
     }
      a.trigger-pop-up {
-      font-family: 'Generis Sans W01 Regular';
+      font-family: var(--base-font-family);
       font-size: 16px;
       line-height: 18px;
   }

@@ -625,9 +625,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <style>
 .shopify-section-group-header-group .navigation .navigation__item .navigation__link{
-    font-family: 'Generis Sans W01 Regular';
-    font-style: normal;
-    font-weight: 400;
+    font-family: var(--nav-font-family);
+    font-style: var(--nav-font-style);
+    font-weight: var(--nav-font-weight);
     font-size: 16px;
     line-height: 18px;
     /* text-align: center; */
@@ -726,9 +726,9 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 @media screen and (max-width:767.98px){
 .mobile-navigation-drawer .navigation__link{
-    font-family:'Generis Sans W01 Bold' !important;
-    font-style: normal;
-    font-weight: 400;
+    font-family: var(--nav-font-family) !important;
+    font-style: var(--nav-font-style);
+    font-weight: var(--nav-font-weight);
     font-size: 14px;
     line-height: 16px;
     text-transform: uppercase;
@@ -770,7 +770,7 @@ document.addEventListener("DOMContentLoaded", function () {
   justify-content: flex-start;
   width: 44px;
   height: 44px;
-   margin: 0 ;
+   margin: 0;
 }
 button svg:not(.feather):not(.cc-select__icon):not(.icon--full-color){
     width:21px;

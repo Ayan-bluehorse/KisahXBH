@@ -1140,7 +1140,7 @@
               <div class="child-product-selector input-row js-product" style="margin-top:20px; border-top: 1px solid #e2e2e2; padding-top:20px;">
                 
 
-                <p class="child_kurta_title_custom_bs" style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: 'Generis Sans W01 Bold' !important;">Also Add: {{ child_kurta.title }}</p>
+                <p class="child_kurta_title_custom_bs" style="margin-bottom: 15px;font-style: normal;font-weight: 500;font-size: 24px;line-height: 27px;color: rgba(52, 52, 52, 0.83);font-family: var(--base-font-family) !important;">Also Add: {{ child_kurta.title }}</p>
                 <div class="price-container" {{ block.shopify_attributes }}>
                  <div class="product-info__price product-price product-price--large">
                 {% render 'price',
@@ -2482,7 +2482,7 @@ console.log({{ product | json }}, "PDP JSON");
       align-items:center;
     }
      a.trigger-pop-up {
-      font-family: 'Generis Sans W01 Regular';
+      font-family: var(--base-font-family);
       font-size: 16px;
       line-height: 18px;
   }

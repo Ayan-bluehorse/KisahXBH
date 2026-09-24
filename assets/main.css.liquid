@@ -1,36 +1,6 @@
 
 
-@font-face{
-    font-family: "Generis Sans W01 Bold";
-    src: url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/25aa5d947dfbf38926e37430129209f0.eot?v=1726035314");
-    src: url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/25aa5d947dfbf38926e37430129209f0.eot?v=1726035314?#iefix")format("embedded-opentype"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/25aa5d947dfbf38926e37430129209f0.woff?v=1726035359")format("woff"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.woff2?v=1726038612")format("woff2"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/25aa5d947dfbf38926e37430129209f0.ttf?v=1726035412")format("truetype"),
-        url("25aa5d947dfbf38926e37430129209f0.svg#Generis Sans W01 Bold")format("svg");
-    font-weight:normal;
-    font-style:normal;
-    font-display:swap;
-}
-@font-face{
-    font-family: "Generis Sans W01 Regular";
-    src: url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.eot?v=1726038540");
-    src: url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.eot?v=1726038540?#iefix")format("embedded-opentype"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.woff?v=1726038580")format("woff"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.woff2?v=1726038612")format("woff2"),
-        url("https://cdn.shopify.com/s/files/1/0496/1003/1256/files/aa93cb662eed3dbceaf9144b30dbea90.ttf?v=1726038646")format("truetype"),
-        url("aa93cb662eed3dbceaf9144b30dbea90.svg#Generis Sans W01 Regular")format("svg");
-    font-weight:normal;
-    font-style:normal;
-    font-display:swap;
-}
-
-p{
-   font-family: Generis Sans W01 Regular !important;
-}
-a, h5{
-  font-family: Generis Sans W01 Bold;
-}
+/* Kisah Brand Typography uses Theme Settings variables: var(--heading-font-family) and var(--base-font-family) */
 @charset "UTF-8";
 /* used for: transparent header, dropdown nav, docked utility bar */
 .pointer-events-none{
@@ -6943,7 +6913,7 @@ hotspots-image .image-overlay {
   opacity: 0.85 !important;
 }
 .opt-label span.js-value {
-  font-family: 'Generis Sans W01 Bold', sans-serif;
+  font-family: var(--base-font-family);
   font-style: normal;
   font-weight: 700;
   font-size: 13px;
@@ -11185,7 +11155,7 @@ fieldset.option-selector .flex-container {
   background-color:unset !important;
 }
 .section-main-product .option-selector .size-chart-link__text{
-    font-family: 'Generis Sans W01 Regular';
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -11234,7 +11204,7 @@ fieldset.option-selector .flex-container {
      min-height:37px;
 }
 .section-main-product .buy-buttons-row.block .product-form__item #wishlisthero-product-page-button-container button span{
-    font-family: 'Generis Sans W01 Bold';
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -11277,7 +11247,7 @@ fieldset.option-selector .flex-container {
     font-size: 16px;
     line-height: 18px;
     text-align: center;
-    font-family:'Generis Sans W01 Bold';
+    font-family: var(--base-font-family);
     text-transform: capitalize;
     min-height:40px;
     padding: 0 25px;
@@ -11373,7 +11343,7 @@ fieldset.option-selector .flex-container {
       margin-inline-start:30px;
 }
 .media-gallery.media-gallery--layout-carousel-beside .thumbnails{
-     width: unset ;
+     width: unset;
      padding-inline-end:0;
 }
  .detail.product-column-right .title_share_button .mob_share-svg_icon{
@@ -11392,7 +11362,7 @@ fieldset.option-selector .flex-container {
     text-align: center;
     color: rgba(52, 52, 52, 0.83);
     opacity: 0.9;
-    font-family: 'Generis Sans W01 Regular';
+    font-family: var(--base-font-family);
     position: absolute;
     display: flex;
     background: #ffffff;
@@ -11502,7 +11472,7 @@ fieldset.option-selector .flex-container {
   }
 #shopify-section-template--17154595618968__rich_text_dEDpTN h3{
     font-size: 20px !important;
-    line-height: 24px ;
+    line-height: 24px;
   }
 #shopify-section-template--17154595618968__rich_text_dEDpTN p{
     font-size:16px !important;
@@ -11517,18 +11487,18 @@ fieldset.option-selector .flex-container {
   padding:0;
 }
 .template-page .majortitle, h1, h2{
-   font-family: 'Generis Sans W01 Bold';
+   font-family: var(--heading-font-family);
 }
 .template-page span, p, li{
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   color:#000000;
 }
 .template-article span, p, li{
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   color:#000000;
 }
 .quickbuy-container .trust-icons_container .text_with-icons span {
-    font-family:'Generis Sans W01 Bold';
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -11552,7 +11522,7 @@ fieldset.option-selector .flex-container {
 }
 .quickbuy-container .price-container .price__default .price__current {
     order: 2;
-    font-family: Generis Sans W01 Regular;
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -11560,7 +11530,7 @@ fieldset.option-selector .flex-container {
     color: #343434d4;
   }
 .quickbuy-container .price-container .price__default .price__was {
-    font-family: Generis Sans W01 Regular;
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -11582,22 +11552,22 @@ fieldset.option-selector .flex-container {
 .main-search__results .product-price--block .price__was{
   text-decoration-color: red;
   color: #000000;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
 }
 .main-search__results .product-block__title{
-   font-family: 'Generis Sans W01 Bold'
+   font-family: var(--heading-font-family);
 }
 .main-search__results  .price__current{
   color: #000000;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
 }
 .main-search__results-all-link{
-  font-family: 'Generis Sans W01 Bold';
+  font-family: var(--base-font-family);
   background: #201747;
   color: #fff;
 }
 input[type=text].main-search__input{
-font-family: 'Generis Sans W01 Regular'; 
+font-family: var(--base-font-family); 
 }
 .opt-btn.is-unavailable+.opt-label{
   position:relative;
@@ -11620,7 +11590,7 @@ display: none;
   display:none;
 } 
 .product-label > span {
-    font-family: 'Generis Sans W01 Regular';
+    font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
@@ -11684,13 +11654,13 @@ display: none;
 .custom-select__btn{
   border-radius: 50px;
   padding: 7px 12px;
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   border: 1px solid #000000;
   font-size:16px;
   line-height:18px;
 }
 .option-selector .label{
-  font-family: 'Generis Sans W01 Regular';
+  font-family: var(--base-font-family);
   font-size:16px;
   line-height:18px;
 }
@@ -11738,7 +11708,7 @@ body.sortfilter #bik-widget-wrapper-lK25ZN0Qiu39ugQe7j3V{
     font-size: 16px;
     line-height: 18px;
     color: #000000;
-    font-family: 'Generis Sans W01 Bold';
+    font-family: var(--base-font-family);
    
 }
 @media screen and (max-width:768px){
@@ -11769,7 +11739,7 @@ body.sortfilter #bik-widget-wrapper-lK25ZN0Qiu39ugQe7j3V{
 }
 
 .quinn_card_heading_4 * {
-    font-family: Gabarito !important;
+    font-family: var(--base-font-family) !important;
     font-size: 48px;
     font-weight: 700 !important;
     line-height: 57.6px !important;
@@ -11889,12 +11859,14 @@ div#PBarNextFrameWrapper {
     padding: 0 9px;
     width: 100%;
     background-color: #fff0ee;
-    max-width: 180px;
+    max-width: 195px;
+    white-space: nowrap;
 }
 
 #NavigationTier2-1 ul.navigation__tier-2>li.navigation__item>a.navigation__link > span {
     padding: 10px;
     display: block;
+    white-space: nowrap;
 }
 
 #NavigationTier2-1 ul.navigation__tier-2>li.navigation__item:first-child > a {
@@ -11921,8 +11893,8 @@ div#PBarNextFrameWrapper {
 #NavigationTier2-1 ul.navigation__tier-2>.navigation__item:hover .navigation__tier-3-container {
     display: block;
     position: absolute;
-    left: 265px;
-    width: calc(100% - 265px);
+    left: 275px;
+    width: calc(100% - 275px);
     top: 31px;
     padding-right: 47px;
 }
@@ -11938,7 +11910,7 @@ div#PBarNextFrameWrapper {
 #NavigationTier2-1 ul.navigation__tier-2>.navigation__item .navigation__tier-3-container > ul.navigation__tier-3 {
     display: grid;
     grid-auto-flow: column; 
-    grid-auto-columns: 120px;
+    grid-auto-columns: 125px;
     gap: 20px;
     height: 100%;
 }
@@ -11960,7 +11932,9 @@ div#PBarNextFrameWrapper {
     text-align: center;
     color: #fff;
     text-transform: capitalize;
-    font-size: 14px;
+    font-size: 13px;
+    padding: 0 4px;
+    white-space: nowrap;
 }
 
 
@@ -12073,7 +12047,7 @@ position: static !important;
     gap: 4px;
     color: #1E1E1E;
     font-weight: 400;
-    font-family: "Generis Sans W01 Bold";
+    font-family: var(--base-font-family);
     padding: 0;
     right: 0;
     flex-direction: row-reverse;
@@ -12241,7 +12215,7 @@ position: static !important;
 }
 
 .template-collection .product-price--block .product-label-container > span.product-label {
-    font-family: 'Generis Sans W01 Regular';
+    font-family: var(--base-font-family);
 }
 
 
@@ -12465,7 +12439,7 @@ ease;
     gap: 4px;
     color: #1e1e1e;
     font-weight: 400;
-    font-family: Generis Sans W01 Bold;
+    font-family: var(--base-font-family);
     padding: 0;
     right: 0;
     flex-direction: row-reverse;
@@ -12517,7 +12491,7 @@ ease;
 }
 
 .template-search .product-price--block .product-label-container>span.product-label {
-    font-family: Generis Sans W01 Regular;
+    font-family: var(--base-font-family);
 }
 
 .template-search  .product-grid {
@@ -12620,7 +12594,7 @@ ease;
 
 .new-home-page-banner.wedding-banner-wrapper .butn-para-content .button-with-content .hide-mobile-cont > h2 {
     max-width: 555px;
-    font-family: "Playfair Display";
+    font-family: var(--heading-font-family);
     font-size: 72px;
     color: #fff;
     font-weight: 600;
@@ -12674,7 +12648,7 @@ ease;
     font-size: 48px !important;
     line-height: 48px !important;
     text-transform: none !important;
-    font-family: "Playfair Display" !important;
+    font-family: var(--heading-font-family) !important;
     margin-bottom: 14px;
 }
 
@@ -12726,7 +12700,7 @@ ease;
     text-align: center;
     font-size: 48px !important;
     line-height: 48px !important;
-    font-family: Playfair Display !important;
+    font-family: var(--heading-font-family) !important;
     margin-bottom: 0 !important;
     font-weight: 600 !important;
     text-transform: none !important;
@@ -12801,7 +12775,7 @@ ease;
     line-height: 32px;
     max-width: 73%;
     color: #201747;
-    font-family: Playfair Display !important;
+    font-family: var(--heading-font-family) !important;
     margin-bottom: 21px;
 }
 
@@ -13148,7 +13122,7 @@ ease;
 .template-suffix-wedding-lp2 .shop-occasion-section .oc-heading,
 .template-suffix-wedding-lp2 .cp-category-grid-section h2.cp-cat-title {
     color: #B50E24 !important;
-    font-family: "Playfair Display" !important;
+    font-family: var(--heading-font-family) !important;
     font-size: 56px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -13159,7 +13133,7 @@ ease;
 
 .template-suffix-wedding-lp2 .wedding-collection-grid-wrapper .tab-collection .categories-collec-name .head-part h2 {
     color: #B50E24 !important;
-    font-family: "Playfair Display" !important;
+    font-family: var(--heading-font-family) !important;
     font-size: 40px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -13371,7 +13345,7 @@ ease;
 .dulhe-toli-section.wedding2-app-section-wrapper .container h2.section-title {
     font-size: 56px;
     line-height: normal;
-    font-family: Playfair Display !important;
+    font-family: var(--heading-font-family) !important;
     text-align: center;
     font-weight: 600;
     color: #940a2f;

@@ -37,7 +37,7 @@
   margin-bottom: 0px;
   font-weight: 500;
   color: #2c2c48;
-  font-family: "Gabarito";
+  font-family: var(--nav-font-family);
 }
 .mobile-navigation-drawer #custom-main-menu .menu-grid a {
   text-align: center;
@@ -50,7 +50,7 @@
   margin-top: 0px;
   font-weight: 400;
   color: #363636;
-  font-family: Amiri !important;
+  font-family: var(--nav-font-family) !important;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -58,7 +58,7 @@
 .mobile-navigation-drawer #custom-main-menu .menu-grid .menu-label.wide {
   margin-top: 0px;
   color: #363636;
-  font-family: Amiri !important;
+  font-family: var(--nav-font-family) !important;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -103,7 +103,7 @@
   color: #363636;
   font-size: 16px;
   font-weight: 500;
-  font-family: "Gabarito";
+  font-family: var(--nav-font-family);
 }
 .mobile-navigation-drawer #custom-sub-menu .submenu-header a {
   display: flex;
@@ -114,7 +114,7 @@
 .mobile-navigation-drawer .info-links span {
   color: #363636;
   text-align: center;
-  font-family: "Gabarito";
+  font-family: var(--nav-font-family);
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -180,21 +180,21 @@
   justify-content: center;
   font-size: 14px;
   margin-right: 12px;
-  font-family: "Gabarito" !important;
+  font-family: var(--nav-font-family) !important;
 }
 .mobile-navigation-drawer .review-meta {
   font-size: 13px;
-  font-family: "Gabarito" !important;
+  font-family: var(--nav-font-family) !important;
 }
 .mobile-navigation-drawer .review-name {
   font-weight: bold;
   color: #333;
-  font-family: "Gabarito" !important;
+  font-family: var(--nav-font-family) !important;
 }
 .mobile-navigation-drawer .review-date {
   color: #777;
   font-size: 12px;
-  font-family: "Gabarito" !important;
+  font-family: var(--nav-font-family) !important;
 }
 .mobile-navigation-drawer .review-stars {
   color: #000;
@@ -204,7 +204,7 @@
   margin-top: 10px;
   font-size: 14px;
   color: #333;
-  font-family: "Gabarito" !important;
+  font-family: var(--nav-font-family) !important;
 }
 .mobile-navigation-drawer .review-dots {
   margin-top: 10px;
@@ -266,7 +266,7 @@
 .mobile-navigation-drawer .cp-usp-item p {
   font-size: 12px;
   font-weight: 400;
-  font-family: "Generis Sans W01 Bold" !important;
+  font-family: var(--base-font-family) !important;
 }
 .mobile-navigation-drawer .navigation {
   margin-bottom: 0px;
@@ -296,7 +296,7 @@
 .mobile-navigation-drawer .cp-submenu-text {
   font-size: 16px;
   color: #363636;
-  font-family: "GenerisSansW01-Regular" !important;
+  font-family: var(--base-font-family) !important;
   width: 150px;
   margin-left: 10px;
   white-space: nowrap;
@@ -328,7 +328,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-family: "GenerisSansW01-Bold";
+  font-family: var(--base-font-family);
   color: #363636;
 }
 .mobile-navigation-drawer .menu-item-pair img {
@@ -348,7 +348,7 @@
 .mobile-navigation-drawer .menu-label {
   margin-top: 6px;
   font-size: 13px;
-  font-family: "GenerisSansW01-Bold";
+  font-family: var(--base-font-family);
   font-weight: 400;
   text-align:center;
 }
@@ -379,11 +379,11 @@
 }
 .mobile-navigation-drawer .menu-single-item {
   text-decoration: none;
-  font-family: "GenerisSansW01-Bold";
+  font-family: var(--base-font-family);
   color: #363636;
 }
 .mobile-navigation-drawer .menu-single-item span {
-  font-family: "GenerisSansW01-Bold";
+  font-family: var(--base-font-family);
   font-size: 13px;
   font-weight: 400;
   text-align:center;
@@ -410,7 +410,7 @@
   text-align: center;
   padding: 6px 10px;
   font-size: 14px;
-  font-family: "Gabarito", sans-serif;
+  font-family: var(--nav-font-family);
   text-decoration: none;
   font-weight: 500;
   text-transform: uppercase;
