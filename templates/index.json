@@ -1364,7 +1364,7 @@
         "quinn_shoppable_videos_app_cards_block_p9hKa7"
       ],
       "custom_css": [
-        ".quinn_card_heading_6 * {font-family: Gabarito !important;}",
+        ".quinn_card_heading_6 * {font-family: var(--heading-font-family) !important;}",
         "@media (min-width: 769px) {.quinn_card_heading_6 * {font-size: 48px; }}",
         "@media (max-width: 768px) {.quinn_card_heading_6 * {font-size: 28px; }}"
       ],

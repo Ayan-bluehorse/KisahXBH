@@ -11718,7 +11718,9 @@ body.sortfilter #bik-widget-wrapper-lK25ZN0Qiu39ugQe7j3V{
 .filter-group--availability .filter-toggle__group-label{
     width:50%;
 }
-.quinn_cards_widget .quinn_card_heading_4 * {
+.quinn_cards_widget .quinn_card_heading_4 *,
+.quinn_cards_widget [class*="quinn_card_heading"] *,
+[class*="quinn_card_heading"] * {
     font-size: 28px !important;
     line-height: 33.6px !important;
     margin-top:10px !important;
@@ -11738,8 +11740,9 @@ body.sortfilter #bik-widget-wrapper-lK25ZN0Qiu39ugQe7j3V{
     display: none;
 }
 
-.quinn_card_heading_4 * {
-    font-family: var(--base-font-family) !important;
+.quinn_cards_widget [class*="quinn_card_heading"] *,
+[class*="quinn_card_heading"] * {
+    font-family: var(--heading-font-family) !important;
     font-size: 48px;
     font-weight: 700 !important;
     line-height: 57.6px !important;
@@ -11748,6 +11751,12 @@ body.sortfilter #bik-widget-wrapper-lK25ZN0Qiu39ugQe7j3V{
     color: #201747;
     margin-top: 10px !important;
     margin-bottom: 0px !important;
+}
+
+.quinn_cards_widget [class*="quinn_card_subheading"] *,
+[class*="quinn_card_subheading"] * {
+    font-family: var(--base-font-family) !important;
+    text-align: center;
 }
 
 @media (max-width: 768px) {
