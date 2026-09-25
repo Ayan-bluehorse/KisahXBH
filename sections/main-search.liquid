@@ -802,7 +802,7 @@
     assign no_search_count = 0
     for item in search.results
       if item.object_type == 'product'
-        if item.tags contains 'no-search' or item.available == false
+        if item.tags contains 'no-search'
           assign no_search_count = no_search_count | plus: 1
         endif
       endif
@@ -924,7 +924,7 @@
                   endfor
                 else
                   for product in search.results
-                    if product.object_type == 'product' and product.available
+                    if product.object_type == 'product'
                       unless product.tags contains 'no-search'
                         if product.featured_media.preview_image.aspect_ratio < chosen_product_aspect_ratio
                           assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
@@ -947,7 +947,7 @@
                   endfor
                 else
                   for product in search.results
-                    if product.object_type == 'product' and product.available
+                    if product.object_type == 'product'
                       unless product.tags contains 'no-search'
                         if product.featured_media.preview_image.aspect_ratio > chosen_product_aspect_ratio
                           assign chosen_product_aspect_ratio = product.featured_media.preview_image.aspect_ratio
@@ -1004,7 +1004,7 @@
             {% for item in search.results %}
 
   {% if item.object_type == 'product' %}
-    {% if item.tags contains 'no-search' or item.available == false %}
+    {% if item.tags contains 'no-search' %}
       {% continue %}
     {% endif %}
     {%- if show_override_grid and so_grid_count > 0 -%}

@@ -196,6 +196,7 @@ const MainSearch = class extends HTMLElement {
                 'resources[options][fields]',
                 'title,product_type,variants.title,vendor,tag,variants.sku'
               );
+              ajaxUrl.searchParams.set('resources[options][unavailable_products]', 'show');
             } else {
               ajaxUrl = new URL(linkURL.toString());
               ajaxUrl.searchParams.set('q', term);
@@ -230,35 +231,58 @@ const MainSearch = class extends HTMLElement {
                     .catch(() => resultsList);
                 }
 
-                // 2. If multi-hyphen SKU (e.g. KA-1258-5588-T301) returned no products, try space-separated tokens
-                if (!gridHasBlocks(resultsList) && queryToUse.includes('-')) {
-                  const spaceSeparated = queryToUse.replace(/-/g, ' ');
-                  return fetchSearchHtml(spaceSeparated)
-                    .then((spaceText) => {
-                      const spaceGrid = parseGridFromHtml(spaceText);
-                      if (gridHasBlocks(spaceGrid)) {
-                        linkURL.searchParams.set('q', spaceSeparated);
-                        runGridIntoUi(spaceGrid);
+                // 2. If multi-hyphen SKU without size suffix (e.g. KA-1099-5641-T140) returned no products,
+                // try standard variant size suffixes since Shopify variant SKUs include sizes
+                if (!gridHasBlocks(resultsList) && /^k[ak]-/i.test(queryToUse) && !/-\d{1,2}$/.test(queryToUse)) {
+                  const sizeTry = `${queryToUse}-38`;
+                  return fetchSearchHtml(sizeTry)
+                    .then((sizeText) => {
+                      const sizeGrid = parseGridFromHtml(sizeText);
+                      if (gridHasBlocks(sizeGrid)) {
+                        linkURL.searchParams.set('q', sizeTry);
+                        runGridIntoUi(sizeGrid);
                         return null;
                       }
-
-                      // Try stripped prefix without leading KA- (e.g. 1258-5588-T301)
-                      const withoutPrefix = queryToUse.replace(/^k[ak]-/i, '');
-                      if (withoutPrefix !== queryToUse) {
-                        return fetchSearchHtml(withoutPrefix).then((wpText) => {
-                          const wpGrid = parseGridFromHtml(wpText);
-                          if (gridHasBlocks(wpGrid)) {
-                            linkURL.searchParams.set('q', withoutPrefix);
-                            runGridIntoUi(wpGrid);
-                            return null;
-                          }
-                          return resultsList;
-                        });
-                      }
-
-                      return resultsList;
+                      return doHyphenFallback();
                     })
-                    .catch(() => resultsList);
+                    .catch(() => doHyphenFallback());
+                }
+
+                function doHyphenFallback() {
+                  if (queryToUse.includes('-')) {
+                    const spaceSeparated = queryToUse.replace(/-/g, ' ');
+                    return fetchSearchHtml(spaceSeparated)
+                      .then((spaceText) => {
+                        const spaceGrid = parseGridFromHtml(spaceText);
+                        if (gridHasBlocks(spaceGrid)) {
+                          linkURL.searchParams.set('q', spaceSeparated);
+                          runGridIntoUi(spaceGrid);
+                          return null;
+                        }
+
+                        // Try stripped prefix without leading KA- (e.g. 1258-5588-T301)
+                        const withoutPrefix = queryToUse.replace(/^k[ak]-/i, '');
+                        if (withoutPrefix !== queryToUse) {
+                          return fetchSearchHtml(withoutPrefix).then((wpText) => {
+                            const wpGrid = parseGridFromHtml(wpText);
+                            if (gridHasBlocks(wpGrid)) {
+                              linkURL.searchParams.set('q', withoutPrefix);
+                              runGridIntoUi(wpGrid);
+                              return null;
+                            }
+                            return resultsList;
+                          });
+                        }
+
+                        return resultsList;
+                      })
+                      .catch(() => resultsList);
+                  }
+                  return resultsList;
+                }
+
+                if (!gridHasBlocks(resultsList) && queryToUse.includes('-')) {
+                  return doHyphenFallback();
                 }
 
                 return resultsList;
