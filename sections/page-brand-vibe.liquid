@@ -164,24 +164,36 @@
         {%- endfor -%}
       {%- else -%}
         <article class="gallery-card reveal">
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- if section.settings.gallery1_image != blank -%}
+            {{ section.settings.gallery1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery1_title | default: 'Break the code.' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
           <div class="gallery-copy">
-            <small>The new</small>
-            <h3>Break the code.</h3>
+            <small>{{ section.settings.gallery1_tag | default: 'The new' }}</small>
+            <h3>{{ section.settings.gallery1_title | default: 'Break the code.' }}</h3>
           </div>
         </article>
         <article class="gallery-card reveal">
-          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- if section.settings.gallery2_image != blank -%}
+            {{ section.settings.gallery2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery2_title | default: 'Show up different.' }}
+          {%- else -%}
+            {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
           <div class="gallery-copy">
-            <small>The attitude</small>
-            <h3>Show up different.</h3>
+            <small>{{ section.settings.gallery2_tag | default: 'The attitude' }}</small>
+            <h3>{{ section.settings.gallery2_title | default: 'Show up different.' }}</h3>
           </div>
         </article>
         <article class="gallery-card reveal">
-          {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- if section.settings.gallery3_image != blank -%}
+            {{ section.settings.gallery3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery3_title | default: 'Celebrate forward.' }}
+          {%- else -%}
+            {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
           <div class="gallery-copy">
-            <small>The occasion</small>
-            <h3>Celebrate forward.</h3>
+            <small>{{ section.settings.gallery3_tag | default: 'The occasion' }}</small>
+            <h3>{{ section.settings.gallery3_title | default: 'Celebrate forward.' }}</h3>
           </div>
         </article>
       {%- endif -%}
@@ -390,6 +402,73 @@
       "id": "code_description",
       "label": "Design Code Description",
       "default": "Different for a reason. Expressive with restraint. Every design choice earns its place—and your second look."
+    },
+    {
+      "type": "header",
+      "content": "Visual World Gallery"
+    },
+    {
+      "type": "paragraph",
+      "content": "Card 1: The New"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "gallery1_tag",
+      "label": "Card 1 Tag",
+      "default": "The new"
+    },
+    {
+      "type": "text",
+      "id": "gallery1_title",
+      "label": "Card 1 Title",
+      "default": "Break the code."
+    },
+    {
+      "type": "paragraph",
+      "content": "Card 2: The Attitude"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "gallery2_tag",
+      "label": "Card 2 Tag",
+      "default": "The attitude"
+    },
+    {
+      "type": "text",
+      "id": "gallery2_title",
+      "label": "Card 2 Title",
+      "default": "Show up different."
+    },
+    {
+      "type": "paragraph",
+      "content": "Card 3: The Occasion"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery3_image",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "gallery3_tag",
+      "label": "Card 3 Tag",
+      "default": "The occasion"
+    },
+    {
+      "type": "text",
+      "id": "gallery3_title",
+      "label": "Card 3 Title",
+      "default": "Celebrate forward."
     },
     {
       "type": "header",

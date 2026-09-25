@@ -164,40 +164,66 @@
             {%- endif -%}
           {%- endfor -%}
         {%- else -%}
-          <!-- Default Clean Cards -->
-          <a class="film-card" href="https://www.instagram.com/reel/DP6SflcDwZr/" target="_blank" rel="noopener noreferrer" aria-label="Watch Kisah on Instagram">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          <!-- Dynamic Default Cards from Section Settings -->
+          <a class="film-card" href="{{ section.settings.card1_link | default: 'https://www.instagram.com/reel/DP6SflcDwZr/' }}" target="_blank" rel="noopener noreferrer" aria-label="{{ section.settings.card1_title | default: 'Kisah, in motion' }}">
+            {%- if section.settings.card1_image != blank -%}
+              {{ section.settings.card1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.card1_title | default: 'Kisah, in motion' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
             <div class="film-card-content">
               <div class="play" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+                {%- if section.settings.card1_icon == 'arrow' -%}
+                  <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- else -%}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+                {%- endif -%}
               </div>
               <div>
-                <h3>Kisah, in motion</h3>
-                <span>Watch the Instagram reel <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3>{{ section.settings.card1_title | default: 'Kisah, in motion' }}</h3>
+                <span>{{ section.settings.card1_subtitle | default: 'Watch the Instagram reel' }} <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               </div>
             </div>
           </a>
-          <a class="film-card" href="https://www.linkedin.com/posts/kisah-in_hyderabadstorelaunch-activity-7427610689176756224-Whqh" target="_blank" rel="noopener noreferrer" aria-label="View Kisah's Hyderabad store launch post">
-            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+
+          <a class="film-card" href="{{ section.settings.card2_link | default: 'https://www.linkedin.com/posts/kisah-in_hyderabadstorelaunch-activity-7427610689176756224-Whqh' }}" target="_blank" rel="noopener noreferrer" aria-label="{{ section.settings.card2_title | default: 'A new address in Hyderabad' }}">
+            {%- if section.settings.card2_image != blank -%}
+              {{ section.settings.card2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.card2_title | default: 'A new address in Hyderabad' }}
+            {%- else -%}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
             <div class="film-card-content">
               <div class="play" aria-hidden="true">
-                <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- if section.settings.card2_icon == 'play' -%}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+                {%- else -%}
+                  <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- endif -%}
               </div>
               <div>
-                <h3>A new address in Hyderabad</h3>
-                <span>Explore the launch <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3>{{ section.settings.card2_title | default: 'A new address in Hyderabad' }}</h3>
+                <span>{{ section.settings.card2_subtitle | default: 'Explore the launch' }} <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               </div>
             </div>
           </a>
-          <a class="film-card" href="https://fashionvaluechain.com/kisah-opens-first-bangalore-store-in-indiranagar/" target="_blank" rel="noopener noreferrer" aria-label="Read about Kisah's Indiranagar store">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+
+          <a class="film-card" href="{{ section.settings.card3_link | default: 'https://fashionvaluechain.com/kisah-opens-first-bangalore-store-in-indiranagar/' }}" target="_blank" rel="noopener noreferrer" aria-label="{{ section.settings.card3_title | default: 'Indiranagar opens its doors' }}">
+            {%- if section.settings.card3_image != blank -%}
+              {{ section.settings.card3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.card3_title | default: 'Indiranagar opens its doors' }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
             <div class="film-card-content">
               <div class="play" aria-hidden="true">
-                <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- if section.settings.card3_icon == 'play' -%}
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+                {%- else -%}
+                  <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {%- endif -%}
               </div>
               <div>
-                <h3>Indiranagar opens its doors</h3>
-                <span>Read the story <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <h3>{{ section.settings.card3_title | default: 'Indiranagar opens its doors' }}</h3>
+                <span>{{ section.settings.card3_subtitle | default: 'Read the story' }} <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               </div>
             </div>
           </a>
@@ -542,6 +568,114 @@
       "default": "See it come alive."
     },
     {
+      "type": "paragraph",
+      "content": "Card 1: Motion / Film"
+    },
+    {
+      "type": "image_picker",
+      "id": "card1_image",
+      "label": "Card 1 Background Image"
+    },
+    {
+      "type": "text",
+      "id": "card1_title",
+      "label": "Card 1 Title",
+      "default": "Kisah, in motion"
+    },
+    {
+      "type": "text",
+      "id": "card1_subtitle",
+      "label": "Card 1 Subtitle / Action Label",
+      "default": "Watch the Instagram reel"
+    },
+    {
+      "type": "url",
+      "id": "card1_link",
+      "label": "Card 1 Link URL"
+    },
+    {
+      "type": "select",
+      "id": "card1_icon",
+      "label": "Card 1 Icon",
+      "options": [
+        { "value": "play", "label": "Play Button" },
+        { "value": "arrow", "label": "Arrow" }
+      ],
+      "default": "play"
+    },
+    {
+      "type": "paragraph",
+      "content": "Card 2: Location Launch"
+    },
+    {
+      "type": "image_picker",
+      "id": "card2_image",
+      "label": "Card 2 Background Image"
+    },
+    {
+      "type": "text",
+      "id": "card2_title",
+      "label": "Card 2 Title",
+      "default": "A new address in Hyderabad"
+    },
+    {
+      "type": "text",
+      "id": "card2_subtitle",
+      "label": "Card 2 Subtitle / Action Label",
+      "default": "Explore the launch"
+    },
+    {
+      "type": "url",
+      "id": "card2_link",
+      "label": "Card 2 Link URL"
+    },
+    {
+      "type": "select",
+      "id": "card2_icon",
+      "label": "Card 2 Icon",
+      "options": [
+        { "value": "play", "label": "Play Button" },
+        { "value": "arrow", "label": "Arrow" }
+      ],
+      "default": "arrow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Card 3: Press / Story"
+    },
+    {
+      "type": "image_picker",
+      "id": "card3_image",
+      "label": "Card 3 Background Image"
+    },
+    {
+      "type": "text",
+      "id": "card3_title",
+      "label": "Card 3 Title",
+      "default": "Indiranagar opens its doors"
+    },
+    {
+      "type": "text",
+      "id": "card3_subtitle",
+      "label": "Card 3 Subtitle / Action Label",
+      "default": "Read the story"
+    },
+    {
+      "type": "url",
+      "id": "card3_link",
+      "label": "Card 3 Link URL"
+    },
+    {
+      "type": "select",
+      "id": "card3_icon",
+      "label": "Card 3 Icon",
+      "options": [
+        { "value": "play", "label": "Play Button" },
+        { "value": "arrow", "label": "Arrow" }
+      ],
+      "default": "arrow"
+    },
+    {
       "type": "text",
       "id": "film_note",
       "label": "Film Footer Note",
@@ -689,10 +823,14 @@
           "label": "Card URL"
         },
         {
-          "type": "text",
-          "id": "icon",
-          "label": "Play / Arrow Icon",
-          "default": "▶"
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "play", "label": "Play Button" },
+            { "value": "arrow", "label": "Arrow" }
+          ],
+          "default": "play"
         }
       ]
     }
@@ -707,7 +845,7 @@
             "title": "Kisah, in motion",
             "subtitle": "Watch the Instagram reel",
             "link": "https://www.instagram.com/reel/DP6SflcDwZr/",
-            "icon": "▶"
+            "icon_type": "play"
           }
         },
         {
@@ -716,7 +854,7 @@
             "title": "A new address in Hyderabad",
             "subtitle": "Explore the launch",
             "link": "https://www.linkedin.com/posts/kisah-in_hyderabadstorelaunch-activity-7427610689176756224-Whqh",
-            "icon": "↗"
+            "icon_type": "arrow"
           }
         },
         {
@@ -725,7 +863,7 @@
             "title": "Indiranagar opens its doors",
             "subtitle": "Read the story",
             "link": "https://fashionvaluechain.com/kisah-opens-first-bangalore-store-in-indiranagar/",
-            "icon": "↗"
+            "icon_type": "arrow"
           }
         }
       ]
