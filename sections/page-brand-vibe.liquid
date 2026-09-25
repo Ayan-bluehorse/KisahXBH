@@ -151,11 +151,13 @@
       {%- if gallery_blocks.size > 0 -%}
         {%- for block in gallery_blocks -%}
           <article class="gallery-card reveal" {{ block.shopify_attributes }}>
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
+            <div class="gallery-media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
             <div class="gallery-copy">
               <small>{{ block.settings.tag }}</small>
               <h3>{{ block.settings.title }}</h3>
@@ -164,33 +166,39 @@
         {%- endfor -%}
       {%- else -%}
         <article class="gallery-card reveal">
-          {%- if section.settings.gallery1_image != blank -%}
-            {{ section.settings.gallery1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery1_title | default: 'Break the code.' }}
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
+          <div class="gallery-media">
+            {%- if section.settings.gallery1_image != blank -%}
+              {{ section.settings.gallery1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery1_title | default: 'Break the code.' }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
           <div class="gallery-copy">
             <small>{{ section.settings.gallery1_tag | default: 'The new' }}</small>
             <h3>{{ section.settings.gallery1_title | default: 'Break the code.' }}</h3>
           </div>
         </article>
         <article class="gallery-card reveal">
-          {%- if section.settings.gallery2_image != blank -%}
-            {{ section.settings.gallery2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery2_title | default: 'Show up different.' }}
-          {%- else -%}
-            {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
+          <div class="gallery-media">
+            {%- if section.settings.gallery2_image != blank -%}
+              {{ section.settings.gallery2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery2_title | default: 'Show up different.' }}
+            {%- else -%}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
           <div class="gallery-copy">
             <small>{{ section.settings.gallery2_tag | default: 'The attitude' }}</small>
             <h3>{{ section.settings.gallery2_title | default: 'Show up different.' }}</h3>
           </div>
         </article>
         <article class="gallery-card reveal">
-          {%- if section.settings.gallery3_image != blank -%}
-            {{ section.settings.gallery3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery3_title | default: 'Celebrate forward.' }}
-          {%- else -%}
-            {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
+          <div class="gallery-media">
+            {%- if section.settings.gallery3_image != blank -%}
+              {{ section.settings.gallery3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery3_title | default: 'Celebrate forward.' }}
+            {%- else -%}
+              {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
           <div class="gallery-copy">
             <small>{{ section.settings.gallery3_tag | default: 'The occasion' }}</small>
             <h3>{{ section.settings.gallery3_title | default: 'Celebrate forward.' }}</h3>

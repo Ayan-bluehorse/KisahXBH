@@ -722,27 +722,40 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 
 /* 9. Gallery */
 .brand-vibe-page .gallery {
-  padding: 14px;
+  padding: 16px 16px 0;
   background: var(--bv-paper);
   display: grid;
   grid-template-columns: 1.05fr .9fr 1.05fr;
-  gap: 14px;
+  gap: 16px;
+  position: relative;
+  overflow: visible !important;
+  z-index: 3;
 }
 
 .brand-vibe-page .gallery-card {
   position: relative;
-  min-height: 78svh;
+  min-height: 80svh;
+  background: #1b1717;
+  overflow: visible !important;
+}
+
+.brand-vibe-page .gallery-card:nth-child(2) {
+  margin-top: 64px;
+  margin-bottom: -64px;
+  z-index: 6;
+}
+
+.brand-vibe-page .gallery-media {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   background: #1b1717;
 }
 
-.brand-vibe-page .gallery-card:nth-child(2) {
-  margin-top: 84px;
-  margin-bottom: -84px;
-}
-
 .brand-vibe-page .gallery-card img,
-.brand-vibe-page .gallery-card .placeholder-svg {
+.brand-vibe-page .gallery-card .placeholder-svg,
+.brand-vibe-page .gallery-media img,
+.brand-vibe-page .gallery-media .placeholder-svg {
   position: absolute;
   inset: 0;
   height: 100%;
@@ -752,41 +765,55 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 }
 
 .brand-vibe-page .gallery-card:hover img,
-.brand-vibe-page .gallery-card:hover .placeholder-svg {
+.brand-vibe-page .gallery-card:hover .placeholder-svg,
+.brand-vibe-page .gallery-card:hover .gallery-media img {
   transform: scale(1.035);
 }
 
+.brand-vibe-page .gallery-media:after,
 .brand-vibe-page .gallery-card:after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .82));
+  background: linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, .85));
+  pointer-events: none;
 }
 
 .brand-vibe-page .gallery-copy {
   position: absolute;
-  z-index: 2;
-  left: 26px;
-  right: 26px;
-  bottom: 26px;
+  z-index: 8;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  pointer-events: none;
+}
+
+.brand-vibe-page .gallery-card:nth-child(2) .gallery-copy {
+  bottom: -48px;
 }
 
 .brand-vibe-page .gallery-copy small {
   display: block;
-  font-size: 10px;
-  letter-spacing: .2em;
+  font-size: 11px;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .65);
-  margin-bottom: 7px;
+  color: rgba(255, 255, 255, .75);
+  margin-bottom: 8px;
+  font-family: var(--bv-sans);
 }
 
 .brand-vibe-page .gallery-copy h3 {
   font-family: var(--bv-serif);
-  font-size: clamp(28px, 3vw, 48px);
+  font-size: clamp(32px, 3.6vw, 56px);
   font-weight: 300;
-  line-height: 1;
+  line-height: 1.05;
   margin: 0;
   color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.brand-vibe-page .gallery-card:nth-child(2) .gallery-copy h3 {
+  max-width: 260px;
 }
 
 /* 10. Main Character */
@@ -983,14 +1010,17 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   }
   .brand-vibe-page .gallery {
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 10px;
+    gap: 24px;
+    padding: 14px 14px 40px;
   }
   .brand-vibe-page .gallery-card {
-    min-height: 78svh;
+    min-height: 70svh;
   }
   .brand-vibe-page .gallery-card:nth-child(2) {
     margin: 0;
+  }
+  .brand-vibe-page .gallery-card:nth-child(2) .gallery-copy {
+    bottom: 28px;
   }
   .brand-vibe-page .mural {
     min-height: 100svh;
