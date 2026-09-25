@@ -1,8 +1,94 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "our_journey": {
       "type": "page-our-journey",
-      "settings": {}
+      "settings": {
+        "hero_eyebrow": "A Kisah story   /   Our journey",
+        "hero_title": "Still<br>being<br><em>worn.</em>",
+        "hero_deck": "A question about Indian fashion became a new way to show up for its biggest moments.",
+        "hero_foot_text": "From an idea online to a place you can walk into.<br>And this is only the beginning.",
+        "hero_image": "shopify://shop_images/our-journey-design-rack.png",
+        "hero_caption": "The art of choosing a different story / Kisah",
+        "ch1_nav_title": "The idea",
+        "ch2_nav_title": "The design",
+        "ch3_nav_title": "The encounter",
+        "ch4_nav_title": "What comes next",
+        "ch1_eyebrow": "01 / The question",
+        "ch1_heading": "Why did<br>celebration<br>wear feel so<br>predictable?",
+        "ch1_p1": "Kisah began as an experiment: could Indian fashion feel rooted in culture and still leave room for surprise?",
+        "ch1_p2": "We wanted the colour, craft and pleasure of dressing for a celebration to belong to more people. So we took familiar codes and asked what might happen if they moved with the times.",
+        "ch1_note": "The answer began online, with a generation ready to dress as themselves.",
+        "ch2_number": "02.",
+        "ch2_eyebrow": "The design / Culture in motion",
+        "ch2_heading": "The next<br>generation<br>sets the pace.",
+        "ch2_lead": "they wear heritage, on their own terms.",
+        "ch2_text": "Young India decides what celebration looks like now: how a look is mixed, photographed, danced in, and made its own. Kisah follows that energy with colour that stands out, craft worth a closer look, and silhouettes made for real plans. The culture is familiar. The vibe - entirely new.",
+        "ch2_img1": "shopify://shop_images/brand-vibe-five-looks.webp",
+        "ch2_img2": "shopify://shop_images/our-journey-black-kurta.png",
+        "ch2_img3": "shopify://shop_images/brand-vibe-mural.webp",
+        "ch2_pill1": "Colour with nerve",
+        "ch2_pill2": "Craft up close",
+        "ch2_pill3": "Shape for now",
+        "ch2_pill4": "Styled your way",
+        "breakout_eyebrow": "Our point of view",
+        "breakout_text": "What started as an experiment is becoming the wardrobe language of the new generation—how they show up, celebrate, and make every moment their own.",
+        "ch3_number": "03.",
+        "ch3_eyebrow": "The encounter / From screen to street",
+        "ch3_heading": "The story<br>stepped<br>outside.",
+        "ch3_lead": "First discovered on a screen. Then experienced in person.",
+        "ch3_text": "Kisah grew from a digital native label into an omnichannel brand: online discovery, a direct relationship with its community, and stores made for the pleasure of finding your next look. From Kolkata to Bengaluru, Hyderabad, Mumbai, Vishakhapatnam and Gurgaon, each opening gives the story another address.",
+        "ch3_stat_number": "16",
+        "ch3_stat_label": "locations listed on our store map",
+        "store_locator_text": "Find a Kisah store",
+        "store_locator_link": "",
+        "ch3_image": "shopify://shop_images/our-journey-kisah-store.png",
+        "ch3_caption": "A new place for the story to unfold",
+        "film_eyebrow": "Moving images / Field notes",
+        "film_heading": "See it come alive.",
+        "card1_image": "shopify://shop_images/our-journey-kisah-store.png",
+        "card1_title": "Kisah, in motion",
+        "card1_subtitle": "Watch the Instagram reel",
+        "card1_link": "",
+        "card1_icon": "play",
+        "card2_image": "shopify://shop_images/our-journey-black-kurta.png",
+        "card2_title": "A new address in Hyderabad",
+        "card2_subtitle": "Explore the launch",
+        "card2_link": "",
+        "card2_icon": "arrow",
+        "card3_image": "shopify://shop_images/brand-vibe-five-looks.webp",
+        "card3_title": "Indiranagar opens its doors",
+        "card3_subtitle": "Read the story",
+        "card3_link": "",
+        "card3_icon": "arrow",
+        "film_note": "Videos and features open on their original platforms.",
+        "ch4_number": "04.",
+        "ch4_eyebrow": "A new chapter / Kisah × Fireside",
+        "ch4_heading": "A belief<br>with room<br>to grow.",
+        "ch4_lead": "An independent idea found a partner who understood its ambition.",
+        "ch4_text": "In 2026, Fireside Ventures backed Kisah. The consumer brand investor saw the possibility in modern, expressive Indian menswear made more accessible. The partnership gives Kisah room to take its design point of view into more wardrobes, more celebrations and more cities.",
+        "fireside_link_text": "Meet our partner",
+        "fireside_link": "",
+        "fireside_top_badge": "The next chapter / 2026",
+        "kisah_logo_img": "shopify://shop_images/our-journey-kisah-logo.png",
+        "fireside_logo_img": "shopify://shop_images/our-journey-fireside-logo.png",
+        "fireside_quote": "The story is growing. The reason we started remains.",
+        "fireside_bottom_badge": "Kisah    ×    Fireside Ventures",
+        "closing_eyebrow": "Where the story goes next",
+        "closing_heading": "Now, make it yours.",
+        "closing_description": "Every celebration is a chance to be remembered for how you showed up.",
+        "primary_cta_text": "Explore the collection",
+        "secondary_cta_text": "Discover the brand",
+        "closing_note": "Kisah / Never be vanilla"
+      }
     }
   },
   "order": [
