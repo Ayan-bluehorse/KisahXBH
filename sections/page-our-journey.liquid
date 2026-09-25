@@ -1,0 +1,735 @@
+{% comment %}
+  Standalone Page: Our Journey
+  Clean Shopify Best Practices / Pure Liquid Architecture
+{% endcomment %}
+
+{{ 'page-our-journey.css' | asset_url | stylesheet_tag }}
+
+<div class="our-journey-page">
+  <main id="journey-content">
+    <!-- 3. Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow">{{ section.settings.hero_eyebrow | default: 'A Kisah story &nbsp; / &nbsp; Our journey' }}</div>
+        <h1 id="hero-title">{{ section.settings.hero_title | default: 'Still<br>being<br><em>worn.</em>' }}</h1>
+        <div class="hero-deck">{{ section.settings.hero_deck | default: 'A question about Indian fashion became a new way to show up for its biggest moments.' }}</div>
+        <div class="hero-foot">
+          <small>{{ section.settings.hero_foot_text | default: 'From an idea online to a place you can walk into.<br>And this is only the beginning.' }}</small>
+          <a class="down" href="#the-question" aria-label="Read the story">
+            <svg class="oj-icon-down" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 4V20M12 20L5 13M12 20L19 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-art">
+        {%- if section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image.alt | default: 'Kisah Our Journey' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        <span class="image-caption">{{ section.settings.hero_caption | default: 'The art of choosing a different story / Kisah' }}</span>
+      </div>
+    </section>
+
+    <!-- 4. Story Chapters Navigation -->
+    <nav class="chapter-nav" aria-label="Story chapters">
+      <a href="#the-question"><b>01</b> {{ section.settings.ch1_nav_title | default: 'The idea' }}</a>
+      <a href="#design"><b>02</b> {{ section.settings.ch2_nav_title | default: 'The design' }}</a>
+      <a href="#stores"><b>03</b> {{ section.settings.ch3_nav_title | default: 'The encounter' }}</a>
+      <a href="#fireside"><b>04</b> {{ section.settings.ch4_nav_title | default: 'What comes next' }}</a>
+    </nav>
+
+    <!-- 5. Chapter 1: The Question -->
+    <section class="opening" id="the-question">
+      <div>
+        <div class="eyebrow">{{ section.settings.ch1_eyebrow | default: '01 / The question' }}</div>
+        <h2>{{ section.settings.ch1_heading | default: 'Why did<br>celebration<br>wear feel so<br>predictable?' }}</h2>
+      </div>
+      <div class="opening-copy">
+        <p>{{ section.settings.ch1_p1 | default: 'Kisah began as an experiment: could Indian fashion feel rooted in culture and still leave room for surprise?' }}</p>
+        <p>{{ section.settings.ch1_p2 | default: 'We wanted the colour, craft and pleasure of dressing for a celebration to belong to more people. So we took familiar codes and asked what might happen if they moved with the times.' }}</p>
+        <div class="rule"></div>
+        <div class="small">{{ section.settings.ch1_note | default: 'The answer began online, with a generation ready to dress as themselves.' }}</div>
+      </div>
+    </section>
+
+    <!-- 6. Chapter 2: The Design -->
+    <section class="section-cream" id="design">
+      <div class="chapter">
+        <div class="collage" role="group" aria-label="Three Kisah fashion stories: expressive prints, black-on-black craft, and Dandiya in motion">
+          <div class="collage-tile collage-main">
+            {%- if section.settings.ch2_img1 != blank -%}
+              {{ section.settings.ch2_img1 | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.ch2_img1.alt | default: 'Kisah models' }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="collage-tile collage-black">
+            {%- if section.settings.ch2_img2 != blank -%}
+              {{ section.settings.ch2_img2 | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.ch2_img2.alt | default: 'Black kurta editorial' }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="collage-tile collage-dandiya-final">
+            {%- if section.settings.ch2_img3 != blank -%}
+              {{ section.settings.ch2_img3 | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.ch2_img3.alt | default: 'Festive dandiya wear' }}
+            {%- else -%}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+        </div>
+        <div>
+          <div class="chapter-number">{{ section.settings.ch2_number | default: '02.' }}</div>
+          <div class="eyebrow">{{ section.settings.ch2_eyebrow | default: 'The design / Culture in motion' }}</div>
+          <h2>{{ section.settings.ch2_heading | default: 'The next<br>generation<br>sets the pace.' }}</h2>
+          <p class="lead">{{ section.settings.ch2_lead | default: 'they wear heritage, on their own terms.' }}</p>
+          <p>{{ section.settings.ch2_text | default: 'Young India decides what celebration looks like now: how a look is mixed, photographed, danced in, and made its own. Kisah follows that energy with colour that stands out, craft worth a closer look, and silhouettes made for real plans. The culture is familiar. The vibe - entirely new.' }}</p>
+          <div class="design-words">
+            <div><span>01</span> {{ section.settings.ch2_pill1 | default: 'Colour with nerve' }}</div>
+            <div><span>02</span> {{ section.settings.ch2_pill2 | default: 'Craft up close' }}</div>
+            <div><span>03</span> {{ section.settings.ch2_pill3 | default: 'Shape for now' }}</div>
+            <div><span>04</span> {{ section.settings.ch2_pill4 | default: 'Styled your way' }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Breakout Quote -->
+    <section class="breakout">
+      <div class="eyebrow">{{ section.settings.breakout_eyebrow | default: 'Our point of view' }}</div>
+      <h2>{{ section.settings.breakout_text | default: 'What started as an experiment is becoming the wardrobe language of the new generation—how they show up, celebrate, and make every moment their own.' }}</h2>
+    </section>
+
+    <!-- 8. Chapter 3: Store Section -->
+    <section class="store-section" id="stores">
+      <div class="chapter">
+        <div>
+          <div class="chapter-number">{{ section.settings.ch3_number | default: '03.' }}</div>
+          <div class="eyebrow">{{ section.settings.ch3_eyebrow | default: 'The encounter / From screen to street' }}</div>
+          <h2>{{ section.settings.ch3_heading | default: 'The story<br>stepped<br>outside.' }}</h2>
+          <p class="lead">{{ section.settings.ch3_lead | default: 'First discovered on a screen. Then experienced in person.' }}</p>
+          <p>{{ section.settings.ch3_text | default: 'Kisah grew from a digital native label into an omnichannel brand: online discovery, a direct relationship with its community, and stores made for the pleasure of finding your next look. From Kolkata to Bengaluru, Hyderabad, Mumbai, Vishakhapatnam and Gurgaon, each opening gives the story another address.' }}</p>
+          <div class="statline">
+            <strong>{{ section.settings.ch3_stat_number | default: '16' }}</strong>
+            <span>{{ section.settings.ch3_stat_label | default: 'locations listed on our store map' }}</span>
+          </div>
+          <a class="line-link" href="{{ section.settings.store_locator_link | default: '/pages/store-locator-new' }}">
+            {{ section.settings.store_locator_text | default: 'Find a Kisah store' }}
+            <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="art-panel store">
+          {%- if section.settings.ch3_image != blank -%}
+            {{ section.settings.ch3_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.ch3_image.alt | default: 'Kisah store interior' }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <span class="image-caption">{{ section.settings.ch3_caption | default: 'A new place for the story to unfold' }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Moving Images / Field Notes -->
+    <section class="film" aria-labelledby="film-title">
+      <div class="film-head">
+        <div>
+          <div class="eyebrow">{{ section.settings.film_eyebrow | default: 'Moving images / Field notes' }}</div>
+          <h2 id="film-title">{{ section.settings.film_heading | default: 'See it come alive.' }}</h2>
+        </div>
+      </div>
+      <div class="film-grid">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'film_card' -%}
+              <a class="film-card" href="{{ block.settings.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ block.settings.title }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+                <div class="film-card-content">
+                  <div class="play" aria-hidden="true">
+                    {%- if block.settings.icon_type == 'arrow' -%}
+                      <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {%- else -%}
+                      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+                    {%- endif -%}
+                  </div>
+                  <div>
+                    <h3>{{ block.settings.title }}</h3>
+                    <span>{{ block.settings.subtitle }} <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </div>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default Clean Cards -->
+          <a class="film-card" href="https://www.instagram.com/reel/DP6SflcDwZr/" target="_blank" rel="noopener noreferrer" aria-label="Watch Kisah on Instagram">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            <div class="film-card-content">
+              <div class="play" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 2.5L13.5 8L4 13.5V2.5Z"/></svg>
+              </div>
+              <div>
+                <h3>Kisah, in motion</h3>
+                <span>Watch the Instagram reel <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+          <a class="film-card" href="https://www.linkedin.com/posts/kisah-in_hyderabadstorelaunch-activity-7427610689176756224-Whqh" target="_blank" rel="noopener noreferrer" aria-label="View Kisah's Hyderabad store launch post">
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            <div class="film-card-content">
+              <div class="play" aria-hidden="true">
+                <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>A new address in Hyderabad</h3>
+                <span>Explore the launch <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+          <a class="film-card" href="https://fashionvaluechain.com/kisah-opens-first-bangalore-store-in-indiranagar/" target="_blank" rel="noopener noreferrer" aria-label="Read about Kisah's Indiranagar store">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            <div class="film-card-content">
+              <div class="play" aria-hidden="true">
+                <svg class="oj-icon-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <h3>Indiranagar opens its doors</h3>
+                <span>Read the story <svg class="oj-icon-arrow" width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </a>
+        {%- endif -%}
+      </div>
+      <div class="film-note">{{ section.settings.film_note | default: 'Videos and features open on their original platforms.' }}</div>
+    </section>
+
+    <!-- 10. Chapter 4: Fireside Section -->
+    <section class="fireside" id="fireside">
+      <div>
+        <div class="chapter-number">{{ section.settings.ch4_number | default: '04.' }}</div>
+        <div class="eyebrow">{{ section.settings.ch4_eyebrow | default: 'A new chapter / Kisah × Fireside' }}</div>
+        <h2>{{ section.settings.ch4_heading | default: 'A belief<br>with room<br>to grow.' }}</h2>
+        <p class="lead">{{ section.settings.ch4_lead | default: 'An independent idea found a partner who understood its ambition.' }}</p>
+        <p>{{ section.settings.ch4_text | default: 'In 2026, Fireside Ventures backed Kisah. The consumer brand investor saw the possibility in modern, expressive Indian menswear made more accessible. The partnership gives Kisah room to take its design point of view into more wardrobes, more celebrations and more cities.' }}</p>
+        <a class="line-link" href="{{ section.settings.fireside_link | default: 'https://firesideventures.com/blogs/portfolio/kisah' }}" target="_blank" rel="noopener noreferrer">
+          {{ section.settings.fireside_link_text | default: 'Meet our partner' }}
+          <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="fireside-panel" aria-label="Kisah and Fireside Ventures partnership">
+        <span class="micro">{{ section.settings.fireside_top_badge | default: 'The next chapter / 2026' }}</span>
+        <div class="partner-marks">
+          {%- if section.settings.kisah_logo_img != blank -%}
+            {{ section.settings.kisah_logo_img | image_url: width: 250 | image_tag: loading: 'lazy', class: 'kisah-mark', alt: 'Kisah logo' }}
+          {%- else -%}
+            <span class="partner-text-mark">{{ section.settings.wordmark | default: 'KISAH' }}</span>
+          {%- endif -%}
+          <span class="mark-x" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          {%- if section.settings.fireside_logo_img != blank -%}
+            {{ section.settings.fireside_logo_img | image_url: width: 300 | image_tag: loading: 'lazy', class: 'fireside-mark', alt: 'Fireside Ventures logo' }}
+          {%- else -%}
+            <span class="partner-text-mark">FIRESIDE</span>
+          {%- endif -%}
+        </div>
+        <span class="quote">{{ section.settings.fireside_quote | default: 'The story is growing. The reason we started remains.' }}</span>
+        <span class="micro">{{ section.settings.fireside_bottom_badge | default: 'Kisah &nbsp; × &nbsp; Fireside Ventures' }}</span>
+      </div>
+    </section>
+
+    <!-- 11. Closing Section -->
+    <section class="closing">
+      <div class="eyebrow">{{ section.settings.closing_eyebrow | default: 'Where the story goes next' }}</div>
+      <h2>{{ section.settings.closing_heading | default: 'Now, make it yours.' }}</h2>
+      <p>{{ section.settings.closing_description | default: 'Every celebration is a chance to be remembered for how you showed up.' }}</p>
+      <div class="links">
+        <a class="cta primary" href="{{ section.settings.collection_link | default: '/pages/navratri2026' }}">
+          {{ section.settings.primary_cta_text | default: 'Explore the collection' }}
+          <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="cta" href="{{ section.settings.brand_link | default: '/pages/the-brand' }}">
+          {{ section.settings.secondary_cta_text | default: 'Discover the brand' }}
+          <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="note">{{ section.settings.closing_note | default: 'Kisah / Never be vanilla' }}</div>
+    </section>
+  </main>
+</div>
+
+<script src="{{ 'page-our-journey.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Our Journey Editorial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Hero Eyebrow",
+      "default": "A Kisah story   /   Our journey"
+    },
+    {
+      "type": "html",
+      "id": "hero_title",
+      "label": "Hero Title (HTML supported)",
+      "default": "Still<br>being<br><em>worn.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_deck",
+      "label": "Hero Deck / Subtitle",
+      "default": "A question about Indian fashion became a new way to show up for its biggest moments."
+    },
+    {
+      "type": "html",
+      "id": "hero_foot_text",
+      "label": "Hero Foot Note",
+      "default": "From an idea online to a place you can walk into.<br>And this is only the beginning."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Right Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_caption",
+      "label": "Hero Image Caption",
+      "default": "The art of choosing a different story / Kisah"
+    },
+    {
+      "type": "header",
+      "content": "Chapter Navigation Titles"
+    },
+    {
+      "type": "text",
+      "id": "ch1_nav_title",
+      "label": "Chapter 1 Nav Label",
+      "default": "The idea"
+    },
+    {
+      "type": "text",
+      "id": "ch2_nav_title",
+      "label": "Chapter 2 Nav Label",
+      "default": "The design"
+    },
+    {
+      "type": "text",
+      "id": "ch3_nav_title",
+      "label": "Chapter 3 Nav Label",
+      "default": "The encounter"
+    },
+    {
+      "type": "text",
+      "id": "ch4_nav_title",
+      "label": "Chapter 4 Nav Label",
+      "default": "What comes next"
+    },
+    {
+      "type": "header",
+      "content": "Chapter 1: The Question"
+    },
+    {
+      "type": "text",
+      "id": "ch1_eyebrow",
+      "label": "Chapter 1 Eyebrow",
+      "default": "01 / The question"
+    },
+    {
+      "type": "html",
+      "id": "ch1_heading",
+      "label": "Chapter 1 Heading",
+      "default": "Why did<br>celebration<br>wear feel so<br>predictable?"
+    },
+    {
+      "type": "textarea",
+      "id": "ch1_p1",
+      "label": "Chapter 1 Paragraph 1",
+      "default": "Kisah began as an experiment: could Indian fashion feel rooted in culture and still leave room for surprise?"
+    },
+    {
+      "type": "textarea",
+      "id": "ch1_p2",
+      "label": "Chapter 1 Paragraph 2",
+      "default": "We wanted the colour, craft and pleasure of dressing for a celebration to belong to more people. So we took familiar codes and asked what might happen if they moved with the times."
+    },
+    {
+      "type": "text",
+      "id": "ch1_note",
+      "label": "Chapter 1 Footer Note",
+      "default": "The answer began online, with a generation ready to dress as themselves."
+    },
+    {
+      "type": "header",
+      "content": "Chapter 2: The Design"
+    },
+    {
+      "type": "text",
+      "id": "ch2_number",
+      "label": "Chapter 2 Number",
+      "default": "02."
+    },
+    {
+      "type": "text",
+      "id": "ch2_eyebrow",
+      "label": "Chapter 2 Eyebrow",
+      "default": "The design / Culture in motion"
+    },
+    {
+      "type": "html",
+      "id": "ch2_heading",
+      "label": "Chapter 2 Heading",
+      "default": "The next<br>generation<br>sets the pace."
+    },
+    {
+      "type": "text",
+      "id": "ch2_lead",
+      "label": "Chapter 2 Lead Text",
+      "default": "they wear heritage, on their own terms."
+    },
+    {
+      "type": "textarea",
+      "id": "ch2_text",
+      "label": "Chapter 2 Description",
+      "default": "Young India decides what celebration looks like now: how a look is mixed, photographed, danced in, and made its own. Kisah follows that energy with colour that stands out, craft worth a closer look, and silhouettes made for real plans. The culture is familiar. The vibe - entirely new."
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_img1",
+      "label": "Collage Main Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_img2",
+      "label": "Collage Top Right Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_img3",
+      "label": "Collage Bottom Right Image"
+    },
+    {
+      "type": "text",
+      "id": "ch2_pill1",
+      "label": "Design Pill 1",
+      "default": "Colour with nerve"
+    },
+    {
+      "type": "text",
+      "id": "ch2_pill2",
+      "label": "Design Pill 2",
+      "default": "Craft up close"
+    },
+    {
+      "type": "text",
+      "id": "ch2_pill3",
+      "label": "Design Pill 3",
+      "default": "Shape for now"
+    },
+    {
+      "type": "text",
+      "id": "ch2_pill4",
+      "label": "Design Pill 4",
+      "default": "Styled your way"
+    },
+    {
+      "type": "header",
+      "content": "Breakout Quote"
+    },
+    {
+      "type": "text",
+      "id": "breakout_eyebrow",
+      "label": "Breakout Eyebrow",
+      "default": "Our point of view"
+    },
+    {
+      "type": "textarea",
+      "id": "breakout_text",
+      "label": "Breakout Quote Text",
+      "default": "What started as an experiment is becoming the wardrobe language of the new generation—how they show up, celebrate, and make every moment their own."
+    },
+    {
+      "type": "header",
+      "content": "Chapter 3: The Encounter"
+    },
+    {
+      "type": "text",
+      "id": "ch3_number",
+      "label": "Chapter 3 Number",
+      "default": "03."
+    },
+    {
+      "type": "text",
+      "id": "ch3_eyebrow",
+      "label": "Chapter 3 Eyebrow",
+      "default": "The encounter / From screen to street"
+    },
+    {
+      "type": "html",
+      "id": "ch3_heading",
+      "label": "Chapter 3 Heading",
+      "default": "The story<br>stepped<br>outside."
+    },
+    {
+      "type": "text",
+      "id": "ch3_lead",
+      "label": "Chapter 3 Lead Text",
+      "default": "First discovered on a screen. Then experienced in person."
+    },
+    {
+      "type": "textarea",
+      "id": "ch3_text",
+      "label": "Chapter 3 Description",
+      "default": "Kisah grew from a digital native label into an omnichannel brand: online discovery, a direct relationship with its community, and stores made for the pleasure of finding your next look. From Kolkata to Bengaluru, Hyderabad, Mumbai, Vishakhapatnam and Gurgaon, each opening gives the story another address."
+    },
+    {
+      "type": "text",
+      "id": "ch3_stat_number",
+      "label": "Stat Number",
+      "default": "16"
+    },
+    {
+      "type": "text",
+      "id": "ch3_stat_label",
+      "label": "Stat Label",
+      "default": "locations listed on our store map"
+    },
+    {
+      "type": "text",
+      "id": "store_locator_text",
+      "label": "Store Locator Link Text",
+      "default": "Find a Kisah store"
+    },
+    {
+      "type": "url",
+      "id": "store_locator_link",
+      "label": "Store Locator URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch3_image",
+      "label": "Store Image"
+    },
+    {
+      "type": "text",
+      "id": "ch3_caption",
+      "label": "Store Image Caption",
+      "default": "A new place for the story to unfold"
+    },
+    {
+      "type": "header",
+      "content": "Moving Images / Field Notes"
+    },
+    {
+      "type": "text",
+      "id": "film_eyebrow",
+      "label": "Film Eyebrow",
+      "default": "Moving images / Field notes"
+    },
+    {
+      "type": "text",
+      "id": "film_heading",
+      "label": "Film Heading",
+      "default": "See it come alive."
+    },
+    {
+      "type": "text",
+      "id": "film_note",
+      "label": "Film Footer Note",
+      "default": "Videos and features open on their original platforms."
+    },
+    {
+      "type": "header",
+      "content": "Chapter 4: What Comes Next (Fireside)"
+    },
+    {
+      "type": "text",
+      "id": "ch4_number",
+      "label": "Chapter 4 Number",
+      "default": "04."
+    },
+    {
+      "type": "text",
+      "id": "ch4_eyebrow",
+      "label": "Chapter 4 Eyebrow",
+      "default": "A new chapter / Kisah × Fireside"
+    },
+    {
+      "type": "html",
+      "id": "ch4_heading",
+      "label": "Chapter 4 Heading",
+      "default": "A belief<br>with room<br>to grow."
+    },
+    {
+      "type": "text",
+      "id": "ch4_lead",
+      "label": "Chapter 4 Lead Text",
+      "default": "An independent idea found a partner who understood its ambition."
+    },
+    {
+      "type": "textarea",
+      "id": "ch4_text",
+      "label": "Chapter 4 Description",
+      "default": "In 2026, Fireside Ventures backed Kisah. The consumer brand investor saw the possibility in modern, expressive Indian menswear made more accessible. The partnership gives Kisah room to take its design point of view into more wardrobes, more celebrations and more cities."
+    },
+    {
+      "type": "text",
+      "id": "fireside_link_text",
+      "label": "Partner Link Text",
+      "default": "Meet our partner"
+    },
+    {
+      "type": "url",
+      "id": "fireside_link",
+      "label": "Partner URL"
+    },
+    {
+      "type": "text",
+      "id": "fireside_top_badge",
+      "label": "Fireside Top Badge",
+      "default": "The next chapter / 2026"
+    },
+    {
+      "type": "image_picker",
+      "id": "kisah_logo_img",
+      "label": "Kisah Logo Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "fireside_logo_img",
+      "label": "Fireside Logo Image"
+    },
+    {
+      "type": "textarea",
+      "id": "fireside_quote",
+      "label": "Fireside Quote",
+      "default": "The story is growing. The reason we started remains."
+    },
+    {
+      "type": "text",
+      "id": "fireside_bottom_badge",
+      "label": "Fireside Bottom Badge",
+      "default": "Kisah    ×    Fireside Ventures"
+    },
+    {
+      "type": "header",
+      "content": "Closing Section"
+    },
+    {
+      "type": "text",
+      "id": "closing_eyebrow",
+      "label": "Closing Eyebrow",
+      "default": "Where the story goes next"
+    },
+    {
+      "type": "text",
+      "id": "closing_heading",
+      "label": "Closing Heading",
+      "default": "Now, make it yours."
+    },
+    {
+      "type": "textarea",
+      "id": "closing_description",
+      "label": "Closing Description",
+      "default": "Every celebration is a chance to be remembered for how you showed up."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary CTA Label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary CTA Label",
+      "default": "Discover the brand"
+    },
+    {
+      "type": "text",
+      "id": "closing_note",
+      "label": "Closing Note",
+      "default": "Kisah / Never be vanilla"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "film_card",
+      "name": "Film / Moving Image Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Background Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Kisah, in motion"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Card Subtitle / Action Label",
+          "default": "Watch the Instagram reel"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card URL"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Play / Arrow Icon",
+          "default": "▶"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Journey Editorial",
+      "blocks": [
+        {
+          "type": "film_card",
+          "settings": {
+            "title": "Kisah, in motion",
+            "subtitle": "Watch the Instagram reel",
+            "link": "https://www.instagram.com/reel/DP6SflcDwZr/",
+            "icon": "▶"
+          }
+        },
+        {
+          "type": "film_card",
+          "settings": {
+            "title": "A new address in Hyderabad",
+            "subtitle": "Explore the launch",
+            "link": "https://www.linkedin.com/posts/kisah-in_hyderabadstorelaunch-activity-7427610689176756224-Whqh",
+            "icon": "↗"
+          }
+        },
+        {
+          "type": "film_card",
+          "settings": {
+            "title": "Indiranagar opens its doors",
+            "subtitle": "Read the story",
+            "link": "https://fashionvaluechain.com/kisah-opens-first-bangalore-store-in-indiranagar/",
+            "icon": "↗"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

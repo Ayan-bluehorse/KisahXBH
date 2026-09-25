@@ -1,0 +1,1052 @@
+/* ==========================================================================
+   PAGE: Brand Page / Brand Vibe
+   Scoped stylesheet for standalone page
+   ========================================================================== */
+
+/* Scoped Container Width & Footer Gap Reset */
+body.template-suffix-the-brand #content,
+body.template-suffix-the-brand #content > .container,
+body.template-suffix-the-brand #main,
+body.template-suffix-brand #content,
+body.template-suffix-brand #content > .container,
+body.template-suffix-brand #main,
+body.template-suffix-brand-vibe #content,
+body.template-suffix-brand-vibe #content > .container,
+body.template-suffix-brand-vibe #main {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.template-suffix-the-brand #pagefooter .footer-seo-wrapper,
+body.template-suffix-brand #pagefooter .footer-seo-wrapper,
+body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
+  display: none !important;
+}
+
+/* Base Theme Tokens & Inherited Global Fonts */
+.brand-vibe-page {
+  --bv-ink: #0d0b0b;
+  --bv-paper: #f5efe6;
+  --bv-cream: #eadfce;
+  --bv-pink: #f04f78;
+  --bv-saffron: #f3a31c;
+  --bv-blue: #273970;
+  --bv-line: rgba(245, 239, 230, .22);
+  --bv-serif: "Bodoni Moda", var(--heading-font-family, serif);
+  --bv-sans: "Manrope", var(--base-font-family, sans-serif);
+  --bv-nav: "Manrope", var(--nav-font-family, sans-serif);
+  --bv-logo: "Bodoni Moda", var(--logo-font-family, serif);
+  background-color: var(--bv-ink) !important;
+  color: var(--bv-paper) !important;
+  font-family: var(--bv-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.5;
+}
+
+/* Force dark section text to stay light regardless of global theme .template-page rules */
+.brand-vibe-page p,
+.brand-vibe-page span,
+.brand-vibe-page li,
+.brand-vibe-page div,
+.brand-vibe-page h1,
+.brand-vibe-page h2,
+.brand-vibe-page h3,
+.brand-vibe-page blockquote {
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .hero-sub,
+.brand-vibe-page .body-copy,
+.brand-vibe-page .mural-copy p,
+.brand-vibe-page .main-character p {
+  color: rgba(245, 239, 230, .88) !important;
+}
+
+.brand-vibe-page .hero-foot,
+.brand-vibe-page .hero-foot span {
+  color: rgba(245, 239, 230, .92) !important;
+}
+
+.brand-vibe-page .micro span {
+  color: rgba(245, 239, 230, .95) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(245, 239, 230, 0.45) !important;
+}
+
+.brand-vibe-page .bv-marquee,
+.brand-vibe-page .bv-marquee span,
+.brand-vibe-page .bv-marquee-group span,
+.brand-vibe-page .marquee,
+.brand-vibe-page .marquee span,
+.brand-vibe-page .marquee-group span {
+  color: var(--bv-paper) !important;
+}
+
+.brand-vibe-page .bv-marquee-track b,
+.brand-vibe-page .bv-marquee-track em,
+.brand-vibe-page .marquee-track b,
+.brand-vibe-page .marquee-track em,
+.brand-vibe-page h1 em,
+.brand-vibe-page .display em,
+.brand-vibe-page .chapter-no,
+.brand-vibe-page .code-card .n,
+.brand-vibe-page .main-character blockquote em,
+.brand-vibe-page .finale h2 em {
+  color: var(--bv-pink) !important;
+}
+
+.brand-vibe-page .statement,
+.brand-vibe-page .statement h2 {
+  color: var(--bv-ink) !important;
+}
+
+.brand-vibe-page .statement h2 span {
+  color: var(--bv-pink) !important;
+}
+
+.brand-vibe-page .statement p {
+  color: #5d524c !important;
+}
+
+.brand-vibe-page .statement .eyebrow {
+  color: #6d625a !important;
+}
+
+.brand-vibe-page .code-card {
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .code-card p {
+  color: rgba(245, 239, 230, .75) !important;
+}
+
+.brand-vibe-page .code-card:hover h3 {
+  color: var(--bv-ink) !important;
+}
+
+.brand-vibe-page .code-card:hover p {
+  color: #665a52 !important;
+}
+
+.brand-vibe-page *,
+.brand-vibe-page *::before,
+.brand-vibe-page *::after {
+  box-sizing: border-box;
+}
+
+.brand-vibe-page a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.brand-vibe-page img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.brand-vibe-page .placeholder-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #211d1d;
+  fill: #473e3a;
+}
+
+.brand-vibe-page .hero-placeholder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-vibe-page .wordmark-brand {
+  font-family: var(--bv-logo);
+  font-size: 26px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+}
+
+.brand-vibe-page button {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.brand-vibe-page button,
+.brand-vibe-page a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. Hero Section */
+.brand-vibe-page .hero {
+  min-height: 100svh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #0d0b0b;
+}
+
+.brand-vibe-page .hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background-position: center 18%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #1a1616;
+  transform: scale(1.03);
+  will-change: transform;
+}
+
+.brand-vibe-page .hero:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(180deg, rgba(7, 5, 8, .2) 0%, rgba(7, 5, 8, .05) 34%, rgba(7, 5, 8, .85) 95%), linear-gradient(90deg, rgba(7, 5, 8, .45), transparent 55%);
+}
+
+.brand-vibe-page .hero:after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 30%;
+  z-index: -1;
+  background: linear-gradient(0deg, var(--bv-ink), transparent);
+}
+
+.brand-vibe-page .hero-copy {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  padding: 140px clamp(18px, 6vw, 92px) 72px;
+}
+
+.brand-vibe-page .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .eyebrow:before {
+  content: "";
+  width: 38px;
+  height: 1px;
+  background: currentColor;
+}
+
+.brand-vibe-page h1 {
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-size: clamp(48px, 8.5vw, 120px);
+  line-height: 0.98;
+  letter-spacing: -.045em;
+  margin: 26px 0 28px;
+  max-width: 1100px;
+  text-wrap: balance;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page h1 em {
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--bv-pink);
+}
+
+.brand-vibe-page .hero-sub {
+  max-width: 580px;
+  margin: 0;
+  font-size: clamp(16px, 2vw, 23px);
+  line-height: 1.45;
+  color: rgba(245, 239, 230, .88);
+}
+
+.brand-vibe-page .hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 48px;
+  border-top: 1px solid var(--bv-line);
+  padding-top: 18px;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 230, .9);
+}
+
+.brand-vibe-page .scroll-cue {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-vibe-page .scroll-cue i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 50%;
+  position: relative;
+}
+
+.brand-vibe-page .scroll-cue i svg {
+  display: block;
+  animation: drop 1.6s infinite ease-in-out;
+}
+
+@keyframes drop {
+  0%, 100% {
+    transform: translateY(-2px);
+    opacity: .45;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
+.brand-vibe-page section {
+  position: relative;
+}
+
+/* 4. Chapter 1: The Shift */
+.brand-vibe-page .chapter {
+  padding: clamp(60px, 8vw, 120px) clamp(18px, 6vw, 92px) clamp(40px, 6vw, 80px);
+}
+
+.brand-vibe-page .split {
+  width: min(1380px, 100%);
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
+  gap: clamp(36px, 7vw, 120px);
+  align-items: center;
+}
+
+.brand-vibe-page .split.reverse {
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1fr);
+}
+
+.brand-vibe-page .split.reverse .visual {
+  order: 2;
+}
+
+.brand-vibe-page .chapter-no {
+  color: var(--bv-pink);
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  margin-bottom: 35px;
+}
+
+.brand-vibe-page .display {
+  font-family: var(--bv-serif);
+  font-size: clamp(42px, 6vw, 88px);
+  line-height: 1.04;
+  letter-spacing: -.04em;
+  font-weight: 300;
+  margin: 0 0 28px;
+  text-wrap: balance;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .display em {
+  color: var(--bv-pink);
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.brand-vibe-page .body-copy {
+  font-size: clamp(17px, 1.75vw, 23px);
+  line-height: 1.5;
+  color: rgba(245, 239, 230, .82);
+  max-width: 640px;
+}
+
+.brand-vibe-page .micro {
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bv-line);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand-vibe-page .micro span {
+  border: 1px solid rgba(245, 239, 230, .45);
+  padding: 10px 14px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(245, 239, 230, .95);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.brand-vibe-page .visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 720px;
+  background: #211d1d;
+}
+
+.brand-vibe-page .visual img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(.2, .8, .2, 1);
+}
+
+.brand-vibe-page .visual:hover img {
+  transform: scale(1.025);
+}
+
+.brand-vibe-page .visual:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, .16);
+  pointer-events: none;
+}
+
+.brand-vibe-page .stamp {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  width: 118px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, .62);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 9px;
+  line-height: 1.45;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  background: rgba(10, 8, 8, .18);
+  transform: rotate(8deg);
+}
+
+/* 5. Infinite Marquee */
+.brand-vibe-page .bv-marquee,
+.brand-vibe-page .marquee,
+.js .brand-vibe-page .bv-marquee,
+.js .brand-vibe-page .marquee,
+.js .brand-vibe-page .bv-marquee:not(.marquee--animate),
+.js .brand-vibe-page .marquee:not(.marquee--animate) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow: hidden !important;
+  border-top: 1px solid rgba(245, 239, 230, 0.22) !important;
+  border-bottom: 1px solid rgba(245, 239, 230, 0.22) !important;
+  padding: 24px 0 !important;
+  background-color: #0d0b0b !important;
+  white-space: nowrap !important;
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+  z-index: 5 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.brand-vibe-page .bv-marquee-track,
+.brand-vibe-page .marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee-infinite 20s linear infinite !important;
+}
+
+.brand-vibe-page .bv-marquee-track:hover,
+.brand-vibe-page .marquee-track:hover {
+  animation-play-state: paused !important;
+}
+
+.brand-vibe-page .bv-marquee-group,
+.brand-vibe-page .marquee-group {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+.brand-vibe-page .bv-marquee-item,
+.brand-vibe-page .marquee-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding-right: 48px !important;
+  white-space: nowrap !important;
+  color: #f5efe6 !important;
+  font-family: var(--bv-serif) !important;
+  font-size: clamp(26px, 3.8vw, 50px) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+}
+
+.brand-vibe-page .bv-marquee-item em,
+.brand-vibe-page .marquee-item em {
+  font-family: var(--bv-serif) !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  color: #f04f78 !important;
+  margin: 0 0.22em !important;
+}
+
+.brand-vibe-page .bv-marquee-item b,
+.brand-vibe-page .marquee-item b {
+  color: #f5efe6 !important;
+  margin-left: 0.22em !important;
+  font-weight: 300 !important;
+}
+
+@keyframes marquee-infinite {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* 6. Statement Section */
+.brand-vibe-page .statement {
+  min-height: 92svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 90px 18px;
+  background: var(--bv-paper);
+  color: var(--bv-ink);
+  overflow: hidden;
+}
+
+.brand-vibe-page .statement-inner {
+  max-width: 1220px;
+}
+
+.brand-vibe-page .statement .eyebrow {
+  justify-content: center;
+  color: #6d625a;
+}
+
+.brand-vibe-page .statement h2 {
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-size: clamp(54px, 10vw, 148px);
+  line-height: .84;
+  letter-spacing: -.06em;
+  margin: 28px 0 36px;
+  text-transform: uppercase;
+  color: var(--bv-ink);
+}
+
+.brand-vibe-page .statement h2 span {
+  display: block;
+  color: var(--bv-pink);
+  font-style: italic;
+}
+
+.brand-vibe-page .statement p {
+  font-size: clamp(16px, 1.6vw, 22px);
+  max-width: 600px;
+  margin: 0 auto;
+  color: #5d524c;
+  line-height: 1.55;
+}
+
+/* 7. Mural Section */
+.brand-vibe-page .mural {
+  min-height: 115svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #0d0b0b;
+}
+
+.brand-vibe-page .mural-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center 25%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #1a1616;
+  z-index: -2;
+  will-change: transform;
+}
+
+.brand-vibe-page .mural:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(13, 11, 11, .06), rgba(13, 11, 11, .04) 44%, rgba(13, 11, 11, .9) 100%);
+}
+
+.brand-vibe-page .mural-copy {
+  width: min(1380px, 100%);
+  margin: 0 auto;
+  padding: 80px clamp(18px, 6vw, 92px);
+}
+
+.brand-vibe-page .mural-copy h2 {
+  font-family: var(--bv-serif);
+  font-size: clamp(45px, 7.5vw, 112px);
+  line-height: .92;
+  letter-spacing: -.05em;
+  font-weight: 300;
+  max-width: 990px;
+  margin: 0 0 24px;
+  text-wrap: balance;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .mural-copy p {
+  font-size: clamp(16px, 1.6vw, 22px);
+  max-width: 560px;
+  color: rgba(255, 255, 255, .74);
+  line-height: 1.5;
+}
+
+/* 8. Design Code */
+.brand-vibe-page .code {
+  background: #171313;
+  padding: clamp(84px, 11vw, 160px) clamp(18px, 6vw, 92px);
+}
+
+.brand-vibe-page .code-wrap {
+  max-width: 1380px;
+  margin: auto;
+}
+
+.brand-vibe-page .code-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 56px;
+}
+
+.brand-vibe-page .code-head .display {
+  max-width: 760px;
+  margin: 0;
+}
+
+.brand-vibe-page .code-head p {
+  max-width: 390px;
+  color: rgba(245, 239, 230, .62);
+  line-height: 1.5;
+}
+
+.brand-vibe-page .code-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--bv-line);
+  border-left: 1px solid var(--bv-line);
+}
+
+.brand-vibe-page .code-card {
+  min-height: 340px;
+  padding: 28px;
+  border-right: 1px solid var(--bv-line);
+  border-bottom: 1px solid var(--bv-line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: background-color .35s ease, color .35s ease;
+}
+
+.brand-vibe-page .code-card:hover {
+  background: var(--bv-paper);
+  color: var(--bv-ink);
+}
+
+.brand-vibe-page .code-card .n {
+  font-size: 11px;
+  letter-spacing: .2em;
+  color: var(--bv-pink);
+  font-weight: 600;
+}
+
+.brand-vibe-page .code-card h3 {
+  font-family: var(--bv-serif);
+  font-size: clamp(27px, 2.8vw, 42px);
+  line-height: 1.02;
+  font-weight: 300;
+  margin: 0 0 16px;
+}
+
+.brand-vibe-page .code-card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(245, 239, 230, .56);
+  margin: 0;
+}
+
+.brand-vibe-page .code-card:hover p {
+  color: #665a52;
+}
+
+/* 9. Gallery */
+.brand-vibe-page .gallery {
+  padding: 14px;
+  background: var(--bv-paper);
+  display: grid;
+  grid-template-columns: 1.05fr .9fr 1.05fr;
+  gap: 14px;
+}
+
+.brand-vibe-page .gallery-card {
+  position: relative;
+  min-height: 78svh;
+  overflow: hidden;
+  background: #1b1717;
+}
+
+.brand-vibe-page .gallery-card:nth-child(2) {
+  margin-top: 84px;
+  margin-bottom: -84px;
+}
+
+.brand-vibe-page .gallery-card img,
+.brand-vibe-page .gallery-card .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 1.1s cubic-bezier(.2, .8, .2, 1);
+}
+
+.brand-vibe-page .gallery-card:hover img,
+.brand-vibe-page .gallery-card:hover .placeholder-svg {
+  transform: scale(1.035);
+}
+
+.brand-vibe-page .gallery-card:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .82));
+}
+
+.brand-vibe-page .gallery-copy {
+  position: absolute;
+  z-index: 2;
+  left: 26px;
+  right: 26px;
+  bottom: 26px;
+}
+
+.brand-vibe-page .gallery-copy small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .65);
+  margin-bottom: 7px;
+}
+
+.brand-vibe-page .gallery-copy h3 {
+  font-family: var(--bv-serif);
+  font-size: clamp(28px, 3vw, 48px);
+  font-weight: 300;
+  line-height: 1;
+  margin: 0;
+  color: #fff;
+}
+
+/* 10. Main Character */
+.brand-vibe-page .main-character {
+  padding: clamp(120px, 15vw, 220px) 18px;
+  text-align: center;
+  background: var(--bv-ink);
+}
+
+.brand-vibe-page .main-character .eyebrow {
+  justify-content: center;
+  color: rgba(245, 239, 230, .6);
+}
+
+.brand-vibe-page .main-character blockquote {
+  max-width: 1180px;
+  margin: 34px auto 38px;
+  font-family: var(--bv-serif);
+  font-size: clamp(49px, 8.5vw, 126px);
+  font-weight: 300;
+  line-height:.9;
+  letter-spacing: -.055em;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .main-character blockquote em {
+  color: var(--bv-pink);
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.brand-vibe-page .main-character p {
+  max-width: 650px;
+  margin: auto;
+  color: rgba(245, 239, 230, .62);
+  font-size: clamp(16px, 1.7vw, 22px);
+  line-height: 1.5;
+}
+
+/* 11. Finale */
+.brand-vibe-page .finale {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #0d0b0b;
+}
+
+.brand-vibe-page .finale-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #1a1616;
+  filter: saturate(.86);
+  will-change: transform;
+}
+
+.brand-vibe-page .finale:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(10, 7, 9, .63);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.brand-vibe-page .finale-inner {
+  max-width: 1100px;
+  padding: 100px 18px;
+}
+
+.brand-vibe-page .finale .eyebrow {
+  justify-content: center;
+}
+
+.brand-vibe-page .finale h2 {
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-size: clamp(60px, 11vw, 154px);
+  line-height: 0.94;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+  margin: 20px 0 38px;
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .finale h2 em {
+  display: block;
+  color: var(--bv-pink);
+  font-family: var(--bv-serif);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.brand-vibe-page .cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border: 1px solid rgba(255, 255, 255, .76);
+  padding: 18px 28px;
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: background-color .3s ease, color .3s ease;
+  background: rgba(0, 0, 0, .12);
+  color: var(--bv-paper);
+}
+
+.brand-vibe-page .cta:hover {
+  background: var(--bv-paper);
+  color: var(--bv-ink);
+}
+
+.brand-vibe-page .cta b,
+.brand-vibe-page .cta .cta-arrow {
+  display: inline-block;
+  transition: transform .3s ease;
+}
+
+.brand-vibe-page .cta:hover b,
+.brand-vibe-page .cta:hover .cta-arrow {
+  transform: translateX(5px);
+}
+
+/* 13. Reveal Animations */
+.brand-vibe-page .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1);
+  will-change: opacity, transform;
+}
+
+.brand-vibe-page .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 900px) {
+  .brand-vibe-page .nav-right .nav-link {
+    display: none;
+  }
+  .brand-vibe-page .shop-pill {
+    padding: 10px 14px;
+  }
+  .brand-vibe-page .brand {
+    width: 88px;
+  }
+  .brand-vibe-page .hero-copy {
+    padding-bottom: 42px;
+  }
+  .brand-vibe-page .hero-sub {
+    max-width: 360px;
+  }
+  .brand-vibe-page .hero-foot {
+    margin-top: 34px;
+  }
+  .brand-vibe-page .split,
+  .brand-vibe-page .split.reverse {
+    grid-template-columns: 1fr;
+  }
+  .brand-vibe-page .split.reverse .visual {
+    order: 0;
+  }
+  .brand-vibe-page .visual {
+    min-height: 72svh;
+  }
+  .brand-vibe-page .chapter {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .brand-vibe-page .code-head {
+    display: block;
+  }
+  .brand-vibe-page .code-head p {
+    margin-top: 24px;
+  }
+  .brand-vibe-page .code-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .brand-vibe-page .code-card {
+    min-height: 270px;
+  }
+  .brand-vibe-page .gallery {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
+  .brand-vibe-page .gallery-card {
+    min-height: 78svh;
+  }
+  .brand-vibe-page .gallery-card:nth-child(2) {
+    margin: 0;
+  }
+  .brand-vibe-page .mural {
+    min-height: 100svh;
+  }
+  .brand-vibe-page .mural-bg {
+    background-position: 48% 24%;
+  }
+  .brand-vibe-page footer {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand-vibe-page .hero-media {
+    background-position: center 12%;
+  }
+  .brand-vibe-page .hero-copy {
+    padding-top: 120px;
+  }
+  .brand-vibe-page .hero-foot > span:last-child {
+    display: none;
+  }
+  .brand-vibe-page h1 {
+    font-size: clamp(50px, 15vw, 74px);
+  }
+  .brand-vibe-page .code-grid {
+    grid-template-columns: 1fr;
+  }
+  .brand-vibe-page .code-card {
+    min-height: 240px;
+  }
+  .brand-vibe-page .mural-copy {
+    padding-bottom: 50px;
+  }
+  .brand-vibe-page .gallery-card {
+    min-height: 74svh;
+  }
+  .brand-vibe-page .statement h2 {
+    font-size: clamp(50px, 15vw, 76px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-vibe-page html {
+    scroll-behavior: auto;
+  }
+  .brand-vibe-page .bv-marquee-track,
+  .brand-vibe-page .marquee-track {
+    animation: none;
+  }
+  .brand-vibe-page .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .brand-vibe-page .scroll-cue i:after {
+    animation: none;
+  }
+}

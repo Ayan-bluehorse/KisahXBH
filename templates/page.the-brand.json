@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "brand_vibe": {
+      "type": "page-brand-vibe",
+      "settings": {}
+    }
+  },
+  "order": [
+    "brand_vibe"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "our_journey": {
+      "type": "page-our-journey",
+      "settings": {}
+    }
+  },
+  "order": [
+    "our_journey"
+  ]
+}

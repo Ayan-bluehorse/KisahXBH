@@ -1,0 +1,1145 @@
+/* ==========================================================================
+   PAGE: Our Journey Editorial
+   Using Theme Global Fonts & Variables
+   ========================================================================== */
+
+/* Scoped Container Width & Footer Gap Reset */
+body.template-suffix-our-journey #content,
+body.template-suffix-our-journey #content > .container,
+body.template-suffix-our-journey #main {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
+  display: none !important;
+}
+
+/* Base Theme Tokens & Inherited Global Fonts */
+.our-journey-page {
+  --oj-ink: #211b1b;
+  --oj-paper: #f2eee6;
+  --oj-cream: #e8dfd0;
+  --oj-gold: #bb8750;
+  --oj-bright: #dbad68;
+  --oj-serif: "Bodoni Moda", var(--heading-font-family, serif);
+  --oj-sans: "Manrope", var(--base-font-family, sans-serif);
+  --oj-nav: "Manrope", var(--nav-font-family, sans-serif);
+  --oj-logo: "Bodoni Moda", var(--logo-font-family, serif);
+
+  background-color: var(--oj-paper);
+  color: var(--oj-ink);
+  font-family: var(--oj-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.5;
+}
+
+.our-journey-page *,
+.our-journey-page *::before,
+.our-journey-page *::after {
+  box-sizing: border-box;
+}
+
+.our-journey-page a {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.our-journey-page img {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.our-journey-page .svg-icon,
+.our-journey-page .oj-icon-arrow,
+.our-journey-page .oj-icon-down {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.our-journey-page .oj-icon-arrow {
+  transition: transform 0.25s ease;
+}
+
+.our-journey-page a:hover .oj-icon-arrow {
+  transform: translate(2px, -2px);
+}
+
+.our-journey-page .mark-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.our-journey-page .mark-x svg {
+  display: block;
+  stroke: #7f6e63;
+}
+
+.our-journey-page .placeholder-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #3b3330;
+  fill: #665b51;
+}
+
+.our-journey-page .partner-text-mark {
+  font-family: var(--oj-serif);
+  font-size: 28px;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  color: #27242b;
+}
+
+.our-journey-page button {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.our-journey-page ::selection {
+  background: #d8a962;
+  color: #211b1b;
+}
+
+/* 3. Hero Section */
+.our-journey-page .hero {
+  min-height: 720px;
+  background: #211b1b;
+  color: #f3eadc;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.our-journey-page .hero-copy {
+  padding: 70px 6% 84px 8.8%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.our-journey-page .eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--oj-gold);
+}
+
+.our-journey-page .hero h1 {
+  font-family: var(--oj-serif);
+  font-size: clamp(84px, 10.5vw, 184px);
+  line-height: 0.78;
+  font-weight: 400;
+  letter-spacing: -0.07em;
+  margin: 90px 0 38px;
+  max-width: 750px;
+  color: #f3eadc;
+}
+
+.our-journey-page .hero h1 em {
+  font-style: normal;
+  color: var(--oj-bright);
+}
+
+.our-journey-page .hero-deck {
+  font-family: var(--oj-serif);
+  font-size: clamp(20px, 2.2vw, 31px);
+  line-height: 1.25;
+  max-width: 415px;
+  color: #f3eadc;
+}
+
+.our-journey-page .hero-foot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+}
+
+.our-journey-page .hero-foot small,
+.our-journey-page .image-caption {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  line-height: 1.7;
+  color: #f3eadc;
+}
+
+.our-journey-page .down {
+  width: 32px;
+  height: 32px;
+  color: var(--oj-bright);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.our-journey-page .down:hover {
+  transform: translateY(6px);
+}
+
+.our-journey-page .hero-art {
+  position: relative;
+  min-height: 720px;
+  background: #504a41;
+}
+
+.our-journey-page .hero-art img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+  filter: saturate(0.88) contrast(1.08);
+}
+
+.our-journey-page .hero-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(33, 27, 27, 0.12), transparent 45%),
+    linear-gradient(0deg, rgba(20, 17, 17, 0.38), transparent 34%);
+  pointer-events: none;
+}
+
+.our-journey-page .hero-art .image-caption {
+  position: absolute;
+  z-index: 2;
+  bottom: 30px;
+  left: 35px;
+  color: #fff;
+}
+
+/* 4. Sticky Chapter Nav */
+.our-journey-page .chapter-nav {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 25px 20px;
+  border-bottom: 1px solid #d8cabc;
+  background: #eae3d8;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.our-journey-page .chapter-nav a {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.17em;
+  white-space: nowrap;
+  color: var(--oj-ink);
+  transition: color 0.2s;
+  font-family: var(--oj-nav);
+}
+
+.our-journey-page .chapter-nav a:hover,
+.our-journey-page .chapter-nav a.active {
+  color: #9b603b;
+}
+
+.our-journey-page .chapter-nav b {
+  font-weight: 600;
+  color: #a0714b;
+  margin-right: 10px;
+}
+
+/* 5. Chapter 1: The Question */
+.our-journey-page .opening {
+  padding: 126px 8% 136px;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 8vw;
+}
+
+.our-journey-page .opening h2,
+.our-journey-page .chapter h2,
+.our-journey-page .breakout h2,
+.our-journey-page .closing h2,
+.our-journey-page .fireside h2,
+.our-journey-page .film h2 {
+  font-family: var(--oj-serif);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+
+.our-journey-page .opening h2 {
+  font-size: clamp(54px, 7.2vw, 105px);
+  line-height: 0.94;
+  margin: 0;
+  color: var(--oj-ink);
+}
+
+.our-journey-page .opening-copy {
+  max-width: 460px;
+  align-self: end;
+}
+
+.our-journey-page .opening-copy p {
+  font-size: clamp(16px, 1.5vw, 21px);
+  line-height: 1.6;
+  margin: 0 0 22px;
+  color: var(--oj-ink);
+}
+
+.our-journey-page .rule {
+  height: 1px;
+  background: #ab9c89;
+  margin: 22px 0;
+}
+
+.our-journey-page .opening-copy .small {
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  line-height: 1.7;
+  color: #665b51;
+}
+
+/* 6. Chapter 2: The Design */
+.our-journey-page .chapter {
+  padding: 120px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9vw;
+  align-items: center;
+}
+
+.our-journey-page .chapter-number {
+  font-family: var(--oj-serif);
+  font-size: 58px;
+  color: #ad8560;
+  line-height: 1;
+}
+
+.our-journey-page .chapter h2 {
+  font-size: clamp(58px, 6.1vw, 90px);
+  line-height: 0.95;
+  margin: 22px 0 30px;
+  color: var(--oj-ink);
+}
+
+.our-journey-page .chapter p {
+  font-size: 16px;
+  line-height: 1.78;
+  max-width: 470px;
+  color: #474039;
+  margin: 0 0 16px;
+}
+
+.our-journey-page .chapter p.lead {
+  font-family: var(--oj-serif);
+  font-size: 29px;
+  line-height: 1.25;
+  color: var(--oj-ink);
+  margin-bottom: 24px;
+}
+
+.our-journey-page .art-panel {
+  aspect-ratio: 4/5;
+  position: relative;
+  overflow: hidden;
+  background: #c4ad95;
+}
+
+.our-journey-page .art-panel img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.our-journey-page .art-panel:hover img {
+  transform: scale(1.03);
+}
+
+.our-journey-page .art-panel.rack img {
+  object-position: 63% center;
+}
+
+.our-journey-page .art-panel.store img {
+  object-position: 50% center;
+}
+
+.our-journey-page .art-panel .image-caption {
+  position: absolute;
+  left: 22px;
+  bottom: 18px;
+  padding: 7px 10px;
+  background: rgba(242, 238, 230, 0.9);
+  font-size: 8px;
+  color: var(--oj-ink);
+  z-index: 2;
+}
+
+.our-journey-page .collage {
+  aspect-ratio: 1;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  background: #e6d8c8;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.our-journey-page .collage-tile {
+  position: relative;
+  overflow: hidden;
+  background: #312923;
+}
+
+.our-journey-page .collage-tile img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+.our-journey-page .collage-tile:hover img {
+  transform: scale(1.04);
+}
+
+.our-journey-page .collage-main {
+  grid-row: 1/3;
+}
+
+.our-journey-page .collage-main img {
+  object-fit: contain;
+}
+
+.our-journey-page .collage-black img {
+  object-position: 50% 20%;
+}
+
+.our-journey-page .collage-dandiya-final img {
+  height: 190%;
+  top: -52%;
+  object-position: center;
+}
+
+.our-journey-page .section-cream {
+  background: #e9e0d3;
+}
+
+.our-journey-page .section-cream .chapter {
+  padding-top: 105px;
+  padding-bottom: 105px;
+}
+
+.our-journey-page .design-words {
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+  max-width: 410px;
+}
+
+.our-journey-page .design-words div {
+  padding: 14px 0;
+  border-top: 1px solid #bda995;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.our-journey-page .design-words span {
+  color: #9c6841;
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+/* 7. Breakout Section */
+.our-journey-page .breakout {
+  background: #9b4b38;
+  color: #f5e9d9;
+  padding: 65px 8% 73px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.our-journey-page .breakout h2 {
+  font-size: clamp(38px, 5vw, 74px);
+  line-height: 1.02;
+  max-width: 900px;
+  margin: 0;
+  color: #f5e9d9;
+}
+
+.our-journey-page .breakout .eyebrow {
+  color: #f3d9ab;
+  min-width: 130px;
+}
+
+/* 8. Chapter 3: Store Section */
+.our-journey-page .store-section {
+  background: #eee8df;
+}
+
+.our-journey-page .store-section .chapter {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+
+.our-journey-page .store-section .art-panel {
+  aspect-ratio: 1.17;
+}
+
+.our-journey-page .store-section .art-panel img {
+  object-fit: cover;
+}
+
+.our-journey-page .statline {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  border-top: 1px solid #bcae9d;
+  margin-top: 35px;
+  padding-top: 15px;
+}
+
+.our-journey-page .statline strong {
+  font-family: var(--oj-serif);
+  font-size: 80px;
+  line-height: 1;
+  color: #9e543b;
+}
+
+.our-journey-page .statline span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  max-width: 130px;
+  line-height: 1.5;
+}
+
+.our-journey-page .line-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid currentColor;
+  padding: 10px 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-top: 14px;
+  color: var(--oj-ink);
+}
+
+/* 9. Film / Moving Images */
+.our-journey-page .film {
+  padding: 100px 8%;
+  background: #242020;
+  color: #f1e8dd;
+}
+
+.our-journey-page .film-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.our-journey-page .film h2 {
+  font-size: clamp(48px, 5vw, 74px);
+  line-height: 0.98;
+  margin: 16px 0 0;
+  color: #f1e8dd;
+}
+
+.our-journey-page .film .eyebrow {
+  color: #d6a066;
+}
+
+.our-journey-page .film-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 18px;
+}
+
+.our-journey-page .film-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 305px;
+  overflow: hidden;
+  background: #403832;
+  color: #f1e8dd;
+}
+
+.our-journey-page .film-card img,
+.our-journey-page .film-card .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.58) saturate(0.85);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.our-journey-page .film-card:first-child img {
+  object-position: 75% center;
+}
+
+.our-journey-page .film-card:nth-child(2) img {
+  object-position: 55% center;
+}
+
+.our-journey-page .film-card:nth-child(3) img {
+  object-position: 23% center;
+}
+
+.our-journey-page .film-card:hover img,
+.our-journey-page .film-card:hover .placeholder-svg {
+  transform: scale(1.04);
+}
+
+.our-journey-page .film-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 25px;
+}
+
+.our-journey-page .play {
+  height: 44px;
+  width: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.our-journey-page .play svg {
+  width: 14px;
+  height: 14px;
+}
+
+.our-journey-page .film-card:hover .play {
+  background: #fff;
+  color: #242020;
+}
+
+.our-journey-page .film-card h3 {
+  font-family: var(--oj-serif);
+  font-size: 31px;
+  line-height: 1.04;
+  max-width: 250px;
+  margin: 0 0 10px;
+  color: #fff;
+}
+
+.our-journey-page .film-card span {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #e5c6a5;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.our-journey-page .film-note {
+  font-size: 10px;
+  color: #b7a89b;
+  letter-spacing: 0.05em;
+  margin-top: 21px;
+}
+
+/* 10. Chapter 4: Fireside Section */
+.our-journey-page .fireside {
+  background: #e6d9c8;
+  padding: 120px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9vw;
+  align-items: center;
+}
+
+.our-journey-page .fireside .chapter-number {
+  font-size: 58px;
+}
+
+.our-journey-page .fireside h2 {
+  font-size: clamp(55px, 6vw, 90px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  margin: 20px 0 30px;
+  color: var(--oj-ink);
+}
+
+.our-journey-page .fireside p {
+  font-size: 16px;
+  line-height: 1.77;
+  max-width: 500px;
+  color: #474039;
+  margin: 0 0 16px;
+}
+
+.our-journey-page .fireside-panel {
+  min-height: 500px;
+  background: #fff;
+  color: #27242b;
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 45px rgba(58, 37, 28, 0.08);
+}
+
+.our-journey-page .fireside-bg-star {
+  position: absolute;
+  right: -50px;
+  bottom: -60px;
+  width: 280px;
+  height: 280px;
+  color: #c49950;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.our-journey-page .fireside-panel .micro {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  z-index: 1;
+  color: #8c6647;
+}
+
+.our-journey-page .fireside-panel .quote {
+  font-family: var(--oj-serif);
+  font-size: 32px;
+  line-height: 1.13;
+  z-index: 1;
+  max-width: 380px;
+  color: #27242b;
+}
+
+.our-journey-page .partner-marks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 27px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 35px 0;
+  border-block: 1px solid #e7ddd2;
+}
+
+.our-journey-page .partner-marks img {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.our-journey-page .partner-marks .kisah-mark {
+  height: 71px;
+}
+
+.our-journey-page .partner-marks .fireside-mark {
+  height: 83px;
+  margin-left: -39px;
+}
+
+.our-journey-page .partner-marks .mark-x {
+  color: #a57b57;
+  display: inline-flex;
+}
+
+/* 11. Closing Section */
+.our-journey-page .closing {
+  background: #191617;
+  color: #f3ede2;
+  text-align: center;
+  padding: 125px 20px 150px;
+}
+
+.our-journey-page .closing .eyebrow {
+  color: #d6a066;
+}
+
+.our-journey-page .closing h2 {
+  font-size: clamp(62px, 9vw, 136px);
+  line-height: 0.9;
+  max-width: 1050px;
+  margin: 28px auto 25px;
+  color: #f3ede2;
+}
+
+.our-journey-page .closing p {
+  font-family: var(--oj-serif);
+  font-size: 25px;
+  line-height: 1.3;
+  max-width: 510px;
+  margin: 0 auto 38px;
+  color: #d9c8b4;
+}
+
+.our-journey-page .links {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.our-journey-page .cta {
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 235px;
+  padding: 17px 21px;
+  border: 1px solid #dfc9ae;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: 0.25s ease;
+  font-family: var(--oj-nav);
+}
+
+.our-journey-page .cta:hover {
+  background: #dfc9ae;
+  color: #1d1718;
+}
+
+.our-journey-page .cta.primary {
+  background: #f2ede4;
+  border-color: #f2ede4;
+  color: #211b1b;
+}
+
+.our-journey-page .cta.primary:hover {
+  background: #eed7b7;
+}
+
+.our-journey-page .closing .links {
+  gap: 20px;
+}
+
+.our-journey-page .closing .cta {
+  position: relative;
+  min-width: 330px;
+  min-height: 82px;
+  justify-content: center;
+  text-align: center;
+  padding: 22px 42px;
+  font-size: 13px;
+  letter-spacing: 0.11em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.our-journey-page .closing .cta .svg-icon {
+  position: absolute;
+  right: 22px;
+}
+
+.our-journey-page .closing .cta:not(.primary) {
+  background: #f2ede4;
+  color: #211b1b;
+  border-color: #f2ede4;
+}
+
+.our-journey-page .closing .cta:not(.primary):hover {
+  background: #dcb481;
+  border-color: #dcb481;
+}
+
+.our-journey-page .closing .note {
+  font-family: var(--oj-sans);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 66px;
+  color: #a89988;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 900px) {
+  .our-journey-page .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .our-journey-page .hero-copy {
+    min-height: 590px;
+    padding: 55px 7% 35px;
+  }
+  .our-journey-page .hero h1 {
+    margin: 95px 0 30px;
+  }
+  .our-journey-page .hero-art {
+    min-height: 460px;
+    height: 56vw;
+  }
+  .our-journey-page .chapter-nav {
+    gap: 20px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .our-journey-page .chapter-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .our-journey-page .opening {
+    padding: 100px 7%;
+    gap: 45px;
+  }
+  .our-journey-page .chapter {
+    gap: 45px;
+    padding: 95px 7%;
+  }
+  .our-journey-page .fireside {
+    gap: 45px;
+    padding: 95px 7%;
+  }
+  .our-journey-page .film {
+    padding: 90px 7%;
+  }
+  .our-journey-page .film-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .our-journey-page .film-card:first-child {
+    grid-column: span 2;
+  }
+  .our-journey-page .film-card {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 620px) {
+  .our-journey-page .topline {
+    font-size: 7px;
+    letter-spacing: 0.13em;
+  }
+  .our-journey-page .nav {
+    height: 65px;
+    padding: 0 5%;
+    grid-template-columns: 1fr auto;
+  }
+  .our-journey-page .wordmark {
+    font-size: 29px;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    text-align: left;
+    padding-left: 0;
+  }
+  .our-journey-page .nav-link {
+    display: none;
+  }
+  .our-journey-page .nav-right {
+    font-size: 9px;
+  }
+  .our-journey-page .nav-right span {
+    padding-left: 6px;
+  }
+  .our-journey-page .hero-copy {
+    min-height: 540px;
+    padding: 36px 6% 35px;
+  }
+  .our-journey-page .hero h1 {
+    font-size: clamp(82px, 22vw, 120px);
+    margin: 70px 0 26px;
+  }
+  .our-journey-page .hero-deck {
+    font-size: 23px;
+  }
+  .our-journey-page .hero-art {
+    height: 420px;
+    min-height: 0;
+  }
+  .our-journey-page .hero-art .image-caption {
+    left: 18px;
+    bottom: 16px;
+  }
+  .our-journey-page .chapter-nav {
+    padding: 18px 6%;
+    gap: 25px;
+  }
+  .our-journey-page .chapter-nav a {
+    font-size: 9px;
+  }
+  .our-journey-page .opening {
+    display: block;
+    padding: 85px 6% 95px;
+  }
+  .our-journey-page .opening h2 {
+    font-size: 65px;
+  }
+  .our-journey-page .opening-copy {
+    margin-top: 40px;
+  }
+  .our-journey-page .opening-copy p {
+    font-size: 17px;
+  }
+  .our-journey-page .chapter,
+  .our-journey-page .store-section .chapter {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 75px 6%;
+    gap: 38px;
+  }
+  .our-journey-page .chapter h2,
+  .our-journey-page .fireside h2 {
+    font-size: 67px;
+  }
+  .our-journey-page .chapter-number {
+    font-size: 46px;
+  }
+  .our-journey-page .chapter p.lead {
+    font-size: 26px;
+  }
+  .our-journey-page .chapter p {
+    font-size: 15px;
+  }
+  .our-journey-page .section-cream .chapter {
+    flex-direction: column-reverse;
+    padding: 70px 6%;
+  }
+  .our-journey-page .art-panel {
+    aspect-ratio: 1;
+  }
+  .our-journey-page .store-section .chapter {
+    flex-direction: column;
+  }
+  .our-journey-page .store-section .art-panel {
+    aspect-ratio: 1.12;
+  }
+  .our-journey-page .breakout {
+    padding: 65px 6%;
+    display: block;
+  }
+  .our-journey-page .breakout h2 {
+    font-size: 48px;
+    margin-top: 20px;
+  }
+  .our-journey-page .statline strong {
+    font-size: 74px;
+  }
+  .our-journey-page .film {
+    padding: 77px 6%;
+  }
+  .our-journey-page .film h2 {
+    font-size: 56px;
+  }
+  .our-journey-page .film-grid {
+    grid-template-columns: 1fr;
+  }
+  .our-journey-page .film-card:first-child {
+    grid-column: auto;
+  }
+  .our-journey-page .film-card {
+    min-height: 290px;
+  }
+  .our-journey-page .film-card:nth-child(n + 2) {
+    min-height: 240px;
+  }
+  .our-journey-page .fireside {
+    display: block;
+    padding: 82px 6%;
+  }
+  .our-journey-page .fireside h2 {
+    font-size: 65px;
+  }
+  .our-journey-page .fireside-panel {
+    margin-top: 35px;
+    min-height: 380px;
+    padding: 32px;
+  }
+  .our-journey-page .fireside-panel .quote {
+    font-size: 29px;
+  }
+  .our-journey-page .partner-marks .kisah-mark {
+    height: 63px;
+  }
+  .our-journey-page .partner-marks .fireside-mark {
+    height: 68px;
+    margin-left: -29px;
+  }
+  .our-journey-page .collage {
+    gap: 5px;
+    padding: 5px;
+  }
+  .our-journey-page .closing {
+    padding: 95px 6% 100px;
+  }
+  .our-journey-page .closing h2 {
+    font-size: 75px;
+  }
+  .our-journey-page .closing p {
+    font-size: 22px;
+  }
+  .our-journey-page .links {
+    display: flex;
+    flex-direction: column;
+  }
+  .our-journey-page .cta {
+    width: 100%;
+  }
+  .our-journey-page footer {
+    flex-direction: column;
+    text-align: center;
+    line-height: 1.8;
+  }
+  .our-journey-page .closing .cta {
+    width: 100%;
+    min-width: 0;
+    min-height: 74px;
+    font-size: 12px;
+  }
+  .our-journey-page .hero-foot small {
+    max-width: 200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .our-journey-page html {
+    scroll-behavior: auto;
+  }
+  .our-journey-page .film-card img {
+    transition: none;
+  }
+}

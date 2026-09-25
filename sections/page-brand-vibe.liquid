@@ -1,0 +1,554 @@
+{% comment %}
+  Standalone Page: Brand Page / Brand Vibe
+  Clean Shopify Best Practices / Pure Liquid Architecture
+{% endcomment %}
+
+{{ 'page-brand-vibe.css' | asset_url | stylesheet_tag }}
+
+<div class="brand-vibe-page">
+  <main id="top">
+    <!-- 3. Hero Section -->
+    <section class="hero">
+      <div class="hero-media" data-parallax=".12"{% if section.settings.hero_image != blank %} style="background-image: url('{{ section.settings.hero_image | image_url: width: 1920 }}');"{% endif %}>
+        {%- if section.settings.hero_image == blank -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg hero-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      
+      <div class="hero-copy">
+        <div class="eyebrow reveal">{{ section.settings.hero_eyebrow | default: 'A new Kisah begins' }}</div>
+        <h1 class="reveal">{{ section.settings.hero_heading | default: 'The next decade of Indian celebration wear. <em>Worn now.</em>' }}</h1>
+        <p class="hero-sub reveal">{{ section.settings.hero_subtitle | default: 'We move tradition forward—with expressive colour, unexpected design and the confidence to never disappear into the room.' }}</p>
+        <div class="hero-foot reveal">
+          <span class="scroll-cue"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 4V20M12 20L5 13M12 20L19 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></i> {{ section.settings.hero_foot_left | default: 'Enter the new era' }}</span>
+          <span>{{ section.settings.hero_foot_right | default: 'Men’s celebration wear, reimagined' }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Chapter 1: The Shift -->
+    <section class="chapter" id="point-of-view">
+      <div class="split">
+        <div class="visual reveal">
+          {%- if section.settings.ch1_image != blank -%}
+            {{ section.settings.ch1_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.ch1_image.alt | default: 'Kisah celebration wear' }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+          <div class="stamp">{{ section.settings.ch1_stamp_text | default: 'Fresh point<br>of view<br>by Kisah' }}</div>
+        </div>
+        <div class="reveal">
+          <div class="chapter-no">{{ section.settings.ch1_number | default: '01 / The shift' }}</div>
+          <h2 class="display">{{ section.settings.ch1_heading | default: 'The man moved forward. <em>His festive wardrobe didn’t.</em>' }}</h2>
+          <p class="body-copy">{{ section.settings.ch1_body | default: 'Men found new ways to express who they are. Celebration wear kept handing them the same colours, the same cuts, the same story. Kisah exists to close that gap.' }}</p>
+          <div class="micro">
+            <span>{{ section.settings.ch1_pill1 | default: 'Rebellious, not reckless' }}</span>
+            <span>{{ section.settings.ch1_pill2 | default: 'Bold, but tasteful' }}</span>
+            <span>{{ section.settings.ch1_pill3 | default: 'Modern, yet rooted' }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Marquee -->
+    <div class="bv-marquee">
+      <div class="bv-marquee-track">
+        <div class="bv-marquee-group">
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+        </div>
+        <div class="bv-marquee-group" aria-hidden="true">
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+          <span class="bv-marquee-item">NEVER BE <em>VANILLA</em> <b>&bull;</b></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Statement Section -->
+    <section class="statement">
+      <div class="statement-inner reveal">
+        <div class="eyebrow">{{ section.settings.statement_eyebrow | default: 'Our point of view' }}</div>
+        <h2>{{ section.settings.statement_heading_line1 | default: 'Same rituals.' }}<span>{{ section.settings.statement_heading_line2 | default: 'New rules.' }}</span></h2>
+        <p>{{ section.settings.statement_body | default: 'We don’t reject tradition. We give it fresh colours, sharper silhouettes and a reason to start conversations again.' }}</p>
+      </div>
+    </section>
+
+    <!-- 7. Mural Section -->
+    <section class="mural">
+      <div class="mural-bg" data-parallax=".08"{% if section.settings.mural_image != blank %} style="background-image: url('{{ section.settings.mural_image | image_url: width: 1920 }}');"{% endif %}>
+        {%- if section.settings.mural_image == blank -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg hero-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      
+      <div class="mural-copy reveal">
+        <div class="chapter-no">{{ section.settings.mural_chapter | default: '02 / Culture, remixed' }}</div>
+        <h2>{{ section.settings.mural_heading | default: 'Art. Ritual. Attitude. In one frame.' }}</h2>
+        <p>{{ section.settings.mural_description | default: 'Indian celebration is our canvas—not our cage. We draw from its energy, then challenge every predictable way it has been worn.' }}</p>
+      </div>
+    </section>
+
+    <!-- 8. Design Code Section -->
+    <section class="code" id="design-code">
+      <div class="code-wrap">
+        <div class="code-head reveal">
+          <h2 class="display">{{ section.settings.code_heading | default: 'Designed to be <em>noticed.</em><br>Made to be remembered.' }}</h2>
+          <p>{{ section.settings.code_description | default: 'Different for a reason. Expressive with restraint. Every design choice earns its place—and your second look.' }}</p>
+        </div>
+        <div class="code-grid">
+          {%- assign code_blocks = section.blocks | where: 'type', 'code_card' -%}
+          {%- if code_blocks.size > 0 -%}
+            {%- for block in code_blocks -%}
+              <article class="code-card reveal" {{ block.shopify_attributes }}>
+                <span class="n">{{ block.settings.number }}</span>
+                <div>
+                  <h3>{{ block.settings.title }}</h3>
+                  <p>{{ block.settings.text }}</p>
+                </div>
+              </article>
+            {%- endfor -%}
+          {%- else -%}
+            <article class="code-card reveal">
+              <span class="n">01</span>
+              <div>
+                <h3>Unexpected colour</h3>
+                <p>Palettes that step outside the familiar ethnic script.</p>
+              </div>
+            </article>
+            <article class="code-card reveal">
+              <span class="n">02</span>
+              <div>
+                <h3>Contemporary silhouette</h3>
+                <p>Shapes that feel rooted in culture, alive in the present.</p>
+              </div>
+            </article>
+            <article class="code-card reveal">
+              <span class="n">03</span>
+              <div>
+                <h3>Expressive detail</h3>
+                <p>Print, texture and craft that reward a closer look.</p>
+              </div>
+            </article>
+            <article class="code-card reveal">
+              <span class="n">04</span>
+              <div>
+                <h3>Fresh styling</h3>
+                <p>Unexpected combinations that make the whole look your own.</p>
+              </div>
+            </article>
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Gallery Section -->
+    <section class="gallery" aria-label="Kisah visual world">
+      {%- assign gallery_blocks = section.blocks | where: 'type', 'gallery_card' -%}
+      {%- if gallery_blocks.size > 0 -%}
+        {%- for block in gallery_blocks -%}
+          <article class="gallery-card reveal" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            <div class="gallery-copy">
+              <small>{{ block.settings.tag }}</small>
+              <h3>{{ block.settings.title }}</h3>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- else -%}
+        <article class="gallery-card reveal">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          <div class="gallery-copy">
+            <small>The new</small>
+            <h3>Break the code.</h3>
+          </div>
+        </article>
+        <article class="gallery-card reveal">
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+          <div class="gallery-copy">
+            <small>The attitude</small>
+            <h3>Show up different.</h3>
+          </div>
+        </article>
+        <article class="gallery-card reveal">
+          {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+          <div class="gallery-copy">
+            <small>The occasion</small>
+            <h3>Celebrate forward.</h3>
+          </div>
+        </article>
+      {%- endif -%}
+    </section>
+
+    <!-- 10. Main Character Section -->
+    <section class="main-character">
+      <div class="eyebrow reveal">{{ section.settings.character_eyebrow | default: 'For the main character' }}</div>
+      <blockquote class="reveal">{{ section.settings.character_quote | default: 'Not the loudest man in the room. <em>The one you remember.</em>' }}</blockquote>
+      <p class="reveal">{{ section.settings.character_description | default: 'For the man who uses fashion to say something—without ever needing to announce himself.' }}</p>
+    </section>
+
+    <!-- 11. Finale Section -->
+    <section class="finale">
+      <div class="finale-bg" data-parallax=".08"{% if section.settings.finale_image != blank %} style="background-image: url('{{ section.settings.finale_image | image_url: width: 1920 }}');"{% endif %}>
+        {%- if section.settings.finale_image == blank -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg hero-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      
+      <div class="finale-inner reveal">
+        <div class="eyebrow">{{ section.settings.finale_eyebrow | default: 'This is celebration wear, fast-forwarded' }}</div>
+        <h2>{{ section.settings.finale_heading | default: 'Never be<em>vanilla.</em>' }}</h2>
+        <a class="cta" href="{{ section.settings.home_link | default: '/' }}">
+          {{ section.settings.finale_cta_text | default: 'Enter the new Kisah' }}
+          <svg class="cta-arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="{{ 'page-brand-vibe.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Brand Vibe Editorial",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Hero Eyebrow",
+      "default": "A new Kisah begins"
+    },
+    {
+      "type": "html",
+      "id": "hero_heading",
+      "label": "Hero Heading (HTML)",
+      "default": "The next decade of Indian celebration wear. <em>Worn now.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "We move tradition forward—with expressive colour, unexpected design and the confidence to never disappear into the room."
+    },
+    {
+      "type": "text",
+      "id": "hero_foot_left",
+      "label": "Hero Footer Cue",
+      "default": "Enter the new era"
+    },
+    {
+      "type": "text",
+      "id": "hero_foot_right",
+      "label": "Hero Footer Tagline",
+      "default": "Men’s celebration wear, reimagined"
+    },
+    {
+      "type": "header",
+      "content": "Chapter 1: The Shift"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch1_image",
+      "label": "Chapter 1 Visual Image"
+    },
+    {
+      "type": "html",
+      "id": "ch1_stamp_text",
+      "label": "Badge Stamp Text (HTML)",
+      "default": "Fresh point<br>of view<br>by Kisah"
+    },
+    {
+      "type": "text",
+      "id": "ch1_number",
+      "label": "Chapter 1 Eyebrow",
+      "default": "01 / The shift"
+    },
+    {
+      "type": "html",
+      "id": "ch1_heading",
+      "label": "Chapter 1 Heading (HTML)",
+      "default": "The man moved forward. <em>His festive wardrobe didn’t.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "ch1_body",
+      "label": "Chapter 1 Body Text",
+      "default": "Men found new ways to express who they are. Celebration wear kept handing them the same colours, the same cuts, the same story. Kisah exists to close that gap."
+    },
+    {
+      "type": "text",
+      "id": "ch1_pill1",
+      "label": "Pill 1",
+      "default": "Rebellious, not reckless"
+    },
+    {
+      "type": "text",
+      "id": "ch1_pill2",
+      "label": "Pill 2",
+      "default": "Bold, but tasteful"
+    },
+    {
+      "type": "text",
+      "id": "ch1_pill3",
+      "label": "Pill 3",
+      "default": "Modern, yet rooted"
+    },
+    {
+      "type": "header",
+      "content": "Marquee Ticker"
+    },
+    {
+      "type": "html",
+      "id": "marquee_text",
+      "label": "Marquee HTML Item",
+      "default": "NEVER BE <b>VANILLA</b> • "
+    },
+    {
+      "type": "header",
+      "content": "Statement Section"
+    },
+    {
+      "type": "text",
+      "id": "statement_eyebrow",
+      "label": "Statement Eyebrow",
+      "default": "Our point of view"
+    },
+    {
+      "type": "text",
+      "id": "statement_heading_line1",
+      "label": "Heading Line 1",
+      "default": "Same rituals."
+    },
+    {
+      "type": "text",
+      "id": "statement_heading_line2",
+      "label": "Heading Line 2 (Highlighted)",
+      "default": "New rules."
+    },
+    {
+      "type": "textarea",
+      "id": "statement_body",
+      "label": "Statement Body Text",
+      "default": "We don’t reject tradition. We give it fresh colours, sharper silhouettes and a reason to start conversations again."
+    },
+    {
+      "type": "header",
+      "content": "Mural Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "mural_image",
+      "label": "Mural Background Image"
+    },
+    {
+      "type": "text",
+      "id": "mural_chapter",
+      "label": "Mural Eyebrow",
+      "default": "02 / Culture, remixed"
+    },
+    {
+      "type": "text",
+      "id": "mural_heading",
+      "label": "Mural Heading",
+      "default": "Art. Ritual. Attitude. In one frame."
+    },
+    {
+      "type": "textarea",
+      "id": "mural_description",
+      "label": "Mural Description",
+      "default": "Indian celebration is our canvas—not our cage. We draw from its energy, then challenge every predictable way it has been worn."
+    },
+    {
+      "type": "header",
+      "content": "Design Code Section"
+    },
+    {
+      "type": "html",
+      "id": "code_heading",
+      "label": "Design Code Heading (HTML)",
+      "default": "Designed to be <em>noticed.</em><br>Made to be remembered."
+    },
+    {
+      "type": "textarea",
+      "id": "code_description",
+      "label": "Design Code Description",
+      "default": "Different for a reason. Expressive with restraint. Every design choice earns its place—and your second look."
+    },
+    {
+      "type": "header",
+      "content": "Main Character Quote"
+    },
+    {
+      "type": "text",
+      "id": "character_eyebrow",
+      "label": "Character Eyebrow",
+      "default": "For the main character"
+    },
+    {
+      "type": "html",
+      "id": "character_quote",
+      "label": "Character Quote (HTML)",
+      "default": "Not the loudest man in the room. <em>The one you remember.</em>"
+    },
+    {
+      "type": "textarea",
+      "id": "character_description",
+      "label": "Character Description",
+      "default": "For the man who uses fashion to say something—without ever needing to announce himself."
+    },
+    {
+      "type": "header",
+      "content": "Finale Section"
+    },
+    {
+      "type": "image_picker",
+      "id": "finale_image",
+      "label": "Finale Background Image"
+    },
+    {
+      "type": "text",
+      "id": "finale_eyebrow",
+      "label": "Finale Eyebrow",
+      "default": "This is celebration wear, fast-forwarded"
+    },
+    {
+      "type": "html",
+      "id": "finale_heading",
+      "label": "Finale Heading (HTML)",
+      "default": "Never be<em>vanilla.</em>"
+    },
+    {
+      "type": "text",
+      "id": "finale_cta_text",
+      "label": "Finale Button Text",
+      "default": "Enter the new Kisah"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "code_card",
+      "name": "Design Code Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Unexpected colour"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Card Description",
+          "default": "Palettes that step outside the familiar ethnic script."
+        }
+      ]
+    },
+    {
+      "type": "gallery_card",
+      "name": "Gallery Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card Image"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Small Tag Label",
+          "default": "The new"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading Text",
+          "default": "Break the code."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Vibe Editorial",
+      "blocks": [
+        {
+          "type": "code_card",
+          "settings": {
+            "number": "01",
+            "title": "Unexpected colour",
+            "text": "Palettes that step outside the familiar ethnic script."
+          }
+        },
+        {
+          "type": "code_card",
+          "settings": {
+            "number": "02",
+            "title": "Contemporary silhouette",
+            "text": "Shapes that feel rooted in culture, alive in the present."
+          }
+        },
+        {
+          "type": "code_card",
+          "settings": {
+            "number": "03",
+            "title": "Expressive detail",
+            "text": "Print, texture and craft that reward a closer look."
+          }
+        },
+        {
+          "type": "code_card",
+          "settings": {
+            "number": "04",
+            "title": "Fresh styling",
+            "text": "Unexpected combinations that make the whole look your own."
+          }
+        },
+        {
+          "type": "gallery_card",
+          "settings": {
+            "tag": "The new",
+            "title": "Break the code."
+          }
+        },
+        {
+          "type": "gallery_card",
+          "settings": {
+            "tag": "The attitude",
+            "title": "Show up different."
+          }
+        },
+        {
+          "type": "gallery_card",
+          "settings": {
+            "tag": "The occasion",
+            "title": "Celebrate forward."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

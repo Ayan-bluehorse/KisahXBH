@@ -5,6 +5,31 @@ Footer SEO section with:
 - Best-selling products table (collection only)
 {% endcomment %}
 
+{%- liquid
+  assign seo_heading = blank
+  assign seo_richtext = blank
+  assign popular_searches = blank
+
+  if template.name == 'index'
+    assign seo_heading = section.settings.home_seo_heading
+    assign seo_richtext = section.settings.home_seo_description
+    assign popular_searches = section.settings.home_popular_searches
+  elsif template.name == 'collection'
+    assign seo_heading = collection.metafields.custom.footer_seo_heading
+    assign seo_richtext = collection.metafields.custom.footer_seo_content
+    assign popular_searches = collection.metafields.custom.popular_searches
+  elsif template.name == 'product'
+    assign seo_heading = product.metafields.custom.footer_seo_heading
+    assign seo_richtext = product.metafields.custom.footer_seo_description
+  endif
+
+  assign has_content = false
+  if seo_heading != blank or seo_richtext != blank or popular_searches != blank or template.name == 'collection'
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
 <section class="container footer-seo-wrapper" aria-label="SEO Footer">
   <div class="footer-seo-grid {% if template.name == 'index' %}homepage-layout{% endif %}">
 
@@ -12,21 +37,6 @@ Footer SEO section with:
     <div class="footer-left">
 
       <div class="welcome-outer" id="welcomeOuter-{{ section.id }}">
-
-        {% if template.name == 'index' %}
-          {% assign seo_heading = section.settings.home_seo_heading %}
-          {% assign seo_richtext = section.settings.home_seo_description %}
-          {% assign popular_searches = section.settings.home_popular_searches %}
-
-        {% elsif template.name == 'collection' %}
-          {% assign seo_heading = collection.metafields.custom.footer_seo_heading %}
-          {% assign seo_richtext = collection.metafields.custom.footer_seo_content %}
-          {% assign popular_searches = collection.metafields.custom.popular_searches %}
-
-        {% elsif template.name == 'product' %}
-          {% assign seo_heading = product.metafields.custom.footer_seo_heading %}
-          {% assign seo_richtext = product.metafields.custom.footer_seo_description %}
-        {% endif %}
 
         {% if seo_heading != blank %}
           <h2 class="section-heading">
@@ -93,6 +103,7 @@ Footer SEO section with:
 
   </div>
 </section>
+{%- endif -%}
 
 <style>
 .footer-seo-grid {
