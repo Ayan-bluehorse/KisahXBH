@@ -592,7 +592,14 @@
   <script defer src="{{ 'sticky-add-to-cart.js' | asset_url }}"></script>
 {% endif %}
 {%- if request.page_type == 'collection' or request.page_type == 'search' -%}
-  <script defer src="{{ 'collection-revamp.js' | asset_url }}"></script> {% comment %} {% endcomment %}
+  <script>
+    if (window.innerWidth < 768) {
+      var s = document.createElement('script');
+      s.src = "{{ 'collection-revamp.js' | asset_url }}";
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  </script>
 {%- endif -%}
   {% if template.name == 'index' %}
     {% render 'cart-chiplet' %}
@@ -600,7 +607,14 @@
   {% if request.page_type == 'product' or request.page_type == 'collection' or request.page_type == 'search' or request.page_type == 'page' or template.name == 'index' %}
     <script defer src="{{ 'pdp-variant-size.js' | asset_url }}"></script>
   {% endif %}
-  <script defer src="{{ 'custom-menu.js' | asset_url }}"></script>
+  <script>
+    if (window.innerWidth < 768) {
+      var s = document.createElement('script');
+      s.src = "{{ 'custom-menu.js' | asset_url }}";
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+  </script>
 
 {%- if request.page_type == 'collection' -%}
 {% render 'size-selector' %}
