@@ -182,33 +182,41 @@
 
                       assign val_down = value.label | downcase
                       assign swatch_color = '#ccc'
-                      if val_down contains 'black'
+                      if val_down contains 'wine'
+                        assign swatch_color = '#581825'
+                      elsif val_down contains 'maroon'
+                        assign swatch_color = '#6b2231'
+                      elsif val_down contains 'charcoal' or val_down contains 'black'
                         assign swatch_color = '#181721'
                       elsif val_down contains 'blue' or val_down contains 'blie' or val_down contains 'navy'
                         assign swatch_color = '#2b3f73'
-                      elsif val_down contains 'maroon' or val_down contains 'wine'
-                        assign swatch_color = '#6b2231'
-                      elsif val_down contains 'pink'
+                      elsif val_down contains 'pink' or val_down contains 'rose'
                         assign swatch_color = '#d99aad'
                       elsif val_down contains 'multi'
                         assign swatch_color = 'linear-gradient(135deg,#c16452 0%,#d3b25e 34%,#4a7a5e 67%,#3b3f78 100%)'
                       elsif val_down contains 'cream' or val_down contains 'beige' or val_down contains 'fawn'
                         assign swatch_color = '#e6dbc6'
-                      elsif val_down contains 'purple' or val_down contains 'lilac' or val_down contains 'violet' or val_down contains 'mauve'
+                      elsif val_down contains 'lilac'
+                        assign swatch_color = '#a594c7'
+                      elsif val_down contains 'purple' or val_down contains 'violet' or val_down contains 'mauve'
                         assign swatch_color = '#6f5a92'
                       elsif val_down contains 'green' or val_down contains 'olive' or val_down contains 'mint' or val_down contains 'sage'
                         assign swatch_color = '#3f6b52'
+                      elsif val_down contains 'teal' or val_down contains 'turquoise'
+                        assign swatch_color = '#2c6b6b'
                       elsif val_down contains 'yellow' or val_down contains 'gold' or val_down contains 'mustard'
                         assign swatch_color = '#d6ac48'
-                      elsif val_down contains 'grey' or val_down contains 'gray'
+                      elsif val_down contains 'grey' or val_down contains 'gray' or val_down contains 'silver'
                         assign swatch_color = '#8c8b93'
                       elsif val_down contains 'white' or val_down contains 'off white' or val_down contains 'ivory'
                         assign swatch_color = '#f6f4ef'
-                      elsif val_down contains 'orange' or val_down contains 'rust' or val_down contains 'peach'
+                      elsif val_down contains 'orange' or val_down contains 'rust' or val_down contains 'peach' or val_down contains 'coral'
                         assign swatch_color = '#d46c43'
                       elsif val_down contains 'red'
                         assign swatch_color = '#a82c2c'
-                      elsif val_down contains 'brown'
+                      elsif val_down contains 'aqua'
+                        assign swatch_color = '#389ab8'
+                      elsif val_down contains 'brown' or val_down contains 'choco'
                         assign swatch_color = '#593e2b'
                       endif
                     -%}
@@ -222,7 +230,13 @@
                              data-initial-disabled="{% if is_disabled %}1{% else %}0{% endif %}"
                              {% if value.active %}checked{% endif %}
                              {% if is_disabled %}disabled{% endif %}>
-                      <i style="background: {{ swatch_color }};"></i>
+                      {%- if value.swatch.image -%}
+                        <i style="background-image: url('{{ value.swatch.image | image_url: width: 60 }}'); background-size: cover;"></i>
+                      {%- elsif value.swatch.color -%}
+                        <i style="background: {{ value.swatch.color }};"></i>
+                      {%- else -%}
+                        <i style="background: {{ swatch_color }};"></i>
+                      {%- endif -%}
                       <em>{{ value.label | replace: ' & ', '<br>& ' }}<b class="kisah-sw-count"> {{ value.count }}</b></em>
                     </label>
                   {%- endfor -%}
