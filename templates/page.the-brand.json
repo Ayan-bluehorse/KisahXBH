@@ -52,7 +52,8 @@
         "finale_image": "shopify://shop_images/brand-vibe-mural.webp",
         "finale_eyebrow": "This is celebration wear, fast-forwarded",
         "finale_heading": "Never be<em>vanilla.</em>",
-        "finale_cta_text": "Enter the new Kisah"
+        "finale_cta_text": "Enter the new Kisah",
+        "finale_cta_url": "shopify://collections/new-arrivals"
       }
     }
   },
