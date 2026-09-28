@@ -85,11 +85,19 @@
         {%- endif -%}
       </div>
       
-      <div class="mural-copy reveal">
-        <div class="chapter-no">{{ section.settings.mural_chapter | default: '02 / Culture, remixed' }}</div>
-        <h2>{{ section.settings.mural_heading | default: 'Art. Ritual. Attitude. In one frame.' }}</h2>
-        <p>{{ section.settings.mural_description | default: 'Indian celebration is our canvas—not our cage. We draw from its energy, then challenge every predictable way it has been worn.' }}</p>
-      </div>
+      {%- if section.settings.mural_chapter != blank or section.settings.mural_heading != blank or section.settings.mural_description != blank -%}
+        <div class="mural-copy reveal">
+          {%- if section.settings.mural_chapter != blank -%}
+            <div class="chapter-no">{{ section.settings.mural_chapter }}</div>
+          {%- endif -%}
+          {%- if section.settings.mural_heading != blank -%}
+            <h2>{{ section.settings.mural_heading }}</h2>
+          {%- endif -%}
+          {%- if section.settings.mural_description != blank -%}
+            <p>{{ section.settings.mural_description }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
     </section>
 
     <!-- 8. Design Code Section -->

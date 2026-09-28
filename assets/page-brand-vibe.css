@@ -599,7 +599,7 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 .brand-vibe-page .mural-bg {
   position: absolute;
   inset: 0;
-  background-position: center 8%;
+  background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #1a1616;
