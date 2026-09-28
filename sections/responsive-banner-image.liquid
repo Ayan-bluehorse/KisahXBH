@@ -34,15 +34,24 @@
 {% endstyle %}
 
 <div class="responsive-banner-wrapper">
+  {%- liquid
+    if section.index == 1
+      assign banner_loading = 'eager'
+      assign banner_priority = 'high'
+    else
+      assign banner_loading = 'lazy'
+      assign banner_priority = 'auto'
+    endif
+  -%}
   {% if section.settings.desktop_image %}
     <img
       width="{{ section.settings.desktop_image.width }}"
       height="{{ section.settings.desktop_image.height }}"
-      loading="lazy"
+      loading="{{ banner_loading }}"
+      fetchpriority="{{ banner_priority }}"
       src="{{ section.settings.desktop_image | image_url: width: 2000 }}"
       alt="{{ section.settings.alt_text }}"
       class="desktop-banner"
-      loading="lazy"
     >
   {% endif %}
 
@@ -50,11 +59,11 @@
     <img
       width="{{ section.settings.mobile_image.width }}"
       height="{{ section.settings.mobile_image.height }}"
-      loading="lazy"
+      loading="{{ banner_loading }}"
+      fetchpriority="{{ banner_priority }}"
       src="{{ section.settings.mobile_image | image_url: width: 1000 }}"
       alt="{{ section.settings.alt_text }}"
       class="mobile-banner"
-      loading="lazy"
     >
   {% endif %}
 </div>

@@ -31,27 +31,34 @@
     </div>
 
     <div class="ap-right">
+      {%- liquid
+        if section.index == 1
+          assign ap_loading = 'eager'
+          assign ap_priority = 'high'
+        else
+          assign ap_loading = 'lazy'
+          assign ap_priority = 'auto'
+        endif
+      -%}
       {% if section.settings.mobile_image %}
-        <a 
-          href="{{ section.settings.btn_link }}" class="overlay_link">
-    <img 
-      width="{{ section.settings.mobile_image.width }}" height="{{ section.settings.mobile_image.height }}" loading="lazy" src="{{ section.settings.mobile_image | image_url: width: 900 }}"
-      alt="After Party Image Mobile"
-      class="ap-image mobile-img"
-    >
-    </a>
-  {% endif %}
+        <a href="{{ section.settings.btn_link }}" class="overlay_link">
+          <img 
+            width="{{ section.settings.mobile_image.width }}" height="{{ section.settings.mobile_image.height }}" loading="{{ ap_loading }}" fetchpriority="{{ ap_priority }}" src="{{ section.settings.mobile_image | image_url: width: 900 }}"
+            alt="After Party Image Mobile"
+            class="ap-image mobile-img"
+          >
+        </a>
+      {% endif %}
 
-  {% if section.settings.main_image %}
-    <a 
-          href="{{ section.settings.btn_link }}" class="overlay_link">
-    <img 
-      width="{{ section.settings.main_image.width }}" height="{{ section.settings.main_image.height }}" loading="lazy" src="{{ section.settings.main_image | image_url: width: 1600 }}"
-      alt="After Party Image Desktop"
-      class="ap-image desktop-img"
-    >
-      </a>
-  {% endif %}
+      {% if section.settings.main_image %}
+        <a href="{{ section.settings.btn_link }}" class="overlay_link">
+          <img 
+            width="{{ section.settings.main_image.width }}" height="{{ section.settings.main_image.height }}" loading="{{ ap_loading }}" fetchpriority="{{ ap_priority }}" src="{{ section.settings.main_image | image_url: width: 1600 }}"
+            alt="After Party Image Desktop"
+            class="ap-image desktop-img"
+          >
+        </a>
+      {% endif %}
     </div>
 
   </div>

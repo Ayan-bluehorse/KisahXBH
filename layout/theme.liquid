@@ -251,8 +251,8 @@
  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Gabarito:wght@400..900&family=Manrope:wght@200..800&family=Oxygen:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Gabarito:wght@400..900&family=Manrope:wght@200..800&family=Oxygen:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Gabarito:wght@400..900&family=Manrope:wght@200..800&family=Oxygen:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"></noscript>
 
   <script>
   window.kisahJQueryCallbacks = [];
@@ -264,12 +264,16 @@
     }
   };
   document.addEventListener('DOMContentLoaded', function() {
+    var checkAttempts = 0;
     var checkInterval = setInterval(function() {
+      checkAttempts++;
       if (window.jQuery && window.jQuery.fn && window.jQuery.fn.slick) {
         clearInterval(checkInterval);
         window.kisahJQueryCallbacks.forEach(function(cb) {
           try { cb(window.jQuery); } catch (e) { console.error('kisahWhenJQueryReady callback error:', e); }
         });
+      } else if (checkAttempts >= 100) {
+        clearInterval(checkInterval);
       }
     }, 50);
   });
@@ -283,12 +287,16 @@
     }
   };
   document.addEventListener('DOMContentLoaded', function() {
+    var swiperAttempts = 0;
     var swiperInterval = setInterval(function() {
+      swiperAttempts++;
       if (window.Swiper) {
         clearInterval(swiperInterval);
         window.kisahSwiperCallbacks.forEach(function(cb) {
           try { cb(window.Swiper); } catch (e) { console.error('kisahWhenSwiperReady callback error:', e); }
         });
+      } else if (swiperAttempts >= 100) {
+        clearInterval(swiperInterval);
       }
     }, 50);
   });
