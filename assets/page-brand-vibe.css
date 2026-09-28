@@ -998,25 +998,27 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   }
   .brand-vibe-page .gallery {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 12px;
+    gap: 14px;
+    padding: 14px;
+    background: var(--bv-paper);
   }
   .brand-vibe-page .gallery-card {
-    aspect-ratio: 4 / 5;
     min-height: auto;
     height: auto;
+    aspect-ratio: auto;
     margin: 0 !important;
     position: relative;
     overflow: hidden;
+    background: #1b1717;
   }
   .brand-vibe-page .gallery-media,
   .brand-vibe-page .gallery-card img {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
   .brand-vibe-page .gallery-copy {
     bottom: 20px;
