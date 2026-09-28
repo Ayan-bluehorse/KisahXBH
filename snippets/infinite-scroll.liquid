@@ -239,10 +239,9 @@
     var nextUrl = root.getAttribute('data-next-url');
     var currentPage = parseInt(root.getAttribute('data-current-page'), 10) || 1;
     var pages = parseInt(root.getAttribute('data-pages'), 10) || 1;
-    var minimumLoaderMs = parseInt(
-      root.getAttribute('data-min-loader-ms'),
-      10
-    ) || 0;
+    var rawMinLoaderMs = root.getAttribute('data-min-loader-ms');
+    var parsedMin = parseInt(rawMinLoaderMs, 10);
+    var minimumLoaderMs = Number.isFinite(parsedMin) ? parsedMin : 0;
     var hasNextPage = Boolean(nextUrl) || currentPage < pages;
     var isLoading = false;
     var oosAppended = false;
@@ -666,7 +665,7 @@
           }
         }
       }, {
-        rootMargin: '400px 0px 400px 0px',
+        rootMargin: '1000px 0px 1000px 0px',
         threshold: 0
       });
 
@@ -679,7 +678,7 @@
 
         ticking = true;
         requestAnimationFrame(function () {
-          if (sentinel.getBoundingClientRect().top <= (window.innerHeight + 400)) {
+          if (sentinel.getBoundingClientRect().top <= (window.innerHeight + 1000)) {
             loadNextPage(false);
           }
           ticking = false;

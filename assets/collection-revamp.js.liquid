@@ -656,22 +656,10 @@ product-form.js-product.product-info.quickbuy-content {
     sideWidget.querySelector(".CP-top")?.addEventListener("click", () => scrollIcon?.click());
   })();
 
-  /* ---------------- Fetch product tags for badges ---------------- */
-  const productMap = {};
-  let firstTilesInit = true;
-  const fetchProductsPromise = (function () {
-    const jsonURL = `${location.pathname.replace(/\/$/, "")}/products.json?limit=500`;
-    return fetch(jsonURL)
-      .then((res) => res.json())
-      .then((data) => {
-        (data.products || []).forEach((p) => { productMap[p.handle] = { tags: p.tags || [] }; });
-      })
-      .catch((err) => console.error("Product JSON fetch failed:", err));
-  })();
-
+  /* ---------------- Product badge mappings ---------------- */
   const badgeMap = {
     "clearance sale": "On Sale",
-    "New Arrivals": "New Arrival",
+    "new arrivals": "New Arrival",
     "best seller": " Best Seller",
   };
 
@@ -766,26 +754,19 @@ product-form.js-product.product-info.quickbuy-content {
       snapList.insertAdjacentHTML("beforeend", actionButtons);
     }
 
-
-
-    // Badge by tag
-    const link = productBlock.querySelector("a.product-link");
-    const href = link ? link.getAttribute("href") : null;
-    const handleMatch = href && href.match(/\/products\/([a-zA-Z0-9\-]+)/);
-    if (handleMatch) {
-      const handle = handleMatch[1];
-      const productData = productMap[handle];
-      if (productData && productData.tags) {
-        const matchedTag = Object.keys(badgeMap).find((tag) => productData.tags.includes(tag));
-        const matchedBadge = matchedTag ? badgeMap[matchedTag] : null;
-        if (matchedBadge) {
-          const tile = link.closest(".image-cont");
-          if (tile && !tile.querySelector(".CP-ribbon-tag")) {
-            const badge = document.createElement("div");
-            badge.className = "CP-ribbon-tag";
-            badge.textContent = matchedBadge;
-            tile.appendChild(badge);
-          }
+    // Badge by tag (read directly from data attribute)
+    const rawTags = productBlock.getAttribute("data-product-tags") || "";
+    if (rawTags) {
+      const tagsList = rawTags.split(",");
+      const matchedTag = Object.keys(badgeMap).find((tag) => tagsList.includes(tag.toLowerCase()));
+      const matchedBadge = matchedTag ? badgeMap[matchedTag] : null;
+      if (matchedBadge) {
+        const tile = productBlock.querySelector(".image-cont");
+        if (tile && !tile.querySelector(".CP-ribbon-tag")) {
+          const badge = document.createElement("div");
+          badge.className = "CP-ribbon-tag";
+          badge.textContent = matchedBadge;
+          tile.appendChild(badge);
         }
       }
     }

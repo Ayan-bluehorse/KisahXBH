@@ -260,8 +260,7 @@
       });
     });
 
-    /* Fallback 2-second polling */
-    setInterval(updateCartChiplet, 2000);
+    // Event-driven updates only (no wasteful continuous polling)
 
     /* -----------------------
        CLICK HANDLERS

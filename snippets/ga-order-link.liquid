@@ -160,25 +160,26 @@
     }
   }
 
-  /* ---- 5. Polling Loop with Retries for First-Pageview Races ---- */
-  function initPolling() {
-    var delays = [100, 300, 700, 1500, 3000, 5000];
+  /* ---- 5. Resolve IDs & Inject into Page Forms (No unwanted network spam) ---- */
+  function initAttribution() {
+    var delays = [200, 1000, 3000];
     var attempt = 0;
 
-    function checkAndSync() {
+    function checkAndInject() {
       resolveIds(function(cid, sid) {
-        if (!state.stamped) {
-          syncToShopifyCart(cid, sid, false);
-        }
+        var attrs = {};
+        if (cid) attrs['ga_client_id'] = cid;
+        if (sid) attrs['ga_session_id'] = String(sid);
+        injectFormInputs(attrs);
       });
 
       if ((!state.clientId || !state.sessionId) && attempt < delays.length) {
-        setTimeout(checkAndSync, delays[attempt]);
+        setTimeout(checkAndInject, delays[attempt]);
         attempt++;
       }
     }
 
-    checkAndSync();
+    checkAndInject();
   }
 
   /* ---- 6. Checkout Interceptors (GoKwik, Rebuy, Helium, Native Checkout) ---- */
@@ -235,28 +236,14 @@
     ].forEach(function(evtName) {
       document.addEventListener(evtName, function() {
         resolveIds(function(cid, sid) {
-          syncToShopifyCart(cid, sid, false);
-        });
-      });
-      window.addEventListener(evtName, function() {
-        resolveIds(function(cid, sid) {
+          var attrs = {};
+          if (cid) attrs['ga_client_id'] = cid;
+          if (sid) attrs['ga_session_id'] = String(sid);
+          injectFormInputs(attrs);
           syncToShopifyCart(cid, sid, false);
         });
       });
     });
-
-    // Observe DOM additions for any newly injected forms or modal elements
-    if (window.MutationObserver) {
-      var observer = new MutationObserver(function() {
-        if (state.clientId || state.sessionId) {
-          var attrs = {};
-          if (state.clientId) attrs['ga_client_id'] = state.clientId;
-          if (state.sessionId) attrs['ga_session_id'] = state.sessionId;
-          injectFormInputs(attrs);
-        }
-      });
-      observer.observe(document.body || document.documentElement, { childList: true, subtree: true });
-    }
   }
 
   /* ---- 7. Global API for other scripts & verification ---- */
@@ -280,11 +267,11 @@
   /* ---- Bootstrapping ---- */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
-      initPolling();
+      initAttribution();
       setupCheckoutInterceptors();
     });
   } else {
-    initPolling();
+    initAttribution();
     setupCheckoutInterceptors();
   }
 })();

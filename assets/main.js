@@ -1,22 +1,27 @@
 (function () {
-  // Run only on mobile (less than or equal to 768px width)
-  if (window.innerWidth > 768) return;
+  // Run only on mobile product pages
+  if (window.innerWidth > 768 || !window.location.pathname.includes('/products/')) return;
+
+  var attempts = 0;
+  var maxAttempts = 20;
 
   function tryInject() {
+    attempts++;
+    if (attempts >= maxAttempts && typeof timer !== 'undefined') {
+      clearInterval(timer);
+    }
+
     const orig = document.querySelector('#wishlisthero-product-page-button-container button');
     const stickyActions = document.querySelector('.zrx-sticky-atc-bar .zrx-sticky-atc-product-actions');
     if (!orig || !stickyActions) return;
 
     if (stickyActions.querySelector('.zrx-sticky-atc-wishlist-button')) {
-      clearInterval(timer);
+      if (typeof timer !== 'undefined') clearInterval(timer);
       return;
     }
 
-
-    
     const stickyBtn = orig.cloneNode(true);
     stickyBtn.classList.add('zrx-sticky-atc-wishlist-button');
-
 
     const observer = new MutationObserver(() => {
       stickyBtn.setAttribute('aria-label', orig.getAttribute('aria-label'));
@@ -28,7 +33,6 @@
       orig.click();
     });
 
-    
     const atc = stickyActions.querySelector('.zrx-sticky-atc-main-button');
     stickyActions.insertBefore(stickyBtn, atc);
 
@@ -84,20 +88,20 @@
         justify-content: center;
       }
 
-           span.wishlist-hero-items-count.wishlist-hero-items-count-exists {
+      span.wishlist-hero-items-count.wishlist-hero-items-count-exists {
         right: 3px;
         top: 6px;
         width: 5px;
         height: auto;
-    }
+      }
+
       .zrx-sticky-atc-product-actions .zrx-sticky-atc-wishlist-button[aria-label="REMOVE FROM WISHLIST"] svg {
         color: white !important;
-  
       }
     `;
     document.head.appendChild(extraStyle);
 
-    clearInterval(timer);
+    if (typeof timer !== 'undefined') clearInterval(timer);
   }
 
   const timer = setInterval(tryInject, 300);
