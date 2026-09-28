@@ -269,11 +269,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  /* Product title - mobile spec (desktop keeps 27px / rgba(52,52,52,.83)).
-     var(--base-font-family)W01-Heavy has no @font-face in this theme, so it falls back to
-     the declared Bold face until the Heavy file is added. */
+  /* Product title - mobile spec using theme heading font (Bodoni Moda) */
   .section-main-product .product-column-right .title-row .product-title {
-    font-family: var(--base-font-family)W01-Heavy", var(--base-font-family), sans-serif;
+    font-family: var(--heading-font-family, "Bodoni Moda", serif);
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
@@ -293,13 +291,12 @@
     color: #6b6b6b;
   }
 
-  /* main.css:28 sets a global "p { font-family: ... !important }", so the rich
-     text inside the description needs !important to take Nunito Sans. */
+  /* Product description font styling using theme base font (Manrope) */
   .kpdp-title-description,
   .kpdp-title-description p,
   .kpdp-title-description li,
   .kpdp-title-description span {
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -332,17 +329,14 @@
     display: inline;
   }
 
-  /* Compare-at price - mobile spec. var(--base-font-family)W01-Medium has no @font-face in
-     this theme, so it falls back to the declared Regular face. The base rule
-     uses font-size !important, so this one has to as well. */
+  /* Compare-at price - mobile spec using theme base font (Manrope) */
   .section-main-product
     .product-column-right
     .price-container
     .kpdp-price-row
     .price__default
     .price__was {
-    font-family:
-      var(--base-font-family)W01-Medium", var(--base-font-family), sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 16px !important;
     font-weight: 400;
     line-height: 20px;
@@ -356,7 +350,7 @@
     .kpdp-price-row
     .price__default
     .price__current {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 24px;
     font-weight: 800;
     line-height: 22px;
@@ -367,7 +361,7 @@
      so the family here needs !important or it renders in var(--base-font-family). */
   .product-column-right .price-container .kpdp-price-row .inclusive-tax,
   .product-column-right .price-container .kpdp-price-row .inclusive-tax span {
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 14px;
     line-height: 19px;
     font-weight: 500;
@@ -404,7 +398,7 @@
     float: none;
     margin: 0;
     padding: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
@@ -424,7 +418,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 12px;
     font-weight: 700;
     line-height: 20px;
@@ -563,7 +557,7 @@
     /* 13px text in an 18px line-box leaves ~2.5px half-leading above the
        glyphs; trim it so the text sits flush under the pills. */
     line-height: 100%;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.02em;
@@ -622,7 +616,7 @@
     border-radius: 50px;
     /* var(--base-font-family) is the Figma layer name for the face declared in
        main.css as var(--base-font-family) - same typeface, different spelling. */
-    font-family: var(--base-font-family), var(--base-font-family), sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 16px;
     font-weight: 400;
     line-height: 21.45px;
@@ -660,7 +654,7 @@
   /* main.css:28 forces a global p font-family with !important */
   .kpdp-help-chat,
   .kpdp-help-chat .kpdp-help-chat__link {
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -700,7 +694,7 @@
 
   .tim-heading {
     margin: 0 0 20px;
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 16px;
     font-weight: 700;
     line-height: 20px;
@@ -752,7 +746,7 @@
 
   .tim-text {
     display: block;
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 14px;
     font-weight: 600;
     line-height: 16px;
@@ -775,7 +769,7 @@
   }
 
   .product-column-right .clickpost-edd__container .clickpost-edd__heading {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 16px;
     font-weight: 700;
     line-height: 20px;
@@ -792,7 +786,7 @@
     padding: 14px 16px !important;
     border-radius: 8px;
     background: #fcf0da;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
@@ -833,7 +827,7 @@
   }
 
   .ptwi-text {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
@@ -920,7 +914,7 @@
     padding: 5px 11px;
     border-radius: 8px;
     background: #ffffff;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
@@ -985,7 +979,7 @@ body.kpdp-contains-open {
 
 .kpdp-contains-drawer__title {
   margin: 0 34px 6px 0;
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: var(--heading-font-family, "Bodoni Moda", serif) !important;
   font-size: 18px !important;
   font-weight: 700 !important;
   line-height: 20px !important;
@@ -994,7 +988,7 @@ body.kpdp-contains-open {
 
 .kpdp-contains-drawer__note {
   margin: 0 0 12px;
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: var(--base-font-family, "Manrope", sans-serif) !important;
   font-size: 14px !important;
   font-weight: 200 !important;
   line-height: 27px !important;
@@ -1019,7 +1013,7 @@ body.kpdp-contains-open {
   border-color: #b78a2e99;
   border-radius: 8px 8px 0 0;
   background: #fdefd5;
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: var(--base-font-family, "Manrope", sans-serif) !important;
   font-size: 14px !important;
   font-weight: 700 !important;
   line-height: 20px !important;
@@ -1058,7 +1052,7 @@ body.kpdp-contains-open {
 
 .kpdp-spec__k,
 .kpdp-spec__v {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--base-font-family, "Manrope", sans-serif);
   font-size: 14px;
   line-height: 19px;
   color: #000000;
@@ -1119,7 +1113,7 @@ body.kpdp-contains-open {
   border-radius: 12px;
   background: var(--brand-rating-bg, #fff3da);
   color: var(--brand-rating-text, #1f1f1f);
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--base-font-family, "Manrope", sans-serif);
   font-size: 12px;
   font-weight: 600;
   line-height: 15px;
@@ -1135,7 +1129,7 @@ body.kpdp-contains-open {
 
 .brand-rating__label {
   color: inherit;
-  font-family: "Nunito Sans", sans-serif;
+  font-family: var(--base-font-family, "Manrope", sans-serif);
   font-size: 12px;
   font-weight: 600;
   line-height: 15px;
@@ -1299,6 +1293,29 @@ body.kpdp-contains-open {
 
    Mobile only, per the design brief - above 768px the template keeps the
    theme's strike-through treatment.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  .opt-btn.is-unavailable + .opt-label {
+    background-color: #F2F2F4 !important;
+    border-color: #D8D8DC !important;
+    border-radius: 0 !important;
+    color: #98989E !important;
+    opacity: 0.65 !important;
+  }
+
+  .opt-btn.is-unavailable:checked + .opt-label {
+    background-color: #D5D5DA !important;
+    border-color: #8E8E96 !important;
+    border-radius: 0 !important;
+    color: #333333 !important;
+    opacity: 0.85 !important;
+  }
+
+  .opt-btn.is-unavailable + .opt-label::after {
+    content: none !important;
+    display: none !important;
+  }
+}
 
 
 /* ==========================================================================
@@ -1403,7 +1420,7 @@ body.kpdp-contains-open {
      the family, so the override repeats it. Weights stay as they were - the
      count is bold on purpose. */
   .kpdp20-proof--atc .kpdp20-proof__text {
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: var(--base-font-family, "Manrope", sans-serif) !important;
     font-size: 14px;
     line-height: 1.4;
   }
@@ -1485,7 +1502,7 @@ body.kpdp-contains-open {
     border-radius: 10px;
     background: #f1edfd;
     color: #5e3bb3;
-    font-family: "Nunito Sans", sans-serif;
+    font-family: var(--base-font-family, "Manrope", sans-serif);
     font-size: 14px;
     font-weight: 400;
     line-height: 1.4;

@@ -13,11 +13,12 @@
   {% render 'elevateab' %}
 
 <!-- Font & CDN Preconnects for Page Speed -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="preconnect" href="https://cdn.rebuyengine.com" crossorigin>
-<link rel="preconnect" href="https://pdp.gokwik.co" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://cdn.rebuyengine.com">
+<link rel="dns-prefetch" href="https://pdp.gokwik.co">
 
 <!-- FontAwesome CSS Removed for Performance -->
 
@@ -108,6 +109,14 @@
 
   {%- unless base_font.system? -%}
     <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
+  {%- endunless -%}
+
+  {%- unless base_font_medium.system? -%}
+    <link rel="preload" as="font" href="{{ base_font_medium | font_url }}" type="font/woff2" crossorigin>
+  {%- endunless -%}
+
+  {%- unless base_font_bold.system? -%}
+    <link rel="preload" as="font" href="{{ base_font_bold | font_url }}" type="font/woff2" crossorigin>
   {%- endunless -%}
 
   {%- unless heading_font.system? -%}
@@ -249,8 +258,6 @@
   {%- endif -%}
 
  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Gabarito:wght@400..900&family=Manrope:wght@200..800&family=Oxygen:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Gabarito:wght@400..900&family=Manrope:wght@200..800&family=Oxygen:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"></noscript>
 

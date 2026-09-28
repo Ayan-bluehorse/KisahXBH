@@ -1,3 +1,38 @@
+<style>
+.new-home-page-banner .banner-image-sec {
+  position: relative;
+  width: 100%;
+}
+.new-home-page-banner .banner-image-sec:not(.slick-initialized) > .slide:not(:first-child) {
+  display: none !important;
+}
+.new-home-page-banner .banner-image-sec:not(.slick-initialized) > .slide:first-child {
+  display: block !important;
+  opacity: 1 !important;
+}
+@media screen and (max-width: 768px) {
+  .new-home-page-banner .banner-image-sec .mob-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+  .new-home-page-banner .banner-image-sec .desk-img {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 769px) {
+  .new-home-page-banner .banner-image-sec .desk-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+  .new-home-page-banner .banner-image-sec .mob-img {
+    display: none !important;
+  }
+}
+</style>
 <div class="new-home-page-banner">
     <div class="banner-image-sec">
          {% for block in section.blocks %}
@@ -18,8 +53,8 @@
                      height="auto"
                      alt="{{ block.settings.mob-img.alt | escape }}"
                      class="mob-img"
-                     loading="eager"
-                     fetchpriority="high"
+                     loading="{% if first %}eager{% else %}lazy{% endif %}"
+                     fetchpriority="{% if first %}high{% else %}low{% endif %}"
                    >
                  {% endif %}
                  
@@ -36,8 +71,8 @@
                      height="auto"
                      alt="{{ block.settings.desk-img.alt | escape }}"
                      class="desk-img"
-                     loading="eager"
-                     fetchpriority="high"
+                     loading="{% if first %}eager{% else %}lazy{% endif %}"
+                     fetchpriority="{% if first %}high{% else %}low{% endif %}"
                    >
                  {% endif %}
                  <div style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:15;pointer-events:none;">
@@ -68,8 +103,8 @@
                  height="auto"
                  alt="{{ block.settings.mob-img.alt | escape }}"
                 class="mob-img"
-                loading="eager"
-                 fetchpriority="high"
+                loading="{% if first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if first %}high{% else %}low{% endif %}"
                 />
           {% endif %}
           
@@ -85,8 +120,8 @@
                  height="auto"
                  alt="{{ block.settings.desk-img.alt | escape }}"
                  class="desk-img"
-                 loading="eager"
-                fetchpriority="high"
+                 loading="{% if first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if first %}high{% else %}low{% endif %}"
              />
             {% endif %}
                 {% if block.settings.link != blank %}

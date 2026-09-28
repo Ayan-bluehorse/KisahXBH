@@ -1,8 +1,43 @@
+<style>
+.wedding-banner-wrapper .banner-image-sec {
+  position: relative;
+  width: 100%;
+}
+.wedding-banner-wrapper .banner-image-sec:not(.slick-initialized) > .slide:not(:first-child) {
+  display: none !important;
+}
+.wedding-banner-wrapper .banner-image-sec:not(.slick-initialized) > .slide:first-child {
+  display: block !important;
+  opacity: 1 !important;
+}
+@media screen and (max-width: 768px) {
+  .wedding-banner-wrapper .banner-image-sec .mob-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+  .wedding-banner-wrapper .banner-image-sec .desk-img {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 769px) {
+  .wedding-banner-wrapper .banner-image-sec .desk-img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+  }
+  .wedding-banner-wrapper .banner-image-sec .mob-img {
+    display: none !important;
+  }
+}
+</style>
 <div class="new-home-page-banner wedding-banner-wrapper">
     <div class="banner-image-sec">
          {% for block in section.blocks %}
             {% assign first = forloop.first %}
-               
+                
            <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
             {% if block.settings.button-link != blank %}
                        <a href="{{ block.settings.button-link }}" class="overlay_link"></a>
@@ -23,8 +58,8 @@
                  height="auto"
                  alt="{{ block.settings.mob-img.alt | escape }}"
                 class="mob-img"
-                loading="eager"
-                 fetchpriority="high"
+                loading="{% if first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if first %}high{% else %}low{% endif %}"
                 />
           {% endif %}
           
@@ -40,9 +75,9 @@
                  height="auto"
                  alt="{{ block.settings.desk-img.alt | escape }}"
                  class="desk-img"
-                 loading="eager"
-                fetchpriority="high"
-             />
+                 loading="{% if first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if first %}high{% else %}low{% endif %}"
+              />
             {% endif %}
                 {% if block.settings.link != blank %}
                  </a>
