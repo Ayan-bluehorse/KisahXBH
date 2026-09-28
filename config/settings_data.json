@@ -843,8 +843,8 @@
           "reveal_timeout_ms": 1000
         }
       },
-      "377650522495455440": {
-        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+      "9674181886073616913": {
+        "type": "shopify://apps/mida-fraud-ip-blocker/blocks/blocker-script/09aab972-8c77-47b1-a9a0-4712e9f2405d",
         "disabled": false,
         "settings": {}
       }
