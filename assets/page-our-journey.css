@@ -368,19 +368,12 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  object-position: center center;
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .our-journey-page .art-panel:hover img {
   transform: scale(1.03);
-}
-
-.our-journey-page .art-panel.rack img {
-  object-position: 63% center;
-}
-
-.our-journey-page .art-panel.store img {
-  object-position: 50% center;
 }
 
 .our-journey-page .art-panel .image-caption {
@@ -416,6 +409,7 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   inset: 0;
   transition: transform 0.6s ease;
 }
@@ -429,17 +423,8 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
 }
 
 .our-journey-page .collage-main img {
-  object-fit: contain;
-}
-
-.our-journey-page .collage-black img {
-  object-position: 50% 20%;
-}
-
-.our-journey-page .collage-dandiya-final img {
-  height: 190%;
-  top: -52%;
-  object-position: center;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .our-journey-page .section-cream {
@@ -601,20 +586,9 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  filter: brightness(0.58) saturate(0.85);
+  object-position: center 6%;
+  filter: brightness(0.68) saturate(0.95);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.our-journey-page .film-card:first-child img {
-  object-position: 75% center;
-}
-
-.our-journey-page .film-card:nth-child(2) img {
-  object-position: 55% center;
-}
-
-.our-journey-page .film-card:nth-child(3) img {
-  object-position: 23% center;
 }
 
 .our-journey-page .film-card:hover img,
@@ -987,7 +961,8 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
     font-size: 23px;
   }
   .our-journey-page .hero-art {
-    height: 420px;
+    height: auto;
+    aspect-ratio: 4 / 3;
     min-height: 0;
   }
   .our-journey-page .hero-art .image-caption {
@@ -1040,13 +1015,13 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
     padding: 70px 6%;
   }
   .our-journey-page .art-panel {
-    aspect-ratio: 1;
+    aspect-ratio: 4 / 3;
   }
   .our-journey-page .store-section .chapter {
     flex-direction: column;
   }
   .our-journey-page .store-section .art-panel {
-    aspect-ratio: 1.12;
+    aspect-ratio: 4 / 3;
   }
   .our-journey-page .breakout {
     padding: 65px 6%;
@@ -1067,15 +1042,19 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
   }
   .our-journey-page .film-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   .our-journey-page .film-card:first-child {
     grid-column: auto;
   }
   .our-journey-page .film-card {
-    min-height: 290px;
+    min-height: 310px;
   }
   .our-journey-page .film-card:nth-child(n + 2) {
-    min-height: 240px;
+    min-height: 310px;
+  }
+  .our-journey-page .film-card img {
+    object-position: center 4%;
   }
   .our-journey-page .fireside {
     display: block;

@@ -207,7 +207,7 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   position: absolute;
   inset: 0;
   z-index: -3;
-  background-position: center 18%;
+  background-position: center 2%;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #1a1616;
@@ -587,18 +587,19 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 
 /* 7. Mural Section */
 .brand-vibe-page .mural {
-  min-height: 115svh;
+  min-height: 85svh;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
   isolation: isolate;
   background-color: #0d0b0b;
+  position: relative;
 }
 
 .brand-vibe-page .mural-bg {
   position: absolute;
   inset: 0;
-  background-position: center 25%;
+  background-position: center 8%;
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #1a1616;
@@ -722,36 +723,27 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 
 /* 9. Gallery */
 .brand-vibe-page .gallery {
-  padding: 16px 16px 0;
+  padding: 16px;
   background: var(--bv-paper);
   display: grid;
-  grid-template-columns: 1.05fr .9fr 1.05fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   position: relative;
-  overflow: visible !important;
-  z-index: 3;
 }
 
 .brand-vibe-page .gallery-card {
   position: relative;
-  min-height: 80svh;
+  aspect-ratio: 9 / 14;
+  overflow: hidden;
   background: #1b1717;
-  overflow: visible !important;
+  border-radius: 2px;
 }
 
 .brand-vibe-page .gallery-card:nth-child(2) {
-  margin-top: 64px;
-  margin-bottom: -64px;
-  z-index: 6;
+  margin-top: 32px;
 }
 
-.brand-vibe-page .gallery-media {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background: #1b1717;
-}
-
+.brand-vibe-page .gallery-media,
 .brand-vibe-page .gallery-card img,
 .brand-vibe-page .gallery-card .placeholder-svg,
 .brand-vibe-page .gallery-media img,
@@ -761,6 +753,7 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  object-position: center top;
   transition: transform 1.1s cubic-bezier(.2, .8, .2, 1);
 }
 
@@ -770,50 +763,43 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   transform: scale(1.035);
 }
 
-.brand-vibe-page .gallery-media:after,
-.brand-vibe-page .gallery-card:after {
+.brand-vibe-page .gallery-card:after,
+.brand-vibe-page .gallery-media:after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, .85));
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .85) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
 .brand-vibe-page .gallery-copy {
   position: absolute;
-  z-index: 8;
-  left: 28px;
-  right: 28px;
-  bottom: 28px;
+  z-index: 5;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
   pointer-events: none;
-}
-
-.brand-vibe-page .gallery-card:nth-child(2) .gallery-copy {
-  bottom: -48px;
 }
 
 .brand-vibe-page .gallery-copy small {
   display: block;
   font-size: 11px;
-  letter-spacing: .22em;
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, .75);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-family: var(--bv-sans);
 }
 
 .brand-vibe-page .gallery-copy h3 {
   font-family: var(--bv-serif);
-  font-size: clamp(32px, 3.6vw, 56px);
+  font-size: clamp(26px, 2.6vw, 44px);
   font-weight: 300;
   line-height: 1.05;
   margin: 0;
   color: #fff;
   letter-spacing: -0.02em;
-}
-
-.brand-vibe-page .gallery-card:nth-child(2) .gallery-copy h3 {
-  max-width: 260px;
 }
 
 /* 10. Main Character */
@@ -1010,23 +996,39 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   }
   .brand-vibe-page .gallery {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 14px 14px 40px;
+    gap: 16px;
+    padding: 12px;
   }
   .brand-vibe-page .gallery-card {
-    min-height: 70svh;
+    aspect-ratio: 4 / 5;
+    min-height: auto;
+    height: auto;
+    margin: 0 !important;
+    position: relative;
+    overflow: hidden;
   }
-  .brand-vibe-page .gallery-card:nth-child(2) {
-    margin: 0;
+  .brand-vibe-page .gallery-media,
+  .brand-vibe-page .gallery-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
   }
-  .brand-vibe-page .gallery-card:nth-child(2) .gallery-copy {
-    bottom: 28px;
+  .brand-vibe-page .gallery-copy {
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+  }
+  .brand-vibe-page .gallery-copy h3 {
+    font-size: clamp(24px, 6vw, 34px);
   }
   .brand-vibe-page .mural {
-    min-height: 100svh;
+    min-height: 72svh;
   }
   .brand-vibe-page .mural-bg {
-    background-position: 48% 24%;
+    background-position: center top;
   }
   .brand-vibe-page footer {
     align-items: flex-start;
