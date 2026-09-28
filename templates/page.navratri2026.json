@@ -115,15 +115,6 @@
             "link": "shopify://collections/nehru-jackets"
           }
         },
-        "pick_3": {
-          "type": "pick_card",
-          "settings": {
-            "image": "shopify://shop_images/Kids.jpg",
-            "title": "Kids",
-            "subtitle": "",
-            "link": "shopify://collections/kids"
-          }
-        },
         "pick_4": {
           "type": "pick_card",
           "settings": {
@@ -131,6 +122,15 @@
             "title": "Kurta Sets",
             "subtitle": "",
             "link": "shopify://collections/kurta-jacket-set"
+          }
+        },
+        "pick_3": {
+          "type": "pick_card",
+          "settings": {
+            "image": "shopify://shop_images/Kids.jpg",
+            "title": "Kids",
+            "subtitle": "",
+            "link": "shopify://collections/kids"
           }
         },
         "pick_card_BQWr47": {
@@ -146,8 +146,8 @@
       "block_order": [
         "pick_1",
         "pick_2",
-        "pick_3",
         "pick_4",
+        "pick_3",
         "pick_card_BQWr47"
       ],
       "settings": {
