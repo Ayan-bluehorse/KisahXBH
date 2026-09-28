@@ -273,11 +273,11 @@
       <h2>{{ section.settings.closing_heading | default: 'Now, make it yours.' }}</h2>
       <p>{{ section.settings.closing_description | default: 'Every celebration is a chance to be remembered for how you showed up.' }}</p>
       <div class="links">
-        <a class="cta primary" href="{{ section.settings.collection_link | default: '/pages/navratri2026' }}">
+        <a class="cta primary" href="{{ section.settings.primary_cta_link | default: section.settings.collection_link | default: '/collections/all' }}">
           {{ section.settings.primary_cta_text | default: 'Explore the collection' }}
           <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a class="cta" href="{{ section.settings.brand_link | default: '/pages/the-brand' }}">
+        <a class="cta" href="{{ section.settings.secondary_cta_link | default: section.settings.brand_link | default: '/pages/the-brand' }}">
           {{ section.settings.secondary_cta_text | default: 'Discover the brand' }}
           <svg class="oj-icon-arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -783,10 +783,22 @@
       "default": "Explore the collection"
     },
     {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary CTA Link",
+      "default": "/collections/all"
+    },
+    {
       "type": "text",
       "id": "secondary_cta_text",
       "label": "Secondary CTA Label",
       "default": "Discover the brand"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary CTA Link",
+      "default": "/pages/the-brand"
     },
     {
       "type": "text",

@@ -723,25 +723,26 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 
 /* 9. Gallery */
 .brand-vibe-page .gallery {
-  padding: 16px 16px 64px;
+  padding: 14px;
   background: var(--bv-paper);
   display: grid;
   grid-template-columns: 1.05fr .9fr 1.05fr;
-  gap: 16px;
+  gap: 14px;
   position: relative;
+  z-index: 2;
 }
 
 .brand-vibe-page .gallery-card {
   position: relative;
-  aspect-ratio: 3 / 4;
+  min-height: 78svh;
   overflow: hidden;
   background: #1b1717;
-  border-radius: 2px;
 }
 
 .brand-vibe-page .gallery-card:nth-child(2) {
-  margin-top: 48px;
-  margin-bottom: -48px;
+  margin-top: 84px;
+  margin-bottom: -84px;
+  z-index: 4;
 }
 
 .brand-vibe-page .gallery-media,
@@ -764,12 +765,12 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   transform: scale(1.035);
 }
 
-.brand-vibe-page .gallery-card:has(.gallery-copy):after,
-.brand-vibe-page .gallery-media:has(+ .gallery-copy):after {
+.brand-vibe-page .gallery-card:after,
+.brand-vibe-page .gallery-media:after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, .85) 100%);
+  background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, .82) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -777,27 +778,27 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 .brand-vibe-page .gallery-copy {
   position: absolute;
   z-index: 5;
-  left: 24px;
-  right: 24px;
-  bottom: 24px;
+  left: 26px;
+  right: 26px;
+  bottom: 26px;
   pointer-events: none;
 }
 
 .brand-vibe-page .gallery-copy small {
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, .75);
-  margin-bottom: 6px;
+  color: rgba(255, 255, 255, .65);
+  margin-bottom: 7px;
   font-family: var(--bv-sans);
 }
 
 .brand-vibe-page .gallery-copy h3 {
   font-family: var(--bv-serif);
-  font-size: clamp(26px, 2.6vw, 44px);
+  font-size: clamp(28px, 3vw, 48px);
   font-weight: 300;
-  line-height: 1.05;
+  line-height: 1;
   margin: 0;
   color: #fff;
   letter-spacing: -0.02em;

@@ -256,7 +256,7 @@
       <div class="finale-inner reveal">
         <div class="eyebrow">{{ section.settings.finale_eyebrow | default: 'This is celebration wear, fast-forwarded' }}</div>
         <h2>{{ section.settings.finale_heading | default: 'Never be<em>vanilla.</em>' }}</h2>
-        <a class="cta" href="{{ section.settings.home_link | default: '/' }}">
+        <a class="cta" href="{{ section.settings.finale_cta_url | default: section.settings.home_link | default: '/collections/all' }}">
           {{ section.settings.finale_cta_text | default: 'Enter the new Kisah' }}
           <svg class="cta-arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -557,6 +557,12 @@
       "id": "finale_cta_text",
       "label": "Finale Button Text",
       "default": "Enter the new Kisah"
+    },
+    {
+      "type": "url",
+      "id": "finale_cta_url",
+      "label": "Finale Button Link",
+      "default": "/collections/all"
     }
   ],
   "blocks": [
