@@ -271,12 +271,14 @@
     }
 
     function usesTwoMobileColumns() {
+      if (!grid) return false;
       if (!window.matchMedia('(max-width: 768px)').matches) return false;
 
-      if (grid.classList.contains('product-grid--per-row-mob-2')) {
+      if (grid.classList && grid.classList.contains('product-grid--per-row-mob-2')) {
         return true;
       }
 
+      if (!window.getComputedStyle) return false;
       var columns = window.getComputedStyle(grid).gridTemplateColumns;
 
       return Boolean(

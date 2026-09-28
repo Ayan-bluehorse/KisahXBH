@@ -169,47 +169,52 @@
         externalLinksNewTab: {{ settings.external_links_new_tab | json }},
         internalLinksSmoothScroll: {{ settings.internal_links_smooth_scroll | json }}
       }
-    }
+    };
 
     theme.inlineNavigationCheck = function() {
-      var pageHeader = document.querySelector('.pageheader'),
-          inlineNavContainer = pageHeader.querySelector('.logo-area__left__inner'),
-          inlineNav = inlineNavContainer.querySelector('.navigation--left');
-      if (inlineNav && getComputedStyle(inlineNav).display != 'none') {
+      var pageHeader = document.querySelector('.pageheader');
+      if (!pageHeader) return;
+      var inlineNavContainer = pageHeader.querySelector('.logo-area__left__inner'),
+          inlineNav = inlineNavContainer ? inlineNavContainer.querySelector('.navigation--left') : null;
+      if (inlineNav && window.getComputedStyle && getComputedStyle(inlineNav).display != 'none') {
         var inlineMenuCentered = document.querySelector('.pageheader--layout-inline-menu-center'),
             logoContainer = document.querySelector('.logo-area__middle__inner');
-        if(inlineMenuCentered) {
-          var rightWidth = document.querySelector('.logo-area__right__inner').clientWidth,
+        if (inlineMenuCentered && logoContainer) {
+          var rightInner = document.querySelector('.logo-area__right__inner'),
+              rightWidth = rightInner ? rightInner.clientWidth : 0,
               middleWidth = logoContainer.clientWidth,
-              logoArea = document.querySelector('.logo-area'),
-              computedLogoAreaStyle = getComputedStyle(logoArea),
-              logoAreaInnerWidth = logoArea.clientWidth - Math.ceil(parseFloat(computedLogoAreaStyle.paddingLeft)) - Math.ceil(parseFloat(computedLogoAreaStyle.paddingRight)),
-              availableNavWidth = logoAreaInnerWidth - Math.max(rightWidth, middleWidth) * 2 - 40;
-              inlineNavContainer.style.maxWidth = availableNavWidth + 'px';
+              logoArea = document.querySelector('.logo-area');
+          if (logoArea && window.getComputedStyle) {
+            var computedLogoAreaStyle = getComputedStyle(logoArea),
+                padLeft = parseFloat(computedLogoAreaStyle.paddingLeft) || 0,
+                padRight = parseFloat(computedLogoAreaStyle.paddingRight) || 0,
+                logoAreaInnerWidth = logoArea.clientWidth - Math.ceil(padLeft) - Math.ceil(padRight),
+                availableNavWidth = logoAreaInnerWidth - Math.max(rightWidth, middleWidth) * 2 - 40;
+            if (inlineNavContainer) inlineNavContainer.style.maxWidth = availableNavWidth + 'px';
+          }
         }
 
         var firstInlineNavLink = inlineNav.querySelector('.navigation__item:first-child'),
             lastInlineNavLink = inlineNav.querySelector('.navigation__item:last-child');
-        if (lastInlineNavLink) {
+        if (firstInlineNavLink && lastInlineNavLink && inlineNavContainer) {
           var inlineNavWidth = null;
-          if(document.querySelector('html[dir=rtl]')) {
+          if (document.querySelector('html[dir=rtl]')) {
             inlineNavWidth = firstInlineNavLink.offsetLeft - lastInlineNavLink.offsetLeft + firstInlineNavLink.offsetWidth;
           } else {
             inlineNavWidth = lastInlineNavLink.offsetLeft - firstInlineNavLink.offsetLeft + lastInlineNavLink.offsetWidth;
           }
           if (inlineNavContainer.offsetWidth >= inlineNavWidth) {
-             pageHeader.classList.add('pageheader--layout-inline-permitted');
-            var tallLogo = logoContainer.clientHeight > lastInlineNavLink.clientHeight + 20;
+            pageHeader.classList.add('pageheader--layout-inline-permitted');
+            var tallLogo = logoContainer ? logoContainer.clientHeight > lastInlineNavLink.clientHeight + 20 : false;
             
             if (tallLogo) {
               inlineNav.classList.add('navigation--tight-underline');
             } else {
               inlineNav.classList.remove('navigation--tight-underline');
             }
-            } 
-           else {
-               pageHeader.classList.remove('pageheader--layout-inline-permitted');
-             }
+          } else {
+            pageHeader.classList.remove('pageheader--layout-inline-permitted');
+          }
         }
       }
     };
