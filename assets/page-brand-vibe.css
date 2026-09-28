@@ -723,24 +723,25 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 
 /* 9. Gallery */
 .brand-vibe-page .gallery {
-  padding: 16px;
+  padding: 16px 16px 64px;
   background: var(--bv-paper);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1.05fr .9fr 1.05fr;
   gap: 16px;
   position: relative;
 }
 
 .brand-vibe-page .gallery-card {
   position: relative;
-  aspect-ratio: 9 / 14;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: #1b1717;
   border-radius: 2px;
 }
 
 .brand-vibe-page .gallery-card:nth-child(2) {
-  margin-top: 32px;
+  margin-top: 48px;
+  margin-bottom: -48px;
 }
 
 .brand-vibe-page .gallery-media,
@@ -763,12 +764,12 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   transform: scale(1.035);
 }
 
-.brand-vibe-page .gallery-card:after,
-.brand-vibe-page .gallery-media:after {
+.brand-vibe-page .gallery-card:has(.gallery-copy):after,
+.brand-vibe-page .gallery-media:has(+ .gallery-copy):after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .85) 100%);
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, .85) 100%);
   pointer-events: none;
   z-index: 2;
 }

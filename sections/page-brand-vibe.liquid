@@ -161,56 +161,79 @@
           <article class="gallery-card reveal" {{ block.shopify_attributes }}>
             <div class="gallery-media">
               {%- if block.settings.image != blank -%}
-                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+                {{ block.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: block.settings.title }}
               {%- else -%}
                 {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
               {%- endif -%}
             </div>
-            <div class="gallery-copy">
-              <small>{{ block.settings.tag }}</small>
-              <h3>{{ block.settings.title }}</h3>
-            </div>
+            {%- if block.settings.tag != blank or block.settings.title != blank -%}
+              <div class="gallery-copy">
+                {%- if block.settings.tag != blank -%}<small>{{ block.settings.tag }}</small>{%- endif -%}
+                {%- if block.settings.title != blank -%}<h3>{{ block.settings.title }}</h3>{%- endif -%}
+              </div>
+            {%- endif -%}
           </article>
         {%- endfor -%}
       {%- else -%}
         <article class="gallery-card reveal">
           <div class="gallery-media">
             {%- if section.settings.gallery1_image != blank -%}
-              {{ section.settings.gallery1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery1_title | default: 'Break the code.' }}
+              {{ section.settings.gallery1_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.gallery1_title }}
             {%- else -%}
               {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           </div>
-          <div class="gallery-copy">
-            <small>{{ section.settings.gallery1_tag | default: 'The new' }}</small>
-            <h3>{{ section.settings.gallery1_title | default: 'Break the code.' }}</h3>
-          </div>
+          {%- if section.settings.gallery1_tag != blank or section.settings.gallery1_title != blank -%}
+            <div class="gallery-copy">
+              {%- if section.settings.gallery1_tag != blank -%}<small>{{ section.settings.gallery1_tag }}</small>{%- endif -%}
+              {%- if section.settings.gallery1_title != blank -%}<h3>{{ section.settings.gallery1_title }}</h3>{%- endif -%}
+            </div>
+          {%- elsif section.settings.gallery1_image == blank -%}
+            <div class="gallery-copy">
+              <small>The new</small>
+              <h3>Break the code.</h3>
+            </div>
+          {%- endif -%}
         </article>
         <article class="gallery-card reveal">
           <div class="gallery-media">
             {%- if section.settings.gallery2_image != blank -%}
-              {{ section.settings.gallery2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery2_title | default: 'Show up different.' }}
+              {{ section.settings.gallery2_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.gallery2_title }}
             {%- else -%}
               {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           </div>
-          <div class="gallery-copy">
-            <small>{{ section.settings.gallery2_tag | default: 'The attitude' }}</small>
-            <h3>{{ section.settings.gallery2_title | default: 'Show up different.' }}</h3>
-          </div>
+          {%- if section.settings.gallery2_tag != blank or section.settings.gallery2_title != blank -%}
+            <div class="gallery-copy">
+              {%- if section.settings.gallery2_tag != blank -%}<small>{{ section.settings.gallery2_tag }}</small>{%- endif -%}
+              {%- if section.settings.gallery2_title != blank -%}<h3>{{ section.settings.gallery2_title }}</h3>{%- endif -%}
+            </div>
+          {%- elsif section.settings.gallery2_image == blank -%}
+            <div class="gallery-copy">
+              <small>The attitude</small>
+              <h3>Show up different.</h3>
+            </div>
+          {%- endif -%}
         </article>
         <article class="gallery-card reveal">
           <div class="gallery-media">
             {%- if section.settings.gallery3_image != blank -%}
-              {{ section.settings.gallery3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.gallery3_title | default: 'Celebrate forward.' }}
+              {{ section.settings.gallery3_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.gallery3_title }}
             {%- else -%}
               {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           </div>
-          <div class="gallery-copy">
-            <small>{{ section.settings.gallery3_tag | default: 'The occasion' }}</small>
-            <h3>{{ section.settings.gallery3_title | default: 'Celebrate forward.' }}</h3>
-          </div>
+          {%- if section.settings.gallery3_tag != blank or section.settings.gallery3_title != blank -%}
+            <div class="gallery-copy">
+              {%- if section.settings.gallery3_tag != blank -%}<small>{{ section.settings.gallery3_tag }}</small>{%- endif -%}
+              {%- if section.settings.gallery3_title != blank -%}<h3>{{ section.settings.gallery3_title }}</h3>{%- endif -%}
+            </div>
+          {%- elsif section.settings.gallery3_image == blank -%}
+            <div class="gallery-copy">
+              <small>The occasion</small>
+              <h3>Celebrate forward.</h3>
+            </div>
+          {%- endif -%}
         </article>
       {%- endif -%}
     </section>
