@@ -49,7 +49,7 @@
         "ch3_stat_number": "16",
         "ch3_stat_label": "locations listed on our store map",
         "store_locator_text": "Find a Kisah store",
-        "store_locator_link": "",
+        "store_locator_link": "shopify://pages/store-locator",
         "ch3_image": "shopify://shop_images/our-journey-kisah-store.png",
         "ch3_caption": "A new place for the story to unfold",
         "film_eyebrow": "Moving images / Field notes",
