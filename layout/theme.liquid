@@ -414,12 +414,14 @@
 
     </style>
 
+{%- if template.name == 'index' or request.page_type == 'product' -%}
   <!-- Swiper CSS -->
-<link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" media="print" onload="this.media='all'"/>
-<noscript><link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" /></noscript>
+  <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" media="print" onload="this.media='all'"/>
+  <noscript><link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}" /></noscript>
 
-<!-- Swiper JS -->
-<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+  <!-- Swiper JS -->
+  <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 {%- if template.name == 'index' -%}
   {%- render 'schema-homepage' -%}
