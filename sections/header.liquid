@@ -49,6 +49,35 @@
       padding-top: var(--theme-header-height);
     }
   {%- endif -%}
+  .header-location-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    color: inherit;
+    text-decoration: none;
+  }
+  .header-location-link__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .header-location-link__icon img,
+  .header-location-link__icon svg,
+  .icon-location-pin {
+    width: 26px !important;
+    height: 26px !important;
+    display: block;
+    object-fit: contain;
+  }
+  @media (max-width: 768px) {
+    .header-location-link__icon img,
+    .header-location-link__icon svg,
+    .icon-location-pin {
+      width: 20px !important;
+      height: 20px !important;
+    }
+  }
 {% endstyle %}
 
 <script>
@@ -343,9 +372,9 @@ document.addEventListener("DOMContentLoaded", function () {
               </span>
               <span class="header-location-link__icon">
                 {%- if section.settings.custom_location_icon != blank -%}
-                  <img src="{{ section.settings.custom_location_icon | image_url: width: 44 }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="22" height="22" loading="eager" />
+                  <img src="{{ section.settings.custom_location_icon | image_url: width: 52 }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="26" height="26" loading="eager" />
                 {%- else -%}
-                  <img src="{{ 'icon-location.svg' | asset_url }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="22" height="22" class="icon-location-pin" loading="eager" />
+                  <img src="{{ 'icon-location.svg' | asset_url }}" alt="{{ section.settings.location_text | default: 'Store Locator' | escape }}" width="26" height="26" class="icon-location-pin" loading="eager" />
                 {%- endif -%}
               </span>
             </a>
