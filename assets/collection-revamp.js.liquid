@@ -568,18 +568,12 @@ product-form.js-product.product-info.quickbuy-content {
     });
   }
 
-  /* ========== element-ready via MutationObserver (no rAF/interval) ========== */
+  /* ========== element-ready via MutationObserver (optimized & debounced via rAF) ========== */
   (function (win) {
     var listeners = [], doc = win.document, MutationObserver = win.MutationObserver || win.WebKitMutationObserver, observer;
-    function ready(selector, fn) {
-      listeners.push({ selector, fn });
-      if (!observer) {
-        observer = new MutationObserver(check);
-        observer.observe(doc.documentElement, { childList: true, subtree: true });
-      }
-      check();
-    }
+    var scheduled = false;
     function check() {
+      scheduled = false;
       for (var i = 0; i < listeners.length; i++) {
         var listener = listeners[i];
         var elements = doc.querySelectorAll(listener.selector);
@@ -591,6 +585,24 @@ product-form.js-product.product-info.quickbuy-content {
           }
         }
       }
+    }
+    function queueCheck() {
+      if (!scheduled) {
+        scheduled = true;
+        if (typeof window.requestAnimationFrame === "function") {
+          window.requestAnimationFrame(check);
+        } else {
+          setTimeout(check, 16);
+        }
+      }
+    }
+    function ready(selector, fn) {
+      listeners.push({ selector, fn });
+      if (!observer) {
+        observer = new MutationObserver(queueCheck);
+        observer.observe(doc.body || doc.documentElement, { childList: true, subtree: true });
+      }
+      queueCheck();
     }
     win.eleReady = ready;
   })(this);
