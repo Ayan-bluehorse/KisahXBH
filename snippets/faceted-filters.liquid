@@ -16,6 +16,14 @@
     assign is_single_category = true
   endif
 
+  assign has_price_filter = false
+  for filter in filter_context.filters
+    if filter.type == 'price_range' or filter.label contains 'Price' or filter.label contains 'price'
+      assign has_price_filter = true
+      break
+    endif
+  endfor
+
   assign total_active_count = 0
   assign in_stock_total = 0
   for filter in filter_context.filters
@@ -253,7 +261,8 @@
 
                   # Calculate minimum price from products in collection/search
                   assign min_cents = filter.range_max
-                  for product in filter_context.products
+                  assign items_to_scan = filter_context.products | default: filter_context.results
+                  for product in items_to_scan
                     if product.price_min and product.price_min > 0 and product.price_min < min_cents
                       assign min_cents = product.price_min
                     elsif product.price and product.price > 0 and product.price < min_cents
