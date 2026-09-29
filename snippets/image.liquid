@@ -122,9 +122,9 @@
       endif
     endfor
     assign srcset = srcset | remove_last: ', '
-    assign image_html = image_src | image_tag: sizes: sizes, widths: widths, srcset: srcset, class: class, loading: loading, fetchpriority: fetchpriority
+    assign image_html = image_src | image_tag: sizes: sizes, widths: widths, srcset: srcset, class: class, loading: loading, fetchpriority: fetchpriority, decoding: 'async'
   else
-    assign image_html = image_src | image_tag: sizes: sizes, widths: widths, class: class, loading: loading, fetchpriority: fetchpriority
+    assign image_html = image_src | image_tag: sizes: sizes, widths: widths, class: class, loading: loading, fetchpriority: fetchpriority, decoding: 'async'
   endif
 -%}
 {%- if as_mobile_source -%}
