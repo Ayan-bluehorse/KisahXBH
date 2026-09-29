@@ -26,6 +26,13 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
 }
 
 /* Base Theme Tokens & Inherited Global Fonts */
+.brand-vibe-page,
+.brand-vibe-page *,
+.brand-vibe-page *::before,
+.brand-vibe-page *::after {
+  box-sizing: border-box;
+}
+
 .brand-vibe-page {
   --bv-ink: #0d0b0b;
   --bv-paper: #f5efe6;
@@ -730,6 +737,10 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   gap: 14px;
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .brand-vibe-page .gallery-card {
@@ -737,6 +748,9 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   min-height: 78svh;
   overflow: hidden;
   background: #1b1717;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .brand-vibe-page .gallery-card:nth-child(2) {
@@ -1001,29 +1015,48 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
     gap: 14px;
     padding: 14px;
     background: var(--bv-paper);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
   .brand-vibe-page .gallery-card {
     min-height: auto;
     height: auto;
+    width: 100%;
+    max-width: 100%;
     aspect-ratio: auto;
     margin: 0 !important;
     position: relative;
     overflow: hidden;
     background: #1b1717;
+    box-sizing: border-box;
   }
-  .brand-vibe-page .gallery-media,
-  .brand-vibe-page .gallery-card img {
+  .brand-vibe-page .gallery-media {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .brand-vibe-page .gallery-card img,
+  .brand-vibe-page .gallery-media img {
     position: relative;
     inset: auto;
     width: 100%;
+    max-width: 100%;
     height: auto;
     display: block;
-    object-fit: contain;
+    object-fit: cover;
+    box-sizing: border-box;
   }
   .brand-vibe-page .gallery-copy {
     bottom: 20px;
     left: 20px;
     right: 20px;
+    box-sizing: border-box;
   }
   .brand-vibe-page .gallery-copy h3 {
     font-size: clamp(24px, 6vw, 34px);
@@ -1062,8 +1095,12 @@ body.template-suffix-brand-vibe #pagefooter .footer-seo-wrapper {
   .brand-vibe-page .mural-copy {
     padding-bottom: 50px;
   }
+  .brand-vibe-page .gallery {
+    padding: 14px;
+    gap: 14px;
+  }
   .brand-vibe-page .gallery-card {
-    min-height: 74svh;
+    min-height: auto;
   }
   .brand-vibe-page .statement h2 {
     font-size: clamp(50px, 15vw, 76px);
