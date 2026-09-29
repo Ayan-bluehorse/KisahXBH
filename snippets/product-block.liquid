@@ -72,7 +72,7 @@ Parameters:
   endif
 -%}
 
-<product-block id="jump-id{{ product.handle }}" data-product-handle="{{ product.handle }}" data-product-tags="{{ product.tags | join: ',' | downcase }}" data-total="{{ product.variants.size }}" data-available="{{ product.variants | where: 'available', true | size }}" class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" data-product-id="{{ product.id }}">
+<product-block id="jump-id{{ product.handle }}" data-product-handle="{{ product.handle }}" data-product-sku="{{ product.variants | map: 'sku' | join: ',' | downcase }}" data-product-title="{{ product.title | escape | downcase }}" data-product-tags="{{ product.tags | join: ',' | downcase }}" data-total="{{ product.variants.size }}" data-available="{{ product.variants | where: 'available', true | size }}" class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" data-product-id="{{ product.id }}">
   <div class="block-inner"{% if animate %} data-cc-animate{% endif %}>
     <div class="block-inner-inner">
       {% if product.featured_media %}

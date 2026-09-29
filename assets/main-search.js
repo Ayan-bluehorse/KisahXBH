@@ -31,28 +31,107 @@ const MainSearch = class extends HTMLElement {
     let searchTimeoutID = -1;
     let searchAbortController = null;
 
+    const normalizeSearchQuery = (query) => {
+      if (!query) return '';
+      return query
+        .trim()
+        .toLowerCase()
+        // Split word-to-number: e.g. "ka1176" -> "ka-1176", "sku123" -> "sku-123"
+        .replace(/([a-z]{2,})(\d+)/gi, '$1-$2')
+        // Split number-to-word: e.g. "1176t301" -> "1176-t301"
+        .replace(/(\d+)([a-z]+)/gi, '$1-$2')
+        // Normalize spaces and underscores to hyphens
+        .replace(/[\s_]+/g, '-')
+        // Remove duplicate hyphens
+        .replace(/-+/g, '-');
+    };
+
     const resolveSmartSku = (query) => {
-      if (!query) return { query, isPureNumber: false };
+      if (!query) return { query: '', normalized: '' };
       const trimmed = query.trim();
-      const explicitMatch = trimmed.match(/^(ka|kk)[\s-]?(\d{3,6})$/i);
-      if (explicitMatch) {
-        return { query: `${explicitMatch[1].toLowerCase()}-${explicitMatch[2]}`, isPureNumber: false };
+      const normalized = normalizeSearchQuery(trimmed);
+      return { query: normalized || trimmed, normalized };
+    };
+
+    const scoreProductBlock = (block, rawQuery) => {
+      if (!block || !rawQuery) return 0;
+      const qRaw = rawQuery.trim().toLowerCase();
+      const qNorm = normalizeSearchQuery(rawQuery);
+      const qCompact = qRaw.replace(/[\s-_]+/g, '');
+      const tokens = qNorm.split('-').filter(Boolean);
+      if (!tokens.length) return 0;
+
+      const sku = (block.dataset.productSku || '').toLowerCase();
+      const skuList = sku.split(',').map((s) => s.trim()).filter(Boolean);
+      const handle = (
+        block.dataset.productHandle ||
+        block.querySelector('a.product-link')?.getAttribute('href') ||
+        ''
+      ).toLowerCase();
+      const title = (
+        block.dataset.productTitle ||
+        block.querySelector('.product-block__title')?.innerText ||
+        ''
+      ).toLowerCase();
+      const tags = (block.dataset.productTags || '').toLowerCase();
+      const combined = (sku + ' ' + handle + ' ' + title + ' ' + tags).toLowerCase();
+
+      let score = 0;
+
+      // 1. Exact full SKU / code match
+      for (const s of skuList) {
+        const sCompact = s.replace(/[\s-_]+/g, '');
+        const sWithoutSize = s.replace(/-\d{2}$/, '');
+        const sWithoutSizeCompact = sWithoutSize.replace(/[\s-_]+/g, '');
+
+        if (sWithoutSize === qNorm || sWithoutSizeCompact === qCompact) {
+          score += 20000;
+        } else if (s.includes(qNorm) || sCompact.includes(qCompact)) {
+          score += 15000;
+        }
       }
-      if (/^\d{3,6}$/.test(trimmed)) {
-        return { query: `ka-${trimmed}`, isPureNumber: true, rawNumber: trimmed };
+
+      // 2. Handle matches
+      const handleCompact = handle.replace(/[\s-_]+/g, '');
+      if (handle.endsWith('-' + qNorm) || handle.includes('-' + qNorm + '-')) {
+        score += 12000;
+      } else if (handleCompact.includes(qCompact)) {
+        score += 10000;
       }
-      return { query: trimmed, isPureNumber: false };
+
+      // 3. Exact Title Match
+      if (title === qRaw) {
+        score += 10000;
+      } else if (title.startsWith(qRaw)) {
+        score += 5000;
+      } else if (title.includes(qRaw)) {
+        score += 3000;
+      }
+
+      // 4. Distinct token matching
+      let matchedTokens = 0;
+      for (const token of tokens) {
+        const isCodeToken = /\d+/.test(token) || token.length >= 3;
+        const tokenRegex = new RegExp('(?:^|[\\s-_])' + token + '(?:[\\s-_]|$)', 'i');
+
+        if (skuList.some((s) => tokenRegex.test(s)) || tokenRegex.test(handle)) {
+          matchedTokens++;
+          score += isCodeToken ? 5000 : 100;
+        } else if (combined.includes(token)) {
+          matchedTokens++;
+          score += isCodeToken ? 2000 : 50;
+        }
+      }
+
+      // Bonus when ALL query tokens are matched
+      if (matchedTokens === tokens.length && tokens.length > 1) {
+        score += 1000;
+      }
+
+      return score;
     };
 
     const form = searchInput.closest('form');
-    if (form) {
-      form.addEventListener('submit', () => {
-        const smart = resolveSmartSku(searchInput.value);
-        if (smart.query && smart.query !== searchInput.value) {
-          searchInput.value = smart.query;
-        }
-      });
-    }
 
     const handleInputChange = () => {
       const resultsBox = this.querySelector('.main-search__results');
@@ -75,7 +154,7 @@ const MainSearch = class extends HTMLElement {
         const smartSku = resolveSmartSku(valueToSearch);
         const queryToUse = smartSku.query;
 
-        // Create URL for full search results
+        // Create URL for full search results (using user's search query)
         const linkURL = new URL(form ? form.action : window.location.origin + (theme.routes.search || '/search'));
         if (form) {
           const formParams = new URLSearchParams(new FormData(form));
@@ -83,7 +162,7 @@ const MainSearch = class extends HTMLElement {
             linkURL.searchParams.set(key, value);
           });
         }
-        linkURL.searchParams.set('q', queryToUse);
+        linkURL.searchParams.set('q', valueToSearch.trim());
 
         // Show loading
         this.classList.remove('main-search--has-results', 'main-search--results-on-multiple-lines', 'main-search--no-results');
@@ -111,6 +190,32 @@ const MainSearch = class extends HTMLElement {
             (grid.querySelector('.product-block:not(.collection-block):not(.page-block)') ||
               grid.querySelector('.product-block.page-block'));
 
+          const mergeGrids = (primaryGrid, secondaryGrid) => {
+            if (!primaryGrid && !secondaryGrid) return null;
+            if (!primaryGrid) return secondaryGrid;
+            if (!secondaryGrid) return primaryGrid;
+
+            const existingIds = new Set();
+            primaryGrid
+              .querySelectorAll('.product-block:not(.collection-block):not(.page-block)')
+              .forEach((block) => {
+                const id = block.dataset.productId || block.dataset.productHandle;
+                if (id) existingIds.add(id);
+              });
+
+            secondaryGrid
+              .querySelectorAll('.product-block:not(.collection-block):not(.page-block)')
+              .forEach((block) => {
+                const id = block.dataset.productId || block.dataset.productHandle;
+                if (!id || !existingIds.has(id)) {
+                  primaryGrid.appendChild(block.cloneNode(true));
+                  if (id) existingIds.add(id);
+                }
+              });
+
+            return primaryGrid;
+          };
+
           const runGridIntoUi = (grid, opts) => {
             searchAbortController = null;
             this.classList.remove('main-search--has-results', 'main-search--results-on-multiple-lines', 'main-search--no-results');
@@ -134,13 +239,22 @@ const MainSearch = class extends HTMLElement {
 
             resultsProducts.firstElementChild.className = grid.className;
 
-            grid.querySelectorAll('.product-block:not(.collection-block):not(.page-block)').forEach((block, index) => {
-              if (index <= resultLimit) {
-                block.classList.add('main-search-result');
-                block.querySelectorAll('.btn.quickbuy-toggle').forEach((el) => el.remove());
-                block.querySelectorAll('.quickbuy-toggle').forEach((el) => el.classList.remove('quickbuy-toggle'));
-                resultsProducts.firstElementChild.appendChild(block);
-              }
+            const productBlocks = Array.from(
+              grid.querySelectorAll('.product-block:not(.collection-block):not(.page-block)')
+            );
+
+            // Re-order product blocks so exact code/SKU matches appear FIRST
+            productBlocks.sort((a, b) => {
+              const scoreB = Math.max(scoreProductBlock(b, valueToSearch), scoreProductBlock(b, queryToUse));
+              const scoreA = Math.max(scoreProductBlock(a, valueToSearch), scoreProductBlock(a, queryToUse));
+              return scoreB - scoreA;
+            });
+
+            productBlocks.slice(0, resultLimit).forEach((block) => {
+              block.classList.add('main-search-result');
+              block.querySelectorAll('.btn.quickbuy-toggle').forEach((el) => el.remove());
+              block.querySelectorAll('.quickbuy-toggle').forEach((el) => el.classList.remove('quickbuy-toggle'));
+              resultsProducts.firstElementChild.appendChild(block);
             });
 
             grid.querySelectorAll('.product-block.page-block').forEach((block) => {
@@ -212,79 +326,40 @@ const MainSearch = class extends HTMLElement {
           };
 
           const runPredictiveFlow = () => {
-            fetchSearchHtml(queryToUse)
+            // First fetch with raw search value to get all matching results
+            fetchSearchHtml(valueToSearch.trim())
               .then((responseText) => {
                 let resultsList = parseGridFromHtml(responseText);
 
-                // 1. If pure number (e.g. 0637) returned no products for KA-, try KK- (kids) fallback
-                if (!gridHasBlocks(resultsList) && smartSku.isPureNumber) {
-                  return fetchSearchHtml(`kk-${smartSku.rawNumber}`)
-                    .then((kkText) => {
-                      const kkGrid = parseGridFromHtml(kkText);
-                      if (gridHasBlocks(kkGrid)) {
-                        linkURL.searchParams.set('q', `kk-${smartSku.rawNumber}`);
-                        runGridIntoUi(kkGrid);
-                        return null;
+                const fetchPromises = [];
+
+                // If normalized query differs, also fetch normalized to ensure exact SKU variant is included
+                if (queryToUse && queryToUse !== valueToSearch.trim()) {
+                  fetchPromises.push(
+                    fetchSearchHtml(queryToUse)
+                      .then((normText) => {
+                        resultsList = mergeGrids(resultsList, parseGridFromHtml(normText));
+                      })
+                      .catch(() => {})
+                  );
+                }
+
+                return Promise.all(fetchPromises).then(() => resultsList);
+              })
+              .then((resultsList) => {
+                // If no blocks found and query has hyphens, fallback to space-separated
+                if (!gridHasBlocks(resultsList) && queryToUse.includes('-')) {
+                  const spaceSeparated = queryToUse.replace(/-/g, ' ');
+                  return fetchSearchHtml(spaceSeparated)
+                    .then((spaceText) => {
+                      const spaceGrid = parseGridFromHtml(spaceText);
+                      if (gridHasBlocks(spaceGrid)) {
+                        return spaceGrid;
                       }
                       return resultsList;
                     })
                     .catch(() => resultsList);
                 }
-
-                // 2. If multi-hyphen SKU without size suffix (e.g. KA-1099-5641-T140) returned no products,
-                // try standard variant size suffixes since Shopify variant SKUs include sizes
-                if (!gridHasBlocks(resultsList) && /^k[ak]-/i.test(queryToUse) && !/-\d{1,2}$/.test(queryToUse)) {
-                  const sizeTry = `${queryToUse}-38`;
-                  return fetchSearchHtml(sizeTry)
-                    .then((sizeText) => {
-                      const sizeGrid = parseGridFromHtml(sizeText);
-                      if (gridHasBlocks(sizeGrid)) {
-                        linkURL.searchParams.set('q', sizeTry);
-                        runGridIntoUi(sizeGrid);
-                        return null;
-                      }
-                      return doHyphenFallback();
-                    })
-                    .catch(() => doHyphenFallback());
-                }
-
-                function doHyphenFallback() {
-                  if (queryToUse.includes('-')) {
-                    const spaceSeparated = queryToUse.replace(/-/g, ' ');
-                    return fetchSearchHtml(spaceSeparated)
-                      .then((spaceText) => {
-                        const spaceGrid = parseGridFromHtml(spaceText);
-                        if (gridHasBlocks(spaceGrid)) {
-                          linkURL.searchParams.set('q', spaceSeparated);
-                          runGridIntoUi(spaceGrid);
-                          return null;
-                        }
-
-                        // Try stripped prefix without leading KA- (e.g. 1258-5588-T301)
-                        const withoutPrefix = queryToUse.replace(/^k[ak]-/i, '');
-                        if (withoutPrefix !== queryToUse) {
-                          return fetchSearchHtml(withoutPrefix).then((wpText) => {
-                            const wpGrid = parseGridFromHtml(wpText);
-                            if (gridHasBlocks(wpGrid)) {
-                              linkURL.searchParams.set('q', withoutPrefix);
-                              runGridIntoUi(wpGrid);
-                              return null;
-                            }
-                            return resultsList;
-                          });
-                        }
-
-                        return resultsList;
-                      })
-                      .catch(() => resultsList);
-                  }
-                  return resultsList;
-                }
-
-                if (!gridHasBlocks(resultsList) && queryToUse.includes('-')) {
-                  return doHyphenFallback();
-                }
-
                 return resultsList;
               })
               .then((resultsList) => {
