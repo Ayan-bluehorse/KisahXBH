@@ -786,12 +786,8 @@ product-form.js-product.product-info.quickbuy-content {
 
   // Initialize product tiles (works for current and future blocks)
   eleReady(".product-grid .product-block", function (block) {
-    const run = () => initTile(block);
-    if (firstTilesInit) {
-      fetchProductsPromise.then(() => { run(); firstTilesInit = false; }).catch(run);
-    } else {
-      run();
-    }
+    if (!block || block._cpTileInit) return;
+    initTile(block);
   });
 
   /* ---------------- Show More pagination ---------------- */

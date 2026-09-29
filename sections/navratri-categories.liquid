@@ -217,8 +217,8 @@
 
       function getScrollStep() {
         var card = cards[0];
-        if (!card) return 300;
-        var gap = parseFloat(window.getComputedStyle(track).gap) || 20;
+        if (!card || !track || !(track instanceof Element)) return 300;
+        var gap = (window.getComputedStyle ? parseFloat(window.getComputedStyle(track).gap) : 0) || 20;
         return card.offsetWidth + gap;
       }
 

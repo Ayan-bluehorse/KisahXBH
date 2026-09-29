@@ -398,9 +398,9 @@ document.addEventListener("DOMContentLoaded", function () {
              {% render 'wishlisthero-header-icon' %}
           
           <a href="{{ routes.cart_url }}"
-   class="cart-link"
-   onclick="event.preventDefault(); Rebuy.SmartCart.show();">
-  <span class="cart-link__label {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
+             class="cart-link"
+             onclick="event.preventDefault(); if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') { window.Rebuy.SmartCart.show(); } else { window.location.href = '{{ routes.cart_url }}'; }">
+            <span class="cart-link__label {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
     {{- 'sections.header.cart' | t | escape -}}
   </span>
   <span class="cart-link__icon">

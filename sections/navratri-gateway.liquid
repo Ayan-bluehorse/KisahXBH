@@ -200,9 +200,9 @@
 
       function getScrollStep() {
         var firstCard = cards[0];
-        if (!firstCard) return 300;
-        var style = window.getComputedStyle(track);
-        var gap = parseFloat(style.gap) || 20;
+        if (!firstCard || !track || !(track instanceof Element)) return 300;
+        var style = window.getComputedStyle ? window.getComputedStyle(track) : null;
+        var gap = (style ? parseFloat(style.gap) : 0) || 20;
         return firstCard.offsetWidth + gap;
       }
 

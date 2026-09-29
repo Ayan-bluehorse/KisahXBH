@@ -2443,45 +2443,53 @@ const ProductBlock = class extends HTMLElement {
 
   initImagePagination() {
     // next button
-    this.querySelector('.image-page-button--next').addEventListener('click', (evt) => {
-      evt.preventDefault();
-      this.incrementActiveImage(1);
-    });
+    const nextBtn = this.querySelector('.image-page-button--next');
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        this.incrementActiveImage(1);
+      });
+    }
 
     // previous button
-    this.querySelector('.image-page-button--previous').addEventListener('click', (evt) => {
-      evt.preventDefault();
-      this.incrementActiveImage(-1);
-    });
+    const prevBtn = this.querySelector('.image-page-button--previous');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        this.incrementActiveImage(-1);
+      });
+    }
 
     // swipe (when not in a carousel)
     if (!this.closest('.carousel, .product-grid--scrollarea')) {
       const touchContainer = this.querySelector('.image-cont--with-secondary-image');
-      touchContainer.addEventListener('touchstart', (evt) => {
-        // swipe may end in another block
-        theme.productBlockTouchTracking = true;
-        theme.productBlockTouchStartX = evt.touches[0].clientX;
-        theme.productBlockTouchStartY = evt.touches[0].clientY;
-      }, { passive: true });
+      if (touchContainer) {
+        touchContainer.addEventListener('touchstart', (evt) => {
+          // swipe may end in another block
+          theme.productBlockTouchTracking = true;
+          theme.productBlockTouchStartX = evt.touches[0].clientX;
+          theme.productBlockTouchStartY = evt.touches[0].clientY;
+        }, { passive: true });
 
-      touchContainer.addEventListener('touchmove', (evt) => {
-        if (theme.productBlockTouchTracking) {
-          if (Math.abs(evt.touches[0].clientY - theme.productBlockTouchStartY) < 30) {
-            const deltaX = evt.touches[0].clientX - theme.productBlockTouchStartX;
-            if (deltaX > 25) {
-              this.incrementActiveImage(-1);
-              theme.productBlockTouchTracking = false;
-            } else if (deltaX < -25) {
-              this.incrementActiveImage(1);
-              theme.productBlockTouchTracking = false;
+        touchContainer.addEventListener('touchmove', (evt) => {
+          if (theme.productBlockTouchTracking) {
+            if (Math.abs(evt.touches[0].clientY - theme.productBlockTouchStartY) < 30) {
+              const deltaX = evt.touches[0].clientX - theme.productBlockTouchStartX;
+              if (deltaX > 25) {
+                this.incrementActiveImage(-1);
+                theme.productBlockTouchTracking = false;
+              } else if (deltaX < -25) {
+                this.incrementActiveImage(1);
+                theme.productBlockTouchTracking = false;
+              }
             }
           }
-        }
-      }, { passive: true });
+        }, { passive: true });
 
-      touchContainer.addEventListener('touchend', () => {
-        theme.productBlockTouchTracking = false;
-      });
+        touchContainer.addEventListener('touchend', () => {
+          theme.productBlockTouchTracking = false;
+        });
+      }
     }
   }
 

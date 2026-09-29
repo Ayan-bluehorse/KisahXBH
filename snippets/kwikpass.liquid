@@ -78,18 +78,18 @@
   
   // Add a click event listener to the document
   document.addEventListener('click', function(event) {
-    const dropdownButton = document.getElementsByClassName('header--icon') ?. [0]  
+    const dropdownButton = document.getElementsByClassName('header--icon')?.[0];
     // Check if the clicked element is the dropdown button or inside the dropdown menu
-      const isClickInsideDropdown = dropdownButton.contains(event.target);    
+    const isClickInsideDropdown = dropdownButton ? dropdownButton.contains(event.target) : false;
     // If the click is outside the dropdown, hide the dropdown
     const kwikpassLoggedInElement = document.getElementById("icon-kwikpass");
-    const crossIconElement = document.getElementById("icon-close-kwikpass")
-    const drawerElement = document.getElementById("kwikpass-drawer-desktop") 
-    if (! isClickInsideDropdown && isDropdownVisible && token) {
-    drawerElement.style.display = "none";
-    crossIconElement.style.display = "none";
-    kwikpassLoggedInElement.style.display = "flex";
-    isDropdownVisible = ! isDropdownVisible;
+    const crossIconElement = document.getElementById("icon-close-kwikpass");
+    const drawerElement = document.getElementById("kwikpass-drawer-desktop");
+    if (!isClickInsideDropdown && isDropdownVisible && token) {
+      if (drawerElement) drawerElement.style.display = "none";
+      if (crossIconElement) crossIconElement.style.display = "none";
+      if (kwikpassLoggedInElement) kwikpassLoggedInElement.style.display = "flex";
+      isDropdownVisible = !isDropdownVisible;
     }
   });
 

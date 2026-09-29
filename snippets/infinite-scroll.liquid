@@ -271,7 +271,7 @@
     }
 
     function usesTwoMobileColumns() {
-      if (!grid) return false;
+      if (!grid || !(grid instanceof Element)) return false;
       if (!window.matchMedia('(max-width: 768px)').matches) return false;
 
       if (grid.classList && grid.classList.contains('product-grid--per-row-mob-2')) {
