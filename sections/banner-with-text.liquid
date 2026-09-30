@@ -32,6 +32,113 @@
     display: none !important;
   }
 }
+
+/* Prominent, High-Contrast Navigation Arrows (Desktop & Mobile) */
+.new-home-page-banner .slick-prev,
+.new-home-page-banner .slick-next,
+#shopify-section-{{section.id}} .slick-prev,
+#shopify-section-{{section.id}} .slick-next {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  position: absolute !important;
+  top: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  padding: 0 !important;
+  transform: translateY(-50%) !important;
+  cursor: pointer !important;
+  color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.28) !important;
+  z-index: 100 !important;
+  transition: all 0.25s ease !important;
+}
+.new-home-page-banner .slick-prev:hover,
+.new-home-page-banner .slick-next:hover,
+#shopify-section-{{section.id}} .slick-prev:hover,
+#shopify-section-{{section.id}} .slick-next:hover {
+  background: #ffffff !important;
+  transform: translateY(-50%) scale(1.08) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38) !important;
+}
+.new-home-page-banner .slick-prev,
+#shopify-section-{{section.id}} .slick-prev {
+  left: 20px !important;
+}
+.new-home-page-banner .slick-next,
+#shopify-section-{{section.id}} .slick-next {
+  right: 20px !important;
+}
+.new-home-page-banner .slick-prev:before,
+#shopify-section-{{section.id}} .slick-prev:before {
+  content: "" !important;
+  display: block !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-left: 2.5px solid #551f2d !important;
+  border-bottom: 2.5px solid #551f2d !important;
+  transform: rotate(45deg) !important;
+  margin-left: 3px !important;
+  background: none !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+.new-home-page-banner .slick-next:before,
+#shopify-section-{{section.id}} .slick-next:before {
+  content: "" !important;
+  display: block !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-right: 2.5px solid #551f2d !important;
+  border-bottom: 2.5px solid #551f2d !important;
+  transform: rotate(-45deg) !important;
+  margin-right: 3px !important;
+  background: none !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .new-home-page-banner .slick-prev,
+  .new-home-page-banner .slick-next,
+  #shopify-section-{{section.id}} .slick-prev,
+  #shopify-section-{{section.id}} .slick-next {
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.32) !important;
+  }
+  .new-home-page-banner .slick-prev,
+  #shopify-section-{{section.id}} .slick-prev {
+    left: 10px !important;
+  }
+  .new-home-page-banner .slick-next,
+  #shopify-section-{{section.id}} .slick-next {
+    right: 10px !important;
+  }
+  .new-home-page-banner .slick-prev:before,
+  #shopify-section-{{section.id}} .slick-prev:before {
+    width: 8px !important;
+    height: 8px !important;
+    border-width: 2.2px !important;
+    margin-left: 2px !important;
+  }
+  .new-home-page-banner .slick-next:before,
+  #shopify-section-{{section.id}} .slick-next:before {
+    width: 8px !important;
+    height: 8px !important;
+    border-width: 2.2px !important;
+    margin-right: 2px !important;
+  }
+}
 </style>
 <div class="new-home-page-banner">
     <div class="banner-image-sec">
@@ -341,17 +448,30 @@
   line-height: 0;
   position: absolute;
   top: 50%;
-  display: block;
-  width: 20px;
-  height: 20px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  transform: translate(0, -50%);
+  transform: translateY(-50%);
   cursor: pointer;
   color: transparent;
   border: none;
   outline: none;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 50% !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
   z-index: 100;
+  transition: all 0.25s ease;
+}
+#shopify-section-{{section.id}} .slick-prev:hover,
+#shopify-section-{{section.id}} .slick-next:hover {
+  background: #ffffff !important;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
 }
 #shopify-section-{{section.id}} .slick-dots li button {
   font-size: 0;
