@@ -33,7 +33,7 @@
   }
 }
 
-/* Prominent, High-Contrast Navigation Arrows (Desktop & Mobile) */
+/* Clean White Arrow Lines (No Background Circle) - Desktop & Mobile */
 .new-home-page-banner .slick-prev,
 .new-home-page-banner .slick-next,
 #shopify-section-{{section.id}} .slick-prev,
@@ -53,57 +53,57 @@
   color: transparent !important;
   border: none !important;
   outline: none !important;
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px) !important;
-  border-radius: 50% !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.28) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   z-index: 100 !important;
-  transition: all 0.25s ease !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
 }
 .new-home-page-banner .slick-prev:hover,
 .new-home-page-banner .slick-next:hover,
 #shopify-section-{{section.id}} .slick-prev:hover,
 #shopify-section-{{section.id}} .slick-next:hover {
-  background: #ffffff !important;
-  transform: translateY(-50%) scale(1.08) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38) !important;
+  background: transparent !important;
+  transform: translateY(-50%) scale(1.18) !important;
 }
 .new-home-page-banner .slick-prev,
 #shopify-section-{{section.id}} .slick-prev {
-  left: 20px !important;
+  left: 14px !important;
 }
 .new-home-page-banner .slick-next,
 #shopify-section-{{section.id}} .slick-next {
-  right: 20px !important;
+  right: 14px !important;
 }
 .new-home-page-banner .slick-prev:before,
 #shopify-section-{{section.id}} .slick-prev:before {
   content: "" !important;
   display: block !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-left: 2.5px solid #551f2d !important;
-  border-bottom: 2.5px solid #551f2d !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-left: 2.8px solid #ffffff !important;
+  border-bottom: 2.8px solid #ffffff !important;
   transform: rotate(45deg) !important;
-  margin-left: 3px !important;
+  margin-left: 5px !important;
   background: none !important;
   background-image: none !important;
-  opacity: 1 !important;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.75)) !important;
+  opacity: 0.95 !important;
 }
 .new-home-page-banner .slick-next:before,
 #shopify-section-{{section.id}} .slick-next:before {
   content: "" !important;
   display: block !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-right: 2.5px solid #551f2d !important;
-  border-bottom: 2.5px solid #551f2d !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-right: 2.8px solid #ffffff !important;
+  border-bottom: 2.8px solid #ffffff !important;
   transform: rotate(-45deg) !important;
-  margin-right: 3px !important;
+  margin-right: 5px !important;
   background: none !important;
   background-image: none !important;
-  opacity: 1 !important;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.75)) !important;
+  opacity: 0.95 !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -111,32 +111,34 @@
   .new-home-page-banner .slick-next,
   #shopify-section-{{section.id}} .slick-prev,
   #shopify-section-{{section.id}} .slick-next {
-    width: 36px !important;
-    height: 36px !important;
-    background: rgba(255, 255, 255, 0.94) !important;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.32) !important;
+    width: 38px !important;
+    height: 38px !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
   .new-home-page-banner .slick-prev,
   #shopify-section-{{section.id}} .slick-prev {
-    left: 10px !important;
+    left: 6px !important;
   }
   .new-home-page-banner .slick-next,
   #shopify-section-{{section.id}} .slick-next {
-    right: 10px !important;
+    right: 6px !important;
   }
   .new-home-page-banner .slick-prev:before,
   #shopify-section-{{section.id}} .slick-prev:before {
-    width: 8px !important;
-    height: 8px !important;
-    border-width: 2.2px !important;
-    margin-left: 2px !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-width: 2.5px !important;
+    margin-left: 4px !important;
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.8)) !important;
   }
   .new-home-page-banner .slick-next:before,
   #shopify-section-{{section.id}} .slick-next:before {
-    width: 8px !important;
-    height: 8px !important;
-    border-width: 2.2px !important;
-    margin-right: 2px !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-width: 2.5px !important;
+    margin-right: 4px !important;
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.8)) !important;
   }
 }
 </style>
@@ -459,19 +461,19 @@
   color: transparent;
   border: none;
   outline: none;
-  background: rgba(255, 255, 255, 0.92) !important;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 50% !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
   z-index: 100;
-  transition: all 0.25s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 #shopify-section-{{section.id}} .slick-prev:hover,
 #shopify-section-{{section.id}} .slick-next:hover {
-  background: #ffffff !important;
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
+  background: transparent !important;
+  transform: translateY(-50%) scale(1.18);
+  box-shadow: none !important;
 }
 #shopify-section-{{section.id}} .slick-dots li button {
   font-size: 0;
