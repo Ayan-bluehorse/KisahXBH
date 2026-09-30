@@ -80,7 +80,7 @@
   document.addEventListener('click', function(event) {
     const dropdownButton = document.getElementsByClassName('header--icon')?.[0];
     // Check if the clicked element is the dropdown button or inside the dropdown menu
-    const isClickInsideDropdown = dropdownButton ? dropdownButton.contains(event.target) : false;
+    const isClickInsideDropdown = (dropdownButton && event.target && typeof dropdownButton.contains === 'function') ? dropdownButton.contains(event.target) : false;
     // If the click is outside the dropdown, hide the dropdown
     const kwikpassLoggedInElement = document.getElementById("icon-kwikpass");
     const crossIconElement = document.getElementById("icon-close-kwikpass");

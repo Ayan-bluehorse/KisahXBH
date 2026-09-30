@@ -269,7 +269,9 @@
     const kwipassDesktopNode = document.createElement('div')
     kwipassDesktopNode.className="header--icon"
     kwipassDesktopNode.innerHTML = html
-    personIconElement.replaceChild(kwipassDesktopNode,profileButtonElement)
+    if (personIconElement && profileButtonElement && typeof personIconElement.replaceChild === 'function' && personIconElement.contains(profileButtonElement)) {
+      personIconElement.replaceChild(kwipassDesktopNode,profileButtonElement)
+    }
   }
 </script>
 <!-- Kwikpass script to add kwikpass button in the header - [Ends] -->

@@ -10,6 +10,22 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
 <head>
+  <script>
+    // Critical Global Polyfills & Safety Nets (Prevents top console errors)
+    window.firsttilesinit = window.firsttilesinit || function() {};
+    window._autofillcallbackhandler = window._autofillcallbackhandler || function() {};
+    (function() {
+      try {
+        var _origGCS = window.getComputedStyle;
+        window.getComputedStyle = function(el, pseudo) {
+          if (!el || !(el instanceof Element || el instanceof Node)) {
+            return { getPropertyValue: function() { return ''; } };
+          }
+          return _origGCS.call(window, el, pseudo);
+        };
+      } catch(e) {}
+    })();
+  </script>
   {% render 'elevateab' %}
 
 <!-- Font & CDN Preconnects for Page Speed -->
