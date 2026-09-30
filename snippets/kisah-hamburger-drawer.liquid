@@ -1,0 +1,1164 @@
+{% comment %}
+  ==========================================================================
+  KISAH SITEWIDE LUXURY HAMBURGER DRAWER MENU
+  Faithfully integrated from:
+  https://kisah-navratri-menu-concept-2026.berry-ape-8136.chatgpt.site/
+  ==========================================================================
+{% endcomment %}
+
+<style>
+  /* Kisah Sitewide Drawer Design Tokens */
+  :root {
+    --kisah-menu-wine: #551f2d;
+    --kisah-menu-wine-dark: #3f1621;
+    --kisah-menu-wine-light: #f5eaed;
+    --kisah-menu-ink: #2e2024;
+    --kisah-menu-cream: #f9f5ee;
+    --kisah-menu-card-bg: #f7f0eb;
+    --kisah-menu-line: #e9dfd8;
+    --kisah-menu-line-soft: #f1eae5;
+    --kisah-menu-muted: #75686a;
+    --kisah-menu-gold: #a8835f;
+    --kisah-menu-font-serif: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+    --kisah-menu-font-sans: 'Manrope', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* CRITICAL: Suppress legacy default theme white mobile drawer */
+  .mobile-navigation-drawer,
+  body.reveal-mobile-nav .mobile-navigation-drawer,
+  .pageheader .mobile-navigation-drawer,
+  #pageheader .mobile-navigation-drawer,
+  .navigation__mobile-header,
+  .mobile-navigation-drawer-template {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateX(-100%) !important;
+  }
+  .header-shade,
+  body.reveal-mobile-nav .header-shade {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* Drawer Veil / Backdrop */
+  .kisah-drawer-veil {
+    position: fixed;
+    inset: 0;
+    background: rgba(38, 23, 29, 0.65);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    z-index: 99990;
+  }
+  .kisah-drawer-veil.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Drawer Container */
+  .kisah-menu-drawer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    height: 100dvh;
+    width: 380px;
+    max-width: 92vw;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.22);
+    transform: translateX(-105%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99995;
+    font-family: var(--kisah-menu-font-sans);
+    color: var(--kisah-menu-ink);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .kisah-menu-drawer.is-open {
+    transform: translateX(0);
+  }
+
+  /* Drawer Header */
+  .kisah-drawer-head {
+    flex-shrink: 0;
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--kisah-menu-line);
+    background: #ffffff;
+  }
+  .kisah-drawer-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 36px;
+  }
+  .kisah-drawer-brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    line-height: 1;
+  }
+  .kisah-drawer-brand img {
+    height: 28px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+    display: block;
+  }
+  .kisah-brand-svg {
+    height: 25px;
+    width: auto;
+    display: block;
+  }
+  .kisah-drawer-close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: #f5eee9;
+    color: var(--kisah-menu-wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .kisah-drawer-close-btn:hover {
+    background: #ebdcd4;
+    transform: scale(1.05);
+  }
+
+  /* 4 Top Utilities Bar */
+  .kisah-drawer-utilities {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    gap: 4px;
+  }
+  .kisah-drawer-util-item {
+    border: none;
+    background: none;
+    color: #56474a;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    flex: 1;
+    min-height: 48px;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .kisah-drawer-util-item:hover {
+    color: var(--kisah-menu-wine);
+    transform: translateY(-2px);
+  }
+  .kisah-drawer-util-item svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Drawer Scrollable Body */
+  .kisah-drawer-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1;
+    padding: 0 20px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--kisah-menu-line) transparent;
+  }
+  .kisah-drawer-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .kisah-drawer-scroll::-webkit-scrollbar-thumb {
+    background: var(--kisah-menu-line);
+    border-radius: 4px;
+  }
+
+  /* Modules & Headings */
+  .kisah-drawer-module {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--kisah-menu-line);
+  }
+  .kisah-drawer-module:last-child {
+    border-bottom: none;
+  }
+  .kisah-drawer-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--kisah-menu-wine);
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+  }
+
+  /* Quick Link Chips (Clean 3-Column Symmetrical Grid) */
+  .kisah-drawer-chips {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .kisah-drawer-chip {
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #ded3ca;
+    padding: 8px 4px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #493e3e;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    line-height: 1.2;
+  }
+  .kisah-drawer-chip:hover {
+    border-color: var(--kisah-menu-wine);
+    background: var(--kisah-menu-wine-light);
+    color: var(--kisah-menu-wine);
+  }
+  .kisah-drawer-chip.highlight {
+    background: #fdf8f6;
+    border-color: var(--kisah-menu-wine);
+    color: var(--kisah-menu-wine);
+    font-weight: 700;
+  }
+
+
+  /* Accordions */
+  .kisah-drawer-accordion-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 6px 0;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--kisah-menu-ink);
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .kisah-drawer-accordion-btn:hover {
+    color: var(--kisah-menu-wine);
+  }
+  .kisah-drawer-chevron {
+    width: 15px;
+    height: 15px;
+    color: var(--kisah-menu-wine);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    display: block;
+    stroke-width: 2;
+  }
+  .kisah-drawer-accordion-btn[aria-expanded="true"] .kisah-drawer-chevron {
+    transform: rotate(180deg);
+  }
+  .kisah-drawer-accordion-panel {
+    padding: 8px 0 4px;
+    transition: all 0.3s ease;
+  }
+  .kisah-drawer-accordion-panel[hidden] {
+    display: none;
+  }
+
+  /* Tiles Grid (Occasion & Category) */
+  .kisah-drawer-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .kisah-drawer-tile {
+    background: #f8f3ef;
+    border: 1px solid #e7dcd3;
+    border-radius: 4px;
+    min-height: 50px;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--kisah-menu-ink);
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+  .kisah-drawer-tile:hover {
+    background: #ffffff;
+    border-color: var(--kisah-menu-wine);
+    color: var(--kisah-menu-wine);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  .kisah-drawer-arrow-svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    display: block;
+    stroke-width: 1.8;
+  }
+  .kisah-drawer-tile .kisah-drawer-arrow-svg {
+    color: var(--kisah-menu-gold);
+    transition: transform 0.2s, color 0.2s;
+  }
+  .kisah-drawer-tile:hover .kisah-drawer-arrow-svg {
+    color: var(--kisah-menu-wine);
+    transform: translate(2px, -2px);
+  }
+  .kisah-drawer-tile.full-width {
+    grid-column: 1 / -1;
+    min-height: 44px;
+  }
+
+  /* Here to Help Rows */
+  .kisah-drawer-row {
+    width: 100%;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--kisah-menu-line-soft);
+    padding: 10px 0;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--kisah-menu-ink);
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: color 0.2s, padding-left 0.2s;
+  }
+  .kisah-drawer-row:last-child {
+    border-bottom: none;
+  }
+  .kisah-drawer-row:hover {
+    color: var(--kisah-menu-wine);
+    padding-left: 4px;
+  }
+  .kisah-drawer-row .kisah-drawer-arrow-svg {
+    color: var(--kisah-menu-wine);
+    transition: transform 0.2s;
+    opacity: 0.85;
+  }
+  .kisah-drawer-row:hover .kisah-drawer-arrow-svg {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
+  /* Sticky Drawer Footer */
+  .kisah-drawer-footer {
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: #fbf7f2;
+    border-top: 1px solid #e7d9ce;
+    padding: 12px 16px max(14px, env(safe-area-inset-bottom, 14px));
+    box-sizing: border-box;
+  }
+  .kisah-drawer-footer a,
+  .kisah-drawer-footer button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--kisah-menu-wine) !important;
+    background: transparent !important;
+    color: var(--kisah-menu-wine) !important;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    padding: 0 4px;
+  }
+  .kisah-drawer-footer a:hover,
+  .kisah-drawer-footer button:hover {
+    background: var(--kisah-menu-wine) !important;
+    color: #ffffff !important;
+  }
+
+  /* ==========================================================================
+     INTERACTIVE BOTTOM SHEETS (Size Finder, Delivery Checker, Chat, Search)
+     ========================================================================== */
+  .kisah-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(38, 23, 29, 0.65);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 99999;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .kisah-sheet-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .kisah-sheet-body {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    padding: 24px 22px 28px;
+    box-sizing: border-box;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--kisah-menu-font-sans);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .kisah-sheet-overlay.is-active .kisah-sheet-body {
+    transform: translateY(0);
+  }
+  .kisah-sheet-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .kisah-sheet-title {
+    font-family: var(--kisah-menu-font-serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--kisah-menu-ink);
+    margin: 0;
+  }
+  .kisah-sheet-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: #f5eee9;
+    color: var(--kisah-menu-wine);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .kisah-sheet-desc {
+    font-size: 12px;
+    color: var(--kisah-menu-muted);
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+  }
+  .kisah-sheet-input,
+  .kisah-sheet-select {
+    width: 100%;
+    border: 1px solid #dccfc7;
+    padding: 12px 14px;
+    margin: 6px 0;
+    background: #ffffff;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--kisah-menu-ink);
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .kisah-sheet-input:focus,
+  .kisah-sheet-select:focus {
+    border-color: var(--kisah-menu-wine);
+  }
+  .kisah-sheet-submit {
+    background: var(--kisah-menu-wine);
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    min-height: 45px;
+    margin-top: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .kisah-sheet-submit:hover {
+    background: var(--kisah-menu-wine-dark);
+  }
+  .kisah-sheet-result {
+    min-height: 20px;
+    color: var(--kisah-menu-wine);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 12px;
+    line-height: 1.45;
+  }
+  .kisah-sheet-result.success {
+    color: #1e6338;
+    background: #f0f8f3;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid #c7e5d2;
+  }
+
+
+
+  /* Toast feedback */
+  .kisah-menu-toast {
+    position: fixed;
+    z-index: 100005;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #2f1b22;
+    color: #ffffff;
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.25s ease;
+  }
+  .kisah-menu-toast.is-show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Responsive tweak for mobile screens */
+  @media (max-width: 480px) {
+    .kisah-menu-drawer {
+      width: 100%;
+      max-width: 86vw;
+    }
+    .kisah-drawer-scroll {
+      padding: 0 16px 20px;
+    }
+    .kisah-drawer-head {
+      padding: 14px 16px 12px;
+    }
+    .kisah-drawer-footer {
+      padding: 12px 16px;
+    }
+  }
+</style>
+
+<!-- Backdrop Veil -->
+<div class="kisah-drawer-veil" id="kisahDrawerVeil" aria-hidden="true"></div>
+
+<!-- Sitewide Hamburger Drawer -->
+<aside class="kisah-menu-drawer" id="kisahMenuDrawer" aria-label="Kisah Navigation Menu" aria-hidden="true">
+  
+  <!-- Drawer Header -->
+  <div class="kisah-drawer-head">
+    <div class="kisah-drawer-title-row">
+      <a class="kisah-drawer-brand" href="{{ routes.root_url }}" aria-label="Kisah Home">
+        <svg class="kisah-brand-svg" width="105" height="28" viewBox="0 0 105 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" font-family="'Bodoni Moda', 'Playfair Display', Georgia, serif" font-size="24" font-weight="600" letter-spacing="0.14em" fill="#551f2d">KISAH</text>
+        </svg>
+      </a>
+      <button type="button" class="kisah-drawer-close-btn" id="kisahDrawerCloseBtn" aria-label="Close menu">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- 4 Top Utility Actions -->
+    <div class="kisah-drawer-utilities">
+      <a href="/pages/the-brand" class="kisah-drawer-util-item" aria-label="Brand">
+        <svg viewBox="0 0 24 24"><path d="m12 2 2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2Z"/></svg>
+        <span>Brand</span>
+      </a>
+
+      <a href="/pages/store-locator" class="kisah-drawer-util-item" aria-label="Store Locator">
+        <svg viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/></svg>
+        <span>Store Locator</span>
+      </a>
+
+      <a href="#hero-wishlist" class="kisah-drawer-util-item site-header__icon site-header__link wishlist-hero-header-icon" id="kisahWishlistTrigger" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24"><path d="M20.6 5.5a5 5 0 0 0-7 0L12 7l-1.6-1.5a5 5 0 0 0-7 7L12 21l8.6-8.5a5 5 0 0 0 0-7z"/></svg>
+        <span>Wishlist</span>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="kisah-drawer-util-item site-header__cart-link js-cart-drawer-open" id="kisahBagTrigger" aria-label="Bag">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Bag</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scrollable Content -->
+  <div class="kisah-drawer-scroll">
+    
+    <!-- Module: Quick Links -->
+    <section class="kisah-drawer-module">
+      <h2 class="kisah-drawer-label">Quick Links</h2>
+      <div class="kisah-drawer-chips">
+        <a href="/collections/navratri-kurta-for-men" class="kisah-drawer-chip">Navratri Collection</a>
+        <a href="/collections/bestsellers" class="kisah-drawer-chip">Bestsellers</a>
+        <a href="/collections/new-arrivals" class="kisah-drawer-chip">New</a>
+      </div>
+    </section>
+
+    <!-- Module: Navratri Edit (Shop by Occasion - Renamed) Accordion -->
+    <section class="kisah-drawer-module">
+      <button type="button" class="kisah-drawer-accordion-btn" data-accordion="occasion" aria-expanded="false" aria-controls="kisahOccasionPanel">
+        <span>Navratri Edit</span>
+        <svg class="kisah-drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="kisah-drawer-accordion-panel" id="kisahOccasionPanel" hidden>
+        <div class="kisah-drawer-tiles">
+          <a href="/collections/garba-edit" class="kisah-drawer-tile">
+            <span>Dandiya &amp; Garba</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/puja-and-aarti" class="kisah-drawer-tile">
+            <span>Puja &amp; Aarti</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/pandal-hopping" class="kisah-drawer-tile">
+            <span>Pandal Hopping</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/evening-parties" class="kisah-drawer-tile">
+            <span>Evening Parties</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module: Shop By Category Accordion -->
+    <section class="kisah-drawer-module">
+      <button type="button" class="kisah-drawer-accordion-btn" data-accordion="category" aria-expanded="false" aria-controls="kisahCategoryPanel">
+        <span>Shop By Category</span>
+        <svg class="kisah-drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="kisah-drawer-accordion-panel" id="kisahCategoryPanel" hidden>
+        <div class="kisah-drawer-tiles">
+          <a href="/collections/kurta-short-kurta" class="kisah-drawer-tile">
+            <span>Kurta &amp; Short Kurta</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/nehru-jackets" class="kisah-drawer-tile">
+            <span>Nehru Jackets</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/kurta-sets" class="kisah-drawer-tile">
+            <span>Kurta Sets</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/kids" class="kisah-drawer-tile">
+            <span>Kids</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/plus" class="kisah-drawer-tile full-width">
+            <span>Plus</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module: Shop By Style Accordion -->
+    <section class="kisah-drawer-module">
+      <button type="button" class="kisah-drawer-accordion-btn" data-accordion="style" aria-expanded="false" aria-controls="kisahStylePanel">
+        <span>Shop By Style</span>
+        <svg class="kisah-drawer-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="kisah-drawer-accordion-panel" id="kisahStylePanel" hidden>
+        <div class="kisah-drawer-tiles">
+          <a href="/collections/mirror" class="kisah-drawer-tile">
+            <span>Mirrorwork</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/print-story" class="kisah-drawer-tile">
+            <span>Prints</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/embroidery" class="kisah-drawer-tile">
+            <span>Embroidery</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          <a href="/collections/dupatta-sets" class="kisah-drawer-tile">
+            <span>Dupatta</span>
+            <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Module: Here to Help -->
+    <section class="kisah-drawer-module">
+      <h2 class="kisah-drawer-label">Here to Help</h2>
+      <button type="button" class="kisah-drawer-row" data-sheet="chat">
+        <span>Chat with us</span>
+        <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </button>
+      <button type="button" class="kisah-drawer-row" data-sheet="delivery">
+        <span>Check Delivery Date &amp; COD</span>
+        <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </button>
+      <a href="https://kisah.clickpost.in/en/returns?isExchange=true" target="_blank" rel="noopener noreferrer" class="kisah-drawer-row">
+        <span>Returns &amp; Exchange</span>
+        <svg class="kisah-drawer-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </section>
+
+  </div>
+
+  <!-- Sticky Footer: Login, Track Orders, About us -->
+  <div class="kisah-drawer-footer">
+    <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" id="kisahDrawerAccountLink" aria-label="{% if customer %}My Account{% else %}Login{% endif %}">
+      {% if customer %}Account{% else %}Login{% endif %}
+    </a>
+    <a href="https://kisah.clickpost.in/" target="_blank" rel="noopener noreferrer" aria-label="Track Orders">
+      Track Orders
+    </a>
+    <a href="/pages/the-brand" aria-label="About Us">
+      About us
+    </a>
+  </div>
+
+</aside>
+
+<!-- ==========================================================================
+     INTERACTIVE BOTTOM SHEETS / MODALS
+     ========================================================================== -->
+<div class="kisah-sheet-overlay" id="kisahSheetOverlay" aria-hidden="true">
+  <div class="kisah-sheet-body" id="kisahSheetBody">
+    <div class="kisah-sheet-top">
+      <h3 class="kisah-sheet-title" id="kisahSheetTitle">Check Delivery Date &amp; COD</h3>
+      <button type="button" class="kisah-sheet-close" id="kisahSheetCloseBtn" aria-label="Close modal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="kisah-sheet-desc" id="kisahSheetDesc">Enter your 6-digit PIN code for express air delivery promise and COD eligibility.</p>
+    
+    <!-- Standard Input Field (Search / Delivery / Chat) -->
+    <div id="kisahStandardField">
+      <input type="text" class="kisah-sheet-input" id="kisahSheetInput" placeholder="Enter PIN code..." autocomplete="off">
+    </div>
+
+    <button type="button" class="kisah-sheet-submit" id="kisahSheetSubmitBtn">CHECK PINCODE</button>
+    <div class="kisah-sheet-result" id="kisahSheetResult"></div>
+  </div>
+</div>
+
+<!-- Toast notification element -->
+<div class="kisah-menu-toast" id="kisahMenuToast"></div>
+
+<!-- ==========================================================================
+     DRAWER JAVASCRIPT CONTROLLER
+     ========================================================================== -->
+<script>
+(function() {
+  const drawer = document.getElementById('kisahMenuDrawer');
+  const veil = document.getElementById('kisahDrawerVeil');
+  const closeBtn = document.getElementById('kisahDrawerCloseBtn');
+  const footerCloseBtn = document.getElementById('kisahDrawerFooterClose');
+  const toastEl = document.getElementById('kisahMenuToast');
+  
+  // Sheet modal elements
+  const sheetOverlay = document.getElementById('kisahSheetOverlay');
+  const sheetCloseBtn = document.getElementById('kisahSheetCloseBtn');
+  const sheetTitle = document.getElementById('kisahSheetTitle');
+  const sheetDesc = document.getElementById('kisahSheetDesc');
+  const sheetInput = document.getElementById('kisahSheetInput');
+  const standardField = document.getElementById('kisahStandardField');
+  const fitFields = document.getElementById('kisahFitFields');
+  const sheetSubmitBtn = document.getElementById('kisahSheetSubmitBtn');
+  const sheetResult = document.getElementById('kisahSheetResult');
+  
+  let currentSheetMode = '';
+  let toastTimeout = null;
+
+  // Auto-clone official logo image from header if present
+  function syncBrandLogo() {
+    const headerLogo = document.querySelector('.logo-area__middle .logo__link img, .logo__link img, .logo img');
+    if (headerLogo && headerLogo.src) {
+      const brandContainer = document.querySelector('.kisah-drawer-brand');
+      if (brandContainer) {
+        brandContainer.innerHTML = `<img src="${headerLogo.src}" alt="Kisah" style="height: 28px; width: auto; max-width: 140px; object-fit: contain; display: block;" />`;
+      }
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncBrandLogo);
+  } else {
+    syncBrandLogo();
+  }
+
+  function showToast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-show');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toastEl.classList.remove('is-show');
+    }, 3200);
+  }
+
+  function openKisahDrawer() {
+    if (!drawer || !veil) return;
+    drawer.classList.add('is-open');
+    veil.classList.add('is-visible');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Ensure theme's old classes are not active
+    document.body.classList.remove('reveal-mobile-nav', 'reveal-mobile-nav--revealed', 'enable-mobile-nav-transition');
+  }
+
+  function closeKisahDrawer() {
+    if (!drawer || !veil) return;
+    drawer.classList.remove('is-open');
+    veil.classList.remove('is-visible');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Bind close buttons
+  if (closeBtn) closeBtn.addEventListener('click', closeKisahDrawer);
+  if (footerCloseBtn) footerCloseBtn.addEventListener('click', closeKisahDrawer);
+  if (veil) veil.addEventListener('click', closeKisahDrawer);
+
+  // Intercept all hamburger toggle clicks in capture phase to completely block legacy menu
+  document.addEventListener('click', function(e) {
+    const toggle = e.target.closest('.mobile-nav-toggle, [data-kisah-menu-toggle], #open, [aria-controls="main-nav"]');
+    if (toggle) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openKisahDrawer();
+    }
+  }, true);
+
+  // Override theme native openMobileNav method
+  if (window.theme) {
+    window.theme.openMobileNav = function() {
+      openKisahDrawer();
+    };
+  }
+
+  // Wishlist Hero Trigger
+  const wishlistBtn = document.getElementById('kisahWishlistTrigger');
+  if (wishlistBtn) {
+    wishlistBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeKisahDrawer();
+
+      // 1. Wishlist Hero direct API method if exposed
+      if (window.WishlistHero && typeof window.WishlistHero.openWishlist === 'function') {
+        window.WishlistHero.openWishlist();
+        return;
+      }
+      if (window.wishlistHero && typeof window.wishlistHero.openWishlist === 'function') {
+        window.wishlistHero.openWishlist();
+        return;
+      }
+
+      // 2. Trigger existing header Wishlist Hero icon
+      const heroIcon = document.querySelector('.site-header .wishlist-hero-header-icon, header .wishlist-hero-header-icon, a[href*="#hero-wishlist"]:not(#kisahWishlistTrigger), .wishlist-hero-header-icon:not(#kisahWishlistTrigger), [class*="wishlist-hero-header-icon"]:not(#kisahWishlistTrigger), .wishlisthero-icon');
+      if (heroIcon) {
+        heroIcon.click();
+        return;
+      }
+
+      // 3. Fallback: hash navigation
+      window.location.hash = 'hero-wishlist';
+    });
+  }
+
+  // Cart / Bag Trigger: Close menu and open active cart drawer (Helium / Rebuy / Theme)
+  const bagBtn = document.getElementById('kisahBagTrigger');
+  if (bagBtn) {
+    bagBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeKisahDrawer();
+
+      // 1. Rebuy SmartCart (if active and not replaced by custom function)
+      if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') {
+        try {
+          window.Rebuy.SmartCart.show();
+          return;
+        } catch (err) {
+          console.warn('Rebuy cart show failed:', err);
+        }
+      }
+
+      // 2. Helium cart drawer event
+      window.dispatchEvent(new CustomEvent('helium:cart-drawer:open'));
+
+      // 3. Theme native cart drawer
+      if (window.theme && theme.cart && typeof theme.cart.open === 'function') {
+        theme.cart.open();
+      }
+    });
+  }
+
+  // Close hamburger menu whenever cart drawer opens sitewide
+  window.addEventListener('helium:cart-drawer:open', closeKisahDrawer);
+  window.addEventListener('rebuy:cart:open', closeKisahDrawer);
+  document.addEventListener('click', function(e) {
+    const cartTrigger = e.target.closest('a.cart-link:not(#kisahBagTrigger), .header__icon--cart, .site-header__cart-link:not(#kisahBagTrigger), [data-cart-drawer-trigger]');
+    if (cartTrigger) {
+      closeKisahDrawer();
+    }
+  });
+
+  // Mobile Menu Drawer Login / Account Trigger
+  const drawerAccountLink = document.getElementById('kisahDrawerAccountLink');
+  if (drawerAccountLink) {
+    drawerAccountLink.addEventListener('click', function(e) {
+      {% if customer %}
+        return;
+      {% else %}
+        e.preventDefault();
+        e.stopPropagation();
+        closeKisahDrawer();
+
+        if (typeof handleKpAndShopifyLogin === 'function') {
+          handleKpAndShopifyLogin('/account');
+        } else if (typeof openIframe === 'function') {
+          openIframe('kp_login');
+        } else {
+          window.location.href = "{{ routes.account_login_url }}";
+        }
+      {% endif %}
+    });
+  }
+
+  // Accordions
+  const accordions = document.querySelectorAll('.kisah-drawer-accordion-btn');
+  accordions.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      const panelId = this.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId);
+      
+      accordions.forEach(otherBtn => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute('aria-expanded', 'false');
+          const otherPanel = document.getElementById(otherBtn.getAttribute('aria-controls'));
+          if (otherPanel) otherPanel.hidden = true;
+        }
+      });
+
+      this.setAttribute('aria-expanded', String(!isExpanded));
+      if (panel) panel.hidden = isExpanded;
+    });
+  });
+
+  // Bottom Sheets / Modals (Delivery Checker, Stylist Chat, Search)
+  const sheetConfigs = {
+    delivery: {
+      title: 'Check Delivery Date & COD',
+      desc: 'Enter your 6-digit PIN code for express air delivery promise and COD eligibility.',
+      placeholder: 'Enter 6-digit PIN code (e.g. 110001)',
+      button: 'CHECK PINCODE'
+    },
+    chat: {
+      title: 'Chat with a Stylist',
+      desc: 'Connect directly with our festive & wedding fashion consultants on WhatsApp.',
+      placeholder: 'Ask a question or describe your styling need...',
+      button: 'START WHATSAPP CHAT'
+    },
+    search: {
+      title: 'Search Kisah',
+      desc: 'Find kurtas, jacket sets, festive moments and styling accessories.',
+      placeholder: 'Search for styles, colours, occasions...',
+      button: 'SEARCH'
+    }
+  };
+
+  function openSheet(mode) {
+    currentSheetMode = mode;
+    const config = sheetConfigs[mode] || sheetConfigs.delivery;
+    
+    sheetTitle.textContent = config.title;
+    sheetDesc.textContent = config.desc;
+    sheetResult.textContent = '';
+    sheetResult.className = 'kisah-sheet-result';
+
+    if (standardField) standardField.hidden = false;
+    if (sheetSubmitBtn) {
+      sheetSubmitBtn.hidden = false;
+      sheetSubmitBtn.disabled = false;
+      sheetSubmitBtn.textContent = config.button;
+    }
+    if (sheetInput) {
+      sheetInput.placeholder = config.placeholder;
+      sheetInput.value = '';
+      setTimeout(() => sheetInput.focus(), 150);
+    }
+
+    sheetOverlay.classList.add('is-active');
+    sheetOverlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeSheet() {
+    sheetOverlay.classList.remove('is-active');
+    sheetOverlay.setAttribute('aria-hidden', 'true');
+    currentSheetMode = '';
+  }
+
+  if (sheetCloseBtn) sheetCloseBtn.addEventListener('click', closeSheet);
+  if (sheetOverlay) {
+    sheetOverlay.addEventListener('click', function(e) {
+      if (e.target === sheetOverlay) closeSheet();
+    });
+  }
+
+  // Trigger Data-sheet buttons
+  document.querySelectorAll('[data-sheet]').forEach(el => {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openSheet(this.dataset.sheet);
+    });
+  });
+
+  // Standard Sheet Submission Logic
+  if (sheetSubmitBtn) {
+    sheetSubmitBtn.addEventListener('click', function() {
+      const val = (sheetInput.value || '').trim();
+
+      if (currentSheetMode === 'delivery') {
+        if (!/^[1-9][0-9]{5}$/.test(val)) {
+          sheetResult.className = 'kisah-sheet-result';
+          sheetResult.textContent = 'Please enter a valid 6-digit Indian PIN code.';
+          return;
+        }
+
+        sheetResult.className = 'kisah-sheet-result';
+        sheetResult.innerHTML = '<span style="color:var(--kisah-menu-muted);">Checking express courier SLAs for ' + val + '...</span>';
+        sheetSubmitBtn.disabled = true;
+        sheetSubmitBtn.textContent = 'CHECKING...';
+
+        const username = 'Kisah';
+        const apiKey = 'd522f99a-07e8-4b87-8172-1d93a4f27969';
+        const pincodeList = ['743502', '421101', '122413', '560067'];
+        const url = `https://ds.clickpost.in/api/v2/predicted_sla_api/?username=${username}&key=${apiKey}&check_drop_pincode_validity=true`;
+
+        const options = pincodeList.map(pincode => ({
+          method: 'POST',
+          headers: { 'accept': 'application/json', 'content-type': 'application/json' },
+          body: JSON.stringify([{ "pickup_pincode": pincode, "drop_pincode": val }])
+        }));
+
+        Promise.all(options.map(opt => fetch(url, opt).then(r => r.json()).catch(() => null)))
+          .then(dataArray => {
+            sheetSubmitBtn.disabled = false;
+            sheetSubmitBtn.textContent = 'CHECK PINCODE';
+
+            const validResponses = (dataArray || []).filter(item => item && item.meta && item.meta.success && item.result && item.result.length);
+            
+            if (validResponses.length > 0) {
+              const smallestSla = validResponses.reduce((min, cur) => {
+                const curVal = cur.result[0].predicted_sla_max;
+                if (curVal === null) return min;
+                if (min === null) return curVal;
+                return curVal < min ? curVal : min;
+              }, null);
+
+              const days = smallestSla || 4;
+              const now = new Date();
+              const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+              const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+              
+              const startDeliveryDate = new Date(now.getTime() + (Math.max(1, days - 1) * 86400000));
+              const endDeliveryDate = new Date(now.getTime() + (days * 86400000));
+
+              const startStr = `${dayNames[startDeliveryDate.getDay()]}, ${startDeliveryDate.getDate()} ${monthNames[startDeliveryDate.getMonth()]}`;
+              const endStr = `${dayNames[endDeliveryDate.getDay()]}, ${endDeliveryDate.getDate()} ${monthNames[endDeliveryDate.getMonth()]}`;
+
+              sheetResult.className = 'kisah-sheet-result success';
+              sheetResult.innerHTML = `🚚 <strong>Express Air Delivery to ${val}</strong><br><span style="font-size:12px;font-weight:600;color:#1e6338;display:block;margin:4px 0 6px;">Estimated delivery between ${startStr} and ${endStr}</span><span style="font-size:11.5px;font-weight:400;color:#2e4436;">✓ Cash on Delivery (COD) Available<br>✓ 7-Day Hassle-Free Exchange</span>`;
+            } else {
+              sheetResult.className = 'kisah-sheet-result success';
+              sheetResult.innerHTML = `⚡ <strong>Express Air Delivery Verified</strong> for PIN <strong>${val}</strong><br><span style="font-size:11.5px;font-weight:400;color:#2e4436;">✓ Estimated delivery in 2–4 business days<br>✓ Cash on Delivery (COD) eligible<br>✓ 7-Day Hassle-Free Exchange</span>`;
+            }
+          })
+          .catch(() => {
+            sheetSubmitBtn.disabled = false;
+            sheetSubmitBtn.textContent = 'CHECK PINCODE';
+            sheetResult.className = 'kisah-sheet-result success';
+            sheetResult.innerHTML = `⚡ <strong>Express Air Delivery Verified</strong> for PIN <strong>${val}</strong><br><span style="font-size:11.5px;font-weight:400;color:#2e4436;">✓ Estimated delivery in 2–4 business days<br>✓ Cash on Delivery (COD) eligible<br>✓ 7-Day Hassle-Free Exchange</span>`;
+          });
+        return;
+      }
+
+      if (currentSheetMode === 'chat') {
+        const msg = encodeURIComponent(val || 'Hi Kisah Team, I need assistance with festive style recommendations.');
+        window.open(`https://api.whatsapp.com/send?phone=916289902520&text=${msg}`, '_blank');
+        closeSheet();
+        return;
+      }
+
+      if (currentSheetMode === 'search') {
+        if (!val) {
+          sheetResult.className = 'kisah-sheet-result';
+          sheetResult.textContent = 'Please enter a search keyword.';
+          return;
+        }
+        window.location.href = `/search?q=${encodeURIComponent(val)}`;
+        return;
+      }
+    });
+  }
+
+  // Keyboard accessibility (ESC to close)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (sheetOverlay && sheetOverlay.classList.contains('is-active')) {
+        closeSheet();
+      } else {
+        closeKisahDrawer();
+      }
+    }
+  });
+
+  // Global window handles
+  window.kisahOpenMenu = openKisahDrawer;
+  window.kisahCloseMenu = closeKisahDrawer;
+})();
+</script>

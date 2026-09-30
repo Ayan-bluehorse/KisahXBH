@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", function () {
           
           <a href="{{ routes.cart_url }}"
              class="cart-link"
-             onclick="event.preventDefault(); if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') { window.Rebuy.SmartCart.show(); } else { window.location.href = '{{ routes.cart_url }}'; }">
+             onclick="event.preventDefault(); if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') { window.Rebuy.SmartCart.show(); } else { window.dispatchEvent(new CustomEvent('helium:cart-drawer:open')); if (window.theme && theme.cart && typeof theme.cart.open === 'function') { theme.cart.open(); } }">
             <span class="cart-link__label {% if section.settings.icon_strategy == 'icons_only' %}visually-hidden{% else %}visually-hidden-mobile{% endif %}">
     {{- 'sections.header.cart' | t | escape -}}
   </span>
