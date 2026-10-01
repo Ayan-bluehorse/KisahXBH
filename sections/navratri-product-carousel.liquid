@@ -4,6 +4,10 @@
   assign anchor = section.settings.anchor_id
 
   assign chosen_coll = section.settings.collection
+  if chosen_coll.title == blank and section.settings.collection != blank
+    assign chosen_coll = collections[section.settings.collection]
+  endif
+
   assign view_link = section.settings.view_all_link
   if view_link == blank and chosen_coll != blank
     assign view_link = chosen_coll.url
@@ -15,6 +19,9 @@
   if show_view_all == nil
     assign show_view_all = true
   endif
+
+  assign section_coll_title = chosen_coll.title | default: section.settings.title
+  assign section_coll_url = chosen_coll.url | default: view_link
 -%}
 
 {%- style -%}
@@ -31,7 +38,7 @@
   }
 {%- endstyle -%}
 
-<section class="cp-navratri-pcarousel" id="navratri-pcarousel-{{ sid }}" {% if anchor != blank %}data-anchor="{{ anchor }}"{% endif %}>
+<section class="cp-navratri-pcarousel" id="navratri-pcarousel-{{ sid }}" {% if anchor != blank %}data-anchor="{{ anchor }}"{% endif %}{% if section_coll_title != blank and section_coll_url != blank %} data-collection-title="{{ section_coll_title | escape }}" data-collection-url="{{ section_coll_url }}"{% endif %}>
   {%- if anchor != blank -%}
     <div id="{{ anchor }}" class="cp-navratri-anchor-point" style="position: relative; top: -80px; visibility: hidden; height: 0; width: 0;"></div>
   {%- endif -%}

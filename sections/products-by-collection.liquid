@@ -180,10 +180,19 @@
 
 
 
-<div class="custom-collection-section page-width" id="{{ section.settings.section_id }}">
+{%- liquid
+  assign sec_collection = section.settings.collection
+  if sec_collection.title == blank and section.settings.collection != blank
+    assign sec_collection = collections[section.settings.collection]
+  endif
+  assign col_title = sec_collection.title | default: section.settings.section_heading
+  assign col_url = sec_collection.url
+-%}
+
+<div class="custom-collection-section page-width" id="{{ section.settings.section_id }}"{% if col_title != blank and col_url != blank %} data-collection-title="{{ col_title | escape }}" data-collection-url="{{ col_url }}"{% endif %}>
   <h2 class="custom-collection-heading">{{ section.settings.section_heading }}</h2>
   <div class="collection-grid">
-    {% assign products = section.settings.collection.products %}
+    {% assign products = sec_collection.products | default: section.settings.collection.products %}
     {% for product in products %}
       {% assign any_available = false %}
       {% for variant in product.variants %}

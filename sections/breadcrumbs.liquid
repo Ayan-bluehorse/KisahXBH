@@ -257,6 +257,18 @@
               sessionStorage.setItem(KEY_CLICKED_FROM_PAGE, 'true');
               sessionStorage.removeItem(KEY_CLICKED_FROM_HEADER);
             }
+
+            // If navigating to a product, capture active collection from parent section if present
+            if (href.indexOf('/products/') !== -1) {
+              var colContainer = link.closest('[data-collection-title][data-collection-url]');
+              if (colContainer) {
+                var cTitle = colContainer.getAttribute('data-collection-title');
+                var cUrl = colContainer.getAttribute('data-collection-url');
+                if (cTitle && cUrl) {
+                  sessionStorage.setItem(KEY_ACTIVE_COLLECTION, JSON.stringify({ title: cTitle, url: cUrl }));
+                }
+              }
+            }
           }
         } catch(err) {}
       }, true);
@@ -350,7 +362,10 @@
         }
       } catch(e) {}
 
-      var chosenCol = activeCol || (defaultCollection.title ? defaultCollection : null);
+      var chosenCol = activeCol;
+      if (!chosenCol && !landingPage && defaultCollection.title) {
+        chosenCol = defaultCollection;
+      }
 
       if (landingPage) {
         trail.push({ title: landingPage.title, url: landingPage.url });
