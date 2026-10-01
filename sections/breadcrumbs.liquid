@@ -167,7 +167,7 @@
   </div>
 </div>
 
-{% unless template == 'index' or settings.breadcrumbs == false %}
+{% unless settings.breadcrumbs == false %}
 <script>
 (function() {
   try {
@@ -175,6 +175,7 @@
     var KEY_CLICKED_FROM_PAGE = 'kisah_clicked_from_page';
     var KEY_CLICKED_FROM_HEADER = 'kisah_clicked_from_header';
     var KEY_ACTIVE_COLLECTION = 'kisah_active_collection';
+    var KEY_NAV_SOURCE = 'kisah_nav_source';
 
     var currentPath = window.location.pathname;
     var isHome = currentPath === '/' || currentPath === '';
@@ -191,12 +192,13 @@
         .replace(/'/g, '&#039;');
     }
 
-    // On homepage, reset all contextual navigation state
+    // On homepage, always reset all contextual navigation state
     if (isHome || pageType === 'index') {
       sessionStorage.removeItem(KEY_LANDING_PAGE);
       sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
       sessionStorage.removeItem(KEY_CLICKED_FROM_HEADER);
       sessionStorage.removeItem(KEY_ACTIVE_COLLECTION);
+      sessionStorage.removeItem(KEY_NAV_SOURCE);
       return;
     }
 
@@ -206,27 +208,42 @@
       sessionStorage.removeItem(KEY_CLICKED_FROM_HEADER);
       sessionStorage.removeItem(KEY_LANDING_PAGE);
       sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
+      sessionStorage.removeItem(KEY_NAV_SOURCE);
     }
 
     // Referrer analysis
     var referrerPath = '';
     var isSameOriginReferrer = false;
+    var referrerIsHome = false;
+    var referrerIsPage = false;
+    var referrerIsCollection = false;
+    var referrerIsProduct = false;
+
     try {
       if (document.referrer) {
         var refObj = new URL(document.referrer);
         if (refObj.origin === window.location.origin) {
           isSameOriginReferrer = true;
           referrerPath = refObj.pathname;
+          if (referrerPath === '/' || referrerPath === '') {
+            referrerIsHome = true;
+          } else if (referrerPath.indexOf('/pages/') !== -1) {
+            referrerIsPage = true;
+          } else if (referrerPath.indexOf('/collections/') !== -1) {
+            referrerIsCollection = true;
+          } else if (referrerPath.indexOf('/products/') !== -1) {
+            referrerIsProduct = true;
+          }
         }
       }
     } catch(e) {}
 
-    // If arriving directly or from an external site, reset any contextual landing page
-    if (!isSameOriginReferrer) {
+    // If arriving directly from home or from an external site, reset any contextual landing page
+    if (referrerIsHome || !isSameOriginReferrer) {
       sessionStorage.removeItem(KEY_LANDING_PAGE);
       sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
       sessionStorage.removeItem(KEY_CLICKED_FROM_HEADER);
-      sessionStorage.removeItem(KEY_ACTIVE_COLLECTION);
+      sessionStorage.removeItem(KEY_NAV_SOURCE);
     }
 
     // Global listener to track link clicks (Capture Phase)
@@ -251,10 +268,12 @@
             sessionStorage.removeItem(KEY_LANDING_PAGE);
             sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
             sessionStorage.removeItem(KEY_ACTIVE_COLLECTION);
+            sessionStorage.removeItem(KEY_NAV_SOURCE);
           } else if (isInMainContent) {
             // Clicked inside main page body
             if (window.location.pathname.indexOf('/pages/') !== -1) {
               sessionStorage.setItem(KEY_CLICKED_FROM_PAGE, 'true');
+              sessionStorage.setItem(KEY_NAV_SOURCE, 'landing_page');
               sessionStorage.removeItem(KEY_CLICKED_FROM_HEADER);
             }
 
@@ -282,6 +301,7 @@
         url: {{ page.url | json }}
       };
       sessionStorage.setItem(KEY_LANDING_PAGE, JSON.stringify(currentPage));
+      sessionStorage.setItem(KEY_NAV_SOURCE, 'landing_page');
       sessionStorage.removeItem(KEY_ACTIVE_COLLECTION);
       sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
 
@@ -294,7 +314,7 @@
       };
 
       var clickedFromPage = sessionStorage.getItem(KEY_CLICKED_FROM_PAGE) === 'true';
-      var refIsPage = referrerPath.indexOf('/pages/') !== -1;
+      var navSource = sessionStorage.getItem(KEY_NAV_SOURCE);
       var landingPage = null;
 
       try {
@@ -304,16 +324,16 @@
         }
       } catch(e) {}
 
-      // Retain landing page ONLY if navigation originated from that landing page or within same flow
+      // Retain landing page ONLY if navigation originated from that landing page
       var isSameCollection = referrerPath.indexOf(currentCollection.url) !== -1 || referrerPath === currentPath;
-      var isFromProduct = referrerPath.indexOf('/products/') !== -1;
-      var cameFromLandingPage = !cameFromHeader && landingPage && (clickedFromPage || refIsPage || isSameCollection || isFromProduct);
+      var cameFromLandingPage = !referrerIsHome && !cameFromHeader && (navSource === 'landing_page') && landingPage && (clickedFromPage || referrerIsPage || (isSameCollection && navSource === 'landing_page') || (referrerIsProduct && navSource === 'landing_page'));
 
       if (cameFromLandingPage) {
         trail.push({ title: landingPage.title, url: landingPage.url });
       } else {
         landingPage = null;
         sessionStorage.removeItem(KEY_LANDING_PAGE);
+        sessionStorage.removeItem(KEY_NAV_SOURCE);
       }
       sessionStorage.removeItem(KEY_CLICKED_FROM_PAGE);
 
@@ -362,13 +382,21 @@
         }
       } catch(e) {}
 
-      var chosenCol = activeCol;
-      if (!chosenCol && !landingPage && defaultCollection.title) {
-        chosenCol = defaultCollection;
+      var navSource = sessionStorage.getItem(KEY_NAV_SOURCE);
+
+      // ONLY include landing page if navigation actively came from the landing page flow!
+      var showLandingPage = !referrerIsHome && !cameFromHeader && (navSource === 'landing_page') && landingPage && (referrerIsPage || referrerIsCollection || referrerIsProduct);
+
+      if (showLandingPage) {
+        trail.push({ title: landingPage.title, url: landingPage.url });
+      } else {
+        sessionStorage.removeItem(KEY_LANDING_PAGE);
+        sessionStorage.removeItem(KEY_NAV_SOURCE);
       }
 
-      if (landingPage) {
-        trail.push({ title: landingPage.title, url: landingPage.url });
+      var chosenCol = activeCol;
+      if (!chosenCol && defaultCollection.title) {
+        chosenCol = defaultCollection;
       }
 
       if (chosenCol && chosenCol.title) {

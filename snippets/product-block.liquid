@@ -19,11 +19,7 @@ Parameters:
   %}
 {%- endcomment -%}
 {%- liquid
-  if collection and settings.prod_thumb_url_within_coll and product.collections contains collection
-    assign product_url = product.url | within: collection
-  else
-    assign product_url = product.url
-  endif
+  assign product_url = product.url
 
   assign product_images = product.media | where: 'media_type', 'image'
   if settings.prod_thumb_hover_image and product_images.size > 1
