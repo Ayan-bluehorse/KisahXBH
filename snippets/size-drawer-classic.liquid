@@ -1,0 +1,638 @@
+<style>
+  body.scroll{
+    overflow:hidden !important;
+  }
+  body.scroll #sy-whatshelp a.sywh-open-services{
+    display: none;
+  }
+  .template-product .size-chart-drawer .tab{
+  	display: none;
+      width:100%;
+      padding:0 20px;
+  }
+  .template-product .size-chart-table{
+    width:100%;
+    overflow:auto;
+  }
+  .template-product .size-chart-drawer .tab-active{
+  	display: block;
+  }
+  .template-product .size-chart-drawer{
+      background: #fff;
+      z-index: 9;
+      display:flex;
+      position:fixed;
+      top: 0;
+      right: 0;
+      padding: var(--gutter-content);
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      transition: opacity .5s;
+      visibility: hidden;
+      z-index: 8001;
+      width:500px;
+      max-width:100%;
+      transition: transform .34s ease, visibility .34s ease;
+      transform: translate3d(100%, 0, 0);
+      outline: 0;
+      overflow-y: scroll;
+      /* height:1000px; */
+  }
+  .template-product .size-chart-heading{
+     display:flex;
+         flex-direction: column;
+     justify-content:space-between;
+     align-items:center;
+     width:100%;
+     padding:0 30px;
+  }
+  .template-product .size-chart-heading svg{
+     width:18px;
+     height:18px;
+  }
+  .template-product .size-chart-heading h2{
+      font-size:26px;
+      line-height:30px;
+      margin:30px 0;
+      width:100%;
+      text-align:center;
+  }
+  .template-product .size-chart-drawer.open{
+      visibility: visible;
+      transition: visibility 0s 0s, transform .34s ease;
+       transform: translateZ(0);
+  }
+
+  .template-product .size-chart-drawer .size_drawer__close-btn{
+      position: absolute;
+      right: 15px;
+      top: 30px;
+      background: #d9d9d9;
+      border-radius: 50px;
+      width:25px;
+      height:25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+  }
+  .template-product .size-chart-drawer .overall-content-wraping{
+      width:100%;
+      padding:0 30px;
+  }
+  .template-product .size-chart-drawer .size-chart-accordion {
+      width: 100%;
+  }
+
+  .template-product .size-chart-drawer .disclosure{
+    border:none;
+    margin-bottom:0;
+  }
+  .template-product .size-chart-drawer .disclosure__title{
+    padding:15px 0;
+    cursor:none;
+  }
+  .template-product .size-chart-drawer .disclosure__title span{
+     justify-content: space-between;
+      display: flex;
+      align-items: center;
+  }
+  .template-product .size-chart-drawer .disclosure[open] .disclosure__title span svg.pro-dropdown.open {
+      transform: rotate(180deg);
+  }
+  .template-product .size-cart-drawer-overlay{
+      visibility: hidden;
+      z-index: 8000;
+      transition: visibility .3s, z-index 0s .3s, opacity .3s;
+      opacity: 0;
+      background-color: rgba(var(--modal-overlay-color) / var(--modal-overlay-opacity));
+      pointer-events: none;
+      position:fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+  }
+  .template-product .size-cart-drawer-overlay.is-visible{
+      visibility: visible;
+      transition: visibility .3s, z-index 0s, opacity .3s;
+      opacity: 1;
+      pointer-events: initial;
+  }
+  .template-product .size-chart-drawer li{
+    list-style:none !important;
+    display:flex;
+    align-items:center;
+    margin-bottom: 20px;
+    gap:15px;
+  }
+  .template-product .size-chart-drawer li span{
+     border: 1px solid;
+      border-radius: 50px;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+  }
+  .template-product .size-chart-drawer li div h3, .size-chart-drawer li div p{
+     margin:0 !important;
+  }
+  .template-product .size-chart-accordion .disclosure__title p{
+      font-size:18px;
+      line-height:20px;
+      margin:0;
+      font-weight:600;
+      /* pointer-events:none; */
+    }
+  /* .template-product .size-chart-accordion .disclosure__title p:hover{
+     color:#201747;
+     font-weight:600;
+    } */
+  .template-product .size-chart-drawer ul.tabs-btn-container {
+      display: flex;
+      width: 100%;
+      padding: 0 50px;
+      justify-content:center;
+      gap:20px;
+      margin: 20px 0;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container .tab-a{
+      border: 1px solid #000;
+      width: fit-content;
+      padding: 10px;
+      color: #000;
+      transition: 0.3s;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a:hover{
+      background: #201747;
+      color: #fff !important;
+      border: 1px solid #fff !important;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a {
+      background: #201747;
+      color: #fff !important;
+      border: 1px solid #fff !important;
+  }
+  .template-product .size-chart-drawer .size-chart-table table{
+      /* border: 1px solid #ddd;
+       border-top-left-radius: 5px;
+      border-top-right-radius: 5px; */
+      width:100%;
+  }
+  .template-product .size-chart-drawer table th{
+       font-size: 14px;
+      line-height: 16px;
+      font-family: 'Generis Sans W01 Bold';
+  }
+  .template-product .size-chart-drawer table td {
+      font-size: 15px;
+      line-height: 17px;
+      font-weight: 600;
+      color: #000;
+      font-family: Generis Sans W01 Regular;
+      text-align:center;
+      text-transform:uppercase;
+  }
+  .template-product .size-chart-drawer table th.top-heading {
+      text-align: center;
+      background: #201747;
+      color: #fff;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+  }
+  .template-product .size-chart-drawer .imge-details img{
+      width:100%;
+      /* max-width:350px; */
+  }
+  .template-product .size-chart-drawer .disclosure__content ul{
+    margin:0;
+  }
+
+  #camweara-find-my-size {
+    text-align: center !important;
+    background: #201747 !important;
+    color: #fff !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    padding: 0.7em !important;
+}
+
+
+  @media only screen and (max-width: 768px) {
+  .template-product .size-chart-drawer {
+      z-index: 8001;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top:unset;
+      height: 80%;
+      /* max-height: 450px; /* Adjust this based on your need */ */
+      transition: opacity .5s, transform .34s ease, visibility .34s ease;
+      visibility: hidden;
+      width: 100%;
+      transform: translate3d(0, 100%, 0); /* Move off-screen (bottom) */
+  }
+
+  .template-product .size-chart-drawer.open {
+      visibility: visible;
+      transition: visibility 0s 0s, transform .34s ease;
+      transform: translate3d(0, 0, 0); /* Slide up into view */
+  }
+  .template-product .size-chart-drawer .size-chart-heading h2{
+      font-size: 22px;
+      line-height: 26px;
+  }
+  .template-product .size-chart-drawer .overall-content-wraping{
+      padding: 0 20px;
+  }
+   .template-product .size-chart-drawer ul.tabs-btn-container{
+     margin:5px 0;
+   }
+  }
+</style>
+
+
+
+<div class="size-chart-drawer">
+  <div class="size-chart-heading">
+    <h2>Kisah Size Chart</h2>
+
+
+
+    <div id="camweara-find-my-size" class="camweara-find-my-size-btn" data-product-title="Black Jacket Kurta Trouser Set" data-button-text="Find My Size" data-button-icon="magic" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); display: flex;" data-entity-type="section" data-entity-id="camweara-find-my-size" data-entity-name="camweara-find-my-size" data-h-event-data="{}" data-marked-section="true" data-entity-position="4" data-h-id="temp-1770996996231-d094d21e401ae" data-h-component-type="section" data-h-feature-provider="helium" data-h-view-listener-added="true" data-h-view-triggered="true">
+ <div class="camweara-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9 21.75L10.3256 16.9242C10.666 15.6853 11.6425 14.7088 12.8814 14.3685L17.7071 13.0429L12.8814 11.7174C11.6425 11.377 10.666 10.4005 10.3256 9.16164L9 4.33594L7.67439 9.16164C7.33403 10.4005 6.35753 11.377 5.11863 11.7174L0.292893 13.0429L5.11863 14.3685C6.35753 14.7088 7.33403 15.6853 7.67439 16.9242L9 21.75Z"></path>
+  <path d="M19.5 10.5L20.0895 8.35526C20.2408 7.80461 20.6749 7.37055 21.2255 7.21921L23.3703 6.62969L21.2255 6.04016C20.6749 5.88883 20.2408 5.45476 20.0895 4.90412L19.5 2.75938L18.9105 4.90412C18.7592 5.45476 18.3251 5.88883 17.7745 6.04016L15.6297 6.62969L17.7745 7.21921C18.3251 7.37055 18.7592 7.80461 18.9105 8.35526L19.5 10.5Z"></path>
+</svg></div>  
+  <div class="camweara-text">Find My Size</div>
+</div>
+
+
+
+    <button type="button" class="size_drawer__close-btn js-close-drawer">
+      <span class="visually-hidden">Close</span>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="icon feather feather-x"
+        aria-hidden="true"
+        focusable="false"
+        role="presentation"
+      >
+        <path d="M18 6 6 18M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+
+
+{% assign has_kid = false %}
+
+{% for tag in product.tags %}
+  {% if tag contains 'Kid' %}
+    {% assign has_kid = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<ul class="tabs-btn-container">
+  <li>
+    <a href="#" class="tab-a {% if has_kid %}active-a{% endif %}" data-id="tab1">
+      Kid's Sizes
+    </a>
+  </li>
+
+  <li>
+    <a href="#" class="tab-a {% unless has_kid %}active-a{% endunless %}" data-id="tab2">
+      Men's Sizes
+    </a>
+  </li>
+</ul>
+
+  <div class="tab {% if has_kid %}active-a tab-active{% endif %} " data-id="tab1">
+    <div class="size-chart-table">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="7" class="top-heading">To Fit Body Measurements</th>
+          </tr>
+          <tr>
+            <th>SIZE</th>
+            <th>STANDARD SIZE</th>
+            <th>CHEST</th>
+            <th>WAIST</th>
+            <th>SHOULDER</th>
+            <th>HIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4</td>
+            <td>3-4 YEARS</td>
+            <td>22</td>
+            <td>21</td>
+            <td>10.5</td>
+            <td>24</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>5-6 YEARS</td>
+            <td>25</td>
+            <td>23</td>
+            <td>11</td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>7-8 YEARS</td>
+            <td>27</td>
+            <td>26</td>
+            <td>11.5</td>
+            <td>29</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>9-10 YEARS</td>
+            <td>30</td>
+            <td>28</td>
+            <td>12</td>
+            <td>31</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>11-12 YEARS</td>
+            <td>32</td>
+            <td>31</td>
+            <td>12.5</td>
+            <td>34</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   <div class="overall-content-wraping">
+    <div class="size-chart-accordion">
+      <details-disclosure>
+        <details class="disclosure last-diclosuer" open>
+          <summary class="disclosure__title">
+            <span>
+              <p>How to measure</p>
+              {% comment %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 14 8" fill="none" class="pro-dropdown open">
+                <path d="M13.7108 0.295798C13.6178 0.202069 13.5072 0.127675 13.3854 0.0769065C13.2635 0.026138 13.1328 0 13.0008 0C12.8688 0 12.7381 0.026138 12.6162 0.0769065C12.4944 0.127675 12.3838 0.202069 12.2908 0.295798L7.71079 4.87579C7.61783 4.96952 7.50723 5.04391 7.38537 5.09468C7.26351 5.14545 7.13281 5.17159 7.00079 5.17159C6.86878 5.17159 6.73808 5.14545 6.61622 5.09468C6.49436 5.04391 6.38376 4.96952 6.29079 4.87579L1.71079 0.295798C1.61783 0.202069 1.50723 0.127675 1.38537 0.0769065C1.26351 0.026138 1.1328 0 1.00079 0C0.868781 0 0.738075 0.026138 0.616216 0.0769065C0.494357 0.127675 0.383756 0.202069 0.290792 0.295798C0.104542 0.48316 0 0.736611 0 1.0008C0 1.26498 0.104542 1.51843 0.290792 1.70579L4.88079 6.29579C5.44329 6.85759 6.20579 7.17314 7.00079 7.17314C7.7958 7.17314 8.55829 6.85759 9.12079 6.29579L13.7108 1.70579C13.897 1.51843 14.0016 1.26498 14.0016 1.0008C14.0016 0.736611 13.897 0.48316 13.7108 0.295798Z" fill="black" fill-opacity="0.9"></path>
+                 </svg>
+              {% endcomment %}
+            </span>
+          </summary>
+          <div class="disclosure__panel has-motion">
+            <div class="disclosure__content rte cf">
+              {% if section.settings.kid-size-image != blank %}
+              <div class="imge-details">
+                 {%- render 'image' with section.settings.kid-size-image, loading: 'eager', fetchpriority: 'high' -%}
+              </div>
+              {% endif %}
+              <ul>
+                <li>
+                  <span>1</span>
+                  <div>
+                    <h3>Height</h3>
+                    <p>Measure the total height of the child.</p>
+                  </div>
+                </li>
+                 <li>
+                  <span>2</span>
+                  <div>
+                    <h3>Shoulder</h3>
+                    <p>Measure the Shoulder over the fullest part.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>3</span>
+                  <div>
+                    <h3>Chest</h3>
+                    <p>Measure the chest over the fullest part.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>4</span>
+                  <div>
+                    <h3>Waist</h3>
+                    <p>Measure waist at the narrowest point.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>5</span>
+                  <div>
+                    <h3>Hip</h3>
+                    <p>Measure low hip around the fullest part of the hip.</p>
+                  </div>
+                </li>
+                {% comment %}<li>
+                  <span>5</span>
+                  <div>
+                    <h3>Inside leg</h3>
+                    <p>Inside leg is measured from the crotch to the floor.</p>
+                  </div>
+                </li>{% endcomment %}
+              </ul>
+            </div>
+          </div>
+        </details>
+      </details-disclosure>
+    </div>
+  </div>
+
+  </div>
+  <!-- end of tab one -->
+
+  <div class="tab {% unless has_kid %}active-a tab-active{% endunless %} " data-id="tab2">
+    <div class="size-chart-table">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="6" class="top-heading">To Fit Body Measurements</th>
+          </tr>
+          <tr>
+            <th>KISAH SIZE</th>
+            <th>STANDARD SIZE</th>
+            <th>CHEST</th>
+            <th>WAIST</th>
+            <th>HIP</th>
+            <th>SHOULDER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>36</td>
+            <td>XS</td>
+            <td>36</td>
+            <td>34</td>
+            <td>38</td>
+            <td>16.5</td>
+          </tr>
+          <tr>
+            <td>38</td>
+            <td>S</td>
+            <td>38</td>
+            <td>36</td>
+            <td>40</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>40</td>
+            <td>M</td>
+            <td>40</td>
+            <td>38</td>
+            <td>42</td>
+            <td>17.5</td>
+          </tr>
+          <tr>
+            <td>42</td>
+            <td>L</td>
+            <td>42</td>
+            <td>40</td>
+            <td>44</td>
+             <td>18</td>
+          </tr>
+          <tr>
+            <td>44</td>
+            <td>XL</td>
+            <td>44</td>
+            <td>42</td>
+            <td>46</td>
+            <td>18.5</td>
+          </tr>
+          <tr>
+            <td>46</td>
+            <td>XXL</td>
+            <td>46</td>
+            <td>44</td>
+            <td>48</td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td>48</td>
+            <td>3XL</td>
+            <td>48</td>
+            <td>46</td>
+            <td>50</td>
+            <td>19.5</td>
+          </tr>
+          <tr>
+            <td>50</td>
+            <td>4XL</td>
+            <td>50</td>
+            <td>48</td>
+            <td>52</td>
+             <td>20</td>
+          </tr>
+          <tr>
+            <td>52</td>
+            <td>5XL</td>
+            <td>52</td>
+            <td>50</td>
+            <td>54</td>
+            <td>20.5</td>
+          </tr>
+          <tr>
+            <td>54</td>
+            <td>6XL</td>
+            <td>54</td>
+            <td>52</td>
+            <td>56</td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>56</td>
+            <td>7XL</td>
+            <td>56</td>
+            <td>54</td>
+            <td>58</td>
+            <td>21.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<div class="overall-content-wraping">
+    <div class="size-chart-accordion">
+      <details-disclosure>
+        <details class="disclosure last-diclosuer" open>
+          <summary class="disclosure__title">
+            <span>
+              <p>How to measure</p>
+              {% comment %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 14 8" fill="none" class="pro-dropdown open">
+                <path d="M13.7108 0.295798C13.6178 0.202069 13.5072 0.127675 13.3854 0.0769065C13.2635 0.026138 13.1328 0 13.0008 0C12.8688 0 12.7381 0.026138 12.6162 0.0769065C12.4944 0.127675 12.3838 0.202069 12.2908 0.295798L7.71079 4.87579C7.61783 4.96952 7.50723 5.04391 7.38537 5.09468C7.26351 5.14545 7.13281 5.17159 7.00079 5.17159C6.86878 5.17159 6.73808 5.14545 6.61622 5.09468C6.49436 5.04391 6.38376 4.96952 6.29079 4.87579L1.71079 0.295798C1.61783 0.202069 1.50723 0.127675 1.38537 0.0769065C1.26351 0.026138 1.1328 0 1.00079 0C0.868781 0 0.738075 0.026138 0.616216 0.0769065C0.494357 0.127675 0.383756 0.202069 0.290792 0.295798C0.104542 0.48316 0 0.736611 0 1.0008C0 1.26498 0.104542 1.51843 0.290792 1.70579L4.88079 6.29579C5.44329 6.85759 6.20579 7.17314 7.00079 7.17314C7.7958 7.17314 8.55829 6.85759 9.12079 6.29579L13.7108 1.70579C13.897 1.51843 14.0016 1.26498 14.0016 1.0008C14.0016 0.736611 13.897 0.48316 13.7108 0.295798Z" fill="black" fill-opacity="0.9"></path>
+                 </svg>
+              {% endcomment %}
+            </span>
+          </summary>
+          <div class="disclosure__panel has-motion">
+            <div class="disclosure__content rte cf">
+              {% if section.settings.size-image != blank %}
+              <div class="imge-details">
+                 {%- render 'image' with section.settings.size-image, loading: 'eager', fetchpriority: 'high' -%}
+              </div>
+              {% endif %}
+              <ul>
+                <li>
+                  <span>1</span>
+                  <div>
+                    <h3>Shoulder</h3>
+                    <p>Measure the Shoulder over the fullest part.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>2</span>
+                  <div>
+                    <h3>Chest</h3>
+                    <p>Measure the chest over the fullest part.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>3</span>
+                  <div>
+                    <h3>Waist</h3>
+                    <p>Measure waist at the narrowest point.</p>
+                  </div>
+                </li>
+                <li>
+                  <span>4</span>
+                  <div>
+                    <h3>Hip</h3>
+                    <p>Measure low hip around the fullest part of the hip.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </details>
+      </details-disclosure>
+    </div>
+  </div>
+    
+  </div>
+  <!-- end of tab two -->
+
+  
+</div>
+<div class="size-cart-drawer-overlay"></div>
+
+
+
+<script>
+  window.kisahWhenJQueryReady(function($) {
+      $('.tab-a').click(function(){
+        $(".tab").removeClass('tab-active');
+        $(".tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
+        $(".tab-a").removeClass('active-a');
+        $(this).parent().find(".tab-a").addClass('active-a');
+       });
+  });
+</script>

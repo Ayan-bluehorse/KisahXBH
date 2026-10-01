@@ -29,7 +29,7 @@
       '42': { size: 42, share: 0.75 },
       '44': { size: 44, share: 1.0 }
     },
-    WHATSAPP_NUMBER: '918100993480',
+    WHATSAPP_NUMBER: '918100993481',
     COOKIE_NAME: '_fys_cid',
     COOKIE_DAYS: 365 * 2,
     LS_KEY: 'fys_inputs',
@@ -37,6 +37,15 @@
   };
 
   var SIZES = [36, 38, 40, 42, 44, 46, 48, 50, 52];
+
+  // Garment specs shown on the result screen, expressed as offsets from the
+  // recommended size (size 38 -> chest 40, kurta 40, waist 34-36).
+  var GARMENT = {
+    jacketChest: 2,
+    kurtaSize: 2,
+    waistLow: -4,
+    waistHigh: -2
+  };
   var SIZE_NAMES = {
     36: 'XS', 38: 'S', 40: 'M', 42: 'L', 44: 'XL',
     46: 'XXL', 48: '3XL', 50: '4XL', 52: '5XL'
@@ -147,6 +156,12 @@
   window.__fysInitWidget = initWidget;
 
   function initWidget(root) {
+    // find-your-size.liquid includes this script, so it runs once per rendered
+    // copy of the widget (PDP + size chart drawer). Initialising a container
+    // twice would bind the trigger twice and cancel every toggle out.
+    if (root.getAttribute('data-fys-ready') === 'true') return;
+    root.setAttribute('data-fys-ready', 'true');
+
     var productId     = root.getAttribute('data-product-id');
     var productTitle  = root.getAttribute('data-product-title');
     var productHandle = root.getAttribute('data-product-handle');
@@ -502,6 +517,29 @@
         btn.addEventListener('click', function () { goTo(a.step); });
         answersWrap.appendChild(btn);
       });
+
+      // Garment breakdown
+      var breakdown = root.querySelector('[data-fys-breakdown]');
+      if (breakdown) {
+        var waistLow = size + GARMENT.waistLow;
+        var waistHigh = size + GARMENT.waistHigh;
+        var specs = [
+          'Jacket - for a ' + (size + GARMENT.jacketChest) + '-inch body chest; regular fit',
+          'Kurta - size ' + (size + GARMENT.kurtaSize) + '; regular fit',
+          'Trouser - for a ' + waistLow + String.fromCharCode(8211) + waistHigh +
+            '-inch body waist; partially elasticated with drawstring'
+        ];
+        breakdown.innerHTML = '';
+        specs.forEach(function (txt) {
+          var li = document.createElement('li');
+          li.textContent = txt;
+          breakdown.appendChild(li);
+        });
+      }
+
+      // Size on the primary button
+      var btnSize = root.querySelector('[data-fys-btn-size]');
+      if (btnSize) btnSize.textContent = size;
 
       // Slim note
       var note = root.querySelector('[data-fys-slim-note]');

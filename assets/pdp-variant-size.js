@@ -50,10 +50,8 @@ fieldset.option-selector label {
 
   // Auto-select preferred size on PDP from localStorage (selected in collection popup)
   function selectPreferredSize() {
-    // If a specific variant was requested via URL (?variant=...), do not override it
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('variant')) return;
-
     const preferredNum = (localStorage.getItem('preferredSizeNum') || '').trim().toLowerCase();
     const preferredLabel = (localStorage.getItem('preferredSizeLabel') || '').trim().toLowerCase();
     if (!preferredNum && !preferredLabel) return;
@@ -94,21 +92,4 @@ fieldset.option-selector label {
     apply(document);
     selectPreferredSize();
   });
-
-  // Watch for dynamically rendered cards (carousels, tabs, ajax)
-  let observerTimer = null;
-  const observer = new MutationObserver(() => {
-    if (observerTimer) return;
-    observerTimer = setTimeout(() => {
-      observerTimer = null;
-      apply(document);
-    }, 150);
-  });
-  if (document.body) {
-    observer.observe(document.body, { childList: true, subtree: true });
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      observer.observe(document.body, { childList: true, subtree: true });
-    });
-  }
 })();

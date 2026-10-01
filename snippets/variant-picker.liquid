@@ -136,7 +136,7 @@
                 {{ size_chart_link }}
               </div>
             {%- else -%}
-              <legend class="label">{{- option.name -}}{% if is_color_selector %}: <span class="option-selector__label-value js-color-text">{% if block.settings.select_first_variant or product.variants.size == 1 or product.selected_variant %}{{ option.selected_value }}{% endif %}</span>{% endif %}</legend>
+              <legend class="label"><span class="opt-legend__name">{{- option.name -}}</span><span class="opt-legend__prompt">Select {{ option.name }}:</span>{% if is_color_selector %}: <span class="option-selector__label-value js-color-text">{% if block.settings.select_first_variant or product.variants.size == 1 or product.selected_variant %}{{ option.selected_value }}{% endif %}</span>{% endif %}</legend>
             {%- endif -%}
             <div class="option-selector__btns flex flex-wrap">
               {%- for value in option.values -%}
