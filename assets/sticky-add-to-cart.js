@@ -438,8 +438,8 @@
     stickyPrice.textContent = priceText;
 
     const stickyButton = document.createElement('button');
-    stickyButton.className = 'btn btn--large sticky-add-to-cart';
-    stickyButton.type = 'submit';
+    stickyButton.className = 'sticky-add-to-cart';
+    stickyButton.type = 'button';
     stickyButton.name = 'add';
     stickyButton.innerHTML = `
       Add To Cart
@@ -469,48 +469,75 @@
       .sticky-inner-wrapper {
         max-width: 600px;
         margin: 0 auto;
-        background: #201847;
         height: 51px !important;
         border-radius: 50px !important;
         background-color: #201747 !important;
-        box-shadow: 0px 4px 8px 3px #00000026 !important;
+        box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15) !important;
         width: 100% !important;
         display: flex !important;
         padding: 0 31px !important;
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer;
+        transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+      }
+      @media (hover: hover) {
+        .sticky-inner-wrapper:hover {
+          background-color: #c16452 !important;
+          box-shadow: 0px 6px 14px 4px rgba(0, 0, 0, 0.25) !important;
+        }
+      }
+      .sticky-inner-wrapper:active {
+        background-color: #c16452 !important;
+        transform: scale(0.98);
       }
       .sticky-add-to-cart-price {
         display: none !important;
         color: #ffffff !important;
-        font-weight: 400 !important;
+        font-weight: 500 !important;
         font-size: 18px !important;
-        font-family: "Generis Sans W01 Bold" !important;
+        font-family: var(--base-font-family, 'Manrope', sans-serif) !important;
       }
       .sticky-add-to-cart {
-        background: transparent;
-        border: none;
+        background: transparent !important;
+        border: none !important;
         display: flex;
         /* markup is "label then svg"; reverse puts the bag on the left */
         flex-direction: row-reverse !important;
         align-items: center !important;
         justify-content: center !important;
         height: 100% !important;
+        width: 100% !important;
         gap: 10px;
         color: #ffffff !important;
         text-transform: capitalize !important;
-        font-weight: 400 !important;
+        font-weight: 500 !important;
         font-size: 16px !important;
         line-height: 21.45px !important;
-        font-family: 'GenerisSansW01-Bold', 'Generis Sans W01 Bold', sans-serif !important;
+        font-family: var(--base-font-family, 'Manrope', sans-serif) !important;
         padding: 1px 0 0 !important;
         letter-spacing: normal;
+        cursor: pointer !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      .sticky-add-to-cart:hover,
+      .sticky-add-to-cart:focus,
+      .sticky-add-to-cart:active {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        color: #ffffff !important;
       }
       .sticky-add-to-cart .add-to-cart-bag {
         width: 16px !important;
         height: 17px !important;
         margin-left: 0 !important;
+        fill: #ffffff !important;
+      }
+      .sticky-add-to-cart .add-to-cart-bag path {
+        fill: #ffffff !important;
       }
     `;
     document.head.appendChild(style);
