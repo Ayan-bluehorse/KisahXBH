@@ -541,7 +541,10 @@
 {% endfor %}
 
 {%- comment -%} Size chart: Size Guide + How to Measure tabs {%- endcomment -%}
-{%- assign sc_wa = section.settings.sizechart_help_whatsapp | default: shop.phone | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign sc_wa = section.settings.sizechart_help_whatsapp | default: '918100993480' | remove: " " | remove: "+" | remove: "-" -%}
+{%- if sc_wa == '918100993481' or sc_wa == '8100993481' or sc_wa == blank -%}
+  {%- assign sc_wa = '918100993480' -%}
+{%- endif -%}
 {%- capture sc_help_html -%}
 <div class="sc-help{% if kpdp %} sc-help--bottom{% endif %}">
   <span class="sc-help__badge" aria-hidden="true">

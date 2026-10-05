@@ -29,7 +29,7 @@
       '42': { size: 42, share: 0.75 },
       '44': { size: 44, share: 1.0 }
     },
-    WHATSAPP_NUMBER: '918100993481',
+    WHATSAPP_NUMBER: '918100993480',
     COOKIE_NAME: '_fys_cid',
     COOKIE_DAYS: 365 * 2,
     LS_KEY: 'fys_inputs',
