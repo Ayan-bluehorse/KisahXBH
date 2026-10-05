@@ -37,6 +37,10 @@
     <div class="banner-image-sec">
          {% for block in section.blocks %}
             {% assign first = forloop.first %}
+            {%- assign is_lcp = false -%}
+            {%- if section.index == 1 and forloop.first -%}
+              {%- assign is_lcp = true -%}
+            {%- endif -%}
                 
            <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
             {% if block.settings.button-link != blank %}
@@ -58,8 +62,8 @@
                  height="auto"
                  alt="{{ block.settings.mob-img.alt | escape }}"
                 class="mob-img"
-                loading="{% if first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if first %}high{% else %}low{% endif %}"
+                loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
                 />
           {% endif %}
           
@@ -75,8 +79,8 @@
                  height="auto"
                  alt="{{ block.settings.desk-img.alt | escape }}"
                  class="desk-img"
-                 loading="{% if first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if first %}high{% else %}low{% endif %}"
+                 loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
               />
             {% endif %}
                 {% if block.settings.link != blank %}

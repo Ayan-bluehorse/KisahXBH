@@ -146,6 +146,10 @@
     <div class="banner-image-sec">
          {% for block in section.blocks %}
             {% assign first = forloop.first %}
+            {%- assign is_lcp = false -%}
+            {%- if section.index == 1 and forloop.first -%}
+              {%- assign is_lcp = true -%}
+            {%- endif -%}
            <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
              {% if block.type == 'slide_banner_dual_button' %}
                 <div class="desk-mob-img-wrap dual-button-wrap" id="dual-wrap-{{block.id}}" style="position:relative;display:block;">
@@ -162,9 +166,9 @@
                      height="auto"
                      alt="{{ block.settings.mob-img.alt | escape }}"
                      class="mob-img"
-                     loading="{% if first %}eager{% else %}lazy{% endif %}"
-                     fetchpriority="{% if first %}high{% else %}low{% endif %}"
-                     decoding="{% if first %}sync{% else %}async{% endif %}"
+                     loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                     fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
+                     decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
                    >
                  {% endif %}
                  
@@ -181,9 +185,9 @@
                      height="auto"
                      alt="{{ block.settings.desk-img.alt | escape }}"
                      class="desk-img"
-                     loading="{% if first %}eager{% else %}lazy{% endif %}"
-                     fetchpriority="{% if first %}high{% else %}low{% endif %}"
-                     decoding="{% if first %}sync{% else %}async{% endif %}"
+                     loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                     fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
+                     decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
                    >
                  {% endif %}
                  <div style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:15;pointer-events:none;">
@@ -214,9 +218,9 @@
                  height="auto"
                  alt="{{ block.settings.mob-img.alt | escape }}"
                 class="mob-img"
-                loading="{% if first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if first %}high{% else %}low{% endif %}"
-                decoding="{% if first %}sync{% else %}async{% endif %}"
+                loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
+                decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
                 />
           {% endif %}
           
@@ -232,9 +236,9 @@
                  height="auto"
                  alt="{{ block.settings.desk-img.alt | escape }}"
                  class="desk-img"
-                 loading="{% if first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if first %}high{% else %}low{% endif %}"
-                decoding="{% if first %}sync{% else %}async{% endif %}"
+                 loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
+                decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
              />
             {% endif %}
                 {% if block.settings.link != blank %}

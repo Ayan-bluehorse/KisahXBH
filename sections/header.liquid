@@ -326,8 +326,10 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="logo-area__middle logo-area__middle--logo-{% if section.settings.logo != blank %}image{% else %}text{% endif %}">
         <div class="logo-area__middle__inner">
           <div class="logo">
-            {%- if request.page_type == 'index' and section.settings.logo_h2 -%}
-              <h2 class="logo__h2">
+            {%- if request.page_type == 'index' -%}
+              <h1 class="logo__h1" style="margin:0;padding:0;font-size:inherit;font-weight:inherit;line-height:inherit;display:inline-block;">
+            {%- elsif section.settings.logo_h2 -%}
+              <h2 class="logo__h2" style="margin:0;padding:0;font-size:inherit;font-weight:inherit;line-height:inherit;display:inline-block;">
             {%- endif -%}
 
             <a class="logo__link" href="{{ routes.root_url }}" title="{{ shop.name }}">
@@ -344,7 +346,9 @@ document.addEventListener("DOMContentLoaded", function () {
               {%- endif -%}
             </a>
 
-            {%- if request.page_type == 'index' and section.settings.logo_h2 -%}
+            {%- if request.page_type == 'index' -%}
+              </h1>
+            {%- elsif section.settings.logo_h2 -%}
               </h2>
             {%- endif -%}
           </div>
