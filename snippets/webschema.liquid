@@ -1,4 +1,99 @@
 {% if template.name == 'collection' %}
+  {%- liquid
+    assign coll_min_price = 0
+    assign coll_max_price = 0
+    assign coll_review_count = 0
+    assign coll_rating_sum = 0.0
+
+    if collection.products.size > 0
+      assign coll_min_price = collection.products.first.price_min
+      assign coll_max_price = collection.products.first.price_max
+      for p in collection.products
+        if p.price_min < coll_min_price
+          assign coll_min_price = p.price_min
+        endif
+        if p.price_max > coll_max_price
+          assign coll_max_price = p.price_max
+        endif
+        assign p_count = p.metafields.judgeme.review_count | default: 0 | plus: 0
+        assign p_rate = p.metafields.judgeme.avg_rating | default: 0 | plus: 0.0
+        if p_count > 0 and p_rate > 0
+          assign coll_review_count = coll_review_count | plus: p_count
+          assign p_total = p_rate | times: p_count
+          assign coll_rating_sum = coll_rating_sum | plus: p_total
+        endif
+      endfor
+    endif
+
+    if coll_review_count > 0
+      assign coll_rating_val = coll_rating_sum | divided_by: coll_review_count | round: 1
+    else
+      assign j_rate = shop.metafields.judgeme.all_reviews_rating | default: 4.8 | plus: 0.0 | round: 1
+      assign j_count = shop.metafields.judgeme.all_reviews_count | default: 2468 | plus: 0
+      assign coll_rating_val = j_rate
+      assign coll_review_count = j_count
+    endif
+
+    assign coll_image = ''
+    if collection.image != blank
+      assign coll_image = collection.image | image_url: width: 1200 | prepend: "https:"
+    elsif collection.products.first.featured_image != blank
+      assign coll_image = collection.products.first.featured_image | image_url: width: 1200 | prepend: "https:"
+    elsif page_image != blank
+      assign coll_image = page_image | image_url: width: 1200 | prepend: "https:"
+    endif
+
+    assign coll_desc = collection.description | strip_html | strip
+    if coll_desc == blank
+      assign coll_desc = page_description | default: collection.title
+    endif
+    assign coll_desc = coll_desc | replace: '&#39;', "'" | replace: '&amp;', '&'
+
+    assign coll_name = collection.title
+    if collection.handle == 'all'
+      assign coll_name = page_title | default: "All Men's Ethnic Wear & Kurtas"
+    endif
+    assign coll_name = coll_name | replace: '&#39;', "'" | replace: '&amp;', '&'
+  -%}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ coll_name | json }},
+    "url": {{ request.origin | append: collection.url | json }},
+    {%- if coll_image != blank -%}
+      "image": [{{ coll_image | json }}],
+    {%- endif -%}
+    "description": {{ coll_desc | json }},
+    "brand": {
+      "@type": "Brand",
+      "name": "Kisah"
+    },
+    {%- if coll_min_price > 0 -%}
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": {{ cart.currency.iso_code | default: "INR" | json }},
+        "lowPrice": {{ coll_min_price | divided_by: 100.00 | json }},
+        {%- if coll_max_price > coll_min_price -%}
+          "highPrice": {{ coll_max_price | divided_by: 100.00 | json }},
+        {%- endif -%}
+        "offerCount": {{ collection.all_products_count | default: collection.products_count | default: 1 | json }}
+      },
+    {%- endif -%}
+    {%- if coll_review_count > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ coll_rating_val | json }},
+        "reviewCount": {{ coll_review_count | json }},
+        "ratingCount": {{ coll_review_count | json }},
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    {%- endif -%}
+  }
+  </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
