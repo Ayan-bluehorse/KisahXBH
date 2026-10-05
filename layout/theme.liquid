@@ -30,8 +30,6 @@
 
 <!-- Font & CDN Preconnects for Page Speed -->
 <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://cdn.rebuyengine.com">
 <link rel="dns-prefetch" href="https://pdp.gokwik.co">
@@ -124,14 +122,6 @@
 
   {%- unless base_font.system? -%}
     <link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
-  {%- endunless -%}
-
-  {%- unless base_font_medium.system? -%}
-    <link rel="preload" as="font" href="{{ base_font_medium | font_url }}" type="font/woff2" crossorigin>
-  {%- endunless -%}
-
-  {%- unless base_font_bold.system? -%}
-    <link rel="preload" as="font" href="{{ base_font_bold | font_url }}" type="font/woff2" crossorigin>
   {%- endunless -%}
 
   {%- unless heading_font.system? -%}
@@ -278,9 +268,6 @@
   {%- endif -%}
 
  
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Playfair+Display:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Playfair+Display:wght@400;600;700&family=Manrope:wght@400;500;600&display=swap"></noscript>
-
   <script>
   window.kisahJQueryCallbacks = [];
   window.kisahWhenJQueryReady = function(cb) {
