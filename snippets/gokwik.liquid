@@ -109,18 +109,18 @@
 </script>
 
 <!-- GA Tag Tracking -->
-<!-- GA Tag Tracking -->
 <script>
   (function() {
     var gaId = (window.gaTag && window.gaTag.ga4) ? window.gaTag.ga4 : 'G-31X587J1SK';
     if (gaId && gaId.trim() !== '' && gaId !== 'undefined') {
-      var script = document.createElement('script');
-      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(gaId);
-      script.async = true;
-      document.head.appendChild(script);
-
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
+      if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+        var script = document.createElement('script');
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(gaId);
+        script.async = true;
+        document.head.appendChild(script);
+      }
       gtag('js', new Date());
       gtag('config', gaId, { 'groups': 'GA4' });
     }

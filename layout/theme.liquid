@@ -42,13 +42,21 @@
   <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  // Set defaults — denied until user accepts
+  // Google Consent Mode v2:
+  // Default to denied for EEA/UK regions (GDPR compliance)
   gtag('consent', 'default', {
     'analytics_storage': 'denied',
     'ad_storage': 'denied',
     'ad_user_data': 'denied',
     'ad_personalization': 'denied',
-    'wait_for_update': 500
+    'region': ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'GB']
+  });
+  // Default to granted for India and other non-EEA regions (prevents GA4 Unassigned Sessions)
+  gtag('consent', 'default', {
+    'analytics_storage': 'granted',
+    'ad_storage': 'granted',
+    'ad_user_data': 'granted',
+    'ad_personalization': 'granted'
   });
 </script>
 
@@ -62,6 +70,9 @@
   gtag('js', new Date());
 
   gtag('config', 'AW-16459568302');
+  gtag('config', '{{ settings.ga4Gokwik | default: "G-31X587J1SK" }}', {
+    'send_page_view': true
+  });
 </script>
 {% render 'ga-order-link' %}
   <!-- Gokwik theme code start -->
