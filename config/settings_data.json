@@ -734,11 +734,6 @@
           "disableAutomaticButtonAddition": false
         }
       },
-      "13961321637066155319": {
-        "type": "shopify://apps/zotify-web-push-notifications/blocks/GkPush-block/04ca7b9b-0daf-4027-8a20-b1250c460c56",
-        "disabled": false,
-        "settings": {}
-      },
       "11434813149838796522": {
         "type": "shopify://apps/pre-order-restock-notifier/blocks/app-embed/1fadf77e-ebd8-4e68-90cb-f24d97d07bde",
         "disabled": true,
@@ -835,17 +830,14 @@
         "disabled": false,
         "settings": {}
       },
-      "3899311746560949427": {
-        "type": "shopify://apps/sofcy-a-b-test-cro/blocks/ab-testing/019f5d8f-8a01-7479-90e0-61e6206d82a1",
-        "disabled": false,
-        "settings": {
-          "debug": true,
-          "reveal_timeout_ms": 1000
-        }
-      },
       "9674181886073616913": {
         "type": "shopify://apps/mida-fraud-ip-blocker/blocks/blocker-script/09aab972-8c77-47b1-a9a0-4712e9f2405d",
         "disabled": false,
+        "settings": {}
+      },
+      "13961321637066155319": {
+        "type": "shopify://apps/zotify-web-push-notifications/blocks/GkPush-block/04ca7b9b-0daf-4027-8a20-b1250c460c56",
+        "disabled": true,
         "settings": {}
       }
     }
