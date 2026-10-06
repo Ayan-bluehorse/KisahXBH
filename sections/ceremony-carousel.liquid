@@ -102,6 +102,31 @@
     padding: 0 var(--container-pad-x, 20px);
   }
 
+  /* ===== ZERO-CLS PRE-MOUNT LAYOUT (Matches Slick dimensions before JS loads) ===== */
+  #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) {
+    display: flex;
+    overflow: hidden;
+    gap: 0;
+  }
+  #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
+    flex: 0 0 calc(100% / {{ section.settings.slides_desktop | default: 4 }});
+    max-width: calc(100% / {{ section.settings.slides_desktop | default: 4 }});
+    box-sizing: border-box;
+    display: block !important;
+  }
+  @media screen and (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
+      flex: 0 0 33.333%;
+      max-width: 33.333%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
+      flex: 0 0 70%;
+      max-width: 70%;
+    }
+  }
+
   /* ===== SLIDE ===== */
   #shopify-section-{{ section.id }} .ceremony-carousel__slide {
     padding: 0 6px;

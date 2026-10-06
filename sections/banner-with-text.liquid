@@ -162,8 +162,8 @@
                        {{ block.settings.mob-img | image_url: width: 600 }} 600w
                      "
                      sizes="(max-width: 768px) 100vw"
-                     width="420"
-                     height="auto"
+                     width="{{ block.settings.mob-img.width | default: 800 }}"
+                     height="{{ block.settings.mob-img.height | default: 1067 }}"
                      alt="{{ block.settings.mob-img.alt | escape }}"
                      class="mob-img"
                      loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
@@ -181,8 +181,8 @@
                        {{ block.settings.desk-img | image_url: width: 1400 }} 1400w
                      "
                      sizes="(min-width: 769px) 100vw"
-                     width="1000"
-                     height="auto"
+                     width="{{ block.settings.desk-img.width | default: 2000 }}"
+                     height="{{ block.settings.desk-img.height | default: 989 }}"
                      alt="{{ block.settings.desk-img.alt | escape }}"
                      class="desk-img"
                      loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
@@ -214,8 +214,8 @@
                 {{ block.settings.mob-img | image_url: width: 420 }} 420w,
                 {{ block.settings.mob-img | image_url: width: 600 }} 600w"
                  sizes="(max-width: 768px) 100vw"
-                  width="420"
-                 height="auto"
+                  width="{{ block.settings.mob-img.width | default: 800 }}"
+                 height="{{ block.settings.mob-img.height | default: 1067 }}"
                  alt="{{ block.settings.mob-img.alt | escape }}"
                 class="mob-img"
                 loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
@@ -232,8 +232,8 @@
                  {{ block.settings.desk-img | image_url: width: 1000 }} 1000w,
                  {{ block.settings.desk-img | image_url: width: 1400 }} 1400w"
                  sizes="(min-width: 769px) 100vw"
-                 width="1000"
-                 height="auto"
+                 width="{{ block.settings.desk-img.width | default: 2000 }}"
+                 height="{{ block.settings.desk-img.height | default: 989 }}"
                  alt="{{ block.settings.desk-img.alt | escape }}"
                  class="desk-img"
                  loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
