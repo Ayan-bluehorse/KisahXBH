@@ -108,23 +108,10 @@
   });
 </script>
 
-<!-- GA Tag Tracking -->
+<!-- GA Tag Definition for GoKwik Events (Deduplicated: Config is handled strictly once in layout/theme.liquid) -->
 <script>
-  (function() {
-    var gaId = (window.gaTag && window.gaTag.ga4) ? window.gaTag.ga4 : 'G-31X587J1SK';
-    if (gaId && gaId.trim() !== '' && gaId !== 'undefined') {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
-        var script = document.createElement('script');
-        script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(gaId);
-        script.async = true;
-        document.head.appendChild(script);
-      }
-      gtag('js', new Date());
-      gtag('config', gaId, { 'groups': 'GA4' });
-    }
-  })();
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function() { window.dataLayer.push(arguments); };
 </script>
 
 <!-- GoKwik Logic -->
