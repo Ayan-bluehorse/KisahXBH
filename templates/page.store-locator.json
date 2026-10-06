@@ -74,17 +74,18 @@
         "store_kol_allenby": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/Allenby.png",
             "name": "Allenby Road",
             "city": "Kolkata",
-            "is_coming_soon": true,
-            "address": "",
-            "phone": "",
-            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "is_coming_soon": false,
+            "address": "Allenby, Kolkata - 6B, Allenby Road, Kolkata - 700020",
+            "phone": "+919230374683",
+            "hours_label": "10:30 AM – 9:30 PM · All days",
             "open_time": "10:30 AM",
             "close_time": "09:30 PM",
-            "maps_url": "",
-            "city_lat": "22.5367",
-            "city_lng": "88.3512"
+            "maps_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
+            "city_lat": "22.536692",
+            "city_lng": "88.351196"
           }
         },
         "store_blr_indiranagar": {
@@ -140,17 +141,18 @@
         "store_blr_commercial": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/commercial_street.png",
             "name": "Commercial Street",
             "city": "Bangalore",
-            "is_coming_soon": true,
-            "address": "",
-            "phone": "",
-            "hours_label": "10:30 AM – 9:30 PM (All Days)",
-            "open_time": "10:30 AM",
-            "close_time": "09:30 PM",
-            "maps_url": "",
-            "city_lat": "12.9822",
-            "city_lng": "77.6083"
+            "is_coming_soon": false,
+            "address": "No.183, 183/3 to 183/16 , Ground, 1st and 2nd Floor, Commercial Street, Bangalore - 560052",
+            "phone": "+919230374682",
+            "hours_label": "11 AM  –  10 PM · All Days",
+            "open_time": "11 AM",
+            "close_time": "10 PM",
+            "maps_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
+            "city_lat": "12.981702",
+            "city_lng": "77.610141"
           }
         },
         "store_hyd_sarath": {
