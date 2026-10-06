@@ -75,6 +75,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/Allenby.png",
+            "image_position": "75%",
             "name": "Allenby Road",
             "city": "Kolkata",
             "is_coming_soon": false,

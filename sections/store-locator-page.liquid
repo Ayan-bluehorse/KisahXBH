@@ -179,6 +179,9 @@
                           loading="lazy"
                           width="400"
                           height="280"
+                          {% if block.settings.image_position != blank and block.settings.image_position != 'center' %}
+                            style="object-position: center {{ block.settings.image_position }};"
+                          {% endif %}
                         >
                       </div>
                     {% endif %}
@@ -1311,6 +1314,21 @@
           "id": "image",
           "label": "Store Image (Optional)",
           "info": "Upload a photo of the store front. If left empty, card displays clean without image."
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image Vertical Position / Focal Point",
+          "default": "center",
+          "options": [
+            { "value": "top", "label": "Top (Align Top)" },
+            { "value": "35%", "label": "Shift Down Slightly (35%)" },
+            { "value": "center", "label": "Center (Default 50%)" },
+            { "value": "65%", "label": "Shift Up Slightly (65%)" },
+            { "value": "75%", "label": "Shift Up Medium (75%)" },
+            { "value": "85%", "label": "Shift Up More (85%)" },
+            { "value": "bottom", "label": "Bottom (Align Bottom)" }
+          ]
         },
         {
           "type": "text",
