@@ -512,7 +512,9 @@
   {%- unless utm_builder_page -%}
   {%- sections 'header-group' -%}
   {% render 'kwikpass-add-button' %}
-  {% section 'breadcrumbs' %}
+  {%- unless template.name == 'index' -%}
+    {% section 'breadcrumbs' %}
+  {%- endunless -%}
   {%- endunless -%}
   <main id="content" role="main"{% if utm_builder_page %} class="utm-builder-page-main"{% endif %}>
     <div class="container cf{% if utm_builder_page %} utm-builder-page-container{% endif %}">

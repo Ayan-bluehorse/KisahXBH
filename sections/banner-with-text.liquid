@@ -16,6 +16,7 @@
     width: 100% !important;
     height: auto !important;
     max-width: 100%;
+    aspect-ratio: 800 / 1067;
   }
   .new-home-page-banner .banner-image-sec .desk-img {
     display: none !important;
@@ -27,6 +28,7 @@
     width: 100% !important;
     height: auto !important;
     max-width: 100%;
+    aspect-ratio: 2000 / 989;
   }
   .new-home-page-banner .banner-image-sec .mob-img {
     display: none !important;
@@ -147,10 +149,10 @@
          {% for block in section.blocks %}
             {% assign first = forloop.first %}
             {%- assign is_lcp = false -%}
-            {%- if section.index == 1 and forloop.first -%}
+            {%- if forloop.first -%}
               {%- assign is_lcp = true -%}
             {%- endif -%}
-           <div class="slide wrapping-content {% if first != true %}slick-slide{% endif %}" id="block-{{block.id}}">
+           <div class="slide wrapping-content" id="block-{{block.id}}">
              {% if block.type == 'slide_banner_dual_button' %}
                 <div class="desk-mob-img-wrap dual-button-wrap" id="dual-wrap-{{block.id}}" style="position:relative;display:block;">
                  {% if block.settings.mob-img != blank %}
@@ -833,32 +835,17 @@
 
 <script>
 window.kisahWhenJQueryReady(function($) {
-  function initializeSlick() {
-    var slickOptions = {
+  var $slider = $('#shopify-section-{{ section.id }} .banner-image-sec');
+  if (!$slider.hasClass('slick-initialized')) {
+    $slider.slick({
       dots: {% if section.settings.show_dots == false %}false{% else %}true{% endif %},  
       infinite: true,
       speed: 500,
-      autoplay:true,
-     autoplaySpeed:3000,
-    };
-
-    // Initialize or reinitialize the Slick slider
-    var $slider = $('#shopify-section-{{ section.id }} .banner-image-sec');
-    if ($slider.hasClass('slick-initialized')) {
-      $slider.slick('unslick');
-    }
-    $slider.slick(slickOptions);
+      autoplay: true,
+      autoplaySpeed: 3000
+    });
   }
-
-  // Initial check
-  initializeSlick();
-
-  // Check on window resize
-  $(window).resize(function() {
-    initializeSlick();
-  });
 });
-
 </script>
 
 

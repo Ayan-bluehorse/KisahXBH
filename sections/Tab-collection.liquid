@@ -13,7 +13,7 @@
        {% for block in section.blocks %}
         {% if block.settings.categories != blank %}
         <li>
-          <a href="#" class="categories-menus" collection-id="{{ block.id }}">
+          <a href="#" class="categories-menus {% if forloop.first %}active{% endif %}" collection-id="{{ block.id }}">
             <span>
               {{ block.settings.categories }}
             </span>
@@ -26,7 +26,7 @@
    </div>
   
  {% for block in section.blocks %}
-   <div class="collection-con" select-id="{{ block.id }}">
+   <div class="collection-con" select-id="{{ block.id }}" {% if forloop.first %}style="display:block;"{% endif %}>
      <div class="collection-products collection-products-slider">
        {%- assign collection = block.settings.collection -%}
         {% for product in collection.products limit: section.settings.grid %}
@@ -164,6 +164,26 @@
 } 
 #shopify-section-{{section.id}} .collection-con{
       display:none;
+}
+#shopify-section-{{section.id}} .collection-con:first-of-type {
+      display:block;
+}
+#shopify-section-{{section.id}} .collection-products-slider:not(.slick-initialized) {
+      display: flex !important;
+      overflow: hidden;
+      gap: 16px;
+}
+#shopify-section-{{section.id}} .collection-products-slider:not(.slick-initialized) .products-img-details {
+      flex: 0 0 calc((100% - 3 * 16px) / 4);
+      max-width: calc((100% - 3 * 16px) / 4);
+      display: block !important;
+      box-sizing: border-box;
+}
+@media screen and (max-width: 768px) {
+  #shopify-section-{{section.id}} .collection-products-slider:not(.slick-initialized) .products-img-details {
+      flex: 0 0 70%;
+      max-width: 70%;
+  }
 }
 #shopify-section-{{section.id}} .tab-collection{
         margin:0 auto;
@@ -551,9 +571,7 @@ window.kisahWhenJQueryReady(function($) {
     ]
   });
 
-  setTimeout(function () {
-    $('#shopify-section-{{ section.id }} .categories-collec-name li:first-child a.categories-menus').trigger('click');
-  }, 200);
+  // Initial tab is already active and pre-rendered in HTML to eliminate layout shift
 
   $( "#shopify-section-{{ section.id }} .categories-collec-name .categories-menus" ).click(function(e) {
     e.preventDefault();
