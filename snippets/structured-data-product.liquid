@@ -25,6 +25,10 @@
       assign rating_count = product.metafields.reviews.rating_count.value
     endif
   endif
+  if rating == blank or rating_count == blank or rating_count == 0
+    assign rating = shop.metafields.judgeme.all_reviews_rating | default: 4.8 | plus: 0.0 | round: 1
+    assign rating_count = shop.metafields.judgeme.all_reviews_count | default: 2468 | plus: 0
+  endif
 -%}
 
 <script type="application/ld+json">
@@ -51,6 +55,7 @@
         "@type": "AggregateRating",
         "ratingValue": {{ rating | json }},
         "reviewCount": {{ rating_count | json }},
+        "ratingCount": {{ rating_count | json }},
         "bestRating": "5",
         "worstRating": "1"
       },
