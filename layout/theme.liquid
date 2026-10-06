@@ -447,15 +447,22 @@
   assign is_noindex = false
   if product and product.tags contains 'no-search'
     assign is_noindex = true
-  elsif template.suffix == 'utm-builder'
-    assign is_noindex = true
+  elsif request.page_type == 'page'
+    assign pg_handle = page.handle | downcase
+    if page.metafields.seo.hidden == 1 or page.metafields.custom.noindex == true
+      assign is_noindex = true
+    elsif template.suffix == 'utm-builder' or pg_handle == 'utm-builder'
+      assign is_noindex = true
+    elsif pg_handle contains 'test' or pg_handle contains 'staging' or pg_handle contains 'demo'
+      assign is_noindex = true
+    endif
   elsif request.page_type == 'collection'
     assign col_handle = collection.handle | downcase
     if collection.metafields.seo.hidden == 1 or collection.metafields.custom.noindex == true or collection.metafields.custom.hide_from_search == true
       assign is_noindex = true
     elsif col_handle contains 'fake-wedding' or col_handle contains 'liquidation' or col_handle contains 'pulkit-selects' or col_handle contains 'enablers' or col_handle contains 'am25-'
       assign is_noindex = true
-    elsif col_handle contains 'shoot-' or col_handle contains 'gst-' or col_handle contains 'temp-' or col_handle contains 'test-' or col_handle contains 'staging' or col_handle contains 'internal'
+    elsif col_handle contains 'shoot-' or col_handle contains 'gst-' or col_handle contains 'temp-' or col_handle contains 'test-' or col_handle contains 'staging' or col_handle contains 'internal' or col_handle contains 'without-no-search'
       assign is_noindex = true
     endif
   endif
