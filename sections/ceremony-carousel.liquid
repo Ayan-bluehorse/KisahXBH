@@ -3,6 +3,62 @@
   Uses Slick (globally loaded in theme.liquid). All styles scoped to avoid conflicts.
 {% endcomment %}
 
+<div class="ceremony-carousel-section" id="ceremony-carousel-{{ section.id }}" data-mobile-layout="{{ section.settings.mobile_layout }}">
+  {%- if section.settings.subheading != blank or section.settings.heading != blank -%}
+    <div class="ceremony-carousel__header">
+      {%- if section.settings.subheading != blank -%}
+        <p class="ceremony-carousel__subheading" style="color: {{ section.settings.subheading_color }};">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ceremony-carousel__heading" style="color: {{ section.settings.heading_color }};">
+          {{ section.settings.heading | replace: '<p>', '' | replace: '</p>', '' }}
+        </h2>
+      {%- endif -%}
+      <div class="ceremony-carousel__divider" style="background-color: {{ section.settings.divider_color }};"></div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="ceremony-carousel__slider">
+      {%- for block in section.blocks -%}
+        <div class="ceremony-carousel__slide" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}" class="ceremony-carousel__card" aria-label="{{ block.settings.title | escape | default: 'Carousel Link' }}" {% if block.settings.link == blank %}onclick="return false;"{% endif %}>
+            <div class="ceremony-carousel__image-wrapper">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 400 }}"
+                  srcset="{{ block.settings.image | image_url: width: 200 }} 200w,
+                         {{ block.settings.image | image_url: width: 300 }} 300w,
+                         {{ block.settings.image | image_url: width: 400 }} 400w,
+                         {{ block.settings.image | image_url: width: 500 }} 500w,
+                         {{ block.settings.image | image_url: width: 600 }} 600w"
+                  sizes="(max-width: 480px) 70vw, (max-width: 768px) 45vw, 25vw"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  class="ceremony-carousel__img"
+                >
+              {%- else -%}
+                <div class="ceremony-carousel__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <div class="ceremony-carousel__overlay">
+                  <span class="ceremony-carousel__title">{{ block.settings.title }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
 <style>
   /* ===== SECTION WRAPPER ===== */
   #shopify-section-{{ section.id }} {
@@ -44,32 +100,6 @@
     max-width: var(--page-container-width, 1480px);
     margin: 0 auto;
     padding: 0 var(--container-pad-x, 20px);
-  }
-
-  /* ===== ZERO-CLS PRE-MOUNT LAYOUT (Matches Slick dimensions before JS loads) ===== */
-  #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) {
-    margin-bottom: 32px;
-    display: flex;
-    overflow: hidden;
-    gap: 0;
-  }
-  #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
-    flex: 0 0 calc(100% / {{ section.settings.slides_desktop | default: 4 }});
-    max-width: calc(100% / {{ section.settings.slides_desktop | default: 4 }});
-    box-sizing: border-box;
-    display: block !important;
-  }
-  @media screen and (max-width: 1024px) {
-    #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
-      flex: 0 0 33.333%;
-      max-width: 33.333%;
-    }
-  }
-  @media screen and (max-width: 768px) {
-    #shopify-section-{{ section.id }} .ceremony-carousel__slider:not(.slick-initialized) .ceremony-carousel__slide {
-      flex: 0 0 70%;
-      max-width: 70%;
-    }
   }
 
   /* ===== SLIDE ===== */
@@ -340,62 +370,6 @@
   }
 </style>
 
-<div class="ceremony-carousel-section" id="ceremony-carousel-{{ section.id }}" data-mobile-layout="{{ section.settings.mobile_layout }}">
-  {%- if section.settings.subheading != blank or section.settings.heading != blank -%}
-    <div class="ceremony-carousel__header">
-      {%- if section.settings.subheading != blank -%}
-        <p class="ceremony-carousel__subheading" style="color: {{ section.settings.subheading_color }};">
-          {{ section.settings.subheading }}
-        </p>
-      {%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="ceremony-carousel__heading" style="color: {{ section.settings.heading_color }};">
-          {{ section.settings.heading | replace: '<p>', '' | replace: '</p>', '' }}
-        </h2>
-      {%- endif -%}
-      <div class="ceremony-carousel__divider" style="background-color: {{ section.settings.divider_color }};"></div>
-    </div>
-  {%- endif -%}
-
-  {%- if section.blocks.size > 0 -%}
-    <div class="ceremony-carousel__slider">
-      {%- for block in section.blocks -%}
-        <div class="ceremony-carousel__slide" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.link | default: '#' }}" class="ceremony-carousel__card" aria-label="{{ block.settings.title | escape | default: 'Carousel Link' }}" {% if block.settings.link == blank %}onclick="return false;"{% endif %}>
-            <div class="ceremony-carousel__image-wrapper">
-              {%- if block.settings.image != blank -%}
-                <img
-                  src="{{ block.settings.image | image_url: width: 400 }}"
-                  srcset="{{ block.settings.image | image_url: width: 200 }} 200w,
-                         {{ block.settings.image | image_url: width: 300 }} 300w,
-                         {{ block.settings.image | image_url: width: 400 }} 400w,
-                         {{ block.settings.image | image_url: width: 500 }} 500w,
-                         {{ block.settings.image | image_url: width: 600 }} 600w"
-                  sizes="(max-width: 480px) 70vw, (max-width: 768px) 45vw, 25vw"
-                  alt="{{ block.settings.title | escape }}"
-                  loading="lazy"
-                  width="{{ block.settings.image.width }}"
-                  height="{{ block.settings.image.height }}"
-                  class="ceremony-carousel__img"
-                >
-              {%- else -%}
-                <div class="ceremony-carousel__placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
-              {%- endif -%}
-              {%- if block.settings.title != blank -%}
-                <div class="ceremony-carousel__overlay">
-                  <span class="ceremony-carousel__title">{{ block.settings.title }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-          </a>
-        </div>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
-</div>
-
 <script>
 window.kisahWhenJQueryReady(function($) {
 
@@ -477,7 +451,11 @@ window.kisahWhenJQueryReady(function($) {
       resizeTimer = setTimeout(handleView, 150);
     });
 
-    handleView();
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      setTimeout(handleView, 100);
+    } else {
+      $(document).ready(handleView);
+    }
 
     /* Re-init on Shopify theme editor section select */
     if (Shopify && Shopify.designMode) {
