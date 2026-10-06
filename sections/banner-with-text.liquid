@@ -2,6 +2,12 @@
 .new-home-page-banner .banner-image-sec {
   position: relative;
   width: 100%;
+  aspect-ratio: 2000 / 989;
+}
+@media screen and (max-width: 768px) {
+  .new-home-page-banner .banner-image-sec {
+    aspect-ratio: 800 / 1067;
+  }
 }
 .new-home-page-banner .banner-image-sec:not(.slick-initialized) > .slide:not(:first-child) {
   display: none !important;
