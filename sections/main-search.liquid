@@ -8,6 +8,8 @@
     <div class="main-search">
       <div class="main-search__container">
         <form class="main-search__form" action="{{ routes.search_url }}" method="get" autocomplete="off">
+          <input type="hidden" name="filter.v.availability" value="1">
+          <input type="hidden" name="type" value="product">
           <div class="main-search__input-container">
             <input
               class="main-search__input"
@@ -149,7 +151,7 @@
       </div>
     {%- endif -%}
 
-    <filter-container class="filter-container filter-container--side{% if section.settings.collapse_tag_sidebar_by_default == false %} filter-container--show-filters-desktop{% endif %}" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
+    <filter-container class="filter-container" data-ajax-filtering="{{ settings.ajax_products }}" data-filter-section-id="{{ section.id }}">
       {% liquid
         assign clear_url = search.terms | escape | prepend: '?q=' | prepend: routes.search_url
         if section.settings.show_sort or show_filters
@@ -269,45 +271,169 @@
                 {%- endif -%}
               {%- endfor -%}
             {%- endif -%}
-            {% for item in search.results %}
+            {%- liquid
+              assign size_map = 'XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56' | split: ','
+              assign mapped_s = '38'
+              assign mapped_m = '40'
+              assign mapped_l = '42'
+              assign mapped_xl = '44'
 
-  {% if item.object_type == 'product' %}
-    {% if item.tags contains 'no-search' %}
-      {% continue %}
-    {% endif %}
-    {%- if show_override_grid and so_grid_count > 0 -%}
-      {%- assign so_needle = ',' | append: item.id | append: ',' -%}
-      {%- if so_id_prefix contains so_needle -%}{%- continue -%}{%- endif -%}
-    {%- endif -%}
-    {% render 'product-block', product: item, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true %}
-  {% elsif item.object_type == 'collection' %}
-    {% render 'collection-block', collection: item, custom_aspect_ratio: chosen_collection_aspect_ratio, animate: true %}
-  {% else %}
-    <div class="product-block page-block" data-cc-animate>
-      <div class="block-inner">
-        <div class="block-inner-inner">
-          {% if item.object_type == 'article' and item.image %}
-            <div class="article-image">
-              <a href="{{ item.url }}">
-                {%- render 'image' with item.image, size_cols_mobile: 2, size_cols_desktop: section.settings.grid, custom_aspect_ratio: 1.33 -%}
-              </a>
-            </div>
-          {% endif %}
-          <div class="text-cont">
-            <h6 class="page-block__title"><a href="{{ item.url }}">{{ item.title }}</a></h6>
-            {% unless item.object_type == 'article' and item.image %}
-              <p>{{ item.content | strip_html | truncatewords: 20 }}</p>
-            {% endunless %}
-            <a href="{{ item.url }}" class="more">
-              <span class="beside-svg underline">{{ 'blogs.article.read_more' | t }}</span>
-              <span class="icon--small icon-natcol has-ltr-icon">{% render 'icon-chevron-right' %}</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endif %}
-{% endfor %}
+              for pair in size_map
+                assign p = pair | split: ':'
+                assign p_letter = p[0] | downcase | strip
+                assign p_number = p[1] | strip
+
+                if p_letter == 's'
+                  assign mapped_s = p_number
+                elsif p_letter == 'm'
+                  assign mapped_m = p_number
+                elsif p_letter == 'l'
+                  assign mapped_l = p_number
+                elsif p_letter == 'xl'
+                  assign mapped_xl = p_number
+                endif
+              endfor
+            -%}
+
+            {%- comment -%}---- PASS 1: IN-STOCK PRODUCTS & NON-PRODUCTS ----{%- endcomment -%}
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% if item.tags contains 'no-search' %}
+                  {% continue %}
+                {% endif %}
+                {%- if show_override_grid and so_grid_count > 0 -%}
+                  {%- assign so_needle = ',' | append: item.id | append: ',' -%}
+                  {%- if so_id_prefix contains so_needle -%}{%- continue -%}{%- endif -%}
+                {%- endif -%}
+                {%- liquid
+                  assign total_variants = item.variants.size
+                  assign available_variants = item.variants | where: 'available', true | size
+                -%}
+                {% if available_variants > 0 %}
+                  {%- liquid
+                    assign size_s_available = false
+                    assign size_m_available = false
+                    assign size_l_available = false
+                    assign size_xl_available = false
+
+                    for option in item.options_with_values
+                      assign option_name = option.name | downcase | strip
+                      if option_name == 'size'
+                        for value in option.values
+                          assign size_clean = value | downcase | strip | replace: ' ', '' | replace: '/', '-'
+
+                          if size_clean == 's' or size_clean == 'small' or size_clean == '38' or size_clean == 's-38' or size_clean == 's38'
+                            if value.available
+                              assign size_s_available = true
+                            endif
+                          endif
+
+                          if size_clean == 'm' or size_clean == 'medium' or size_clean == '40' or size_clean == 'm-40' or size_clean == 'm40'
+                            if value.available
+                              assign size_m_available = true
+                            endif
+                          endif
+
+                          if size_clean == 'l' or size_clean == 'large' or size_clean == '42' or size_clean == 'l-42' or size_clean == 'l42'
+                            if value.available
+                              assign size_l_available = true
+                            endif
+                          endif
+
+                          if size_clean == 'xl' or size_clean == 'extralarge' or size_clean == 'extra-large' or size_clean == '44' or size_clean == 'xl-44' or size_clean == 'xl44'
+                            if value.available
+                              assign size_xl_available = true
+                            endif
+                          endif
+
+                          if size_s_available and size_m_available and size_l_available and size_xl_available
+                            break
+                          endif
+                        endfor
+                        break
+                      endif
+                    endfor
+                  -%}
+                  <div
+                    class="stock-sort-item"
+                    data-stock-sort-item
+                    data-stock-tier="primary"
+                    data-product-handle="{{ item.handle }}"
+                    data-available-variants="{{ available_variants }}"
+                    data-total-variants="{{ total_variants }}"
+                    data-option-name="Size"
+                    data-product-type="{{ item.type | downcase | strip | escape }}"
+                    data-size-s-available="{{ size_s_available }}"
+                    data-size-m-available="{{ size_m_available }}"
+                    data-size-l-available="{{ size_l_available }}"
+                    data-size-xl-available="{{ size_xl_available }}"
+                  >
+                    {% render 'product-block', product: item, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true %}
+                  </div>
+                {% endif %}
+              {% elsif item.object_type == 'collection' %}
+                {% render 'collection-block', collection: item, custom_aspect_ratio: chosen_collection_aspect_ratio, animate: true %}
+              {% else %}
+                <div class="product-block page-block" data-cc-animate>
+                  <div class="block-inner">
+                    <div class="block-inner-inner">
+                      {% if item.object_type == 'article' and item.image %}
+                        <div class="article-image">
+                          <a href="{{ item.url }}">
+                            {%- render 'image' with item.image, size_cols_mobile: 2, size_cols_desktop: section.settings.grid, custom_aspect_ratio: 1.33 -%}
+                          </a>
+                        </div>
+                      {% endif %}
+                      <div class="text-cont">
+                        <h6 class="page-block__title"><a href="{{ item.url }}">{{ item.title }}</a></h6>
+                        {% unless item.object_type == 'article' and item.image %}
+                          <p>{{ item.content | strip_html | truncatewords: 20 }}</p>
+                        {% endunless %}
+                        <a href="{{ item.url }}" class="more">
+                          <span class="beside-svg underline">{{ 'blogs.article.read_more' | t }}</span>
+                          <span class="icon--small icon-natcol has-ltr-icon">{% render 'icon-chevron-right' %}</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+            {%- comment -%}---- PASS 2: OUT-OF-STOCK PRODUCTS (dimmed, rendered at the bottom) ----{%- endcomment -%}
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% if item.tags contains 'no-search' %}
+                  {% continue %}
+                {% endif %}
+                {%- if show_override_grid and so_grid_count > 0 -%}
+                  {%- assign so_needle = ',' | append: item.id | append: ',' -%}
+                  {%- if so_id_prefix contains so_needle -%}{%- continue -%}{%- endif -%}
+                {%- endif -%}
+                {%- liquid
+                  assign total_variants = item.variants.size
+                  assign available_variants = item.variants | where: 'available', true | size
+                -%}
+                {% if available_variants == 0 %}
+                  <div
+                    class="stock-sort-item stock-sort-item--oos"
+                    data-stock-sort-item
+                    data-stock-tier="out-of-stock"
+                    data-product-handle="{{ item.handle }}"
+                    data-available-variants="0"
+                    data-total-variants="{{ total_variants }}"
+                    data-option-name="Size"
+                    data-product-type="{{ item.type | downcase | strip | escape }}"
+                    data-size-s-available="false"
+                    data-size-m-available="false"
+                    data-size-l-available="false"
+                    data-size-xl-available="false"
+                  >
+                    {% render 'product-block', product: item, custom_aspect_ratio: chosen_product_aspect_ratio, animate: true %}
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
           </div>
         {% endif %}
       </div>
@@ -366,6 +492,9 @@
           if (newGrid && newGrid.children.length) {
             for (var i = 0; i < newGrid.children.length; i++) {
               grid.appendChild(newGrid.children[i].cloneNode(true));
+            }
+            if (window.__reorderSearchGrid) {
+              window.__reorderSearchGrid();
             }
           }
 

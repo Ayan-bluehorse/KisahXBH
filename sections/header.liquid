@@ -444,6 +444,8 @@ document.addEventListener("DOMContentLoaded", function () {
           <button class="main-search__close" aria-label="{{ 'general.search.close' | t | escape }}">{% render 'icon-close', stroke_width: 1 %}</button>
 
           <form class="main-search__form" action="{{ routes.search_url }}" method="get" autocomplete="off">
+            <input type="hidden" name="filter.v.availability" value="1">
+            <input type="hidden" name="type" value="product">
             <div class="main-search__input-container">
               <input class="main-search__input" type="text" name="q" autocomplete="off" placeholder="{{ 'general.search.placeholder' | t | escape }}" aria-label="{{ 'general.search.title' | t | escape }}" />
               <button class="main-search__button" type="submit" aria-label="{{ 'general.search.submit' | t }}">{% render 'icon-search' %}</button>

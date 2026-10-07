@@ -69,9 +69,46 @@ Parameters:
   if custom_aspect_ratio
     assign custom_aspect_ratio = custom_aspect_ratio | at_least: 0.6
   endif
+
+  assign pb_size_s_available = false
+  assign pb_size_m_available = false
+  assign pb_size_l_available = false
+  assign pb_size_xl_available = false
+
+  for option in product.options_with_values
+    assign option_name = option.name | downcase | strip
+    if option_name == 'size'
+      for value in option.values
+        assign size_clean = value | downcase | strip | replace: ' ', '' | replace: '/', '-'
+        if size_clean == 's' or size_clean == 'small' or size_clean == '38' or size_clean == 's-38' or size_clean == 's38'
+          if value.available
+            assign pb_size_s_available = true
+          endif
+        endif
+        if size_clean == 'm' or size_clean == 'medium' or size_clean == '40' or size_clean == 'm-40' or size_clean == 'm40'
+          if value.available
+            assign pb_size_m_available = true
+          endif
+        endif
+        if size_clean == 'l' or size_clean == 'large' or size_clean == '42' or size_clean == 'l-42' or size_clean == 'l42'
+          if value.available
+            assign pb_size_l_available = true
+          endif
+        endif
+        if size_clean == 'xl' or size_clean == 'extralarge' or size_clean == 'extra-large' or size_clean == '44' or size_clean == 'xl-44' or size_clean == 'xl44'
+          if value.available
+            assign pb_size_xl_available = true
+          endif
+        endif
+      endfor
+      break
+    endif
+  endfor
+  assign pb_available_variants = product.variants | where: 'available', true | size
+  assign pb_total_variants = product.variants.size
 -%}
 
-<product-block id="jump-id{{ product.handle }}" data-product-handle="{{ product.handle }}" data-product-sku="{{ product.variants | map: 'sku' | join: ',' | downcase }}" data-product-title="{{ product.title | escape | downcase }}" data-product-tags="{{ product.tags | join: ',' | downcase }}" data-total="{{ product.variants.size }}" data-available="{{ product.variants | where: 'available', true | size }}" class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" data-product-id="{{ product.id }}">
+<product-block id="jump-id{{ product.handle }}" data-product-handle="{{ product.handle }}" data-product-sku="{{ product.variants | map: 'sku' | join: ',' | downcase }}" data-product-title="{{ product.title | escape | downcase }}" data-product-tags="{{ product.tags | join: ',' | downcase }}" data-total="{{ pb_total_variants }}" data-available="{{ pb_available_variants }}" data-total-variants="{{ pb_total_variants }}" data-available-variants="{{ pb_available_variants }}" data-size-s-available="{{ pb_size_s_available }}" data-size-m-available="{{ pb_size_m_available }}" data-size-l-available="{{ pb_size_l_available }}" data-size-xl-available="{{ pb_size_xl_available }}" class="product-block{% if compact %} product-block--compact{% endif %}{% if card_layout == 'landscape' %} product-block--landscape{% endif %}" data-product-id="{{ product.id }}">
   <div class="block-inner"{% if animate %} data-cc-animate{% endif %}>
     <div class="block-inner-inner">
       {% if product.featured_media %}
