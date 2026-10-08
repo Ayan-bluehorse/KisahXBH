@@ -291,10 +291,7 @@ const MainSearch = class extends HTMLElement {
           const parseGridFromHtml = (html) => {
             const template = document.createElement('template');
             template.innerHTML = html;
-            if (theme.Shopify.features.predictiveSearch) {
-              return template.content.querySelector('.product-grid');
-            }
-            return template.content.querySelector('.section-search-template .product-grid');
+            return template.content.querySelector('.product-grid, .section-search-template .product-grid, .search-infinite-scroll-grid');
           };
 
           const gridHasBlocks = (grid) =>
@@ -355,14 +352,21 @@ const MainSearch = class extends HTMLElement {
               grid.querySelectorAll('.product-block:not(.collection-block):not(.page-block)')
             );
 
-            // Re-order product blocks so exact code/SKU matches appear FIRST
-            productBlocks.sort((a, b) => {
-              const scoreB = Math.max(scoreProductBlock(b, valueToSearch), scoreProductBlock(b, queryToUse));
-              const scoreA = Math.max(scoreProductBlock(a, valueToSearch), scoreProductBlock(a, queryToUse));
-              return scoreB - scoreA;
+            // Re-order product blocks so exact code/SKU matches appear FIRST and score-ranked
+            const scoredBlocks = productBlocks.map((block) => {
+              const score = Math.max(scoreProductBlock(block, valueToSearch), scoreProductBlock(block, queryToUse));
+              return { block, score };
             });
 
-            productBlocks.slice(0, resultLimit).forEach((block) => {
+            scoredBlocks.sort((a, b) => b.score - a.score);
+
+            // If there are in-stock products or exact SKU/title matches (score > 0), filter out any general OOS items (score < 0)
+            const hasPositiveMatches = scoredBlocks.some((entry) => entry.score > 0);
+            const filteredBlocks = hasPositiveMatches
+              ? scoredBlocks.filter((entry) => entry.score > 0).map((entry) => entry.block)
+              : scoredBlocks.map((entry) => entry.block);
+
+            filteredBlocks.slice(0, resultLimit).forEach((block) => {
               block.classList.add('main-search-result');
               block.querySelectorAll('.btn.quickbuy-toggle').forEach((el) => el.remove());
               block.querySelectorAll('.quickbuy-toggle').forEach((el) => el.classList.remove('quickbuy-toggle'));
@@ -411,25 +415,13 @@ const MainSearch = class extends HTMLElement {
           };
 
           const fetchSearchHtml = (term) => {
-            let ajaxUrl;
             const baseUrl = window.location.origin;
-            if (theme.Shopify && theme.Shopify.features && theme.Shopify.features.predictiveSearch) {
-              ajaxUrl = new URL(theme.routes.predictiveSearch || '/search/suggest', baseUrl);
-              ajaxUrl.searchParams.set('q', term);
-              ajaxUrl.searchParams.set('section_id', 'predictive-search');
-              ajaxUrl.searchParams.set('resources[limit]', resultLimit);
-              ajaxUrl.searchParams.set(
-                'resources[options][fields]',
-                'title,product_type,variants.title,vendor,tag,variants.sku'
-              );
-              ajaxUrl.searchParams.set('resources[options][unavailable_products]', 'show');
-            } else {
-              ajaxUrl = new URL(linkURL.toString());
-              ajaxUrl.searchParams.set('q', term);
-              ajaxUrl.searchParams.set('section_id', 'main-search');
-            }
+            const searchUrl = new URL(theme.routes.search || '/search', baseUrl);
+            searchUrl.searchParams.set('q', term);
+            searchUrl.searchParams.set('type', 'product');
+            searchUrl.searchParams.set('section_id', 'main-search');
 
-            return fetch(ajaxUrl, { method: 'get', signal }).then((response) => {
+            return fetch(searchUrl, { method: 'get', signal }).then((response) => {
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
               }
