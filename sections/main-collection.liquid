@@ -221,8 +221,6 @@
       </h1>
     {% endif %}
 
-    {% render 'featured-in-ad', collection: collection %}
-
     {% liquid
       assign show_filters = section.settings.enable_filtering
       if collection.filters == empty
