@@ -24,6 +24,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/Gariahat.png",
+            "image_position": "center",
             "name": "Gariahat",
             "city": "Kolkata",
             "is_coming_soon": false,
@@ -41,6 +42,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/lake_mall_image.jpg",
+            "image_position": "center",
             "name": "Lake Mall",
             "city": "Kolkata",
             "is_coming_soon": false,
@@ -58,6 +60,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/lindsay_street.jpg",
+            "image_position": "center",
             "name": "Lindsay Street",
             "city": "Kolkata",
             "is_coming_soon": false,
@@ -93,6 +96,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/blr_store_image.jpg",
+            "image_position": "center",
             "name": "Indiranagar",
             "city": "Bangalore",
             "is_coming_soon": false,
@@ -110,6 +114,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/phoenix_store.png",
+            "image_position": "center",
             "name": "Phoenix Marketcity",
             "city": "Bangalore",
             "is_coming_soon": false,
@@ -126,15 +131,17 @@
         "store_blr_jayanagar": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
+            "image_position": "center",
             "name": "Jaya Nagar",
             "city": "Bangalore",
-            "is_coming_soon": true,
-            "address": "",
+            "is_coming_soon": false,
+            "address": "KISAH - JAYA NAGAR - No 33, 11th Main Road 4th Block Jayanagar, Bengaluru - 560041",
             "phone": "",
-            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "hours_label": "10:30 AM – 10:00 PM All Days",
             "open_time": "10:30 AM",
-            "close_time": "09:30 PM",
-            "maps_url": "",
+            "close_time": "10:00 PM",
+            "maps_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
             "city_lat": "12.9308",
             "city_lng": "77.5838"
           }
@@ -143,6 +150,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/commercial_street.png",
+            "image_position": "center",
             "name": "Commercial Street",
             "city": "Bangalore",
             "is_coming_soon": false,
@@ -160,6 +168,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "image_position": "center",
             "name": "Sarath City Mall",
             "city": "Hyderabad",
             "is_coming_soon": false,
@@ -176,14 +185,16 @@
         "store_hyd_himayat": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
+            "image_position": "center",
             "name": "Himayat Nagar",
             "city": "Hyderabad",
-            "is_coming_soon": true,
-            "address": "",
+            "is_coming_soon": false,
+            "address": "KISAH - -  3-6-475/1/A/B/C Bhavani arcade Himayat Nagar Rd, Himayatnagar Hyderabad - 500029",
             "phone": "",
-            "hours_label": "10:30 AM – 9:30 PM (All Days)",
+            "hours_label": "10:30 AM – 10:00 PM  All Days",
             "open_time": "10:30 AM",
-            "close_time": "09:30 PM",
+            "close_time": "10:00 PM",
             "maps_url": "",
             "city_lat": "17.4042",
             "city_lng": "78.4878"
@@ -193,6 +204,7 @@
           "type": "store",
           "settings": {
             "image": "shopify://shop_images/malad_store.png",
+            "image_position": "center",
             "name": "Infiniti Mall",
             "city": "Mumbai",
             "is_coming_soon": false,
@@ -209,6 +221,7 @@
         "store_gur_m3m": {
           "type": "store",
           "settings": {
+            "image_position": "center",
             "name": "Jewel M3M Mall",
             "city": "Gurgaon",
             "is_coming_soon": true,
@@ -225,6 +238,7 @@
         "store_jai_pacific": {
           "type": "store",
           "settings": {
+            "image_position": "center",
             "name": "Pacific Mall",
             "city": "Jaipur",
             "is_coming_soon": true,
@@ -241,6 +255,7 @@
         "store_viz_inorbit": {
           "type": "store",
           "settings": {
+            "image_position": "center",
             "name": "Inorbit Vizag",
             "city": "Vishakhapatnam",
             "is_coming_soon": true,
