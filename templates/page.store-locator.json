@@ -255,18 +255,19 @@
         "store_viz_inorbit": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/vizag.png",
             "image_position": "center",
             "name": "Inorbit Vizag",
             "city": "Vishakhapatnam",
-            "is_coming_soon": true,
-            "address": "",
+            "is_coming_soon": false,
+            "address": "KISAH - INORBIT VIZAG -Unit No. S-39, Inorbit Mall, New Link, Salagramapuram , Dondaparthi village,Visakhapatnam - 530024",
             "phone": "",
-            "hours_label": "10:30 AM – 9:30 PM (All Days)",
-            "open_time": "10:30 AM",
-            "close_time": "09:30 PM",
-            "maps_url": "",
-            "city_lat": "17.6868",
-            "city_lng": "83.2185"
+            "hours_label": "11:00 AM – 10:00 PM All Days",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "maps_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
+            "city_lat": "17.741648",
+            "city_lng": "83.293316"
           }
         }
       },
