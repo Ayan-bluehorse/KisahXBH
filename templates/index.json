@@ -856,8 +856,8 @@
         "slide_banner_DhgQ4b": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Desktop_63fc8462-764d-49b9-8d88-49037dc3f64b.jpg",
-            "mob-img": "shopify://shop_images/Mobile_78468dc5-05e7-4a18-9efd-c952fda7cae1.jpg",
+            "desk-img": "shopify://shop_images/Desktop_63fc8462-764d-49b9-8d88-49037dc3f64b.webp",
+            "mob-img": "shopify://shop_images/Mobile_78468dc5-05e7-4a18-9efd-c952fda7cae1.webp",
             "link": "shopify://collections/garba-edit",
             "button-name": "",
             "button-link": ""
