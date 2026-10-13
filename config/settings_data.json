@@ -830,9 +830,9 @@
         "disabled": false,
         "settings": {}
       },
-      "13961321637066155319": {
-        "type": "shopify://apps/zotify-web-push-notifications/blocks/GkPush-block/04ca7b9b-0daf-4027-8a20-b1250c460c56",
-        "disabled": true,
+      "208873322266159137": {
+        "type": "shopify://apps/searchanise-search-filter/blocks/app-embed-v2/d8f24ada-02b1-458a-bbeb-5bf16d5c921e",
+        "disabled": false,
         "settings": {}
       }
     }
