@@ -836,8 +836,8 @@
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/desktop_hp.png",
-            "mob-img": "shopify://shop_images/mobile_hp.png",
+            "desk-img": "shopify://shop_images/desktop_hp.webp",
+            "mob-img": "shopify://shop_images/mobile_hp.webp",
             "link": "shopify://collections/navratri-kurta-for-men",
             "button-name": "",
             "button-link": ""
