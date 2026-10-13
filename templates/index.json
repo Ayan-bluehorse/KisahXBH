@@ -846,8 +846,8 @@
         "slide_banner_FiWGha": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Desktop_d854eb50-2ba0-4a2d-bb8d-ec2d0d0a49aa.jpg",
-            "mob-img": "shopify://shop_images/Mobile_4fe41e73-41ae-465e-9d62-dc08b4a48dc7.jpg",
+            "desk-img": "shopify://shop_images/Desktop_d854eb50-2ba0-4a2d-bb8d-ec2d0d0a49aa.webp",
+            "mob-img": "shopify://shop_images/Mobile_4fe41e73-41ae-465e-9d62-dc08b4a48dc7.webp",
             "link": "shopify://collections/short-kurta",
             "button-name": "",
             "button-link": ""
