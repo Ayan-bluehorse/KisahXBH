@@ -199,6 +199,59 @@
     line-height: 16px;
   }
 
+  .kisah-ad-card__title-link,
+  .kisah-ad-card__price-link {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+  }
+
+  /* Size chips — identical spec to .product-block__size-chip */
+  .kisah-ad-card__size-chips,
+  .kisah-ad-card .product-block__size-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 6px;
+    margin: 8px 0 6px 0;
+    padding: 0;
+    line-height: 1;
+  }
+  .kisah-ad-card__size-chip,
+  .kisah-ad-card .product-block__size-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--base-font-family, 'Manrope', sans-serif);
+    padding: 3px 6px;
+    min-width: 34px;
+    height: 22px;
+    border: 1px solid #dcd7cc;
+    background-color: #faf9f6;
+    color: #201747;
+    text-align: center;
+    text-decoration: none !important;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .kisah-ad-card__size-chip--oos,
+  .kisah-ad-card .product-block__size-chip--oos {
+    border-color: #e5e2dc;
+    background-color: #f5f4f1;
+    color: #b3aea4;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .kisah-ad-card__size-chip--available:hover,
+  .kisah-ad-card .product-block__size-chip--available:hover {
+    border-color: #201747;
+    background-color: #201747;
+    color: #ffffff !important;
+  }
+
   /* Explore Entire Collection Header */
   .kisah-explore-header {
     margin: 32px 0 16px 0;
@@ -280,6 +333,20 @@
     .kisah-ad-card__compare {
       font-size: 12px;
       line-height: 14px;
+    }
+
+    .kisah-ad-card__size-chips,
+    .kisah-ad-card .product-block__size-chips {
+      gap: 4px;
+      margin: 6px 0 4px 0;
+      padding: 0;
+    }
+    .kisah-ad-card__size-chip,
+    .kisah-ad-card .product-block__size-chip {
+      font-size: 10px;
+      padding: 2.5px 5px;
+      min-width: 28px;
+      height: 20px;
     }
 
     .kisah-explore-header {
@@ -448,7 +515,7 @@
           var linkUrl = linkEl ? linkEl.getAttribute('href') : ('/products/' + item.handle);
           var titleEl = el.querySelector('.product-block__title') || el.querySelector('h3, .title');
           var titleText = titleEl ? titleEl.innerText.trim() : (el.getAttribute('data-product-title') || item.handle);
-          
+
           var priceCurrentEl = el.querySelector('.price__current');
           var priceWasEl = el.querySelector('.price__was');
           var priceText = priceCurrentEl ? priceCurrentEl.innerText.trim() : '';
@@ -472,13 +539,24 @@
             wasText = formatRupees(wasText);
           }
 
+          var existingChips = el.querySelector('.product-block__size-chips');
+          var domSizesHtml = existingChips ? existingChips.outerHTML : null;
+
+          var productHandle = item.handle;
+          if (!productHandle && linkUrl) {
+            var m = linkUrl.match(/\/products\/([a-zA-Z0-9-_]+)/);
+            if (m) productHandle = m[1];
+          }
+
           return {
             id: el.getAttribute('data-product-id') || item.handle,
             title: titleText,
             url: linkUrl,
             image: imgSrc,
             price: priceText,
-            compare_price: wasText
+            compare_price: wasText,
+            sizes_html: domSizesHtml,
+            _handle: productHandle
           };
         }
       }
@@ -507,6 +585,11 @@
           if (match) {
             var rawPrice = match.price;
             var rawCompare = match.compare_at_price_max;
+            var productHandle = match.handle || '';
+            if (!productHandle && match.url) {
+              var m = match.url.match(/\/products\/([a-zA-Z0-9-_]+)/);
+              if (m) productHandle = m[1];
+            }
 
             return {
               id: match.id,
@@ -514,7 +597,9 @@
               url: match.url,
               image: match.featured_image ? (match.featured_image.url || match.featured_image) : (match.image || ''),
               price: formatRupees(rawPrice),
-              compare_price: (rawCompare && parseFloat(rawCompare) > parseFloat(rawPrice)) ? formatRupees(rawCompare) : ''
+              compare_price: (rawCompare && parseFloat(rawCompare) > parseFloat(rawPrice)) ? formatRupees(rawCompare) : '',
+              sizes_html: null,
+              _handle: productHandle
             };
           }
           return null;
@@ -522,12 +607,98 @@
         .catch(function () { return null; });
     }
 
+    // Build size chip HTML from /products/handle.js variant data
+    function fetchSizesHtml(handle, productUrl) {
+      if (!handle) return Promise.resolve('');
+      var cleanHandle = handle.split('?')[0].replace(/^\/products\//, '').trim();
+
+      return fetch('/products/' + cleanHandle + '.js')
+        .then(function (r) {
+          if (!r.ok) return null;
+          return r.json();
+        })
+        .then(function (prod) {
+          if (!prod) return '';
+
+          var sizeOptIndex = -1;
+          var sizeOptValues = [];
+
+          (prod.options || []).forEach(function (opt, i) {
+            var optName = typeof opt === 'string' ? opt : (opt && opt.name ? opt.name : '');
+            var lower = (optName || '').toLowerCase().trim();
+            if (sizeOptIndex === -1 && (lower === 'size' || lower === 'sizes' || lower.indexOf('size') !== -1)) {
+              sizeOptIndex = i;
+              if (opt && opt.values && opt.values.length) {
+                sizeOptValues = opt.values;
+              }
+            }
+          });
+
+          if (sizeOptIndex === -1) return '';
+
+          var sizeMap = {};
+          var order = [];
+
+          (prod.variants || []).forEach(function (v) {
+            var label = (v.options && v.options[sizeOptIndex] != null) ? String(v.options[sizeOptIndex]).trim() : null;
+            if (!label) return;
+            if (order.indexOf(label) === -1) {
+              order.push(label);
+            }
+            if (!sizeMap[label]) {
+              sizeMap[label] = { id: v.id, available: false };
+            }
+            if (v.available) {
+              sizeMap[label].available = true;
+              sizeMap[label].id = v.id;
+            }
+          });
+
+          var finalSizes = sizeOptValues.length ? sizeOptValues : order;
+          if (!finalSizes.length) return '';
+
+          var baseUrl = productUrl.split('?')[0];
+
+          var chips = finalSizes.map(function (sz) {
+            var info = sizeMap[sz] || { id: null, available: false };
+            var href = baseUrl + (info.id ? ('?variant=' + info.id) : '');
+            var isAvail = !!info.available;
+            var cls = isAvail
+              ? 'product-block__size-chip product-block__size-chip--available kisah-ad-card__size-chip kisah-ad-card__size-chip--available'
+              : 'product-block__size-chip product-block__size-chip--oos kisah-ad-card__size-chip kisah-ad-card__size-chip--oos';
+            var title = 'Size ' + sz + (isAvail ? ' - In Stock' : ' - Out of Stock');
+            return '<a href="' + href + '" class="' + cls + '" title="' + title + '">' + sz + '</a>';
+          }).join('');
+
+          return '<div class="product-block__size-chips kisah-ad-card__size-chips" aria-label="Available sizes">' + chips + '</div>';
+        })
+        .catch(function (err) {
+          console.warn('[FeaturedInAd] fetchSizesHtml error:', err);
+          return '';
+        });
+    }
+
     function resolveSingleSku(sku) {
-      var inDom = findProductInDom(sku);
-      if (inDom) {
-        return Promise.resolve(inDom);
-      }
-      return fetchProductBySku(sku);
+      var basePromise = (function() {
+        var inDom = findProductInDom(sku);
+        return inDom ? Promise.resolve(inDom) : fetchProductBySku(sku);
+      })();
+
+      return basePromise.then(function (result) {
+        if (!result) return result;
+        if (result.sizes_html) return result;
+
+        var handle = result._handle || '';
+        if (!handle && result.url) {
+          handle = (result.url.split('/products/')[1] || '').split('?')[0];
+        }
+        if (!handle) return result;
+
+        return fetchSizesHtml(handle, result.url).then(function (sizesHtml) {
+          result.sizes_html = sizesHtml;
+          return result;
+        });
+      });
     }
 
     function buildCardHtml(item) {
@@ -542,16 +713,23 @@
           '</div>'
         : '';
 
+      var sizesHtml = item.sizes_html || '';
+
       return (
-        '<a class="kisah-ad-card" href="' + item.url + '">' +
-          '<div class="kisah-ad-card__img-wrap">' +
+        '<div class="kisah-ad-card">' +
+          '<a class="kisah-ad-card__img-wrap" href="' + item.url + '">' +
             imgHtml +
-          '</div>' +
+          '</a>' +
           '<div class="kisah-ad-card__info">' +
-            '<h3 class="kisah-ad-card__title">' + item.title + '</h3>' +
-            priceHtml +
+            '<a class="kisah-ad-card__title-link" href="' + item.url + '">' +
+              '<h3 class="kisah-ad-card__title">' + item.title + '</h3>' +
+            '</a>' +
+            sizesHtml +
+            '<a class="kisah-ad-card__price-link" href="' + item.url + '">' +
+              priceHtml +
+            '</a>' +
           '</div>' +
-        '</a>'
+        '</div>'
       );
     }
 
