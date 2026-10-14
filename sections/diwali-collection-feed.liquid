@@ -122,81 +122,6 @@
     border-color: {{ section.settings.text_color | default: '#141414' }};
   }
 
-  /* Skeleton Grid & Shimmer Styling matching collection page */
-  .diwali-skeleton-grid-{{ sid }} {
-    display: none;
-    margin-top: 16px;
-    width: 100%;
-  }
-
-  /* Automatically show skeleton when infinite scroll loader is active */
-  #infinite-scroll-{{ sid }}:not([hidden]) .infinite-scroll__loader:not([hidden]) ~ .diwali-skeleton-grid-{{ sid }},
-  .diwali-skeleton-grid-{{ sid }}.is-active {
-    display: grid !important;
-  }
-
-  .diwali-skeleton-card-{{ sid }} {
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    border-radius: 4px;
-    overflow: hidden;
-    padding-bottom: 8px;
-  }
-
-  .diwali-skeleton-media-{{ sid }} {
-    width: 100%;
-    aspect-ratio: 0.75;
-    background-color: #edeae4;
-    border-radius: 4px 4px 0 0;
-  }
-
-  .diwali-skeleton-content-{{ sid }} {
-    padding: 10px 6px 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .diwali-skeleton-line-{{ sid }} {
-    border-radius: 3px;
-    background-color: #edeae4;
-  }
-  .diwali-skeleton-title-{{ sid }} {
-    width: 78%;
-    height: 14px;
-  }
-  .diwali-skeleton-price-{{ sid }} {
-    width: 45%;
-    height: 14px;
-  }
-
-  .diwali-skeleton-sizes-{{ sid }} {
-    display: flex;
-    gap: 6px;
-    margin-top: 2px;
-  }
-  .diwali-skeleton-chip-{{ sid }} {
-    width: 32px;
-    height: 22px;
-    border-radius: 3px;
-    background-color: #edeae4;
-  }
-
-  @keyframes diwaliShimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  .diwali-shimmer {
-    background: linear-gradient(90deg, #edeae4 25%, #f6f3ee 50%, #edeae4 75%);
-    background-size: 200% 100%;
-    animation: diwaliShimmer 1.4s ease-in-out infinite;
-  }
 {%- endstyle -%}
 
 <span id="all-diwali-styles" class="cp-diwali-feed-anchor"></span>
@@ -336,6 +261,38 @@
               </div>
             {%- endif -%}
           {%- endfor -%}
+
+          {%- comment -%}---- PASS 2: OUT-OF-STOCK (dimmed, at the bottom) ----{%- endcomment -%}
+          {%- for prod in chosen_coll.products -%}
+            {%- liquid
+              assign total_variants = prod.variants.size
+              assign available_variants = prod.variants | where: 'available', true | size
+            -%}
+            {%- if available_variants == 0 -%}
+              <div
+                class="stock-sort-item stock-sort-item--oos"
+                data-stock-sort-item
+                data-stock-tier="out-of-stock"
+                data-product-handle="{{ prod.handle }}"
+                data-available-variants="0"
+                data-total-variants="{{ total_variants }}"
+                data-option-name="Size"
+                data-product-type="{{ prod.type | downcase | strip | escape }}"
+                data-size-s-available="false"
+                data-size-m-available="false"
+                data-size-l-available="false"
+                data-size-xl-available="false"
+              >
+                {%- render 'product-block', 
+                    product: prod, 
+                    collection: chosen_coll,
+                    custom_aspect_ratio: chosen_aspect_ratio,
+                    animate: false,
+                    prioritised_loading: false,
+                    grid: 4 -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
 
         <!-- Theme Native Infinite Scroll (Exact pattern from main-collection.liquid) -->
@@ -347,70 +304,11 @@
           hidden
         ></div>
 
-        <!-- Skeleton Loading Cards with Shimmer Animation -->
-        <div
-          id="diwali-skeleton-grid-{{ sid }}"
-          class="diwali-skeleton-grid-{{ sid }} product-grid product-grid--per-row-{{ section.settings.grid | default: 4 }} product-grid--per-row-mob-{{ section.settings.grid_mobile | default: 2 }}"
-          aria-hidden="true"
-        >
-          {%- for i in (1..4) -%}
-            <div class="diwali-skeleton-card-{{ sid }}">
-              <div class="diwali-skeleton-media-{{ sid }} diwali-shimmer"></div>
-              <div class="diwali-skeleton-content-{{ sid }}">
-                <div class="diwali-skeleton-line-{{ sid }} diwali-skeleton-title-{{ sid }} diwali-shimmer"></div>
-                <div class="diwali-skeleton-line-{{ sid }} diwali-skeleton-price-{{ sid }} diwali-shimmer"></div>
-                <div class="diwali-skeleton-sizes-{{ sid }}">
-                  <div class="diwali-skeleton-chip-{{ sid }} diwali-shimmer"></div>
-                  <div class="diwali-skeleton-chip-{{ sid }} diwali-shimmer"></div>
-                  <div class="diwali-skeleton-chip-{{ sid }} diwali-shimmer"></div>
-                  <div class="diwali-skeleton-chip-{{ sid }} diwali-shimmer"></div>
-                </div>
-              </div>
-            </div>
-          {%- endfor -%}
-        </div>
-
       {%- endpaginate -%}
     </div>
 
   </div>
 </div>
-
-<script>
-  (function () {
-    var sid = '{{ sid }}';
-    function bindSkeletonSync() {
-      var root = document.getElementById('infinite-scroll-' + sid);
-      var skel = document.getElementById('diwali-skeleton-grid-' + sid);
-      if (!root || !skel) return;
-
-      var loader = root.querySelector('[data-infinite-scroll-loader]');
-      if (!loader) return;
-
-      function updateSkeleton() {
-        var isLoaderVisible = !root.hidden && !loader.hidden && loader.style.display !== 'none';
-        if (isLoaderVisible) {
-          skel.classList.add('is-active');
-          skel.style.display = 'grid';
-        } else {
-          skel.classList.remove('is-active');
-          skel.style.display = 'none';
-        }
-      }
-
-      var observer = new MutationObserver(updateSkeleton);
-      observer.observe(loader, { attributes: true, attributeFilter: ['hidden', 'style'] });
-      observer.observe(root, { attributes: true, attributeFilter: ['hidden', 'style'] });
-      updateSkeleton();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bindSkeletonSync);
-    } else {
-      bindSkeletonSync();
-    }
-  })();
-</script>
 
 {% schema %}
 {
