@@ -1,0 +1,396 @@
+{%- liquid
+  assign sid = section.id
+-%}
+
+{%- style -%}
+  #diwali-seo-{{ sid }} {
+    background-color: {{ section.settings.bg_color | default: '#fdfcf9' }};
+    color: {{ section.settings.text_color | default: '#141414' }};
+    padding: 24px 14px 36px;
+    border-top: 1px solid #eee8df;
+    margin: 0 !important;
+  }
+
+  .cp-diwali-seo__wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* Editorial Story Section */
+  .cp-diwali-story {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+  .cp-diwali-story__heading {
+    margin: 0;
+    font-family: var(--font-heading-family, "Bodoni Moda", "Didot", Georgia, serif);
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 600;
+    color: {{ section.settings.text_color | default: '#141414' }};
+    letter-spacing: -0.01em;
+  }
+  .cp-diwali-story__text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #545159;
+  }
+
+  /* FAQ Accordion */
+  .cp-diwali-faq {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cp-diwali-faq__heading {
+    margin: 0 0 4px;
+    font-family: var(--font-heading-family, "Bodoni Moda", "Didot", Georgia, serif);
+    font-size: clamp(18px, 3.5vw, 22px);
+    font-weight: 600;
+    color: {{ section.settings.text_color | default: '#141414' }};
+  }
+  .cp-diwali-faq__item {
+    border: 1px solid #e5e0d8;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .cp-diwali-faq__item[open] {
+    border-color: #b0862f;
+    box-shadow: 0 2px 8px rgba(176, 134, 47, 0.08);
+  }
+  .cp-diwali-faq__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    color: #141414;
+    user-select: none;
+  }
+  .cp-diwali-faq__summary::-webkit-details-marker {
+    display: none;
+  }
+  .cp-diwali-faq__icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    stroke: #b0862f;
+    transition: transform 0.25s ease;
+  }
+  .cp-diwali-faq__item[open] .cp-diwali-faq__icon {
+    transform: rotate(180deg);
+  }
+  .cp-diwali-faq__content {
+    padding: 0 16px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #545159;
+  }
+
+  /* 4-Column USP Trust Strip */
+  .cp-diwali-usp {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding-top: 10px;
+  }
+  @media (min-width: 640px) {
+    .cp-diwali-usp {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+  }
+  .cp-diwali-usp__card {
+    background: #ffffff;
+    border: 1px solid #e6e2da;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .cp-diwali-usp__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: #b0862f;
+  }
+  .cp-diwali-usp__text {
+    display: flex;
+    flex-direction: column;
+    font-size: 11.5px;
+    line-height: 1.25;
+    color: #5b5b5b;
+  }
+  .cp-diwali-usp__text b {
+    font-size: 13px;
+    font-weight: 700;
+    color: #141414;
+  }
+{%- endstyle -%}
+
+<section class="cp-diwali-seo section-id-{{ sid }}" id="diwali-seo-{{ sid }}">
+  <div class="container">
+    <div class="cp-diwali-seo__wrap">
+
+    <!-- 1. Editorial Story -->
+    {%- if section.settings.story_title != blank -%}
+      <div class="cp-diwali-story">
+        <h3 class="cp-diwali-story__heading">{{ section.settings.story_title }}</h3>
+        <div class="cp-diwali-story__text">
+          {{ section.settings.story_content }}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <!-- 2. Interactive FAQ Accordion -->
+    <div class="cp-diwali-faq">
+      <h3 class="cp-diwali-faq__heading">{{ section.settings.faq_title | default: 'Frequently Asked Questions' }}</h3>
+      
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <details class="cp-diwali-faq__item" {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+              <summary class="cp-diwali-faq__summary">
+                <span>{{ block.settings.question }}</span>
+                <svg class="cp-diwali-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </summary>
+              <div class="cp-diwali-faq__content">
+                {{ block.settings.answer }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default FAQs from design specification -->
+        <details class="cp-diwali-faq__item" open>
+          <summary class="cp-diwali-faq__summary">
+            <span>What should men wear for Diwali puja?</span>
+            <svg class="cp-diwali-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="cp-diwali-faq__content">
+            Traditional silk blend kurtas in auspicious festive colors like yellow, saffron, royal blue, and deep maroon are timeless for Diwali morning and Lakshmi puja ceremonies. Kisah kurtas pair rich ethnic embroidery with all-day breathable comfort.
+          </div>
+        </details>
+
+        <details class="cp-diwali-faq__item">
+          <summary class="cp-diwali-faq__summary">
+            <span>Can I get delivery before Diwali?</span>
+            <svg class="cp-diwali-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="cp-diwali-faq__content">
+            Yes! We offer 48-hour express dispatch across major Indian metros and express courier partnerships nationwide to ensure your festive outfits arrive well before celebrations begin.
+          </div>
+        </details>
+
+        <details class="cp-diwali-faq__item">
+          <summary class="cp-diwali-faq__summary">
+            <span>Do you have matching kids' and father-son kurtas?</span>
+            <svg class="cp-diwali-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="cp-diwali-faq__content">
+            Yes! Our Diwali Kids collection features hypoallergenic, soft cotton-silk kurtas and coordinated father-son styles designed for celebratory portraits and family get-togethers.
+          </div>
+        </details>
+
+        <details class="cp-diwali-faq__item">
+          <summary class="cp-diwali-faq__summary">
+            <span>Is Cash on Delivery (COD) and easy exchange available?</span>
+            <svg class="cp-diwali-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <div class="cp-diwali-faq__content">
+            Yes, COD is available across India. We also offer 7-day hassle-free exchanges so you can easily swap for another size or style if needed.
+          </div>
+        </details>
+      {%- endif -%}
+    </div>
+
+    <!-- 3. 4-Column USP Trust Strip -->
+    {%- if section.settings.show_usp_strip -%}
+      <div class="cp-diwali-usp">
+        <div class="cp-diwali-usp__card">
+          <svg class="cp-diwali-usp__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          <div class="cp-diwali-usp__text">
+            <b>48 hr</b>
+            <span>express delivery</span>
+          </div>
+        </div>
+
+        <div class="cp-diwali-usp__card">
+          <svg class="cp-diwali-usp__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <line x1="2" y1="10" x2="22" y2="10"></line>
+          </svg>
+          <div class="cp-diwali-usp__text">
+            <b>COD</b>
+            <span>available pan-India</span>
+          </div>
+        </div>
+
+        <div class="cp-diwali-usp__card">
+          <svg class="cp-diwali-usp__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <div class="cp-diwali-usp__text">
+            <b>7 day</b>
+            <span>easy exchange</span>
+          </div>
+        </div>
+
+        <div class="cp-diwali-usp__card">
+          <svg class="cp-diwali-usp__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <div class="cp-diwali-usp__text">
+            <b>Money</b>
+            <span>back guarantee</span>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Diwali SEO Story & FAQs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Editorial Brand Story"
+    },
+    {
+      "type": "text",
+      "id": "story_title",
+      "label": "Story Title",
+      "default": "Men's Diwali outfits by Kisah"
+    },
+    {
+      "type": "richtext",
+      "id": "story_content",
+      "label": "Story Content",
+      "default": "<p>From puja mornings to card-party nights, find kurtas, kurta sets and Nehru jackets made for the festival. Foil prints, silk blends and easy cotton for long days of family visits.</p>"
+    },
+    {
+      "type": "header",
+      "content": "FAQs Accordion"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "FAQ Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "header",
+      "content": "USP Trust Strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_usp_strip",
+      "label": "Show USP Trust Cards",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fdfcf9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#141414"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Can I get delivery before Diwali?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Yes! We offer 48-hour express dispatch across India to ensure your festive outfits arrive in time."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diwali SEO Story & FAQs",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should men wear for Diwali puja?",
+            "answer": "Traditional silk blend kurtas in auspicious festive colors like yellow, saffron, royal blue, and deep maroon are timeless for Diwali morning and Lakshmi puja ceremonies."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I get delivery before Diwali?",
+            "answer": "Yes! We offer 48-hour express dispatch across major Indian metros and express courier partnerships nationwide to ensure your festive outfits arrive well before celebrations begin."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you have matching kids' and father-son kurtas?",
+            "answer": "Yes! Our Diwali Kids collection features hypoallergenic, soft cotton-silk kurtas and coordinated father-son styles designed for celebratory portraits."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is Cash on Delivery (COD) and easy exchange available?",
+            "answer": "Yes, COD is available across India. We also offer 7-day hassle-free exchanges so you can easily swap for another size or style if needed."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

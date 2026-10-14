@@ -1,0 +1,189 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "diwali_landing": {
+      "type": "diwali-landing",
+      "blocks": {
+        "circle_1": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "New",
+            "link": "/collections/new-arrivals"
+          }
+        },
+        "circle_2": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Diwali Puja",
+            "link": "/collections/yellow"
+          }
+        },
+        "circle_3": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Diwali Party",
+            "link": "/collections/kurta-sets"
+          }
+        },
+        "circle_4": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Diwali Kids",
+            "link": "/collections/kids"
+          }
+        },
+        "circle_5": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Plus Size",
+            "link": "/collections/plus-size"
+          }
+        }
+      },
+      "block_order": [
+        "circle_1",
+        "circle_2",
+        "circle_3",
+        "circle_4",
+        "circle_5"
+      ],
+      "settings": {
+        "show_circles": true,
+        "title": "Top Diwali Picks",
+        "subtitle": "Most bought this week · tap a size to open it selected",
+        "collection": "diwali-party",
+        "max_picks": 8,
+        "grid": 4,
+        "grid_mobile": "2",
+        "pad_top": 12,
+        "pad_bottom": 16,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414",
+        "gold_color": "#b0862f",
+        "show_see_more": true,
+        "see_more_text": "SEE MORE DIWALI STYLES",
+        "see_more_link": "#all-diwali-styles"
+      }
+    },
+    "diwali_feed": {
+      "type": "diwali-collection-feed",
+      "blocks": {
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Diwali Puja",
+            "collection": "diwali-puja"
+          }
+        },
+        "tab_2": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Diwali Party",
+            "collection": "diwali-party"
+          }
+        },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Kurta Sets",
+            "collection": "kurta-sets"
+          }
+        },
+        "tab_4": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Nehru Jackets",
+            "collection": "nehru-jackets"
+          }
+        },
+        "tab_5": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Short Kurtas",
+            "collection": "short-kurta"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "tab_4",
+        "tab_5"
+      ],
+      "settings": {
+        "title": "All Diwali styles",
+        "subtitle": "Sorted by most bought",
+        "collection": "festive-collection",
+        "products_per_page": 16,
+        "grid": 4,
+        "grid_mobile": "2",
+        "show_filter_tabs": true,
+        "pad_top": 16,
+        "pad_bottom": 32,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    },
+    "diwali_seo_faq": {
+      "type": "diwali-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should men wear for Diwali puja?",
+            "answer": "Traditional silk blend kurtas in auspicious festive colors like yellow, saffron, royal blue, and deep maroon are timeless for Diwali morning and Lakshmi puja ceremonies. Kisah kurtas pair rich ethnic embroidery with all-day breathable comfort."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I get delivery before Diwali?",
+            "answer": "Yes! We offer 48-hour express dispatch across major Indian metros and express courier partnerships nationwide to ensure your festive outfits arrive well before celebrations begin."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you have matching kids' and father-son kurtas?",
+            "answer": "Yes! Our Diwali Kids collection features hypoallergenic, soft cotton-silk kurtas and coordinated father-son styles designed for celebratory portraits and family get-togethers."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is Cash on Delivery (COD) and easy exchange available?",
+            "answer": "Yes, COD is available across India. We also offer 7-day hassle-free exchanges so you can easily swap for another size or style if needed."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "story_title": "Men's Diwali outfits by Kisah",
+        "story_content": "<p>From puja mornings to card-party nights, find kurtas, kurta sets and Nehru jackets made for the festival. Foil prints, silk blends and easy cotton for long days of family visits.</p>",
+        "faq_title": "Frequently Asked Questions",
+        "show_usp_strip": true,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    }
+  },
+  "order": [
+    "diwali_landing",
+    "diwali_feed",
+    "diwali_seo_faq"
+  ]
+}
