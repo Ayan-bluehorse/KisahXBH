@@ -1,0 +1,2107 @@
+{% comment %}
+  ==========================================================================
+  KISAH FESTIVE STYLE STORY / THE KISAH JOURNAL
+  - 4-chapter interactive tabbed editorial story
+  - Uses Global Theme Fonts: var(--heading-font-family), var(--base-font-family)
+  - Full desktop & mobile responsiveness with luxury magazine layout
+  - High contrast readability: white text on dark panels (#1b1722 / After Dark)
+  - Zero external dependencies: pure performance & instant loading
+  ==========================================================================
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section 
+  id="v5-kj-section-{{ sid }}" 
+  class="v5-kj-section"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#f5f0e8' }};
+    padding-top: {{ section.settings.mob_padding_top | default: 28 }}px;
+    padding-bottom: {{ section.settings.mob_padding_bottom | default: 32 }}px;
+  "
+>
+  <div class="v5-kj-container">
+    <div class="kj-wrapper" id="kj-wrapper-{{ sid }}" aria-labelledby="kj-title-{{ sid }}">
+      
+      <!-- Section Header -->
+      <header class="kj-intro">
+        {%- if section.settings.kicker != blank -%}
+          <p class="kj-kicker">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="kj-title" id="kj-title-{{ sid }}">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="kj-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+        {%- if section.settings.link_text != blank -%}
+          <a class="kj-maximalism-link" href="{{ section.settings.link_url | default: '/collections/festive-collection' }}">
+            {{ section.settings.link_text }}
+          </a>
+        {%- endif -%}
+      </header>
+
+      {%- assign ch_count = section.blocks.size -%}
+      {%- if ch_count == 0 -%}
+        {%- assign ch_count = 4 -%}
+      {%- endif -%}
+
+      <!-- Chapter Tabs -->
+      <div class="kj-nav" role="tablist" aria-label="Choose festive style chapter">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign tab_num = forloop.index -%}
+            <button class="kj-tab" type="button" role="tab" id="kj-tab-{{ tab_num }}-{{ sid }}" aria-controls="kj-panel-{{ tab_num }}-{{ sid }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" tabindex="{% if forloop.first %}0{% else %}-1{% endif %}" {{ block.shopify_attributes }}>
+              <span class="kj-tab-number">{% if tab_num < 10 %}0{% endif %}{{ tab_num }}</span>
+              <span class="kj-tab-label">{{ block.settings.tab_title | default: 'Chapter' }}</span>
+            </button>
+          {%- endfor -%}
+        {%- else -%}
+          <button class="kj-tab" type="button" role="tab" id="kj-tab-1-{{ sid }}" aria-controls="kj-panel-1-{{ sid }}" aria-selected="true" tabindex="0">
+            <span class="kj-tab-number">01</span>
+            <span class="kj-tab-label">{{ section.settings.tab_1_title | default: 'Puja & Ritual' }}</span>
+          </button>
+          <button class="kj-tab" type="button" role="tab" id="kj-tab-2-{{ sid }}" aria-controls="kj-panel-2-{{ sid }}" aria-selected="false" tabindex="-1">
+            <span class="kj-tab-number">02</span>
+            <span class="kj-tab-label">{{ section.settings.tab_2_title | default: 'Art & Print' }}</span>
+          </button>
+          <button class="kj-tab" type="button" role="tab" id="kj-tab-3-{{ sid }}" aria-controls="kj-panel-3-{{ sid }}" aria-selected="false" tabindex="-1">
+            <span class="kj-tab-number">03</span>
+            <span class="kj-tab-label">{{ section.settings.tab_3_title | default: 'Modern Form' }}</span>
+          </button>
+          <button class="kj-tab" type="button" role="tab" id="kj-tab-4-{{ sid }}" aria-controls="kj-panel-4-{{ sid }}" aria-selected="false" tabindex="-1">
+            <span class="kj-tab-number">04</span>
+            <span class="kj-tab-label">{{ section.settings.tab_4_title | default: 'After Dark' }}</span>
+          </button>
+        {%- endif -%}
+      </div>
+
+      <p class="kj-status kj-sr" aria-live="polite" aria-atomic="true">Chapter 1 of {{ ch_count }}</p>
+
+      <!-- Chapter Panels Track -->
+      <div class="kj-track" id="kj-track-{{ sid }}" tabindex="0" aria-label="Swipe through festive style chapters">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign ch_num = forloop.index -%}
+            {%- assign ch_idx = forloop.index0 -%}
+            {%- assign next_ch_idx = ch_idx | plus: 1 -%}
+            {%- if next_ch_idx >= section.blocks.size -%}{%- assign next_ch_idx = 0 -%}{%- endif -%}
+            {%- assign next_block = section.blocks[next_ch_idx] -%}
+
+            {%- assign is_dark = block.settings.is_dark -%}
+            {%- assign bg_color = block.settings.bg_color | default: '#eee4d9' -%}
+            {%- assign text_color = block.settings.text_color | default: '#2b2222' -%}
+            {%- if is_dark -%}
+              {%- assign bg_color = block.settings.bg_color | default: '#191522' -%}
+              {%- assign text_color = block.settings.text_color | default: '#ffffff' -%}
+            {%- endif -%}
+
+            {%- comment -%} Dynamically determine which looks are active (2, 3, or 4) {%- endcomment -%}
+            {%- assign show_look1 = false -%}
+            {%- assign show_look2 = false -%}
+            {%- assign show_look3 = false -%}
+            {%- assign show_look4 = false -%}
+
+            {%- if block.settings.images_count == '2' -%}
+              {%- assign show_look1 = true -%}
+              {%- assign show_look2 = true -%}
+              {%- assign active_count = 2 -%}
+            {%- elsif block.settings.images_count == '3' -%}
+              {%- assign show_look1 = true -%}
+              {%- assign show_look2 = true -%}
+              {%- assign show_look3 = true -%}
+              {%- assign active_count = 3 -%}
+            {%- elsif block.settings.images_count == '4' -%}
+              {%- assign show_look1 = true -%}
+              {%- assign show_look2 = true -%}
+              {%- assign show_look3 = true -%}
+              {%- assign show_look4 = true -%}
+              {%- assign active_count = 4 -%}
+            {%- else -%}
+              {%- comment -%} Auto detect: 4 if look4 present, 3 if look3 present, 2 if look2 present {%- endcomment -%}
+              {%- if block.settings.look4_img != blank or block.settings.look4_fallback != blank -%}
+                {%- assign show_look1 = true -%}
+                {%- assign show_look2 = true -%}
+                {%- assign show_look3 = true -%}
+                {%- assign show_look4 = true -%}
+                {%- assign active_count = 4 -%}
+              {%- elsif block.settings.look3_img != blank or block.settings.look3_fallback != blank or block.settings.look3_name != blank -%}
+                {%- assign show_look1 = true -%}
+                {%- assign show_look2 = true -%}
+                {%- assign show_look3 = true -%}
+                {%- assign active_count = 3 -%}
+              {%- elsif block.settings.look2_img != blank or block.settings.look2_fallback != blank -%}
+                {%- assign show_look1 = true -%}
+                {%- assign show_look2 = true -%}
+                {%- assign active_count = 2 -%}
+              {%- else -%}
+                {%- assign show_look1 = true -%}
+                {%- assign show_look2 = true -%}
+                {%- assign show_look3 = true -%}
+                {%- assign active_count = 3 -%}
+              {%- endif -%}
+            {%- endif -%}
+
+            <article 
+              class="kj-panel{% if is_dark %} kj-panel--dark{% else %} kj-panel--light{% endif %}" 
+              id="kj-panel-{{ ch_num }}-{{ sid }}" 
+              role="tabpanel" 
+              aria-labelledby="kj-tab-{{ ch_num }}-{{ sid }}" 
+              data-theme="{{ block.settings.tab_title | default: 'Chapter' }}" 
+              style="--scene: {{ bg_color }}; --tone: {{ text_color }};"
+              {% unless forloop.first %}inert aria-hidden="true"{% endunless %}
+              {{ block.shopify_attributes }}
+            >
+              <div class="kj-panel-inner">
+                <div class="kj-eyebrow">
+                  <span>{% if ch_num < 10 %}0{% endif %}{{ ch_num }} / {{ block.settings.tab_title | default: 'CHAPTER' | upcase }}</span>
+                  <small>SWIPE →</small>
+                </div>
+                <h3 class="kj-headline">{{ block.settings.headline | default: 'Same rituals.\nYour signature.' | newline_to_br }}</h3>
+
+                <div class="kj-looks" data-count="{{ active_count }}">
+                  {%- if show_look1 -%}
+                    <a class="kj-look" href="{{ block.settings.look1_link | default: '#' }}" aria-label="{{ block.settings.look1_name | default: 'Look 1' }}">
+                      <figure>
+                        <div class="kj-photo">
+                          {%- if block.settings.look1_img != blank -%}
+                            <img src="{{ block.settings.look1_img | image_url: width: 600 }}" alt="{{ block.settings.look1_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- elsif block.settings.look1_fallback != blank -%}
+                            <img src="{{ block.settings.look1_fallback }}" alt="{{ block.settings.look1_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag }}
+                          {%- endif -%}
+                          <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                        </div>
+                        <figcaption>{{ block.settings.look1_name | default: 'Look 1' }}</figcaption>
+                      </figure>
+                    </a>
+                  {%- endif -%}
+
+                  {%- if show_look2 -%}
+                    <a class="kj-look" href="{{ block.settings.look2_link | default: '#' }}" aria-label="{{ block.settings.look2_name | default: 'Look 2' }}">
+                      <figure>
+                        <div class="kj-photo">
+                          {%- if block.settings.look2_img != blank -%}
+                            <img src="{{ block.settings.look2_img | image_url: width: 600 }}" alt="{{ block.settings.look2_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- elsif block.settings.look2_fallback != blank -%}
+                            <img src="{{ block.settings.look2_fallback }}" alt="{{ block.settings.look2_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag }}
+                          {%- endif -%}
+                          <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                        </div>
+                        <figcaption>{{ block.settings.look2_name | default: 'Look 2' }}</figcaption>
+                      </figure>
+                    </a>
+                  {%- endif -%}
+
+                  {%- if show_look3 -%}
+                    <a class="kj-look" href="{{ block.settings.look3_link | default: '#' }}" aria-label="{{ block.settings.look3_name | default: 'Look 3' }}">
+                      <figure>
+                        <div class="kj-photo">
+                          {%- if block.settings.look3_img != blank -%}
+                            <img src="{{ block.settings.look3_img | image_url: width: 600 }}" alt="{{ block.settings.look3_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- elsif block.settings.look3_fallback != blank -%}
+                            <img src="{{ block.settings.look3_fallback }}" alt="{{ block.settings.look3_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag }}
+                          {%- endif -%}
+                          <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                        </div>
+                        <figcaption>{{ block.settings.look3_name | default: 'Look 3' }}</figcaption>
+                      </figure>
+                    </a>
+                  {%- endif -%}
+
+                  {%- if show_look4 -%}
+                    <a class="kj-look" href="{{ block.settings.look4_link | default: '#' }}" aria-label="{{ block.settings.look4_name | default: 'Look 4' }}">
+                      <figure>
+                        <div class="kj-photo">
+                          {%- if block.settings.look4_img != blank -%}
+                            <img src="{{ block.settings.look4_img | image_url: width: 600 }}" alt="{{ block.settings.look4_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- elsif block.settings.look4_fallback != blank -%}
+                            <img src="{{ block.settings.look4_fallback }}" alt="{{ block.settings.look4_name | escape }}" width="300" height="400" loading="lazy">
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag }}
+                          {%- endif -%}
+                          <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                        </div>
+                        <figcaption>{{ block.settings.look4_name | default: 'Look 4' }}</figcaption>
+                      </figure>
+                    </a>
+                  {%- endif -%}
+                </div>
+
+                {%- if block.settings.story != blank -%}
+                  <p class="kj-story">{{ block.settings.story }}</p>
+                {%- endif -%}
+                {%- if block.settings.expression != blank -%}
+                  <p class="kj-expression"><strong>The new expression</strong>{{ block.settings.expression }}</p>
+                {%- endif -%}
+                {%- if block.settings.cta_text != blank -%}
+                  <a class="kj-cta" href="{{ block.settings.cta_link | default: '#' }}">
+                    {{ block.settings.cta_text }}
+                  </a>
+                {%- endif -%}
+
+                <div class="kj-next-row">
+                  <span class="kj-step">{% if ch_num < 10 %}0{% endif %}{{ ch_num }} / {% if section.blocks.size < 10 %}0{% endif %}{{ section.blocks.size }}</span>
+                  <button class="kj-next" type="button" data-next-target="{{ next_ch_idx }}">Next: {{ next_block.settings.tab_title | default: 'Next Chapter' }}<span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+            </article>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- CHAPTER 1: PUJA & RITUAL -->
+        <article 
+          class="kj-panel kj-panel--light" 
+          id="kj-panel-1-{{ sid }}" 
+          role="tabpanel" 
+          aria-labelledby="kj-tab-1-{{ sid }}" 
+          data-theme="{{ section.settings.tab_1_title | default: 'Puja & Ritual' }}" 
+          style="--scene: {{ section.settings.ch1_bg | default: '#eee4d9' }}; --tone: {{ section.settings.ch1_text | default: '#2b2222' }};"
+        >
+          <div class="kj-panel-inner">
+            <div class="kj-eyebrow">
+              <span>01 / {{ section.settings.tab_1_title | default: 'PUJA & RITUAL' | upcase }}</span>
+              <small>SWIPE →</small>
+            </div>
+            <h3 class="kj-headline">{{ section.settings.ch1_headline | default: 'Same rituals.\nYour signature.' | newline_to_br }}</h3>
+
+            <div class="kj-looks" data-count="3">
+              <a class="kj-look" href="{{ section.settings.ch1_look1_link | default: '/collections/floral-kurta-for-men' }}" aria-label="{{ section.settings.ch1_look1_name | default: 'Floral expression' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch1_look1_img != blank -%}
+                      <img src="{{ section.settings.ch1_look1_img | image_url: width: 600 }}" alt="{{ section.settings.ch1_look1_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-1.jpg" alt="Wine floral kurta beside a carved stone wall" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch1_look1_name | default: 'Floral expression' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch1_look2_link | default: '/products/wine-kurta-with-palm-embroidery-ka-1187' }}" aria-label="{{ section.settings.ch1_look2_name | default: 'Wine & palms' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch1_look2_img != blank -%}
+                      <img src="{{ section.settings.ch1_look2_img | image_url: width: 600 }}" alt="{{ section.settings.ch1_look2_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-2.jpg" alt="Wine palm motif kurta with white trousers" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch1_look2_name | default: 'Wine & palms' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch1_look3_link | default: '/collections/green-kurta' }}" aria-label="{{ section.settings.ch1_look3_name | default: 'Olive texture' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch1_look3_img != blank -%}
+                      <img src="{{ section.settings.ch1_look3_img | image_url: width: 600 }}" alt="{{ section.settings.ch1_look3_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-3.jpg" alt="Olive textured kurta worn with black trousers" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch1_look3_name | default: 'Olive texture' }}</figcaption>
+                </figure>
+              </a>
+            </div>
+
+            <p class="kj-story">{{ section.settings.ch1_story | default: 'The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions &amp; stories.' }}</p>
+            <p class="kj-expression"><strong>The new expression</strong>{{ section.settings.ch1_expression | default: 'Floral, olive, wine or midnight blue: choose your colour and expression.' }}</p>
+            
+            <a class="kj-cta" href="{{ section.settings.ch1_cta_link | default: '/collections/diwali-puja' }}">
+              {{ section.settings.ch1_cta_text | default: 'Explore Puja & Rituals' }}
+            </a>
+
+            <div class="kj-next-row">
+              <span class="kj-step">01 / 04</span>
+              <button class="kj-next" type="button" data-next-target="1">Next: {{ section.settings.tab_2_title | default: 'Art & Print' }}<span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 2: ART & PRINT -->
+        <article 
+          class="kj-panel kj-panel--light" 
+          id="kj-panel-2-{{ sid }}" 
+          role="tabpanel" 
+          aria-labelledby="kj-tab-2-{{ sid }}" 
+          data-theme="{{ section.settings.tab_2_title | default: 'Art & Print' }}" 
+          style="--scene: {{ section.settings.ch2_bg | default: '#e5eadf' }}; --tone: {{ section.settings.ch2_text | default: '#203025' }};"
+          inert
+          aria-hidden="true"
+        >
+          <div class="kj-panel-inner">
+            <div class="kj-eyebrow">
+              <span>02 / {{ section.settings.tab_2_title | default: 'ART & PRINT' | upcase }}</span>
+              <small>SWIPE →</small>
+            </div>
+            <h3 class="kj-headline">{{ section.settings.ch2_headline | default: 'Wear a little\nimagination.' | newline_to_br }}</h3>
+
+            <div class="kj-looks" data-count="3">
+              <a class="kj-look" href="{{ section.settings.ch2_look1_link | default: '/collections/the-printed-man' }}" aria-label="{{ section.settings.ch2_look1_name | default: 'Navy floral kurta set' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch2_look1_img != blank -%}
+                      <img src="{{ section.settings.ch2_look1_img | image_url: width: 600 }}" alt="{{ section.settings.ch2_look1_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/navy-floral-v3.webp" alt="Navy floral kurta set" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch2_look1_name | default: 'Navy floral kurta set' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch2_look2_link | default: '/collections/the-printed-man' }}" aria-label="{{ section.settings.ch2_look2_name | default: 'Black floral jacket set' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch2_look2_img != blank -%}
+                      <img src="{{ section.settings.ch2_look2_img | image_url: width: 600 }}" alt="{{ section.settings.ch2_look2_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/black-floral-v3.webp" alt="Black floral jacket set" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch2_look2_name | default: 'Black floral jacket set' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch2_look3_link | default: '/collections/the-printed-man' }}" aria-label="{{ section.settings.ch2_look3_name | default: 'Blue floral Nehru set' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch2_look3_img != blank -%}
+                      <img src="{{ section.settings.ch2_look3_img | image_url: width: 600 }}" alt="{{ section.settings.ch2_look3_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/blue-jacket-v3.webp" alt="Blue floral Nehru set" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch2_look3_name | default: 'Blue floral Nehru set' }}</figcaption>
+                </figure>
+              </a>
+            </div>
+
+            <p class="kj-story">{{ section.settings.ch2_story | default: 'Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals &amp; Nawabs, florals on menswear signify status, masculinity, triumph &amp; spiritual bliss.' }}</p>
+            
+            <a class="kj-cta" href="{{ section.settings.ch2_cta_link | default: '/collections/the-printed-man' }}">
+              {{ section.settings.ch2_cta_text | default: 'Explore Art & Floral designs' }}
+            </a>
+
+            <div class="kj-next-row">
+              <span class="kj-step">02 / 04</span>
+              <button class="kj-next" type="button" data-next-target="2">Next: {{ section.settings.tab_3_title | default: 'Modern Form' }}<span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 3: MODERN FORM -->
+        <article 
+          class="kj-panel kj-panel--light" 
+          id="kj-panel-3-{{ sid }}" 
+          role="tabpanel" 
+          aria-labelledby="kj-tab-3-{{ sid }}" 
+          data-theme="{{ section.settings.tab_3_title | default: 'Modern Form' }}" 
+          style="--scene: {{ section.settings.ch3_bg | default: '#e3e7ea' }}; --tone: {{ section.settings.ch3_text | default: '#1f2d38' }};"
+          inert
+          aria-hidden="true"
+        >
+          <div class="kj-panel-inner">
+            <div class="kj-eyebrow">
+              <span>03 / {{ section.settings.tab_3_title | default: 'MODERN FORM' | upcase }}</span>
+              <small>SWIPE →</small>
+            </div>
+            <h3 class="kj-headline">{{ section.settings.ch3_headline | default: 'A modern\npoint of view.' | newline_to_br }}</h3>
+
+            <div class="kj-looks" data-count="{% if section.settings.ch3_look3_img != blank or section.settings.ch3_look3_name != blank %}3{% else %}2{% endif %}">
+              <a class="kj-look" href="{{ section.settings.ch3_look1_link | default: '/collections/fusion-wear' }}" aria-label="{{ section.settings.ch3_look1_name | default: 'Multicolour embroidered zip kurta' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch3_look1_img != blank -%}
+                      <img src="{{ section.settings.ch3_look1_img | image_url: width: 600 }}" alt="{{ section.settings.ch3_look1_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/zip-kurta.jpg" alt="Multicolour embroidered zip kurta" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch3_look1_name | default: 'Multicolour embroidered zip kurta' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch3_look2_link | default: '/collections/fusion-wear' }}" aria-label="{{ section.settings.ch3_look2_name | default: 'Black embroidered bomber' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch3_look2_img != blank -%}
+                      <img src="{{ section.settings.ch3_look2_img | image_url: width: 600 }}" alt="{{ section.settings.ch3_look2_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/black-bomber.jpg" alt="Black embroidered bomber" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch3_look2_name | default: 'Black embroidered bomber' }}</figcaption>
+                </figure>
+              </a>
+              {%- if section.settings.ch3_look3_img != blank or section.settings.ch3_look3_name != blank -%}
+                <a class="kj-look" href="{{ section.settings.ch3_look3_link | default: '/collections/fusion-wear' }}" aria-label="{{ section.settings.ch3_look3_name }}">
+                  <figure>
+                    <div class="kj-photo">
+                      {%- if section.settings.ch3_look3_img != blank -%}
+                        <img src="{{ section.settings.ch3_look3_img | image_url: width: 600 }}" alt="{{ section.settings.ch3_look3_name }}" width="300" height="400" loading="lazy">
+                      {%- endif -%}
+                      <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                    </div>
+                    <figcaption>{{ section.settings.ch3_look3_name }}</figcaption>
+                  </figure>
+                </a>
+              {%- endif -%}
+            </div>
+
+            <p class="kj-story">{{ section.settings.ch3_story | default: 'A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist.' }}</p>
+            
+            <a class="kj-cta" href="{{ section.settings.ch3_cta_link | default: '/collections/fusion-wear' }}">
+              {{ section.settings.ch3_cta_text | default: 'Explore Modern Silhouette' }}
+            </a>
+
+            <div class="kj-next-row">
+              <span class="kj-step">03 / 04</span>
+              <button class="kj-next" type="button" data-next-target="3">Next: {{ section.settings.tab_4_title | default: 'After Dark' }}<span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 4: AFTER DARK (DARK BACKGROUND WITH CRISP WHITE TEXT) -->
+        <article 
+          class="kj-panel kj-panel--dark" 
+          id="kj-panel-4-{{ sid }}" 
+          role="tabpanel" 
+          aria-labelledby="kj-tab-4-{{ sid }}" 
+          data-theme="{{ section.settings.tab_4_title | default: 'After Dark' }}" 
+          style="--scene: {{ section.settings.ch4_bg | default: '#191522' }}; --tone: #ffffff;"
+          inert
+          aria-hidden="true"
+        >
+          <div class="kj-panel-inner">
+            <div class="kj-eyebrow">
+              <span>04 / {{ section.settings.tab_4_title | default: 'AFTER DARK' | upcase }}</span>
+              <small>SWIPE →</small>
+            </div>
+            <h3 class="kj-headline">{{ section.settings.ch4_headline | default: 'The lights are on.\nSo are you.' | newline_to_br }}</h3>
+
+            <div class="kj-looks" data-count="{% if section.settings.ch4_look3_img != blank or section.settings.ch4_look3_name != blank %}3{% else %}2{% endif %}">
+              <a class="kj-look" href="{{ section.settings.ch4_look1_link | default: '/collections/cocktail' }}" aria-label="{{ section.settings.ch4_look1_name | default: 'Wine sequinned bomber' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch4_look1_img != blank -%}
+                      <img src="{{ section.settings.ch4_look1_img | image_url: width: 600 }}" alt="{{ section.settings.ch4_look1_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/wine-bomber-v3.webp" alt="Wine sequinned bomber" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch4_look1_name | default: 'Wine sequinned bomber' }}</figcaption>
+                </figure>
+              </a>
+              <a class="kj-look" href="{{ section.settings.ch4_look2_link | default: '/collections/cocktail' }}" aria-label="{{ section.settings.ch4_look2_name | default: 'Peach ombré zipped kurta' }}">
+                <figure>
+                  <div class="kj-photo">
+                    {%- if section.settings.ch4_look2_img != blank -%}
+                      <img src="{{ section.settings.ch4_look2_img | image_url: width: 600 }}" alt="{{ section.settings.ch4_look2_name }}" width="300" height="400" loading="lazy">
+                    {%- else -%}
+                      <img src="https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/peach-ombre-v3.webp" alt="Peach ombré zipped kurta" width="300" height="400" loading="lazy">
+                    {%- endif -%}
+                    <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                  </div>
+                  <figcaption>{{ section.settings.ch4_look2_name | default: 'Peach ombré zipped kurta' }}</figcaption>
+                </figure>
+              </a>
+              {%- if section.settings.ch4_look3_img != blank or section.settings.ch4_look3_name != blank -%}
+                <a class="kj-look" href="{{ section.settings.ch4_look3_link | default: '/collections/cocktail' }}" aria-label="{{ section.settings.ch4_look3_name }}">
+                  <figure>
+                    <div class="kj-photo">
+                      {%- if section.settings.ch4_look3_img != blank -%}
+                        <img src="{{ section.settings.ch4_look3_img | image_url: width: 600 }}" alt="{{ section.settings.ch4_look3_name }}" width="300" height="400" loading="lazy">
+                      {%- endif -%}
+                      <span class="kj-photo-arrow" aria-hidden="true"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+                    </div>
+                    <figcaption>{{ section.settings.ch4_look3_name }}</figcaption>
+                  </figure>
+                </a>
+              {%- endif -%}
+            </div>
+
+            <p class="kj-story">{{ section.settings.ch4_story | default: 'Kisah’s modern take on zardozi &amp; crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings &amp; after-parties.' }}</p>
+            <p class="kj-expression"><strong>The new expression</strong>{{ section.settings.ch4_expression | default: 'A sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.' }}</p>
+            
+            <a class="kj-cta" href="{{ section.settings.ch4_cta_link | default: '/collections/cocktail' }}">
+              {{ section.settings.ch4_cta_text | default: 'Explore After Dark Look' }}
+            </a>
+
+            <div class="kj-next-row">
+              <span class="kj-step">04 / 04</span>
+              <button class="kj-next" type="button" data-next-target="0">Back to {{ section.settings.tab_1_title | default: 'Puja & Ritual' }}<span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </article>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ==========================================================================
+     THEME FONTS INTEGRATION
+     ========================================================================== */
+  #shopify-section-{{ sid }} {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    font-family: var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  }
+  #shopify-section-{{ sid }} .v5-kj-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  #shopify-section-{{ sid }} .kj-wrapper {
+    --paper: {{ section.settings.bg_color | default: '#f5f0e8' }};
+    --ink: #2b2222;
+    --wine: #702c40;
+    color: var(--ink);
+    background: var(--paper);
+    padding: 20px 0 0;
+    border-radius: 0;
+    border: none;
+    text-align: left;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  #shopify-section-{{ sid }} .kj-wrapper * {
+    box-sizing: border-box;
+  }
+
+  /* Intro Section */
+  #shopify-section-{{ sid }} .kj-intro {
+    padding: 0 18px;
+  }
+  #shopify-section-{{ sid }} .kj-kicker {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10px;
+    line-height: 1.6;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    color: #6b5e54;
+  }
+  #shopify-section-{{ sid }} .kj-title {
+    font-family: var(--heading-font-family, Georgia, serif);
+    font-size: 36px;
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+    color: #201c1a;
+  }
+  #shopify-section-{{ sid }} .kj-subtitle {
+    font-family: var(--heading-font-family, Georgia, serif);
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: normal;
+    margin: 0;
+    color: #584f47;
+  }
+  #shopify-section-{{ sid }} .kj-maximalism-link {
+    display: inline-block;
+    margin-top: 14px;
+    padding-bottom: 3px;
+    border-bottom: 1.5px solid currentColor;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #201c1a;
+    text-decoration: none;
+  }
+
+  /* Nav Tabs */
+  #shopify-section-{{ sid }} .kj-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+    gap: 6px;
+    padding: 18px 18px 22px;
+  }
+  #shopify-section-{{ sid }} .kj-tab {
+    min-height: 60px;
+    border: 1px solid rgba(43, 34, 34, 0.22);
+    background: transparent;
+    padding: 8px 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10.5px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #201c1a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  #shopify-section-{{ sid }} .kj-tab-number {
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  #shopify-section-{{ sid }} .kj-tab[aria-selected="true"] {
+    background: #201c1a !important;
+    color: #ffffff !important;
+    border-color: #201c1a !important;
+  }
+
+  /* Track & Panels */
+  #shopify-section-{{ sid }} .kj-track {
+    display: flex;
+    align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+    transition: height 0.28s ease;
+  }
+  #shopify-section-{{ sid }} .kj-track::-webkit-scrollbar {
+    display: none;
+  }
+  #shopify-section-{{ sid }} .kj-panel {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 24px 18px 24px;
+    background: var(--scene);
+    color: var(--tone);
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  #shopify-section-{{ sid }} .kj-panel-inner {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* CRITICAL: Force Colors on All Children for Total Readability */
+  #shopify-section-{{ sid }} .kj-panel h3.kj-headline,
+  #shopify-section-{{ sid }} .kj-panel .kj-eyebrow,
+  #shopify-section-{{ sid }} .kj-panel .kj-eyebrow span,
+  #shopify-section-{{ sid }} .kj-panel .kj-eyebrow small,
+  #shopify-section-{{ sid }} .kj-panel .kj-story,
+  #shopify-section-{{ sid }} .kj-panel .kj-expression,
+  #shopify-section-{{ sid }} .kj-panel .kj-expression strong,
+  #shopify-section-{{ sid }} .kj-panel .kj-step,
+  #shopify-section-{{ sid }} .kj-panel .kj-next,
+  #shopify-section-{{ sid }} .kj-panel .kj-look figcaption {
+    color: var(--tone) !important;
+  }
+
+  /* SPECIAL DARK PANEL ENHANCEMENT: High Contrast White Text */
+  .v5-kj-section .kj-panel--dark,
+  .v5-kj-section #kj-panel-4-{{ sid }},
+  #shopify-section-{{ sid }} .kj-panel--dark,
+  #shopify-section-{{ sid }} #kj-panel-4-{{ sid }} {
+    background-color: #191522 !important;
+  }
+  .v5-kj-section .kj-panel--dark h3.kj-headline,
+  .v5-kj-section #kj-panel-4-{{ sid }} h3.kj-headline,
+  #shopify-section-{{ sid }} .kj-panel--dark h3.kj-headline {
+    color: #ffffff !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+  .v5-kj-section .kj-panel--dark .kj-eyebrow,
+  .v5-kj-section .kj-panel--dark .kj-eyebrow span,
+  .v5-kj-section .kj-panel--dark .kj-eyebrow small,
+  .v5-kj-section .kj-panel--dark .kj-story,
+  .v5-kj-section .kj-panel--dark .kj-expression,
+  .v5-kj-section .kj-panel--dark .kj-expression strong,
+  .v5-kj-section .kj-panel--dark .kj-step,
+  .v5-kj-section .kj-panel--dark .kj-look figcaption,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-story,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-expression,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-expression strong,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-step,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-look figcaption {
+    color: #ffffff !important;
+  }
+
+  /* Eyebrow & Headline */
+  #shopify-section-{{ sid }} .kj-eyebrow {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 9.5px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #shopify-section-{{ sid }} .kj-headline {
+    font-family: var(--heading-font-family, Georgia, serif) !important;
+    font-size: 34px !important;
+    line-height: 1.08 !important;
+    font-weight: normal;
+    letter-spacing: -0.015em;
+    margin: 0 0 20px;
+  }
+
+  /* Looks Grid */
+  #shopify-section-{{ sid }} .kj-looks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 22px;
+  }
+  #shopify-section-{{ sid }} .kj-looks[data-count="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+  #shopify-section-{{ sid }} .kj-looks[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  #shopify-section-{{ sid }} .kj-looks[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  #shopify-section-{{ sid }} .kj-look {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  #shopify-section-{{ sid }} .kj-look figure {
+    margin: 0;
+  }
+  #shopify-section-{{ sid }} .kj-photo {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: #ddd4ca;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ sid }} .kj-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.35s ease;
+  }
+  #shopify-section-{{ sid }} .kj-look:hover img {
+    transform: scale(1.04);
+  }
+  .v5-kj-section .kj-photo-arrow,
+  .v5-kj-section .kj-photo span,
+  #shopify-section-{{ sid }} .kj-photo span {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(23, 23, 23, 0.8) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    transition: all 0.25s ease;
+    z-index: 2;
+  }
+  @media (max-width: 767px) {
+    .v5-kj-section .kj-photo-arrow,
+    .v5-kj-section .kj-photo span,
+    #shopify-section-{{ sid }} .kj-photo span,
+    #shopify-section-{{ sid }} .kj-photo-arrow,
+    .kj-photo .kj-photo-arrow {
+      right: 5px !important;
+      bottom: 5px !important;
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      min-height: 20px !important;
+      border: 1px solid rgba(255, 255, 255, 0.35) !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    }
+    .v5-kj-section .kj-photo-arrow svg,
+    .v5-kj-section .kj-photo span svg,
+    #shopify-section-{{ sid }} .kj-photo span svg,
+    #shopify-section-{{ sid }} .kj-photo-arrow svg,
+    .kj-photo .kj-photo-arrow svg {
+      width: 8px !important;
+      height: 8px !important;
+      stroke-width: 2.2 !important;
+    }
+    #shopify-section-{{ sid }} .kj-looks[data-count="4"] .kj-photo-arrow,
+    #shopify-section-{{ sid }} .kj-looks[data-count="4"] .kj-photo span {
+      right: 3px !important;
+      bottom: 3px !important;
+      width: 17px !important;
+      height: 17px !important;
+      min-width: 17px !important;
+      min-height: 17px !important;
+    }
+    #shopify-section-{{ sid }} .kj-looks[data-count="4"] .kj-photo-arrow svg,
+    #shopify-section-{{ sid }} .kj-looks[data-count="4"] .kj-photo span svg {
+      width: 7px !important;
+      height: 7px !important;
+    }
+    #shopify-section-{{ sid }} .kj-look figcaption {
+      font-size: 10px !important;
+      line-height: 1.25 !important;
+      padding-top: 5px !important;
+      min-height: 26px !important;
+    }
+  }
+  .v5-kj-section .kj-look:hover .kj-photo-arrow,
+  .v5-kj-section .kj-look:hover .kj-photo span,
+  #shopify-section-{{ sid }} .kj-look:hover .kj-photo span {
+    background: #702c40 !important;
+    color: #ffffff !important;
+    border-color: #702c40 !important;
+    transform: scale(1.12);
+  }
+  #shopify-section-{{ sid }} .kj-look figcaption {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11px;
+    line-height: 1.35;
+    padding-top: 8px;
+    min-height: 32px;
+  }
+
+  /* Story Narrative & Theme Solid CTA Button */
+  #shopify-section-{{ sid }} .kj-story {
+    font-family: var(--heading-font-family, Georgia, serif) !important;
+    font-size: 15px !important;
+    line-height: 1.65;
+    margin: 0 0 16px;
+    max-width: 680px;
+  }
+  #shopify-section-{{ sid }} .kj-expression {
+    font-family: var(--base-font-family, sans-serif);
+    margin: 0 0 18px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  #shopify-section-{{ sid }} .kj-expression strong {
+    display: block;
+    font-size: 9.5px;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .v5-kj-section .kj-cta,
+  #shopify-section-{{ sid }} .kj-cta {
+    display: grid !important;
+    place-items: center;
+    min-height: 48px;
+    padding: 14px 28px;
+    border: 1.5px solid #171717 !important;
+    border-radius: var(--btn-border-radius, 3px) !important;
+    background: #171717 !important;
+    color: #ffffff !important;
+    font-family: var(--base-font-family, sans-serif) !important;
+    font-size: 12.5px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transition: all 0.25s ease !important;
+    cursor: pointer;
+  }
+  .v5-kj-section .kj-cta:hover,
+  #shopify-section-{{ sid }} .kj-cta:hover {
+    background: #702c40 !important;
+    border-color: #702c40 !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(112, 44, 64, 0.28) !important;
+    transform: translateY(-2px);
+  }
+
+  /* Dark Panel (Chapter 4) Button: Pure White Background with Dark Charcoal Text */
+  .v5-kj-section .kj-panel--dark .kj-cta,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-cta,
+  #shopify-section-{{ sid }} .kj-panel--dark .kj-cta {
+    background: #ffffff !important;
+    color: #171717 !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+  }
+  .v5-kj-section .kj-panel--dark .kj-cta:hover,
+  .v5-kj-section #kj-panel-4-{{ sid }} .kj-cta:hover,
+  #shopify-section-{{ sid }} .kj-panel--dark .kj-cta:hover {
+    background: #702c40 !important;
+    color: #ffffff !important;
+    border-color: #702c40 !important;
+    box-shadow: 0 6px 22px rgba(112, 44, 64, 0.4) !important;
+    transform: translateY(-2px);
+  }
+  #shopify-section-{{ sid }} .kj-next-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+    font-size: 11px;
+    font-family: var(--base-font-family, sans-serif);
+  }
+  #shopify-section-{{ sid }} .kj-step {
+    opacity: 0.7;
+    letter-spacing: 1px;
+  }
+  .v5-kj-section .kj-next,
+  #shopify-section-{{ sid }} .kj-next {
+    border: 0;
+    background: transparent;
+    min-height: 44px;
+    padding: 10px 0;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11.5px !important;
+    text-align: right;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #702c40 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  .v5-kj-section .kj-next:hover,
+  #shopify-section-{{ sid }} .kj-next:hover {
+    color: #171717 !important;
+    transform: translateX(3px);
+  }
+  .v5-kj-section .kj-panel--dark .kj-next,
+  #shopify-section-{{ sid }} .kj-panel--dark .kj-next {
+    color: #ffffff !important;
+  }
+  .v5-kj-section .kj-panel--dark .kj-next:hover,
+  #shopify-section-{{ sid }} .kj-panel--dark .kj-next:hover {
+    color: #ffffff !important;
+    opacity: 0.85;
+  }
+  #shopify-section-{{ sid }} .kj-next span {
+    margin-left: 4px;
+  }
+  #shopify-section-{{ sid }} .kj-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Tablet Responsiveness (768px - 991px) */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .v5-kj-section .kj-panel-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .v5-kj-section .kj-headline {
+      text-align: center;
+      font-size: 38px !important;
+    }
+    .v5-kj-section .kj-looks {
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .v5-kj-section .kj-story {
+      text-align: center;
+      margin: 0 auto 16px;
+    }
+    .v5-kj-section .kj-cta {
+      max-width: 340px;
+      margin: 0 auto;
+    }
+  }
+
+  /* Desktop Responsiveness (min-width: 992px) */
+  @media (min-width: 992px) {
+    .v5-kj-section {
+      padding-top: {{ section.settings.desk_padding_top | default: 32 }}px !important;
+      padding-bottom: 0px !important;
+    }
+    #shopify-section-{{ sid }} .v5-kj-container {
+      padding: 0;
+      max-width: 100%;
+    }
+    #shopify-section-{{ sid }} .kj-wrapper {
+      border-radius: 0;
+      padding: 24px 0 0;
+      border: none;
+      box-shadow: none;
+    }
+    #shopify-section-{{ sid }} .kj-intro {
+      padding: 0 32px;
+      text-align: center;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    #shopify-section-{{ sid }} .kj-title {
+      font-size: 52px;
+      line-height: 1.05;
+    }
+    #shopify-section-{{ sid }} .kj-subtitle {
+      font-size: 20px;
+    }
+    #shopify-section-{{ sid }} .kj-nav {
+      max-width: 760px;
+      margin: 0 auto;
+      gap: 12px;
+      padding: 20px 20px 28px;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+    #shopify-section-{{ sid }} .kj-tab {
+      min-height: 64px;
+      font-size: 12.5px;
+      border-radius: 6px;
+    }
+    .v5-kj-section .kj-panel,
+    #shopify-section-{{ sid }} .kj-panel {
+      padding: 32px 36px 18px !important;
+      width: 100%;
+    }
+    .v5-kj-section .kj-panel-inner,
+    #shopify-section-{{ sid }} .kj-panel-inner {
+      display: grid !important;
+      grid-template-columns: 1fr 1.18fr !important;
+      grid-template-areas:
+        "eyebrow    eyebrow"
+        "headline   looks"
+        "story      looks"
+        "expression looks"
+        "cta        looks"
+        "next       next" !important;
+      column-gap: 56px !important;
+      row-gap: 10px !important;
+      align-items: start !important;
+      align-content: start !important;
+      max-width: 1440px !important;
+      margin: 0 auto !important;
+      width: 100% !important;
+      text-align: left !important;
+    }
+    .v5-kj-section .kj-eyebrow,
+    #shopify-section-{{ sid }} .kj-eyebrow {
+      grid-area: eyebrow;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 0 12px !important;
+      padding-bottom: 10px !important;
+      border-bottom: 1px solid rgba(120, 120, 120, 0.2) !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      font-size: 11.5px;
+      letter-spacing: 2px;
+    }
+    .v5-kj-section .kj-eyebrow small,
+    #shopify-section-{{ sid }} .kj-eyebrow small {
+      margin-left: auto;
+      text-align: right;
+    }
+    .v5-kj-section .kj-headline,
+    #shopify-section-{{ sid }} .kj-headline {
+      grid-area: headline;
+      font-size: 42px !important;
+      line-height: 1.08 !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+    .v5-kj-section .kj-looks,
+    #shopify-section-{{ sid }} .kj-looks {
+      grid-area: looks;
+      display: grid !important;
+      gap: 16px !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      align-self: start !important;
+    }
+    .v5-kj-section .kj-looks[data-count="1"],
+    #shopify-section-{{ sid }} .kj-looks[data-count="1"] {
+      grid-template-columns: 1fr !important;
+      max-width: 320px !important;
+      margin: 0 auto !important;
+    }
+    .v5-kj-section .kj-looks[data-count="2"],
+    #shopify-section-{{ sid }} .kj-looks[data-count="2"] {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .v5-kj-section .kj-looks[data-count="3"],
+    #shopify-section-{{ sid }} .kj-looks[data-count="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    .v5-kj-section .kj-looks[data-count="4"],
+    #shopify-section-{{ sid }} .kj-looks[data-count="4"] {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 12px !important;
+    }
+    .v5-kj-section .kj-photo,
+    #shopify-section-{{ sid }} .kj-photo {
+      border-radius: 8px;
+    }
+    .v5-kj-section .kj-look figcaption,
+    #shopify-section-{{ sid }} .kj-look figcaption {
+      font-size: 12.5px;
+      padding-top: 8px;
+      text-align: center;
+    }
+    .v5-kj-section .kj-story,
+    #shopify-section-{{ sid }} .kj-story {
+      grid-area: story;
+      font-size: 16px !important;
+      line-height: 1.65 !important;
+      max-width: 580px !important;
+      margin: 4px 0 0 !important;
+      text-align: left !important;
+    }
+    .v5-kj-section .kj-expression,
+    #shopify-section-{{ sid }} .kj-expression {
+      grid-area: expression;
+      font-size: 13px !important;
+      max-width: 560px !important;
+      margin: 4px 0 0 !important;
+      text-align: left !important;
+    }
+    .v5-kj-section .kj-cta,
+    #shopify-section-{{ sid }} .kj-cta {
+      grid-area: cta;
+      max-width: 340px !important;
+      margin: 10px 0 0 !important;
+      font-size: 12.5px !important;
+      min-height: 48px !important;
+    }
+    .v5-kj-section .kj-next-row,
+    #shopify-section-{{ sid }} .kj-next-row {
+      grid-area: next;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 18px 0 0 !important;
+      padding-top: 14px !important;
+      border-top: 1px solid rgba(120, 120, 120, 0.2) !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .v5-kj-section .kj-next-row .kj-next,
+    #shopify-section-{{ sid }} .kj-next-row .kj-next {
+      margin-left: auto;
+      text-align: right;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sid = '{{ sid }}';
+    var root = document.getElementById('kj-wrapper-' + sid);
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = 'true';
+
+    var track = document.getElementById('kj-track-' + sid);
+    if (!track) return;
+
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.kj-panel'));
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.kj-tab'));
+    var status = root.querySelector('.kj-status');
+    var active = 0;
+    var requested = null;
+    var timer;
+    var frame;
+
+    var reduced = function() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    };
+
+    var position = function(i) {
+      return track.scrollLeft + panels[i].getBoundingClientRect().left - track.getBoundingClientRect().left;
+    };
+
+    var nearest = function() {
+      var best = 0;
+      var curScroll = track.scrollLeft;
+      for (var i = 0; i < panels.length; i++) {
+        if (Math.abs(position(i) - curScroll) < Math.abs(position(best) - curScroll)) {
+          best = i;
+        }
+      }
+      return best;
+    };
+
+    function fit() {
+      if (panels[active]) {
+        track.style.height = Math.ceil(panels[active].getBoundingClientRect().height) + 'px';
+      }
+    }
+
+    function paint(i) {
+      active = i;
+      tabs.forEach(function(tab, k) {
+        tab.setAttribute('aria-selected', String(i === k));
+        tab.tabIndex = i === k ? 0 : -1;
+      });
+      panels.forEach(function(panel, k) {
+        panel.inert = k !== i;
+        panel.setAttribute('aria-hidden', String(k !== i));
+      });
+      if (status && panels[i]) {
+        status.textContent = 'Chapter ' + (i + 1) + ' of ' + panels.length + ': ' + panels[i].dataset.theme;
+      }
+      fit();
+    }
+
+    function go(i, instant) {
+      i = Math.max(0, Math.min(i, panels.length - 1));
+      requested = i;
+      paint(i);
+      track.scrollTo({
+        left: position(i),
+        behavior: instant || reduced() ? 'auto' : 'smooth'
+      });
+    }
+
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() { go(i); });
+      tab.addEventListener('keydown', function(event) {
+        var target;
+        if (event.key === 'ArrowRight') target = (i + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') target = (i - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') target = 0;
+        if (event.key === 'End') target = tabs.length - 1;
+        if (target !== undefined) {
+          event.preventDefault();
+          go(target);
+          tabs[target].focus();
+        }
+      });
+    });
+
+    root.querySelectorAll('.kj-next').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var nextIdx = parseInt(button.getAttribute('data-next-target') || '0', 10);
+        go(nextIdx);
+        var nav = root.querySelector('.kj-nav');
+        if (nav) nav.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' });
+        if (tabs[active]) tabs[active].focus({ preventScroll: true });
+      });
+    });
+
+    var settled = function() {
+      clearTimeout(timer);
+      requested = null;
+      paint(nearest());
+    };
+
+    track.addEventListener('scroll', function() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(function() {
+        if (requested === null) paint(nearest());
+      });
+      clearTimeout(timer);
+      timer = setTimeout(settled, 180);
+    }, { passive: true });
+
+    ['pointerdown', 'touchstart', 'wheel'].forEach(function(name) {
+      track.addEventListener(name, function() { requested = null; }, { passive: true });
+    });
+
+    track.addEventListener('keydown', function(event) {
+      if (event.target !== track) return;
+      if (event.key === 'ArrowRight') { event.preventDefault(); go(active + 1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); go(active - 1); }
+    });
+
+    window.addEventListener('resize', fit, { passive: true });
+    root.querySelectorAll('img').forEach(function(img) {
+      img.addEventListener('load', fit);
+    });
+
+    setTimeout(function() {
+      paint(0);
+      fit();
+    }, 120);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Festive Style Story",
+  "tag": "section",
+  "class": "v5-kisah-journal-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Eyebrow",
+      "default": "THE KISAH JOURNAL / THE FESTIVE STYLE STORY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Men’s Diwali fashion."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "One festival. Many occasions. Many Expressions"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Editorial Link Text",
+      "default": "READ: KISAH ON FASHION MAXIMALISM →"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Editorial Link URL"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#f5f0e8"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Bottom Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Chapter 1: Puja & Ritual"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "Chapter 1 Tab Name",
+      "default": "Puja & Ritual"
+    },
+    {
+      "type": "color",
+      "id": "ch1_bg",
+      "label": "Chapter 1 Background",
+      "default": "#eee4d9"
+    },
+    {
+      "type": "color",
+      "id": "ch1_text",
+      "label": "Chapter 1 Text Color",
+      "default": "#2b2222"
+    },
+    {
+      "type": "textarea",
+      "id": "ch1_headline",
+      "label": "Chapter 1 Headline",
+      "default": "Same rituals.\nYour signature."
+    },
+    {
+      "type": "textarea",
+      "id": "ch1_story",
+      "label": "Chapter 1 Story Text",
+      "default": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories."
+    },
+    {
+      "type": "text",
+      "id": "ch1_expression",
+      "label": "Chapter 1 Expression Callout",
+      "default": "Floral, olive, wine or midnight blue: choose your colour and expression."
+    },
+    {
+      "type": "text",
+      "id": "ch1_cta_text",
+      "label": "Chapter 1 Button Label",
+      "default": "Explore Puja & Rituals"
+    },
+    {
+      "type": "url",
+      "id": "ch1_cta_link",
+      "label": "Chapter 1 Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch1_look1_img",
+      "label": "Look 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch1_look1_name",
+      "label": "Look 1 Name",
+      "default": "Floral expression"
+    },
+    {
+      "type": "url",
+      "id": "ch1_look1_link",
+      "label": "Look 1 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch1_look2_img",
+      "label": "Look 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch1_look2_name",
+      "label": "Look 2 Name",
+      "default": "Wine & palms"
+    },
+    {
+      "type": "url",
+      "id": "ch1_look2_link",
+      "label": "Look 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch1_look3_img",
+      "label": "Look 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch1_look3_name",
+      "label": "Look 3 Name",
+      "default": "Olive texture"
+    },
+    {
+      "type": "url",
+      "id": "ch1_look3_link",
+      "label": "Look 3 Link"
+    },
+    {
+      "type": "header",
+      "content": "Chapter 2: Art & Print"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Chapter 2 Tab Name",
+      "default": "Art & Print"
+    },
+    {
+      "type": "color",
+      "id": "ch2_bg",
+      "label": "Chapter 2 Background",
+      "default": "#e5eadf"
+    },
+    {
+      "type": "color",
+      "id": "ch2_text",
+      "label": "Chapter 2 Text Color",
+      "default": "#203025"
+    },
+    {
+      "type": "textarea",
+      "id": "ch2_headline",
+      "label": "Chapter 2 Headline",
+      "default": "Wear a little\nimagination."
+    },
+    {
+      "type": "textarea",
+      "id": "ch2_story",
+      "label": "Chapter 2 Story Text",
+      "default": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss."
+    },
+    {
+      "type": "text",
+      "id": "ch2_cta_text",
+      "label": "Chapter 2 Button Label",
+      "default": "Explore Art & Floral designs"
+    },
+    {
+      "type": "url",
+      "id": "ch2_cta_link",
+      "label": "Chapter 2 Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_look1_img",
+      "label": "Look 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch2_look1_name",
+      "label": "Look 1 Name",
+      "default": "Navy floral kurta set"
+    },
+    {
+      "type": "url",
+      "id": "ch2_look1_link",
+      "label": "Look 1 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_look2_img",
+      "label": "Look 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch2_look2_name",
+      "label": "Look 2 Name",
+      "default": "Black floral jacket set"
+    },
+    {
+      "type": "url",
+      "id": "ch2_look2_link",
+      "label": "Look 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch2_look3_img",
+      "label": "Look 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch2_look3_name",
+      "label": "Look 3 Name",
+      "default": "Blue floral Nehru set"
+    },
+    {
+      "type": "url",
+      "id": "ch2_look3_link",
+      "label": "Look 3 Link"
+    },
+    {
+      "type": "header",
+      "content": "Chapter 3: Modern Form"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_title",
+      "label": "Chapter 3 Tab Name",
+      "default": "Modern Form"
+    },
+    {
+      "type": "color",
+      "id": "ch3_bg",
+      "label": "Chapter 3 Background",
+      "default": "#e3e7ea"
+    },
+    {
+      "type": "color",
+      "id": "ch3_text",
+      "label": "Chapter 3 Text Color",
+      "default": "#1f2d38"
+    },
+    {
+      "type": "textarea",
+      "id": "ch3_headline",
+      "label": "Chapter 3 Headline",
+      "default": "A modern\npoint of view."
+    },
+    {
+      "type": "textarea",
+      "id": "ch3_story",
+      "label": "Chapter 3 Story Text",
+      "default": "A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist."
+    },
+    {
+      "type": "text",
+      "id": "ch3_cta_text",
+      "label": "Chapter 3 Button Label",
+      "default": "Explore Modern Silhouette"
+    },
+    {
+      "type": "url",
+      "id": "ch3_cta_link",
+      "label": "Chapter 3 Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch3_look1_img",
+      "label": "Look 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch3_look1_name",
+      "label": "Look 1 Name",
+      "default": "Multicolour embroidered zip kurta"
+    },
+    {
+      "type": "url",
+      "id": "ch3_look1_link",
+      "label": "Look 1 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch3_look2_img",
+      "label": "Look 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch3_look2_name",
+      "label": "Look 2 Name",
+      "default": "Black embroidered bomber"
+    },
+    {
+      "type": "url",
+      "id": "ch3_look2_link",
+      "label": "Look 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch3_look3_img",
+      "label": "Look 3 Image (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "ch3_look3_name",
+      "label": "Look 3 Name"
+    },
+    {
+      "type": "url",
+      "id": "ch3_look3_link",
+      "label": "Look 3 Link"
+    },
+    {
+      "type": "header",
+      "content": "Chapter 4: After Dark"
+    },
+    {
+      "type": "text",
+      "id": "tab_4_title",
+      "label": "Chapter 4 Tab Name",
+      "default": "After Dark"
+    },
+    {
+      "type": "color",
+      "id": "ch4_bg",
+      "label": "Chapter 4 Background",
+      "default": "#191522"
+    },
+    {
+      "type": "color",
+      "id": "ch4_text",
+      "label": "Chapter 4 Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "ch4_headline",
+      "label": "Chapter 4 Headline",
+      "default": "The lights are on.\nSo are you."
+    },
+    {
+      "type": "textarea",
+      "id": "ch4_story",
+      "label": "Chapter 4 Story Text",
+      "default": "Kisah’s modern take on zardozi & crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings & after-parties."
+    },
+    {
+      "type": "text",
+      "id": "ch4_expression",
+      "label": "Chapter 4 Expression Callout",
+      "default": "A sequinned jacket, gold print or ombré drape brings expression through light, colour and movement."
+    },
+    {
+      "type": "text",
+      "id": "ch4_cta_text",
+      "label": "Chapter 4 Button Label",
+      "default": "Explore After Dark Look"
+    },
+    {
+      "type": "url",
+      "id": "ch4_cta_link",
+      "label": "Chapter 4 Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch4_look1_img",
+      "label": "Look 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch4_look1_name",
+      "label": "Look 1 Name",
+      "default": "Wine sequinned bomber"
+    },
+    {
+      "type": "url",
+      "id": "ch4_look1_link",
+      "label": "Look 1 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch4_look2_img",
+      "label": "Look 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "ch4_look2_name",
+      "label": "Look 2 Name",
+      "default": "Peach ombré zipped kurta"
+    },
+    {
+      "type": "url",
+      "id": "ch4_look2_link",
+      "label": "Look 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch4_look3_img",
+      "label": "Look 3 Image (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "ch4_look3_name",
+      "label": "Look 3 Name"
+    },
+    {
+      "type": "url",
+      "id": "ch4_look3_link",
+      "label": "Look 3 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "ch4_look4_img",
+      "label": "Look 4 Image (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "ch4_look4_name",
+      "label": "Look 4 Name"
+    },
+    {
+      "type": "url",
+      "id": "ch4_look4_link",
+      "label": "Look 4 Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter",
+      "name": "Story Chapter",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab Name",
+          "default": "Chapter Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_dark",
+          "label": "Dark Theme Mode",
+          "default": false,
+          "info": "Enables luxury high-contrast dark background with white typography"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#eee4d9"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#2b2222"
+        },
+        {
+          "type": "textarea",
+          "id": "headline",
+          "label": "Headline",
+          "default": "Same rituals.\nYour signature."
+        },
+        {
+          "type": "textarea",
+          "id": "story",
+          "label": "Story Text",
+          "default": "The kurta holds family memories, festive rituals and memories of the first diya."
+        },
+        {
+          "type": "text",
+          "id": "expression",
+          "label": "Expression Callout",
+          "default": "Floral, olive, wine or midnight blue: choose your colour and expression."
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button Label",
+          "default": "Explore Collection"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "images_count",
+          "label": "Number of Images to display",
+          "options": [
+            { "value": "auto", "label": "Auto (detect 2, 3, or 4)" },
+            { "value": "2", "label": "2 Images" },
+            { "value": "3", "label": "3 Images" },
+            { "value": "4", "label": "4 Images" }
+          ],
+          "default": "auto",
+          "info": "Choose how many images/looks to show (2, 3, or 4). Auto will automatically adjust based on uploaded images."
+        },
+        {
+          "type": "header",
+          "content": "Look 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "look1_img",
+          "label": "Look 1 Image"
+        },
+        {
+          "type": "text",
+          "id": "look1_fallback",
+          "label": "Look 1 Image URL (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "look1_name",
+          "label": "Look 1 Name",
+          "default": "Look 1"
+        },
+        {
+          "type": "url",
+          "id": "look1_link",
+          "label": "Look 1 Link"
+        },
+        {
+          "type": "header",
+          "content": "Look 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "look2_img",
+          "label": "Look 2 Image"
+        },
+        {
+          "type": "text",
+          "id": "look2_fallback",
+          "label": "Look 2 Image URL (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "look2_name",
+          "label": "Look 2 Name",
+          "default": "Look 2"
+        },
+        {
+          "type": "url",
+          "id": "look2_link",
+          "label": "Look 2 Link"
+        },
+        {
+          "type": "header",
+          "content": "Look 3 (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "look3_img",
+          "label": "Look 3 Image"
+        },
+        {
+          "type": "text",
+          "id": "look3_fallback",
+          "label": "Look 3 Image URL (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "look3_name",
+          "label": "Look 3 Name"
+        },
+        {
+          "type": "url",
+          "id": "look3_link",
+          "label": "Look 3 Link"
+        },
+        {
+          "type": "header",
+          "content": "Look 4 (Optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "look4_img",
+          "label": "Look 4 Image"
+        },
+        {
+          "type": "text",
+          "id": "look4_fallback",
+          "label": "Look 4 Image URL (Fallback)"
+        },
+        {
+          "type": "text",
+          "id": "look4_name",
+          "label": "Look 4 Name"
+        },
+        {
+          "type": "url",
+          "id": "look4_link",
+          "label": "Look 4 Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Festive Style Story",
+      "blocks": [
+        {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Puja & Ritual",
+            "bg_color": "#eee4d9",
+            "text_color": "#2b2222",
+            "headline": "Same rituals.\nYour signature.",
+            "story": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories.",
+            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
+            "cta_text": "Explore Puja & Rituals",
+            "cta_link": "/collections/diwali-puja",
+            "look1_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-1.jpg",
+            "look1_name": "Floral expression",
+            "look1_link": "/collections/floral-kurta-for-men",
+            "look2_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-2.jpg",
+            "look2_name": "Wine & palms",
+            "look2_link": "/products/wine-kurta-with-palm-embroidery-ka-1187",
+            "look3_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/puja-3.jpg",
+            "look3_name": "Olive texture",
+            "look3_link": "/collections/green-kurta"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Art & Print",
+            "bg_color": "#e5eadf",
+            "text_color": "#203025",
+            "headline": "Wear a little\nimagination.",
+            "story": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss.",
+            "cta_text": "Explore Art & Floral designs",
+            "cta_link": "/collections/the-printed-man",
+            "look1_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/navy-floral-v3.webp",
+            "look1_name": "Navy floral kurta set",
+            "look1_link": "/collections/the-printed-man",
+            "look2_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/black-floral-v3.webp",
+            "look2_name": "Black floral jacket set",
+            "look2_link": "/collections/the-printed-man",
+            "look3_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/blue-jacket-v3.webp",
+            "look3_name": "Blue floral Nehru set",
+            "look3_link": "/collections/the-printed-man"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Modern Form",
+            "bg_color": "#ece6e1",
+            "text_color": "#28201a",
+            "headline": "Structure meets\nease.",
+            "story": "Contemporary festive silhouettes designed for ease of movement and modern celebration.",
+            "cta_text": "Explore Modern Silhouettes",
+            "cta_link": "/collections/modern-kurtas",
+            "look1_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/taupe-silk-v3.webp",
+            "look1_name": "Taupe silk asymmetrical set",
+            "look1_link": "/collections/modern-kurtas",
+            "look2_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/ivory-jacquard-v3.webp",
+            "look2_name": "Ivory textured jacket set",
+            "look2_link": "/collections/modern-kurtas",
+            "look3_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v3/olive-overlay-v3.webp",
+            "look3_name": "Olive overlay kurta set",
+            "look3_link": "/collections/modern-kurtas"
+          }
+        },
+        {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "After Dark",
+            "is_dark": true,
+            "bg_color": "#191522",
+            "text_color": "#ffffff",
+            "headline": "Gold glimmer on\nmidnight cloth.",
+            "story": "Midnight blacks, deep jewel tones and subtle metallic accents crafted for evening soirees and card parties.",
+            "expression": "A sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.",
+            "cta_text": "Explore After Dark Look",
+            "cta_link": "/collections/evening-parties",
+            "look1_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/dark-1.jpg",
+            "look1_name": "Black & gold bandhgala",
+            "look1_link": "/collections/evening-parties",
+            "look2_fallback": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/journal-v2/dark-2.jpg",
+            "look2_name": "Midnight blue embroidered set",
+            "look2_link": "/collections/evening-parties"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

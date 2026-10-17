@@ -107,7 +107,7 @@
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
   {{ 'collections.css' | asset_url | stylesheet_tag }}
-  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' -%}
+  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' -%}
     {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 

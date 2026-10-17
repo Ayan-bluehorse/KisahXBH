@@ -1,35 +1,6 @@
 {%- liquid
   assign sid = section.id
-
-  assign chosen_coll = section.settings.collection
-  if chosen_coll.title == blank and section.settings.collection != blank
-    assign chosen_coll = collections[section.settings.collection]
-  endif
-
-  assign max_picks = section.settings.max_picks | default: 8
-
-  assign view_link = section.settings.see_more_link
-  if view_link == blank
-    assign view_link = '#all-diwali-styles'
-  endif
-
-  # Aspect ratio detection matching theme settings
-  if settings.prod_thumb_shape == 'portrait-23'
-    assign chosen_aspect_ratio = 0.67
-  elsif settings.prod_thumb_shape == 'portrait-45'
-    assign chosen_aspect_ratio = 0.8
-  elsif settings.prod_thumb_shape == 'square'
-    assign chosen_aspect_ratio = 1.0
-  elsif settings.prod_thumb_shape == 'landscape-54'
-    assign chosen_aspect_ratio = 1.25
-  elsif settings.prod_thumb_shape == 'landscape-32'
-    assign chosen_aspect_ratio = 1.50
-  else
-    assign chosen_aspect_ratio = 0.75
-  endif
 -%}
-
-{{ 'navratri.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   /* Global reset for Diwali LP to eliminate blank spaces */
@@ -49,35 +20,27 @@
     background-color: {{ section.settings.bg_color | default: '#fdfcf9' }} !important;
   }
 
-  /* Hide unwanted arrow navigation injected on product cards */
-  .image-slider-nav,
-  .image-slider-nav button,
-  .product-block .image-slider-nav,
-  .product-block .image-slider-nav button {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  .diwali-landing-section-{{ sid }} {
+  .diwali-occasions-section-{{ sid }} {
     background-color: {{ section.settings.bg_color | default: '#fdfcf9' }};
     color: {{ section.settings.text_color | default: '#141414' }};
     padding-top: {{ section.settings.pad_top | default: 12 }}px;
-    padding-bottom: {{ section.settings.pad_bottom | default: 16 }}px;
+    padding-bottom: {{ section.settings.pad_bottom | default: 8 }}px;
     margin: 0 !important;
     position: relative;
   }
 
-  /* Occasion & Category Circles Rail */
+  /* Occasion & Category Square/Portrait Cards Rail (Matching HP Style) */
   .diwali-circles-rail-{{ sid }} {
     display: flex;
-    gap: 16px;
+    gap: 10px;
     overflow-x: auto;
-    padding: 6px 4px 14px;
-    margin-bottom: 6px;
+    overflow-y: hidden;
+    padding: 6px 14px 10px;
+    margin: 0 -14px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    box-sizing: border-box;
   }
   .diwali-circles-rail-{{ sid }}::-webkit-scrollbar {
     display: none;
@@ -85,9 +48,22 @@
   @media (min-width: 768px) {
     .diwali-circles-rail-{{ sid }} {
       justify-content: center;
-      gap: 28px;
-      padding: 10px 0 20px;
-      margin-bottom: 8px;
+      gap: 16px;
+      margin: 0 auto;
+      padding: 10px 0 14px;
+      max-width: 100%;
+      overflow-x: visible;
+    }
+  }
+  @media (min-width: 992px) {
+    .diwali-circles-rail-{{ sid }} {
+      justify-content: center;
+      gap: 20px;
+      margin: 4px auto;
+      padding: 10px 0 16px;
+      max-width: 100%;
+      width: 100%;
+      overflow-x: visible;
     }
   }
 
@@ -95,508 +71,139 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    flex: 0 0 auto;
-    width: 68px;
+    gap: 6px;
+    flex: 0 0 calc((100% - 20px) / 3.15);
+    width: calc((100% - 20px) / 3.15);
     text-align: center;
     text-decoration: none;
     color: inherit;
     scroll-snap-align: start;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease;
+    box-sizing: border-box;
   }
   @media (min-width: 768px) {
     .diwali-circle-item-{{ sid }} {
-      width: 86px;
+      flex: 1 1 0;
+      max-width: 190px;
+      min-width: 130px;
+      width: auto;
+      gap: 8px;
+    }
+  }
+  @media (min-width: 992px) {
+    .diwali-circle-item-{{ sid }} {
+      flex: 1 1 0;
+      max-width: 240px;
+      min-width: 170px;
+      width: auto;
       gap: 10px;
     }
   }
   .diwali-circle-item-{{ sid }}:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     color: inherit;
   }
 
   .diwali-circle-img-{{ sid }} {
-    width: 62px;
-    height: 62px;
-    border-radius: 50%;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 6px;
     background-color: #f6f3ee;
     background-size: cover;
-    background-position: center 15%;
+    background-position: center top;
     background-repeat: no-repeat;
-    box-shadow: 0 0 0 2px {{ section.settings.bg_color | default: '#fdfcf9' }}, 0 0 0 3.5px {{ section.settings.gold_color | default: '#b0862f' }};
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    position: relative;
   }
   @media (min-width: 768px) {
     .diwali-circle-img-{{ sid }} {
-      width: 76px;
-      height: 76px;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+  }
+  @media (min-width: 992px) {
+    .diwali-circle-img-{{ sid }} {
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
   }
   .diwali-circle-item-{{ sid }}:hover .diwali-circle-img-{{ sid }} {
-    box-shadow: 0 0 0 2px {{ section.settings.bg_color | default: '#fdfcf9' }}, 0 0 0 4.5px {{ section.settings.gold_color | default: '#b0862f' }};
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 
   .diwali-circle-label-{{ sid }} {
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 500;
     line-height: 1.25;
     color: {{ section.settings.text_color | default: '#141414' }};
-    max-width: 76px;
-    word-break: break-word;
+    text-align: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 2px;
   }
   @media (min-width: 768px) {
     .diwali-circle-label-{{ sid }} {
-      font-size: 13px;
-      max-width: 95px;
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-top: 4px;
     }
   }
-
-  /* Section Title & Subtitle */
-  .diwali-header-{{ sid }} {
-    margin-bottom: 14px;
-    padding: 0 4px;
-  }
-  .diwali-header-{{ sid }} .diwali-title {
-    margin: 0;
-    font-family: var(--font-heading-family, "Bodoni Moda", "Didot", Georgia, serif);
-    font-size: clamp(22px, 4vw, 30px);
-    font-weight: 600;
-    line-height: 1.25;
-    color: {{ section.settings.text_color | default: '#141414' }};
-  }
-  .diwali-header-{{ sid }} .diwali-subtitle {
-    margin: 4px 0 0;
-    font-size: 13px;
-    color: #5b5b5b;
-  }
-
-  /* "SEE MORE DIWALI STYLES" Button — text-width, sharp corners */
-  .diwali-seemore-wrap-{{ sid }} {
-    margin-top: 24px;
-    margin-bottom: 20px;
-    padding: 0 4px;
-    display: flex;
-    justify-content: center;
-  }
-  .diwali-seemore-btn-{{ sid }} {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 28px;
-    background: #141414;
-    border: 1.5px solid #141414;
-    border-radius: 0;
-    color: #ffffff !important;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none !important;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background-color 0.2s ease;
-  }
-  .diwali-seemore-btn-{{ sid }} span {
-    color: #ffffff !important;
-  }
-  .diwali-seemore-btn-{{ sid }} svg {
-    width: 14px;
-    height: 14px;
-    stroke: #ffffff !important;
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-  }
-  .diwali-seemore-btn-{{ sid }}:hover {
-    background: #2b2b2b;
-    border-color: #2b2b2b;
-    color: #ffffff !important;
-  }
-  .diwali-seemore-btn-{{ sid }}:hover svg {
-    transform: translateY(2px);
+  @media (min-width: 992px) {
+    .diwali-circle-label-{{ sid }} {
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
   }
 {%- endstyle -%}
 
-<div class="section-id-{{ sid }} diwali-landing-section-{{ sid }} cp-navratri-pcarousel" data-pcarousel id="diwali-landing-{{ sid }}">
+<div class="section-id-{{ sid }} diwali-occasions-section-{{ sid }}" id="diwali-occasions-{{ sid }}">
   <div class="container">
-
-    <!-- 1. Occasion & Category Circles Rail -->
-    {%- if section.settings.show_circles -%}
+    {%- if section.blocks.size > 0 -%}
       <div class="diwali-circles-rail-{{ sid }}">
-        {%- if section.blocks.size > 0 -%}
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'occasion_circle' -%}
-              {%- liquid
-                assign circle_img_url = ''
-                if block.settings.image != blank
-                  assign circle_img_url = block.settings.image | image_url: width: 200
-                else
-                  assign btitle_lower = block.settings.title | downcase
-                  if btitle_lower contains 'new'
-                    assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/New_Arrivals_f1d9edae-25c9-4f8a-b553-88542e5662ca.png?v=1772169881'
-                  elsif btitle_lower contains 'puja' or btitle_lower contains 'yellow'
-                    assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_87d44b1a-b676-4f63-b4df-3f315b0cab3e.png?v=1772186846'
-                  elsif btitle_lower contains 'party' or btitle_lower contains 'indo' or btitle_lower contains 'set'
-                    assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Indowestern_7f38c040-6874-4970-8b35-0acbf3e45227.png?v=1772186846'
-                  elsif btitle_lower contains 'kid'
-                    assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kids_7be95264-57b8-48c3-8619-5887acfd1ffb.png?v=1772169881'
-                  elsif btitle_lower contains 'plus'
-                    assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Plus.png?v=1772169881'
-                  endif
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'occasion_circle' -%}
+            {%- liquid
+              assign circle_img_url = ''
+              if block.settings.image != blank
+                assign circle_img_url = block.settings.image | image_url: width: 480
+              else
+                assign btitle_lower = block.settings.title | downcase
+                if btitle_lower contains 'new'
+                  assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/New_Arrivals_f1d9edae-25c9-4f8a-b553-88542e5662ca.png?v=1772169881'
+                elsif btitle_lower contains 'puja' or btitle_lower contains 'yellow'
+                  assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kurta_87d44b1a-b676-4f63-b4df-3f315b0cab3e.png?v=1772186846'
+                elsif btitle_lower contains 'party' or btitle_lower contains 'indo' or btitle_lower contains 'set'
+                  assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Indowestern_7f38c040-6874-4970-8b35-0acbf3e45227.png?v=1772186846'
+                elsif btitle_lower contains 'kid'
+                  assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Kids_7be95264-57b8-48c3-8619-5887acfd1ffb.png?v=1772169881'
+                elsif btitle_lower contains 'plus'
+                  assign circle_img_url = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Plus.png?v=1772169881'
                 endif
-              -%}
-              <a href="{{ block.settings.link | default: '/collections/all' }}" class="diwali-circle-item-{{ sid }}" {{ block.shopify_attributes }}>
-                <div class="diwali-circle-img-{{ sid }}" {% if circle_img_url != blank %}style="background-image: url('{{ circle_img_url }}');"{% endif %}></div>
-                <span class="diwali-circle-label-{{ sid }}">{{ block.settings.title }}</span>
-              </a>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
+              endif
+            -%}
+            <a href="{{ block.settings.link | default: '/collections/all' }}" class="diwali-circle-item-{{ sid }}" {{ block.shopify_attributes }}>
+              <div class="diwali-circle-img-{{ sid }}" {% if circle_img_url != blank %}style="background-image: url('{{ circle_img_url }}');"{% endif %}></div>
+              <span class="diwali-circle-label-{{ sid }}">{{ block.settings.title }}</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     {%- endif -%}
-
-    <!-- 2. Section Heading -->
-    <div class="diwali-header-{{ sid }}">
-      <h2 class="diwali-title">{{ section.settings.title | default: 'Top Diwali Picks' }}</h2>
-      {%- if section.settings.subtitle != blank -%}
-        <p class="diwali-subtitle">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
-    </div>
-
-    <!-- 3. Top Diwali Picks: Theme Default Responsive Product Grid (4 desktop / 2 mobile = 8 products) -->
-    <div class="collection-listing fade-in-up" data-cc-animate>
-      <div class="product-grid product-grid--per-row-{{ section.settings.grid | default: 4 }} product-grid--per-row-mob-{{ section.settings.grid_mobile | default: 2 }}">
-        {%- liquid
-          assign rendered_count = 0
-          assign product_limit = max_picks
-          assign show_only_available = section.settings.show_only_available
-          if show_only_available == nil
-            assign show_only_available = true
-          endif
-
-          # Exact size mapping from Navratri LP
-          assign size_map = 'XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56' | split: ','
-          assign mapped_s = ''
-          assign mapped_m = ''
-          assign mapped_l = ''
-          assign mapped_xl = ''
-
-          for pair in size_map
-            assign p = pair | split: ':'
-            assign p_letter = p[0] | downcase | strip
-            assign p_number = p[1] | strip
-
-            if p_letter == 's'
-              assign mapped_s = p_number
-            elsif p_letter == 'm'
-              assign mapped_m = p_number
-            elsif p_letter == 'l'
-              assign mapped_l = p_number
-            elsif p_letter == 'xl'
-              assign mapped_xl = p_number
-            endif
-          endfor
-
-          if section.settings.products != blank and section.settings.products.count > 0
-            # Merchant selected exact products: Show in-stock available first
-            for prod in section.settings.products
-              assign available_variants = prod.variants | where: 'available', true | size
-              if prod.available and available_variants > 0
-                assign rendered_count = rendered_count | plus: 1
-                render 'product-block', product: prod, collection: chosen_coll, custom_aspect_ratio: chosen_aspect_ratio, prioritised_loading: true, grid: 4
-                if rendered_count >= product_limit
-                  break
-                endif
-              endif
-            endfor
-
-            if show_only_available == false and rendered_count < product_limit
-              for prod in section.settings.products
-                assign available_variants = prod.variants | where: 'available', true | size
-                unless prod.available and available_variants > 0
-                  assign rendered_count = rendered_count | plus: 1
-                  render 'product-block', product: prod, collection: chosen_coll, custom_aspect_ratio: chosen_aspect_ratio, prioritised_loading: false, grid: 4
-                  if rendered_count >= product_limit
-                    break
-                  endif
-                endunless
-              endfor
-            endif
-
-          elsif chosen_coll != blank and chosen_coll.products.size > 0
-            # Exact ranking logic from Navratri LP (Rank 0..5)
-            for target_rank in (0..5)
-              for prod in chosen_coll.products
-                assign total_variants = prod.variants.size
-                assign available_variants = prod.variants | where: 'available', true | size
-
-                if available_variants > 0
-                  assign cur_rank = 5
-
-                  if available_variants == total_variants and total_variants > 0
-                    assign cur_rank = 0
-                  else
-                    assign size_s_available = false
-                    assign size_m_available = false
-                    assign size_l_available = false
-                    assign size_xl_available = false
-
-                    for option in prod.options_with_values
-                      assign option_name = option.name | downcase | strip
-                      if option_name == 'size'
-                        for value in option.values
-                          assign size_value = value | downcase | strip
-
-                          if size_value == 's' or size_value == 'small' or size_value == mapped_s
-                            if value.available
-                              assign size_s_available = true
-                            endif
-                          endif
-
-                          if size_value == 'm' or size_value == 'medium' or size_value == mapped_m
-                            if value.available
-                              assign size_m_available = true
-                            endif
-                          endif
-
-                          if size_value == 'l' or size_value == 'large' or size_value == mapped_l
-                            if value.available
-                              assign size_l_available = true
-                            endif
-                          endif
-
-                          if size_value == 'xl' or size_value == 'extra large' or size_value == mapped_xl
-                            if value.available
-                              assign size_xl_available = true
-                            endif
-                          endif
-
-                          if size_s_available and size_m_available and size_l_available and size_xl_available
-                            break
-                          endif
-                        endfor
-                        break
-                      endif
-                    endfor
-
-                    if size_s_available and size_m_available and size_l_available and size_xl_available
-                      assign cur_rank = 1
-                    elsif size_s_available and size_m_available and size_l_available
-                      assign cur_rank = 2
-                    elsif size_m_available and size_l_available
-                      assign cur_rank = 3
-                    elsif size_m_available
-                      assign cur_rank = 4
-                    endif
-                  endif
-
-                  if cur_rank == target_rank
-                    assign rendered_count = rendered_count | plus: 1
-                    render 'product-block', product: prod, collection: chosen_coll, custom_aspect_ratio: chosen_aspect_ratio, prioritised_loading: true, grid: 4
-                    if rendered_count >= product_limit
-                      break
-                    endif
-                  endif
-                endif
-              endfor
-
-              if rendered_count >= product_limit
-                break
-              endif
-            endfor
-
-            # Fallback: if ranking found fewer items, fill remaining slots
-            if rendered_count < product_limit
-              for prod in chosen_coll.products
-                if prod.available
-                  assign rendered_count = rendered_count | plus: 1
-                  render 'product-block', product: prod, collection: chosen_coll, custom_aspect_ratio: chosen_aspect_ratio, prioritised_loading: true, grid: 4
-                  if rendered_count >= product_limit
-                    break
-                  endif
-                endif
-              endfor
-            endif
-          else
-            # Default store catalog fallback
-            for prod in collections['all'].products limit: product_limit
-              if prod.available
-                assign rendered_count = rendered_count | plus: 1
-                render 'product-block', product: prod, custom_aspect_ratio: chosen_aspect_ratio, prioritised_loading: true, grid: 4
-                if rendered_count >= product_limit
-                  break
-                endif
-              endif
-            endfor
-          endif
-        -%}
-      </div>
-    </div>
-
-    <!-- 4. "SEE MORE DIWALI STYLES" Button (Smooth scrolls to All Diwali styles section) -->
-    {%- if section.settings.show_see_more != false -%}
-      <div class="diwali-seemore-wrap-{{ sid }}">
-        <a href="{{ view_link }}" class="diwali-seemore-btn-{{ sid }}" id="diwali-seemore-btn-{{ sid }}">
-          <span>{{ section.settings.see_more_text | default: 'SEE MORE DIWALI STYLES' }}</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </a>
-      </div>
-    {%- endif -%}
-
   </div>
-
-  {% if settings.quickbuy_style != 'off' %}
-    <div class="quickbuy-container use-color-scheme use-color-scheme--{{ settings.quickbuy_color_scheme }}">
-      <a href="#" class="close-detail" aria-label="{{ 'accessibility.close' | t }}" tabindex="-1">{% render 'icon-close', stroke_width: 1 %}</a>
-      <div class="inner"></div>
-    </div>
-  {% endif %}
 </div>
-
-{% render 'navratri-quickview-popup' %}
-
-<script>
-  (function () {
-    function initSeeMoreScroll() {
-      var seeMoreBtn = document.getElementById('diwali-seemore-btn-{{ sid }}');
-      if (!seeMoreBtn) return;
-      seeMoreBtn.addEventListener('click', function (e) {
-        var href = this.getAttribute('href') || '#all-diwali-styles';
-        if (href.startsWith('#')) {
-          var targetEl = document.querySelector(href) || document.querySelector('.diwali-feed-title');
-          if (targetEl) {
-            e.preventDefault();
-            var headerOffset = 70;
-            var elementPosition = targetEl.getBoundingClientRect().top;
-            var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initSeeMoreScroll);
-    } else {
-      initSeeMoreScroll();
-    }
-  })();
-</script>
 
 {% schema %}
 {
   "name": "Diwali Landing Top Fold",
+  "tag": "section",
+  "class": "section-diwali-landing-top-fold",
   "settings": [
-    {
-      "type": "header",
-      "content": "Occasion Circles Rail"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_circles",
-      "label": "Show Occasion Circles",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Top Diwali Picks Grid"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Heading",
-      "default": "Top Diwali Picks"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Section Subtitle",
-      "default": "Most bought this week · tap a size to open it selected"
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection Source"
-    },
-    {
-      "type": "product_list",
-      "id": "products",
-      "label": "Or Select Specific Products (Manual Override)",
-      "limit": 12
-    },
-    {
-      "type": "checkbox",
-      "id": "show_only_available",
-      "label": "Show Only In-Stock Products",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "max_picks",
-      "min": 4,
-      "max": 16,
-      "step": 2,
-      "label": "Max Products to Display",
-      "default": 8,
-      "info": "Set to 8 to fill exactly 2 full 4-column rows on desktop (4 on mobile) with no empty slots."
-    },
-    {
-      "type": "range",
-      "id": "grid",
-      "min": 2,
-      "max": 5,
-      "step": 1,
-      "label": "Products per row (Desktop)",
-      "default": 4
-    },
-    {
-      "type": "select",
-      "id": "grid_mobile",
-      "label": "Products per row (Mobile)",
-      "options": [
-        {
-          "value": "1",
-          "label": "1 product per row"
-        },
-        {
-          "value": "2",
-          "label": "2 products per row"
-        }
-      ],
-      "default": "2"
-    },
-    {
-      "type": "header",
-      "content": "CTA Button"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_see_more",
-      "label": "Show 'SEE MORE DIWALI STYLES' button",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "see_more_text",
-      "label": "Button Label",
-      "default": "SEE MORE DIWALI STYLES"
-    },
-    {
-      "type": "url",
-      "id": "see_more_link",
-      "label": "Button Link",
-      "info": "Leave blank or #all-diwali-styles to smooth scroll down to the full collection feed"
-    },
-    {
-      "type": "header",
-      "content": "Section Spacing & Colors"
-    },
     {
       "type": "range",
       "id": "pad_top",
@@ -615,7 +222,7 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom Padding",
-      "default": 16
+      "default": 8
     },
     {
       "type": "color",
@@ -628,12 +235,6 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#141414"
-    },
-    {
-      "type": "color",
-      "id": "gold_color",
-      "label": "Accent / Gold Color",
-      "default": "#b0862f"
     }
   ],
   "blocks": [
@@ -655,7 +256,7 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Circle Image (Optional)"
+          "label": "Card Image (Optional)"
         }
       ]
     }

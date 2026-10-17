@@ -428,14 +428,15 @@
       });
   }
 
-  // Intercept '+' button clicks ONLY on Navratri sections / landing page
+  // Intercept '+' and quickview button clicks on Navratri pages
   document.addEventListener('click', function (evt) {
-    var btn = evt.target.closest('.quickbuy-toggle');
+    var btn = evt.target.closest('.quickbuy-toggle, .CP-quick-view-btn, [data-quick-view]');
     if (!btn) return;
 
-    // Verify it is specifically within a Navratri section
-    var inNavratri = btn.closest('.cp-navratri-pcarousel, .cp-navratri-kids, [data-pcarousel], .cp-navratri-main');
-    if (!inNavratri) {
+    var inScope = btn.closest('.cp-navratri-pcarousel, .cp-navratri-kids, [data-pcarousel], .cp-navratri-main, .diwali-toppicks-section, .diwali-feed-section, [id^="diwali-"]') ||
+                  document.body.classList.contains('template-suffix-diwali') ||
+                  window.location.pathname.indexOf('/diwali') !== -1;
+    if (!inScope) {
       // Do NOT intercept on default collection, list, or search pages!
       return;
     }

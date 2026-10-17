@@ -1,0 +1,815 @@
+{% comment %}
+  ==========================================================================
+  KISAH CUSTOMER STORIES ("WORN & LOVED")
+  - Recreates the 8-card social proof carousel from the prototype
+  - Responsive: Full card swipe on mobile, 3-card viewport on desktop
+  - Ultra-lightweight: zero external dependencies, native CSS & vanilla JS
+  - Fast web performance with lazy-loading responsive images
+  ==========================================================================
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section 
+  id="v5-ks-section-{{ sid }}" 
+  class="v5-ks-section"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#f5f0e8' }};
+    padding-top: {{ section.settings.mob_padding_top | default: 32 }}px;
+    padding-bottom: {{ section.settings.mob_padding_bottom | default: 28 }}px;
+  "
+>
+  <div class="v5-ks-container">
+    <div class="ks-wrapper" id="ks-wrapper-{{ sid }}" aria-labelledby="ks-title-{{ sid }}" aria-roledescription="carousel">
+      
+      <!-- Section Header -->
+      <header class="ks-intro">
+        {%- if section.settings.kicker != blank -%}
+          <p class="ks-kicker">{{ section.settings.kicker }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 id="ks-title-{{ sid }}">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="ks-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </header>
+
+      <!-- Carousel Track -->
+      <div class="ks-track" id="ks-track-{{ sid }}" tabindex="0" aria-label="Customer stories. Swipe or use arrow keys.">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- assign story_img = block.settings.image -%}
+            {%- assign story_fallback = block.settings.fallback_image_url -%}
+            {%- assign story_index = forloop.index -%}
+            {%- assign total_blocks = section.blocks.size -%}
+
+            <article 
+              class="ks-card" 
+              role="group" 
+              aria-roledescription="slide" 
+              aria-label="Story {{ story_index }} of {{ total_blocks }}" 
+              id="ks-story-{{ story_index }}-{{ sid }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="ks-photo">
+                {%- if story_img != blank -%}
+                  <img 
+                    src="{{ story_img | image_url: width: 720 }}"
+                    srcset="{{ story_img | image_url: width: 360 }} 360w,
+                            {{ story_img | image_url: width: 540 }} 540w,
+                            {{ story_img | image_url: width: 720 }} 720w"
+                    sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 360px"
+                    alt="{{ block.settings.title | escape }}" 
+                    width="360" 
+                    height="360" 
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- elsif story_fallback != blank -%}
+                  <img 
+                    src="{{ story_fallback }}" 
+                    alt="{{ block.settings.title | escape }}" 
+                    width="360" 
+                    height="360" 
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <div class="ks-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+                {%- endif -%}
+
+                <span class="ks-photo-index">
+                  {{ block.settings.badge | default: story_index | prepend: '0' | slice: -2, 2 }} / {{ total_blocks | prepend: '0' | slice: -2, 2 }}
+                </span>
+              </div>
+
+              <div class="ks-copy">
+                {%- if block.settings.label != blank -%}
+                  <p class="ks-label">{{ block.settings.label }}</p>
+                {%- endif -%}
+                {%- if block.settings.title != blank -%}
+                  <h3>{{ block.settings.title }}</h3>
+                {%- endif -%}
+                {%- if block.settings.quote != blank -%}
+                  <blockquote>
+                    <p>{{ block.settings.quote }}</p>
+                  </blockquote>
+                {%- endif -%}
+                {%- if block.settings.button_text != blank -%}
+                  <a class="ks-cta" href="{{ block.settings.button_link | default: '/collections/wedding' }}">
+                    {{ block.settings.button_text }}
+                  </a>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Controls -->
+      <div class="ks-controls">
+        <button type="button" class="ks-arrow ks-prev" id="ks-prev-{{ sid }}" aria-label="Previous customer story" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="ks-dots" id="ks-dots-{{ sid }}" aria-label="Choose customer story">
+          {%- for block in section.blocks -%}
+            <button type="button" class="ks-dot" aria-label="Go to customer story {{ forloop.index }}" aria-controls="ks-story-{{ forloop.index }}-{{ sid }}" {% if forloop.first %}aria-current="true"{% endif %}>
+              <span></span>
+            </button>
+          {%- endfor -%}
+        </div>
+        <button type="button" class="ks-arrow ks-next" id="ks-next-{{ sid }}" aria-label="Next customer story">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <p class="ks-status" id="ks-status-{{ sid }}" aria-live="polite" aria-atomic="true">
+        Story 1 of {{ section.blocks.size }} · Swipe to discover
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Base Container & Fonts */
+  .v5-ks-section,
+  #shopify-section-{{ sid }} {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    font-family: var(--base-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  }
+  .v5-ks-section .v5-ks-container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .v5-ks-section .ks-wrapper {
+    background: transparent;
+    color: #28251f;
+    padding: 10px 0 10px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+  }
+  .v5-ks-section .ks-wrapper * {
+    box-sizing: border-box;
+  }
+
+  /* Intro Header */
+  .v5-ks-section .ks-intro {
+    padding: 0 20px 20px;
+    text-align: left;
+  }
+  .v5-ks-section .ks-kicker {
+    margin: 0 0 10px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 1.6px;
+    color: #6b5e54;
+    text-transform: uppercase;
+  }
+  .v5-ks-section .ks-intro h2 {
+    font-family: var(--heading-font-family, "Bodoni Moda", "Lora", Georgia, serif) !important;
+    font-size: 34px !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: #201c1a;
+  }
+  .v5-ks-section .ks-subtitle {
+    font-family: var(--heading-font-family, Georgia, serif);
+    font-size: 16px;
+    line-height: 1.45;
+    margin: 0;
+    color: #584f47;
+  }
+
+  /* Track & Cards (Never touches screen border) */
+  .v5-ks-section .ks-track {
+    display: flex;
+    gap: 16px;
+    padding: 4px 16px 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    align-items: stretch;
+  }
+  .v5-ks-section .ks-track::-webkit-scrollbar {
+    display: none;
+  }
+  .v5-ks-section .ks-card {
+    flex: 0 0 84vw;
+    width: 84vw;
+    max-width: 340px;
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    background: #ffffff;
+    border: 1px solid rgba(40, 37, 31, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .v5-ks-section .ks-photo {
+    position: relative;
+    aspect-ratio: 1;
+    background: #e8e0d6;
+    overflow: hidden;
+  }
+  .v5-ks-section .ks-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.4s ease;
+  }
+  .v5-ks-section .ks-card:hover .ks-photo img {
+    transform: scale(1.03);
+  }
+  .v5-ks-section .ks-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eae6de;
+  }
+  .v5-ks-section .ks-photo-index {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    padding: 5px 9px;
+    color: #201c1a;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+
+  /* Card Copy & Typography */
+  .v5-ks-section .ks-copy {
+    padding: 20px 18px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #ffffff;
+  }
+  .v5-ks-section .ks-label {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10px;
+    line-height: 1.35;
+    letter-spacing: 1.4px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: #702c40;
+    text-transform: uppercase;
+  }
+  .v5-ks-section .ks-copy h3 {
+    font-family: var(--heading-font-family, "Bodoni Moda", "Lora", Georgia, serif) !important;
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    margin: 0 0 14px;
+    color: #201c1a;
+  }
+  .v5-ks-section .ks-copy blockquote {
+    position: relative;
+    margin: 0 0 20px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #3b3530;
+    flex: 1;
+    padding-left: 24px;
+    border: 0;
+  }
+  .v5-ks-section .ks-copy blockquote::before {
+    content: "“";
+    position: absolute;
+    left: 0;
+    top: -6px;
+    font-family: var(--heading-font-family, Georgia, serif);
+    font-size: 38px;
+    line-height: 1;
+    color: #702c40;
+    font-weight: 700;
+  }
+  .v5-ks-section .ks-copy blockquote p {
+    margin: 0;
+  }
+  .v5-ks-section .ks-cta {
+    display: grid;
+    place-items: center;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1.5px solid #171717;
+    background: #171717;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11.5px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: var(--btn-border-radius, 3px);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  .v5-ks-section .ks-cta:hover {
+    background: #702c40;
+    border-color: #702c40;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(112, 44, 64, 0.25);
+    transform: translateY(-2px);
+  }
+
+  /* Controls */
+  .v5-ks-section .ks-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 0;
+    gap: 8px;
+  }
+  .v5-ks-section .ks-arrow {
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid rgba(40, 37, 31, 0.22);
+    background: #ffffff;
+    flex: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 50%;
+    color: #171717;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+  .v5-ks-section .ks-arrow:hover:not(:disabled) {
+    background: #702c40;
+    color: #ffffff;
+    border-color: #702c40;
+    box-shadow: 0 4px 12px rgba(112, 44, 64, 0.3);
+    transform: scale(1.06);
+  }
+  .v5-ks-section .ks-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  .v5-ks-section .ks-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+  .v5-ks-section .ks-dot {
+    width: 22px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .v5-ks-section .ks-dot span {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c2baa8;
+    transition: all 0.2s ease;
+  }
+  .v5-ks-section .ks-dot[aria-current="true"] span {
+    background: #702c40;
+    width: 8px;
+    height: 8px;
+  }
+  .v5-ks-section .ks-status {
+    text-align: center;
+    margin: 8px 16px 0;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: #645d53;
+  }
+
+  /* Tablet Responsiveness (768px - 991px) */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .v5-ks-section .v5-ks-container {
+      padding: 0 20px;
+    }
+    .v5-ks-section .ks-track {
+      gap: 18px;
+      padding: 8px 24px 22px;
+      scroll-padding-inline: 24px;
+    }
+    .v5-ks-section .ks-card {
+      flex: 0 0 calc((100% - 18px) / 2);
+      width: calc((100% - 18px) / 2);
+      max-width: none;
+    }
+    .v5-ks-section .ks-intro {
+      padding: 0 24px 22px;
+    }
+    .v5-ks-section .ks-controls {
+      padding: 18px 24px 0;
+    }
+  }
+
+  /* Desktop Responsiveness (min-width: 992px) */
+  @media (min-width: 992px) {
+    .v5-ks-section {
+      padding-top: {{ section.settings.desk_padding_top | default: 20 }}px !important;
+      padding-bottom: {{ section.settings.desk_padding_bottom | default: 32 }}px !important;
+    }
+    .v5-ks-section .v5-ks-container {
+      padding: 0 32px;
+      max-width: 1440px;
+    }
+    .v5-ks-section .ks-wrapper {
+      padding: 10px 0 24px;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .v5-ks-section .ks-intro {
+      padding: 0 0 32px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .v5-ks-section .ks-intro h2 {
+      font-size: 48px !important;
+    }
+    .v5-ks-section .ks-subtitle {
+      font-size: 18px;
+    }
+    .v5-ks-section .ks-track {
+      gap: 24px;
+      padding: 8px 0 24px;
+      scroll-padding-inline: 0;
+    }
+    .v5-ks-section .ks-card {
+      flex: 0 0 calc((100% - 48px) / 3);
+      width: calc((100% - 48px) / 3);
+      max-width: 440px;
+      border-radius: 8px;
+    }
+    .v5-ks-section .ks-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    }
+    .v5-ks-section .ks-controls {
+      padding: 24px 0 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sid = '{{ sid }}';
+    var section = document.getElementById('ks-wrapper-' + sid);
+    if (!section) return;
+
+    var track = document.getElementById('ks-track-' + sid);
+    if (!track) return;
+
+    var cards = Array.prototype.slice.call(track.querySelectorAll('.ks-card'));
+    var dots = Array.prototype.slice.call(section.querySelectorAll('.ks-dot'));
+    var previous = document.getElementById('ks-prev-' + sid);
+    var next = document.getElementById('ks-next-' + sid);
+    var status = document.getElementById('ks-status-' + sid);
+    var active = 0;
+    var frame;
+
+    var position = function(index) {
+      var offset = window.innerWidth >= 992 ? 36 : (window.innerWidth >= 768 ? 24 : 16);
+      return track.scrollLeft + cards[index].getBoundingClientRect().left - track.getBoundingClientRect().left - offset;
+    };
+
+    function update() {
+      frame = null;
+      var curScroll = track.scrollLeft;
+      var index = 0;
+      var bestDiff = Math.abs(position(0) - curScroll);
+      for (var i = 1; i < cards.length; i++) {
+        var diff = Math.abs(position(i) - curScroll);
+        if (diff < bestDiff) {
+          bestDiff = diff;
+          index = i;
+        }
+      }
+      active = index;
+      dots.forEach(function(dot, i) {
+        if (i === active) {
+          dot.setAttribute('aria-current', 'true');
+        } else {
+          dot.removeAttribute('aria-current');
+        }
+      });
+      if (previous) previous.disabled = active === 0;
+      if (next) next.disabled = active === cards.length - 1;
+      var text = 'Story ' + (active + 1) + ' of ' + cards.length + ' · Swipe to discover';
+      if (status && status.textContent !== text) status.textContent = text;
+    }
+
+    function go(index) {
+      var target = Math.max(0, Math.min(cards.length - 1, index));
+      var isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({
+        left: position(target),
+        behavior: isReduced ? 'auto' : 'smooth'
+      });
+    }
+
+    if (previous) previous.addEventListener('click', function() { go(active - 1); });
+    if (next) next.addEventListener('click', function() { go(active + 1); });
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() { go(i); });
+    });
+
+    track.addEventListener('scroll', function() {
+      if (!frame) frame = requestAnimationFrame(update);
+    }, { passive: true });
+
+    track.addEventListener('keydown', function(event) {
+      if (event.target !== track) return;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        go(active + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+      if (event.key === 'Home' || event.key === 'End') {
+        event.preventDefault();
+        go(event.key === 'Home' ? 0 : cards.length - 1);
+      }
+    });
+
+    window.addEventListener('resize', function() {
+      track.scrollTo({ left: position(active), behavior: 'auto' });
+      update();
+    });
+
+    update();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Customer Stories",
+  "tag": "section",
+  "class": "v5-customer-stories-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Eyebrow",
+      "default": "KISAH / WORN & LOVED"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Customer Stories"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Real people. Their celebrations. Their Kisah."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background Color",
+      "default": "#f5f0e8"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Top Padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Bottom Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Customer Story",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image_url",
+          "label": "Fallback Image URL"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Index Badge",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Category Label",
+          "default": "THE WEDDING SQUAD"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Story Headline",
+          "default": "LA glam. Indian soul."
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Testimonial Quote",
+          "default": "Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad!"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Label",
+          "default": "SEE THE EDIT"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Stories",
+      "blocks": [
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-1.png",
+            "badge": "01",
+            "label": "THE WEDDING SQUAD",
+            "title": "LA glam. Indian soul.",
+            "quote": "Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad!",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-2.jpeg",
+            "badge": "02",
+            "label": "THE BAARAT",
+            "title": "The baarat, in full colour.",
+            "quote": "Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-3.jpeg",
+            "badge": "03",
+            "label": "THE FAMILY EDIT",
+            "title": "Together, in every detail.",
+            "quote": "Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-4.jpeg",
+            "badge": "04",
+            "label": "MEHENDI NIGHT",
+            "title": "A Mehendi to remember.",
+            "quote": "Ordered these outfits for my cousin’s Mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-5.jpeg",
+            "badge": "05",
+            "label": "DIWALI TOGETHER",
+            "title": "Every generation. One celebration.",
+            "quote": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-6.jpeg",
+            "badge": "06",
+            "label": "FRIENDS & FESTIVITIES",
+            "title": "Made for the baarat.",
+            "quote": "We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-7.jpeg",
+            "badge": "07",
+            "label": "THE COORDINATED EDIT",
+            "title": "A moment worth matching.",
+            "quote": "Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-8.jpeg",
+            "badge": "08",
+            "label": "RAKHI MOMENTS",
+            "title": "Rakhi, in good company.",
+            "quote": "Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
