@@ -9,826 +9,15 @@
  */
 {
   "sections": {
-    "banner_with_text_tEQYry": {
-      "type": "banner-with-text",
-      "blocks": {
-        "slide_banner_hXrKEp": {
-          "type": "slide_banner",
-          "settings": {
-            "desk-img": "shopify://shop_images/Artboard_2-min.jpg",
-            "mob-img": "shopify://shop_images/Artboard_1-min.jpg",
-            "link": "shopify://collections/cocktail",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_farh3r": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Desktop_2000X989_344647c8-785f-42db-ad2f-1ba658d785c2.png",
-            "mob-img": "shopify://shop_images/Mobile___1200x1600_9a6724cf-d678-4a8f-9487-7368f21b1998.png",
-            "link": "https://kisah.in/collections/eid-signature?filter.v.availability=1",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_YaiQcM": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Dulhe_ki_toli_mobile-min.jpg",
-            "mob-img": "shopify://shop_images/Dulhe_ki_toli_desktop-min.jpg",
-            "link": "https://kisah.in/collections/wedding",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_YhtMnP": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/2025-06-16-D2C-WEB-TDE-NL-V1.png",
-            "mob-img": "shopify://shop_images/2025-06-16-D2C-M-TDE-NL-V1.png",
-            "link": "https://kisah.in/collections/denim-fusion-kurta",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_dPkbE6": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/wedding_font_page_4-min.jpg",
-            "mob-img": "shopify://shop_images/wedding_font_page_mobile_4-min.jpg",
-            "link": "https://kisah.in/collections/wedding-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_dpn4Yg": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Groosman_D-min.jpg",
-            "mob-img": "shopify://shop_images/Groosman_M.jpg",
-            "link": "https://kisah.in/collections/coordinate-outfits-for-groomsmen",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_aPRDUU": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/rakhi_desk.png",
-            "mob-img": "shopify://shop_images/rakhi_mob.png",
-            "link": "https://kisah.in/collections/rakhi-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_WjTi4L": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Desktop_version.jpg",
-            "mob-img": "shopify://shop_images/Mobile_version.jpg",
-            "link": "shopify://collections/diwali-party",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_MCVgm4": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Desktop_Version_1.jpg",
-            "mob-img": "shopify://shop_images/Mobile_Version_1_6d48f4a8-3e90-4c6c-b9ea-bc8fd3dd27b0.jpg",
-            "link": "shopify://collections/diwali-puja",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_ePcmAB": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Website_banner_Desktop.jpg",
-            "mob-img": "shopify://shop_images/Website_banner_Mobile.jpg",
-            "link": "https://kisah.in/collections/wedding",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_BnXnxh": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Media_1.jpg",
-            "mob-img": "shopify://shop_images/Media.jpg",
-            "link": "shopify://collections/new-arrivals",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_JBkP3t": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/DESKTOP.png",
-            "mob-img": "shopify://shop_images/Diwali_Banner_Mobile.jpg",
-            "link": "shopify://collections/shor-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_Pmn4bz": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/HUNGAMA_2.png",
-            "mob-img": "shopify://shop_images/HUNGAMA_MOBILE_VERSION_2.png",
-            "link": "shopify://collections/hungama-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_PPYFkx": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/New_arrivals_desktop_banner.png",
-            "mob-img": "shopify://shop_images/New_Arrivals_mobile_banner.png",
-            "link": "https://kisah.in/collections/new-arrivals",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_88B8Nt": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/NAVRATRI_COLLECTION.png",
-            "mob-img": "shopify://shop_images/NAVRATRI_COLLECTION_1.png",
-            "link": "shopify://pages/navratri-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_YKkzfy": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/FESTIVE_COLLECTION.png",
-            "mob-img": "shopify://shop_images/FESTIVE.png",
-            "link": "shopify://collections/festive-collection",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_dnFYjB": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/01_HM_BNR_-_01_-_Navratri-Banner-DSKTP-4.png",
-            "mob-img": "shopify://shop_images/01_HM_BNR_-_01_-_Navratri-Banner-MBL-2.png",
-            "link": "shopify://collections/navratri-kurta-for-men",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_JGH4e8": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Image_671449c3-05c9-4cda-9cbc-80aad27c1e3e.jpg",
-            "mob-img": "shopify://shop_images/Image_1_2b6b7652-db29-4792-ac36-e6e4bdd8aaff.jpg",
-            "link": "shopify://collections/fake-wedding",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_E7DfFU": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/everday_desk.png",
-            "mob-img": "shopify://shop_images/everyday_mob.png",
-            "link": "https://kisah.in/collections/everyday-wear",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
-        "slide_banner_rfE3jF": {
-          "type": "slide_banner",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/denim_desk.png",
-            "mob-img": "shopify://shop_images/denim_mob.png",
-            "link": "https://kisah.in/collections/denim-fusion-kurta",
-            "button-name": "",
-            "button-link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_banner_hXrKEp",
-        "slide_banner_farh3r",
-        "slide_banner_YaiQcM",
-        "slide_banner_YhtMnP",
-        "slide_banner_dPkbE6",
-        "slide_banner_dpn4Yg",
-        "slide_banner_aPRDUU",
-        "slide_banner_WjTi4L",
-        "slide_banner_MCVgm4",
-        "slide_banner_ePcmAB",
-        "slide_banner_BnXnxh",
-        "slide_banner_JBkP3t",
-        "slide_banner_Pmn4bz",
-        "slide_banner_PPYFkx",
-        "slide_banner_88B8Nt",
-        "slide_banner_YKkzfy",
-        "slide_banner_dnFYjB",
-        "slide_banner_JGH4e8",
-        "slide_banner_E7DfFU",
-        "slide_banner_rfE3jF"
-      ],
-      "disabled": true,
-      "settings": {
-        "gift-icon": "shopify://shop_images/gift-box-with-a-ribbon_1.png",
-        "whats-icon": "shopify://shop_images/whatsapp_1.png",
-        "whats-app-link": "",
-        "desk-padding-top": 0,
-        "desk-padding-bottom": 0,
-        "mob-padding-top": 0,
-        "mob-padding-bottom": 0,
-        "show_dots": true
-      }
-    },
-    "custom_category_zpkXwM": {
-      "type": "custom-category",
-      "blocks": {
-        "category_item_KJaQed": {
-          "type": "category_item",
-          "settings": {
-            "collection": "kurta-sets",
-            "collection_title": "",
-            "image": "shopify://shop_images/KURTA_SET_e8356b34-20fe-4703-ae4c-33b99eec1baa.png"
-          }
-        },
-        "category_item_DbLEC4": {
-          "type": "category_item",
-          "settings": {
-            "collection": "indowestern-check",
-            "collection_title": "",
-            "image": "shopify://shop_images/INDO-WESTERN_a2f67941-709c-4130-af39-4bbe325b7ffe.png"
-          }
-        },
-        "category_item_mUqLcw": {
-          "type": "category_item",
-          "settings": {
-            "collection": "kurta-jacket-set",
-            "collection_title": "",
-            "image": "shopify://shop_images/JACKET_SET_a9779e66-b378-46c3-ba10-aa034868c470.png"
-          }
-        },
-        "category_item_kAT4nP": {
-          "type": "category_item",
-          "settings": {
-            "collection": "kurta",
-            "collection_title": "",
-            "image": "shopify://shop_images/KURTA_3de71f28-b544-41ac-ac69-6af7e0dd0c18.png"
-          }
-        },
-        "category_item_Rqcegi": {
-          "type": "category_item",
-          "settings": {
-            "collection": "nehru-jackets",
-            "collection_title": "",
-            "image": "shopify://shop_images/JACKET_9389ff1b-ac5f-4a73-ab15-df20250d7fb0.png"
-          }
-        },
-        "category_item_X4CxMm": {
-          "type": "category_item",
-          "settings": {
-            "collection": "jodhpuri-bandhgala",
-            "collection_title": "",
-            "image": "shopify://shop_images/JODHPURI_BANDHGALA_b9f34bae-fad0-42d2-9d2e-a84406606248.png"
-          }
-        },
-        "category_item_9dAazc": {
-          "type": "category_item",
-          "settings": {
-            "collection": "sherwani-achkans",
-            "collection_title": "",
-            "image": "shopify://shop_images/SHERWANI_ACHKANS_b51602d2-baf4-4896-9759-82d55d2744bc.png"
-          }
-        },
-        "category_item_g7EcMC": {
-          "type": "category_item",
-          "settings": {
-            "collection": "short-kurta",
-            "collection_title": "",
-            "image": "shopify://shop_images/SHORT_KURTA_66eb902c-6882-40df-9bd4-fcbaabe1f637.png"
-          }
-        },
-        "category_item_4Bwhmk": {
-          "type": "category_item",
-          "settings": {
-            "collection": "plus",
-            "collection_title": "",
-            "image": "shopify://shop_images/PLUS_SIZE_d314ce53-4155-4cf9-819f-6ad68fd01a03.png"
-          }
-        },
-        "category_item_qyrRYg": {
-          "type": "category_item",
-          "settings": {
-            "collection": "kids",
-            "collection_title": "",
-            "image": "shopify://shop_images/KIDS_bbd52ea7-c167-4acb-9b7c-c1c6138fec49.png"
-          }
-        },
-        "category_item_WjY83H": {
-          "type": "category_item",
-          "settings": {
-            "collection": "cocktail",
-            "collection_title": "",
-            "image": "shopify://shop_images/AFTER_PARTY_4a82362f-b582-4a79-aa8a-d6c6a4f0ae07.png"
-          }
-        },
-        "category_item_gHMrPJ": {
-          "type": "category_item",
-          "settings": {
-            "collection": "all",
-            "collection_title": "",
-            "image": "shopify://shop_images/SHOP_ALL_ceb75cf9-09e7-42ea-a7b4-679bbd457abf.png"
-          }
-        }
-      },
-      "block_order": [
-        "category_item_KJaQed",
-        "category_item_DbLEC4",
-        "category_item_mUqLcw",
-        "category_item_kAT4nP",
-        "category_item_Rqcegi",
-        "category_item_X4CxMm",
-        "category_item_9dAazc",
-        "category_item_g7EcMC",
-        "category_item_4Bwhmk",
-        "category_item_qyrRYg",
-        "category_item_WjY83H",
-        "category_item_gHMrPJ"
-      ],
-      "disabled": true,
-      "name": "custom Category",
-      "settings": {
-        "heading": "Shop by Category",
-        "subheading": "",
-        "show-title": false,
-        "background_color": "#ffffff",
-        "desk-padding-top": 16,
-        "desk-padding-bottom": 16,
-        "mob-padding-top": 16,
-        "mob-padding-bottom": 0
-      }
-    },
-    "trending_banner_fXk7BD": {
-      "type": "trending-banner",
-      "blocks": {
-        "banner_image_Qmwtw8": {
-          "type": "banner_image",
-          "settings": {
-            "desk-img": "shopify://shop_images/kisha_desk.png",
-            "mob-img": "shopify://shop_images/kisha_desk.png",
-            "link": "https://kisah.in/pages/wedding"
-          }
-        },
-        "banner_image_HbA9hQ": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Classic.jpg",
-            "mob-img": "shopify://shop_images/Classic_808fccc4-1d32-4568-bd42-4ac6d497e679.jpg",
-            "link": "https://kisah.in/collections/classic"
-          }
-        },
-        "banner_image_Nt6xyG": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Floral_e0fbb00d-a30f-42bd-9641-1a45f7f713fc.jpg",
-            "mob-img": "shopify://shop_images/Floral_e0ca31e9-4b45-4b9b-9542-c4d26621c44d.jpg",
-            "link": "https://kisah.in/collections/floral"
-          }
-        },
-        "banner_image_kTwWkj": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Haldi-min.jpg",
-            "mob-img": "shopify://shop_images/Haldi_mobile_-min.jpg",
-            "link": "https://kisah.in/collections/haldi"
-          }
-        },
-        "banner_image_hdad9B": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Cocktail-min.jpg",
-            "mob-img": "shopify://shop_images/Cocktail_mobile_-min.jpg",
-            "link": "https://kisah.in/collections/cocktail"
-          }
-        },
-        "banner_image_MNMqTR": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Baarat_ansul-min.jpg",
-            "mob-img": "shopify://shop_images/Baarat_ansul_mobile_-min.jpg",
-            "link": "https://kisah.in/collections/baarat"
-          }
-        },
-        "banner_image_pMTM9G": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Sangeet-min.jpg",
-            "mob-img": "shopify://shop_images/Sangeet_mobile_-min.jpg",
-            "link": "https://kisah.in/collections/sangeet"
-          }
-        },
-        "banner_image_UzerBX": {
-          "type": "banner_image",
-          "disabled": true,
-          "settings": {
-            "desk-img": "shopify://shop_images/Web_1920_185-min.jpg",
-            "mob-img": "shopify://shop_images/Web_1920_186-min.jpg",
-            "link": "https://kisah.in/collections/wedding-attendees"
-          }
-        }
-      },
-      "block_order": [
-        "banner_image_Qmwtw8",
-        "banner_image_HbA9hQ",
-        "banner_image_Nt6xyG",
-        "banner_image_kTwWkj",
-        "banner_image_hdad9B",
-        "banner_image_MNMqTR",
-        "banner_image_pMTM9G",
-        "banner_image_UzerBX"
-      ],
-      "disabled": true,
-      "settings": {
-        "head": "",
-        "bg-color": "",
-        "head-color": "#201747",
-        "desk-padding-top": 0,
-        "desk-padding-bottom": 18,
-        "mob-padding-top": 0,
-        "mob-padding-bottom": 0
-      }
-    },
-    "custom_heading_logo_cbUAdy": {
-      "type": "custom-heading-logo",
-      "disabled": true,
-      "name": "custom logo heading",
-      "settings": {
-        "logo-img": "shopify://shop_images/WhatsApp_Image_2026-01-05_at_6.37.10_PM-removebg-preview.png",
-        "desktop-width": 200,
-        "mob-width": 160,
-        "vertical_alignment": "center",
-        "desk-padding-top": 0,
-        "desk-padding-bottom": 10,
-        "mob-padding-top": 12,
-        "mob-padding-bottom": 10
-      }
-    },
-    "tab_collection_CBxDcF": {
-      "type": "Tab-collection",
-      "blocks": {
-        "collection_APVwWa": {
-          "type": "collection",
-          "settings": {
-            "categories": "Cocktail",
-            "collection": "cocktail"
-          }
-        },
-        "collection_grxQUJ": {
-          "type": "collection",
-          "settings": {
-            "categories": "New Arrivals",
-            "collection": "new-arrivals"
-          }
-        },
-        "collection_KkCxec": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "categories": "Bestsellers",
-            "collection": "best-sellersss"
-          }
-        }
-      },
-      "block_order": [
-        "collection_APVwWa",
-        "collection_grxQUJ",
-        "collection_KkCxec"
-      ],
-      "disabled": true,
-      "settings": {
-        "show": false,
-        "show-arrows": true,
-        "show-dots": true,
-        "head": "",
-        "sub-head": "",
-        "btn-name": "Explore now",
-        "bg-color": "",
-        "head-color": "",
-        "grid": 15,
-        "desk-padding-top": 9,
-        "desk-padding-bottom": 12,
-        "mob-padding-top": 0,
-        "mob-padding-bottom": 16
-      }
-    },
-    "testimonials_REBkVr": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_NNhLwP": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "This piece is showStopper. Fabric is super.size is perfect.its fits perfectly. i got so many compliments from my friends and random people Thanks kisha, for Making the festival season special",
-            "author": "Heaven",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_2.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_fHwdAg": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "Looks good",
-            "author": "Syed Rahman",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_3.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_gyV68m": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "Superb product... Quality of fabric is excellent and its fell very comfortable while wearing.Totally value for Money product",
-            "author": "Abishek singh",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_4.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_WVPb4J": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "It's realy look's great, also fabric is good",
-            "author": "Raghul Yadav",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_5.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_ber4PJ": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "perfect for Barati",
-            "author": "Priyanka yadav",
-            "author-place": "Author's place",
-            "image": "shopify://shop_images/chart_8.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_6ehnCB": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "Feel good , comfortable clothes",
-            "author": "Aemi",
-            "author-place": "Author's place",
-            "image": "shopify://shop_images/chart_9.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_pFwmwp": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "The unique desgin and premium fabric makes it standout. while a bit pricey the quality and style are worth it if your are looking to wear to kurta on cocktail party the go for it",
-            "author": "Aakash Sahani",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_10.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_tF8aHG": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "Really loved the look and fitting",
-            "author": "Anupam",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_11.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_DRVaGH": {
-          "type": "testimonial",
-          "disabled": true,
-          "settings": {
-            "star_rating": 5,
-            "testimonial": "Awesome piece. its true to size look really stylish perfect for indian weddings",
-            "author": "Swayanka shanu",
-            "author-place": "",
-            "image": "shopify://shop_images/chart_12.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_fWTDky": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2025-10-21_at_16.57.26_8eb69bd4.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_Bi7J4z": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Ordered these outfits for my cousin's mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/1360231138384369_1.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_iBrXtN": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad! \"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/Screenshot_2025-09-06_151354.png",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_xmaWeY": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2025-09-01_at_1.47.11_PM_2.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_KHGjYt": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/1259850952293456_1.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_JJKjRr": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2025-09-01_at_1.47.13_PM.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_fAPddr": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Picked these sherwanis for the wedding day and they were a hit. The fit was right, very comfortable throughout, and we received many compliments.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/1251107790025416_1.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_Aei8Yf": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/WhatsApp_Image_2025-09-01_at_1.47.10_PM.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        },
-        "testimonial_XchDhC": {
-          "type": "testimonial",
-          "settings": {
-            "star_rating": 0,
-            "testimonial": "\"Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.\"",
-            "author": "",
-            "author-place": "",
-            "image": "shopify://shop_images/615174421637386_1.jpg",
-            "image_caption": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_NNhLwP",
-        "testimonial_fHwdAg",
-        "testimonial_gyV68m",
-        "testimonial_WVPb4J",
-        "testimonial_ber4PJ",
-        "testimonial_6ehnCB",
-        "testimonial_pFwmwp",
-        "testimonial_tF8aHG",
-        "testimonial_DRVaGH",
-        "testimonial_fWTDky",
-        "testimonial_Bi7J4z",
-        "testimonial_iBrXtN",
-        "testimonial_xmaWeY",
-        "testimonial_KHGjYt",
-        "testimonial_JJKjRr",
-        "testimonial_fAPddr",
-        "testimonial_Aei8Yf",
-        "testimonial_XchDhC"
-      ],
-      "disabled": true,
-      "settings": {
-        "head": "Customer Stories",
-        "head-color": "",
-        "title": "Customer reviews",
-        "layout": "image-left",
-        "text_caps": false,
-        "quote_text_size": 30,
-        "quote_text_size_mobile": 20,
-        "image_shape": "natural",
-        "color_scheme": "default",
-        "autoplay": true,
-        "autoplay_speed": 7,
-        "desk-padding-top": 0,
-        "desk-padding-bottom": 36,
-        "mob-padding-top": 0,
-        "mob-padding-bottom": 36
-      }
-    },
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Desktop_96178155-dd9b-484b-b832-15d481597683.webp",
-            "mob-img": "shopify://shop_images/Mobile_33ae6019-97f0-4396-b01c-823988429571.webp",
-            "link": "shopify://pages/navratri-ethnic-wear-for-men",
+            "desk-img": "shopify://shop_images/iconic_diwali_desktop_final.png",
+            "mob-img": "shopify://shop_images/iconic_diwali_mobile_final.png",
+            "link": "shopify://pages/diwali",
             "button-name": "",
             "button-link": ""
           }
@@ -836,15 +25,16 @@
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/desktop_hp.webp",
-            "mob-img": "shopify://shop_images/mobile_hp.webp",
-            "link": "shopify://collections/navratri-kurta-for-men",
+            "desk-img": "shopify://shop_images/Dhoom_Squad_Desktop.jpg",
+            "mob-img": "shopify://shop_images/Dhoom_Squad_Mobile.jpg",
+            "link": "shopify://collections/wedding",
             "button-name": "",
             "button-link": ""
           }
         },
         "slide_banner_FiWGha": {
           "type": "slide_banner",
+          "disabled": true,
           "settings": {
             "desk-img": "shopify://shop_images/Desktop_d854eb50-2ba0-4a2d-bb8d-ec2d0d0a49aa.webp",
             "mob-img": "shopify://shop_images/Mobile_4fe41e73-41ae-465e-9d62-dc08b4a48dc7.webp",
@@ -855,6 +45,7 @@
         },
         "slide_banner_DhgQ4b": {
           "type": "slide_banner",
+          "disabled": true,
           "settings": {
             "desk-img": "shopify://shop_images/Desktop_63fc8462-764d-49b9-8d88-49037dc3f64b.webp",
             "mob-img": "shopify://shop_images/Mobile_78468dc5-05e7-4a18-9efd-c952fda7cae1.webp",
@@ -889,6 +80,612 @@
         "mob-padding-top": 0,
         "mob-padding-bottom": 0,
         "show_dots": true
+      }
+    },
+    "v5_shop_by_category_KpXJQD": {
+      "type": "v5-shop-by-category",
+      "blocks": {
+        "item_wPNmDU": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Kurta_Sets_0aa89bd8-f804-465f-8bcf-a3289a88617d.jpg",
+            "title": "Kurta Sets",
+            "link": "shopify://collections/kurta-sets"
+          }
+        },
+        "item_gTWNJW": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Kurta_d85ee3ac-96e7-49c8-9a54-a398e1eeb404.jpg",
+            "title": "Kurtas",
+            "link": "shopify://collections/kurta"
+          }
+        },
+        "item_PFRBzr": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Nehru_Jackets_7e2248f0-e585-4496-8ca6-3ae848b3fcb0.jpg",
+            "title": "Nehru Jackets",
+            "link": "shopify://collections/nehru-jackets"
+          }
+        },
+        "item_4ygcpV": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Indo_Western.jpg",
+            "title": "Indo-Western",
+            "link": "shopify://collections/3-piece-indo-western-dress-for-men"
+          }
+        },
+        "item_FTkVyb": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Sherwani_549758af-e241-440a-882a-5cf15a376db3.jpg",
+            "title": "Sherwanis",
+            "link": "shopify://collections/sherwani-achkans"
+          }
+        },
+        "item_B7FqMx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Bandhgala.jpg",
+            "title": "Bandhgala",
+            "link": "shopify://collections/bandhgala-set"
+          }
+        }
+      },
+      "block_order": [
+        "item_wPNmDU",
+        "item_gTWNJW",
+        "item_PFRBzr",
+        "item_4ygcpV",
+        "item_FTkVyb",
+        "item_B7FqMx"
+      ],
+      "name": "Shop by Category",
+      "settings": {
+        "heading": "Shop by Category",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 24,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 14,
+        "mob_padding_bottom": 0
+      }
+    },
+    "v5_shop_by_occasion_YkVBXW": {
+      "type": "v5-shop-by-occasion",
+      "blocks": {
+        "item_4j3iFY": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_1.png",
+            "title": "Wedding",
+            "link": "shopify://collections/wedding"
+          }
+        },
+        "item_WxJUy4": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_2_7b4c27d0-6c1d-4210-9764-8058ba291cce.png",
+            "title": "Sangeet",
+            "link": "shopify://collections/sangeet"
+          }
+        },
+        "item_XKe4mi": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_3_b70aea28-3274-4fb9-8b1f-ebc03811fb8b.png",
+            "title": "Mehendi",
+            "link": "shopify://collections/mehendi"
+          }
+        },
+        "item_UtLmyX": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_5.png",
+            "title": "Haldi",
+            "link": "shopify://collections/haldi-1"
+          }
+        },
+        "item_pJdh9h": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_4.png",
+            "title": "Reception",
+            "link": "shopify://collections/reception"
+          }
+        },
+        "item_EeAn3b": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/image_6.png",
+            "title": "House Celebration",
+            "link": "shopify://collections/house-celebration"
+          }
+        }
+      },
+      "block_order": [
+        "item_4j3iFY",
+        "item_WxJUy4",
+        "item_XKe4mi",
+        "item_UtLmyX",
+        "item_pJdh9h",
+        "item_EeAn3b"
+      ],
+      "name": "Shop by Occasion",
+      "settings": {
+        "heading": "Shop by Occasion",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 24,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 12,
+        "mob_padding_bottom": 0
+      }
+    },
+    "v5_shop_by_colour_y7aKUB": {
+      "type": "v5-shop-by-colour",
+      "blocks": {
+        "item_e4Ywxm": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Festive_White_Kurta_Portrait.png",
+            "title": "White",
+            "swatch_color": "#f4f0ea",
+            "link": "shopify://collections/white-ivories"
+          }
+        },
+        "item_jQxVtr": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Pastels_ae0e7cd2-a5f9-4fd1-aa6f-11c6a4514735.jpg",
+            "title": "Pastels",
+            "swatch_color": "#d3dcd6",
+            "link": "shopify://collections/pastel"
+          }
+        },
+        "item_63DGcX": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Gilded_Bokeh_Black_Formalwear_Portrait.png",
+            "title": "Black",
+            "swatch_color": "#1c1c1e",
+            "link": "shopify://collections/midnight-monochromes"
+          }
+        },
+        "item_brNQXA": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Golden_Kurta_in_Festive_Glow.png",
+            "title": "Yellow",
+            "swatch_color": "#e5a835",
+            "link": "shopify://collections/marigold-edit"
+          }
+        },
+        "item_XHmgAm": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Festive_Green_Kurta_Portrait.png",
+            "title": "Green",
+            "swatch_color": "#4a6050",
+            "link": "shopify://collections/earth-green"
+          }
+        },
+        "item_4dERPx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Pink_Sherwani_in_Golden_Bokeh.png",
+            "title": "Pink",
+            "swatch_color": "#d99fa5",
+            "link": "shopify://collections/blush-rose"
+          }
+        }
+      },
+      "block_order": [
+        "item_e4Ywxm",
+        "item_jQxVtr",
+        "item_63DGcX",
+        "item_brNQXA",
+        "item_XHmgAm",
+        "item_4dERPx"
+      ],
+      "name": "Shop by Colour",
+      "settings": {
+        "heading": "Shop by Colour",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 24,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 12,
+        "mob_padding_bottom": 0
+      }
+    },
+    "v5_shop_by_style_aj6Hpd": {
+      "type": "v5-shop-by-style",
+      "blocks": {
+        "item_6Mi83d": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Mirror_Folk.jpg",
+            "title": "Mirror & Folk",
+            "link": "shopify://collections/mirror-folk"
+          }
+        },
+        "item_Tk9Uqd": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/The_Printed_Man.jpg",
+            "title": "The Printed Man",
+            "link": "shopify://collections/the-printed-man"
+          }
+        },
+        "item_B3bBrN": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Floral_048db715-e204-4cfd-a7e9-a00ab9ccca4b.jpg",
+            "title": "Floral",
+            "link": "shopify://collections/floral"
+          }
+        },
+        "item_hinFKi": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Minimal_Edit.jpg",
+            "title": "Minimal Edit",
+            "link": "shopify://collections/minimal-edit"
+          }
+        },
+        "item_tn8Lka": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Ombre_Gradient.jpg",
+            "title": "Ombre & Gradient",
+            "link": "shopify://collections/ombre-gradient"
+          }
+        },
+        "item_GyKn6U": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Embroidery.jpg",
+            "title": "Embroidery",
+            "link": "shopify://collections/embroidery"
+          }
+        }
+      },
+      "block_order": [
+        "item_6Mi83d",
+        "item_Tk9Uqd",
+        "item_B3bBrN",
+        "item_hinFKi",
+        "item_tn8Lka",
+        "item_GyKn6U"
+      ],
+      "name": "Shop by Style",
+      "settings": {
+        "heading": "Shop by Style",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 24,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 12,
+        "mob_padding_bottom": 0
+      }
+    },
+    "v5_kisah_journal_iGJQq9": {
+      "type": "v5-kisah-journal",
+      "blocks": {
+        "chapter_BgWh7H": {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Puja & Ritual",
+            "is_dark": false,
+            "bg_color": "#eee4d9",
+            "text_color": "#2b2222",
+            "headline": "Same rituals.\nYour signature.",
+            "story": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories.",
+            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
+            "cta_text": "Explore Puja & Rituals",
+            "cta_link": "shopify://collections/diwali-puja",
+            "images_count": "auto",
+            "look1_img": "shopify://shop_images/KA-1064-01_bf8122c1-6867-4732-b294-d4c525b77f97.webp",
+            "look1_fallback": "",
+            "look1_name": "Floral expression",
+            "look1_link": "shopify://products/men-multi-printed-floral-only-kurta-ka-1064",
+            "look2_img": "shopify://shop_images/file_1746b5fa-3eb1-47b2-8724-277fd4ff86a0.webp",
+            "look2_fallback": "",
+            "look2_name": "Wine & palms",
+            "look2_link": "/products/wine-kurta-with-palm-embroidery-ka-1187",
+            "look3_img": "shopify://shop_images/ka-1328-1.webp",
+            "look3_fallback": "",
+            "look3_name": "Olive texture",
+            "look3_link": "shopify://products/kisah-mens-mid-kurta-wide-leg-trouser-set-ka-1328-r103",
+            "look4_fallback": "",
+            "look4_name": "",
+            "look4_link": ""
+          }
+        },
+        "chapter_6ynrJU": {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Art & Print",
+            "is_dark": false,
+            "bg_color": "#e5eadf",
+            "text_color": "#203025",
+            "headline": "Wear a little\nimagination.",
+            "story": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss.",
+            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
+            "cta_text": "Explore Art & Floral designs",
+            "cta_link": "/collections/the-printed-man",
+            "images_count": "auto",
+            "look1_img": "shopify://shop_images/KA-1082-T306-01.webp",
+            "look1_fallback": "",
+            "look1_name": "Navy floral kurta set",
+            "look1_link": "shopify://products/ka-1082-t306-men-blue-printed-floral-kurta-trouser-set",
+            "look2_img": "shopify://shop_images/file_f9d4ad3a-5862-43fd-b8a1-b39a55852b05.webp",
+            "look2_fallback": "",
+            "look2_name": "Black floral jacket set",
+            "look2_link": "shopify://products/black-cotton-silk-floral-jacket-mid-kurta-trouser-set-ka-0863-5706-t303",
+            "look3_img": "shopify://shop_images/Kisah8599.webp",
+            "look3_fallback": "",
+            "look3_name": "Blue floral Nehru set",
+            "look3_link": "shopify://products/kisah-men-green-woven-design-floral-kurta-jacket-trouser-set-ka-0941-5533-t306",
+            "look4_fallback": "",
+            "look4_name": "",
+            "look4_link": ""
+          }
+        },
+        "chapter_i9xLE4": {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "Modern Form",
+            "is_dark": false,
+            "bg_color": "#ece6e1",
+            "text_color": "#28201a",
+            "headline": "A modern\npoint of view.",
+            "story": "A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist.",
+            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
+            "cta_text": "Explore Modern Silhouettes",
+            "cta_link": "shopify://collections/fusion-wear",
+            "images_count": "auto",
+            "look1_img": "shopify://shop_images/ka-1303-1.webp",
+            "look1_fallback": "",
+            "look1_name": "Multicolour embroidered zip kurta",
+            "look1_link": "shopify://products/kisah-mens-zip-kurta-ka-1303",
+            "look2_img": "shopify://shop_images/KA-5653-01.webp",
+            "look2_fallback": "",
+            "look2_name": "Black embroidered bomber",
+            "look2_link": "shopify://products/ka-5653-men-black-embroidered-bomber-jacket-with-thread-work",
+            "look3_fallback": "",
+            "look3_name": "",
+            "look3_link": "",
+            "look4_fallback": "",
+            "look4_name": "",
+            "look4_link": ""
+          }
+        },
+        "chapter_YgxFX3": {
+          "type": "chapter",
+          "settings": {
+            "tab_title": "After Dark",
+            "is_dark": true,
+            "bg_color": "#191522",
+            "text_color": "#ffffff",
+            "headline": "The lights are on.\nSo are you.",
+            "story": "Kisah’s modern take on zardozi & crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings & after-parties.",
+            "expression": "The new expressionA sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.",
+            "cta_text": "Explore After Dark Look",
+            "cta_link": "shopify://collections/cocktail",
+            "images_count": "auto",
+            "look1_img": "shopify://shop_images/KA-5654-01.webp",
+            "look1_fallback": "",
+            "look1_name": "Wine sequinned bomber",
+            "look1_link": "shopify://products/ka-5654-men-wine-embellished-bomber-jacket-with-sequence",
+            "look2_img": "shopify://shop_images/file_77a9de6e-8df3-42e1-b2e4-715d51d25e70.webp",
+            "look2_fallback": "",
+            "look2_name": "Peach ombré zipped kurta",
+            "look2_link": "shopify://products/peach-ombre-cotton-silk-zipped-kurta-ka-1247",
+            "look3_fallback": "",
+            "look3_name": "",
+            "look3_link": "",
+            "look4_fallback": "",
+            "look4_name": "",
+            "look4_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "chapter_BgWh7H",
+        "chapter_6ynrJU",
+        "chapter_i9xLE4",
+        "chapter_YgxFX3"
+      ],
+      "name": "Festive Style Story",
+      "settings": {
+        "kicker": "THE KISAH JOURNAL / THE FESTIVE STYLE STORY",
+        "title": "Men’s Diwali fashion.",
+        "subtitle": "One festival. Many occasions. Many Expressions",
+        "link_text": "READ: KISAH ON FASHION MAXIMALISM →",
+        "link_url": "",
+        "bg_color": "#f5f0e8",
+        "desk_padding_top": 36,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 28,
+        "mob_padding_bottom": 0,
+        "tab_1_title": "Puja & Ritual",
+        "ch1_bg": "#eee4d9",
+        "ch1_text": "#2b2222",
+        "ch1_headline": "Same rituals.\nYour signature.",
+        "ch1_story": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories.",
+        "ch1_expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
+        "ch1_cta_text": "Explore Puja & Rituals",
+        "ch1_cta_link": "",
+        "ch1_look1_name": "Floral expression",
+        "ch1_look1_link": "",
+        "ch1_look2_name": "Wine & palms",
+        "ch1_look2_link": "",
+        "ch1_look3_name": "Olive texture",
+        "ch1_look3_link": "",
+        "tab_2_title": "Art & Print",
+        "ch2_bg": "#e5eadf",
+        "ch2_text": "#203025",
+        "ch2_headline": "Wear a little\nimagination.",
+        "ch2_story": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss.",
+        "ch2_cta_text": "Explore Art & Floral designs",
+        "ch2_cta_link": "",
+        "ch2_look1_name": "Navy floral kurta set",
+        "ch2_look1_link": "",
+        "ch2_look2_name": "Black floral jacket set",
+        "ch2_look2_link": "",
+        "ch2_look3_name": "Blue floral Nehru set",
+        "ch2_look3_link": "",
+        "tab_3_title": "Modern Form",
+        "ch3_bg": "#e3e7ea",
+        "ch3_text": "#1f2d38",
+        "ch3_headline": "A modern\npoint of view.",
+        "ch3_story": "A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist.",
+        "ch3_cta_text": "Explore Modern Silhouette",
+        "ch3_cta_link": "",
+        "ch3_look1_name": "Multicolour embroidered zip kurta",
+        "ch3_look1_link": "",
+        "ch3_look2_name": "Black embroidered bomber",
+        "ch3_look2_link": "",
+        "ch3_look3_name": "",
+        "ch3_look3_link": "",
+        "tab_4_title": "After Dark",
+        "ch4_bg": "#191522",
+        "ch4_text": "#ffffff",
+        "ch4_headline": "The lights are on.\nSo are you.",
+        "ch4_story": "Kisah’s modern take on zardozi & crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings & after-parties.",
+        "ch4_expression": "A sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.",
+        "ch4_cta_text": "Explore After Dark Look",
+        "ch4_cta_link": "",
+        "ch4_look1_name": "Wine sequinned bomber",
+        "ch4_look1_link": "",
+        "ch4_look2_name": "Peach ombré zipped kurta",
+        "ch4_look2_link": "",
+        "ch4_look3_name": "",
+        "ch4_look3_link": "",
+        "ch4_look4_name": "",
+        "ch4_look4_link": ""
+      }
+    },
+    "v5_customer_stories_WLwrT3": {
+      "type": "v5-customer-stories",
+      "blocks": {
+        "story_3zmDgD": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-1.png",
+            "badge": "01",
+            "label": "THE WEDDING SQUAD",
+            "title": "LA glam. Indian soul.",
+            "quote": "Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad!",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_VzUfRx": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-2.jpeg",
+            "badge": "02",
+            "label": "THE BAARAT",
+            "title": "The baarat, in full colour.",
+            "quote": "Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_3rQzAU": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-3.jpeg",
+            "badge": "03",
+            "label": "THE FAMILY EDIT",
+            "title": "Together, in every detail.",
+            "quote": "Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_HXi9NH": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-4.jpeg",
+            "badge": "04",
+            "label": "MEHENDI NIGHT",
+            "title": "A Mehendi to remember.",
+            "quote": "Ordered these outfits for my cousin’s Mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_ejAkdf": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-5.jpeg",
+            "badge": "05",
+            "label": "DIWALI TOGETHER",
+            "title": "Every generation. One celebration.",
+            "quote": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        "story_t6nLpY": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-6.jpeg",
+            "badge": "06",
+            "label": "FRIENDS & FESTIVITIES",
+            "title": "Made for the baarat.",
+            "quote": "We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_pK4rB9": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-7.jpeg",
+            "badge": "07",
+            "label": "THE COORDINATED EDIT",
+            "title": "A moment worth matching.",
+            "quote": "Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        "story_F4ftm3": {
+          "type": "story",
+          "settings": {
+            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-8.jpeg",
+            "badge": "08",
+            "label": "RAKHI MOMENTS",
+            "title": "Rakhi, in good company.",
+            "quote": "Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        }
+      },
+      "block_order": [
+        "story_3zmDgD",
+        "story_VzUfRx",
+        "story_3rQzAU",
+        "story_HXi9NH",
+        "story_ejAkdf",
+        "story_t6nLpY",
+        "story_pK4rB9",
+        "story_F4ftm3"
+      ],
+      "name": "Customer Stories",
+      "settings": {
+        "kicker": "KISAH / WORN & LOVED",
+        "title": "Customer Stories",
+        "subtitle": "Real people. Their celebrations. Their Kisah.",
+        "bg_color": "#f5f0e8",
+        "desk_padding_top": 40,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 0
       }
     },
     "ceremony_carousel_hhd6Ke": {
@@ -969,6 +766,7 @@
         "slide_AzrTah",
         "slide_N4KUtV"
       ],
+      "disabled": true,
       "name": "Shop by Ceremony",
       "settings": {
         "subheading": "Every Ritual, Every Look",
@@ -1109,6 +907,7 @@
         "slide_Aw4GP9",
         "slide_UGfgwW"
       ],
+      "disabled": true,
       "name": "Shop by Trend",
       "settings": {
         "subheading": "What's In This Season",
@@ -1219,6 +1018,7 @@
         "slide_hERrpt",
         "slide_UDhBwb"
       ],
+      "disabled": true,
       "name": "Shop by Category",
       "settings": {
         "subheading": "Find Your Signature",
@@ -1302,6 +1102,7 @@
         "slide_WGyTha",
         "slide_PiwD3U"
       ],
+      "disabled": true,
       "name": "Shop by Colour",
       "settings": {
         "subheading": "Hues of the Season",
@@ -1495,6 +1296,7 @@
         "testimonial_e8yn7m",
         "testimonial_WYLtwF"
       ],
+      "disabled": true,
       "settings": {
         "head": "Customer Stories",
         "head-color": "",
@@ -1515,13 +1317,13 @@
     }
   },
   "order": [
-    "banner_with_text_tEQYry",
-    "custom_category_zpkXwM",
-    "trending_banner_fXk7BD",
-    "custom_heading_logo_cbUAdy",
-    "tab_collection_CBxDcF",
-    "testimonials_REBkVr",
     "banner_with_text_xmBXxb",
+    "v5_shop_by_category_KpXJQD",
+    "v5_shop_by_occasion_YkVBXW",
+    "v5_shop_by_colour_y7aKUB",
+    "v5_shop_by_style_aj6Hpd",
+    "v5_kisah_journal_iGJQq9",
+    "v5_customer_stories_WLwrT3",
     "ceremony_carousel_hhd6Ke",
     "trust_badges_bar_nePxQ9",
     "ceremony_carousel_J7BmUm",

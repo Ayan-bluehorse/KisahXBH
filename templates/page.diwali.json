@@ -55,22 +55,12 @@
         "circle_4",
         "circle_5"
       ],
+      "disabled": true,
       "settings": {
-        "show_circles": true,
-        "title": "Top Diwali Picks",
-        "subtitle": "Most bought this week · tap a size to open it selected",
-        "collection": "diwali-party",
-        "max_picks": 8,
-        "grid": 4,
-        "grid_mobile": "2",
         "pad_top": 12,
         "pad_bottom": 16,
         "bg_color": "#fdfcf9",
-        "text_color": "#141414",
-        "gold_color": "#b0862f",
-        "show_see_more": true,
-        "see_more_text": "SEE MORE DIWALI STYLES",
-        "see_more_link": "#all-diwali-styles"
+        "text_color": "#141414"
       }
     },
     "diwali_feed": {
@@ -80,41 +70,55 @@
           "type": "filter_tab",
           "settings": {
             "title": "Diwali Puja",
-            "collection": "diwali-puja"
+            "collection": "diwali-puja",
+            "custom_link": ""
           }
         },
         "tab_2": {
           "type": "filter_tab",
           "settings": {
             "title": "Diwali Party",
-            "collection": "diwali-party"
+            "collection": "diwali-party",
+            "custom_link": ""
+          }
+        },
+        "filter_tab_rgaVnw": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "The Celebration Edit",
+            "collection": "the-celebration-edit",
+            "custom_link": ""
           }
         },
         "tab_3": {
           "type": "filter_tab",
           "settings": {
             "title": "Kurta Sets",
-            "collection": "kurta-sets"
+            "collection": "kurta-sets",
+            "custom_link": ""
           }
         },
         "tab_4": {
           "type": "filter_tab",
           "settings": {
             "title": "Nehru Jackets",
-            "collection": "nehru-jackets"
+            "collection": "nehru-jackets",
+            "custom_link": ""
           }
         },
         "tab_5": {
           "type": "filter_tab",
           "settings": {
             "title": "Short Kurtas",
-            "collection": "short-kurta"
+            "collection": "short-kurta",
+            "custom_link": ""
           }
         }
       },
       "block_order": [
         "tab_1",
         "tab_2",
+        "filter_tab_rgaVnw",
         "tab_3",
         "tab_4",
         "tab_5"
