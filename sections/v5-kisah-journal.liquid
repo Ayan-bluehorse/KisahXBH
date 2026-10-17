@@ -37,7 +37,7 @@
           <p class="kj-subtitle">{{ section.settings.subtitle }}</p>
         {%- endif -%}
         {%- if section.settings.link_text != blank -%}
-          <a class="kj-maximalism-link" href="{{ section.settings.link_url | default: '/collections/festive-collection' }}">
+          <a class="kj-maximalism-link" href="{{ section.settings.link_url }}">
             {{ section.settings.link_text }}
           </a>
         {%- endif -%}
