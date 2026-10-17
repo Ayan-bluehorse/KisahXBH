@@ -122,6 +122,14 @@
     border-color: {{ section.settings.text_color | default: '#141414' }};
   }
 
+  .diwali-feed-container {
+    transition: opacity 0.2s ease;
+  }
+  .diwali-feed-container.is-loading {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
 {%- endstyle -%}
 
 <span id="all-diwali-styles" class="cp-diwali-feed-anchor"></span>
@@ -137,7 +145,7 @@
     <!-- Quick Filter Tabs -->
     {%- if section.settings.show_filter_tabs -%}
       <div class="diwali-feed-tabs-{{ sid }}" role="tablist">
-        <a href="#all-diwali-styles" class="diwali-feed-tab-{{ sid }} is-active" data-collection-tab="all">All Styles</a>
+        <a href="#all-diwali-styles" class="diwali-feed-tab-{{ sid }} is-active" data-collection-tab="all" role="tab" aria-selected="true">All Styles</a>
         {%- for block in section.blocks -%}
           {%- if block.type == 'filter_tab' -%}
             {%- liquid
@@ -150,7 +158,7 @@
                 assign tab_url = '/collections/all'
               endif
             -%}
-            <a href="{{ tab_url }}" class="diwali-feed-tab-{{ sid }}" data-collection-tab="{{ block.settings.collection }}" {{ block.shopify_attributes }}>
+            <a href="{{ tab_url }}" class="diwali-feed-tab-{{ sid }}" data-collection-tab="{{ block.settings.collection | default: block.id }}" role="tab" aria-selected="false" {{ block.shopify_attributes }}>
               {{ block.settings.title | default: tab_coll.title }}
             </a>
           {%- endif -%}
@@ -159,7 +167,7 @@
     {%- endif -%}
 
     <!-- Main Collection Grid matching main-collection.liquid -->
-    <div class="collection-listing" data-feed-container>
+    <div class="collection-listing diwali-feed-container" data-feed-container>
       {%- paginate chosen_coll.products by products_limit -%}
         {%- liquid
           assign size_map = 'XS:36,S:38,M:40,L:42,XL:44,XXL:46,3XL:48,4XL:50,5XL:52,6XL:54,7XL:56' | split: ','
@@ -309,6 +317,146 @@
 
   </div>
 </div>
+
+<script>
+  (function () {
+    function initDiwaliTabs() {
+      var section = document.getElementById('diwali-feed-{{ sid }}');
+      if (!section) return;
+
+      var tabs = section.querySelectorAll('.diwali-feed-tab-{{ sid }}');
+      var container = section.querySelector('[data-feed-container]');
+      if (!tabs.length || !container) return;
+
+      var cache = {};
+      cache['all'] = container.innerHTML;
+
+      var isBusy = false;
+
+      function renderContent(html) {
+        container.innerHTML = html;
+        if (window.__kisahInfiniteScrollManager && typeof window.__kisahInfiniteScrollManager.boot === 'function') {
+          window.__kisahInfiniteScrollManager.boot();
+        }
+        document.dispatchEvent(new CustomEvent('collection:reloaded'));
+      }
+
+      function switchTab(tab, shouldScroll) {
+        var key = tab.getAttribute('data-collection-tab') || 'all';
+        var url = tab.getAttribute('href');
+
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+
+        // Center active tab in scrollable tabs rail
+        var rail = section.querySelector('.diwali-feed-tabs-{{ sid }}');
+        if (rail) {
+          rail.scrollTo({
+            left: tab.offsetLeft - (rail.offsetWidth / 2) + (tab.offsetWidth / 2),
+            behavior: 'smooth'
+          });
+        }
+
+        // Scroll back up to header if user was scrolled down
+        if (shouldScroll) {
+          var header = section.querySelector('.diwali-feed-header-{{ sid }}');
+          if (header) {
+            var rect = header.getBoundingClientRect();
+            if (rect.top < -20) {
+              window.scrollTo({
+                top: window.pageYOffset + rect.top - 80,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+
+        // Instant render if cached
+        if (cache[key]) {
+          renderContent(cache[key]);
+          return;
+        }
+
+        if (isBusy || !url || url === '#' || url === '#all-diwali-styles') return;
+        isBusy = true;
+        container.classList.add('is-loading');
+
+        var fetchUrl = url;
+        if (fetchUrl.indexOf('filter.v.availability') === -1) {
+          fetchUrl += (fetchUrl.indexOf('?') === -1 ? '?' : '&') + 'filter.v.availability=1';
+        }
+
+        fetch(fetchUrl)
+          .then(function (res) { return res.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var newListing = doc.querySelector('.collection-listing');
+            var contentHtml = '';
+
+            if (newListing) {
+              contentHtml = newListing.innerHTML;
+            } else {
+              var grid = doc.querySelector('#product-grid');
+              var inf = doc.querySelector('[data-infinite-scroll]');
+              if (grid) {
+                contentHtml = grid.outerHTML + (inf ? inf.outerHTML : '');
+              }
+            }
+
+            if (contentHtml) {
+              cache[key] = contentHtml;
+              renderContent(contentHtml);
+            }
+          })
+          .catch(function (err) {
+            console.error('Error loading tab collection:', err);
+          })
+          .finally(function () {
+            container.classList.remove('is-loading');
+            isBusy = false;
+          });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function (e) {
+          e.preventDefault();
+          switchTab(tab, true);
+        });
+      });
+
+      // Handle direct anchor clicks (e.g. occasion cards)
+      document.addEventListener('click', function (e) {
+        var anchor = e.target.closest('a[href*="#diwali-feed"], a[href*="#all-diwali-styles"], a[data-feed-tab]');
+        if (anchor && anchor.getAttribute('data-feed-tab')) {
+          var targetTab = section.querySelector('.diwali-feed-tab-{{ sid }}[data-collection-tab="' + anchor.getAttribute('data-feed-tab') + '"]');
+          if (targetTab) {
+            e.preventDefault();
+            switchTab(targetTab, true);
+          }
+        }
+      });
+
+      // Initial hash check on page load
+      if (window.location.hash) {
+        var hashId = window.location.hash.replace('#', '').replace('tab-', '');
+        var initialTab = section.querySelector('.diwali-feed-tab-{{ sid }}[data-collection-tab="' + hashId + '"]');
+        if (initialTab) {
+          switchTab(initialTab, false);
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDiwaliTabs);
+    } else {
+      initDiwaliTabs();
+    }
+  })();
+</script>
 
 {% render 'navratri-quickview-popup' %}
 
