@@ -412,15 +412,17 @@
           </div>
         </div>
 
+        {% if section.settings.show_upcoming_card != false %}
         <div class="ksl-upcoming-card">
-          <span class="ksl-upcoming-badge">OPENING SOON</span>
-          <h3 class="ksl-upcoming-title" id="kslUpcomingTitle">Kisah Allenby Road</h3>
-          <p class="ksl-upcoming-desc" id="kslUpcomingDesc">A fourth Kolkata store is on its way. Until then, Gariahat, Lake Mall and Lindsay Street are the closest destinations.</p>
-          <a href="https://wa.me/918100993480?text=Hi%20Kisah,%20please%20notify%20me%20when%20Allenby%20Road%20store%20opens." target="_blank" rel="noopener noreferrer" class="ksl-upcoming-link">
-            <span>Get notified on WhatsApp</span>
+          <span class="ksl-upcoming-badge">{{ section.settings.upcoming_badge | default: 'OPENING SOON' }}</span>
+          <h3 class="ksl-upcoming-title" id="kslUpcomingTitle">{{ section.settings.upcoming_title | default: 'Kisah Allenby Road' }}</h3>
+          <p class="ksl-upcoming-desc" id="kslUpcomingDesc">{{ section.settings.upcoming_desc | default: 'A fourth Kolkata store is on its way. Until then, Gariahat, Lake Mall and Lindsay Street are the closest destinations.' }}</p>
+          <a href="{{ section.settings.upcoming_whatsapp_url | default: 'https://wa.me/918100993480?text=Hi%20Kisah,%20please%20notify%20me%20when%20Allenby%20Road%20store%20opens.' }}" target="_blank" rel="noopener noreferrer" class="ksl-upcoming-link">
+            <span>{{ section.settings.upcoming_btn_text | default: 'Get notified on WhatsApp' }}</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
         </div>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -430,40 +432,40 @@
     <div class="ksl-container">
       <div class="ksl-why-visit__header">
         <div>
-          <span class="ksl-why-visit__eyebrow">WHY VISIT THE STORE</span>
-          <h2 class="ksl-why-visit__title">Your look deserves a try-on</h2>
-          <p class="ksl-why-visit__subtitle">See the colour, feel the fabric and get the fit right before the big day.</p>
+          <span class="ksl-why-visit__eyebrow">{{ section.settings.why_visit_eyebrow | default: 'WHY VISIT THE STORE' }}</span>
+          <h2 class="ksl-why-visit__title">{{ section.settings.why_visit_title | default: 'Your look deserves a try-on' }}</h2>
+          <p class="ksl-why-visit__subtitle">{{ section.settings.why_visit_subtitle | default: 'See the colour, feel the fabric and get the fit right before the big day.' }}</p>
         </div>
         <div class="ksl-why-visit__cta-desktop">
-          <a href="#ksl-stores-section" class="ksl-btn ksl-btn--directions-pill">Get directions</a>
+          <a href="{{ section.settings.why_visit_btn_url | default: '#ksl-stores-section' }}" class="ksl-btn ksl-btn--directions-pill">{{ section.settings.why_visit_btn_text | default: 'Get directions' }}</a>
         </div>
       </div>
 
       <div class="ksl-reasons-grid">
         <div class="ksl-reason-card">
           <span class="ksl-reason-num">01</span>
-          <h3 class="ksl-reason-title">Try before you celebrate</h3>
-          <p class="ksl-reason-text">Colour, texture and drape look different in person. Try every piece before you decide.</p>
+          <h3 class="ksl-reason-title">{{ section.settings.reason_1_title | default: 'Try before you celebrate' }}</h3>
+          <p class="ksl-reason-text">{{ section.settings.reason_1_desc | default: 'Colour, texture and drape look different in person. Try every piece before you decide.' }}</p>
         </div>
         <div class="ksl-reason-card">
           <span class="ksl-reason-num">02</span>
-          <h3 class="ksl-reason-title">Personal styling</h3>
-          <p class="ksl-reason-text">Our stylists help you build the full look: kurta, jacket, bottoms and dupatta.</p>
+          <h3 class="ksl-reason-title">{{ section.settings.reason_2_title | default: 'Personal styling' }}</h3>
+          <p class="ksl-reason-text">{{ section.settings.reason_2_desc | default: 'Our stylists help you build the full look: kurta, jacket, bottoms and dupatta.' }}</p>
         </div>
         <div class="ksl-reason-card">
           <span class="ksl-reason-num">03</span>
-          <h3 class="ksl-reason-title">Tailored, luxury fit</h3>
-          <p class="ksl-reason-text">Walk in to experience a fit made for you. In-store expert alterations available.</p>
+          <h3 class="ksl-reason-title">{{ section.settings.reason_3_title | default: 'Tailored, luxury fit' }}</h3>
+          <p class="ksl-reason-text">{{ section.settings.reason_3_desc | default: 'Walk in to experience a fit made for you. In-store expert alterations available.' }}</p>
         </div>
         <div class="ksl-reason-card">
           <span class="ksl-reason-num">04</span>
-          <h3 class="ksl-reason-title">The whole family, one stop</h3>
-          <p class="ksl-reason-text">Men's, kids' and plus sizes under one roof. Perfect for father-son twinning.</p>
+          <h3 class="ksl-reason-title">{{ section.settings.reason_4_title | default: 'The whole family, one stop' }}</h3>
+          <p class="ksl-reason-text">{{ section.settings.reason_4_desc | default: "Men's, kids' and plus sizes under one roof. Perfect for father-son twinning." }}</p>
         </div>
         <div class="ksl-reason-card">
           <span class="ksl-reason-num">05</span>
-          <h3 class="ksl-reason-title">Dress the whole squad</h3>
-          <p class="ksl-reason-text">Coordinate groomsmen and baraatis with our specialized Dulhe Ki Toli edit.</p>
+          <h3 class="ksl-reason-title">{{ section.settings.reason_5_title | default: 'Dress the whole squad' }}</h3>
+          <p class="ksl-reason-text">{{ section.settings.reason_5_desc | default: 'Coordinate groomsmen and baraatis with our specialized Dulhe Ki Toli edit.' }}</p>
         </div>
       </div>
     </div>
@@ -472,25 +474,20 @@
   <!-- 6. MARQUEE BANNER (PDF Page 2 - Sentence Case with Amber Gold Diamonds) -->
   <div class="ksl-ticker" aria-hidden="true">
     <div class="ksl-ticker__track">
+      {%- capture m_items -%}
+        <span>{{ section.settings.marquee_item_1 | default: 'Unexpected colour' }}</span><span class="ksl-ticker__sep">✦</span>
+        <span>{{ section.settings.marquee_item_2 | default: 'Contemporary silhouettes' }}</span><span class="ksl-ticker__sep">✦</span>
+        <span>{{ section.settings.marquee_item_3 | default: 'Expressive detail' }}</span><span class="ksl-ticker__sep">✦</span>
+        <span>{{ section.settings.marquee_item_4 | default: 'Never be vanilla' }}</span><span class="ksl-ticker__sep">✦</span>
+        <span>{{ section.settings.marquee_item_5 | default: 'Premium textiles' }}</span><span class="ksl-ticker__sep">✦</span>
+      {%- endcapture -%}
       <div class="ksl-ticker__group">
-        <span>Unexpected colour</span><span class="ksl-ticker__sep">✦</span>
-        <span>Contemporary silhouettes</span><span class="ksl-ticker__sep">✦</span>
-        <span>Expressive detail</span><span class="ksl-ticker__sep">✦</span>
-        <span>Never be vanilla</span><span class="ksl-ticker__sep">✦</span>
-        <span>Unexpected colour</span><span class="ksl-ticker__sep">✦</span>
-        <span>Contemporary silhouettes</span><span class="ksl-ticker__sep">✦</span>
-        <span>Expressive detail</span><span class="ksl-ticker__sep">✦</span>
-        <span>Never be vanilla</span><span class="ksl-ticker__sep">✦</span>
+        {{ m_items }}
+        {{ m_items }}
       </div>
       <div class="ksl-ticker__group" aria-hidden="true">
-        <span>Unexpected colour</span><span class="ksl-ticker__sep">✦</span>
-        <span>Contemporary silhouettes</span><span class="ksl-ticker__sep">✦</span>
-        <span>Expressive detail</span><span class="ksl-ticker__sep">✦</span>
-        <span>Never be vanilla</span><span class="ksl-ticker__sep">✦</span>
-        <span>Unexpected colour</span><span class="ksl-ticker__sep">✦</span>
-        <span>Contemporary silhouettes</span><span class="ksl-ticker__sep">✦</span>
-        <span>Expressive detail</span><span class="ksl-ticker__sep">✦</span>
-        <span>Never be vanilla</span><span class="ksl-ticker__sep">✦</span>
+        {{ m_items }}
+        {{ m_items }}
       </div>
     </div>
   </div>
@@ -500,9 +497,9 @@
     <div class="ksl-container">
       <div class="ksl-cat-head">
         <div>
-          <span class="ksl-cat-eyebrow">IN STORE NOW</span>
-          <h2 class="ksl-cat-title">Find your signature</h2>
-          <p class="ksl-cat-desc" id="kslCatCityNote">Every category is available to try on at all our flagship stores.</p>
+          <span class="ksl-cat-eyebrow">{{ section.settings.cat_eyebrow | default: 'IN STORE NOW' }}</span>
+          <h2 class="ksl-cat-title">{{ section.settings.cat_title | default: 'Find your signature' }}</h2>
+          <p class="ksl-cat-desc" id="kslCatCityNote">{{ section.settings.cat_desc | default: 'Every category is available to try on at all our flagship stores.' }}</p>
         </div>
         <div class="ksl-slider-nav" aria-label="Category Slider Controls">
           <button type="button" class="ksl-slider-nav-btn" id="kslSigPrev" aria-label="Previous categories">‹</button>
@@ -633,7 +630,7 @@
       </div>
 
       <div class="ksl-cat-browse-all">
-        <a href="/collections/all" class="ksl-browse-link">Not ready to visit? <strong>Browse our online catalog →</strong></a>
+        <a href="{{ section.settings.cat_browse_url | default: '/collections/all' }}" class="ksl-browse-link">{{ section.settings.cat_browse_text | default: 'Not ready to visit? Browse our online catalog →' }}</a>
       </div>
     </div>
   </section>
@@ -643,7 +640,7 @@
     <div class="ksl-container">
       <div class="ksl-section-header-wrap">
         <div>
-          <h2 class="ksl-section-title">Every ritual, every look</h2>
+          <h2 class="ksl-section-title">{{ section.settings.rituals_title | default: 'Every ritual, every look' }}</h2>
         </div>
         <span class="ksl-swipe-hint">Swipe →</span>
       </div>
@@ -698,31 +695,51 @@
   <section class="ksl-step-inside">
     <div class="ksl-container">
       <div class="ksl-section-header">
-        <span class="ksl-section-eyebrow" id="kslStepInsideEyebrow">INSIDE OUR KOLKATA STORES</span>
-        <h2 class="ksl-section-title">Step inside</h2>
+        <span class="ksl-section-eyebrow" id="kslStepInsideEyebrow">{{ section.settings.gallery_eyebrow | default: 'INSIDE OUR KOLKATA STORES' }}</span>
+        <h2 class="ksl-section-title">{{ section.settings.gallery_title | default: 'Step inside' }}</h2>
       </div>
 
       <div class="ksl-gallery-grid">
         <div class="ksl-gallery-card ksl-gallery-card--feature">
-          <img src="/cdn/shop/files/Gariahat.png?v=1786366650&width=800" alt="Storefront" loading="lazy" class="ksl-gallery-img" id="kslGalleryFeatureImg">
-          <div class="ksl-gallery-caption" id="kslGalleryFeatureCaption">Storefront · Gariahat (so you recognise it on the street)</div>
+          {% if section.settings.gallery_img_feature != blank %}
+            <img src="{{ section.settings.gallery_img_feature | image_url: width: 800 }}" alt="{{ section.settings.gallery_caption_feature | default: 'Storefront' }}" loading="lazy" class="ksl-gallery-img" id="kslGalleryFeatureImg">
+          {% else %}
+            <img src="/cdn/shop/files/Gariahat.png?v=1786366650&width=800" alt="Storefront" loading="lazy" class="ksl-gallery-img" id="kslGalleryFeatureImg">
+          {% endif %}
+          <div class="ksl-gallery-caption" id="kslGalleryFeatureCaption">{{ section.settings.gallery_caption_feature | default: 'Storefront · Gariahat (so you recognise it on the street)' }}</div>
         </div>
         <div class="ksl-gallery-subgrid">
           <div class="ksl-gallery-card ksl-gallery-card--sub">
-            <img src="/cdn/shop/files/lake_mall_image.jpg?v=1786366650&width=600" alt="Interior · Lake Mall" loading="lazy" class="ksl-gallery-img">
-            <div class="ksl-gallery-caption">Interior · Lake Mall</div>
+            {% if section.settings.gallery_img_1 != blank %}
+              <img src="{{ section.settings.gallery_img_1 | image_url: width: 600 }}" alt="{{ section.settings.gallery_caption_1 | default: 'Interior' }}" loading="lazy" class="ksl-gallery-img">
+            {% else %}
+              <img src="/cdn/shop/files/lake_mall_image.jpg?v=1786366650&width=600" alt="Interior · Lake Mall" loading="lazy" class="ksl-gallery-img">
+            {% endif %}
+            <div class="ksl-gallery-caption">{{ section.settings.gallery_caption_1 | default: 'Interior · Lake Mall' }}</div>
           </div>
           <div class="ksl-gallery-card ksl-gallery-card--sub">
-            <img src="/cdn/shop/files/blr_store_image.jpg?v=1786366650&width=600" alt="Fitting room" loading="lazy" class="ksl-gallery-img">
-            <div class="ksl-gallery-caption">Fitting room</div>
+            {% if section.settings.gallery_img_2 != blank %}
+              <img src="{{ section.settings.gallery_img_2 | image_url: width: 600 }}" alt="{{ section.settings.gallery_caption_2 | default: 'Fitting room' }}" loading="lazy" class="ksl-gallery-img">
+            {% else %}
+              <img src="/cdn/shop/files/blr_store_image.jpg?v=1786366650&width=600" alt="Fitting room" loading="lazy" class="ksl-gallery-img">
+            {% endif %}
+            <div class="ksl-gallery-caption">{{ section.settings.gallery_caption_2 | default: 'Fitting room' }}</div>
           </div>
           <div class="ksl-gallery-card ksl-gallery-card--sub">
-            <img src="/cdn/shop/files/lindsay_street.jpg?v=1786366650&width=600" alt="Stylist helping a customer" loading="lazy" class="ksl-gallery-img">
-            <div class="ksl-gallery-caption">Stylist helping a customer</div>
+            {% if section.settings.gallery_img_3 != blank %}
+              <img src="{{ section.settings.gallery_img_3 | image_url: width: 600 }}" alt="{{ section.settings.gallery_caption_3 | default: 'Stylist' }}" loading="lazy" class="ksl-gallery-img">
+            {% else %}
+              <img src="/cdn/shop/files/lindsay_street.jpg?v=1786366650&width=600" alt="Stylist helping a customer" loading="lazy" class="ksl-gallery-img">
+            {% endif %}
+            <div class="ksl-gallery-caption">{{ section.settings.gallery_caption_3 | default: 'Stylist helping a customer' }}</div>
           </div>
           <div class="ksl-gallery-card ksl-gallery-card--sub">
-            <img src="/cdn/shop/files/Himayat_Nagar_Hyderabad.jpg?v=1786366650&width=600" alt="Kids corner · father–son twinning" loading="lazy" class="ksl-gallery-img">
-            <div class="ksl-gallery-caption">Kids corner · father–son twinning</div>
+            {% if section.settings.gallery_img_4 != blank %}
+              <img src="{{ section.settings.gallery_img_4 | image_url: width: 600 }}" alt="{{ section.settings.gallery_caption_4 | default: 'Kids corner' }}" loading="lazy" class="ksl-gallery-img">
+            {% else %}
+              <img src="/cdn/shop/files/Himayat_Nagar_Hyderabad.jpg?v=1786366650&width=600" alt="Kids corner · father–son twinning" loading="lazy" class="ksl-gallery-img">
+            {% endif %}
+            <div class="ksl-gallery-caption">{{ section.settings.gallery_caption_4 | default: 'Kids corner · father–son twinning' }}</div>
           </div>
         </div>
       </div>
@@ -734,11 +751,11 @@
     <div class="ksl-container">
       <div class="ksl-reviews-head-wrap">
         <div>
-          <span class="ksl-section-eyebrow">CUSTOMER REVIEWS</span>
-          <h2 class="ksl-section-title" id="kslReviewsTitle">Loved by Kolkata</h2>
+          <span class="ksl-section-eyebrow">{{ section.settings.reviews_eyebrow | default: 'CUSTOMER REVIEWS' }}</span>
+          <h2 class="ksl-section-title" id="kslReviewsTitle">{{ section.settings.reviews_heading | default: 'Loved by Kolkata' }}</h2>
         </div>
         <div class="ksl-reviews-badge">
-          <span class="ksl-reviews-badge__score">4.8</span>
+          <span class="ksl-reviews-badge__score">{{ section.settings.reviews_score | default: '4.8' }}</span>
           <div class="ksl-reviews-badge__meta">
             <div class="ksl-stars-svg" aria-label="5 stars">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -747,7 +764,7 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
-            <small>Over 300 Google reviews · 3 stores</small>
+            <small>{{ section.settings.reviews_meta | default: 'Over 300 Google reviews · 4 stores' }}</small>
           </div>
         </div>
       </div>
@@ -759,10 +776,10 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             {% endfor %}
           </div>
-          <p class="ksl-review-card__quote">“This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments.”</p>
+          <p class="ksl-review-card__quote">{{ section.settings.review_1_quote | default: '“This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments.”' }}</p>
           <div class="ksl-review-card__author">
-            <span class="ksl-review-card__name">Anirban Mukherjee</span>
-            <span class="ksl-review-card__store">Gariahat Boutique</span>
+            <span class="ksl-review-card__name">{{ section.settings.review_1_name | default: 'Anirban Mukherjee' }}</span>
+            <span class="ksl-review-card__store">{{ section.settings.review_1_store | default: 'Gariahat Boutique' }}</span>
           </div>
         </div>
 
@@ -772,10 +789,10 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             {% endfor %}
           </div>
-          <p class="ksl-review-card__quote">“Picked these sherwanis for the wedding day and they were a hit. The fit was right, very comfortable throughout, and we received many compliments.”</p>
+          <p class="ksl-review-card__quote">{{ section.settings.review_2_quote | default: '“Picked these sherwanis for the wedding day and they were a hit. The fit was right, very comfortable throughout, and we received many compliments.”' }}</p>
           <div class="ksl-review-card__author">
-            <span class="ksl-review-card__name">Varun Hegde</span>
-            <span class="ksl-review-card__store">Lake Mall Boutique</span>
+            <span class="ksl-review-card__name">{{ section.settings.review_2_name | default: 'Varun Hegde' }}</span>
+            <span class="ksl-review-card__store">{{ section.settings.review_2_store | default: 'Lake Mall Boutique' }}</span>
           </div>
         </div>
 
@@ -785,16 +802,16 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="#F5A623" stroke="#F5A623" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             {% endfor %}
           </div>
-          <p class="ksl-review-card__quote">“Bought matching kurtas for all the baraatis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.”</p>
+          <p class="ksl-review-card__quote">{{ section.settings.review_3_quote | default: '“Bought matching kurtas for all the baraatis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.”' }}</p>
           <div class="ksl-review-card__author">
-            <span class="ksl-review-card__name">Rohan Parekh</span>
-            <span class="ksl-review-card__store">Lindsay Street Boutique</span>
+            <span class="ksl-review-card__name">{{ section.settings.review_3_name | default: 'Rohan Parekh' }}</span>
+            <span class="ksl-review-card__store">{{ section.settings.review_3_store | default: 'Lindsay Street Boutique' }}</span>
           </div>
         </div>
       </div>
 
       <div class="ksl-reviews-footer">
-        <a href="https://maps.google.com/?q=Kisah+Stores" target="_blank" rel="noopener noreferrer" class="ksl-link-arrow">See all reviews on Google →</a>
+        <a href="{{ section.settings.reviews_google_link_url | default: 'https://maps.google.com/?q=Kisah+Stores' }}" target="_blank" rel="noopener noreferrer" class="ksl-link-arrow">{{ section.settings.reviews_google_link_text | default: 'See all reviews on Google →' }}</a>
       </div>
     </div>
   </section>
@@ -803,94 +820,110 @@
   <section class="ksl-faq">
     <div class="ksl-container ksl-faq__inner">
       <div class="ksl-section-header">
-        <span class="ksl-section-eyebrow">FREQUENTLY ASKED</span>
-        <h2 class="ksl-section-title">Before you visit</h2>
+        <span class="ksl-section-eyebrow">{{ section.settings.faq_eyebrow | default: 'FREQUENTLY ASKED' }}</span>
+        <h2 class="ksl-section-title">{{ section.settings.faq_heading | default: 'Before you visit' }}</h2>
       </div>
 
       <div class="ksl-faq__list">
-        <details class="ksl-faq__item" open>
-          <summary class="ksl-faq__question">
-            <span>Which Kisah store is nearest to me?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">−</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>We have 3 stores in Kolkata: Gariahat (opposite Spencer's), Lake Mall (3rd floor) and Lindsay Street (Chowringhee Road). Tap "Get directions" on any store card above to navigate directly.</p>
-          </div>
-        </details>
+        {%- assign faq_1_q = section.settings.faq_1_q | default: 'Which Kisah store is nearest to me?' -%}
+        {%- assign faq_1_a = section.settings.faq_1_a | default: "We have stores across the city. Tap 'Get directions' on any store card above to navigate directly." -%}
+        {%- if faq_1_q != blank -%}
+          <details class="ksl-faq__item" open>
+            <summary class="ksl-faq__question">
+              <span>{{ faq_1_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">−</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_1_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>What are your store timings?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>All Kisah stores in Kolkata are open daily from 10:30 AM to 9:30 PM, all 7 days of the week.</p>
-          </div>
-        </details>
+        {%- assign faq_2_q = section.settings.faq_2_q | default: 'What are your store timings?' -%}
+        {%- assign faq_2_a = section.settings.faq_2_a | default: 'All Kisah stores are open daily from 10:30 AM to 9:30 PM, all 7 days of the week.' -%}
+        {%- if faq_2_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_2_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_2_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Do I need an appointment?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>No appointment is needed! Walk in anytime during store hours. Our in-store fashion stylists will assist you with personalized styling, draping, and sizing.</p>
-          </div>
-        </details>
+        {%- assign faq_3_q = section.settings.faq_3_q | default: 'Do I need an appointment?' -%}
+        {%- assign faq_3_a = section.settings.faq_3_a | default: 'No appointment is needed! Walk in anytime during store hours. Our in-store fashion stylists will assist you with personalized styling, draping, and sizing.' -%}
+        {%- if faq_3_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_3_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_3_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Do you offer alterations?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>Yes. We offer expert alterations on sleeve length, chest, waist, and pant hem to ensure your garment fits you like it was custom-made.</p>
-          </div>
-        </details>
+        {%- assign faq_4_q = section.settings.faq_4_q | default: 'Do you offer alterations?' -%}
+        {%- assign faq_4_a = section.settings.faq_4_a | default: 'Yes. We offer expert alterations on sleeve length, chest, waist, and pant hem to ensure your garment fits you like it was custom-made.' -%}
+        {%- if faq_4_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_4_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_4_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Can I exchange an online order at the store?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>Yes! We provide hassle-free exchanges within 7 days of delivery. Simply bring your unworn outfit with original tags and invoice to any of our retail boutiques.</p>
-          </div>
-        </details>
+        {%- assign faq_5_q = section.settings.faq_5_q | default: 'Can I exchange an online order at the store?' -%}
+        {%- assign faq_5_a = section.settings.faq_5_a | default: 'Yes! We provide hassle-free exchanges within 7 days of delivery. Simply bring your unworn outfit with original tags and invoice to any of our retail boutiques.' -%}
+        {%- if faq_5_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_5_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_5_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Are store prices the same as online?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>Yes, all prices and official promotions are completely identical online and in-store.</p>
-          </div>
-        </details>
+        {%- assign faq_6_q = section.settings.faq_6_q | default: 'Are store prices the same as online?' -%}
+        {%- assign faq_6_a = section.settings.faq_6_a | default: 'Yes, all prices and official promotions are completely identical online and in-store.' -%}
+        {%- if faq_6_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_6_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_6_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Do you have kids' and plus sizes?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>Yes! We carry complete ranges from kids ethnic wear (toddler to teen) up to plus sizes (up to 5XL/6XL in select designs).</p>
-          </div>
-        </details>
+        {%- assign faq_7_q = section.settings.faq_7_q | default: "Do you have kids' and plus sizes?" -%}
+        {%- assign faq_7_a = section.settings.faq_7_a | default: 'Yes! We carry complete ranges from kids ethnic wear (toddler to teen) up to plus sizes (up to 5XL/6XL in select designs).' -%}
+        {%- if faq_7_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_7_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_7_a }}</p></div>
+          </details>
+        {%- endif -%}
 
-        <details class="ksl-faq__item">
-          <summary class="ksl-faq__question">
-            <span>Is parking available?</span>
-            <span class="ksl-faq__icon" aria-hidden="true">+</span>
-          </summary>
-          <div class="ksl-faq__answer">
-            <p>Yes. Lake Mall has dedicated mall parking. Gariahat and Lindsay Street stores have convenient street and nearby municipal parking lots.</p>
-          </div>
-        </details>
+        {%- assign faq_8_q = section.settings.faq_8_q | default: 'Is parking available?' -%}
+        {%- assign faq_8_a = section.settings.faq_8_a | default: 'Yes, convenient parking is available at all our boutique and mall locations.' -%}
+        {%- if faq_8_q != blank -%}
+          <details class="ksl-faq__item">
+            <summary class="ksl-faq__question">
+              <span>{{ faq_8_q }}</span>
+              <span class="ksl-faq__icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="ksl-faq__answer"><p>{{ faq_8_a }}</p></div>
+          </details>
+        {%- endif -%}
       </div>
 
       <div class="ksl-faq__footer">
-        <p>Still have a question? <a href="#ksl-stores-section" class="ksl-link-underline">Call a store</a> or <a href="https://wa.me/918100993480" target="_blank" rel="noopener noreferrer" class="ksl-link-underline">WhatsApp us</a></p>
+        <p>{{ section.settings.faq_footer_text | default: 'Still have a question? Call a store or WhatsApp us' }}</p>
       </div>
     </div>
   </section>
@@ -898,8 +931,8 @@
   <!-- 12. FINAL BOTTOM STORES STRIP (PDF Page 4 & 5 - Exact 3-column Grid on Desktop) -->
   <section class="ksl-bottom-cta">
     <div class="ksl-container ksl-bottom-cta__inner">
-      <h2 class="ksl-bottom-cta__title" id="kslBottomTitle">Your next look is waiting in Kolkata</h2>
-      <p class="ksl-bottom-cta__subtitle" id="kslBottomSubtitle">Walk into any Kisah store today. Open 10:30 AM to 9:30 PM, all days.</p>
+      <h2 class="ksl-bottom-cta__title" id="kslBottomTitle">{{ section.settings.bottom_heading | default: 'Your next look is waiting in Kolkata' }}</h2>
+      <p class="ksl-bottom-cta__subtitle" id="kslBottomSubtitle">{{ section.settings.bottom_subheading | default: 'Walk into any Kisah store today. Open 10:30 AM to 9:30 PM, all days.' }}</p>
       
       <div class="ksl-bottom-stores-list" id="kslBottomStoresList">
         <!-- Dynamically injected based on active city with 3 side-by-side cards from PDF -->
@@ -3068,7 +3101,7 @@
       "type": "text",
       "id": "timings_summary",
       "label": "Timings Summary",
-      "default": "10:30 AM – 9:30 PM"
+      "default": "10:30 AM \u2013 9:30 PM"
     },
     {
       "type": "text",
@@ -3090,12 +3123,519 @@
       "type": "textarea",
       "id": "stores_subheading",
       "label": "Stores Subheading",
-      "default": "Find your nearest boutique. Walk in anytime — no prior appointment needed."
+      "default": "Find your nearest boutique. Walk in anytime \u2014 no prior appointment needed."
     },
     {
       "type": "text",
       "id": "google_map_embed",
       "label": "Google Maps Embed URL"
+    },
+    {
+      "type": "header",
+      "content": "Upcoming Boutique Card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_upcoming_card",
+      "label": "Show Upcoming Store Card",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "upcoming_badge",
+      "label": "Upcoming Badge Text",
+      "default": "OPENING SOON"
+    },
+    {
+      "type": "text",
+      "id": "upcoming_title",
+      "label": "Upcoming Boutique Title",
+      "default": "Kisah Allenby Road"
+    },
+    {
+      "type": "textarea",
+      "id": "upcoming_desc",
+      "label": "Upcoming Boutique Description",
+      "default": "A fourth Kolkata store is on its way. Until then, Gariahat, Lake Mall and Lindsay Street are the closest destinations."
+    },
+    {
+      "type": "text",
+      "id": "upcoming_btn_text",
+      "label": "Upcoming Button Text",
+      "default": "Get notified on WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "upcoming_whatsapp_url",
+      "label": "Upcoming WhatsApp Notification Link"
+    },
+    {
+      "type": "header",
+      "content": "Why Visit The Store (Reasons 1 to 5)"
+    },
+    {
+      "type": "text",
+      "id": "why_visit_eyebrow",
+      "label": "Why Visit Eyebrow",
+      "default": "WHY VISIT THE STORE"
+    },
+    {
+      "type": "text",
+      "id": "why_visit_title",
+      "label": "Why Visit Title",
+      "default": "Your look deserves a try-on"
+    },
+    {
+      "type": "textarea",
+      "id": "why_visit_subtitle",
+      "label": "Why Visit Subtitle",
+      "default": "See the colour, feel the fabric and get the fit right before the big day."
+    },
+    {
+      "type": "text",
+      "id": "why_visit_btn_text",
+      "label": "Directions Button Text",
+      "default": "Get directions"
+    },
+    {
+      "type": "url",
+      "id": "why_visit_btn_url",
+      "label": "Directions Button Link"
+    },
+    {
+      "type": "text",
+      "id": "reason_1_title",
+      "label": "01 Reason Title",
+      "default": "Try before you celebrate"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_1_desc",
+      "label": "01 Reason Description",
+      "default": "Colour, texture and drape look different in person. Try every piece before you decide."
+    },
+    {
+      "type": "text",
+      "id": "reason_2_title",
+      "label": "02 Reason Title",
+      "default": "Personal styling"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_2_desc",
+      "label": "02 Reason Description",
+      "default": "Our stylists help you build the full look: kurta, jacket, bottoms and dupatta."
+    },
+    {
+      "type": "text",
+      "id": "reason_3_title",
+      "label": "03 Reason Title",
+      "default": "Tailored, luxury fit"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_3_desc",
+      "label": "03 Reason Description",
+      "default": "Walk in to experience a fit made for you. In-store expert alterations available."
+    },
+    {
+      "type": "text",
+      "id": "reason_4_title",
+      "label": "04 Reason Title",
+      "default": "The whole family, one stop"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_4_desc",
+      "label": "04 Reason Description",
+      "default": "Men's, kids' and plus sizes under one roof. Perfect for father-son twinning."
+    },
+    {
+      "type": "text",
+      "id": "reason_5_title",
+      "label": "05 Reason Title",
+      "default": "Dress the whole squad"
+    },
+    {
+      "type": "textarea",
+      "id": "reason_5_desc",
+      "label": "05 Reason Description",
+      "default": "Coordinate groomsmen and baraatis with our specialized Dulhe Ki Toli edit."
+    },
+    {
+      "type": "header",
+      "content": "Marquee Ticker Items"
+    },
+    {
+      "type": "text",
+      "id": "marquee_item_1",
+      "label": "Ticker Item 1",
+      "default": "Unexpected colour"
+    },
+    {
+      "type": "text",
+      "id": "marquee_item_2",
+      "label": "Ticker Item 2",
+      "default": "Contemporary silhouettes"
+    },
+    {
+      "type": "text",
+      "id": "marquee_item_3",
+      "label": "Ticker Item 3",
+      "default": "Expressive detail"
+    },
+    {
+      "type": "text",
+      "id": "marquee_item_4",
+      "label": "Ticker Item 4",
+      "default": "Never be vanilla"
+    },
+    {
+      "type": "text",
+      "id": "marquee_item_5",
+      "label": "Ticker Item 5",
+      "default": "Premium textiles"
+    },
+    {
+      "type": "header",
+      "content": "Find Your Signature (Categories Header)"
+    },
+    {
+      "type": "text",
+      "id": "cat_eyebrow",
+      "label": "Categories Eyebrow",
+      "default": "IN STORE NOW"
+    },
+    {
+      "type": "text",
+      "id": "cat_title",
+      "label": "Categories Title",
+      "default": "Find your signature"
+    },
+    {
+      "type": "textarea",
+      "id": "cat_desc",
+      "label": "Categories Description",
+      "default": "Every category is available to try on at all our flagship stores."
+    },
+    {
+      "type": "text",
+      "id": "cat_browse_text",
+      "label": "Browse Catalog Link Text",
+      "default": "Not ready to visit? Browse our online catalog \u2192"
+    },
+    {
+      "type": "url",
+      "id": "cat_browse_url",
+      "label": "Browse Catalog Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Every Ritual, Every Look"
+    },
+    {
+      "type": "text",
+      "id": "rituals_title",
+      "label": "Rituals Section Heading",
+      "default": "Every ritual, every look"
+    },
+    {
+      "type": "header",
+      "content": "Inside Our Stores (Gallery Photos)"
+    },
+    {
+      "type": "text",
+      "id": "gallery_eyebrow",
+      "label": "Gallery Eyebrow",
+      "default": "INSIDE OUR KOLKATA STORES"
+    },
+    {
+      "type": "text",
+      "id": "gallery_title",
+      "label": "Gallery Title",
+      "default": "Step inside"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_img_feature",
+      "label": "Feature Photo (Large Left)"
+    },
+    {
+      "type": "text",
+      "id": "gallery_caption_feature",
+      "label": "Feature Photo Caption",
+      "default": "Storefront \u00b7 Gariahat (so you recognise it on the street)"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_img_1",
+      "label": "Sub Photo 1"
+    },
+    {
+      "type": "text",
+      "id": "gallery_caption_1",
+      "label": "Sub Photo 1 Caption",
+      "default": "Interior \u00b7 Lake Mall"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_img_2",
+      "label": "Sub Photo 2"
+    },
+    {
+      "type": "text",
+      "id": "gallery_caption_2",
+      "label": "Sub Photo 2 Caption",
+      "default": "Fitting room"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_img_3",
+      "label": "Sub Photo 3"
+    },
+    {
+      "type": "text",
+      "id": "gallery_caption_3",
+      "label": "Sub Photo 3 Caption",
+      "default": "Stylist helping a customer"
+    },
+    {
+      "type": "image_picker",
+      "id": "gallery_img_4",
+      "label": "Sub Photo 4"
+    },
+    {
+      "type": "text",
+      "id": "gallery_caption_4",
+      "label": "Sub Photo 4 Caption",
+      "default": "Kids corner \u00b7 father\u2013son twinning"
+    },
+    {
+      "type": "header",
+      "content": "Customer Reviews"
+    },
+    {
+      "type": "text",
+      "id": "reviews_eyebrow",
+      "label": "Reviews Eyebrow",
+      "default": "CUSTOMER REVIEWS"
+    },
+    {
+      "type": "text",
+      "id": "reviews_heading",
+      "label": "Reviews Heading",
+      "default": "Loved by Kolkata"
+    },
+    {
+      "type": "text",
+      "id": "reviews_score",
+      "label": "Reviews Overall Score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "reviews_meta",
+      "label": "Reviews Meta Text",
+      "default": "Over 300 Google reviews \u00b7 4 stores"
+    },
+    {
+      "type": "textarea",
+      "id": "review_1_quote",
+      "label": "Review 1 Quote",
+      "default": "\u201cThis Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments.\u201d"
+    },
+    {
+      "type": "text",
+      "id": "review_1_name",
+      "label": "Review 1 Customer Name",
+      "default": "Anirban Mukherjee"
+    },
+    {
+      "type": "text",
+      "id": "review_1_store",
+      "label": "Review 1 Store Tag",
+      "default": "Gariahat Boutique"
+    },
+    {
+      "type": "textarea",
+      "id": "review_2_quote",
+      "label": "Review 2 Quote",
+      "default": "\u201cPicked these sherwanis for the wedding day and they were a hit. The fit was right, very comfortable throughout, and we received many compliments.\u201d"
+    },
+    {
+      "type": "text",
+      "id": "review_2_name",
+      "label": "Review 2 Customer Name",
+      "default": "Varun Hegde"
+    },
+    {
+      "type": "text",
+      "id": "review_2_store",
+      "label": "Review 2 Store Tag",
+      "default": "Lake Mall Boutique"
+    },
+    {
+      "type": "textarea",
+      "id": "review_3_quote",
+      "label": "Review 3 Quote",
+      "default": "\u201cBought matching kurtas for all the baraatis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.\u201d"
+    },
+    {
+      "type": "text",
+      "id": "review_3_name",
+      "label": "Review 3 Customer Name",
+      "default": "Rohan Parekh"
+    },
+    {
+      "type": "text",
+      "id": "review_3_store",
+      "label": "Review 3 Store Tag",
+      "default": "Lindsay Street Boutique"
+    },
+    {
+      "type": "text",
+      "id": "reviews_google_link_text",
+      "label": "Google Reviews Link Text",
+      "default": "See all reviews on Google \u2192"
+    },
+    {
+      "type": "url",
+      "id": "reviews_google_link_url",
+      "label": "Google Reviews Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Frequently Asked Questions (8 FAQs)"
+    },
+    {
+      "type": "text",
+      "id": "faq_eyebrow",
+      "label": "FAQ Eyebrow",
+      "default": "FREQUENTLY ASKED"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ Heading",
+      "default": "Before you visit"
+    },
+    {
+      "type": "text",
+      "id": "faq_1_q",
+      "label": "FAQ 1 Question",
+      "default": "Which Kisah store is nearest to me?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_1_a",
+      "label": "FAQ 1 Answer",
+      "default": "We have stores across the city: Gariahat, Lake Mall, Lindsay Street and Allenby Road. Tap 'Get directions' on any store card above to navigate directly."
+    },
+    {
+      "type": "text",
+      "id": "faq_2_q",
+      "label": "FAQ 2 Question",
+      "default": "What are your store timings?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_2_a",
+      "label": "FAQ 2 Answer",
+      "default": "All Kisah stores in Kolkata are open daily from 10:30 AM to 9:30 PM, all 7 days of the week."
+    },
+    {
+      "type": "text",
+      "id": "faq_3_q",
+      "label": "FAQ 3 Question",
+      "default": "Do I need an appointment?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_3_a",
+      "label": "FAQ 3 Answer",
+      "default": "No appointment is needed! Walk in anytime during store hours. Our in-store fashion stylists will assist you with personalized styling, draping, and sizing."
+    },
+    {
+      "type": "text",
+      "id": "faq_4_q",
+      "label": "FAQ 4 Question",
+      "default": "Do you offer alterations?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_4_a",
+      "label": "FAQ 4 Answer",
+      "default": "Yes. We offer expert alterations on sleeve length, chest, waist, and pant hem to ensure your garment fits you like it was custom-made."
+    },
+    {
+      "type": "text",
+      "id": "faq_5_q",
+      "label": "FAQ 5 Question",
+      "default": "Can I exchange an online order at the store?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_5_a",
+      "label": "FAQ 5 Answer",
+      "default": "Yes! We provide hassle-free exchanges within 7 days of delivery. Simply bring your unworn outfit with original tags and invoice to any of our retail boutiques."
+    },
+    {
+      "type": "text",
+      "id": "faq_6_q",
+      "label": "FAQ 6 Question",
+      "default": "Are store prices the same as online?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_6_a",
+      "label": "FAQ 6 Answer",
+      "default": "Yes, all prices and official promotions are completely identical online and in-store."
+    },
+    {
+      "type": "text",
+      "id": "faq_7_q",
+      "label": "FAQ 7 Question",
+      "default": "Do you have kids' and plus sizes?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_7_a",
+      "label": "FAQ 7 Answer",
+      "default": "Yes! We carry complete ranges from kids ethnic wear (toddler to teen) up to plus sizes (up to 5XL/6XL in select designs)."
+    },
+    {
+      "type": "text",
+      "id": "faq_8_q",
+      "label": "FAQ 8 Question",
+      "default": "Is parking available?"
+    },
+    {
+      "type": "textarea",
+      "id": "faq_8_a",
+      "label": "FAQ 8 Answer",
+      "default": "Yes. Lake Mall has dedicated mall parking. Gariahat, Lindsay Street and Allenby Road stores have convenient street and nearby parking lots."
+    },
+    {
+      "type": "text",
+      "id": "faq_footer_text",
+      "label": "FAQ Footer Text",
+      "default": "Still have a question? Call a store or WhatsApp us"
+    },
+    {
+      "type": "header",
+      "content": "Bottom CTA Banner"
+    },
+    {
+      "type": "text",
+      "id": "bottom_heading",
+      "label": "Bottom Heading",
+      "default": "Your next look is waiting in Kolkata"
+    },
+    {
+      "type": "textarea",
+      "id": "bottom_subheading",
+      "label": "Bottom Subheading",
+      "default": "Walk into any Kisah store today. Open 10:30 AM to 9:30 PM, all days."
     }
   ],
   "blocks": [
@@ -3136,7 +3676,7 @@
           "type": "text",
           "id": "hours",
           "label": "Opening Hours",
-          "default": "10:30 AM – 9:30 PM · All days"
+          "default": "10:30 AM \u2013 9:30 PM \u00b7 All days"
         },
         {
           "type": "text",
@@ -3200,7 +3740,7 @@
             "address": "191/1 Rash Behari Avenue, opposite Spencer's Gariahat, Kolkata 700029",
             "landmark": "Opposite Spencer's Gariahat",
             "phone": "+91 62893 00120",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "120+ reviews",
             "maps_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
@@ -3216,7 +3756,7 @@
             "address": "3rd Floor, Lake Mall, 10A Rash Behari Avenue, Kalighat, Kolkata 700029",
             "landmark": "Inside Lake Mall, 3rd floor",
             "phone": "+91 92306 47537",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.7",
             "reviews": "95+ reviews",
             "maps_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
@@ -3232,7 +3772,7 @@
             "address": "Shop No. 4, Premises No. 20, Chowringhee Road, Kolkata 700087",
             "landmark": "Near New Market / Chowringhee Road",
             "phone": "+91 92303 74678",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.9",
             "reviews": "110+ reviews",
             "maps_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
@@ -3248,7 +3788,7 @@
             "address": "6B, Allenby Road, Kolkata 700020",
             "landmark": "Near Forum Mall / Elgin Road",
             "phone": "+91 92303 74683",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "50+ reviews",
             "maps_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
@@ -3264,7 +3804,7 @@
             "address": "Ground Floor, Shreyas Plaza, 100 Feet Road, Indiranagar, Bengaluru 560038",
             "landmark": "100 Feet Road, Indiranagar",
             "phone": "+91 92306 47534",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "140+ reviews",
             "maps_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
@@ -3280,7 +3820,7 @@
             "address": "S-50, 2nd Floor, Phoenix Marketcity, Mahadevapura, Bengaluru 560048",
             "landmark": "Near KR Puram Flyover",
             "phone": "+91 95353 19619",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.7",
             "reviews": "85+ reviews",
             "maps_url": "https://maps.google.com/?q=Phoenix+Marketcity+Bangalore+Kisah",
@@ -3296,7 +3836,7 @@
             "address": "No 33, 11th Main Road, 4th Block Jayanagar, Bengaluru 560041",
             "landmark": "4th Block Jayanagar",
             "phone": "+91 92306 47534",
-            "hours": "10:30 AM – 10:00 PM · All days",
+            "hours": "10:30 AM \u2013 10:00 PM \u00b7 All days",
             "rating": "4.9",
             "reviews": "75+ reviews",
             "maps_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
@@ -3312,7 +3852,7 @@
             "address": "No.183, Ground, 1st & 2nd Floor, Commercial Street, Bengaluru 560052",
             "landmark": "Commercial Street Main",
             "phone": "+91 92303 74682",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "hours": "11:00 AM \u2013 10:00 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "90+ reviews",
             "maps_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
@@ -3328,7 +3868,7 @@
             "address": "SP-03, 3rd Floor, Sarath City Capital Mall, HITEC City, Kondapur, Hyderabad 500084",
             "landmark": "3rd Floor, Sarath City Capital Mall",
             "phone": "+91 92306 47536",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "hours": "10:30 AM \u2013 9:30 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "160+ reviews",
             "maps_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
@@ -3344,7 +3884,7 @@
             "address": "3-6-475/1/A/B/C Bhavani Arcade, Himayat Nagar Rd, Hyderabad 500029",
             "landmark": "Bhavani Arcade, Himayat Nagar",
             "phone": "+91 92306 47536",
-            "hours": "10:30 AM – 10:00 PM · All days",
+            "hours": "10:30 AM \u2013 10:00 PM \u00b7 All days",
             "rating": "4.7",
             "reviews": "60+ reviews",
             "maps_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
@@ -3360,7 +3900,7 @@
             "address": "No. SF224B, Second Floor, Infiniti Mall, New Link Road, Malad West, Mumbai 400064",
             "landmark": "Second Floor, Infiniti Mall",
             "phone": "+91 99672 36627",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "hours": "11:00 AM \u2013 10:00 PM \u00b7 All days",
             "rating": "4.9",
             "reviews": "130+ reviews",
             "maps_url": "https://maps.google.com/?q=Infiniti+Mall+Malad+Kisah",
@@ -3376,7 +3916,7 @@
             "address": "Unit No. S-39, Inorbit Mall, Salagramapuram, Visakhapatnam 530024",
             "landmark": "Second Floor, Inorbit Mall",
             "phone": "+91 81009 93480",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "hours": "11:00 AM \u2013 10:00 PM \u00b7 All days",
             "rating": "4.8",
             "reviews": "50+ reviews",
             "maps_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
@@ -3392,7 +3932,7 @@
             "address": "Jewel M3M Mall, Sector 25, Gurgaon, Haryana 122002",
             "landmark": "Jewel M3M Mall",
             "phone": "+91 81009 93480",
-            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "hours": "10:30 AM \u2013 9:30 PM (All Days)",
             "rating": "5.0",
             "reviews": "Opening Soon",
             "maps_url": "https://maps.google.com/?q=Jewel+M3M+Mall+Gurgaon",
@@ -3409,7 +3949,7 @@
             "address": "Pacific Mall, Jaipur, Rajasthan 302001",
             "landmark": "Pacific Mall",
             "phone": "+91 81009 93480",
-            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "hours": "10:30 AM \u2013 9:30 PM (All Days)",
             "rating": "5.0",
             "reviews": "Opening Soon",
             "maps_url": "https://maps.google.com/?q=Pacific+Mall+Jaipur",
