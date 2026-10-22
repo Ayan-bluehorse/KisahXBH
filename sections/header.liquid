@@ -78,6 +78,88 @@
       height: 20px !important;
     }
   }
+
+  /* Mobile Full Search Bar */
+  .kisah-mobile-search-bar {
+    display: none;
+  }
+  @media (max-width: 767.98px) {
+    .kisah-mobile-search-bar {
+      display: block;
+      width: 100%;
+      background-color: var(--header-bg-col, #ffffff);
+      padding: 2px 14px 10px 14px;
+      box-sizing: border-box;
+    }
+    .kisah-mobile-search-bar__container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .kisah-mobile-search-bar__form {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 42px;
+      background: #f7f7f8;
+      border: 1px solid #e5e5ea;
+      border-radius: 22px;
+      padding: 0 14px;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kisah-mobile-search-bar__form:focus-within {
+      background: #ffffff;
+      border-color: #201747;
+      box-shadow: 0 2px 8px rgba(32, 23, 71, 0.08);
+    }
+    .kisah-mobile-search-bar__submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0 10px 0 0;
+      color: #6d7175;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .kisah-mobile-search-bar__submit svg {
+      width: 18px !important;
+      height: 18px !important;
+      display: block;
+    }
+    .kisah-mobile-search-bar__input {
+      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      font-family: var(--base-font-family, 'Manrope', sans-serif);
+      font-size: 14px;
+      line-height: 1.2;
+      color: #171717;
+      padding: 0 !important;
+      margin: 0 !important;
+      -webkit-appearance: none;
+    }
+    .kisah-mobile-search-bar__input::placeholder {
+      color: #8e8e93;
+      font-size: 13.5px;
+      font-weight: 400;
+    }
+    /* Hide top-row mobile search icon to avoid duplicate */
+    .logo-area__left .show-search-link,
+    .logo-area__right .show-search-link {
+      display: none !important;
+    }
+  }
 {% endstyle %}
 
 <script>
@@ -426,6 +508,112 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       </div>
     </div>
+
+    {%- if section.settings.enable_search -%}
+      <div class="kisah-mobile-search-bar" id="kisahMobileSearchBar">
+        <div class="kisah-mobile-search-bar__container">
+          <form class="kisah-mobile-search-bar__form" action="{{ routes.search_url }}" method="get" role="search" autocomplete="off">
+            <button type="submit" class="kisah-mobile-search-bar__submit" aria-label="{{ 'general.search.submit' | t | default: 'Search' | escape }}">
+              {%- render 'icon-search' -%}
+            </button>
+            <input type="search"
+                   name="q"
+                   class="kisah-mobile-search-bar__input"
+                   placeholder="Search for &quot;Kurtas&quot;"
+                   autocomplete="off"
+                   autocorrect="off"
+                   autocapitalize="off"
+                   spellcheck="false"
+                   aria-label="{{ 'general.search.title' | t | default: 'Search' | escape }}" />
+          </form>
+        </div>
+        <script>
+        (function() {
+          function initSearchTypewriter() {
+            const inputs = document.querySelectorAll('.kisah-mobile-search-bar__input, .main-search__input');
+            if (!inputs.length) return;
+
+            const keywords = [
+              'Kurtas',
+              'Nehru Jackets',
+              'Kurta Sets',
+              'Diwali Outfits',
+              'Short Kurtas',
+              'Indowestern',
+              'Silk Kurtas',
+              'Wedding Sherwanis'
+            ];
+
+            const prefix = 'Search for "';
+            const suffix = '"';
+
+            inputs.forEach(function(input) {
+              if (input.__typewriterInitialized) return;
+              input.__typewriterInitialized = true;
+
+              let wordIndex = 0;
+              let charIndex = 0;
+              let isDeleting = false;
+              let timeoutId = null;
+              let isPaused = false;
+
+              function type() {
+                if (isPaused) return;
+
+                const currentWord = keywords[wordIndex];
+
+                if (isDeleting) {
+                  charIndex--;
+                  input.setAttribute('placeholder', prefix + currentWord.substring(0, charIndex) + suffix);
+
+                  if (charIndex <= 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % keywords.length;
+                    timeoutId = setTimeout(type, 350);
+                    return;
+                  }
+                  timeoutId = setTimeout(type, 35);
+                } else {
+                  charIndex++;
+                  input.setAttribute('placeholder', prefix + currentWord.substring(0, charIndex) + suffix);
+
+                  if (charIndex >= currentWord.length) {
+                    isDeleting = true;
+                    timeoutId = setTimeout(type, 1700);
+                    return;
+                  }
+                  timeoutId = setTimeout(type, 75);
+                }
+              }
+
+              input.addEventListener('focus', function() {
+                isPaused = true;
+                clearTimeout(timeoutId);
+                input.setAttribute('placeholder', 'Search for kurtas, jackets, styles, SKUs...');
+              });
+
+              input.addEventListener('blur', function() {
+                if (!input.value.trim()) {
+                  isPaused = false;
+                  charIndex = 0;
+                  isDeleting = false;
+                  type();
+                }
+              });
+
+              timeoutId = setTimeout(type, 600);
+            });
+          }
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSearchTypewriter);
+          } else {
+            initSearchTypewriter();
+          }
+        })();
+        </script>
+      </div>
+    {%- endif -%}
  
     {%- if section.settings.enable_search -%}
       {%- liquid
