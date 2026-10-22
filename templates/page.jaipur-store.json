@@ -1,0 +1,290 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "show_page_title": false,
+        "full_width": true
+      }
+    },
+    "kolkata_store_landing": {
+      "type": "kolkata-store-landing",
+      "blocks": {
+        "store_kol_gariahat": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "name": "Gariahat",
+            "image": "shopify://shop_images/Gariahat.png",
+            "address": "191/1 Rash Behari Avenue, opposite Spencer's Gariahat, Kolkata 700029",
+            "landmark": "Opposite Spencer's Gariahat",
+            "phone": "+91 62893 00120",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.8",
+            "reviews": "120+ reviews",
+            "maps_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
+            "lat": "22.5186",
+            "lng": "88.3644",
+            "is_coming_soon": false
+          }
+        },
+        "store_kol_lake_mall": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "name": "Lake Mall",
+            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "address": "3rd Floor, Lake Mall, 10A Rash Behari Avenue, Kalighat, Kolkata 700029",
+            "landmark": "Inside Lake Mall, 3rd floor",
+            "phone": "+91 92306 47537",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.7",
+            "reviews": "95+ reviews",
+            "maps_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
+            "lat": "22.5163",
+            "lng": "88.3491",
+            "is_coming_soon": false
+          }
+        },
+        "store_kol_lindsay": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "name": "Lindsay Street",
+            "image": "shopify://shop_images/lindsay_street.jpg",
+            "address": "Shop No. 4, Premises No. 20, Chowringhee Road, Kolkata 700087",
+            "landmark": "Near New Market / Chowringhee Road",
+            "phone": "+91 92303 74678",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.9",
+            "reviews": "110+ reviews",
+            "maps_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
+            "lat": "22.5601",
+            "lng": "88.3518",
+            "is_coming_soon": false
+          }
+        },
+        "store_kol_allenby": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "name": "Allenby Road",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-09_at_6.08.13_PM.jpg",
+            "address": "6B, Allenby Road, Kolkata 700020",
+            "landmark": "Near Forum Mall / Elgin Road",
+            "phone": "+91 92303 74683",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.8",
+            "reviews": "50+ reviews",
+            "maps_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
+            "lat": "22.536692",
+            "lng": "88.351196",
+            "is_coming_soon": false
+          }
+        },
+        "store_blr_indiranagar": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "name": "Indiranagar",
+            "image": "shopify://shop_images/blr_store_image.jpg",
+            "address": "Ground Floor, Shreyas Plaza, 100 Feet Road, Indiranagar, Bengaluru 560038",
+            "landmark": "100 Feet Road, Indiranagar",
+            "phone": "+91 92306 47534",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.8",
+            "reviews": "140+ reviews",
+            "maps_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
+            "lat": "12.9716",
+            "lng": "77.6412",
+            "is_coming_soon": false
+          }
+        },
+        "store_blr_phoenix": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "name": "Phoenix Marketcity",
+            "image": "shopify://shop_images/phoenix_store.png",
+            "address": "S-50, 2nd Floor, Phoenix Marketcity, Mahadevapura, Bengaluru 560048",
+            "landmark": "Near KR Puram Flyover",
+            "phone": "+91 95353 19619",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.7",
+            "reviews": "85+ reviews",
+            "maps_url": "https://maps.google.com/?q=Phoenix+Marketcity+Bangalore+Kisah",
+            "lat": "12.9959",
+            "lng": "77.6963",
+            "is_coming_soon": false
+          }
+        },
+        "store_blr_jayanagar": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "name": "Jaya Nagar",
+            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
+            "address": "No 33, 11th Main Road, 4th Block Jayanagar, Bengaluru 560041",
+            "landmark": "4th Block Jayanagar",
+            "phone": "+91 92306 47534",
+            "hours": "10:30 AM – 10:00 PM · All days",
+            "rating": "4.9",
+            "reviews": "75+ reviews",
+            "maps_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
+            "lat": "12.928987",
+            "lng": "77.586173",
+            "is_coming_soon": false
+          }
+        },
+        "store_blr_commercial": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "name": "Commercial Street",
+            "image": "shopify://shop_images/commercial_street.png",
+            "address": "No.183, Ground, 1st & 2nd Floor, Commercial Street, Bengaluru 560052",
+            "landmark": "Commercial Street Main",
+            "phone": "+91 92303 74682",
+            "hours": "11:00 AM – 10:00 PM · All days",
+            "rating": "4.8",
+            "reviews": "90+ reviews",
+            "maps_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
+            "lat": "12.981702",
+            "lng": "77.610141",
+            "is_coming_soon": false
+          }
+        },
+        "store_hyd_sarath": {
+          "type": "store",
+          "settings": {
+            "city": "Hyderabad",
+            "name": "Sarath City Mall",
+            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "address": "SP-03, 3rd Floor, Sarath City Capital Mall, HITEC City, Kondapur, Hyderabad 500084",
+            "landmark": "3rd Floor, Sarath City Capital Mall",
+            "phone": "+91 92306 47536",
+            "hours": "10:30 AM – 9:30 PM · All days",
+            "rating": "4.8",
+            "reviews": "160+ reviews",
+            "maps_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
+            "lat": "17.4563",
+            "lng": "78.3662",
+            "is_coming_soon": false
+          }
+        },
+        "store_hyd_himayat": {
+          "type": "store",
+          "settings": {
+            "city": "Hyderabad",
+            "name": "Himayat Nagar",
+            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
+            "address": "3-6-475/1/A/B/C Bhavani Arcade, Himayat Nagar Rd, Hyderabad 500029",
+            "landmark": "Bhavani Arcade, Himayat Nagar",
+            "phone": "+91 92306 47536",
+            "hours": "10:30 AM – 10:00 PM · All days",
+            "rating": "4.7",
+            "reviews": "60+ reviews",
+            "maps_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
+            "lat": "17.402674",
+            "lng": "78.483428",
+            "is_coming_soon": false
+          }
+        },
+        "store_mum_malad": {
+          "type": "store",
+          "settings": {
+            "city": "Mumbai",
+            "name": "Infiniti Mall (Malad)",
+            "image": "shopify://shop_images/malad_store.png",
+            "address": "No. SF224B, Second Floor, Infiniti Mall, New Link Road, Malad West, Mumbai 400064",
+            "landmark": "Second Floor, Infiniti Mall",
+            "phone": "+91 99672 36627",
+            "hours": "11:00 AM – 10:00 PM · All days",
+            "rating": "4.9",
+            "reviews": "130+ reviews",
+            "maps_url": "https://maps.google.com/?q=Infiniti+Mall+Malad+Kisah",
+            "lat": "19.1843",
+            "lng": "72.8347",
+            "is_coming_soon": false
+          }
+        },
+        "store_viz_inorbit": {
+          "type": "store",
+          "settings": {
+            "city": "Vishakhapatnam",
+            "name": "Inorbit Mall (Vizag)",
+            "image": "shopify://shop_images/vizag.png",
+            "address": "Unit No. S-39, Inorbit Mall, Salagramapuram, Visakhapatnam 530024",
+            "landmark": "Second Floor, Inorbit Mall",
+            "phone": "+91 81009 93480",
+            "hours": "11:00 AM – 10:00 PM · All days",
+            "rating": "4.8",
+            "reviews": "50+ reviews",
+            "maps_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
+            "lat": "17.741648",
+            "lng": "83.293316",
+            "is_coming_soon": false
+          }
+        },
+        "store_gur_m3m": {
+          "type": "store",
+          "settings": {
+            "city": "Gurgaon",
+            "name": "Jewel M3M Mall",
+            "address": "Jewel M3M Mall, Sector 25, Gurgaon, Haryana 122002",
+            "landmark": "Jewel M3M Mall",
+            "phone": "+91 81009 93480",
+            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "rating": "5.0",
+            "reviews": "Opening Soon",
+            "maps_url": "https://maps.google.com/?q=Jewel+M3M+Mall+Gurgaon",
+            "lat": "28.4595",
+            "lng": "77.0266",
+            "is_coming_soon": true
+          }
+        },
+        "store_jai_pacific": {
+          "type": "store",
+          "settings": {
+            "city": "Jaipur",
+            "name": "Pacific Mall",
+            "address": "Pacific Mall, Jaipur, Rajasthan 302001",
+            "landmark": "Pacific Mall",
+            "phone": "+91 81009 93480",
+            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "rating": "5.0",
+            "reviews": "Opening Soon",
+            "maps_url": "https://maps.google.com/?q=Pacific+Mall+Jaipur",
+            "lat": "26.9124",
+            "lng": "75.7873",
+            "is_coming_soon": true
+          }
+        }
+      },
+      "block_order": [
+        "store_kol_gariahat",
+        "store_kol_lake_mall",
+        "store_kol_lindsay",
+        "store_kol_allenby",
+        "store_blr_indiranagar",
+        "store_blr_phoenix",
+        "store_blr_jayanagar",
+        "store_blr_commercial",
+        "store_hyd_sarath",
+        "store_hyd_himayat",
+        "store_mum_malad",
+        "store_viz_inorbit",
+        "store_gur_m3m",
+        "store_jai_pacific"
+      ],
+      "settings": {
+        "default_city": "jaipur"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "kolkata_store_landing"
+  ]
+}
