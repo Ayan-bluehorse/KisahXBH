@@ -24,10 +24,10 @@
 
     {%- if section.blocks.size > 0 -%}
       <div class="v5-sty-rail-wrapper">
-        {%- if section.blocks.size > 6 -%}
+        {%- if section.blocks.size > 2 -%}
           <button 
             type="button" 
-            class="v5-sty-arrow v5-sty-arrow--prev" 
+            class="v5-sty-arrow v5-sty-arrow--prev is-hidden" 
             data-rail-prev="{{ section.id }}" 
             aria-label="Scroll left"
           >
@@ -79,7 +79,7 @@
           {%- endfor -%}
         </div>
 
-        {%- if section.blocks.size > 6 -%}
+        {%- if section.blocks.size > 2 -%}
           <button 
             type="button" 
             class="v5-sty-arrow v5-sty-arrow--next" 
@@ -212,9 +212,43 @@
     background: #eae6de;
   }
 
-  /* Arrows 100% hidden on mobile and tablet */
+  /* Small white arrows for mobile & tablet */
   #shopify-section-{{ section.id }} .v5-sty-arrow {
-    display: none !important;
+    display: flex;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(24, 23, 26, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+    color: #18171a;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #shopify-section-{{ section.id }} .v5-sty-arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: #18171a;
+  }
+  #shopify-section-{{ section.id }} .v5-sty-arrow--prev {
+    left: 4px;
+  }
+  #shopify-section-{{ section.id }} .v5-sty-arrow--next {
+    right: 4px;
+  }
+  #shopify-section-{{ section.id }} .v5-sty-arrow.is-hidden,
+  #shopify-section-{{ section.id }} .v5-sty-arrow[disabled] {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
   }
 
   /* Tablet: 768px - 991px */
@@ -275,41 +309,33 @@
     }
 
     #shopify-section-{{ section.id }} .v5-sty-arrow {
-      display: flex !important;
-      position: absolute;
-      top: 42%;
-      transform: translateY(-50%);
-      z-index: 4;
       width: 36px;
       height: 36px;
+      top: 42%;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(24, 23, 26, 0.12);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       color: #18171a;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      padding: 0;
       transition: all 0.2s ease;
     }
-    #shopify-section-{{ section.id }} .v5-sty-arrow.is-hidden {
-      display: none !important;
+    #shopify-section-{{ section.id }} .v5-sty-arrow svg {
+      width: 18px;
+      height: 18px;
     }
     #shopify-section-{{ section.id }} .v5-sty-arrow:hover {
       background: #18171a;
       color: #ffffff;
       border-color: #18171a;
     }
+    #shopify-section-{{ section.id }} .v5-sty-arrow:hover svg {
+      stroke: #ffffff;
+    }
     #shopify-section-{{ section.id }} .v5-sty-arrow--prev {
       left: -14px;
     }
     #shopify-section-{{ section.id }} .v5-sty-arrow--next {
       right: -14px;
-    }
-    #shopify-section-{{ section.id }} .v5-sty-arrow[disabled] {
-      opacity: 0.3;
-      pointer-events: none;
     }
   }
 </style>
@@ -325,7 +351,6 @@
 
     function updateArrows() {
       if (!prevBtn || !nextBtn) return;
-      if (window.innerWidth < 992) return;
 
       var isScrollable = track.scrollWidth > track.clientWidth + 4;
       if (!isScrollable) {
@@ -337,21 +362,21 @@
       nextBtn.classList.remove('is-hidden');
 
       var scrollLeft = track.scrollLeft;
-      var maxScroll = track.scrollWidth - track.clientWidth - 2;
-      prevBtn.disabled = scrollLeft <= 0;
+      var maxScroll = track.scrollWidth - track.clientWidth - 4;
+      prevBtn.disabled = scrollLeft <= 4;
       nextBtn.disabled = scrollLeft >= maxScroll;
     }
 
     if (prevBtn) {
       prevBtn.addEventListener('click', function() {
-        var scrollAmount = track.clientWidth * 0.75;
+        var scrollAmount = track.clientWidth * (window.innerWidth < 768 ? 0.65 : 0.75);
         track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', function() {
-        var scrollAmount = track.clientWidth * 0.75;
+        var scrollAmount = track.clientWidth * (window.innerWidth < 768 ? 0.65 : 0.75);
         track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       });
     }
