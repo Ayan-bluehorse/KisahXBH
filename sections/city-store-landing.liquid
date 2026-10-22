@@ -44,8 +44,8 @@
 
 <div class="ksl-wrap" id="ksl-wrap-{{ section.id }}" data-section-id="{{ section.id }}" data-default-city="{{ initial_city }}">
 
-  <!-- 1. DYNAMIC CITY SWITCHER LIST -->
-  {% if city_list.size > 0 %}
+  <!-- 1. DYNAMIC CITY SWITCHER LIST (only show when multiple cities exist) -->
+  {% if city_list.size > 1 %}
     <nav class="ksl-city-bar" aria-label="Select Kisah City">
       <div class="ksl-container ksl-city-bar__inner">
         <div class="ksl-city-bar__label">
@@ -2512,9 +2512,22 @@
     var geoTriggers = Array.from(document.querySelectorAll('.ksl-geo-trigger'));
     var geoStatus = document.getElementById('kslGeoStatus');
 
+    // Detect single-city mode (page has only stores from one city)
+    var uniqueCitiesOnPage = [];
+    allCards.forEach(function(card) {
+      var c = card.getAttribute('data-city');
+      if (c && uniqueCitiesOnPage.indexOf(c) === -1) uniqueCitiesOnPage.push(c);
+    });
+    var isSingleCityPage = uniqueCitiesOnPage.length <= 1;
+
     // Get initial city from URL param ?city= or default setting
     var urlParams = new URLSearchParams(window.location.search);
     var requestedCity = (urlParams.get('city') || wrap.getAttribute('data-default-city') || 'kolkata').toLowerCase().trim();
+
+    // On single-city pages, always use 'all' to show everything (since all blocks are same city)
+    if (isSingleCityPage && requestedCity !== 'all') {
+      requestedCity = 'all';
+    }
 
     var activeCityKey = '';
     var activeCityName = '';
@@ -2575,136 +2588,146 @@
         storeNamesFormatted = storeNamesArray.slice(0, -1).join(', ') + ' and ' + storeNamesArray[storeNamesArray.length - 1];
       }
 
-      // 1. Hero Eyebrow
-      var heroEyebrow = document.getElementById('kslHeroEyebrow');
-      if (heroEyebrow) {
-        heroEyebrow.textContent = "MEN'S WEDDING & FESTIVE WEAR · " + (cKey === 'all' ? 'INDIA' : activeCityName.toUpperCase());
-      }
+      // On single-city pages, preserve section settings text (editable in Theme Customizer)
+      // Only override text dynamically on multi-city pages when switching cities
+      if (!isSingleCityPage) {
+        // 1. Hero Eyebrow
+        var heroEyebrow = document.getElementById('kslHeroEyebrow');
+        if (heroEyebrow) {
+          heroEyebrow.textContent = "MEN'S WEDDING & FESTIVE WEAR · " + (cKey === 'all' ? 'INDIA' : activeCityName.toUpperCase());
+        }
 
-      // 2. Hero Title
-      var storeWord = matchingCards.length === 1 ? 'store' : 'stores';
-      if (heroTitle) {
-        if (cKey === 'all') {
-          heroTitle.innerHTML = matchingCards.length + ' Kisah Flagship Stores Across India. Walk in, try on, stand out.';
-        } else {
-          heroTitle.innerHTML = matchingCards.length + ' Kisah ' + storeWord + ' in ' + activeCityName + '. Walk in, try on, stand out.';
+        // 2. Hero Title
+        var storeWord = matchingCards.length === 1 ? 'store' : 'stores';
+        if (heroTitle) {
+          if (cKey === 'all') {
+            heroTitle.innerHTML = matchingCards.length + ' Kisah Flagship Stores Across India. Walk in, try on, stand out.';
+          } else {
+            heroTitle.innerHTML = matchingCards.length + ' Kisah ' + storeWord + ' in ' + activeCityName + '. Walk in, try on, stand out.';
+          }
+        }
+
+        // 3. Hero Subtitle
+        if (heroSubtitle) {
+          if (cKey === 'all') {
+            heroSubtitle.textContent = 'Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Walk into our flagship boutiques across India — open daily, 10:30 AM to 9:30 PM.';
+          } else {
+            heroSubtitle.textContent = 'Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. ' + (storeNamesFormatted ? storeNamesFormatted + ' — ' : '') + 'open daily, 10:30 AM to 9:30 PM.';
+          }
+        }
+
+        // 5. Stores Section Header & Subheading
+        if (storesTitle) {
+          storesTitle.textContent = cKey === 'all' ? 'Visit Kisah Flagships Across India' : 'Visit Kisah in ' + activeCityName;
+        }
+        var storesDesc = document.getElementById('kslStoresDesc');
+        if (storesDesc) {
+          if (cKey === 'kolkata') {
+            storesDesc.textContent = 'Two stores on Rash Behari Avenue, one in Central Kolkata. Walk in — no appointment needed.';
+          } else if (cKey === 'all') {
+            storesDesc.textContent = 'Explore our luxury flagship boutiques nationwide. Walk in — no appointment needed.';
+          } else {
+            storesDesc.textContent = 'Explore our boutiques across ' + activeCityName + (storeNamesFormatted ? ' (' + storeNamesFormatted + ')' : '') + '. Walk in — no appointment needed.';
+          }
         }
       }
 
-      // 3. Hero Subtitle
-      if (heroSubtitle) {
-        if (cKey === 'all') {
-          heroSubtitle.textContent = 'Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Walk into our flagship boutiques across India — open daily, 10:30 AM to 9:30 PM.';
-        } else {
-          heroSubtitle.textContent = 'Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. ' + (storeNamesFormatted ? storeNamesFormatted + ' — ' : '') + 'open daily, 10:30 AM to 9:30 PM.';
-        }
-      }
-
-      // 4. Trust Strip
+      // 4. Trust Strip (always update since it's count-based)
       if (trustCount) {
         trustCount.textContent = matchingCards.length + ' ' + (matchingCards.length === 1 ? 'Boutique' : 'Boutiques');
       }
       if (trustCity) {
-        trustCity.textContent = cKey === 'all' ? 'Across India' : 'Across ' + activeCityName;
+        trustCity.textContent = isSingleCityPage ? 'Across ' + (matchingCards.length > 0 ? matchingCards[0].getAttribute('data-city-name') : 'the city') : (cKey === 'all' ? 'Across India' : 'Across ' + activeCityName);
       }
 
-      // 5. Stores Section Header & Subheading
-      if (storesTitle) {
-        storesTitle.textContent = cKey === 'all' ? 'Visit Kisah Flagships Across India' : 'Visit Kisah in ' + activeCityName;
-      }
-      var storesDesc = document.getElementById('kslStoresDesc');
-      if (storesDesc) {
-        if (cKey === 'kolkata') {
-          storesDesc.textContent = 'Two stores on Rash Behari Avenue, one in Central Kolkata. Walk in — no appointment needed.';
-        } else if (cKey === 'all') {
-          storesDesc.textContent = 'Explore our luxury flagship boutiques nationwide. Walk in — no appointment needed.';
-        } else {
-          storesDesc.textContent = 'Explore our boutiques across ' + activeCityName + (storeNamesFormatted ? ' (' + storeNamesFormatted + ')' : '') + '. Walk in — no appointment needed.';
+      // 6-7: Map & Upcoming Card (skip on single-city pages to preserve section settings)
+      if (!isSingleCityPage) {
+        // 6. Live Google Map
+        var mapTitle = document.getElementById('kslMapTitle');
+        var mapIframe = document.getElementById('kslMapIframe');
+        if (mapTitle) {
+          mapTitle.textContent = 'Live Google Map · ' + (cKey === 'all' ? 'All' : activeCityName) + ' Stores';
         }
-      }
-
-      // 6. Live Google Map
-      var mapTitle = document.getElementById('kslMapTitle');
-      var mapIframe = document.getElementById('kslMapIframe');
-      if (mapTitle) {
-        mapTitle.textContent = 'Live Google Map · ' + (cKey === 'all' ? 'All' : activeCityName) + ' Stores';
-      }
-      if (mapIframe) {
-        if (cKey === 'kolkata') {
-          mapIframe.src = 'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58963.91890333215!2d88.3300!3d22.5300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sKisah%20Stores%20Kolkata!5e0!3m2!1sen!2sin!4v1729600000000!5m2!1sen!2sin';
-        } else {
-          var mapQuery = 'Kisah ' + (cKey === 'all' ? 'Stores India' : (activeCityName + ' Stores'));
-          mapIframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(mapQuery) + '&t=&z=12&ie=UTF8&iwloc=&output=embed';
+        if (mapIframe) {
+          if (cKey === 'kolkata') {
+            mapIframe.src = 'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d58963.91890333215!2d88.3300!3d22.5300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sKisah%20Stores%20Kolkata!5e0!3m2!1sen!2sin!4v1729600000000!5m2!1sen!2sin';
+          } else {
+            var mapQuery = 'Kisah ' + (cKey === 'all' ? 'Stores India' : (activeCityName + ' Stores'));
+            mapIframe.src = 'https://maps.google.com/maps?q=' + encodeURIComponent(mapQuery) + '&t=&z=12&ie=UTF8&iwloc=&output=embed';
+          }
         }
-      }
 
-      // 7. Upcoming Store Card
-      var upcomingCard = document.querySelector('.ksl-upcoming-card');
-      var upcomingTitle = document.getElementById('kslUpcomingTitle');
-      var upcomingDesc = document.getElementById('kslUpcomingDesc');
-      var upcomingLink = upcomingCard ? upcomingCard.querySelector('a') : null;
+        // 7. Upcoming Store Card
+        var upcomingCard = document.querySelector('.ksl-upcoming-card');
+        var upcomingTitle = document.getElementById('kslUpcomingTitle');
+        var upcomingDesc = document.getElementById('kslUpcomingDesc');
+        var upcomingLink = upcomingCard ? upcomingCard.querySelector('a') : null;
 
-      if (upcomingTitle && upcomingDesc) {
-        var comingSoonCard = matchingCards.find(function(c) {
-          return c.getAttribute('data-is-soon') === 'true';
-        });
+        if (upcomingTitle && upcomingDesc) {
+          var comingSoonCard = matchingCards.find(function(c) {
+            return c.getAttribute('data-is-soon') === 'true';
+          });
 
-        if (cKey === 'kolkata') {
-          upcomingTitle.textContent = 'Kisah Allenby Road';
-          upcomingDesc.textContent = 'A fourth Kolkata store is on its way. Until then, Gariahat, Lake Mall and Lindsay Street are the closest destinations.';
-          if (upcomingLink) {
-            upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me when Allenby Road store opens.');
-          }
-        } else if (comingSoonCard) {
-          var csName = comingSoonCard.getAttribute('data-store-name');
-          upcomingTitle.textContent = 'Kisah ' + csName;
-          upcomingDesc.textContent = 'A new Kisah destination in ' + activeCityName + ' is on its way. Stay tuned for our launch.';
-          if (upcomingLink) {
-            upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me when ' + csName + ' opens in ' + activeCityName + '.');
-          }
-        } else {
-          upcomingTitle.textContent = 'More ' + activeCityName + ' Stores Coming Soon';
-          upcomingDesc.textContent = 'New Kisah destinations are expanding across ' + activeCityName + '. Until then, visit our open boutiques at ' + (storeNamesFormatted || activeCityName) + '.';
-          if (upcomingLink) {
-            upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me about upcoming stores in ' + activeCityName + '.');
+          if (cKey === 'kolkata') {
+            upcomingTitle.textContent = 'Kisah Allenby Road';
+            upcomingDesc.textContent = 'A fourth Kolkata store is on its way. Until then, Gariahat, Lake Mall and Lindsay Street are the closest destinations.';
+            if (upcomingLink) {
+              upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me when Allenby Road store opens.');
+            }
+          } else if (comingSoonCard) {
+            var csName = comingSoonCard.getAttribute('data-store-name');
+            upcomingTitle.textContent = 'Kisah ' + csName;
+            upcomingDesc.textContent = 'A new Kisah destination in ' + activeCityName + ' is on its way. Stay tuned for our launch.';
+            if (upcomingLink) {
+              upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me when ' + csName + ' opens in ' + activeCityName + '.');
+            }
+          } else {
+            upcomingTitle.textContent = 'More ' + activeCityName + ' Stores Coming Soon';
+            upcomingDesc.textContent = 'New Kisah destinations are expanding across ' + activeCityName + '. Until then, visit our open boutiques at ' + (storeNamesFormatted || activeCityName) + '.';
+            if (upcomingLink) {
+              upcomingLink.href = 'https://wa.me/918100993480?text=' + encodeURIComponent('Hi Kisah, please notify me about upcoming stores in ' + activeCityName + '.');
+            }
           }
         }
       }
 
-      // 8. "Step inside" Gallery Eyebrow & Feature Photo
-      var stepInsideEyebrow = document.getElementById('kslStepInsideEyebrow');
-      if (stepInsideEyebrow) {
-        stepInsideEyebrow.textContent = 'INSIDE OUR ' + (cKey === 'all' ? 'INDIA' : activeCityName.toUpperCase()) + ' STORES';
-      }
-      var galleryFeatureImg = document.getElementById('kslGalleryFeatureImg');
-      var galleryFeatureCap = document.getElementById('kslGalleryFeatureCaption');
-      if (galleryFeatureImg && galleryFeatureCap) {
-        if (cKey === 'kolkata') {
-          galleryFeatureImg.src = '/cdn/shop/files/Gariahat.png?v=1786366650&width=800';
-          galleryFeatureCap.textContent = 'Storefront · Gariahat (so you recognise it on the street)';
-        } else if (cKey === 'hyderabad') {
-          galleryFeatureImg.src = '/cdn/shop/files/Himayat_Nagar_Hyderabad.jpg?v=1786366650&width=800';
-          galleryFeatureCap.textContent = 'Storefront & Showroom · Himayat Nagar (Hyderabad)';
-        } else if (cKey === 'bengaluru') {
-          galleryFeatureImg.src = '/cdn/shop/files/commercial_street.png?v=1786366650&width=800';
-          galleryFeatureCap.textContent = 'Flagship Storefront · Commercial Street (Bengaluru)';
-        } else if (matchingCards.length > 0 && matchingCards[0].getAttribute('data-image')) {
-          galleryFeatureImg.src = matchingCards[0].getAttribute('data-image');
-          galleryFeatureCap.textContent = 'Boutique · ' + matchingCards[0].getAttribute('data-store-name') + ' (' + activeCityName + ')';
+      // On single-city pages, preserve section settings for these texts
+      if (!isSingleCityPage) {
+        // 8. "Step inside" Gallery Eyebrow & Feature Photo
+        var stepInsideEyebrow = document.getElementById('kslStepInsideEyebrow');
+        if (stepInsideEyebrow) {
+          stepInsideEyebrow.textContent = 'INSIDE OUR ' + (cKey === 'all' ? 'INDIA' : activeCityName.toUpperCase()) + ' STORES';
         }
-      }
+        var galleryFeatureImg = document.getElementById('kslGalleryFeatureImg');
+        var galleryFeatureCap = document.getElementById('kslGalleryFeatureCaption');
+        if (galleryFeatureImg && galleryFeatureCap) {
+          if (cKey === 'kolkata') {
+            galleryFeatureImg.src = '/cdn/shop/files/Gariahat.png?v=1786366650&width=800';
+            galleryFeatureCap.textContent = 'Storefront · Gariahat (so you recognise it on the street)';
+          } else if (cKey === 'hyderabad') {
+            galleryFeatureImg.src = '/cdn/shop/files/Himayat_Nagar_Hyderabad.jpg?v=1786366650&width=800';
+            galleryFeatureCap.textContent = 'Storefront & Showroom · Himayat Nagar (Hyderabad)';
+          } else if (cKey === 'bengaluru') {
+            galleryFeatureImg.src = '/cdn/shop/files/commercial_street.png?v=1786366650&width=800';
+            galleryFeatureCap.textContent = 'Flagship Storefront · Commercial Street (Bengaluru)';
+          } else if (matchingCards.length > 0 && matchingCards[0].getAttribute('data-image')) {
+            galleryFeatureImg.src = matchingCards[0].getAttribute('data-image');
+            galleryFeatureCap.textContent = 'Boutique · ' + matchingCards[0].getAttribute('data-store-name') + ' (' + activeCityName + ')';
+          }
+        }
 
-      // 9. Categories Note
-      if (catCityNote) {
-        catCityNote.textContent = cKey === 'all' ? 'Every category is available to try on at all our flagship stores.' : 'Every category is available to try on at all ' + activeCityName + ' stores.';
-      }
+        // 9. Categories Note
+        if (catCityNote) {
+          catCityNote.textContent = cKey === 'all' ? 'Every category is available to try on at all our flagship stores.' : 'Every category is available to try on at all ' + activeCityName + ' stores.';
+        }
 
-      // 10. Reviews & Bottom Headings
-      if (reviewsTitle) {
-        reviewsTitle.textContent = 'Loved by ' + (cKey === 'all' ? 'India' : activeCityName);
-      }
-      if (bottomTitle) {
-        bottomTitle.textContent = 'Your next look is waiting in ' + (cKey === 'all' ? 'Kolkata' : activeCityName);
+        // 10. Reviews & Bottom Headings
+        if (reviewsTitle) {
+          reviewsTitle.textContent = 'Loved by ' + (cKey === 'all' ? 'India' : activeCityName);
+        }
+        if (bottomTitle) {
+          bottomTitle.textContent = 'Your next look is waiting in ' + (cKey === 'all' ? 'Kolkata' : activeCityName);
+        }
       }
 
       // Render Final Bottom Stores Strip (PDF Page 4 & 5: 3 side-by-side cards)

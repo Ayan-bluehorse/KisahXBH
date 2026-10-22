@@ -8,7 +8,7 @@
         "full_width": true
       }
     },
-    "city_store_landing": {
+    "all_stores_landing": {
       "type": "city-store-landing",
       "blocks": {
         "store_kol_gariahat": {
@@ -279,12 +279,18 @@
         "store_jai_pacific"
       ],
       "settings": {
-        "default_city": "kolkata"
+        "default_city": "all",
+        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · ALL INDIA",
+        "hero_title": "14 Kisah Flagship Stores Across India. Walk in, try on, stand out.",
+        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Kolkata, Bengaluru, Hyderabad, Mumbai, Vizag — open daily.",
+        "stores_heading": "Visit Kisah Flagships Across India",
+        "stores_subheading": "Explore our luxury flagship boutiques nationwide. Walk in — no appointment needed.",
+        "google_map_embed": "https://maps.google.com/maps?q=Kisah+Stores+India&t=&z=5&ie=UTF8&iwloc=&output=embed"
       }
     }
   },
   "order": [
     "main",
-    "city_store_landing"
+    "all_stores_landing"
   ]
 }
