@@ -131,6 +131,8 @@
         "grid": 4,
         "grid_mobile": "2",
         "show_filter_tabs": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
         "pad_top": 16,
         "pad_bottom": 32,
         "bg_color": "#fdfcf9",

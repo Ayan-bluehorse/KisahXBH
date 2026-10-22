@@ -15,3 +15,6 @@ Desktop.ini
 *.log
 *.tmp
 *.docx
+*.xlsx
+*.xls
+*.tsv

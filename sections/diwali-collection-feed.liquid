@@ -31,6 +31,9 @@
   endif
 -%}
 
+<link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}">
+<script src="{{ 'collection-filter-sheet.js' | asset_url }}" defer></script>
+
 {%- style -%}
   /* Hide unwanted slider arrow navigation buttons on product cards */
   .image-slider-nav,
@@ -86,7 +89,7 @@
     gap: 8px;
     overflow-x: auto;
     padding: 2px 4px 14px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -96,7 +99,7 @@
   @media (min-width: 768px) {
     .diwali-feed-tabs-{{ sid }} {
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
   }
 
@@ -120,6 +123,20 @@
     background: {{ section.settings.text_color | default: '#141414' }};
     color: #ffffff;
     border-color: {{ section.settings.text_color | default: '#141414' }};
+  }
+
+  /* Control Row (Sort + Filter Bar) integration */
+  .diwali-feed-section-{{ sid }} .kisah-ctrl {
+    margin: 4px 0 12px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e7e3dc;
+    box-shadow: 0 1px 4px rgba(32, 23, 71, 0.04);
+  }
+  .diwali-feed-section-{{ sid }} .kisah-applied {
+    margin: -4px 0 12px;
+    padding: 2px 2px 6px;
+    background: transparent;
   }
 
   .diwali-feed-container {
@@ -164,6 +181,30 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+    {%- endif -%}
+
+    <!-- Filter & Sort Bar (Matching Kisah PLP) -->
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+      <div class="kisah-ctrl" data-ajax-container>
+        <div class="kisah-ctrl__n"><b><span data-diwali-style-count>{{ chosen_coll.all_products_count | default: chosen_coll.products_count | default: 0 }}</span></b> styles</div>
+        {%- if section.settings.enable_sorting -%}
+          <button class="kisah-ctrl__btn" id="kisahSortBtn" type="button" aria-label="Sort styles">
+            <svg viewBox="0 0 24 24"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>
+            Sort
+          </button>
+        {%- endif -%}
+        {%- if section.settings.enable_sorting and section.settings.enable_filtering -%}
+          <span class="kisah-ctrl__rule"></span>
+        {%- endif -%}
+        {%- if section.settings.enable_filtering -%}
+          <button class="kisah-ctrl__btn kisah-ctrl__btn--filter" id="kisahFilterBtn" type="button" data-any="0" aria-label="Filter styles">
+            <svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+            Filter
+          </button>
+        {%- endif -%}
+      </div>
+
+      <div class="kisah-applied" id="kisahApplied" data-applied-filters style="display: none;"></div>
     {%- endif -%}
 
     <!-- Main Collection Grid matching main-collection.liquid -->
@@ -318,76 +359,214 @@
   </div>
 </div>
 
+<!-- Filter Bottom Sheet & Sort Modal Mount Point -->
+<div id="diwali-filter-sheet-mount" data-filter-section-id="main-collection">
+  <div class="kisah-scrim" id="kisahScrim"></div>
+</div>
+
 <script>
   (function () {
-    function initDiwaliTabs() {
+    function initDiwaliFeed() {
       var section = document.getElementById('diwali-feed-{{ sid }}');
       if (!section) return;
 
       var tabs = section.querySelectorAll('.diwali-feed-tab-{{ sid }}');
       var container = section.querySelector('[data-feed-container]');
-      if (!tabs.length || !container) return;
+      var styleCountEl = section.querySelector('[data-diwali-style-count]');
+      var filterBtn = document.getElementById('kisahFilterBtn');
+      var sortBtn = document.getElementById('kisahSortBtn');
+      var appliedContainer = document.getElementById('kisahApplied');
+      var sheetMount = document.getElementById('diwali-filter-sheet-mount');
 
-      var cache = {};
-      cache['all'] = container.innerHTML;
+      if (!container) return;
+
+      var currentCollectionUrl = '{{ chosen_coll.url | default: "/collections/festive-collection" }}';
+      var activeFilterParams = new URLSearchParams();
+      activeFilterParams.set('filter.v.availability', '1');
+      var activeSortBy = '';
 
       var isBusy = false;
+      var sheetLoaded = false;
+      var cachedSheets = {};
 
-      function renderContent(html) {
-        container.innerHTML = html;
-        if (window.__kisahInfiniteScrollManager && typeof window.__kisahInfiniteScrollManager.boot === 'function') {
-          window.__kisahInfiniteScrollManager.boot();
-        }
-        document.dispatchEvent(new CustomEvent('collection:reloaded'));
-      }
+      // 1. Fetch & mount filter sheet + sort modal for a collection URL
+      function loadFilterDrawer(collUrl, forceOpenFilter) {
+        if (!sheetMount) return;
+        var cleanUrl = collUrl.split('?')[0];
 
-      function switchTab(tab, shouldScroll) {
-        var key = tab.getAttribute('data-collection-tab') || 'all';
-        var url = tab.getAttribute('href');
-
-        tabs.forEach(function (t) {
-          t.classList.remove('is-active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('is-active');
-        tab.setAttribute('aria-selected', 'true');
-
-        // Center active tab in scrollable tabs rail
-        var rail = section.querySelector('.diwali-feed-tabs-{{ sid }}');
-        if (rail) {
-          rail.scrollTo({
-            left: tab.offsetLeft - (rail.offsetWidth / 2) + (tab.offsetWidth / 2),
-            behavior: 'smooth'
-          });
-        }
-
-        // Scroll back up to header if user was scrolled down
-        if (shouldScroll) {
-          var header = section.querySelector('.diwali-feed-header-{{ sid }}');
-          if (header) {
-            var rect = header.getBoundingClientRect();
-            if (rect.top < -20) {
-              window.scrollTo({
-                top: window.pageYOffset + rect.top - 80,
-                behavior: 'smooth'
-              });
-            }
-          }
-        }
-
-        // Instant render if cached
-        if (cache[key]) {
-          renderContent(cache[key]);
+        if (cachedSheets[cleanUrl]) {
+          applySheetHtml(cachedSheets[cleanUrl], forceOpenFilter);
           return;
         }
 
-        if (isBusy || !url || url === '#' || url === '#all-diwali-styles') return;
+        var fetchUrl = cleanUrl + '?filter.v.availability=1';
+
+        fetch(fetchUrl)
+          .then(function (res) { return res.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var sheet = doc.getElementById('kisahSheet');
+            var sortModal = doc.getElementById('kisahSortModal');
+            var scrim = doc.getElementById('kisahScrim');
+
+            // Update style count if present
+            var retCountEl = doc.querySelector('.kisah-ctrl__n b') || doc.getElementById('kisahApplyBtn');
+            if (retCountEl && styleCountEl && activeFilterParams.toString() === 'filter.v.availability=1') {
+              var countText = retCountEl.getAttribute('data-initial-count') || retCountEl.textContent.trim();
+              var m = countText.match(/\d[\d,]*/);
+              if (m) styleCountEl.textContent = m[0];
+            }
+
+            if (sheet && sortModal) {
+              cachedSheets[cleanUrl] = {
+                sheet: sheet.outerHTML,
+                sortModal: sortModal.outerHTML,
+                scrim: scrim ? scrim.outerHTML : '<div class="kisah-scrim" id="kisahScrim"></div>'
+              };
+              applySheetHtml(cachedSheets[cleanUrl], forceOpenFilter);
+            }
+          })
+          .catch(function (err) {
+            console.error('Error loading filter drawer:', err);
+          });
+      }
+
+      function applySheetHtml(sheetData, forceOpenFilter) {
+        sheetMount.innerHTML = sheetData.scrim + sheetData.sheet + sheetData.sortModal;
+        sheetLoaded = true;
+
+        // Re-initialize collection-filter-sheet.js
+        document.dispatchEvent(new CustomEvent('shopify:section:load'));
+
+        // Bind interception for apply, clear all, and sort options
+        bindDrawerInterceptors();
+
+        if (forceOpenFilter && typeof window.openKisahSheet === 'function') {
+          window.openKisahSheet();
+        }
+      }
+
+      // 2. Intercept Apply Button, Clear All, and Sort Modal clicks
+      function bindDrawerInterceptors() {
+        var sheet = document.getElementById('kisahSheet');
+        var sortModal = document.getElementById('kisahSortModal');
+        var applyBtn = document.getElementById('kisahApplyBtn');
+        var clearAllBtn = document.getElementById('kisahClearAll');
+        var filterForm = document.getElementById('KisahCollectionFilterForm') || document.getElementById('CollectionFilterForm');
+
+        if (applyBtn && filterForm) {
+          applyBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if (applyBtn.disabled) return;
+            if (typeof window.closeKisahSheet === 'function') {
+              window.closeKisahSheet();
+            }
+
+            var params = new URLSearchParams();
+            filterForm.querySelectorAll('input[type="hidden"]').forEach(function (h) {
+              if (h.name && h.value) params.append(h.name, h.value);
+            });
+            filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach(function (cb) {
+              if (cb.name && cb.value) params.append(cb.name, cb.value);
+            });
+            var minInput = sheet.querySelector('#kisahRngLo');
+            var maxInput = sheet.querySelector('#kisahRngHi');
+            if (minInput && minInput.hasAttribute('name') && minInput.value) {
+              params.append(minInput.name, minInput.value);
+            }
+            if (maxInput && maxInput.hasAttribute('name') && maxInput.value) {
+              params.append(maxInput.name, maxInput.value);
+            }
+
+            if (!params.has('filter.v.availability')) {
+              params.set('filter.v.availability', '1');
+            }
+            if (activeSortBy) {
+              params.set('sort_by', activeSortBy);
+            }
+
+            activeFilterParams = params;
+            fetchAndRenderFiltered(currentCollectionUrl, activeFilterParams);
+          }, true);
+        }
+
+        if (clearAllBtn) {
+          clearAllBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if (typeof window.closeKisahSheet === 'function') {
+              window.closeKisahSheet();
+            }
+
+            activeFilterParams = new URLSearchParams();
+            activeFilterParams.set('filter.v.availability', '1');
+            if (activeSortBy) {
+              activeFilterParams.set('sort_by', activeSortBy);
+            }
+            fetchAndRenderFiltered(currentCollectionUrl, activeFilterParams);
+          }, true);
+        }
+
+        // Intercept Sort Rows in sort modal
+        if (sortModal) {
+          sortModal.querySelectorAll('.kisah-row').forEach(function (row) {
+            row.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopImmediatePropagation();
+
+              var href = row.getAttribute('href') || '';
+              var sortMatch = href.match(/[?&]sort_by=([^&]+)/);
+              activeSortBy = sortMatch ? decodeURIComponent(sortMatch[1]) : '';
+
+              if (activeSortBy) {
+                activeFilterParams.set('sort_by', activeSortBy);
+              } else {
+                activeFilterParams.delete('sort_by');
+              }
+
+              // Update active highlight in sort modal
+              sortModal.querySelectorAll('.kisah-row').forEach(function (r) {
+                r.setAttribute('data-on', '0');
+                var box = r.querySelector('.kisah-box');
+                if (box) box.remove();
+              });
+              row.setAttribute('data-on', '1');
+              var checkSpan = document.createElement('span');
+              checkSpan.className = 'kisah-box';
+              checkSpan.style.cssText = 'background: var(--kisah-ink); border-color: var(--kisah-ink);';
+              checkSpan.innerHTML = '<svg viewBox="0 0 24 24" style="opacity: 1;"><path d="m5 13 4 4L19 7"/></svg>';
+              row.appendChild(checkSpan);
+
+              // Update subtitle
+              var sortLabelEl = row.querySelector('.kisah-row__l');
+              var subtitleEl = section.querySelector('.diwali-feed-subtitle');
+              if (sortLabelEl && subtitleEl) {
+                subtitleEl.textContent = 'Sorted by ' + sortLabelEl.textContent.trim().toLowerCase();
+              }
+
+              if (typeof window.closeKisahSheet === 'function') {
+                window.closeKisahSheet();
+              }
+
+              fetchAndRenderFiltered(currentCollectionUrl, activeFilterParams);
+            });
+          });
+        }
+      }
+
+      // 3. Fetch products with active filters and render
+      function fetchAndRenderFiltered(collUrl, params) {
+        if (isBusy) return;
         isBusy = true;
         container.classList.add('is-loading');
 
-        var fetchUrl = url;
-        if (fetchUrl.indexOf('filter.v.availability') === -1) {
-          fetchUrl += (fetchUrl.indexOf('?') === -1 ? '?' : '&') + 'filter.v.availability=1';
+        var fetchUrl = collUrl;
+        var queryStr = params ? params.toString() : '';
+        if (queryStr) {
+          fetchUrl += (fetchUrl.indexOf('?') === -1 ? '?' : '&') + queryStr;
         }
 
         fetch(fetchUrl)
@@ -408,17 +587,174 @@
             }
 
             if (contentHtml) {
-              cache[key] = contentHtml;
-              renderContent(contentHtml);
+              container.innerHTML = contentHtml;
+              if (window.__kisahInfiniteScrollManager && typeof window.__kisahInfiniteScrollManager.boot === 'function') {
+                window.__kisahInfiniteScrollManager.boot();
+              }
+              document.dispatchEvent(new CustomEvent('collection:reloaded'));
+            }
+
+            // Update style count
+            var countEl = doc.querySelector('.kisah-ctrl__n b') || doc.getElementById('kisahApplyBtn');
+            if (countEl && styleCountEl) {
+              var countText = countEl.getAttribute('data-initial-count') || countEl.textContent.trim();
+              var m = countText.match(/\d[\d,]*/);
+              if (m) styleCountEl.textContent = m[0];
+            }
+
+            // Update active filter count on Filter button
+            var activeFilterCount = 0;
+            params.forEach(function (val, key) {
+              if (key !== 'filter.v.availability' && key !== 'sort_by' && key !== 'q' && key !== 'page') {
+                activeFilterCount++;
+              }
+            });
+
+            if (filterBtn) {
+              filterBtn.setAttribute('data-any', activeFilterCount > 0 ? '1' : '0');
+              var pip = filterBtn.querySelector('.kisah-ctrl__pip');
+              if (activeFilterCount > 0) {
+                if (!pip) {
+                  pip = document.createElement('span');
+                  pip.className = 'kisah-ctrl__pip';
+                  filterBtn.appendChild(pip);
+                }
+                pip.textContent = activeFilterCount;
+              } else if (pip) {
+                pip.remove();
+              }
+            }
+
+            // Update Applied Filters Bar (#kisahApplied)
+            var newApplied = doc.getElementById('kisahApplied') || doc.querySelector('.kisah-applied');
+            if (appliedContainer) {
+              if (newApplied && newApplied.children.length > 0) {
+                appliedContainer.innerHTML = newApplied.innerHTML;
+                appliedContainer.style.display = 'flex';
+                bindAppliedChipClicks();
+              } else {
+                appliedContainer.innerHTML = '';
+                appliedContainer.style.display = 'none';
+              }
             }
           })
           .catch(function (err) {
-            console.error('Error loading tab collection:', err);
+            console.error('Error filtering collection:', err);
           })
           .finally(function () {
             container.classList.remove('is-loading');
             isBusy = false;
           });
+      }
+
+      // 4. Handle clicks on applied chips (to remove a single filter or clear all)
+      function bindAppliedChipClicks() {
+        if (!appliedContainer) return;
+        appliedContainer.querySelectorAll('.kisah-achip').forEach(function (chip) {
+          chip.addEventListener('click', function (e) {
+            e.preventDefault();
+            var href = chip.getAttribute('href');
+            if (!href) return;
+
+            var qIdx = href.indexOf('?');
+            var newParams = new URLSearchParams(qIdx !== -1 ? href.substring(qIdx + 1) : '');
+            if (!newParams.has('filter.v.availability')) {
+              newParams.set('filter.v.availability', '1');
+            }
+            if (activeSortBy) {
+              newParams.set('sort_by', activeSortBy);
+            }
+
+            activeFilterParams = newParams;
+            fetchAndRenderFiltered(currentCollectionUrl, activeFilterParams);
+
+            var cleanUrl = currentCollectionUrl.split('?')[0];
+            delete cachedSheets[cleanUrl];
+            loadFilterDrawer(currentCollectionUrl, false);
+          });
+        });
+      }
+
+      // 5. Filter button click - open sheet (or fetch first if not yet ready)
+      if (filterBtn) {
+        filterBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (sheetLoaded && typeof window.openKisahSheet === 'function') {
+            window.openKisahSheet();
+          } else {
+            loadFilterDrawer(currentCollectionUrl, true);
+          }
+        });
+      }
+
+      // 6. Sort button click - open sort modal
+      if (sortBtn) {
+        sortBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var sortModal = document.getElementById('kisahSortModal');
+          var scrim = document.getElementById('kisahScrim');
+          if (sortModal && scrim) {
+            scrim.dataset.open = '1';
+            sortModal.dataset.open = '1';
+            document.body.style.overflow = 'hidden';
+          } else {
+            loadFilterDrawer(currentCollectionUrl, false);
+          }
+        });
+      }
+
+      // 7. Tabs switching - updates currentCollectionUrl and reloads products + filter drawer
+      function switchTab(tab, shouldScroll) {
+        var key = tab.getAttribute('data-collection-tab') || 'all';
+        var url = tab.getAttribute('href');
+
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+
+        var rail = section.querySelector('.diwali-feed-tabs-{{ sid }}');
+        if (rail) {
+          rail.scrollTo({
+            left: tab.offsetLeft - (rail.offsetWidth / 2) + (tab.offsetWidth / 2),
+            behavior: 'smooth'
+          });
+        }
+
+        if (shouldScroll) {
+          var header = section.querySelector('.diwali-feed-header-{{ sid }}');
+          if (header) {
+            var rect = header.getBoundingClientRect();
+            if (rect.top < -20) {
+              window.scrollTo({
+                top: window.pageYOffset + rect.top - 80,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+
+        currentCollectionUrl = (url && url !== '#' && url !== '#all-diwali-styles') ? url : '{{ chosen_coll.url | default: "/collections/festive-collection" }}';
+        activeFilterParams = new URLSearchParams();
+        activeFilterParams.set('filter.v.availability', '1');
+        if (activeSortBy) {
+          activeFilterParams.set('sort_by', activeSortBy);
+        }
+
+        if (filterBtn) {
+          filterBtn.setAttribute('data-any', '0');
+          var pip = filterBtn.querySelector('.kisah-ctrl__pip');
+          if (pip) pip.remove();
+        }
+        if (appliedContainer) {
+          appliedContainer.innerHTML = '';
+          appliedContainer.style.display = 'none';
+        }
+
+        fetchAndRenderFiltered(currentCollectionUrl, activeFilterParams);
+        loadFilterDrawer(currentCollectionUrl, false);
       }
 
       tabs.forEach(function (tab) {
@@ -428,7 +764,7 @@
         });
       });
 
-      // Handle direct anchor clicks (e.g. occasion cards)
+      // Direct anchor clicks (e.g. occasion cards)
       document.addEventListener('click', function (e) {
         var anchor = e.target.closest('a[href*="#diwali-feed"], a[href*="#all-diwali-styles"], a[data-feed-tab]');
         if (anchor && anchor.getAttribute('data-feed-tab')) {
@@ -440,7 +776,7 @@
         }
       });
 
-      // Initial hash check on page load
+      // Initial hash check
       if (window.location.hash) {
         var hashId = window.location.hash.replace('#', '').replace('tab-', '');
         var initialTab = section.querySelector('.diwali-feed-tab-{{ sid }}[data-collection-tab="' + hashId + '"]');
@@ -448,12 +784,15 @@
           switchTab(initialTab, false);
         }
       }
+
+      // Initial background pre-load of filter drawer
+      loadFilterDrawer(currentCollectionUrl, false);
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initDiwaliTabs);
+      document.addEventListener('DOMContentLoaded', initDiwaliFeed);
     } else {
-      initDiwaliTabs();
+      initDiwaliFeed();
     }
   })();
 </script>
@@ -519,6 +858,18 @@
       "type": "checkbox",
       "id": "show_filter_tabs",
       "label": "Show quick filter tabs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering (Filter drawer)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting (Sort drawer)",
       "default": true
     },
     {
