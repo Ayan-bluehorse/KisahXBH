@@ -15,8 +15,8 @@
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/iconic_diwali_desktop_final.png",
-            "mob-img": "shopify://shop_images/iconic_diwali_mobile_final.png",
+            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.jpg",
+            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.jpg",
             "link": "shopify://pages/diwali",
             "button-name": "",
             "button-link": ""
@@ -25,9 +25,19 @@
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/WhatsApp_Image_2026-10-17_at_6.04.34_PM.jpg",
-            "mob-img": "shopify://shop_images/WhatsApp_Image_2026-10-17_at_6.03.30_PM.jpg",
+            "desk-img": "shopify://shop_images/The_Dhoom_Squad_Desktop.jpg",
+            "mob-img": "shopify://shop_images/The_Dhoom_Squad_Mobile.jpg",
             "link": "shopify://collections/wedding",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
+        "slide_banner_GzHARp": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/Peak_Haldi_Josh_Desktop.jpg",
+            "mob-img": "shopify://shop_images/Peak_Haldi_Josh_Mobile.jpg",
+            "link": "shopify://collections/haldi-1",
             "button-name": "",
             "button-link": ""
           }
@@ -69,6 +79,7 @@
       "block_order": [
         "slide_banner_Xp6ga7",
         "slide_banner_HbQBTL",
+        "slide_banner_GzHARp",
         "slide_banner_FiWGha",
         "slide_banner_DhgQ4b",
         "slide_banner_NJiUWz"
