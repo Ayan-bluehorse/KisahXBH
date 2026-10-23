@@ -29,12 +29,64 @@
     return '₹' + Math.round(amount).toLocaleString('en-IN');
   }
 
+  function findDrawerInsertionPoint(drawerRoot) {
+    if (!drawerRoot) return null;
+
+    // 1. Look for 'Great Choice! Grab these too' recommendations container (Rebuy or Helium)
+    var heading = Array.from(drawerRoot.querySelectorAll('h3, h4, p, [class*="heading"]')).find(function(el) {
+      var t = (el.textContent || '').trim();
+      return el.tagName !== 'SCRIPT' && el.tagName !== 'STYLE' && (t === 'Great Choice! Grab these too' || t.indexOf('Great Choice') !== -1 || t.indexOf('Grab these too') !== -1);
+    });
+
+    if (heading) {
+      // Find the recommendations section (in Helium drawer it has class bg-gray-50 / border-t)
+      var recSection = heading.closest('.bg-gray-50, [class*="bg-gray"], .border-t');
+      if (!recSection) {
+        recSection = heading;
+        while (recSection.parentElement && 
+               recSection.parentElement !== drawerRoot && 
+               recSection.parentElement.children.length === 1) {
+          recSection = recSection.parentElement;
+        }
+      }
+      if (recSection && recSection.parentNode) {
+        return { parent: recSection.parentNode, referenceNode: recSection };
+      }
+    }
+
+    // 2. Look for existing Rebuy recommendations widget
+    var rebuy = drawerRoot.querySelector('.rebuy-widget, .rebuy-cart-recommendations');
+    if (rebuy && rebuy.parentNode) {
+      return { parent: rebuy.parentNode, referenceNode: rebuy };
+    }
+
+    // 2. Look for the last cart product item (to place directly below the items list)
+    var items = drawerRoot.querySelectorAll('[data-helium-name="product-item"], [class*="product-item"], [class*="line-item"], [class*="cart-item"], [class*="drawer-item"]');
+    if (items.length > 0) {
+      var lastItem = items[items.length - 1];
+      if (lastItem && lastItem.parentNode) {
+        return { parent: lastItem.parentNode, referenceNode: lastItem.nextSibling };
+      }
+    }
+
+    // 3. Fallback: Place immediately before checkout / subtotal footer
+    var checkoutBtn = drawerRoot.querySelector('a[href*="/checkout"], button[class*="checkout"], [data-helium-name="checkout-button"], .cart-drawer__checkout');
+    if (checkoutBtn) {
+      var footerBox = checkoutBtn.closest('[class*="footer"], [class*="bottom"]') || checkoutBtn.parentElement;
+      if (footerBox && footerBox.parentNode) {
+        return { parent: footerBox.parentNode, referenceNode: footerBox };
+      }
+    }
+
+    return null;
+  }
+
   function ensurePriceBlockContainer() {
-    // 1. Remove any stray/orphaned price blocks sitting at the body or root level
+    // 1. Remove any stray price blocks attached to body or root directly
     var strays = document.querySelectorAll('body > #kisah-price-block, #helium-cart-drawer-root > #kisah-price-block');
     strays.forEach(function(el) { el.remove(); });
 
-    // 2. If on the Cart Page (/cart)
+    // 2. If on Cart Page (/cart): Place inside .checkout-col above checkout buttons
     if (window.location.pathname.indexOf('/cart') !== -1) {
       var cartPageBlock = document.querySelector('.checkout-col #kisah-price-block') || document.getElementById('kisah-price-block');
       if (cartPageBlock) {
@@ -56,35 +108,24 @@
       return null;
     }
 
-    // 3. If in Cart Drawer: ONLY inject if inside drawer dialog/panel (drawer is active/rendered)
+    // 3. If in Cart Drawer: ONLY place inside drawer above recommendations or below cart items
     var drawerRoot = document.getElementById('helium-cart-drawer-root');
     if (!drawerRoot) return null;
 
-    var drawerPanel = drawerRoot.querySelector('[role="dialog"], [class*="dialog"], [class*="drawer-content"], [class*="drawer-panel"], [class*="drawer-body"], [class*="content-wrapper"], [class*="h-drawer"]');
-    if (!drawerPanel) return null; // Drawer is closed or not mounted; do NOT append to body or root!
+    var insertion = findDrawerInsertionPoint(drawerRoot);
+    if (!insertion || !insertion.parent) return null;
 
-    var existingInDrawer = drawerPanel.querySelector('#kisah-price-block');
-    if (existingInDrawer) {
-      existingInDrawer.style.display = 'block';
-      return existingInDrawer;
+    var block = document.getElementById('kisah-price-block');
+    if (!block) {
+      block = document.createElement('div');
+      block.id = 'kisah-price-block';
     }
 
-    var recsBlock = drawerPanel.querySelector('.helium-recommendations, [data-helium-recommendations], [class*="recommendation"], [class*="cross-sell"], [class*="upsell"]');
-    var cartFooter = drawerPanel.querySelector('.helium-cart-footer, [class*="footer"]');
-    var cartItems = drawerPanel.querySelector('.helium-cart-items, [class*="items"], [class*="item-list"]');
-
-    var block = document.createElement('div');
-    block.id = 'kisah-price-block';
-
-    if (recsBlock && recsBlock.parentNode) {
-      recsBlock.parentNode.insertBefore(block, recsBlock);
-    } else if (cartFooter && cartFooter.parentNode) {
-      cartFooter.parentNode.insertBefore(block, cartFooter);
-    } else if (cartItems && cartItems.parentNode) {
-      cartItems.parentNode.insertBefore(block, cartItems.nextSibling);
-    } else {
-      drawerPanel.appendChild(block);
+    // Insert or move to the exact insertion point (above recommendations)
+    if (block.nextSibling !== insertion.referenceNode || block.parentNode !== insertion.parent) {
+      insertion.parent.insertBefore(block, insertion.referenceNode);
     }
+    block.style.display = 'block';
     return block;
   }
 
@@ -215,7 +256,6 @@
   }
 
   function handleDrawerOpen(e) {
-    if (isDrawerOpen) return;
     isDrawerOpen = true;
     drawerOpenTimestamp = performance.now();
 
@@ -232,28 +272,26 @@
       });
     }, 150);
 
-    // Fetch initial cart and inject price block & sync header count
-    if (window._h_initial_cart) {
-      updatePriceBlock(window._h_initial_cart);
-      syncCartBadge(window._h_initial_cart);
-    } else {
-      fetch('/cart.js')
-        .then(function(r) { return r.json(); })
-        .then(function(c) {
-          window._h_initial_cart = c;
-          updatePriceBlock(c);
-          syncCartBadge(c);
-        })
-        .catch(function() {});
-    }
-
-    // Re-verify after drawer animation paints
-    setTimeout(function() {
+    function refreshDrawerPrice() {
       if (window._h_initial_cart) {
         updatePriceBlock(window._h_initial_cart);
         syncCartBadge(window._h_initial_cart);
+      } else {
+        fetch('/cart.js')
+          .then(function(r) { return r.json(); })
+          .then(function(c) {
+            window._h_initial_cart = c;
+            updatePriceBlock(c);
+            syncCartBadge(c);
+          })
+          .catch(function() {});
       }
-    }, 250);
+    }
+
+    refreshDrawerPrice();
+    setTimeout(refreshDrawerPrice, 100);
+    setTimeout(refreshDrawerPrice, 350);
+    setTimeout(refreshDrawerPrice, 700);
 
     // GA4 view_cart event
     if (typeof window.gtag === 'function') {
@@ -276,7 +314,6 @@
   }
 
   function handleDrawerClose(method) {
-    if (!isDrawerOpen) return;
     isDrawerOpen = false;
     var msOpen = drawerOpenTimestamp > 0 ? Math.round(performance.now() - drawerOpenTimestamp) : 0;
     drawerOpenTimestamp = 0;
@@ -321,6 +358,66 @@
     }
   }
   initHeliumPubsub();
+
+  // Escape key and click listener to reliably detect drawer close
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') handleDrawerClose('escape');
+  });
+
+  // Open cart drawer when clicking header cart link
+  document.addEventListener('click', function(e) {
+    var cartLink = e.target.closest('.cart-link, a[href*="/cart"]');
+    if (cartLink && window.location.pathname.indexOf('/cart') === -1) {
+      if (window._h_pubsub && typeof window._h_pubsub.publish === 'function') {
+        e.preventDefault();
+        window._h_pubsub.publish('helium:cart:open');
+        window.dispatchEvent(new CustomEvent('helium:cart-drawer:open'));
+      }
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    var isClose = e.target.closest('#helium-cart-drawer-root button, [data-helium-name="close-button"], [aria-label*="close" i], .cart-drawer__close, .close');
+    var isNotAction = !e.target.closest('a[href*="/checkout"], button[class*="checkout"], [data-action="add"], [data-helium-name="product-item"]');
+    if (isClose && isNotAction) {
+      handleDrawerClose('close button');
+    }
+    if (e.target.closest('#helium-cart-drawer-root .backdrop, [class*="backdrop"], [class*="overlay"]')) {
+      handleDrawerClose('backdrop');
+    }
+  }, true);
+
+  // MutationObserver to ensure price block is always rendered above recommendations whenever drawer is open
+  (function() {
+    var timer = null;
+    var observer = new MutationObserver(function() {
+      if (window.location.pathname.indexOf('/cart') !== -1) return;
+      var drawerRoot = document.getElementById('helium-cart-drawer-root');
+      if (!drawerRoot) return;
+
+      var hasItems = drawerRoot.querySelector('[data-helium-name="product-item"], [class*="product-item"], [class*="cart-item"], [class*="line-item"]');
+      if (!hasItems) return;
+
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        if (window._h_initial_cart) {
+          updatePriceBlock(window._h_initial_cart);
+        } else {
+          fetch('/cart.js').then(function(r){return r.json();}).then(updatePriceBlock).catch(function(){});
+        }
+      }, 60);
+    });
+
+    function startObserving() {
+      var root = document.getElementById('helium-cart-drawer-root');
+      if (root) {
+        observer.observe(root, { childList: true, subtree: true });
+      } else {
+        setTimeout(startObserving, 500);
+      }
+    }
+    startObserving();
+  })();
 
   // Delegated Clicks inside Drawer
   document.addEventListener('click', function(e) {
