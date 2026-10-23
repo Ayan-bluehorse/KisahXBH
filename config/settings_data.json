@@ -788,20 +788,6 @@
         "disabled": false,
         "settings": {}
       },
-      "17637035467823705870": {
-        "type": "shopify://apps/helium-analytics-ai-agent/blocks/cart-drawer/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
-        "disabled": false,
-        "settings": {
-          "slide_direction": "right",
-          "cart_icon_selector": "a[href='/cart']",
-          "header_enable_goals": true,
-          "header_goal_threshold": 5000,
-          "rec_enabled": true,
-          "rec_source": "shopify",
-          "rec_helium_key": "",
-          "footer_checkout_html": "<span>CHECKOUT</span>"
-        }
-      },
       "15223879327137715448": {
         "type": "shopify://apps/helium-analytics-ai-agent/blocks/pulse/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
         "disabled": false,
@@ -834,6 +820,22 @@
         "type": "shopify://apps/searchanise-search-filter/blocks/app-embed-v2/d8f24ada-02b1-458a-bbeb-5bf16d5c921e",
         "disabled": false,
         "settings": {}
+      },
+      "17637035467823705870": {
+        "type": "shopify://apps/helium-analytics-ai-agent/blocks/cart-drawer/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+        "disabled": false,
+        "settings": {
+          "slide_direction": "right",
+          "cart_icon_selector": "a[href='/cart']",
+          "header_enable_goals": true,
+          "header_goal_threshold": 250000,
+          "rec_enabled": true,
+          "rec_source": "shopify",
+          "rec_strategy_id": "",
+          "rec_helium_key": "",
+          "footer_checkout_html": "<span>CHECKOUT</span><span class=\"kisah-cta-total\"></span>",
+          "enable_free_gift_transform": false
+        }
       }
     }
   },
