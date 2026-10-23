@@ -2826,6 +2826,53 @@ window.customElements.define('media-gallery', MediaGallery);
 
 /* eslint-disable max-len */
 /* eslint-disable no-multiple-empty-lines */
+/**
+ * Instantly updates the header cart count badge across the site.
+ * @param {number} count - The count or delta.
+ * @param {boolean} [isIncrement=false] - If true, increments current count; otherwise sets absolute count.
+ */
+window.updateHeaderCartCount = window.updateHeaderCartCount || function(count, isIncrement = false) {
+  let badges = document.querySelectorAll('.cart-link__count, [data-cart-count], .cart-count, .cart-count-bubble span');
+
+  // If no badge exists in DOM, ensure it is created inside all cart link icons
+  if (badges.length === 0) {
+    const cartIcons = document.querySelectorAll('.cart-link__icon, .cart-link');
+    cartIcons.forEach((icon) => {
+      let badge = icon.querySelector('.cart-link__count');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'cart-link__count';
+        icon.appendChild(badge);
+      }
+    });
+    badges = document.querySelectorAll('.cart-link__count');
+  }
+
+  badges.forEach((badge) => {
+    let current = parseInt(badge.textContent.trim(), 10);
+    if (isNaN(current)) current = 0;
+    let next = isIncrement ? (current + count) : count;
+    if (next < 0) next = 0;
+
+    badge.textContent = next;
+    badge.setAttribute('data-cart-count', next);
+
+    if (next > 0) {
+      badge.style.display = 'inline-block';
+      badge.style.visibility = 'visible';
+    } else {
+      badge.style.display = 'none';
+    }
+
+    if (badge.animate) {
+      badge.animate([
+        { transform: 'scale(1.4)' },
+        { transform: 'scale(1)' }
+      ], { duration: 250, easing: 'ease-out' });
+    }
+  });
+};
+
 const ProductForm = class extends HTMLElement {
   constructor() {
     super();
@@ -2869,6 +2916,12 @@ const ProductForm = class extends HTMLElement {
     const childProductId = childVariantInput ? childVariantInput.value : null;
     const mainVariantId = formData.get('id');
     const mainQuantity = parseInt(formData.get('quantity') || 1, 10);
+    const addedCount = mainQuantity + (childProductId ? mainQuantity : 0);
+
+    // Instant Cart Bubble Update (< 1ms optimistic update)
+    if (typeof window.updateHeaderCartCount === 'function') {
+      window.updateHeaderCartCount(addedCount, true);
+    }
 
     const cartAddUrl = (theme.routes && theme.routes.cartAdd) ? theme.routes.cartAdd : '/cart/add.js';
     let fetchRequestOpts;
@@ -2918,6 +2971,16 @@ const ProductForm = class extends HTMLElement {
       window.dispatchEvent(new CustomEvent('helium:cart:updated', { detail: data }));
       document.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
 
+      // Authoritative count reconciliation via /cart.js
+      fetch((theme.routes && theme.routes.cart) ? theme.routes.cart + '.js' : '/cart.js')
+        .then((r) => r.json())
+        .then((cartData) => {
+          if (typeof window.updateHeaderCartCount === 'function' && typeof cartData.item_count === 'number') {
+            window.updateHeaderCartCount(cartData.item_count, false);
+          }
+        })
+        .catch(() => {});
+
       if (document.querySelector('.template-cart')) {
         // Cart page
         const cartForm = document.querySelector('cart-form');
@@ -2966,6 +3029,10 @@ const ProductForm = class extends HTMLElement {
       }, 1500);
     } catch (error) {
       console.error('Cart add failed:', error);
+      // Revert optimistic count increment on failure
+      if (typeof window.updateHeaderCartCount === 'function') {
+        window.updateHeaderCartCount(-addedCount, true);
+      }
       this.dispatchEvent(new CustomEvent('on:cart:error', {
         bubbles: true,
         detail: {

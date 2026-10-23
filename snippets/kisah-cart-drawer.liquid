@@ -126,6 +126,53 @@
     container.innerHTML = html;
   }
 
+  window.updateHeaderCartCount = window.updateHeaderCartCount || function(count, isIncrement) {
+    var badges = document.querySelectorAll('.cart-link__count, [data-cart-count], .cart-count, .cart-count-bubble span');
+    if (badges.length === 0) {
+      var cartIcons = document.querySelectorAll('.cart-link__icon, .cart-link');
+      cartIcons.forEach(function(icon) {
+        var badge = icon.querySelector('.cart-link__count');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'cart-link__count';
+          icon.appendChild(badge);
+        }
+      });
+      badges = document.querySelectorAll('.cart-link__count');
+    }
+    badges.forEach(function(badge) {
+      var current = parseInt(badge.textContent.trim(), 10);
+      if (isNaN(current)) current = 0;
+      var next = isIncrement ? (current + count) : count;
+      if (next < 0) next = 0;
+      badge.textContent = next;
+      badge.setAttribute('data-cart-count', next);
+      if (next > 0) {
+        badge.style.display = 'inline-block';
+        badge.style.visibility = 'visible';
+      } else {
+        badge.style.display = 'none';
+      }
+      if (badge.animate) {
+        badge.animate([
+          { transform: 'scale(1.4)' },
+          { transform: 'scale(1)' }
+        ], { duration: 250, easing: 'ease-out' });
+      }
+    });
+  };
+
+  function syncCartBadge(cart) {
+    if (!cart) return;
+    var count = typeof cart.item_count === 'number' ? cart.item_count : null;
+    if (count === null && Array.isArray(cart.items)) {
+      count = cart.items.reduce(function(acc, it) { return acc + (it.quantity || 1); }, 0);
+    }
+    if (typeof count === 'number') {
+      window.updateHeaderCartCount(count, false);
+    }
+  }
+
   function handleDrawerOpen(e) {
     if (isDrawerOpen) return;
     isDrawerOpen = true;
@@ -144,22 +191,27 @@
       });
     }, 150);
 
-    // Fetch initial cart and inject price block
+    // Fetch initial cart and inject price block & sync header count
     if (window._h_initial_cart) {
       updatePriceBlock(window._h_initial_cart);
+      syncCartBadge(window._h_initial_cart);
     } else {
       fetch('/cart.js')
         .then(function(r) { return r.json(); })
         .then(function(c) {
           window._h_initial_cart = c;
           updatePriceBlock(c);
+          syncCartBadge(c);
         })
         .catch(function() {});
     }
 
     // Re-verify after drawer animation paints
     setTimeout(function() {
-      if (window._h_initial_cart) updatePriceBlock(window._h_initial_cart);
+      if (window._h_initial_cart) {
+        updatePriceBlock(window._h_initial_cart);
+        syncCartBadge(window._h_initial_cart);
+      }
     }, 250);
 
     // GA4 view_cart event
@@ -200,10 +252,16 @@
   // Listeners for Helium Drawer & Cart Events
   window.addEventListener('helium:cart-drawer:open', handleDrawerOpen);
   window.addEventListener('helium:cart:updated', function(e) {
-    if (e.detail) updatePriceBlock(e.detail);
+    if (e.detail) {
+      updatePriceBlock(e.detail);
+      syncCartBadge(e.detail);
+    }
   });
   document.addEventListener('cart:updated', function(e) {
-    if (e.detail) updatePriceBlock(e.detail);
+    if (e.detail) {
+      updatePriceBlock(e.detail);
+      syncCartBadge(e.detail);
+    }
   });
 
   // Helium pubsub subscription
@@ -211,6 +269,7 @@
     if (window._h_pubsub && typeof window._h_pubsub.subscribe === 'function') {
       window._h_pubsub.subscribe('helium:cart:updated', function(cart) {
         updatePriceBlock(cart);
+        syncCartBadge(cart);
       });
       window._h_pubsub.subscribe('helium:cart:open', handleDrawerOpen);
       window._h_pubsub.subscribe('helium:cart:close', function() {

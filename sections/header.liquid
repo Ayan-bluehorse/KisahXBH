@@ -499,9 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
         render 'icon-cart'
       endif
     -%}
-    {%- if cart.item_count > 0 -%}
-      <span class="cart-link__count">{{ cart.item_count }}</span>
-    {%- endif -%}
+    <span class="cart-link__count" data-cart-count="{{ cart.item_count }}" {% if cart.item_count == 0 %}style="display:none;"{% endif %}>{{ cart.item_count }}</span>
   </span>
 </a>
 
