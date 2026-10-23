@@ -315,7 +315,7 @@
         "item_6Mi83d": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Mirror_Folk.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_2.jpg",
             "title": "Mirror & Folk",
             "link": "shopify://collections/mirror-folk"
           }
@@ -323,15 +323,31 @@
         "item_Tk9Uqd": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/The_Printed_Man.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM_1.jpg",
             "title": "The Printed Man",
             "link": "shopify://collections/the-printed-man"
+          }
+        },
+        "item_GyKn6U": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.25_PM.jpg",
+            "title": "Embroidery",
+            "link": "shopify://collections/embroidery"
+          }
+        },
+        "item_tn8Lka": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM.jpg",
+            "title": "Ombre & Gradient",
+            "link": "shopify://collections/ombre-gradient"
           }
         },
         "item_B3bBrN": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Floral_048db715-e204-4cfd-a7e9-a00ab9ccca4b.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM.jpg",
             "title": "Floral",
             "link": "shopify://collections/floral"
           }
@@ -339,35 +355,19 @@
         "item_hinFKi": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Minimal_Edit.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_1.jpg",
             "title": "Minimal Edit",
             "link": "shopify://collections/minimal-edit"
-          }
-        },
-        "item_tn8Lka": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Ombre_Gradient.jpg",
-            "title": "Ombre & Gradient",
-            "link": "shopify://collections/ombre-gradient"
-          }
-        },
-        "item_GyKn6U": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Embroidery.jpg",
-            "title": "Embroidery",
-            "link": "shopify://collections/embroidery"
           }
         }
       },
       "block_order": [
         "item_6Mi83d",
         "item_Tk9Uqd",
-        "item_B3bBrN",
-        "item_hinFKi",
+        "item_GyKn6U",
         "item_tn8Lka",
-        "item_GyKn6U"
+        "item_B3bBrN",
+        "item_hinFKi"
       ],
       "name": "Shop by Style",
       "settings": {
