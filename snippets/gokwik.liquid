@@ -21,91 +21,34 @@
 
   <script src="https://{{ env }}.gokwik.co/merchant-integration/build/merchant.integration.js?v4" defer></script>
 
-   <script>
-  let gkButtonCode = `
-    <div class="gokwik-checkout" {% if settings.hideFlow %} style="display:none !important;" {% endif %}>
-      <button type="button" class="btn-theme" onclick="onCheckoutClick(this)">
-        <span class="btn-text">
-          <span>{{ settings.main-titile }}</span>
-          <span>{{ settings.sub-titile }}</span>
-        </span>
-        <span class="pay-opt-icon">
-          <img width="400" height="400" loading="lazy" src="https://cdn.gokwik.co/v4/images/upi-icons.svg">
-          <img width="400" height="400" loading="lazy" src="https://cdn.gokwik.co/v4/images/right-arrow.svg">
-        </span>
-        <div style="display:none"><div class="cir-loader">Loading..</div></div>
-      </button>
-    </div>`;
-    
-  let parsedBtnCode = new DOMParser().parseFromString(gkButtonCode, 'text/html').querySelector('.gokwik-checkout');
-
-  let checkoutLinkHTML = `
-    <a href="/checkout"
-       style="width:100%;height:45px;background:black;color:white;display:flex;
-              justify-content:center;align-items:center;text-decoration:none;
-              border-radius:6px;">
-      Checkout
-    </a>`;
-    
-  let parsedLink = new DOMParser().parseFromString(checkoutLinkHTML, 'text/html').body.firstElementChild;
-
-  let userCountry = null;
-
-  const sideCartCallback = (mutations) => {
-    mutations.forEach(() => {
-      const target = document.querySelector('.rebuy-cart__checkout-button');
-      if (target && !target.classList.contains('custom-replaced')) {
-        const replacement = (userCountry === "India")
-          ? parsedBtnCode.cloneNode(true)
-          : parsedLink.cloneNode(true);
-        replacement.classList.add('custom-replaced');
-        target.replaceWith(replacement);
-      }
-    });
-  };
-
-  const observer = new MutationObserver(sideCartCallback);
-  const config = { attributes: true, childList: true, subtree: true };
-  const targetNode = document.querySelector('html');
+  <script>
+  let userCountry = "India"; // Default to India for instant protection
+  window.userCountry = userCountry;
 
   const getCountryData = async () => {
     try {
       const res = await fetch("/browsing_context_suggestions.json");
       const json = await res.json();
-      userCountry = json?.detected_values?.country_name || "Other";
+      userCountry = json?.detected_values?.country_name || "India";
+      window.userCountry = userCountry;
 
       const styleElement = document.createElement("style");
       let css = "";
-
       if (userCountry === "India") {
         css = ".shopifycheckoutbtn { display: none !important; }";
       } else {
         css = ".gokwik-checkout { display: none !important; } #gokwik-buy-now { display: none !important; }";
       }
-
       styleElement.textContent = css;
       document.head.appendChild(styleElement);
-
-      // Apply replacement on initial load too
-      const btn = document.querySelector('.rebuy-cart__checkout-button');
-      if (btn && !btn.classList.contains('custom-replaced')) {
-        const replacement = (userCountry === "India")
-          ? parsedBtnCode.cloneNode(true)
-          : parsedLink.cloneNode(true);
-        replacement.classList.add('custom-replaced');
-        btn.replaceWith(replacement);
-      }
-
     } catch (err) {
       console.error("Country fetch failed", err);
-      userCountry = "Other";
+      userCountry = "India";
+      window.userCountry = userCountry;
     }
   };
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    await getCountryData();
-    observer.observe(targetNode, config);
-  });
+  document.addEventListener("DOMContentLoaded", getCountryData);
 </script>
 
 <!-- GA Tag Definition for GoKwik Events (Deduplicated: Config is handled strictly once in layout/theme.liquid) -->
@@ -129,69 +72,103 @@
       button.classList.remove('disabled');
     });
 
-    let clicked = false;
-    let gokwikAdsID = "{{ settings.gkAdsConfig }}";
-
-    const gokwikCheckoutEnable = (selectors) => {
-      selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-          el.addEventListener("click", () => {
-            if (!clicked && gokwikAdsID) {
-              clicked = true;
-              gtag('event', 'conversion', {
-                'send_to': gokwikAdsID.toString().trim(),
-                'value': {{ order.total_price | divided_by: 100.0 }},
-                'currency': '{{ order.shop.currency }}',
-                'transaction_id': '{{ order.order_number }}'
-              });
-            }
-          });
-        });
+    if (window.gokwikSdk && typeof window.gokwikSdk.on === 'function') {
+      window.gokwikSdk.on('modal_closed', () => {
+        window.__gk_clicked = false;
       });
-    };
+    }
+  });
 
-    gokwikCheckoutEnable(["#gokwik-buy-now", ".gokwik-checkout button"]);
+  // Delegated click handler for GoKwik tracking (replaces 700ms listener pile-up)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("#gokwik-buy-now, .gokwik-checkout button");
+    if (!btn) return;
 
-    gokwikSdk.on('modal_closed', () => {
-      clicked = false;
-    });
+    let gokwikAdsID = "{{ settings.gkAdsConfig }}";
+    if (!window.__gk_clicked && gokwikAdsID) {
+      window.__gk_clicked = true;
+      {% if order and order.total_price %}
+      gtag('event', 'conversion', {
+        'send_to': gokwikAdsID.toString().trim(),
+        'value': {{ order.total_price | divided_by: 100.0 }},
+        'currency': '{{ order.shop.currency }}',
+        'transaction_id': '{{ order.order_number }}'
+      });
+      {% endif %}
+    }
+  }, true);
 
-    const targetElement = document.querySelector("body");
+  // Sync Buy Now disabled state with main add button on form changes
+  function syncBuyNowState() {
+    const addToCartButton = document.querySelector("button[name='add']");
+    const gokwikBuyNowButton = document.getElementById('gokwik-buy-now');
+    if (!gokwikBuyNowButton) return;
+    if (addToCartButton && (addToCartButton.disabled || addToCartButton.getAttribute('aria-disabled') === 'true')) {
+      gokwikBuyNowButton.setAttribute('disabled', 'disabled');
+      gokwikBuyNowButton.classList.add('disabled');
+    } else {
+      gokwikBuyNowButton.removeAttribute('disabled');
+      gokwikBuyNowButton.classList.remove('disabled');
+    }
+  }
+  document.addEventListener('change', syncBuyNowState);
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.product-form, variant-radios, variant-selects')) {
+      setTimeout(syncBuyNowState, 50);
+    }
+  });
 
-    function debounce(func, delay) {
-      let timeoutId;
-      return function () {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func.apply(this, arguments), delay);
-      };
+  // Intercept checkout triggers so shoppers in India don't leak into Shopify native checkout
+  document.addEventListener('click', function(e) {
+    const checkoutTrigger = e.target.closest('a[href*="/checkout"], .checkout-button, [data-helium-name="checkout-button"], button[name="checkout"], .shopifycheckoutbtn');
+    if (!checkoutTrigger) return;
+    
+    // Only intercept for India
+    if (window.userCountry && window.userCountry !== 'India') return;
+    // Don't intercept if already a GoKwik trigger
+    if (checkoutTrigger.closest('.gokwik-checkout') || checkoutTrigger.id === 'gokwik-buy-now') return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Show loading state immediately on the checkout button
+    checkoutTrigger.classList.add('is-loading', 'gokwik-loading');
+    if (checkoutTrigger.tagName === 'BUTTON' || checkoutTrigger.tagName === 'INPUT') {
+      checkoutTrigger.setAttribute('disabled', 'disabled');
     }
 
-    const observer = new MutationObserver(() => {
-      const addToCartButton = document.querySelector("button[name='add']");
-      const gokwikBuyNowButton = document.getElementById('gokwik-buy-now');
-
-      if (addToCartButton && addToCartButton.disabled) {
-        gokwikBuyNowButton?.setAttribute('disabled', 'disabled');
+    function launchGoKwik() {
+      if (window.gokwikSdk && typeof window.gokwikSdk.initCheckout === 'function') {
+        window.gokwikSdk.initCheckout(window.merchantInfo);
+        setTimeout(function() {
+          checkoutTrigger.classList.remove('is-loading', 'gokwik-loading');
+          checkoutTrigger.removeAttribute('disabled');
+        }, 1500);
       } else {
-        gokwikBuyNowButton?.removeAttribute('disabled');
+        window.location.href = '/checkout';
       }
+    }
 
-      debouncedMyTimer();
-    });
-
-    const debouncedMyTimer = debounce(() => {
-      observer.disconnect();
-      gokwikCheckoutEnable(["#gokwik-buy-now", ".gokwik-checkout button"]);
-      gokwikCheckoutButtons.forEach(button => {
-        button.disabled = false;
-        button.classList.remove('disabled');
-      });
-      observer.observe(targetElement, { childList: true, subtree: true });
-    }, 700);
-
-    observer.observe(targetElement, { childList: true, subtree: true });
-  });
+    if (window.gokwikSdk && typeof window.gokwikSdk.initCheckout === 'function') {
+      launchGoKwik();
+    } else {
+      let launched = false;
+      const onLoaded = function() {
+        if (launched) return;
+        launched = true;
+        window.removeEventListener('gokwikLoaded', onLoaded);
+        launchGoKwik();
+      };
+      window.addEventListener('gokwikLoaded', onLoaded);
+      setTimeout(function() {
+        if (!launched) {
+          launched = true;
+          window.removeEventListener('gokwikLoaded', onLoaded);
+          launchGoKwik();
+        }
+      }, 3500);
+    }
+  }, true);
 </script>
 
 

@@ -2855,59 +2855,68 @@ const ProductForm = class extends HTMLElement {
     const formValid = this.validate();
     if (!formValid) return;
 
+    // Instant Open: Open Helium cart drawer immediately (< 50ms) without waiting for network response
+    window.dispatchEvent(new CustomEvent('helium:cart-drawer:open', { detail: { instant: true } }));
+
     // Disable "Add to Cart" button until submission is complete.
     this.submitBtn.setAttribute('aria-disabled', 'true');
     this.submitBtn.classList.add('is-loading');
 
     const formData = new FormData(this.form);
-    const sectionsToUpdate = ['page-header', 'cart-drawer'].map((sel) => document.querySelector(sel)).filter((el) => el);
-    const sectionIds = sectionsToUpdate.map((el) => el.dataset.sectionId);
 
-    // --- Child Product (Also Buy) Logic ---
+    // --- Single Batch Add: Main Product + Optional Child Product (Also Buy) ---
     const childVariantInput = document.getElementById('js-child-variant-id');
     const childProductId = childVariantInput ? childVariantInput.value : null;
+    const mainVariantId = formData.get('id');
+    const mainQuantity = parseInt(formData.get('quantity') || 1, 10);
+
+    const cartAddUrl = (theme.routes && theme.routes.cartAdd) ? theme.routes.cartAdd : '/cart/add.js';
+    let fetchRequestOpts;
 
     if (childProductId) {
-      const childFormData = new FormData();
-      childFormData.append('id', childProductId);
-      childFormData.append('quantity', formData.get('quantity') || 1);
-
-      try {
-        await fetch(theme.routes.cartAdd, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/javascript',
-            'X-Requested-With': 'XMLHttpRequest'
-          },
-          body: childFormData
-        });
-      } catch (e) {
-        console.error('Child product cart add failed:', e);
-      }
+      // Send both products in a SINGLE /cart/add.js call via JSON items array
+      fetchRequestOpts = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+          items: [
+            { id: parseInt(mainVariantId, 10), quantity: mainQuantity },
+            { id: parseInt(childProductId, 10), quantity: mainQuantity }
+          ]
+        })
+      };
+    } else {
+      // Single product add - omit 'sections' and 'sections_url' to eliminate server-side 1,090-line drawer render
+      fetchRequestOpts = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/javascript, application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+      };
     }
-    // --- End Child Product Logic ---
-
-    formData.append('sections_url', window.location.pathname);
-    formData.append('sections', sectionIds.join(','));
-
-    const fetchRequestOpts = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/javascript',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      body: formData
-    };
 
     try {
-      const response = await fetch(theme.routes.cartAdd, fetchRequestOpts);
+      const response = await fetch(cartAddUrl, fetchRequestOpts);
       const data = await response.json();
       let error = typeof data.description === 'string' ? data.description : data.message;
       if (data.errors && typeof data.errors === 'object') {
         error = Object.entries(data.errors).map((item) => item[1].join(', '));
       }
-      if (data.status) this.setErrorMsgState(error);
+      if (data.status && data.status !== 200) this.setErrorMsgState(error);
       if (!response.ok) throw new Error(response.status);
+
+      // Reconcile Helium cart drawer if available
+      if (window._h_pubsub && typeof window._h_pubsub.publish === 'function') {
+        window._h_pubsub.publish('helium:cart:updated', data);
+      }
+      window.dispatchEvent(new CustomEvent('helium:cart:updated', { detail: data }));
+      document.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
 
       if (document.querySelector('.template-cart')) {
         // Cart page
@@ -2921,43 +2930,46 @@ const ProductForm = class extends HTMLElement {
           window.location.href = theme.routes.cart;
         }, 300);
       } else {
-        sectionsToUpdate.forEach((el) => {
-          el.updateFromCartChange(data.sections[el.dataset.sectionId]);
-        });
-
-        if (theme.settings.afterAddToCart === 'notification') {
-          const notification = document.getElementById('AddedNotification').content.firstElementChild.cloneNode(true);
-          notification.dataset.productTitle = data.product_title;
-          let notificationContainer = document.querySelector('.pageheader--sticky');
-          if (!notificationContainer) {
-            notificationContainer = document.querySelector('body');
+        // Skip duplicate theme notification toast when Helium drawer is present
+        const hasHeliumDrawer = document.getElementById('helium-cart-drawer-root') || window._h_pubsub;
+        if (!hasHeliumDrawer) {
+          if (theme.settings.afterAddToCart === 'notification') {
+            const notifTemplate = document.getElementById('AddedNotification');
+            if (notifTemplate && notifTemplate.content) {
+              const notification = notifTemplate.content.firstElementChild.cloneNode(true);
+              notification.dataset.productTitle = data.product_title || '';
+              let notificationContainer = document.querySelector('.pageheader--sticky') || document.querySelector('body');
+              notificationContainer.appendChild(notification);
+            }
+          } else if (theme.settings.afterAddToCart === 'drawer') {
+            const themeDrawer = document.querySelector('.js-cart-drawer');
+            if (themeDrawer && typeof themeDrawer.open === 'function') {
+              themeDrawer.open();
+            }
           }
-          notificationContainer.appendChild(notification);
-        } else if (theme.settings.afterAddToCart === 'drawer') {
-          document.querySelector('.js-cart-drawer').open();
         }
       }
 
       this.dispatchEvent(new CustomEvent('on:cart:add', {
         bubbles: true,
         detail: {
-          variantId: data.variant_id
+          variantId: data.variant_id || (data.items && data.items[0] && data.items[0].variant_id)
         }
       }));
 
       // Re-enable 'Add to Cart' button.
       this.submitBtn.classList.add('is-success');
       this.submitBtn.removeAttribute('aria-disabled');
-       setTimeout(() => {
+      setTimeout(() => {
         this.submitBtn.classList.remove('is-loading');
-         this.submitBtn.classList.remove('is-success');
-       }, 2000);
+        this.submitBtn.classList.remove('is-success');
+      }, 1500);
     } catch (error) {
-      console.log(error); // eslint-disable-line
+      console.error('Cart add failed:', error);
       this.dispatchEvent(new CustomEvent('on:cart:error', {
         bubbles: true,
         detail: {
-          error: this.errorMsg.textContent
+          error: this.errorMsg ? this.errorMsg.textContent : 'Failed to add item'
         }
       }));
 
@@ -2965,7 +2977,6 @@ const ProductForm = class extends HTMLElement {
       this.submitBtn.classList.remove('is-loading');
       this.submitBtn.classList.remove('is-success');
       this.submitBtn.removeAttribute('aria-disabled');
-      
     }
   }
 

@@ -28,10 +28,15 @@
   </script>
   {% render 'elevateab' %}
 
-<!-- Font & CDN Preconnects for Page Speed -->
+<!-- Font & CDN Preconnects for Page Speed & GoKwik Checkout -->
 <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="preconnect" href="https://pdp.gokwik.co" crossorigin>
+<link rel="preconnect" href="https://api.gokwik.co" crossorigin>
+<link rel="preconnect" href="https://cdn.gokwik.co" crossorigin>
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://pdp.gokwik.co">
+<link rel="dns-prefetch" href="https://api.gokwik.co">
+<link rel="dns-prefetch" href="https://cdn.gokwik.co">
 <!-- FontAwesome CSS Removed for Performance -->
 
 <!-- n-identify START -->
@@ -62,8 +67,6 @@
   </script>
 {% render 'ga-order-link' %}
   <!-- Gokwik theme code start -->
-  <link rel="dns-prefetch" href="https://pdp.gokwik.co/">
-  <link rel="dns-prefetch" href="https://api.gokwik.co">
     {% render 'gokwik' %}
  <!-- Gokwik theme code End -->
   <link rel="stylesheet" href="{{ 'slick.css' | asset_url }}" type="text/css" media="print" onload="this.media='all'"/>
@@ -700,11 +703,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
-  function openCheckout() {
-    window.location.href = '/checkout';
-  }
-
-
 document.addEventListener("click", function (e) {
   const trigger = e.target.closest(".menu-single-list a.submenu-trigger");
   if (!trigger) return;
@@ -857,6 +855,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 {% render 'kisah-hamburger-drawer' %}
+{% render 'kisah-cart-drawer' %}
 
 </body>
 </html>

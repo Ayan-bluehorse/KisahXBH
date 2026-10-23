@@ -1866,5 +1866,40 @@
         "default": "#FFFFFF"
       }
     ]
+  },
+  {
+    "name": "Cart Drawer Pricing & Fees",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Free Shipping & Fees"
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free Shipping Threshold (₹)",
+        "default": 2500,
+        "info": "Subtotal threshold for free shipping (in Rupees)"
+      },
+      {
+        "type": "number",
+        "id": "cart_shipping_fee",
+        "label": "Standard Shipping Fee (₹)",
+        "default": 99
+      },
+      {
+        "type": "number",
+        "id": "cart_cod_fee",
+        "label": "Cash on Delivery Fee (₹)",
+        "default": 99
+      },
+      {
+        "type": "number",
+        "id": "cart_prepaid_discount",
+        "label": "Prepaid Online Discount (%)",
+        "default": 5,
+        "info": "Percentage discount applied for prepaid online checkout"
+      }
+    ]
   }
 ]

@@ -1,0 +1,269 @@
+{%- comment -%}
+  Kisah High-Performance Cart Drawer Enhancement
+  - Computes dynamic shipping, 5% online prepaid discount, and COD total
+  - Populates #kisah-price-block and .kisah-cta-total
+  - Dispatches GA4 telemetry (view_cart with ms_to_open, checkout_click, drawer_close, select_item)
+  - Accessibility: sets aria-label on close button & backdrop
+{%- endcomment -%}
+
+<script>
+(function() {
+  var FREE_SHIPPING_THRESHOLD = {{ settings.cart_free_shipping_threshold | default: 2500 }};
+  var SHIPPING_FEE = {{ settings.cart_shipping_fee | default: 99 }};
+  var COD_FEE = {{ settings.cart_cod_fee | default: 99 }};
+  var PREPAID_DISCOUNT_PERCENT = {{ settings.cart_prepaid_discount | default: 5 }};
+  var DRAWER_VARIANT = 'variant_b';
+
+  var drawerOpenTimestamp = 0;
+  var addTapTimestamp = 0;
+  var isDrawerOpen = false;
+
+  // Track when Add to Bag is tapped
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('button[name="add"], .js-add-to-cart, [data-add-to-cart]')) {
+      addTapTimestamp = performance.now();
+    }
+  }, true);
+
+  function formatMoney(amount) {
+    return '₹' + Math.round(amount).toLocaleString('en-IN');
+  }
+
+  function ensurePriceBlockContainer() {
+    var existing = document.getElementById('kisah-price-block');
+    if (existing) return existing;
+
+    var drawerRoot = document.getElementById('helium-cart-drawer-root') || document.querySelector('[data-helium-drawer]');
+    if (!drawerRoot) return null;
+
+    var recsBlock = drawerRoot.querySelector('.helium-recommendations, [data-helium-recommendations], [class*="recommendation"], [class*="cross-sell"], [class*="upsell"]');
+    var cartFooter = drawerRoot.querySelector('.helium-cart-footer, [class*="footer"], footer');
+    var cartItems = drawerRoot.querySelector('.helium-cart-items, [class*="items"], [class*="item-list"]');
+    var drawerBody = drawerRoot.querySelector('[class*="body"], [class*="content"]') || drawerRoot;
+
+    var block = document.createElement('div');
+    block.id = 'kisah-price-block';
+
+    if (recsBlock && recsBlock.parentNode) {
+      recsBlock.parentNode.insertBefore(block, recsBlock);
+    } else if (cartFooter && cartFooter.parentNode) {
+      cartFooter.parentNode.insertBefore(block, cartFooter);
+    } else if (cartItems && cartItems.parentNode) {
+      cartItems.parentNode.insertBefore(block, cartItems.nextSibling);
+    } else {
+      drawerBody.appendChild(block);
+    }
+    return block;
+  }
+
+  function ensureCtaTotal() {
+    var checkoutBtn = document.querySelector('#helium-cart-drawer-root a[href*="/checkout"], #helium-cart-drawer-root button[class*="checkout"], [data-helium-name="checkout-button"], .cart-drawer__checkout');
+    if (checkoutBtn && !checkoutBtn.querySelector('.kisah-cta-total')) {
+      var span = document.createElement('span');
+      span.className = 'kisah-cta-total';
+      span.style.marginLeft = '4px';
+      checkoutBtn.appendChild(span);
+    }
+  }
+
+  function updatePriceBlock(cartData) {
+    if (!cartData) return;
+    
+    // Subtotal in rupees
+    var rawSubtotal = cartData.items_subtotal_price || cartData.total_price || 0;
+    // Handle both paise (Shopify integer) and rupees
+    var subtotal = rawSubtotal > 100000 ? (rawSubtotal / 100) : (rawSubtotal > 50000 ? (rawSubtotal / 100) : rawSubtotal);
+    if (cartData.items && rawSubtotal > 1000) {
+      var calcSubtotal = cartData.items.reduce(function(acc, item) {
+        return acc + (item.final_line_price || (item.price * item.quantity));
+      }, 0);
+      if (calcSubtotal > 50000) subtotal = calcSubtotal / 100;
+    }
+
+    var isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+    var shipping = isFreeShipping ? 0 : SHIPPING_FEE;
+    var prepaidDiscount = Math.round(subtotal * (PREPAID_DISCOUNT_PERCENT / 100));
+    var onlineTotal = Math.max(0, subtotal - prepaidDiscount + shipping);
+    var codTotal = subtotal + shipping + COD_FEE;
+
+    // Ensure CTA total element exists in checkout button
+    ensureCtaTotal();
+    var ctaTotals = document.querySelectorAll('.kisah-cta-total');
+    ctaTotals.forEach(function(el) {
+      el.textContent = ' • ' + formatMoney(onlineTotal);
+    });
+
+    // Populate Price Block (auto-injected if not in HTML)
+    var container = ensurePriceBlockContainer();
+    if (!container) return;
+
+    var html = `
+      <div class="kisah-price-summary" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:12px 14px; margin:12px 0; font-size:13px; line-height:1.5;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px; color:#4b5563;">
+          <span>Subtotal</span>
+          <span>${formatMoney(subtotal)}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px; color:#4b5563;">
+          <span>Shipping</span>
+          <span style="${isFreeShipping ? 'color:#15803d; font-weight:600;' : ''}">${isFreeShipping ? 'FREE' : formatMoney(shipping)}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#15803d;">
+          <span>Extra ${PREPAID_DISCOUNT_PERCENT}% Prepaid Saving</span>
+          <span style="font-weight:600;">-${formatMoney(prepaidDiscount)}</span>
+        </div>
+        <div style="border-top:1px dashed #d1d5db; padding-top:6px; margin-top:4px;">
+          <div style="display:flex; justify-content:space-between; font-weight:700; color:#111827; font-size:14px;">
+            <span>Online Payment Total</span>
+            <span>${formatMoney(onlineTotal)}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:#6b7280; margin-top:2px;">
+            <span>COD Total (incl. ₹${COD_FEE} COD fee)</span>
+            <span>${formatMoney(codTotal)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    container.innerHTML = html;
+  }
+
+  function handleDrawerOpen(e) {
+    if (isDrawerOpen) return;
+    isDrawerOpen = true;
+    drawerOpenTimestamp = performance.now();
+
+    var msToOpen = addTapTimestamp > 0 ? Math.round(drawerOpenTimestamp - addTapTimestamp) : 0;
+    addTapTimestamp = 0;
+
+    // Accessibility label on close button and backdrop
+    setTimeout(function() {
+      var closeBtns = document.querySelectorAll('#helium-cart-drawer-root button, [data-helium-name="close-button"], .cart-drawer__close');
+      closeBtns.forEach(function(btn) {
+        if (!btn.getAttribute('aria-label') || btn.getAttribute('aria-label') === '') {
+          btn.setAttribute('aria-label', 'Close cart');
+        }
+      });
+    }, 150);
+
+    // Fetch initial cart and inject price block
+    if (window._h_initial_cart) {
+      updatePriceBlock(window._h_initial_cart);
+    } else {
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(c) {
+          window._h_initial_cart = c;
+          updatePriceBlock(c);
+        })
+        .catch(function() {});
+    }
+
+    // Re-verify after drawer animation paints
+    setTimeout(function() {
+      if (window._h_initial_cart) updatePriceBlock(window._h_initial_cart);
+    }, 250);
+
+    // GA4 view_cart event
+    if (typeof window.gtag === 'function') {
+      var cart = window._h_initial_cart || {};
+      window.gtag('event', 'view_cart', {
+        drawer_variant: DRAWER_VARIANT,
+        ms_to_open: msToOpen,
+        value: (cart.total_price ? cart.total_price / 100 : 0),
+        currency: 'INR',
+        items: (cart.items || []).map(function(item) {
+          return {
+            item_id: item.id || item.variant_id,
+            item_name: item.title || item.product_title,
+            price: item.price ? item.price / 100 : 0,
+            quantity: item.quantity
+          };
+        })
+      });
+    }
+  }
+
+  function handleDrawerClose(method) {
+    if (!isDrawerOpen) return;
+    isDrawerOpen = false;
+    var msOpen = drawerOpenTimestamp > 0 ? Math.round(performance.now() - drawerOpenTimestamp) : 0;
+    drawerOpenTimestamp = 0;
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'drawer_close', {
+        method: method || 'close icon',
+        ms_open: msOpen,
+        drawer_variant: DRAWER_VARIANT
+      });
+    }
+  }
+
+  // Listeners for Helium Drawer & Cart Events
+  window.addEventListener('helium:cart-drawer:open', handleDrawerOpen);
+  window.addEventListener('helium:cart:updated', function(e) {
+    if (e.detail) updatePriceBlock(e.detail);
+  });
+  document.addEventListener('cart:updated', function(e) {
+    if (e.detail) updatePriceBlock(e.detail);
+  });
+
+  // Helium pubsub subscription
+  function initHeliumPubsub() {
+    if (window._h_pubsub && typeof window._h_pubsub.subscribe === 'function') {
+      window._h_pubsub.subscribe('helium:cart:updated', function(cart) {
+        updatePriceBlock(cart);
+      });
+      window._h_pubsub.subscribe('helium:cart:open', handleDrawerOpen);
+      window._h_pubsub.subscribe('helium:cart:close', function() {
+        handleDrawerClose('helium event');
+      });
+    } else {
+      setTimeout(initHeliumPubsub, 300);
+    }
+  }
+  initHeliumPubsub();
+
+  // Delegated Clicks inside Drawer
+  document.addEventListener('click', function(e) {
+    // 1. Checkout Click
+    var checkoutBtn = e.target.closest('#helium-cart-drawer-root a[href*="/checkout"], #helium-cart-drawer-root button[class*="checkout"], [data-helium-name="checkout-button"], .kisah-checkout-trigger');
+    if (checkoutBtn) {
+      var msSinceOpen = drawerOpenTimestamp > 0 ? Math.round(performance.now() - drawerOpenTimestamp) : 0;
+      var cart = window._h_initial_cart || {};
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'checkout_click', {
+          value: cart.total_price ? cart.total_price / 100 : 0,
+          currency: 'INR',
+          drawer_variant: DRAWER_VARIANT,
+          ms_since_drawer_open: msSinceOpen
+        });
+      }
+    }
+
+    // 2. Drawer Close Click
+    var closeBtn = e.target.closest('#helium-cart-drawer-root [data-helium-name="close-button"], #helium-cart-drawer-root .close, .cart-drawer__close');
+    if (closeBtn) {
+      handleDrawerClose('close icon');
+    }
+    var backdrop = e.target.closest('#helium-cart-drawer-root .backdrop, .cart-drawer__backdrop');
+    if (backdrop) {
+      handleDrawerClose('backdrop');
+    }
+
+    // 3. Recommendation Card / ADD Click
+    var recItem = e.target.closest('.helium-recommendations-item, [data-helium-recommendation], #helium-cart-drawer-root .recommendation-item');
+    if (recItem) {
+      var isAdd = !!e.target.closest('button, .btn, [data-action="add"]');
+      var itemId = recItem.dataset.variantId || recItem.dataset.productId || '';
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'select_item', {
+          item_id: itemId,
+          item_list_name: 'drawer_recs',
+          action: isAdd ? 'add' : 'open',
+          drawer_variant: DRAWER_VARIANT
+        });
+      }
+    }
+  }, true);
+
+})();
+</script>
