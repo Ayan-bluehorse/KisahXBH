@@ -1,0 +1,203 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "wedding_landing": {
+      "type": "diwali-landing",
+      "blocks": {
+        "circle_1": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "House Celebration",
+            "link": "/collections/house-celebration"
+          }
+        },
+        "circle_2": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Wedding",
+            "link": "/collections/wedding"
+          }
+        },
+        "circle_3": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Haldi",
+            "link": "/collections/haldi"
+          }
+        },
+        "circle_4": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Mehendi",
+            "link": "/collections/mehendi"
+          }
+        },
+        "circle_5": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Sangeet",
+            "link": "/collections/sangeet"
+          }
+        },
+        "circle_6": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "Reception",
+            "link": "/collections/reception"
+          }
+        }
+      },
+      "block_order": [
+        "circle_1",
+        "circle_2",
+        "circle_3",
+        "circle_4",
+        "circle_5",
+        "circle_6"
+      ],
+      "disabled": true,
+      "settings": {
+        "pad_top": 12,
+        "pad_bottom": 16,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    },
+    "wedding_feed": {
+      "type": "diwali-collection-feed",
+      "blocks": {
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "House Celebration",
+            "collection": "house-celebration",
+            "custom_link": "/collections/house-celebration"
+          }
+        },
+        "tab_2": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Wedding",
+            "collection": "wedding",
+            "custom_link": "/collections/wedding"
+          }
+        },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Haldi",
+            "collection": "haldi",
+            "custom_link": "/collections/haldi"
+          }
+        },
+        "tab_4": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Mehendi",
+            "collection": "mehendi",
+            "custom_link": "/collections/mehendi"
+          }
+        },
+        "tab_5": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Sangeet",
+            "collection": "sangeet",
+            "custom_link": "/collections/sangeet"
+          }
+        },
+        "tab_6": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Reception",
+            "collection": "reception",
+            "custom_link": "/collections/reception"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "tab_4",
+        "tab_5",
+        "tab_6"
+      ],
+      "settings": {
+        "title": "All Wedding styles",
+        "subtitle": "Sorted by most bought",
+        "collection": "wedding",
+        "products_per_page": 16,
+        "grid": 4,
+        "grid_mobile": "2",
+        "show_filter_tabs": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "pad_top": 16,
+        "pad_bottom": 32,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    },
+    "wedding_seo_faq": {
+      "type": "diwali-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What should men wear for Indian wedding ceremonies?",
+            "answer": "For ceremonies like Haldi and Mehendi, vibrant yellow or green silk-cotton kurtas and lightweight kurta sets offer style with all-day comfort. For Sangeet, Indo-Western sets and embroidered jacket ensembles make a striking statement. For the Wedding and Reception, regal sherwanis, embroidered bandhgalas, and silk kurta-dhoti sets deliver timeless royal elegance."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I get delivery before the wedding date?",
+            "answer": "Yes! We offer 48-hour express dispatch across major Indian metros and trusted courier delivery nationwide to ensure your wedding outfits arrive well in advance of your ceremonies."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you have matching outfits for the groom squad and father-son?",
+            "answer": "Yes! Our wedding collection features coordinated family sets, groom squad kurtas, and father-son matching styles crafted from premium jacquard, raw silk blends, and breathable cotton."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is Cash on Delivery (COD) and easy exchange available?",
+            "answer": "Yes, COD is available across India. We also offer 7-day hassle-free exchanges so you can easily swap for another size or style if needed."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "story_title": "Men's Wedding Wear by Kisah",
+        "story_content": "<p>Celebrate every wedding ritual in style. From intimate House Celebrations and sunny Haldi ceremonies to energetic Sangeet nights and grand Receptions, discover Kisah's handcrafted collection of sherwanis, bandhgalas, kurta-jacket sets, and Indo-Western outfits tailored for the modern Indian man.</p>",
+        "faq_title": "Frequently Asked Questions",
+        "show_usp_strip": true,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    }
+  },
+  "order": [
+    "wedding_landing",
+    "wedding_feed",
+    "wedding_seo_faq"
+  ]
+}
