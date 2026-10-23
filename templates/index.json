@@ -96,26 +96,26 @@
     "v5_shop_by_category_KpXJQD": {
       "type": "v5-shop-by-category",
       "blocks": {
-        "item_wPNmDU": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Kurta_Sets_0aa89bd8-f804-465f-8bcf-a3289a88617d.jpg",
-            "title": "Kurta Sets",
-            "link": "shopify://collections/kurta-sets"
-          }
-        },
         "item_gTWNJW": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Kurta_d85ee3ac-96e7-49c8-9a54-a398e1eeb404.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM.jpg",
             "title": "Kurtas",
             "link": "shopify://collections/kurta-short-kurta"
+          }
+        },
+        "item_wPNmDU": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM_2.jpg",
+            "title": "Kurta Sets",
+            "link": "shopify://collections/kurta-sets"
           }
         },
         "item_PFRBzr": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Nehru_Jackets_7e2248f0-e585-4496-8ca6-3ae848b3fcb0.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM_1.jpg",
             "title": "Nehru Jackets",
             "link": "shopify://collections/nehru-jackets"
           }
@@ -123,7 +123,7 @@
         "item_4ygcpV": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Indo_Western.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM.jpg",
             "title": "Indo-Western",
             "link": "shopify://collections/3-piece-indo-western-dress-for-men"
           }
@@ -131,7 +131,7 @@
         "item_FTkVyb": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Sherwani_549758af-e241-440a-882a-5cf15a376db3.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_2.jpg",
             "title": "Sherwanis",
             "link": "shopify://collections/sherwani-achkans"
           }
@@ -139,15 +139,15 @@
         "item_B7FqMx": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Bandhgala.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_1.jpg",
             "title": "Bandhgala",
             "link": "shopify://collections/bandhgala-set"
           }
         }
       },
       "block_order": [
-        "item_wPNmDU",
         "item_gTWNJW",
+        "item_wPNmDU",
         "item_PFRBzr",
         "item_4ygcpV",
         "item_FTkVyb",
