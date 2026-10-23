@@ -236,68 +236,68 @@
     "v5_shop_by_colour_y7aKUB": {
       "type": "v5-shop-by-colour",
       "blocks": {
-        "item_e4Ywxm": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Festive_White_Kurta_Portrait.png",
-            "title": "White",
-            "swatch_color": "#f4f0ea",
-            "link": "shopify://collections/white-ivories"
-          }
-        },
-        "item_jQxVtr": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/Pastels_ae0e7cd2-a5f9-4fd1-aa6f-11c6a4514735.jpg",
-            "title": "Pastels",
-            "swatch_color": "#d3dcd6",
-            "link": "shopify://collections/pastel"
-          }
-        },
         "item_63DGcX": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Gilded_Bokeh_Black_Formalwear_Portrait.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM.jpg",
             "title": "Black",
             "swatch_color": "#1c1c1e",
             "link": "shopify://collections/midnight-monochromes"
           }
         },
+        "item_jQxVtr": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.45_PM.jpg",
+            "title": "Pastels",
+            "swatch_color": "#d3dcd6",
+            "link": "shopify://collections/pastel"
+          }
+        },
         "item_brNQXA": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Golden_Kurta_in_Festive_Glow.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_2.jpg",
             "title": "Yellow",
             "swatch_color": "#e5a835",
             "link": "shopify://collections/marigold-edit"
           }
         },
+        "item_4dERPx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM.jpg",
+            "title": "Pink",
+            "swatch_color": "#d99fa5",
+            "link": "shopify://collections/blush-rose"
+          }
+        },
         "item_XHmgAm": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Festive_Green_Kurta_Portrait.png",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_2.jpg",
             "title": "Green",
             "swatch_color": "#4a6050",
             "link": "shopify://collections/earth-green"
           }
         },
-        "item_4dERPx": {
+        "item_e4Ywxm": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/Pink_Sherwani_in_Golden_Bokeh.png",
-            "title": "Pink",
-            "swatch_color": "#d99fa5",
-            "link": "shopify://collections/blush-rose"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_1.jpg",
+            "title": "White",
+            "swatch_color": "#f4f0ea",
+            "link": "shopify://collections/white-ivories"
           }
         }
       },
       "block_order": [
-        "item_e4Ywxm",
-        "item_jQxVtr",
         "item_63DGcX",
+        "item_jQxVtr",
         "item_brNQXA",
+        "item_4dERPx",
         "item_XHmgAm",
-        "item_4dERPx"
+        "item_e4Ywxm"
       ],
       "name": "Shop by Colour",
       "settings": {
