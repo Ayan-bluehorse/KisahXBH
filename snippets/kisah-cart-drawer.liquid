@@ -60,17 +60,17 @@
       return { parent: rebuy.parentNode, referenceNode: rebuy };
     }
 
-    // 2. Look for the last cart product item (to place directly below the items list)
-    var items = drawerRoot.querySelectorAll('[data-helium-name="product-item"], [class*="product-item"], [class*="line-item"], [class*="cart-item"], [class*="drawer-item"]');
-    if (items.length > 0) {
-      var lastItem = items[items.length - 1];
-      if (lastItem && lastItem.parentNode) {
-        return { parent: lastItem.parentNode, referenceNode: lastItem.nextSibling };
-      }
+    // 3. Fallback: Inside the drawer scroll container
+    var scroller = drawerRoot.querySelector('.overflow-y-auto, [class*="overflow-y-auto"], [class*="drawer-body"]');
+    if (scroller) {
+      return { parent: scroller, referenceNode: null };
     }
 
-    // 3. Fallback: Place immediately before checkout / subtotal footer
-    var checkoutBtn = drawerRoot.querySelector('a[href*="/checkout"], button[class*="checkout"], [data-helium-name="checkout-button"], .cart-drawer__checkout');
+    // 4. Fallback: Place immediately before checkout / subtotal footer
+    var checkoutBtn = Array.from(drawerRoot.querySelectorAll('button, a')).find(function(el) {
+      var t = (el.textContent || '').toUpperCase();
+      return t.indexOf('CHECKOUT') !== -1 || (el.className && typeof el.className === 'string' && el.className.indexOf('checkout') !== -1);
+    });
     if (checkoutBtn) {
       var footerBox = checkoutBtn.closest('[class*="footer"], [class*="bottom"]') || checkoutBtn.parentElement;
       if (footerBox && footerBox.parentNode) {
@@ -82,11 +82,7 @@
   }
 
   function ensurePriceBlockContainer() {
-    // 1. Remove any stray price blocks attached to body or root directly
-    var strays = document.querySelectorAll('body > #kisah-price-block, #helium-cart-drawer-root > #kisah-price-block');
-    strays.forEach(function(el) { el.remove(); });
-
-    // 2. If on Cart Page (/cart): Place inside .checkout-col above checkout buttons
+    // 1. If on Cart Page (/cart): Place inside .checkout-col above checkout buttons
     if (window.location.pathname.indexOf('/cart') !== -1) {
       var cartPageBlock = document.querySelector('.checkout-col #kisah-price-block') || document.getElementById('kisah-price-block');
       if (cartPageBlock) {
@@ -108,7 +104,7 @@
       return null;
     }
 
-    // 3. If in Cart Drawer: ONLY place inside drawer above recommendations or below cart items
+    // 2. If in Cart Drawer: ONLY place inside drawer above recommendations or below cart items
     var drawerRoot = document.getElementById('helium-cart-drawer-root');
     if (!drawerRoot) return null;
 
@@ -122,8 +118,14 @@
     }
 
     // Insert or move to the exact insertion point (above recommendations)
-    if (block.nextSibling !== insertion.referenceNode || block.parentNode !== insertion.parent) {
-      insertion.parent.insertBefore(block, insertion.referenceNode);
+    if (insertion.referenceNode) {
+      if (block.nextSibling !== insertion.referenceNode || block.parentNode !== insertion.parent) {
+        insertion.parent.insertBefore(block, insertion.referenceNode);
+      }
+    } else {
+      if (block.parentNode !== insertion.parent) {
+        insertion.parent.appendChild(block);
+      }
     }
     block.style.display = 'block';
     return block;
@@ -255,6 +257,82 @@
     }
   }
 
+  function fetchFreshCart(callback) {
+    fetch('/cart.js')
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        window._h_initial_cart = cart;
+        updatePriceBlock(cart);
+        syncCartBadge(cart);
+        if (typeof callback === 'function') callback(cart);
+      })
+      .catch(function() {});
+  }
+
+  // Intercept all Shopify cart network calls in real time
+  if (!window._kisah_fetch_intercepted) {
+    window._kisah_fetch_intercepted = true;
+    var origFetch = window.fetch;
+    window.fetch = function() {
+      var args = arguments;
+      var url = (args[0] && typeof args[0] === 'string') ? args[0] : (args[0] && args[0].url ? args[0].url : '');
+      var isCartOp = url && (
+        url.indexOf('/cart/change') !== -1 ||
+        url.indexOf('/cart/update') !== -1 ||
+        url.indexOf('/cart/add') !== -1 ||
+        url.indexOf('/cart/clear') !== -1
+      );
+
+      return origFetch.apply(this, args).then(function(response) {
+        if (isCartOp && response.ok) {
+          response.clone().json().then(function(cartData) {
+            if (cartData && (cartData.items || typeof cartData.item_count === 'number')) {
+              window._h_initial_cart = cartData;
+              updatePriceBlock(cartData);
+              syncCartBadge(cartData);
+            } else {
+              fetchFreshCart();
+            }
+          }).catch(function() {
+            fetchFreshCart();
+          });
+          // Also schedule follow-ups to catch delayed Preact DOM reconciliations
+          setTimeout(fetchFreshCart, 150);
+          setTimeout(fetchFreshCart, 400);
+        }
+        return response;
+      });
+    };
+  }
+
+  // Intercept XMLHttpRequest
+  if (!window._kisah_xhr_intercepted) {
+    window._kisah_xhr_intercepted = true;
+    var origXhrOpen = XMLHttpRequest.prototype.open;
+    var origXhrSend = XMLHttpRequest.prototype.send;
+    XMLHttpRequest.prototype.open = function(method, url) {
+      this._kisah_url = url;
+      return origXhrOpen.apply(this, arguments);
+    };
+    XMLHttpRequest.prototype.send = function() {
+      var self = this;
+      if (this._kisah_url && (
+        this._kisah_url.indexOf('/cart/change') !== -1 ||
+        this._kisah_url.indexOf('/cart/update') !== -1 ||
+        this._kisah_url.indexOf('/cart/add') !== -1 ||
+        this._kisah_url.indexOf('/cart/clear') !== -1
+      )) {
+        this.addEventListener('load', function() {
+          if (self.status >= 200 && self.status < 300) {
+            fetchFreshCart();
+            setTimeout(fetchFreshCart, 200);
+          }
+        });
+      }
+      return origXhrSend.apply(this, arguments);
+    };
+  }
+
   function handleDrawerOpen(e) {
     isDrawerOpen = true;
     drawerOpenTimestamp = performance.now();
@@ -272,26 +350,10 @@
       });
     }, 150);
 
-    function refreshDrawerPrice() {
-      if (window._h_initial_cart) {
-        updatePriceBlock(window._h_initial_cart);
-        syncCartBadge(window._h_initial_cart);
-      } else {
-        fetch('/cart.js')
-          .then(function(r) { return r.json(); })
-          .then(function(c) {
-            window._h_initial_cart = c;
-            updatePriceBlock(c);
-            syncCartBadge(c);
-          })
-          .catch(function() {});
-      }
-    }
-
-    refreshDrawerPrice();
-    setTimeout(refreshDrawerPrice, 100);
-    setTimeout(refreshDrawerPrice, 350);
-    setTimeout(refreshDrawerPrice, 700);
+    fetchFreshCart();
+    setTimeout(fetchFreshCart, 150);
+    setTimeout(fetchFreshCart, 400);
+    setTimeout(fetchFreshCart, 800);
 
     // GA4 view_cart event
     if (typeof window.gtag === 'function') {
@@ -333,12 +395,16 @@
     if (e.detail) {
       updatePriceBlock(e.detail);
       syncCartBadge(e.detail);
+    } else {
+      fetchFreshCart();
     }
   });
   document.addEventListener('cart:updated', function(e) {
     if (e.detail) {
       updatePriceBlock(e.detail);
       syncCartBadge(e.detail);
+    } else {
+      fetchFreshCart();
     }
   });
 
@@ -346,8 +412,12 @@
   function initHeliumPubsub() {
     if (window._h_pubsub && typeof window._h_pubsub.subscribe === 'function') {
       window._h_pubsub.subscribe('helium:cart:updated', function(cart) {
-        updatePriceBlock(cart);
-        syncCartBadge(cart);
+        if (cart) {
+          updatePriceBlock(cart);
+          syncCartBadge(cart);
+        } else {
+          fetchFreshCart();
+        }
       });
       window._h_pubsub.subscribe('helium:cart:open', handleDrawerOpen);
       window._h_pubsub.subscribe('helium:cart:close', function() {
@@ -376,9 +446,24 @@
     }
   });
 
+  // Real-time quantity clicks inside the drawer (+, -, trash)
   document.addEventListener('click', function(e) {
+    var drawerRoot = document.getElementById('helium-cart-drawer-root');
+    if (!drawerRoot) return;
+
+    var btn = e.target.closest('#helium-cart-drawer-root button, [data-helium-name="quantity-increment"], [data-helium-name="quantity-decrement"]');
+    if (btn) {
+      var t = (btn.textContent || '').trim();
+      var aria = (btn.getAttribute('aria-label') || '').toLowerCase();
+      if (t === '+' || t === '-' || aria.indexOf('increase') !== -1 || aria.indexOf('decrease') !== -1 || aria.indexOf('remove') !== -1) {
+        setTimeout(fetchFreshCart, 150);
+        setTimeout(fetchFreshCart, 400);
+        setTimeout(fetchFreshCart, 800);
+      }
+    }
+
     var isClose = e.target.closest('#helium-cart-drawer-root button, [data-helium-name="close-button"], [aria-label*="close" i], .cart-drawer__close, .close');
-    var isNotAction = !e.target.closest('a[href*="/checkout"], button[class*="checkout"], [data-action="add"], [data-helium-name="product-item"]');
+    var isNotAction = !e.target.closest('a[href*="/checkout"], button[class*="checkout"], [data-action="add"], [data-helium-name="product-item"], [data-helium-name="quantity-increment"], [data-helium-name="quantity-decrement"]');
     if (isClose && isNotAction) {
       handleDrawerClose('close button');
     }
@@ -387,7 +472,7 @@
     }
   }, true);
 
-  // MutationObserver to ensure price block is always rendered above recommendations whenever drawer is open
+  // Self-healing MutationObserver to ensure price block is always in the drawer whenever drawer is open
   (function() {
     var timer = null;
     var observer = new MutationObserver(function() {
@@ -395,25 +480,24 @@
       var drawerRoot = document.getElementById('helium-cart-drawer-root');
       if (!drawerRoot) return;
 
-      var hasItems = drawerRoot.querySelector('[data-helium-name="product-item"], [class*="product-item"], [class*="cart-item"], [class*="line-item"]');
-      if (!hasItems) return;
+      var dialog = drawerRoot.querySelector('[role="dialog"], [class*="dialog"], [class*="drawer-content"], [class*="overflow-y-auto"]');
+      if (!dialog) return;
 
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        if (window._h_initial_cart) {
-          updatePriceBlock(window._h_initial_cart);
-        } else {
-          fetch('/cart.js').then(function(r){return r.json();}).then(updatePriceBlock).catch(function(){});
-        }
-      }, 60);
+      var block = document.getElementById('kisah-price-block');
+      var isMountedInDrawer = block && drawerRoot.contains(block) && block.offsetParent !== null;
+
+      if (!isMountedInDrawer) {
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+          fetchFreshCart();
+        }, 80);
+      }
     });
 
     function startObserving() {
-      var root = document.getElementById('helium-cart-drawer-root');
+      var root = document.getElementById('helium-cart-drawer-root') || document.body;
       if (root) {
         observer.observe(root, { childList: true, subtree: true });
-      } else {
-        setTimeout(startObserving, 500);
       }
     }
     startObserving();
