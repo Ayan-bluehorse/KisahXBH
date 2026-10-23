@@ -30,16 +30,48 @@
   }
 
   function ensurePriceBlockContainer() {
-    var existing = document.getElementById('kisah-price-block');
-    if (existing) return existing;
+    // 1. Remove any stray/orphaned price blocks sitting at the body or root level
+    var strays = document.querySelectorAll('body > #kisah-price-block, #helium-cart-drawer-root > #kisah-price-block');
+    strays.forEach(function(el) { el.remove(); });
 
-    var drawerRoot = document.getElementById('helium-cart-drawer-root') || document.querySelector('[data-helium-drawer]');
+    // 2. If on the Cart Page (/cart)
+    if (window.location.pathname.indexOf('/cart') !== -1) {
+      var cartPageBlock = document.querySelector('.checkout-col #kisah-price-block') || document.getElementById('kisah-price-block');
+      if (cartPageBlock) {
+        cartPageBlock.style.display = 'block';
+        return cartPageBlock;
+      }
+      var cartSummary = document.querySelector('.checkout-col, .cart-summary, cart-form .subtotal');
+      if (cartSummary) {
+        var newCartBlock = document.createElement('div');
+        newCartBlock.id = 'kisah-price-block';
+        var btns = cartSummary.querySelector('.checkout-buttons');
+        if (btns) {
+          cartSummary.insertBefore(newCartBlock, btns);
+        } else {
+          cartSummary.appendChild(newCartBlock);
+        }
+        return newCartBlock;
+      }
+      return null;
+    }
+
+    // 3. If in Cart Drawer: ONLY inject if inside drawer dialog/panel (drawer is active/rendered)
+    var drawerRoot = document.getElementById('helium-cart-drawer-root');
     if (!drawerRoot) return null;
 
-    var recsBlock = drawerRoot.querySelector('.helium-recommendations, [data-helium-recommendations], [class*="recommendation"], [class*="cross-sell"], [class*="upsell"]');
-    var cartFooter = drawerRoot.querySelector('.helium-cart-footer, [class*="footer"], footer');
-    var cartItems = drawerRoot.querySelector('.helium-cart-items, [class*="items"], [class*="item-list"]');
-    var drawerBody = drawerRoot.querySelector('[class*="body"], [class*="content"]') || drawerRoot;
+    var drawerPanel = drawerRoot.querySelector('[role="dialog"], [class*="dialog"], [class*="drawer-content"], [class*="drawer-panel"], [class*="drawer-body"], [class*="content-wrapper"], [class*="h-drawer"]');
+    if (!drawerPanel) return null; // Drawer is closed or not mounted; do NOT append to body or root!
+
+    var existingInDrawer = drawerPanel.querySelector('#kisah-price-block');
+    if (existingInDrawer) {
+      existingInDrawer.style.display = 'block';
+      return existingInDrawer;
+    }
+
+    var recsBlock = drawerPanel.querySelector('.helium-recommendations, [data-helium-recommendations], [class*="recommendation"], [class*="cross-sell"], [class*="upsell"]');
+    var cartFooter = drawerPanel.querySelector('.helium-cart-footer, [class*="footer"]');
+    var cartItems = drawerPanel.querySelector('.helium-cart-items, [class*="items"], [class*="item-list"]');
 
     var block = document.createElement('div');
     block.id = 'kisah-price-block';
@@ -51,7 +83,7 @@
     } else if (cartItems && cartItems.parentNode) {
       cartItems.parentNode.insertBefore(block, cartItems.nextSibling);
     } else {
-      drawerBody.appendChild(block);
+      drawerPanel.appendChild(block);
     }
     return block;
   }
@@ -68,17 +100,25 @@
 
   function updatePriceBlock(cartData) {
     if (!cartData) return;
-    
-    // Subtotal in rupees
+
     var rawSubtotal = cartData.items_subtotal_price || cartData.total_price || 0;
-    // Handle both paise (Shopify integer) and rupees
-    var subtotal = rawSubtotal > 100000 ? (rawSubtotal / 100) : (rawSubtotal > 50000 ? (rawSubtotal / 100) : rawSubtotal);
-    if (cartData.items && rawSubtotal > 1000) {
-      var calcSubtotal = cartData.items.reduce(function(acc, item) {
+    if (rawSubtotal <= 0 && Array.isArray(cartData.items) && cartData.items.length > 0) {
+      rawSubtotal = cartData.items.reduce(function(acc, item) {
         return acc + (item.final_line_price || (item.price * item.quantity));
       }, 0);
-      if (calcSubtotal > 50000) subtotal = calcSubtotal / 100;
     }
+
+    // If subtotal is 0 or cart has no items, hide price block and remove CTA total
+    if (rawSubtotal <= 0) {
+      var existing = document.getElementById('kisah-price-block');
+      if (existing) existing.style.display = 'none';
+      var ctaTotals = document.querySelectorAll('.kisah-cta-total');
+      ctaTotals.forEach(function(el) { el.remove(); });
+      return;
+    }
+
+    // Shopify /cart.js and /cart/add.js return prices in paise (e.g. 599700 = ₹5,997).
+    var subtotal = rawSubtotal >= 100 ? (rawSubtotal / 100) : rawSubtotal;
 
     var isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
     var shipping = isFreeShipping ? 0 : SHIPPING_FEE;
@@ -93,9 +133,10 @@
       el.textContent = ' • ' + formatMoney(onlineTotal);
     });
 
-    // Populate Price Block (auto-injected if not in HTML)
+    // Populate Price Block (ONLY inside cart page or drawer dialog)
     var container = ensurePriceBlockContainer();
     if (!container) return;
+    container.style.display = 'block';
 
     var html = `
       <div class="kisah-price-summary" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px; padding:12px 14px; margin:12px 0; font-size:13px; line-height:1.5;">
@@ -323,6 +364,24 @@
       }
     }
   }, true);
+
+  // On /cart page, fetch fresh /cart.js to populate #kisah-price-block in checkout-col
+  if (window.location.pathname.indexOf('/cart') !== -1) {
+    function initCartPage() {
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(c) {
+          updatePriceBlock(c);
+          syncCartBadge(c);
+        })
+        .catch(function() {});
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCartPage);
+    } else {
+      initCartPage();
+    }
+  }
 
 })();
 </script>
