@@ -12,16 +12,6 @@
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
-        "slide_banner_d8WAgW": {
-          "type": "slide_banner",
-          "settings": {
-            "desk-img": "shopify://shop_images/image_7.png",
-            "mob-img": "shopify://shop_images/image_8.png",
-            "link": "https://kisah.in/collections/haldi-1",
-            "button-name": "",
-            "button-link": ""
-          }
-        },
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
@@ -42,8 +32,19 @@
             "button-link": ""
           }
         },
+        "slide_banner_d8WAgW": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/image_7.png",
+            "mob-img": "shopify://shop_images/image_8.png",
+            "link": "https://kisah.in/collections/haldi-1",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
         "slide_banner_GzHARp": {
           "type": "slide_banner",
+          "disabled": true,
           "settings": {
             "desk-img": "shopify://shop_images/Peak_Haldi_Josh_Desktop.jpg",
             "mob-img": "shopify://shop_images/Peak_Haldi_Josh_Mobile.jpg",
@@ -97,9 +98,9 @@
         }
       },
       "block_order": [
-        "slide_banner_d8WAgW",
         "slide_banner_Xp6ga7",
         "slide_banner_HbQBTL",
+        "slide_banner_d8WAgW",
         "slide_banner_GzHARp",
         "slide_banner_FgzJMq",
         "slide_banner_FiWGha",
@@ -138,8 +139,8 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM_1.jpg",
-            "title": "Nehru Jackets",
-            "link": "shopify://collections/nehru-jackets"
+            "title": "Indowestern",
+            "link": "shopify://collections/indowestern-check"
           }
         },
         "item_4ygcpV": {
