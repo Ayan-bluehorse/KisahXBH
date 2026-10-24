@@ -147,8 +147,8 @@
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM.jpg",
-            "title": "Indo-Western",
-            "link": "shopify://collections/3-piece-indo-western-dress-for-men"
+            "title": "Bandhgala",
+            "link": "shopify://collections/bandhgala-set"
           }
         },
         "item_FTkVyb": {
@@ -157,6 +157,13 @@
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-24_at_12.49.57_AM.jpg",
             "title": "Sherwanis",
             "link": "shopify://collections/sherwani-achkans"
+          }
+        },
+        "item_dFJqTn": {
+          "type": "item",
+          "settings": {
+            "title": "Kurta Sets",
+            "link": ""
           }
         },
         "item_B7FqMx": {
@@ -174,6 +181,7 @@
         "item_PFRBzr",
         "item_4ygcpV",
         "item_FTkVyb",
+        "item_dFJqTn",
         "item_B7FqMx"
       ],
       "name": "Shop by Category",
