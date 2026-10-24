@@ -616,7 +616,8 @@
         "story_3zmDgD": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-1.png",
+            "image": "shopify://shop_images/customer-story-1.png",
+            "fallback_image_url": "",
             "badge": "01",
             "label": "THE WEDDING SQUAD",
             "title": "LA glam. Indian soul.",
@@ -628,7 +629,8 @@
         "story_VzUfRx": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-2.jpeg",
+            "image": "shopify://shop_images/customer-story-2.jpg",
+            "fallback_image_url": "",
             "badge": "02",
             "label": "THE BAARAT",
             "title": "The baarat, in full colour.",
@@ -640,7 +642,8 @@
         "story_3rQzAU": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-3.jpeg",
+            "image": "shopify://shop_images/customer-story-3.jpg",
+            "fallback_image_url": "",
             "badge": "03",
             "label": "THE FAMILY EDIT",
             "title": "Together, in every detail.",
@@ -652,7 +655,8 @@
         "story_HXi9NH": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-4.jpeg",
+            "image": "shopify://shop_images/customer-story-4.jpg",
+            "fallback_image_url": "",
             "badge": "04",
             "label": "MEHENDI NIGHT",
             "title": "A Mehendi to remember.",
@@ -664,7 +668,8 @@
         "story_ejAkdf": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-5.jpeg",
+            "image": "shopify://shop_images/customer-story-5.jpg",
+            "fallback_image_url": "",
             "badge": "05",
             "label": "DIWALI TOGETHER",
             "title": "Every generation. One celebration.",
@@ -676,7 +681,8 @@
         "story_t6nLpY": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-6.jpeg",
+            "image": "shopify://shop_images/customer-story-6.jpg",
+            "fallback_image_url": "",
             "badge": "06",
             "label": "FRIENDS & FESTIVITIES",
             "title": "Made for the baarat.",
@@ -688,7 +694,8 @@
         "story_pK4rB9": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-7.jpeg",
+            "image": "shopify://shop_images/customer-story-7.jpg",
+            "fallback_image_url": "",
             "badge": "07",
             "label": "THE COORDINATED EDIT",
             "title": "A moment worth matching.",
@@ -700,7 +707,8 @@
         "story_F4ftm3": {
           "type": "story",
           "settings": {
-            "fallback_image_url": "https://kisah-festive-home-mobile.berry-ape-8136.chatgpt.site/assets/customer-story-8.jpeg",
+            "image": "shopify://shop_images/customer-story-8.jpg",
+            "fallback_image_url": "",
             "badge": "08",
             "label": "RAKHI MOMENTS",
             "title": "Rakhi, in good company.",
