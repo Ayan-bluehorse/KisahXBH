@@ -268,6 +268,15 @@
             "link": "shopify://collections/midnight-monochromes"
           }
         },
+        "item_WgEddV": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_702e12da-cdc0-4bc6-afde-b01784c1da28.jpg",
+            "title": "Blue",
+            "swatch_color": "#077EE7",
+            "link": ""
+          }
+        },
         "item_jQxVtr": {
           "type": "item",
           "settings": {
@@ -316,6 +325,7 @@
       },
       "block_order": [
         "item_63DGcX",
+        "item_WgEddV",
         "item_jQxVtr",
         "item_brNQXA",
         "item_4dERPx",
