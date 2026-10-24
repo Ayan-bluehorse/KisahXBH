@@ -42,6 +42,16 @@
             "button-link": ""
           }
         },
+        "slide_banner_FgzJMq": {
+          "type": "slide_banner",
+          "settings": {
+            "desk-img": "shopify://shop_images/Sheer_Desktop.png",
+            "mob-img": "shopify://shop_images/Sheer_Mobile.png",
+            "link": "https://kisah.in/collections/sheer",
+            "button-name": "",
+            "button-link": ""
+          }
+        },
         "slide_banner_FiWGha": {
           "type": "slide_banner",
           "disabled": true,
@@ -80,6 +90,7 @@
         "slide_banner_Xp6ga7",
         "slide_banner_HbQBTL",
         "slide_banner_GzHARp",
+        "slide_banner_FgzJMq",
         "slide_banner_FiWGha",
         "slide_banner_DhgQ4b",
         "slide_banner_NJiUWz"
