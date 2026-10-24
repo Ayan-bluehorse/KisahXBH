@@ -159,19 +159,12 @@
             "link": "shopify://collections/sherwani-achkans"
           }
         },
-        "item_dFJqTn": {
-          "type": "item",
-          "settings": {
-            "title": "Kurta Sets",
-            "link": ""
-          }
-        },
         "item_B7FqMx": {
           "type": "item",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_1.jpg",
-            "title": "Bandhgala",
-            "link": "shopify://collections/bandhgala-set"
+            "title": "Nehru Jacket",
+            "link": "shopify://collections/nehru-jackets"
           }
         }
       },
@@ -181,7 +174,6 @@
         "item_PFRBzr",
         "item_4ygcpV",
         "item_FTkVyb",
-        "item_dFJqTn",
         "item_B7FqMx"
       ],
       "name": "Shop by Category",
