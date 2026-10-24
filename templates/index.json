@@ -135,6 +135,14 @@
             "link": "shopify://collections/kurta-sets"
           }
         },
+        "item_B7FqMx": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_1.jpg",
+            "title": "Nehru Jacket",
+            "link": "shopify://collections/nehru-jackets"
+          }
+        },
         "item_PFRBzr": {
           "type": "item",
           "settings": {
@@ -158,23 +166,15 @@
             "title": "Sherwanis",
             "link": "shopify://collections/sherwani-achkans"
           }
-        },
-        "item_B7FqMx": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_1.jpg",
-            "title": "Nehru Jacket",
-            "link": "shopify://collections/nehru-jackets"
-          }
         }
       },
       "block_order": [
         "item_gTWNJW",
         "item_wPNmDU",
+        "item_B7FqMx",
         "item_PFRBzr",
         "item_4ygcpV",
-        "item_FTkVyb",
-        "item_B7FqMx"
+        "item_FTkVyb"
       ],
       "name": "Shop by Category",
       "settings": {
