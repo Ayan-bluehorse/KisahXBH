@@ -12,6 +12,11 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "text_with_icon_tags": {
+          "type": "text-with-icon-tags",
+          "disabled": true,
+          "settings": {}
+        },
         "title": {
           "type": "title",
           "settings": {
@@ -26,6 +31,14 @@
           "settings": {
             "show_tax_and_shipping": false,
             "enable_product_reviews_by_price": true
+          }
+        },
+        "brand_rating": {
+          "type": "brand-rating",
+          "settings": {
+            "fallback_handles": "",
+            "background_color": "#fff3da",
+            "text_color": "#1f1f1f"
           }
         },
         "vendor": {
@@ -178,6 +191,19 @@
             "padding_bottom": 0
           }
         },
+        "trust_icons_mobile_kp1": {
+          "type": "trust-icons-mobile",
+          "settings": {
+            "heading": "Shop with Confidence",
+            "icon1": "shopify://shop_images/Screenshot_2026-08-27_153237-removebg-preview.png",
+            "text1": "Cash on\ndelivery",
+            "icon2": "shopify://shop_images/Screenshot_2026-08-27_153232-removebg-preview.png",
+            "text2": "7 days return\nand exchange",
+            "icon3": "shopify://shop_images/Screenshot_2026-08-27_152916-removebg-preview.png",
+            "text3": "Money back\nguarantee",
+            "text4": ""
+          }
+        },
         "trust_icons_LymzYd": {
           "type": "trust-icons",
           "settings": {
@@ -216,6 +242,7 @@
         }
       },
       "block_order": [
+        "text_with_icon_tags",
         "title",
         "price",
         "vendor",
@@ -226,13 +253,14 @@
         "offer_box_YYqAET",
         "custom_liquid_b4f6NA",
         "buy-buttons",
-        "recommendation_PrFffR",
         "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt",
         "preorderoffer_box_Rht83D",
         "preorderoffer_box_1_hkthjE",
         "preorderoffer_box_2_rHfGRg",
         "preorderoffer_box_3_7UbWN6",
         "estimated_delivery_date_cp_clickpost_edd_AJ3qJt",
+        "trust_icons_mobile_kp1",
+        "recommendation_PrFffR",
         "trust_icons_LymzYd",
         "links_Ch9pzh",
         "description",
@@ -249,7 +277,7 @@
         "gallery_size": "medium",
         "gallery_layout": "carousel-beside",
         "enable_zoom": true,
-        "show_alt_text": true,
+        "show_alt_text": false,
         "alt_text_icon": "",
         "enable_video_autoplay": false,
         "enable_video_looping": false,

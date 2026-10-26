@@ -4,15 +4,13 @@
 {{ 'key-highlight.css' | asset_url | stylesheet_tag: preload: true }}
 
 {%- comment -%}
-  The redesigned mobile PDP ("kpdp") belongs to the custom product template only.
-  templates/product.custom-product.json -> template.suffix == 'custom-product'.
-  Every piece of that redesign — markup below and assets/product-custom-pdp.css —
-  hangs off kp_custom_pdp, so templates/product.json and product.preorder keep the
-  theme's original PDP.
+  The redesigned PDP ("kpdp") is enabled globally across all products by default
+  (including default templates with no suffix, and template.suffix == 'custom-product').
+  Only legacy templates like product.preorder keep the theme's original PDP.
 {%- endcomment -%}
-{%- assign kp_custom_pdp = false -%}
-{%- if template.suffix == 'custom-product' -%}
-  {%- assign kp_custom_pdp = true -%}
+{%- assign kp_custom_pdp = true -%}
+{%- if template.suffix == 'preorder' -%}
+  {%- assign kp_custom_pdp = false -%}
 {%- endif -%}
 
 {%- if kp_custom_pdp -%}
@@ -1702,7 +1700,7 @@
                       Desktop only — main.css hides this mount below 768px,
                       where the Sold Out button takes the full row.
                     {%- endcomment -%}
-                    {% unless template.suffix == 'custom-product' %}
+                    {% unless kp_custom_pdp %}
                       {% render 'wishlisthero-custom-button' %}
                     {% endunless %}
                     <div class="quantity-submit-row input-row">
