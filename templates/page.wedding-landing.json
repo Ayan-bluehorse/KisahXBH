@@ -56,12 +56,12 @@
         }
       },
       "block_order": [
-        "circle_1",
         "circle_2",
         "circle_3",
         "circle_4",
         "circle_5",
-        "circle_6"
+        "circle_6",
+        "circle_1"
       ],
       "disabled": true,
       "settings": {
@@ -124,12 +124,12 @@
         }
       },
       "block_order": [
-        "tab_1",
         "tab_2",
         "tab_3",
         "tab_4",
         "tab_5",
-        "tab_6"
+        "tab_6",
+        "tab_1"
       ],
       "settings": {
         "title": "All Wedding styles",
