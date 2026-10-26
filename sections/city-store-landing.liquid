@@ -873,7 +873,7 @@ a.ksl-btn--ghost:hover,
 
 /* 7. Sticky Mobile Bar */
 .ksl-sticky {
-  display: none;
+  display: block;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -882,9 +882,17 @@ a.ksl-btn--ghost:hover,
   background: var(--navy);
   box-shadow: 0 -4px 16px rgba(0,0,0,.18);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(110%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .28s cubic-bezier(0.16, 1, 0.3, 1), opacity .22s ease, visibility .28s;
 }
 .ksl-sticky.on:not(.picking) {
-  display: block;
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 .ksl-sticky .in {
   display: grid;
@@ -1987,14 +1995,27 @@ a.ksl-btn--ghost:hover,
     }
   });
 
-  /* 5. Sticky bar visibility (IntersectionObserver) */
+  /* 5. Sticky bar visibility: appears as soon as user drags down / scrolls from the banner */
   const bar = root.querySelector('#kslSticky');
-  const heroCta = root.querySelector('.ksl-band .ksl-btns');
-  if (bar && heroCta && ('IntersectionObserver' in window)) {
-    const io = new IntersectionObserver(([entry]) => {
-      bar.classList.toggle('on', !entry.isIntersecting && entry.boundingClientRect.top < 0);
-    });
-    io.observe(heroCta);
+  const banner = root.querySelector('.ksl-hero');
+  if (bar && banner) {
+    let ticking = false;
+    function updateSticky() {
+      // Trigger as soon as user drags down / scrolls past the initial banner view (~100-120px)
+      const bannerHeight = banner.offsetHeight || 320;
+      const threshold = Math.min(120, bannerHeight * 0.3);
+      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+      bar.classList.toggle('on', scrollY > threshold);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateSticky);
+        ticking = true;
+      }
+    }, { passive: true });
+    window.addEventListener('resize', updateSticky, { passive: true });
+    updateSticky();
   } else if (bar) {
     bar.classList.add('on');
   }
