@@ -110,7 +110,7 @@
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
   {{ 'collections.css' | asset_url | stylesheet_tag }}
-  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' -%}
+  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' -%}
     {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 

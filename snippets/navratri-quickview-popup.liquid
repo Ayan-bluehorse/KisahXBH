@@ -1,7 +1,6 @@
 {%- comment -%}
   Navratri Quick View Popup Modal
   Opens when customer clicks the '+' button on any product card.
-  Matches Kisah theme aesthetics (deep navy #201747, var(--base-font-family) font, trust badges, responsive).
 {%- endcomment -%}
 
 <div class="cp-qv-modal" id="cp-qv-modal" aria-hidden="true" role="dialog" aria-modal="true">
@@ -433,9 +432,14 @@
     var btn = evt.target.closest('.quickbuy-toggle, .CP-quick-view-btn, [data-quick-view]');
     if (!btn) return;
 
-    var inScope = btn.closest('.cp-navratri-pcarousel, .cp-navratri-kids, [data-pcarousel], .cp-navratri-main, .diwali-toppicks-section, .diwali-feed-section, [id^="diwali-"]') ||
+    var inScope = btn.closest('.cp-navratri-pcarousel, .cp-navratri-kids, [data-pcarousel], .cp-navratri-main, .diwali-toppicks-section, .diwali-feed-section, [id^="diwali-"], .wedding-feed-section, [id^="wedding-"]') ||
                   document.body.classList.contains('template-suffix-diwali') ||
-                  window.location.pathname.indexOf('/diwali') !== -1;
+                  document.body.classList.contains('template-suffix-wedding-landing') ||
+                  document.body.classList.contains('template-suffix-wedding') ||
+                  document.body.classList.contains('template-wedding') ||
+                  window.location.pathname.indexOf('/diwali') !== -1 ||
+                  window.location.pathname.indexOf('/wedding') !== -1 ||
+                  window.location.search.indexOf('wedding') !== -1;
     if (!inScope) {
       // Do NOT intercept on default collection, list, or search pages!
       return;
