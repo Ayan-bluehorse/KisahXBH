@@ -8,79 +8,78 @@
         "full_width": true
       }
     },
-    "bengaluru_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Bengaluru",
+        "city_id": "bengaluru",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": false
+      },
       "blocks": {
         "store_blr_indiranagar": {
           "type": "store",
           "settings": {
-            "city": "Bengaluru",
             "name": "Indiranagar",
-            "image": "shopify://shop_images/blr_store_image.jpg",
-            "address": "Ground Floor, Shreyas Plaza, 100 Feet Road, Indiranagar, Bengaluru 560038",
-            "landmark": "100 Feet Road, Indiranagar",
-            "phone": "+91 92306 47534",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "full_name": "Kisah Indiranagar",
+            "address": "No. 2012, Ground Floor, Shreyas Plaza, 100 Feet Road, HAL 2nd Stage, Indiranagar, Bengaluru 560038",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9230647534",
             "rating": "4.8",
-            "reviews": "140+ reviews",
+            "reviews": "140+",
             "maps_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
             "lat": "12.9716",
-            "lng": "77.6412",
-            "is_coming_soon": false
+            "lng": "77.6412"
           }
         },
         "store_blr_phoenix": {
           "type": "store",
           "settings": {
-            "city": "Bengaluru",
             "name": "Phoenix Marketcity",
-            "image": "shopify://shop_images/phoenix_store.png",
-            "address": "S-50, 2nd Floor, Phoenix Marketcity, Mahadevapura, Bengaluru 560048",
-            "landmark": "Near KR Puram Flyover",
-            "phone": "+91 95353 19619",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "full_name": "Kisah Phoenix Marketcity",
+            "address": "S-50, 2nd Floor, Phoenix Marketcity, ITPL Main Road, Mahadevapura, Bengaluru 560048",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9535319619",
             "rating": "4.7",
-            "reviews": "85+ reviews",
-            "maps_url": "https://maps.google.com/?q=Phoenix+Marketcity+Bangalore+Kisah",
+            "reviews": "85+",
+            "maps_url": "https://www.google.com/maps/search/?api=1&query=Kisah+Phoenix+Marketcity+Bengaluru",
             "lat": "12.9959",
-            "lng": "77.6963",
-            "is_coming_soon": false
+            "lng": "77.6963"
           }
         },
         "store_blr_jayanagar": {
           "type": "store",
           "settings": {
-            "city": "Bengaluru",
-            "name": "Jaya Nagar",
-            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
-            "address": "No 33, 11th Main Road, 4th Block Jayanagar, Bengaluru 560041",
-            "landmark": "4th Block Jayanagar",
-            "phone": "+91 92306 47534",
-            "hours": "10:30 AM – 10:00 PM · All days",
+            "name": "Jayanagar",
+            "full_name": "Kisah Jayanagar",
+            "address": "No. 33, 11th Main Road, 4th Block, Jayanagar, Bengaluru 560041",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9160704884",
             "rating": "4.9",
-            "reviews": "75+ reviews",
+            "reviews": "75+",
             "maps_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
             "lat": "12.928987",
-            "lng": "77.586173",
-            "is_coming_soon": false
+            "lng": "77.586173"
           }
         },
         "store_blr_commercial": {
           "type": "store",
           "settings": {
-            "city": "Bengaluru",
             "name": "Commercial Street",
-            "image": "shopify://shop_images/commercial_street.png",
-            "address": "No.183, Ground, 1st & 2nd Floor, Commercial Street, Bengaluru 560052",
-            "landmark": "Commercial Street Main",
-            "phone": "+91 92303 74682",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "full_name": "Kisah Commercial Street",
+            "address": "No. 183, Ground, 1st & 2nd Floor, Commercial Street, Bengaluru 560052",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9230374682",
             "rating": "4.8",
-            "reviews": "90+ reviews",
+            "reviews": "90+",
             "maps_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
             "lat": "12.981702",
-            "lng": "77.610141",
-            "is_coming_soon": false
+            "lng": "77.610141"
           }
         }
       },
@@ -89,20 +88,11 @@
         "store_blr_phoenix",
         "store_blr_jayanagar",
         "store_blr_commercial"
-      ],
-      "settings": {
-        "default_city": "bengaluru",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · BENGALURU",
-        "hero_title": "4 Kisah stores in Bengaluru. Walk in, try on, stand out.",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Indiranagar, Phoenix Marketcity, Jaya Nagar & Commercial Street — open daily.",
-        "stores_heading": "Visit Kisah in Bengaluru",
-        "stores_subheading": "Explore our boutiques across Bengaluru — Indiranagar, Phoenix Marketcity, Jaya Nagar and Commercial Street. Walk in — no appointment needed.",
-        "google_map_embed": "https://maps.google.com/maps?q=Kisah+Bengaluru+Stores&t=&z=12&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "bengaluru_store_landing"
+    "city_store_landing"
   ]
 }

@@ -8,44 +8,40 @@
         "full_width": true
       }
     },
-    "mumbai_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Mumbai",
+        "city_id": "mumbai",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": false
+      },
       "blocks": {
         "store_mum_malad": {
           "type": "store",
           "settings": {
-            "city": "Mumbai",
-            "name": "Infiniti Mall (Malad)",
-            "image": "shopify://shop_images/malad_store.png",
-            "address": "No. SF224B, Second Floor, Infiniti Mall, New Link Road, Malad West, Mumbai 400064",
-            "landmark": "Second Floor, Infiniti Mall",
-            "phone": "+91 99672 36627",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "name": "Infiniti Mall, Malad",
+            "full_name": "Kisah Infiniti Mall, Malad",
+            "address": "Unit SF224B, Second Floor, Infiniti Mall, Link Road, Malad West, Mumbai 400064",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9967236627",
             "rating": "4.9",
-            "reviews": "130+ reviews",
-            "maps_url": "https://maps.google.com/?q=Infiniti+Mall+Malad+Kisah",
+            "reviews": "130+",
+            "maps_url": "https://www.google.com/maps/search/?api=1&query=Kisah+Infiniti+Mall+Malad+Mumbai",
             "lat": "19.1843",
-            "lng": "72.8347",
-            "is_coming_soon": false
+            "lng": "72.8347"
           }
         }
       },
       "block_order": [
         "store_mum_malad"
-      ],
-      "settings": {
-        "default_city": "mumbai",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · MUMBAI",
-        "hero_title": "Kisah store in Mumbai. Walk in, try on, stand out.",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Infiniti Mall, Malad West — open daily, 11:00 AM to 10:00 PM.",
-        "stores_heading": "Visit Kisah in Mumbai",
-        "stores_subheading": "Explore our flagship boutique at Infiniti Mall, Malad West. Walk in — no appointment needed.",
-        "google_map_embed": "https://maps.google.com/maps?q=Kisah+Infiniti+Mall+Malad+Mumbai&t=&z=14&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "mumbai_store_landing"
+    "city_store_landing"
   ]
 }

@@ -8,43 +8,42 @@
         "full_width": true
       }
     },
-    "jaipur_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Jaipur",
+        "city_id": "jaipur",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": true,
+        "coming_soon_mall": "Pacific Mall",
+        "coming_soon_address": "SF-26, Second Floor, Pacific Mall, Sector 5, Mansarovar, Jaipur 302020"
+      },
       "blocks": {
         "store_jai_pacific": {
           "type": "store",
           "settings": {
-            "city": "Jaipur",
             "name": "Pacific Mall",
-            "address": "Pacific Mall, Jaipur, Rajasthan 302001",
-            "landmark": "Pacific Mall",
-            "phone": "+91 81009 93480",
-            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "full_name": "Kisah Pacific Mall",
+            "address": "SF-26, Second Floor, Pacific Mall, Sector 5, Mansarovar, Jaipur 302020",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "",
             "rating": "5.0",
-            "reviews": "Opening Soon",
-            "maps_url": "https://maps.google.com/?q=Pacific+Mall+Jaipur",
+            "reviews": "Coming soon",
+            "maps_url": "",
             "lat": "26.9124",
-            "lng": "75.7873",
-            "is_coming_soon": true
+            "lng": "75.7873"
           }
         }
       },
       "block_order": [
         "store_jai_pacific"
-      ],
-      "settings": {
-        "default_city": "jaipur",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · JAIPUR",
-        "hero_title": "Kisah is coming to Jaipur. Stay tuned!",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Pacific Mall — opening soon.",
-        "stores_heading": "Visit Kisah in Jaipur",
-        "stores_subheading": "Our new Jaipur boutique at Pacific Mall is opening soon. Get notified!",
-        "google_map_embed": "https://maps.google.com/maps?q=Pacific+Mall+Jaipur&t=&z=14&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "jaipur_store_landing"
+    "city_store_landing"
   ]
 }

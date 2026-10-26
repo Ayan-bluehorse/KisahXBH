@@ -8,63 +8,57 @@
         "full_width": true
       }
     },
-    "hyderabad_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Hyderabad",
+        "city_id": "hyderabad",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": false
+      },
       "blocks": {
         "store_hyd_sarath": {
           "type": "store",
           "settings": {
-            "city": "Hyderabad",
             "name": "Sarath City Mall",
-            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
-            "address": "SP-03, 3rd Floor, Sarath City Capital Mall, HITEC City, Kondapur, Hyderabad 500084",
-            "landmark": "3rd Floor, Sarath City Capital Mall",
-            "phone": "+91 92306 47536",
-            "hours": "10:30 AM – 9:30 PM · All days",
+            "full_name": "Kisah Sarath City Capital Mall",
+            "address": "3F-104, Third Floor, Sarath City Capital Mall, Gachibowli–Miyapur Road, Kondapur, Hyderabad 500084",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "9230647536",
             "rating": "4.8",
-            "reviews": "160+ reviews",
-            "maps_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
+            "reviews": "160+",
+            "maps_url": "https://www.google.com/maps/search/?api=1&query=Kisah+Sarath+City+Capital+Mall+Hyderabad",
             "lat": "17.4563",
-            "lng": "78.3662",
-            "is_coming_soon": false
+            "lng": "78.3662"
           }
         },
         "store_hyd_himayat": {
           "type": "store",
           "settings": {
-            "city": "Hyderabad",
             "name": "Himayat Nagar",
-            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
-            "address": "3-6-475/1/A/B/C Bhavani Arcade, Himayat Nagar Rd, Hyderabad 500029",
-            "landmark": "Bhavani Arcade, Himayat Nagar",
-            "phone": "+91 92306 47536",
-            "hours": "10:30 AM – 10:00 PM · All days",
+            "full_name": "Kisah Himayat Nagar",
+            "address": "3-6-475/1/A/B/C, Bhavani Arcade, Himayat Nagar Road, Hyderabad 500029",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "7619370188",
             "rating": "4.7",
-            "reviews": "60+ reviews",
-            "maps_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
+            "reviews": "60+",
+            "maps_url": "https://maps.app.goo.gl/ggmXiRk79AANBVKE8",
             "lat": "17.402674",
-            "lng": "78.483428",
-            "is_coming_soon": false
+            "lng": "78.483428"
           }
         }
       },
       "block_order": [
         "store_hyd_sarath",
         "store_hyd_himayat"
-      ],
-      "settings": {
-        "default_city": "hyderabad",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · HYDERABAD",
-        "hero_title": "2 Kisah stores in Hyderabad. Walk in, try on, stand out.",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Sarath City Mall & Himayat Nagar — open daily, 10:30 AM to 9:30 PM.",
-        "stores_heading": "Visit Kisah in Hyderabad",
-        "stores_subheading": "Explore our boutiques at Sarath City Capital Mall and Himayat Nagar. Walk in — no appointment needed.",
-        "google_map_embed": "https://maps.google.com/maps?q=Kisah+Hyderabad+Stores&t=&z=12&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "hyderabad_store_landing"
+    "city_store_landing"
   ]
 }

@@ -8,43 +8,42 @@
         "full_width": true
       }
     },
-    "gurgaon_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Gurgaon",
+        "city_id": "gurgaon",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": true,
+        "coming_soon_mall": "Jewel M3M Mall",
+        "coming_soon_address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002"
+      },
       "blocks": {
         "store_gur_m3m": {
           "type": "store",
           "settings": {
-            "city": "Gurgaon",
             "name": "Jewel M3M Mall",
-            "address": "Jewel M3M Mall, Sector 25, Gurgaon, Haryana 122002",
-            "landmark": "Jewel M3M Mall",
-            "phone": "+91 81009 93480",
-            "hours": "10:30 AM – 9:30 PM (All Days)",
+            "full_name": "Kisah Jewel M3M Mall",
+            "address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "",
             "rating": "5.0",
-            "reviews": "Opening Soon",
-            "maps_url": "https://maps.google.com/?q=Jewel+M3M+Mall+Gurgaon",
+            "reviews": "Coming soon",
+            "maps_url": "",
             "lat": "28.4595",
-            "lng": "77.0266",
-            "is_coming_soon": true
+            "lng": "77.0266"
           }
         }
       },
       "block_order": [
         "store_gur_m3m"
-      ],
-      "settings": {
-        "default_city": "gurgaon",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · GURGAON",
-        "hero_title": "Kisah is coming to Gurgaon. Stay tuned!",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Jewel M3M Mall — opening soon.",
-        "stores_heading": "Visit Kisah in Gurgaon",
-        "stores_subheading": "Our new Gurgaon boutique at Jewel M3M Mall is opening soon. Get notified!",
-        "google_map_embed": "https://maps.google.com/maps?q=Jewel+M3M+Mall+Gurgaon&t=&z=14&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "gurgaon_store_landing"
+    "city_store_landing"
   ]
 }

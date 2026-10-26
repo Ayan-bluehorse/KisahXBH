@@ -8,44 +8,40 @@
         "full_width": true
       }
     },
-    "vishakhapatnam_store_landing": {
+    "city_store_landing": {
       "type": "city-store-landing",
+      "settings": {
+        "city_name": "Vizag",
+        "city_id": "vishakhapatnam",
+        "hero_title": "Kisah, available in your nearest store",
+        "ally_phone": "918100993480",
+        "is_coming_soon": false
+      },
       "blocks": {
         "store_viz_inorbit": {
           "type": "store",
           "settings": {
-            "city": "Vishakhapatnam",
-            "name": "Inorbit Mall (Vizag)",
-            "image": "shopify://shop_images/vizag.png",
-            "address": "Unit No. S-39, Inorbit Mall, Salagramapuram, Visakhapatnam 530024",
-            "landmark": "Second Floor, Inorbit Mall",
-            "phone": "+91 81009 93480",
-            "hours": "11:00 AM – 10:00 PM · All days",
+            "name": "Inorbit Mall",
+            "full_name": "Kisah Inorbit Mall, Vizag",
+            "address": "Unit S-39, Inorbit Mall, Salagramapuram, Visakhapatnam 530024",
+            "open_time": "11:00 AM",
+            "close_time": "10:00 PM",
+            "phone": "",
             "rating": "4.8",
-            "reviews": "50+ reviews",
+            "reviews": "50+",
             "maps_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
             "lat": "17.741648",
-            "lng": "83.293316",
-            "is_coming_soon": false
+            "lng": "83.293316"
           }
         }
       },
       "block_order": [
         "store_viz_inorbit"
-      ],
-      "settings": {
-        "default_city": "vishakhapatnam",
-        "hero_eyebrow": "MEN'S WEDDING & FESTIVE WEAR · VISHAKHAPATNAM",
-        "hero_title": "Kisah store in Vishakhapatnam. Walk in, try on, stand out.",
-        "hero_subtitle": "Sherwanis, kurta sets, bandhgalas and Indo-westerns for men and kids. Inorbit Mall, Vizag — open daily, 11:00 AM to 10:00 PM.",
-        "stores_heading": "Visit Kisah in Vishakhapatnam",
-        "stores_subheading": "Explore our flagship boutique at Inorbit Mall, Vizag. Walk in — no appointment needed.",
-        "google_map_embed": "https://maps.google.com/maps?q=Kisah+Inorbit+Mall+Vizag&t=&z=14&ie=UTF8&iwloc=&output=embed"
-      }
+      ]
     }
   },
   "order": [
     "main",
-    "vishakhapatnam_store_landing"
+    "city_store_landing"
   ]
 }
