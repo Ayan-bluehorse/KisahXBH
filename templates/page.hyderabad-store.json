@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -10,26 +19,22 @@
     },
     "city_store_landing": {
       "type": "city-store-landing",
-      "settings": {
-        "city_name": "Hyderabad",
-        "city_id": "hyderabad",
-        "hero_title": "Kisah, available in your nearest store",
-        "ally_phone": "918100993480",
-        "is_coming_soon": false
-      },
       "blocks": {
         "store_hyd_sarath": {
           "type": "store",
           "settings": {
             "name": "Sarath City Mall",
             "full_name": "Kisah Sarath City Capital Mall",
-            "address": "3F-104, Third Floor, Sarath City Capital Mall, Gachibowli–Miyapur Road, Kondapur, Hyderabad 500084",
-            "open_time": "11:00 AM",
-            "close_time": "10:00 PM",
+            "image": "shopify://shop_images/st-sarath.jpg",
+            "address": "Kisah, 3F-104- Third Floor, Sarath City Capital Mall Gachibowli - Miyapur Rd, Whitefields, HITEC City, Kondapur, Hyderabad 500084",
+            "open_time": "11.00 AM",
+            "close_time": "10:00:00 PM",
             "phone": "9230647536",
+            "show_rating": true,
             "rating": "4.8",
             "reviews": "160+",
-            "maps_url": "https://www.google.com/maps/search/?api=1&query=Kisah+Sarath+City+Capital+Mall+Hyderabad",
+            "maps_url": "https://google.com/maps?rlz=1C1CHBD_enIN1152IN1152&gs_lcrp=EgZjaHJvbWUqFQgBEC4YJxivARjHARiABBiKBRiOBTIJCAAQRRg5GIAEMhUIARAuGCcYrwEYxwEYgAQYigUYjgUyCggCEAAYsQMYgAQyBwgDEAAYgAQyEAgEEC4YrwEYxwEYgAQYjgUyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgATSAQgzNjIxajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KYkUKvTIk8s7MbIBafsnTvxX&daddr=Gachibowli+-+Miyapur+Rd,+Kondapur,+Whitefields,+HITEC+City,+Hyderabad,+Telangana+500084",
+            "place_id": "",
             "lat": "17.4563",
             "lng": "78.3662"
           }
@@ -43,9 +48,11 @@
             "open_time": "11:00 AM",
             "close_time": "10:00 PM",
             "phone": "7619370188",
+            "show_rating": true,
             "rating": "4.7",
             "reviews": "60+",
             "maps_url": "https://maps.app.goo.gl/ggmXiRk79AANBVKE8",
+            "place_id": "",
             "lat": "17.402674",
             "lng": "78.483428"
           }
@@ -54,7 +61,30 @@
       "block_order": [
         "store_hyd_sarath",
         "store_hyd_himayat"
-      ]
+      ],
+      "settings": {
+        "city_name": "Hyderabad",
+        "city_id": "hyderabad",
+        "hero_title": "Kisah, available in your nearest store",
+        "band_headline": "",
+        "ally_phone": "918100993480",
+        "stat_1_num": "5 lakh+",
+        "stat_1_label": "happy customers",
+        "stat_2_num": "12",
+        "stat_2_label": "stores",
+        "stat_3_num": "5",
+        "stat_3_label": "cities",
+        "stat_4_num": "7-day",
+        "stat_4_label": "exchange in any store",
+        "stores_title": "",
+        "stores_subtitle": "",
+        "is_coming_soon": false,
+        "coming_soon_title": "",
+        "coming_soon_mall": "Jewel M3M Mall",
+        "coming_soon_address": "Sector 25, Gurgaon, Haryana 122002",
+        "coming_soon_note": "We'll message you on WhatsApp the day the doors open.",
+        "google_places_api_key": ""
+      }
     }
   },
   "order": [
