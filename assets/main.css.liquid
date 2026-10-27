@@ -11929,10 +11929,18 @@ div#PBarNextFrameWrapper {
 .navigation .navigation__columns .navigation__column:not(.navigation__column--promotion) .navigation__item > a.navigation__link {
     padding: 0;
     position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 4px;
 }
 
 .navigation .navigation__columns .navigation__column:not(.navigation__column--promotion) .navigation__item > a.navigation__link > .submenu-icon {
     vertical-align: bottom;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
 }
 
 .navigation .navigation__columns .navigation__column:not(.navigation__column--promotion) .navigation__item > a.navigation__link  > span {

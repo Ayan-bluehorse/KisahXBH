@@ -261,6 +261,20 @@
             "menu_title": "Cocktail",
             "menu_image": "shopify://shop_images/Cocktail.jpg"
           }
+        },
+        "menu_image_sheer_collection": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Sheer Collection",
+            "menu_image": "shopify://shop_images/ka-1640-r604-2.jpg"
+          }
+        },
+        "menu_image_sheer": {
+          "type": "menu_image",
+          "settings": {
+            "menu_title": "Sheer",
+            "menu_image": "shopify://shop_images/ka-1640-r604-2.jpg"
+          }
         }
       },
       "block_order": [
@@ -285,7 +299,9 @@
         "menu_image_YxLxBU",
         "menu_image_9HqU3g",
         "menu_image_QJAARr",
-        "menu_image_fjEhDc"
+        "menu_image_fjEhDc",
+        "menu_image_sheer_collection",
+        "menu_image_sheer"
       ],
       "settings": {
         "logo": "shopify://shop_images/Group_63_1.png",
