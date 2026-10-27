@@ -25,6 +25,7 @@
           "settings": {
             "name": "Gariahat",
             "full_name": "Kisah Gariahat",
+            "image": "shopify://shop_images/st-gariahat.jpg",
             "address": "94 E, Rash Behari Ave, Golpark, Hindustan Park, Gariahat, Kolkata 700029",
             "open_time": "10.30 AM",
             "close_time": "9:30:00 PM",
