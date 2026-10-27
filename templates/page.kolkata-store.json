@@ -44,6 +44,7 @@
           "settings": {
             "name": "Lake Mall",
             "full_name": "Kisah Lake Mall",
+            "image": "shopify://shop_images/st-lakemall.jpg",
             "address": "No.316A 2nd floor, Lake Mall, 104, Rash Behari Ave, Lake Market, Kalighat, Kolkata, West Bengal  700029",
             "open_time": "11.00 AM",
             "close_time": "9:30:00 PM",
@@ -62,6 +63,7 @@
           "settings": {
             "name": "Lindsay Street",
             "full_name": "Kisah Lindsay Street",
+            "image": "shopify://shop_images/st-lindsay.jpg",
             "address": "Shop No -1, Premises No - 20 , Chowringhee Road , Kolkata - 700020",
             "open_time": "10:30 AM",
             "close_time": "9:30:00 PM",
@@ -80,6 +82,7 @@
           "settings": {
             "name": "Allenby Road",
             "full_name": "Kisah Allenby Road",
+            "image": "shopify://shop_images/st-allenby.jpg",
             "address": "ALLENBY, KOLKATA - 6B, ALLENBY ROAD, KOLKATA 700020",
             "open_time": "10:30 AM",
             "close_time": "9:30:00 PM",
