@@ -43,14 +43,14 @@
           "settings": {
             "name": "Lake Mall",
             "full_name": "Kisah Lake Mall",
-            "address": "No. 316A, 2nd Floor, Lake Mall, 104 Rash Behari Avenue, Kalighat, Kolkata 700029",
-            "open_time": "11:00 AM",
-            "close_time": "09:30 PM",
+            "address": "No.316A 2nd floor, Lake Mall, 104, Rash Behari Ave, Lake Market, Kalighat, Kolkata, West Bengal  700029",
+            "open_time": "11.00 AM",
+            "close_time": "9:30:00 PM",
             "phone": "9230647537",
             "show_rating": true,
             "rating": "4.7",
             "reviews": "95+",
-            "maps_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
+            "maps_url": "https://www.google.com/maps?s=web&rlz=1C1CHBD_enIN1152IN1152&sca_esv=955895333519e46a&lqi=ChNraXNhaCBrb2xrYXRhIHN0b3JlSMzVg4Kus4CACFofEAAQAhgAGAEYAiITa2lzYWgga29sa2F0YSBzdG9yZZIBDmNsb3RoaW5nX3N0b3Jl&phdesc=odHB9BfrPtc&vet=12ahUKEwiK69qgkeCQAxXC4jgGHQu8O5sQ1YkKegUIigEQAQ..i&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KUlBGhzqdwI6MSMO5JKysEzz&daddr=Shop+No.316A+2nd+floor,+Lake+Mall,+104,+Rash+Behari+Ave,+Lake+Market,+Kalighat,+Kolkata,+West+Bengal+700029",
             "place_id": "",
             "lat": "22.5163",
             "lng": "88.3491"
