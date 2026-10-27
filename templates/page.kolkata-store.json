@@ -61,14 +61,14 @@
           "settings": {
             "name": "Lindsay Street",
             "full_name": "Kisah Lindsay Street",
-            "address": "Shop No. 1, Premises No. 20, Chowringhee Road, New Market, Kolkata 700020",
+            "address": "Shop No -1, Premises No - 20 , Chowringhee Road , Kolkata - 700020",
             "open_time": "10:30 AM",
-            "close_time": "09:30 PM",
+            "close_time": "9:30:00 PM",
             "phone": "9230374678",
             "show_rating": true,
             "rating": "4.9",
             "reviews": "110+",
-            "maps_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
+            "maps_url": "https://www.google.com/maps/place/Kisah/data=!4m2!3m1!1s0x0:0xf2075f15ec6ffe49?sa=X&ved=1t:2428&ictx=111",
             "place_id": "",
             "lat": "22.5601",
             "lng": "88.3518"
