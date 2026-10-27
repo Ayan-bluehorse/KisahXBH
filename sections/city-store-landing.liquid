@@ -119,6 +119,7 @@
   line-height: 1.5;
   color: var(--ink);
   background: var(--paper);
+  padding-bottom: 80px;
   -webkit-font-smoothing: antialiased;
 }
 .ksl-page * { box-sizing: border-box; }
@@ -136,7 +137,7 @@
   padding-inline: 24px;
 }
 
-/* 1. Hero */
+/* 1. Hero Campaign Banner */
 .ksl-hero {
   position: relative;
   background: var(--navy);
@@ -146,87 +147,89 @@
 .ksl-hero__img {
   display: block;
   width: 100%;
-  height: 480px;
+  height: 660px;
+  min-height: 560px;
   object-fit: cover;
-  object-position: 80% top !important;
+  object-position: 80% 15% !important;
 }
 @media (min-width: 1024px) {
   .ksl-hero__img {
-    height: 500px;
-    object-position: 80% top !important;
+    height: 700px;
+    min-height: 620px;
+    object-position: 80% 15% !important;
   }
 }
 @media (max-width: 768px) {
   .ksl-hero__img {
-    height: 380px;
-    min-height: 320px;
+    height: 560px !important;
+    min-height: 500px !important;
+    max-height: 80vh;
     object-fit: cover;
-    object-position: 82% top !important;
+    object-position: 82% 15% !important;
   }
 }
 .ksl-hero__shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(20,14,46,.82) 0%, rgba(20,14,46,.35) 55%, rgba(20,14,46,0) 80%);
+  background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.12) 36%, rgba(27,33,44,0.72) 68%, rgba(20,25,34,0.96) 98%);
+  pointer-events: none;
 }
 .ksl-hero__over {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0 0 36px;
+  padding: 0 0 32px;
+  z-index: 2;
 }
-.ksl-hero__over h2 {
+.ksl-hero__title {
   color: #fff;
-  font-size: clamp(26px, 4vw, 46px);
+  font-size: clamp(26px, 3.8vw, 42px);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -.02em;
   margin: 0;
   max-width: 16ch;
   text-wrap: balance;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
-
-/* Band */
-.ksl-band {
-  background: var(--navy);
-  color: #fff;
-  padding-block: 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+.ksl-hero__divider {
+  width: 100%;
+  max-width: 520px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  margin: 14px 0 12px;
 }
-.ksl-band .ksl-c {
-  display: flex;
-  gap: 18px 28px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.ksl-band h1 {
-  font-size: 20px;
+.ksl-hero__sub {
+  color: #ffffff;
+  font-size: clamp(14.5px, 2vw, 17.5px);
   font-weight: 700;
   margin: 0;
-  letter-spacing: -.005em;
-  color: #fff;
+  letter-spacing: -.01em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
-.ksl-band h1 span {
+.ksl-hero__sub .dot {
   color: var(--saffron);
+  font-size: 1.15em;
+  line-height: 1;
 }
+
 .ksl-btns {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 .ksl-geo {
-  flex-basis: 100%;
-  margin: 8px 0 0;
+  margin: 0 0 16px;
   display: inline-block;
-  align-self: flex-start;
   background: rgba(245,166,35,.15);
   border: 1px solid var(--saffron);
-  color: #FFE6A8;
+  color: var(--navy);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 8px 16px;
   border-radius: 99px;
   width: fit-content;
@@ -871,48 +874,87 @@ a.ksl-btn--ghost:hover,
   color: var(--wa);
 }
 
-/* 7. Sticky Mobile Bar */
+/* 7. Sticky Bar (Globally Sticky) */
 .ksl-sticky {
   display: block;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99;
-  background: var(--navy);
-  box-shadow: 0 -4px 16px rgba(0,0,0,.18);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
-  transform: translateY(110%);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: transform .28s cubic-bezier(0.16, 1, 0.3, 1), opacity .22s ease, visibility .28s;
-}
-.ksl-sticky.on:not(.picking) {
+  z-index: 999;
+  background: #1B1226;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.28);
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
   transform: translateY(0);
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+  transition: transform .25s ease, opacity .2s ease, visibility .25s;
+}
+.ksl-sticky.picking {
+  transform: translateY(115%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 .ksl-sticky .in {
   display: grid;
-  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-columns: 1.35fr 1fr 1fr;
   gap: 8px;
-  max-width: 500px;
+  max-width: 540px;
   margin: 0 auto;
+  align-items: stretch;
 }
 .ksl-sticky .ksl-btn {
   padding: 8px 6px;
   font-size: 12.5px;
-  gap: 5px;
+  font-weight: 700;
+  gap: 6px;
   white-space: normal;
   text-align: center;
-  line-height: 1.15;
-  min-height: 44px;
+  line-height: 1.16;
+  min-height: 46px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 .ksl-sticky .ksl-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.ksl-sticky .ksl-btn--pri {
+  background: var(--saffron);
+  border: 1.5px solid var(--saffron);
+  color: var(--ink);
+}
+.ksl-sticky .ksl-btn--pri:hover {
+  background: var(--saffron-d);
+  border-color: var(--saffron-d);
+}
+.ksl-sticky .ksl-btn--ghost {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1.5px solid rgba(255,255,255,0.72) !important;
+  color: #ffffff !important;
+}
+.ksl-sticky .ksl-btn--ghost svg {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+.ksl-sticky .ksl-btn--ghost:hover {
+  background: rgba(255,255,255,0.18) !important;
+  border-color: #ffffff !important;
+}
+.ksl-sticky .ksl-btn--wa {
+  background: #128C4A;
+  border: 1.5px solid #128C4A;
+  color: #ffffff;
+}
+.ksl-sticky .ksl-btn--wa:hover {
+  background: #0e733c;
+  border-color: #0e733c;
 }
 
 /* 8. Store Chooser Center Modal Popup */
@@ -1054,21 +1096,11 @@ a.ksl-btn--ghost:hover,
 /* Responsive Media Queries */
 @media (max-width: 768px) {
   .ksl-c { padding-inline: 16px; }
-  .ksl-hero__img { height: 380px !important; min-height: 320px; object-fit: cover; object-position: 82% top !important; }
-  .ksl-hero__shade { background: linear-gradient(180deg, rgba(20,14,46,0) 40%, rgba(20,14,46,.85) 100%); }
-  .ksl-hero__over { padding-bottom: 22px; }
-  .ksl-band { padding-block: 18px; }
-  .ksl-band h1 { font-size: 17px; }
-  .ksl-band .ksl-btns { width: 100%; display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 8px; }
-  .ksl-band .ksl-btn { padding: 8px 6px; font-size: 12px; gap: 4px; white-space: normal; text-align: center; line-height: 1.15; min-height: 44px; }
-  .ksl-band .ksl-btn svg { width: 14px; height: 14px; }
+  .ksl-hero__img { height: 560px !important; min-height: 500px !important; max-height: 80vh; object-fit: cover; object-position: 82% 15% !important; }
+  .ksl-hero__shade { background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.12) 36%, rgba(27,33,44,0.72) 68%, rgba(20,25,34,0.96) 98%); }
+  .ksl-hero__over { padding-bottom: 24px; }
+  .ksl-hero__title { font-size: 26px; }
   .ksl-vhead { align-items: center; }
-  .ksl-vtitle { font-size: 26px; }
-  .ksl-head { align-items: center; }
-  .ksl-cats-arrows { display: flex !important; }
-  .ksl-chip { font-size: 13.5px; padding: 8px 16px; }
-  .ksl-brand ul { grid-template-columns: repeat(2, 1fr); row-gap: 16px; }
-  .ksl-brand b { font-size: 21px; }
   .ksl-sec { padding-block: 40px; }
   .ksl-stores { padding-block: 32px 40px; }
   .ksl-one { grid-template-columns: 1fr; gap: 20px; }
@@ -1141,7 +1173,7 @@ a.ksl-btn--ghost:hover,
     endfor
   -%}
 
-  <!-- 1. Hero -->
+  <!-- 1. Hero Campaign Banner -->
   <section class="ksl-hero">
     {%- if section.settings.hero_image != blank -%}
       <img class="ksl-hero__img"
@@ -1149,122 +1181,42 @@ a.ksl-btn--ghost:hover,
            alt="{{ section.settings.hero_title | default: 'Kisah - Available in your nearest store' }}"
            loading="eager"
            width="1440"
-           height="440">
+           height="660">
       <div class="ksl-hero__shade"></div>
     {%- else -%}
-      <div style="height:320px; background:linear-gradient(135deg, #160e33 0%, #201747 50%, #2a1f5c 100%); position:relative;">
+      <div style="min-height:560px; background:linear-gradient(135deg, #160e33 0%, #201747 50%, #2a1f5c 100%); position:relative;">
         <div style="position:absolute; inset:0; opacity:0.04; background-image:radial-gradient(#ffffff 1px, transparent 1px); background-size:24px 24px;"></div>
       </div>
     {%- endif -%}
     <div class="ksl-hero__over">
       <div class="ksl-c">
-        <h2>{{ section.settings.hero_title | default: 'Kisah, available in your nearest store' }}</h2>
+        <h2 class="ksl-hero__title">{{ section.settings.hero_title | default: 'Kisah, available in your nearest store' }}</h2>
+        <div class="ksl-hero__divider" aria-hidden="true"></div>
+        {%- if store_count == 1 and first_store != null -%}
+          <p class="ksl-hero__sub">
+            {%- if section.settings.band_headline != blank -%}
+              {{ section.settings.band_headline }}
+            {%- else -%}
+              Kisah in {{ city_name }} <span class="dot">•</span> {{ first_store.settings.name }}
+            {%- endif -%}
+          </p>
+        {%- else -%}
+          <p class="ksl-hero__sub">
+            {%- if section.settings.band_headline != blank -%}
+              {{ section.settings.band_headline }}
+            {%- else -%}
+              Kisah in {{ city_name }} <span class="dot">•</span> {{ store_count }} stores
+            {%- endif -%}
+          </p>
+        {%- endif -%}
       </div>
     </div>
   </section>
 
-  <!-- Hero Dark Band -->
-  <section class="ksl-band">
-    <div class="ksl-c">
-      {%- if store_count == 1 and first_store != null -%}
-        {%- if section.settings.band_headline != blank -%}
-          <h1>{{ section.settings.band_headline }}</h1>
-        {%- else -%}
-          <h1>Kisah in {{ city_name }} <span>·</span> {{ first_store.settings.name }}</h1>
-        {%- endif -%}
-        <div class="ksl-btns">
-          <a class="ksl-btn ksl-btn--pri"
-             href="{{ first_store.settings.maps_url }}"
-             target="_blank"
-             rel="noopener"
-             data-scrollto
-             data-track-cta="get_directions"
-             data-track-city="{{ city_name }}"
-             data-track-store="{{ first_store.settings.name }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-            Get directions
-          </a>
-          {%- if first_store.settings.phone != blank -%}
-            <a class="ksl-btn ksl-btn--ghost"
-               href="tel:+91{{ first_store.settings.phone | replace: ' ', '' | replace: '+', '' }}"
-               data-track-cta="call"
-               data-track-city="{{ city_name }}"
-               data-track-store="{{ first_store.settings.name }}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-              Call store
-            </a>
-          {%- else -%}
-            <span class="ksl-btn ksl-btn--ghost" style="opacity:.55;cursor:not-allowed">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-              Call store
-            </span>
-          {%- endif -%}
-          {%- assign wa_single = "Hi Kisah, I'm planning to visit the " | append: first_store.settings.name | append: " store in " | append: city_name | append: "." -%}
-          <a class="ksl-btn ksl-btn--wa"
-             href="https://wa.me/{{ ally_phone }}?text={{ wa_single | url_encode }}"
-             target="_blank"
-             rel="noopener"
-             data-track-cta="whatsapp"
-             data-track-city="{{ city_name }}"
-             data-track-store="{{ first_store.settings.name }}">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-            WhatsApp
-          </a>
-        </div>
-      {%- else -%}
-        {%- if section.settings.band_headline != blank -%}
-          <h1>{{ section.settings.band_headline }}</h1>
-        {%- else -%}
-          <h1>Kisah in {{ city_name }} <span>·</span> {{ store_count }} stores</h1>
-        {%- endif -%}
-        <div class="ksl-btns">
-          <button type="button"
-                  class="ksl-btn ksl-btn--pri"
-                  data-geo
-                  data-track-cta="find_nearest"
-                  data-track-city="{{ city_name }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
-            Find my nearest store
-          </button>
-          <button type="button"
-                  class="ksl-btn ksl-btn--ghost"
-                  data-pick="call"
-                  data-track-cta="call_picker"
-                  data-track-city="{{ city_name }}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-            Call store
-          </button>
-          {%- assign wa_multi = "Hi Kisah, I'm planning to visit one of your stores in " | append: city_name | append: "." -%}
-          <a class="ksl-btn ksl-btn--wa"
-             href="https://wa.me/{{ ally_phone }}?text={{ wa_multi | url_encode }}"
-             target="_blank"
-             rel="noopener"
-             data-track-cta="whatsapp"
-             data-track-city="{{ city_name }}">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-            WhatsApp
-          </a>
-        </div>
-        <p class="ksl-geo" id="kslGeoMsg" hidden aria-live="polite"></p>
-      {%- endif -%}
-    </div>
-  </section>
-
-  <!-- 2. Brand Proof Points Strip -->
-  <section class="ksl-brand">
-    <div class="ksl-c">
-      <ul>
-        <li><b>{{ section.settings.stat_1_num | default: '5 lakh+' }}</b><span>{{ section.settings.stat_1_label | default: 'happy customers' }}</span></li>
-        <li><b>{{ section.settings.stat_2_num | default: '12' }}</b><span>{{ section.settings.stat_2_label | default: 'stores' }}</span></li>
-        <li><b>{{ section.settings.stat_3_num | default: '5' }}</b><span>{{ section.settings.stat_3_label | default: 'cities' }}</span></li>
-        <li><b>{{ section.settings.stat_4_num | default: '7-day' }}</b><span>{{ section.settings.stat_4_label | default: 'exchange in any store' }}</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 3. Stores Section -->
+  <!-- 2. Stores Section -->
   <section class="ksl-stores" id="stores">
     <div class="ksl-c">
+      <p class="ksl-geo" id="kslGeoMsg" hidden aria-live="polite"></p>
       {%- if store_count == 1 and first_store != null -%}
         {%- liquid
           assign s = first_store.settings
@@ -1364,8 +1316,12 @@ a.ksl-btn--ghost:hover,
             <p class="ksl-desc">{{ section.settings.stores_subtitle | default: 'Find your nearest boutique. Walk in anytime — no prior appointment needed.' }}</p>
           </div>
           <div class="ksl-arrows">
-            <button type="button" class="ksl-arrow" data-slide="-1" aria-label="Scroll store tabs left">‹</button>
-            <button type="button" class="ksl-arrow" data-slide="1" aria-label="Scroll store tabs right">›</button>
+            <button type="button" class="ksl-arrow" data-slide="-1" aria-label="Scroll store tabs left">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="ksl-arrow" data-slide="1" aria-label="Scroll store tabs right">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
           </div>
         </div>
 
@@ -1672,7 +1628,7 @@ a.ksl-btn--ghost:hover,
                 data-track-cta="find_nearest"
                 data-track-city="{{ city_name }}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>
-          Nearest store
+          Find my nearest store
         </button>
         <button type="button"
                 class="ksl-btn ksl-btn--ghost"
@@ -1991,28 +1947,9 @@ a.ksl-btn--ghost:hover,
     }
   });
 
-  /* 5. Sticky bar visibility: appears as soon as user drags down / scrolls from the banner */
+  /* 5. Sticky bar visibility: globally sticky at all times */
   const bar = root.querySelector('#kslSticky');
-  const banner = root.querySelector('.ksl-hero');
-  if (bar && banner) {
-    let ticking = false;
-    function updateSticky() {
-      // Trigger as soon as user drags down / scrolls past the initial banner view (~100-120px)
-      const bannerHeight = banner.offsetHeight || 320;
-      const threshold = Math.min(120, bannerHeight * 0.3);
-      const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
-      bar.classList.toggle('on', scrollY > threshold);
-      ticking = false;
-    }
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        window.requestAnimationFrame(updateSticky);
-        ticking = true;
-      }
-    }, { passive: true });
-    window.addEventListener('resize', updateSticky, { passive: true });
-    updateSticky();
-  } else if (bar) {
+  if (bar) {
     bar.classList.add('on');
   }
 
