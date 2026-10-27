@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -10,15 +19,6 @@
     },
     "city_store_landing": {
       "type": "city-store-landing",
-      "settings": {
-        "city_name": "Jaipur",
-        "city_id": "jaipur",
-        "hero_title": "Kisah, available in your nearest store",
-        "ally_phone": "918100993480",
-        "is_coming_soon": true,
-        "coming_soon_mall": "Pacific Mall",
-        "coming_soon_address": "SF-26, Second Floor, Pacific Mall, Sector 5, Mansarovar, Jaipur 302020"
-      },
       "blocks": {
         "store_jai_pacific": {
           "type": "store",
@@ -29,9 +29,11 @@
             "open_time": "11:00 AM",
             "close_time": "10:00 PM",
             "phone": "",
+            "show_rating": true,
             "rating": "5.0",
             "reviews": "Coming soon",
             "maps_url": "",
+            "place_id": "",
             "lat": "26.9124",
             "lng": "75.7873"
           }
@@ -39,7 +41,30 @@
       },
       "block_order": [
         "store_jai_pacific"
-      ]
+      ],
+      "settings": {
+        "city_name": "Jaipur",
+        "city_id": "jaipur",
+        "hero_title": "Kisah, available in your nearest store",
+        "band_headline": "",
+        "ally_phone": "918100993480",
+        "stat_1_num": "5 lakh+",
+        "stat_1_label": "happy customers",
+        "stat_2_num": "12",
+        "stat_2_label": "stores",
+        "stat_3_num": "5",
+        "stat_3_label": "cities",
+        "stat_4_num": "7-day",
+        "stat_4_label": "exchange in any store",
+        "stores_title": "",
+        "stores_subtitle": "",
+        "is_coming_soon": true,
+        "coming_soon_title": "",
+        "coming_soon_mall": "Pacific Mall",
+        "coming_soon_address": "SF-26, Second Floor, Pacific Mall, Sector 5, Mansarovar, Jaipur 302020",
+        "coming_soon_note": "We'll message you on WhatsApp the day the doors open.",
+        "google_places_api_key": ""
+      }
     }
   },
   "order": [
