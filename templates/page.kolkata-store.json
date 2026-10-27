@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -10,26 +19,21 @@
     },
     "city_store_landing": {
       "type": "city-store-landing",
-      "settings": {
-        "city_name": "Kolkata",
-        "city_id": "kolkata",
-        "hero_title": "Kisah, available in your nearest store",
-        "ally_phone": "918100993480",
-        "is_coming_soon": false
-      },
       "blocks": {
         "store_kol_gariahat": {
           "type": "store",
           "settings": {
             "name": "Gariahat",
             "full_name": "Kisah Gariahat",
-            "address": "94 E, Rash Behari Avenue, Golpark, Hindustan Park, Gariahat, Kolkata 700029",
+            "address": "94 E, Rash Behari Ave, Golpark, Hindustan Park, Gariahat, Kolkata 700029",
             "open_time": "10:30 AM",
             "close_time": "09:30 PM",
             "phone": "6289300120",
+            "show_rating": true,
             "rating": "4.8",
             "reviews": "120+",
             "maps_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
+            "place_id": "",
             "lat": "22.5186",
             "lng": "88.3644"
           }
@@ -43,9 +47,11 @@
             "open_time": "11:00 AM",
             "close_time": "09:30 PM",
             "phone": "9230647537",
+            "show_rating": true,
             "rating": "4.7",
             "reviews": "95+",
             "maps_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
+            "place_id": "",
             "lat": "22.5163",
             "lng": "88.3491"
           }
@@ -59,9 +65,11 @@
             "open_time": "10:30 AM",
             "close_time": "09:30 PM",
             "phone": "9230374678",
+            "show_rating": true,
             "rating": "4.9",
             "reviews": "110+",
             "maps_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
+            "place_id": "",
             "lat": "22.5601",
             "lng": "88.3518"
           }
@@ -75,9 +83,11 @@
             "open_time": "10:30 AM",
             "close_time": "09:30 PM",
             "phone": "9230374683",
+            "show_rating": true,
             "rating": "4.8",
             "reviews": "50+",
             "maps_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
+            "place_id": "",
             "lat": "22.536692",
             "lng": "88.351196"
           }
@@ -88,7 +98,30 @@
         "store_kol_lake_mall",
         "store_kol_lindsay",
         "store_kol_allenby"
-      ]
+      ],
+      "settings": {
+        "city_name": "Kolkata",
+        "city_id": "kolkata",
+        "hero_title": "Kisah, available in your nearest store",
+        "band_headline": "",
+        "ally_phone": "918100993480",
+        "stat_1_num": "5 lakh+",
+        "stat_1_label": "happy customers",
+        "stat_2_num": "12",
+        "stat_2_label": "stores",
+        "stat_3_num": "5",
+        "stat_3_label": "cities",
+        "stat_4_num": "7-day",
+        "stat_4_label": "exchange in any store",
+        "stores_title": "",
+        "stores_subtitle": "",
+        "is_coming_soon": false,
+        "coming_soon_title": "",
+        "coming_soon_mall": "Jewel M3M Mall",
+        "coming_soon_address": "Sector 25, Gurgaon, Haryana 122002",
+        "coming_soon_note": "We'll message you on WhatsApp the day the doors open.",
+        "google_places_api_key": ""
+      }
     }
   },
   "order": [
