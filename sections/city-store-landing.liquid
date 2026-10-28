@@ -80,12 +80,13 @@
     assign city_id = 'kolkata'
   endif
 
-  assign is_coming_soon = section.settings.is_coming_soon
-  if city_id == 'gurgaon' or city_id == 'jaipur'
-    if section.settings.is_coming_soon
-      assign is_coming_soon = true
+  assign any_store_open = false
+  for block in section.blocks
+    if block.type == 'store' and block.settings.is_coming_soon != true
+      assign any_store_open = true
+      break
     endif
-  endif
+  endfor
 
   assign store_count = 0
   for block in section.blocks
@@ -511,6 +512,13 @@ a.ksl-btn--ghost:hover,
 .ksl-status.closed i {
   background: #C24040;
 }
+.ksl-status.coming-soon, .ksl-status--soon {
+  background: #FFF4E5 !important;
+  color: #B45309 !important;
+}
+.ksl-status.coming-soon i, .ksl-status--soon i {
+  background: #F5A623 !important;
+}
 
 /* Multi-Store Layout */
 .ksl-vhead {
@@ -587,6 +595,23 @@ a.ksl-btn--ghost:hover,
   color: #fff;
   box-shadow: 0 3px 10px rgba(32,23,71,.25);
 }
+.ksl-chip__soon {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  background: rgba(245,166,35,.2);
+  color: #B45309;
+  padding: 2px 7px;
+  border-radius: 99px;
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.ksl-chip.is-active .ksl-chip__soon {
+  background: rgba(255,255,255,.25);
+  color: #ffffff;
+}
 
 .ksl-cards {
   display: grid;
@@ -638,6 +663,13 @@ a.ksl-btn--ghost:hover,
 }
 .ksl-card__media .ksl-status.closed {
   color: #8A2B2B;
+}
+.ksl-card__media .ksl-status--soon {
+  background: #fff;
+  color: #B45309;
+}
+.ksl-card__media .ksl-status--soon i {
+  background: #F5A623;
 }
 .ksl-card__body {
   padding: 20px 22px 22px;
@@ -1131,64 +1163,6 @@ a.ksl-btn--ghost:hover,
 
 <div class="ksl-page" id="kslPage-{{ section.id }}" data-section-id="{{ section.id }}" data-city="{{ city_id }}">
 
-{%- if is_coming_soon -%}
-  {%- liquid
-    assign mall = section.settings.coming_soon_mall | default: 'City Mall'
-    assign addr = section.settings.coming_soon_address | default: city_name
-    assign soon_title = section.settings.coming_soon_title
-    if soon_title == blank
-      assign soon_title = 'Kisah is coming to ' | append: city_name
-    endif
-    assign soon_note = section.settings.coming_soon_note | default: "We'll message you on WhatsApp the day the doors open."
-    assign soon_msg = 'Hi Kisah, please let me know when the ' | append: mall | append: ' store in ' | append: city_name | append: ' opens.'
-  -%}
-  <section class="ksl-soonpg">
-    {%- assign soon_desk = section.settings.hero_image -%}
-    {%- assign soon_mob = section.settings.hero_image_mobile -%}
-    {%- if soon_desk != blank or soon_mob != blank -%}
-      <picture class="ksl-soonpg__pic">
-        {%- if soon_mob != blank -%}
-          <source media="(max-width: 768px)" srcset="{{ soon_mob | image_url: width: 900 }}">
-        {%- endif -%}
-        {%- if soon_desk != blank -%}
-          <source media="(min-width: 769px)" srcset="{{ soon_desk | image_url: width: 1400 }}">
-        {%- endif -%}
-        {%- assign soon_fallback = soon_desk | default: soon_mob -%}
-        <img class="{% if soon_mob != blank %}has-separate-mobile{% endif %}"
-             src="{{ soon_fallback | image_url: width: 1200 }}"
-             alt="{{ soon_title }}"
-             loading="eager"
-             width="{{ soon_fallback.width | default: 800 }}"
-             height="{{ soon_fallback.height | default: 600 }}">
-      </picture>
-    {%- else -%}
-      <div style="background: linear-gradient(135deg, #1b1226 0%, #201747 100%); display:flex; align-items:center; justify-content:center; min-height:360px; padding:40px;">
-        <span style="font-size:28px; font-weight:800; color:rgba(255,255,255,0.2); letter-spacing:0.08em; text-transform:uppercase;">KISAH · {{ city_name }}</span>
-      </div>
-    {%- endif -%}
-    <div class="ksl-soonpg__txt">
-      <span class="ksl-eyebrow">Coming soon</span>
-      <h1>{{ soon_title }}</h1>
-      <p class="addr">{{ mall }} · {{ addr }}</p>
-      <p>{{ soon_note }}</p>
-      <div class="ksl-btns">
-        <a class="ksl-btn ksl-btn--wa"
-           href="https://wa.me/{{ ally_phone }}?text={{ soon_msg | url_encode }}"
-           target="_blank"
-           rel="noopener"
-           data-track-cta="whatsapp"
-           data-track-city="{{ city_name }}"
-           data-track-store="{{ mall }}">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-          Get notified on WhatsApp
-        </a>
-      </div>
-      <a class="online" href="/collections/new-arrivals">Until then, shop new arrivals online →</a>
-    </div>
-  </section>
-
-{%- else -%}
-
   {%- liquid
     assign first_store = null
     for block in section.blocks
@@ -1197,6 +1171,16 @@ a.ksl-btn--ghost:hover,
         break
       endif
     endfor
+
+    if first_store != null
+      if first_store.settings.is_coming_soon
+        assign wa_single = "Hi Kisah, please let me know when your " | append: first_store.settings.name | append: " store in " | append: city_name | append: " opens."
+      else
+        assign wa_single = "Hi Kisah, I'm planning to visit your " | append: first_store.settings.name | append: " store in " | append: city_name | append: "."
+      endif
+    endif
+
+    assign wa_multi = "Hi Kisah, I'm planning to visit one of your stores in " | append: city_name | append: "."
   -%}
 
   <!-- 1. Hero Campaign Banner -->
@@ -1244,6 +1228,8 @@ a.ksl-btn--ghost:hover,
           <p class="ksl-hero__sub">
             {%- if section.settings.band_headline != blank -%}
               {{ section.settings.band_headline }}
+            {%- elsif first_store.settings.is_coming_soon -%}
+              Kisah in {{ city_name }} <span class="dot">•</span> Opening Soon at {{ first_store.settings.name }}
             {%- else -%}
               Kisah in {{ city_name }} <span class="dot">•</span> {{ first_store.settings.name }}
             {%- endif -%}
@@ -1252,6 +1238,8 @@ a.ksl-btn--ghost:hover,
           <p class="ksl-hero__sub">
             {%- if section.settings.band_headline != blank -%}
               {{ section.settings.band_headline }}
+            {%- elsif any_store_open == false and store_count > 0 -%}
+              Kisah in {{ city_name }} <span class="dot">•</span> Opening Soon ({{ store_count }} stores)
             {%- else -%}
               Kisah in {{ city_name }} <span class="dot">•</span> {{ store_count }} stores
             {%- endif -%}
@@ -1299,7 +1287,11 @@ a.ksl-btn--ghost:hover,
                   </span>
                 </a>
               {%- endif -%}
-              <span class="ksl-status" data-store-open="{{ s.open_time | default: '11:00' }}" data-store-close="{{ s.close_time | default: '22:00' }}"><i></i>Open now</span>
+              {%- if s.is_coming_soon -%}
+                <span class="ksl-status ksl-status--soon"><i></i>Coming Soon</span>
+              {%- else -%}
+                <span class="ksl-status" data-store-open="{{ s.open_time | default: '11:00' }}" data-store-close="{{ s.close_time | default: '22:00' }}"><i></i>Open now</span>
+              {%- endif -%}
             </div>
             <div class="ksl-facts">
               <div class="ksl-fact">
@@ -1308,24 +1300,35 @@ a.ksl-btn--ghost:hover,
               </div>
               <div class="ksl-fact">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                <span>{{ s.open_time | default: '11:00 AM' }} – {{ s.close_time | default: '10:00 PM' }} · All days</span>
+                {%- if s.is_coming_soon -%}
+                  <span>Opening Soon · Doors opening shortly</span>
+                {%- else -%}
+                  <span>{{ s.open_time | default: '11:00 AM' }} – {{ s.close_time | default: '10:00 PM' }} · All days</span>
+                {%- endif -%}
               </div>
               <div class="ksl-fact">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-                <span>{% if s.phone != blank %}+91 {{ s.phone }}{% else %}<small>Store number to be confirmed</small>{% endif %}</span>
+                <span>{% if s.phone != blank %}+91 {{ s.phone }}{% elsif s.is_coming_soon %}<small>Phone number to be announced</small>{% else %}<small>Store number to be confirmed</small>{% endif %}</span>
               </div>
             </div>
             <div class="ksl-btns">
-              <a class="ksl-btn ksl-btn--pri"
-                 href="{{ s.maps_url }}"
-                 target="_blank"
-                 rel="noopener"
-                 data-track-cta="get_directions"
-                 data-track-city="{{ city_name }}"
-                 data-track-store="{{ s.name }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-                Get directions
-              </a>
+              {%- if s.maps_url != blank -%}
+                <a class="ksl-btn ksl-btn--pri"
+                   href="{{ s.maps_url }}"
+                   target="_blank"
+                   rel="noopener"
+                   data-track-cta="get_directions"
+                   data-track-city="{{ city_name }}"
+                   data-track-store="{{ s.name }}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+                  Get directions
+                </a>
+              {%- else -%}
+                <span class="ksl-btn ksl-btn--off" title="Directions available once opened">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+                  Get directions
+                </span>
+              {%- endif -%}
               {%- if s.phone != blank -%}
                 <a class="ksl-btn ksl-btn--line"
                    href="tel:+91{{ s.phone | replace: ' ', '' | replace: '+', '' }}"
@@ -1349,7 +1352,7 @@ a.ksl-btn--ghost:hover,
                  data-track-city="{{ city_name }}"
                  data-track-store="{{ s.name }}">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-                WhatsApp
+                {% if s.is_coming_soon %}Get notified on WhatsApp{% else %}WhatsApp{% endif %}
               </a>
             </div>
           </div>
@@ -1357,11 +1360,17 @@ a.ksl-btn--ghost:hover,
 
       {%- else -%}
         <!-- Multi-Store Section Header -->
-        {%- assign default_stores_title = 'Visit Kisah in ' | append: city_name -%}
+        {%- if any_store_open == false and store_count > 0 -%}
+          {%- assign default_stores_title = 'Kisah is coming to ' | append: city_name -%}
+          {%- assign default_stores_subtitle = 'Our boutiques are opening soon. Connect on WhatsApp to get invited on opening day.' -%}
+        {%- else -%}
+          {%- assign default_stores_title = 'Visit Kisah in ' | append: city_name -%}
+          {%- assign default_stores_subtitle = 'Find your nearest boutique. Walk in anytime — no prior appointment needed.' -%}
+        {%- endif -%}
         <div class="ksl-vhead">
           <div>
             <h2 class="ksl-vtitle">{{ section.settings.stores_title | default: default_stores_title }}</h2>
-            <p class="ksl-desc">{{ section.settings.stores_subtitle | default: 'Find your nearest boutique. Walk in anytime — no prior appointment needed.' }}</p>
+            <p class="ksl-desc">{{ section.settings.stores_subtitle | default: default_stores_subtitle }}</p>
           </div>
           <div class="ksl-arrows">
             <button type="button" class="ksl-arrow" data-slide="-1" aria-label="Scroll store tabs left">
@@ -1378,7 +1387,9 @@ a.ksl-btn--ghost:hover,
           <button type="button" class="ksl-chip is-active" data-filter="all">All Stores ({{ store_count }})</button>
           {%- for block in section.blocks -%}
             {%- if block.type == 'store' -%}
-              <button type="button" class="ksl-chip" data-filter="{{ block.id }}">{{ block.settings.name }}</button>
+              <button type="button" class="ksl-chip" data-filter="{{ block.id }}">
+                {{ block.settings.name }}{% if block.settings.is_coming_soon %} <span class="ksl-chip__soon">Coming Soon</span>{% endif %}
+              </button>
             {%- endif -%}
           {%- endfor -%}
         </div>
@@ -1389,7 +1400,11 @@ a.ksl-btn--ghost:hover,
             {%- if block.type == 'store' -%}
               {%- liquid
                 assign s = block.settings
-                assign wa_store = "Hi Kisah, I'm planning to visit the " | append: s.name | append: " store in " | append: city_name | append: "."
+                if s.is_coming_soon
+                  assign wa_store = "Hi Kisah, please let me know when the " | append: s.name | append: " store in " | append: city_name | append: " opens."
+                else
+                  assign wa_store = "Hi Kisah, I'm planning to visit the " | append: s.name | append: " store in " | append: city_name | append: "."
+                endif
                 if s.full_name != blank
                   assign store_card_name = s.full_name
                 elsif s.name contains 'Kisah'
@@ -1404,7 +1419,8 @@ a.ksl-btn--ghost:hover,
                        data-name="{{ s.name | escape }}"
                        data-lat="{{ s.lat }}"
                        data-lng="{{ s.lng }}"
-                       data-phone="{{ s.phone }}">
+                       data-phone="{{ s.phone }}"
+                       data-coming-soon="{% if s.is_coming_soon %}true{% else %}false{% endif %}">
                 <div class="ksl-card__media">
                   {%- if s.image != blank -%}
                     <img src="{{ s.image | image_url: width: 800 }}" alt="{{ store_card_name }} store" loading="lazy" width="600" height="375">
@@ -1414,7 +1430,11 @@ a.ksl-btn--ghost:hover,
                       <b style="font-size:14px; font-weight:700;">{{ s.name }}</b>
                     </div>
                   {%- endif -%}
-                  <span class="ksl-status" data-store-open="{{ s.open_time | default: '10:30' }}" data-store-close="{{ s.close_time | default: '21:30' }}"><i></i>Open now</span>
+                  {%- if s.is_coming_soon -%}
+                    <span class="ksl-status ksl-status--soon"><i></i>Coming Soon</span>
+                  {%- else -%}
+                    <span class="ksl-status" data-store-open="{{ s.open_time | default: '10:30' }}" data-store-close="{{ s.close_time | default: '21:30' }}"><i></i>Open now</span>
+                  {%- endif -%}
                 </div>
                 <div class="ksl-card__body">
                   <h3>{{ store_card_name }}</h3>
@@ -1443,24 +1463,35 @@ a.ksl-btn--ghost:hover,
                     </div>
                     <div class="ksl-fact">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                      <span>{{ s.open_time | default: '10:30 AM' }} – {{ s.close_time | default: '09:30 PM' }} · All days</span>
+                      {%- if s.is_coming_soon -%}
+                        <span>Opening Soon · Doors opening shortly</span>
+                      {%- else -%}
+                        <span>{{ s.open_time | default: '10:30 AM' }} – {{ s.close_time | default: '09:30 PM' }} · All days</span>
+                      {%- endif -%}
                     </div>
                     <div class="ksl-fact">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-                      <span>{% if s.phone != blank %}+91 {{ s.phone }}{% else %}<small>Store number to be confirmed</small>{% endif %}</span>
+                      <span>{% if s.phone != blank %}+91 {{ s.phone }}{% elsif s.is_coming_soon %}<small>Phone number to be announced</small>{% else %}<small>Store number to be confirmed</small>{% endif %}</span>
                     </div>
                   </div>
                   <div class="ksl-btns">
-                    <a class="ksl-btn ksl-btn--pri"
-                       href="{{ s.maps_url }}"
-                       target="_blank"
-                       rel="noopener"
-                       data-track-cta="get_directions"
-                       data-track-city="{{ city_name }}"
-                       data-track-store="{{ s.name }}">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-                      Get directions
-                    </a>
+                    {%- if s.maps_url != blank -%}
+                      <a class="ksl-btn ksl-btn--pri"
+                         href="{{ s.maps_url }}"
+                         target="_blank"
+                         rel="noopener"
+                         data-track-cta="get_directions"
+                         data-track-city="{{ city_name }}"
+                         data-track-store="{{ s.name }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+                        Get directions
+                      </a>
+                    {%- else -%}
+                      <span class="ksl-btn ksl-btn--off" title="Directions available once opened">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+                        Get directions
+                      </span>
+                    {%- endif -%}
                     {%- if s.phone != blank -%}
                       <a class="ksl-btn ksl-btn--line"
                          href="tel:+91{{ s.phone | replace: ' ', '' | replace: '+', '' }}"
@@ -1484,7 +1515,7 @@ a.ksl-btn--ghost:hover,
                        data-track-city="{{ city_name }}"
                        data-track-store="{{ s.name }}">
                       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-                      WhatsApp
+                      {% if s.is_coming_soon %}Get notified{% else %}WhatsApp{% endif %}
                     </a>
                   </div>
                 </div>
@@ -1692,17 +1723,24 @@ a.ksl-btn--ghost:hover,
   <div class="ksl-sticky" id="kslSticky">
     <div class="in">
       {%- if store_count == 1 and first_store != null -%}
-        <a class="ksl-btn ksl-btn--pri"
-           href="{{ first_store.settings.maps_url }}"
-           target="_blank"
-           rel="noopener"
-           data-scrollto
-           data-track-cta="get_directions"
-           data-track-city="{{ city_name }}"
-           data-track-store="{{ first_store.settings.name }}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-          Get directions
-        </a>
+        {%- if first_store.settings.maps_url != blank -%}
+          <a class="ksl-btn ksl-btn--pri"
+             href="{{ first_store.settings.maps_url }}"
+             target="_blank"
+             rel="noopener"
+             data-scrollto
+             data-track-cta="get_directions"
+             data-track-city="{{ city_name }}"
+             data-track-store="{{ first_store.settings.name }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+            Get directions
+          </a>
+        {%- else -%}
+          <span class="ksl-btn ksl-btn--pri" style="opacity:.65;cursor:not-allowed">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+            Get directions
+          </span>
+        {%- endif -%}
         {%- if first_store.settings.phone != blank -%}
           <a class="ksl-btn ksl-btn--ghost"
              href="tel:+91{{ first_store.settings.phone | replace: ' ', '' | replace: '+', '' }}"
@@ -1726,7 +1764,7 @@ a.ksl-btn--ghost:hover,
            data-track-city="{{ city_name }}"
            data-track-store="{{ first_store.settings.name }}">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-          WhatsApp
+          {% if first_store.settings.is_coming_soon %}Get notified{% else %}WhatsApp{% endif %}
         </a>
       {%- else -%}
         <button type="button"
@@ -1781,7 +1819,7 @@ a.ksl-btn--ghost:hover,
                data-track-city="{{ city_name }}"
                data-track-store="{{ s.name }}">
               <div style="display:flex;flex-direction:column;gap:3px;text-align:left;">
-                <strong style="color:var(--navy);font-size:15px;font-weight:700;">{{ modal_store_title }}</strong>
+                <strong style="color:var(--navy);font-size:15px;font-weight:700;">{{ modal_store_title }}{% if s.is_coming_soon %} <span style="font-size:11px;font-weight:600;color:#B45309;">(Coming Soon)</span>{% endif %}</strong>
                 <span style="color:var(--muted);font-size:12.5px;font-weight:500;">{{ s.name }} · {{ city_name }}</span>
               </div>
               <span class="ksl-sheet__phone">+91 {{ s.phone }}</span>
@@ -1789,18 +1827,16 @@ a.ksl-btn--ghost:hover,
           {%- else -%}
             <a aria-disabled="true" style="opacity:.6;cursor:not-allowed;">
               <div style="display:flex;flex-direction:column;gap:3px;text-align:left;">
-                <strong style="color:var(--navy);font-size:15px;font-weight:700;">{{ modal_store_title }}</strong>
+                <strong style="color:var(--navy);font-size:15px;font-weight:700;">{{ modal_store_title }}{% if s.is_coming_soon %} <span style="font-size:11px;font-weight:600;color:#B45309;">(Coming Soon)</span>{% endif %}</strong>
                 <span style="color:var(--muted);font-size:12.5px;font-weight:500;">{{ s.name }} · {{ city_name }}</span>
               </div>
-              <span class="ksl-sheet__phone">Number pending</span>
+              <span class="ksl-sheet__phone">{% if s.is_coming_soon %}Coming Soon{% else %}Number pending{% endif %}</span>
             </a>
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     </div>
   </div>
-
-{%- endif -%}
 
 </div>
 
@@ -2305,39 +2341,6 @@ a.ksl-btn--ghost:hover,
     },
     {
       "type": "header",
-      "content": "Coming Soon Settings (Gurgaon, Jaipur)"
-    },
-    {
-      "type": "checkbox",
-      "id": "is_coming_soon",
-      "label": "Is this city Coming Soon?",
-      "default": false
-    },
-    {
-      "type": "text",
-      "id": "coming_soon_title",
-      "label": "Coming Soon Headline (Leave blank for 'Kisah is coming to [City]')"
-    },
-    {
-      "type": "text",
-      "id": "coming_soon_mall",
-      "label": "Coming Soon Mall / Center",
-      "default": "Jewel M3M Mall"
-    },
-    {
-      "type": "textarea",
-      "id": "coming_soon_address",
-      "label": "Coming Soon Address",
-      "default": "Sector 25, Gurgaon, Haryana 122002"
-    },
-    {
-      "type": "text",
-      "id": "coming_soon_note",
-      "label": "Coming Soon Note",
-      "default": "We'll message you on WhatsApp the day the doors open."
-    },
-    {
-      "type": "header",
       "content": "Live Google Maps Rating Sync"
     },
     {
@@ -2354,6 +2357,12 @@ a.ksl-btn--ghost:hover,
         {
           "type": "header",
           "content": "Store Info"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_coming_soon",
+          "label": "Is this boutique Coming Soon?",
+          "default": false
         },
         {
           "type": "text",

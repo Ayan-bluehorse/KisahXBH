@@ -23,6 +23,7 @@
         "store_gur_m3m": {
           "type": "store",
           "settings": {
+            "is_coming_soon": true,
             "name": "Jewel M3M Mall",
             "full_name": "Kisah Jewel M3M Mall",
             "address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
@@ -140,11 +141,6 @@
         "ally_phone": "918100993480",
         "stores_title": "",
         "stores_subtitle": "",
-        "is_coming_soon": true,
-        "coming_soon_title": "",
-        "coming_soon_mall": "Jewel M3M Mall",
-        "coming_soon_address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
-        "coming_soon_note": "We'll message you on WhatsApp the day the doors open.",
         "google_places_api_key": ""
       }
     }
