@@ -1238,7 +1238,7 @@ a.ksl-btn--ghost:hover,
     <div class="ksl-hero__shade"></div>
     <div class="ksl-hero__over">
       <div class="ksl-c">
-        <h2 class="ksl-hero__title">{{ section.settings.hero_title | default: 'Kisah, available in your nearest store' }}</h2>
+        <h2 class="ksl-hero__title">{{ section.settings.hero_title }}</h2>
         <div class="ksl-hero__divider" aria-hidden="true"></div>
         {%- if store_count == 1 and first_store != null -%}
           <p class="ksl-hero__sub">
