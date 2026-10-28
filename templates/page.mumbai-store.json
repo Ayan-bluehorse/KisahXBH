@@ -23,7 +23,7 @@
         "store_mum_malad": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Infiniti Mall, Malad",
             "full_name": "Kisah Infiniti Mall, Malad",
             "image": "shopify://shop_images/st-malad.jpg",
