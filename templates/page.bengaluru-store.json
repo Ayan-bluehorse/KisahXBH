@@ -63,7 +63,7 @@
         "store_blr_jayanagar": {
           "type": "store",
           "settings": {
-            "is_coming_soon": false,
+            "is_coming_soon": true,
             "name": "Jayanagar",
             "full_name": "Kisah Jayanagar",
             "image": "shopify://shop_images/st-jayanagar.jpg",
