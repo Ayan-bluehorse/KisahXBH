@@ -144,6 +144,11 @@
   overflow: hidden;
   width: 100%;
 }
+.ksl-hero__pic {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .ksl-hero__img {
   display: block;
   width: 100%;
@@ -166,6 +171,9 @@
     max-height: 80vh;
     object-fit: cover;
     object-position: 82% 15% !important;
+  }
+  .ksl-hero__img.has-separate-mobile {
+    object-position: center center !important;
   }
 }
 .ksl-hero__shade {
@@ -1097,6 +1105,8 @@ a.ksl-btn--ghost:hover,
 @media (max-width: 768px) {
   .ksl-c { padding-inline: 16px; }
   .ksl-hero__img { height: 560px !important; min-height: 500px !important; max-height: 80vh; object-fit: cover; object-position: 82% 15% !important; }
+  .ksl-hero__img.has-separate-mobile { object-position: center center !important; }
+  .ksl-soonpg img.has-separate-mobile { object-position: center center !important; }
   .ksl-hero__shade { background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.12) 36%, rgba(27,33,44,0.72) 68%, rgba(20,25,34,0.96) 98%); }
   .ksl-hero__over { padding-bottom: 24px; }
   .ksl-hero__title { font-size: 26px; }
@@ -1133,8 +1143,24 @@ a.ksl-btn--ghost:hover,
     assign soon_msg = 'Hi Kisah, please let me know when the ' | append: mall | append: ' store in ' | append: city_name | append: ' opens.'
   -%}
   <section class="ksl-soonpg">
-    {%- if section.settings.hero_image != blank -%}
-      <img src="{{ section.settings.hero_image | image_url: width: 1200 }}" alt="{{ soon_title }}" loading="eager" width="800" height="600">
+    {%- assign soon_desk = section.settings.hero_image -%}
+    {%- assign soon_mob = section.settings.hero_image_mobile -%}
+    {%- if soon_desk != blank or soon_mob != blank -%}
+      <picture class="ksl-soonpg__pic">
+        {%- if soon_mob != blank -%}
+          <source media="(max-width: 768px)" srcset="{{ soon_mob | image_url: width: 900 }}">
+        {%- endif -%}
+        {%- if soon_desk != blank -%}
+          <source media="(min-width: 769px)" srcset="{{ soon_desk | image_url: width: 1400 }}">
+        {%- endif -%}
+        {%- assign soon_fallback = soon_desk | default: soon_mob -%}
+        <img class="{% if soon_mob != blank %}has-separate-mobile{% endif %}"
+             src="{{ soon_fallback | image_url: width: 1200 }}"
+             alt="{{ soon_title }}"
+             loading="eager"
+             width="{{ soon_fallback.width | default: 800 }}"
+             height="{{ soon_fallback.height | default: 600 }}">
+      </picture>
     {%- else -%}
       <div style="background: linear-gradient(135deg, #1b1226 0%, #201747 100%); display:flex; align-items:center; justify-content:center; min-height:360px; padding:40px;">
         <span style="font-size:28px; font-weight:800; color:rgba(255,255,255,0.2); letter-spacing:0.08em; text-transform:uppercase;">KISAH · {{ city_name }}</span>
@@ -1175,19 +1201,41 @@ a.ksl-btn--ghost:hover,
 
   <!-- 1. Hero Campaign Banner -->
   <section class="ksl-hero">
+    {%- assign default_desk_banner = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Herobanner_sheer2.jpg?v=1793162097' -%}
+    {%- assign default_mob_banner = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/Herobanner_sheer1.jpg?v=1793162097' -%}
+
     {%- if section.settings.hero_image != blank -%}
-      <img class="ksl-hero__img"
-           src="{{ section.settings.hero_image | image_url: width: 2000 }}"
+      {%- assign hero_desk_src = section.settings.hero_image | image_url: width: 2000 -%}
+      {%- assign hero_desk_w = section.settings.hero_image.width | default: 1440 -%}
+      {%- assign hero_desk_h = section.settings.hero_image.height | default: 660 -%}
+    {%- else -%}
+      {%- assign hero_desk_src = default_desk_banner -%}
+      {%- assign hero_desk_w = 1920 -%}
+      {%- assign hero_desk_h = 700 -%}
+    {%- endif -%}
+
+    {%- if section.settings.hero_image_mobile != blank -%}
+      {%- assign hero_mob_src = section.settings.hero_image_mobile | image_url: width: 900 -%}
+    {%- else -%}
+      {%- assign hero_mob_src = default_mob_banner -%}
+    {%- endif -%}
+
+    <picture class="ksl-hero__pic">
+      {%- if hero_mob_src != blank -%}
+        <source media="(max-width: 768px)" srcset="{{ hero_mob_src }}">
+      {%- endif -%}
+      {%- if hero_desk_src != blank -%}
+        <source media="(min-width: 769px)" srcset="{{ hero_desk_src }}">
+      {%- endif -%}
+      <img class="ksl-hero__img has-separate-mobile"
+           src="{{ hero_desk_src | default: hero_mob_src }}"
            alt="{{ section.settings.hero_title | default: 'Kisah - Available in your nearest store' }}"
            loading="eager"
-           width="1440"
-           height="660">
-      <div class="ksl-hero__shade"></div>
-    {%- else -%}
-      <div style="min-height:560px; background:linear-gradient(135deg, #160e33 0%, #201747 50%, #2a1f5c 100%); position:relative;">
-        <div style="position:absolute; inset:0; opacity:0.04; background-image:radial-gradient(#ffffff 1px, transparent 1px); background-size:24px 24px;"></div>
-      </div>
-    {%- endif -%}
+           fetchpriority="high"
+           width="{{ hero_desk_w }}"
+           height="{{ hero_desk_h }}">
+    </picture>
+    <div class="ksl-hero__shade"></div>
     <div class="ksl-hero__over">
       <div class="ksl-c">
         <h2 class="ksl-hero__title">{{ section.settings.hero_title | default: 'Kisah, available in your nearest store' }}</h2>
@@ -1459,53 +1507,68 @@ a.ksl-btn--ghost:hover,
         </div>
       </div>
       <div class="ksl-colgrid">
-        {%- assign col_shor = collections['shor-collection'] -%}
-        <a class="ksl-col" href="{{ col_shor.url | default: '/collections/shor-collection' }}">
-          {%- if col_shor.featured_image != blank -%}
-            <img src="{{ col_shor.featured_image | image_url: width: 600 }}" alt="{{ col_shor.title | default: 'Shor' }}" loading="lazy" width="400" height="533">
-          {%- endif -%}
-          <div>
-            <b>{{ col_shor.title | default: 'Shor' }}</b>
-            <span>Colour that walks in before you do</span>
-            <em>Shop the collection →</em>
-          </div>
-        </a>
+        {%- assign col_1 = section.settings.collection_1 | default: collections['shor-collection'] -%}
+        {%- if col_1 != blank -%}
+          {%- assign col_1_img = col_1.image | default: col_1.featured_image -%}
+          <a class="ksl-col" href="{{ col_1.url }}">
+            {%- if col_1_img != blank -%}
+              <img src="{{ col_1_img | image_url: width: 600 }}" alt="{{ col_1.title | escape }}" loading="lazy" width="400" height="533">
+            {%- endif -%}
+            <div>
+              <b>{{ col_1.title }}</b>
+              <span>{{ section.settings.collection_1_sub | default: 'Colour that walks in before you do' }}</span>
+              <em>Shop the collection →</em>
+            </div>
+          </a>
+        {%- endif -%}
 
-        {%- assign col_hungama = collections['hungama-collection'] -%}
-        <a class="ksl-col" href="{{ col_hungama.url | default: '/collections/hungama-collection' }}">
-          {%- if col_hungama.featured_image != blank -%}
-            <img src="{{ col_hungama.featured_image | image_url: width: 600 }}" alt="{{ col_hungama.title | default: 'Hungama' }}" loading="lazy" width="400" height="533">
-          {%- endif -%}
-          <div>
-            <b>{{ col_hungama.title | default: 'Hungama' }}</b>
-            <span>Made for sangeet nights</span>
-            <em>Shop the collection →</em>
-          </div>
-        </a>
+        {%- assign col_2 = section.settings.collection_2 | default: collections['sheer'] | default: collections['sheer-collection'] -%}
+        {%- if col_2 != blank -%}
+          {%- assign col_2_img = col_2.image | default: col_2.featured_image -%}
+          {%- assign col_2_fallback_img = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/sheer.jpg?v=1793161624' -%}
+          <a class="ksl-col" href="{{ col_2.url | default: '/collections/sheer' }}">
+            {%- if col_2_img != blank -%}
+              <img src="{{ col_2_img | image_url: width: 600 }}" alt="{{ col_2.title | default: 'Sheer' | escape }}" loading="lazy" width="400" height="533">
+            {%- else -%}
+              <img src="{{ col_2_fallback_img }}" alt="{{ col_2.title | default: 'Sheer' | escape }}" loading="lazy" width="400" height="533">
+            {%- endif -%}
+            <div>
+              <b>{{ col_2.title | default: 'Sheer' }}</b>
+              <span>{{ section.settings.collection_2_sub | default: 'Sheer by nature. Intriguing by design' }}</span>
+              <em>Shop the collection →</em>
+            </div>
+          </a>
+        {%- endif -%}
 
-        {%- assign col_bougee = collections['bougee-1'] -%}
-        <a class="ksl-col" href="{{ col_bougee.url | default: '/collections/bougee-1' }}">
-          {%- if col_bougee.featured_image != blank -%}
-            <img src="{{ col_bougee.featured_image | image_url: width: 600 }}" alt="{{ col_bougee.title | default: 'Bougee' }}" loading="lazy" width="400" height="533">
-          {%- endif -%}
-          <div>
-            <b>{{ col_bougee.title | default: 'Bougee' }}</b>
-            <span>Rich textures, easy confidence</span>
-            <em>Shop the collection →</em>
-          </div>
-        </a>
+        {%- assign col_3 = section.settings.collection_3 | default: collections['bougee-1'] -%}
+        {%- if col_3 != blank -%}
+          {%- assign col_3_img = col_3.image | default: col_3.featured_image -%}
+          <a class="ksl-col" href="{{ col_3.url }}">
+            {%- if col_3_img != blank -%}
+              <img src="{{ col_3_img | image_url: width: 600 }}" alt="{{ col_3.title | escape }}" loading="lazy" width="400" height="533">
+            {%- endif -%}
+            <div>
+              <b>{{ col_3.title }}</b>
+              <span>{{ section.settings.collection_3_sub | default: 'Rich textures, easy confidence' }}</span>
+              <em>Shop the collection →</em>
+            </div>
+          </a>
+        {%- endif -%}
 
-        {%- assign col_wedding = collections['wedding-core25'] -%}
-        <a class="ksl-col" href="{{ col_wedding.url | default: '/collections/wedding-core25' }}">
-          {%- if col_wedding.featured_image != blank -%}
-            <img src="{{ col_wedding.featured_image | image_url: width: 600 }}" alt="{{ col_wedding.title | default: 'Wedding Core' }}" loading="lazy" width="400" height="533">
-          {%- endif -%}
-          <div>
-            <b>{{ col_wedding.title | default: 'Wedding Core' }}</b>
-            <span>The season's staples, sharpened</span>
-            <em>Shop the collection →</em>
-          </div>
-        </a>
+        {%- assign col_4 = section.settings.collection_4 | default: collections['wedding-core25'] -%}
+        {%- if col_4 != blank -%}
+          {%- assign col_4_img = col_4.image | default: col_4.featured_image -%}
+          <a class="ksl-col" href="{{ col_4.url }}">
+            {%- if col_4_img != blank -%}
+              <img src="{{ col_4_img | image_url: width: 600 }}" alt="{{ col_4.title | escape }}" loading="lazy" width="400" height="533">
+            {%- endif -%}
+            <div>
+              <b>{{ col_4.title }}</b>
+              <span>{{ section.settings.collection_4_sub | default: "The season's staples, sharpened" }}</span>
+              <em>Shop the collection →</em>
+            </div>
+          </a>
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -2065,7 +2128,13 @@ a.ksl-btn--ghost:hover,
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero Campaign Image"
+      "label": "Hero Campaign Banner (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_mobile",
+      "label": "Hero Campaign Banner (Mobile)",
+      "info": "Optional. If not uploaded, the desktop banner will be displayed."
     },
     {
       "type": "text",
@@ -2135,6 +2204,54 @@ a.ksl-btn--ghost:hover,
       "id": "stat_4_label",
       "label": "Stat 4 Label",
       "default": "exchange in any store"
+    },
+    {
+      "type": "header",
+      "content": "Recent Collections Grid"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1 (Default: Shor)"
+    },
+    {
+      "type": "text",
+      "id": "collection_1_sub",
+      "label": "Collection 1 Subtitle",
+      "default": "Colour that walks in before you do"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2 (Default: Sheer)"
+    },
+    {
+      "type": "text",
+      "id": "collection_2_sub",
+      "label": "Collection 2 Subtitle",
+      "default": "Sheer by nature. Intriguing by design"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3 (Default: Bougee)"
+    },
+    {
+      "type": "text",
+      "id": "collection_3_sub",
+      "label": "Collection 3 Subtitle",
+      "default": "Rich textures, easy confidence"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4 (Default: Wedding Core)"
+    },
+    {
+      "type": "text",
+      "id": "collection_4_sub",
+      "label": "Collection 4 Subtitle",
+      "default": "The season's staples, sharpened"
     },
     {
       "type": "header",
