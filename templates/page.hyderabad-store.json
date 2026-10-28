@@ -63,7 +63,8 @@
           "settings": {
             "collection": "kurta-sets",
             "title": "Kurta Sets",
-            "desc": "Easy festive dressing, from puja evenings to family dinners"
+            "desc": "Easy festive dressing, from puja evenings to family dinners",
+            "link": ""
           }
         },
         "cat_kurta_jacket": {
@@ -71,7 +72,8 @@
           "settings": {
             "collection": "kurtajacketset",
             "title": "Kurta Jacket Sets",
-            "desc": "Layered and polished for receptions"
+            "desc": "Layered and polished for receptions",
+            "link": ""
           }
         },
         "cat_kurta": {
@@ -79,7 +81,8 @@
           "settings": {
             "collection": "kurta",
             "title": "Kurtas",
-            "desc": "Prints, solids and embroidery for every ritual"
+            "desc": "Prints, solids and embroidery for every ritual",
+            "link": ""
           }
         },
         "cat_short_kurta": {
@@ -87,7 +90,8 @@
           "settings": {
             "collection": "short-kurta",
             "title": "Short Kurtas",
-            "desc": "Relaxed and modern for casual celebrations"
+            "desc": "Relaxed and modern for casual celebrations",
+            "link": ""
           }
         },
         "cat_nehru_jackets": {
@@ -95,7 +99,8 @@
           "settings": {
             "collection": "nehru-jackets",
             "title": "Nehru Jackets",
-            "desc": "Sharpens any solid kurta"
+            "desc": "Sharpens any solid kurta",
+            "link": ""
           }
         },
         "cat_indowestern": {
@@ -103,7 +108,8 @@
           "settings": {
             "collection": "indowestern-sets",
             "title": "Indo-Western Sets",
-            "desc": "Structured drapes for cocktail and sangeet nights"
+            "desc": "Structured drapes for cocktail and sangeet nights",
+            "link": ""
           }
         },
         "cat_sherwani": {
@@ -111,7 +117,8 @@
           "settings": {
             "collection": "sherwani-achkans",
             "title": "Sherwanis & Achkans",
-            "desc": "Craft that owns the room"
+            "desc": "Craft that owns the room",
+            "link": ""
           }
         },
         "cat_jodhpuri": {
@@ -119,7 +126,8 @@
           "settings": {
             "collection": "jodhpuri-bandhgala",
             "title": "Jodhpuri & Bandhgala",
-            "desc": "Sharp tailoring with a modern edge"
+            "desc": "Sharp tailoring with a modern edge",
+            "link": ""
           }
         },
         "cat_kids": {
@@ -127,7 +135,8 @@
           "settings": {
             "collection": "kids",
             "title": "Kids",
-            "desc": "Mini kurtas, jackets and sherwanis"
+            "desc": "Mini kurtas, jackets and sherwanis",
+            "link": ""
           }
         },
         "cat_plus": {
@@ -135,7 +144,8 @@
           "settings": {
             "collection": "plus",
             "title": "Plus Size",
-            "desc": "Celebration wear in sizes that fit right"
+            "desc": "Celebration wear in sizes that fit right",
+            "link": ""
           }
         }
       },
@@ -156,9 +166,20 @@
       "settings": {
         "city_name": "Hyderabad",
         "city_id": "hyderabad",
-        "hero_title": "Kisah, available in your nearest store",
+        "hero_title": "",
         "band_headline": "",
         "ally_phone": "918100993480",
+        "collection_1": "",
+        "collection_1_sub": "Colour that walks in before you do",
+        "collection_2": "",
+        "collection_2_sub": "Sheer by nature. Intriguing by design",
+        "collection_3": "",
+        "collection_3_sub": "Rich textures, easy confidence",
+        "collection_4": "",
+        "collection_4_sub": "The season's staples, sharpened",
+        "categories_eyebrow": "Shop by category",
+        "categories_title": "Find your signature",
+        "category_collection_list": [],
         "stores_title": "",
         "stores_subtitle": "",
         "is_coming_soon": false,
