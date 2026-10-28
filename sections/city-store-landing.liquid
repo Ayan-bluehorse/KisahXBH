@@ -153,25 +153,26 @@
 .ksl-hero__img {
   display: block;
   width: 100%;
-  height: 660px;
-  min-height: 560px;
+  height: 600px;
   object-fit: cover;
-  object-position: 80% 15% !important;
+  object-position: center 20% !important;
 }
 @media (min-width: 1024px) {
   .ksl-hero__img {
-    height: 700px;
-    min-height: 620px;
-    object-position: 80% 15% !important;
+    height: 660px;
+    object-position: center 20% !important;
   }
 }
 @media (max-width: 768px) {
   .ksl-hero__img {
-    height: 560px !important;
-    min-height: 500px !important;
-    max-height: 80vh;
-    object-fit: cover;
-    object-position: 82% 15% !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 3 / 4;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block;
   }
   .ksl-hero__img.has-separate-mobile {
     object-position: center center !important;
@@ -180,7 +181,7 @@
 .ksl-hero__shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.12) 36%, rgba(27,33,44,0.72) 68%, rgba(20,25,34,0.96) 98%);
+  background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.06) 50%, rgba(20,24,33,0.5) 100%);
   pointer-events: none;
 }
 .ksl-hero__over {
@@ -1136,10 +1137,19 @@ a.ksl-btn--ghost:hover,
 /* Responsive Media Queries */
 @media (max-width: 768px) {
   .ksl-c { padding-inline: 16px; }
-  .ksl-hero__img { height: 560px !important; min-height: 500px !important; max-height: 80vh; object-fit: cover; object-position: 82% 15% !important; }
+  .ksl-hero__img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 3 / 4;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block;
+  }
   .ksl-hero__img.has-separate-mobile { object-position: center center !important; }
   .ksl-soonpg img.has-separate-mobile { object-position: center center !important; }
-  .ksl-hero__shade { background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.12) 36%, rgba(27,33,44,0.72) 68%, rgba(20,25,34,0.96) 98%); }
+  .ksl-hero__shade { background: linear-gradient(180deg, rgba(20,24,33,0) 0%, rgba(20,24,33,0.06) 50%, rgba(20,24,33,0.5) 100%); }
   .ksl-hero__over { padding-bottom: 24px; }
   .ksl-hero__title { font-size: 26px; }
   .ksl-vhead { align-items: center; }
@@ -1219,34 +1229,22 @@ a.ksl-btn--ghost:hover,
            width="{{ hero_desk_w }}"
            height="{{ hero_desk_h }}">
     </picture>
-    <div class="ksl-hero__shade"></div>
-    <div class="ksl-hero__over">
-      <div class="ksl-c">
-        <h2 class="ksl-hero__title">{{ section.settings.hero_title }}</h2>
-        <div class="ksl-hero__divider" aria-hidden="true"></div>
-        {%- if store_count == 1 and first_store != null -%}
-          <p class="ksl-hero__sub">
-            {%- if section.settings.band_headline != blank -%}
-              {{ section.settings.band_headline }}
-            {%- elsif first_store.settings.is_coming_soon -%}
-              Kisah in {{ city_name }} <span class="dot">•</span> Opening Soon at {{ first_store.settings.name }}
-            {%- else -%}
-              Kisah in {{ city_name }} <span class="dot">•</span> {{ first_store.settings.name }}
-            {%- endif -%}
-          </p>
-        {%- else -%}
-          <p class="ksl-hero__sub">
-            {%- if section.settings.band_headline != blank -%}
-              {{ section.settings.band_headline }}
-            {%- elsif any_store_open == false and store_count > 0 -%}
-              Kisah in {{ city_name }} <span class="dot">•</span> Opening Soon ({{ store_count }} stores)
-            {%- else -%}
-              Kisah in {{ city_name }} <span class="dot">•</span> {{ store_count }} stores
-            {%- endif -%}
-          </p>
-        {%- endif -%}
+    {%- if section.settings.hero_title != blank or section.settings.band_headline != blank -%}
+      <div class="ksl-hero__shade"></div>
+      <div class="ksl-hero__over">
+        <div class="ksl-c">
+          {%- if section.settings.hero_title != blank -%}
+            <h2 class="ksl-hero__title">{{ section.settings.hero_title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.hero_title != blank and section.settings.band_headline != blank -%}
+            <div class="ksl-hero__divider" aria-hidden="true"></div>
+          {%- endif -%}
+          {%- if section.settings.band_headline != blank -%}
+            <p class="ksl-hero__sub">{{ section.settings.band_headline }}</p>
+          {%- endif -%}
+        </div>
       </div>
-    </div>
+    {%- endif -%}
   </section>
 
   <!-- 2. Stores Section -->
@@ -2221,13 +2219,12 @@ a.ksl-btn--ghost:hover,
     {
       "type": "text",
       "id": "hero_title",
-      "label": "Hero Headline Text Overlay",
-      "default": "Kisah, available in your nearest store"
+      "label": "Hero Headline Text Overlay (Optional)"
     },
     {
       "type": "text",
       "id": "band_headline",
-      "label": "Band Headline Override (Leave blank for dynamic city & store name)"
+      "label": "Hero Subtitle Text Overlay (Optional)"
     },
     {
       "type": "text",
