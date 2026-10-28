@@ -43,7 +43,7 @@
         "store_blr_phoenix": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Phoenix Marketcity",
             "full_name": "Kisah Phoenix Marketcity",
             "image": "shopify://shop_images/st-phoenix.jpg",
@@ -63,7 +63,7 @@
         "store_blr_jayanagar": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Jayanagar",
             "full_name": "Kisah Jayanagar",
             "image": "shopify://shop_images/st-jayanagar.jpg",
@@ -83,7 +83,7 @@
         "store_blr_commercial": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Commercial Street",
             "full_name": "Kisah Commercial Street",
             "image": "shopify://shop_images/st-commercial.jpg",
