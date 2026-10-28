@@ -43,7 +43,7 @@
         "store_hyd_himayat": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Himayat Nagar",
             "full_name": "Kisah Himayat Nagar",
             "image": "shopify://shop_images/st-himayat.jpg",
