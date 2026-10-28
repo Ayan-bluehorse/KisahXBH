@@ -83,7 +83,7 @@
         "store_blr_commercial": {
           "type": "store",
           "settings": {
-            "is_coming_soon": false,
+            "is_coming_soon": true,
             "name": "Commercial Street",
             "full_name": "Kisah Commercial Street",
             "image": "shopify://shop_images/st-commercial.jpg",
