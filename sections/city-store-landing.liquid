@@ -1509,7 +1509,7 @@ a.ksl-btn--ghost:hover,
       <div class="ksl-colgrid">
         {%- assign col_1 = section.settings.collection_1 | default: collections['shor-collection'] -%}
         {%- if col_1 != blank -%}
-          {%- assign col_1_img = col_1.image | default: col_1.featured_image -%}
+          {%- assign col_1_img = section.settings.collection_1_image | default: col_1.image | default: col_1.featured_image -%}
           <a class="ksl-col" href="{{ col_1.url }}">
             {%- if col_1_img != blank -%}
               <img src="{{ col_1_img | image_url: width: 600 }}" alt="{{ col_1.title | escape }}" loading="lazy" width="400" height="533">
@@ -1524,8 +1524,8 @@ a.ksl-btn--ghost:hover,
 
         {%- assign col_2 = section.settings.collection_2 | default: collections['sheer'] | default: collections['sheer-collection'] -%}
         {%- if col_2 != blank -%}
-          {%- assign col_2_img = col_2.image | default: col_2.featured_image -%}
           {%- assign col_2_fallback_img = 'https://cdn.shopify.com/s/files/1/0496/1003/1256/files/sheer.jpg?v=1793161624' -%}
+          {%- assign col_2_img = section.settings.collection_2_image | default: col_2.image | default: col_2.featured_image -%}
           <a class="ksl-col" href="{{ col_2.url | default: '/collections/sheer' }}">
             {%- if col_2_img != blank -%}
               <img src="{{ col_2_img | image_url: width: 600 }}" alt="{{ col_2.title | default: 'Sheer' | escape }}" loading="lazy" width="400" height="533">
@@ -1542,7 +1542,7 @@ a.ksl-btn--ghost:hover,
 
         {%- assign col_3 = section.settings.collection_3 | default: collections['bougee-1'] -%}
         {%- if col_3 != blank -%}
-          {%- assign col_3_img = col_3.image | default: col_3.featured_image -%}
+          {%- assign col_3_img = section.settings.collection_3_image | default: col_3.image | default: col_3.featured_image -%}
           <a class="ksl-col" href="{{ col_3.url }}">
             {%- if col_3_img != blank -%}
               <img src="{{ col_3_img | image_url: width: 600 }}" alt="{{ col_3.title | escape }}" loading="lazy" width="400" height="533">
@@ -1557,7 +1557,7 @@ a.ksl-btn--ghost:hover,
 
         {%- assign col_4 = section.settings.collection_4 | default: collections['wedding-core25'] -%}
         {%- if col_4 != blank -%}
-          {%- assign col_4_img = col_4.image | default: col_4.featured_image -%}
+          {%- assign col_4_img = section.settings.collection_4_image | default: col_4.image | default: col_4.featured_image -%}
           <a class="ksl-col" href="{{ col_4.url }}">
             {%- if col_4_img != blank -%}
               <img src="{{ col_4_img | image_url: width: 600 }}" alt="{{ col_4.title | escape }}" loading="lazy" width="400" height="533">
@@ -1578,8 +1578,8 @@ a.ksl-btn--ghost:hover,
     <div class="ksl-c">
       <div class="ksl-head">
         <div>
-          <span class="ksl-eyebrow">Shop by category</span>
-          <h2 class="ksl-title">Find your signature</h2>
+          <span class="ksl-eyebrow">{{ section.settings.categories_eyebrow | default: 'Shop by category' }}</span>
+          <h2 class="ksl-title">{{ section.settings.categories_title | default: 'Find your signature' }}</h2>
         </div>
         <div class="ksl-arrows ksl-cats-arrows" aria-label="Slide category cards">
           <button type="button" class="ksl-arrow" id="kslCatSlidePrev" aria-label="Slide categories left">‹</button>
@@ -1587,24 +1587,65 @@ a.ksl-btn--ghost:hover,
         </div>
       </div>
       <div class="ksl-cats">
-        {%- assign cat_list = "kurta-sets:Kurta Sets:Easy festive dressing, from puja evenings to family dinners|kurtajacketset:Kurta Jacket Sets:Layered and polished for receptions|kurta:Kurtas:Prints, solids and embroidery for every ritual|short-kurta:Short Kurtas:Relaxed and modern for casual celebrations|nehru-jackets:Nehru Jackets:Sharpens any solid kurta|indowestern-sets:Indo-Western Sets:Structured drapes for cocktail and sangeet nights|sherwani-achkans:Sherwanis & Achkans:Craft that owns the room|jodhpuri-bandhgala:Jodhpuri & Bandhgala:Sharp tailoring with a modern edge|kids:Kids:Mini kurtas, jackets and sherwanis|plus:Plus Size:Celebration wear in sizes that fit right" | split: "|" -%}
-        {%- for cat_item in cat_list -%}
-          {%- assign cat_parts = cat_item | split: ":" -%}
-          {%- assign cat_handle = cat_parts[0] -%}
-          {%- assign cat_title = cat_parts[1] -%}
-          {%- assign cat_desc = cat_parts[2] -%}
-          {%- assign cat_col = collections[cat_handle] -%}
-          <a class="ksl-cat" href="{{ cat_col.url | default: '/collections/' | append: cat_handle }}">
-            {%- if cat_col.featured_image != blank -%}
-              <img src="{{ cat_col.featured_image | image_url: width: 300 }}" alt="{{ cat_title }}" loading="lazy" width="200" height="250">
-            {%- else -%}
-              <div style="width:100%; aspect-ratio:4/5; background:linear-gradient(135deg, #f7f4ed 0%, #ece5d8 100%); display:flex; align-items:center; justify-content:center; color:#201747; font-weight:700; font-size:13px; text-align:center; padding:12px;">
-                <span>{{ cat_title }}</span>
-              </div>
-            {%- endif -%}
-            <div><b>{{ cat_title }}</b><span>{{ cat_desc }}</span><em>See the range →</em></div>
-          </a>
+        {%- assign has_cat_blocks = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            {%- assign has_cat_blocks = true -%}
+            {%- assign b_col = block.settings.collection -%}
+            {%- assign b_title = block.settings.title | default: b_col.title -%}
+            {%- assign b_desc = block.settings.desc -%}
+            {%- assign b_img = block.settings.image | default: b_col.image | default: b_col.featured_image -%}
+            {%- assign b_url = block.settings.link | default: b_col.url -%}
+            <a class="ksl-cat" href="{{ b_url }}" {{ block.shopify_attributes }}>
+              {%- if b_img != blank -%}
+                <img src="{{ b_img | image_url: width: 300 }}" alt="{{ b_title | escape }}" loading="lazy" width="200" height="250">
+              {%- else -%}
+                <div style="width:100%; aspect-ratio:4/5; background:linear-gradient(135deg, #f7f4ed 0%, #ece5d8 100%); display:flex; align-items:center; justify-content:center; color:#201747; font-weight:700; font-size:13px; text-align:center; padding:12px;">
+                  <span>{{ b_title }}</span>
+                </div>
+              {%- endif -%}
+              <div><b>{{ b_title }}</b><span>{{ b_desc }}</span><em>See the range →</em></div>
+            </a>
+          {%- endif -%}
         {%- endfor -%}
+
+        {%- unless has_cat_blocks -%}
+          {%- if section.settings.category_collection_list != blank and section.settings.category_collection_list.count > 0 -%}
+            {%- for col in section.settings.category_collection_list -%}
+              {%- assign col_img = col.image | default: col.featured_image -%}
+              <a class="ksl-cat" href="{{ col.url }}">
+                {%- if col_img != blank -%}
+                  <img src="{{ col_img | image_url: width: 300 }}" alt="{{ col.title | escape }}" loading="lazy" width="200" height="250">
+                {%- else -%}
+                  <div style="width:100%; aspect-ratio:4/5; background:linear-gradient(135deg, #f7f4ed 0%, #ece5d8 100%); display:flex; align-items:center; justify-content:center; color:#201747; font-weight:700; font-size:13px; text-align:center; padding:12px;">
+                    <span>{{ col.title }}</span>
+                  </div>
+                {%- endif -%}
+                <div><b>{{ col.title }}</b>{% if col.description != blank %}<span>{{ col.description | strip_html | truncate: 60 }}</span>{% endif %}<em>See the range →</em></div>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            {%- assign cat_list = "kurta-sets:Kurta Sets:Easy festive dressing, from puja evenings to family dinners|kurtajacketset:Kurta Jacket Sets:Layered and polished for receptions|kurta:Kurtas:Prints, solids and embroidery for every ritual|short-kurta:Short Kurtas:Relaxed and modern for casual celebrations|nehru-jackets:Nehru Jackets:Sharpens any solid kurta|indowestern-sets:Indo-Western Sets:Structured drapes for cocktail and sangeet nights|sherwani-achkans:Sherwanis & Achkans:Craft that owns the room|jodhpuri-bandhgala:Jodhpuri & Bandhgala:Sharp tailoring with a modern edge|kids:Kids:Mini kurtas, jackets and sherwanis|plus:Plus Size:Celebration wear in sizes that fit right" | split: "|" -%}
+            {%- for cat_item in cat_list -%}
+              {%- assign cat_parts = cat_item | split: ":" -%}
+              {%- assign cat_handle = cat_parts[0] -%}
+              {%- assign cat_title = cat_parts[1] -%}
+              {%- assign cat_desc = cat_parts[2] -%}
+              {%- assign cat_col = collections[cat_handle] -%}
+              <a class="ksl-cat" href="{{ cat_col.url | default: '/collections/' | append: cat_handle }}">
+                {%- assign cat_img = cat_col.image | default: cat_col.featured_image -%}
+                {%- if cat_img != blank -%}
+                  <img src="{{ cat_img | image_url: width: 300 }}" alt="{{ cat_title }}" loading="lazy" width="200" height="250">
+                {%- else -%}
+                  <div style="width:100%; aspect-ratio:4/5; background:linear-gradient(135deg, #f7f4ed 0%, #ece5d8 100%); display:flex; align-items:center; justify-content:center; color:#201747; font-weight:700; font-size:13px; text-align:center; padding:12px;">
+                    <span>{{ cat_title }}</span>
+                  </div>
+                {%- endif -%}
+                <div><b>{{ cat_title }}</b><span>{{ cat_desc }}</span><em>See the range →</em></div>
+              </a>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endunless -%}
       </div>
     </div>
   </section>
@@ -1781,17 +1822,19 @@ a.ksl-btn--ghost:hover,
 
   function parseTime(tStr) {
     if (!tStr) return 0;
-    // Format "10:30" or "10:30 AM" or "11:00 PM"
-    let clean = tStr.trim().toUpperCase();
-    let isPM = clean.includes('PM');
-    let isAM = clean.includes('AM');
+    // Format "10:30", "10.30", "10:30 AM", "10.30 AM", "11:00 PM", "11.00 PM"
+    let clean = String(tStr).trim().toUpperCase();
+    const isPM = clean.includes('PM');
+    const isAM = clean.includes('AM');
     clean = clean.replace('AM', '').replace('PM', '').trim();
+    // Normalize dot separator (e.g. 10.30 -> 10:30)
+    clean = clean.replace('.', ':');
     let [h, m] = clean.split(':').map(Number);
     h = h || 0;
     m = m || 0;
     if (isPM && h < 12) h += 12;
     if (isAM && h === 12) h = 0;
-    return h * 60 + m;
+    return Math.floor(h) * 60 + Math.floor(m);
   }
 
   function format12(hmMins) {
@@ -2155,64 +2198,17 @@ a.ksl-btn--ghost:hover,
     },
     {
       "type": "header",
-      "content": "Brand Proof Points Strip (Stats)"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_num",
-      "label": "Stat 1 Number / Value",
-      "default": "5 lakh+"
-    },
-    {
-      "type": "text",
-      "id": "stat_1_label",
-      "label": "Stat 1 Label",
-      "default": "happy customers"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_num",
-      "label": "Stat 2 Number / Value",
-      "default": "12"
-    },
-    {
-      "type": "text",
-      "id": "stat_2_label",
-      "label": "Stat 2 Label",
-      "default": "stores"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_num",
-      "label": "Stat 3 Number / Value",
-      "default": "5"
-    },
-    {
-      "type": "text",
-      "id": "stat_3_label",
-      "label": "Stat 3 Label",
-      "default": "cities"
-    },
-    {
-      "type": "text",
-      "id": "stat_4_num",
-      "label": "Stat 4 Number / Value",
-      "default": "7-day"
-    },
-    {
-      "type": "text",
-      "id": "stat_4_label",
-      "label": "Stat 4 Label",
-      "default": "exchange in any store"
-    },
-    {
-      "type": "header",
       "content": "Recent Collections Grid"
     },
     {
       "type": "collection",
       "id": "collection_1",
       "label": "Collection 1 (Default: Shor)"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_1_image",
+      "label": "Collection 1 Custom Image (Optional)"
     },
     {
       "type": "text",
@@ -2226,6 +2222,11 @@ a.ksl-btn--ghost:hover,
       "label": "Collection 2 (Default: Sheer)"
     },
     {
+      "type": "image_picker",
+      "id": "collection_2_image",
+      "label": "Collection 2 Custom Image (Optional)"
+    },
+    {
       "type": "text",
       "id": "collection_2_sub",
       "label": "Collection 2 Subtitle",
@@ -2235,6 +2236,11 @@ a.ksl-btn--ghost:hover,
       "type": "collection",
       "id": "collection_3",
       "label": "Collection 3 (Default: Bougee)"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_3_image",
+      "label": "Collection 3 Custom Image (Optional)"
     },
     {
       "type": "text",
@@ -2248,10 +2254,37 @@ a.ksl-btn--ghost:hover,
       "label": "Collection 4 (Default: Wedding Core)"
     },
     {
+      "type": "image_picker",
+      "id": "collection_4_image",
+      "label": "Collection 4 Custom Image (Optional)"
+    },
+    {
       "type": "text",
       "id": "collection_4_sub",
       "label": "Collection 4 Subtitle",
       "default": "The season's staples, sharpened"
+    },
+    {
+      "type": "header",
+      "content": "Shop by Category Section"
+    },
+    {
+      "type": "text",
+      "id": "categories_eyebrow",
+      "label": "Categories Eyebrow",
+      "default": "Shop by category"
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories Heading",
+      "default": "Find your signature"
+    },
+    {
+      "type": "collection_list",
+      "id": "category_collection_list",
+      "label": "Select Collections (Optional Quick Multi-select)",
+      "limit": 15
     },
     {
       "type": "header",
@@ -2406,6 +2439,37 @@ a.ksl-btn--ghost:hover,
           "id": "lng",
           "label": "Longitude (for Geolocation nearest store)",
           "default": "88.3644"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "Category Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image (Optional, defaults to collection image)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (Optional, defaults to collection title)"
+        },
+        {
+          "type": "text",
+          "id": "desc",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom Link (Optional, defaults to collection URL)"
         }
       ]
     }

@@ -977,7 +977,7 @@
       var num = parseInt(str, 10);
       if (num <= 1440) return num;
     }
-    var m = str.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/i);
+    var m = str.replace('.', ':').match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/i);
     if (!m) return null;
     var h = parseInt(m[1], 10);
     var min = m[2] ? parseInt(m[2], 10) : 0;
