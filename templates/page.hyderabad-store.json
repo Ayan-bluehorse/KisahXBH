@@ -57,11 +57,101 @@
             "lat": "17.402674",
             "lng": "78.483428"
           }
+        },
+        "cat_kurta_sets": {
+          "type": "category",
+          "settings": {
+            "collection": "kurta-sets",
+            "title": "Kurta Sets",
+            "desc": "Easy festive dressing, from puja evenings to family dinners"
+          }
+        },
+        "cat_kurta_jacket": {
+          "type": "category",
+          "settings": {
+            "collection": "kurtajacketset",
+            "title": "Kurta Jacket Sets",
+            "desc": "Layered and polished for receptions"
+          }
+        },
+        "cat_kurta": {
+          "type": "category",
+          "settings": {
+            "collection": "kurta",
+            "title": "Kurtas",
+            "desc": "Prints, solids and embroidery for every ritual"
+          }
+        },
+        "cat_short_kurta": {
+          "type": "category",
+          "settings": {
+            "collection": "short-kurta",
+            "title": "Short Kurtas",
+            "desc": "Relaxed and modern for casual celebrations"
+          }
+        },
+        "cat_nehru_jackets": {
+          "type": "category",
+          "settings": {
+            "collection": "nehru-jackets",
+            "title": "Nehru Jackets",
+            "desc": "Sharpens any solid kurta"
+          }
+        },
+        "cat_indowestern": {
+          "type": "category",
+          "settings": {
+            "collection": "indowestern-sets",
+            "title": "Indo-Western Sets",
+            "desc": "Structured drapes for cocktail and sangeet nights"
+          }
+        },
+        "cat_sherwani": {
+          "type": "category",
+          "settings": {
+            "collection": "sherwani-achkans",
+            "title": "Sherwanis & Achkans",
+            "desc": "Craft that owns the room"
+          }
+        },
+        "cat_jodhpuri": {
+          "type": "category",
+          "settings": {
+            "collection": "jodhpuri-bandhgala",
+            "title": "Jodhpuri & Bandhgala",
+            "desc": "Sharp tailoring with a modern edge"
+          }
+        },
+        "cat_kids": {
+          "type": "category",
+          "settings": {
+            "collection": "kids",
+            "title": "Kids",
+            "desc": "Mini kurtas, jackets and sherwanis"
+          }
+        },
+        "cat_plus": {
+          "type": "category",
+          "settings": {
+            "collection": "plus",
+            "title": "Plus Size",
+            "desc": "Celebration wear in sizes that fit right"
+          }
         }
       },
       "block_order": [
         "store_hyd_sarath",
-        "store_hyd_himayat"
+        "store_hyd_himayat",
+        "cat_kurta_sets",
+        "cat_kurta_jacket",
+        "cat_kurta",
+        "cat_short_kurta",
+        "cat_nehru_jackets",
+        "cat_indowestern",
+        "cat_sherwani",
+        "cat_jodhpuri",
+        "cat_kids",
+        "cat_plus"
       ],
       "settings": {
         "city_name": "Hyderabad",

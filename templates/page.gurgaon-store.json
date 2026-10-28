@@ -25,7 +25,7 @@
           "settings": {
             "name": "Jewel M3M Mall",
             "full_name": "Kisah Jewel M3M Mall",
-            "address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
+            "address": "R2 107\u2013110, Mehrauli\u2013Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
             "open_time": "11:00 AM",
             "close_time": "10:00 PM",
             "phone": "",
@@ -37,10 +37,100 @@
             "lat": "28.4595",
             "lng": "77.0266"
           }
+        },
+        "cat_kurta_sets": {
+          "type": "category",
+          "settings": {
+            "collection": "kurta-sets",
+            "title": "Kurta Sets",
+            "desc": "Easy festive dressing, from puja evenings to family dinners"
+          }
+        },
+        "cat_kurta_jacket": {
+          "type": "category",
+          "settings": {
+            "collection": "kurtajacketset",
+            "title": "Kurta Jacket Sets",
+            "desc": "Layered and polished for receptions"
+          }
+        },
+        "cat_kurta": {
+          "type": "category",
+          "settings": {
+            "collection": "kurta",
+            "title": "Kurtas",
+            "desc": "Prints, solids and embroidery for every ritual"
+          }
+        },
+        "cat_short_kurta": {
+          "type": "category",
+          "settings": {
+            "collection": "short-kurta",
+            "title": "Short Kurtas",
+            "desc": "Relaxed and modern for casual celebrations"
+          }
+        },
+        "cat_nehru_jackets": {
+          "type": "category",
+          "settings": {
+            "collection": "nehru-jackets",
+            "title": "Nehru Jackets",
+            "desc": "Sharpens any solid kurta"
+          }
+        },
+        "cat_indowestern": {
+          "type": "category",
+          "settings": {
+            "collection": "indowestern-sets",
+            "title": "Indo-Western Sets",
+            "desc": "Structured drapes for cocktail and sangeet nights"
+          }
+        },
+        "cat_sherwani": {
+          "type": "category",
+          "settings": {
+            "collection": "sherwani-achkans",
+            "title": "Sherwanis & Achkans",
+            "desc": "Craft that owns the room"
+          }
+        },
+        "cat_jodhpuri": {
+          "type": "category",
+          "settings": {
+            "collection": "jodhpuri-bandhgala",
+            "title": "Jodhpuri & Bandhgala",
+            "desc": "Sharp tailoring with a modern edge"
+          }
+        },
+        "cat_kids": {
+          "type": "category",
+          "settings": {
+            "collection": "kids",
+            "title": "Kids",
+            "desc": "Mini kurtas, jackets and sherwanis"
+          }
+        },
+        "cat_plus": {
+          "type": "category",
+          "settings": {
+            "collection": "plus",
+            "title": "Plus Size",
+            "desc": "Celebration wear in sizes that fit right"
+          }
         }
       },
       "block_order": [
-        "store_gur_m3m"
+        "store_gur_m3m",
+        "cat_kurta_sets",
+        "cat_kurta_jacket",
+        "cat_kurta",
+        "cat_short_kurta",
+        "cat_nehru_jackets",
+        "cat_indowestern",
+        "cat_sherwani",
+        "cat_jodhpuri",
+        "cat_kids",
+        "cat_plus"
       ],
       "settings": {
         "city_name": "Gurgaon",
@@ -61,7 +151,7 @@
         "is_coming_soon": true,
         "coming_soon_title": "",
         "coming_soon_mall": "Jewel M3M Mall",
-        "coming_soon_address": "R2 107–110, Mehrauli–Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
+        "coming_soon_address": "R2 107\u2013110, Mehrauli\u2013Gurgaon Road, DLF Phase 2, Sector 25, Gurgaon 122002",
         "coming_soon_note": "We'll message you on WhatsApp the day the doors open.",
         "google_places_api_key": ""
       }
