@@ -23,6 +23,7 @@
         "store_viz_inorbit": {
           "type": "store",
           "settings": {
+            "is_coming_soon": true,
             "name": "Inorbit Mall",
             "full_name": "Kisah Inorbit Mall, Vizag",
             "image": "shopify://shop_images/st-vizag.jpg",
