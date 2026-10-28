@@ -83,7 +83,7 @@
         "store_kol_allenby": {
           "type": "store",
           "settings": {
-            "is_coming_soon": true,
+            "is_coming_soon": false,
             "name": "Allenby Road",
             "full_name": "Kisah Allenby Road",
             "image": "shopify://shop_images/st-allenby.jpg",
