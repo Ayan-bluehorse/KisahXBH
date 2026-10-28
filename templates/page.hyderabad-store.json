@@ -23,6 +23,7 @@
         "store_hyd_sarath": {
           "type": "store",
           "settings": {
+            "is_coming_soon": false,
             "name": "Sarath City Mall",
             "full_name": "Kisah Sarath City Capital Mall",
             "image": "shopify://shop_images/st-sarath.jpg",
@@ -42,6 +43,7 @@
         "store_hyd_himayat": {
           "type": "store",
           "settings": {
+            "is_coming_soon": true,
             "name": "Himayat Nagar",
             "full_name": "Kisah Himayat Nagar",
             "image": "shopify://shop_images/st-himayat.jpg",
