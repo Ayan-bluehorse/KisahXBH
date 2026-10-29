@@ -790,7 +790,7 @@
       },
       "15223879327137715448": {
         "type": "shopify://apps/helium-analytics-ai-agent/blocks/pulse/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       },
       "10225203486866009258": {
