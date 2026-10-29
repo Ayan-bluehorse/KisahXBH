@@ -803,7 +803,7 @@
       },
       "16810592368967347061": {
         "type": "shopify://apps/helium-analytics-ai-agent/blocks/feature-base/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       },
       "yoast-seo-metatags": {
