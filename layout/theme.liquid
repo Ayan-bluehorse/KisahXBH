@@ -29,14 +29,19 @@
   {% render 'elevateab' %}
 
 <!-- Font & CDN Preconnects for Page Speed & GoKwik Checkout -->
-<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+{% comment %} <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
 <link rel="preconnect" href="https://pdp.gokwik.co" crossorigin>
 <link rel="preconnect" href="https://api.gokwik.co" crossorigin>
 <link rel="preconnect" href="https://cdn.gokwik.co" crossorigin>
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="https://pdp.gokwik.co">
 <link rel="dns-prefetch" href="https://api.gokwik.co">
-<link rel="dns-prefetch" href="https://cdn.gokwik.co">
+<link rel="dns-prefetch" href="https://cdn.gokwik.co"> {% endcomment %}
+
+<!-- GoKwik connection optimization -->
+<link rel="preconnect" href="https://pdp.gokwik.co" crossorigin>
+<link rel="preconnect" href="https://api.gokwik.co" crossorigin>
+<link rel="preconnect" href="https://cdn.gokwik.co" crossorigin>
 <!-- FontAwesome CSS Removed for Performance -->
 
 <!-- n-identify START -->
