@@ -56,14 +56,24 @@
     });
   </script>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-31X587J1SK"></script>
+  <!-- Google tag (gtag.js) - Initialized with deferral to protect LCP & TBT -->
   <script>
     gtag('js', new Date());
     gtag('config', 'G-31X587J1SK', {
       'send_page_view': false
     });
     gtag('config', 'AW-16459568302');
+
+    function loadGtagScript() {
+      if (window.__gtag_script_loaded) return;
+      window.__gtag_script_loaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-31X587J1SK';
+      s.async = true;
+      document.head.appendChild(s);
+    }
+    window.addEventListener('kisah:delayed-apps-trigger', loadGtagScript, { once: true });
+    setTimeout(loadGtagScript, 4000);
   </script>
 {% render 'ga-order-link' %}
   <!-- Gokwik theme code start -->

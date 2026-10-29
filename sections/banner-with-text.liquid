@@ -176,7 +176,7 @@
                      class="mob-img"
                      loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
                      fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
-                     decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+                     decoding="async"
                    >
                  {% endif %}
                  
@@ -195,7 +195,7 @@
                      class="desk-img"
                      loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
                      fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
-                     decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+                     decoding="async"
                    >
                  {% endif %}
                  <div style="position:absolute;top:0;bottom:0;left:0;right:0;z-index:15;pointer-events:none;">
@@ -228,7 +228,7 @@
                 class="mob-img"
                 loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
                 fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
-                decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+                decoding="async"
                 />
           {% endif %}
           
@@ -246,7 +246,7 @@
                  class="desk-img"
                  loading="{% if is_lcp %}eager{% else %}lazy{% endif %}"
                 fetchpriority="{% if is_lcp %}high{% else %}low{% endif %}"
-                decoding="{% if is_lcp %}sync{% else %}async{% endif %}"
+                decoding="async"
              />
             {% endif %}
                 {% if block.settings.link != blank %}
