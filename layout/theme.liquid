@@ -120,7 +120,10 @@
     }
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
+  {% comment %} {{ 'collections.css' | asset_url | stylesheet_tag }} {% endcomment %}
+   {% if request.page_type == 'collection' %}
   {{ 'collections.css' | asset_url | stylesheet_tag }}
+{% endif %}
   {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' -%}
     {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
