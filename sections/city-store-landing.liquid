@@ -2148,14 +2148,34 @@ a.ksl-btn--ghost:hover,
     const city = t.dataset.trackCity || cityName;
     const store = t.dataset.trackStore || 'General';
 
-    // Google Analytics 4
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'store_action', {
-        action_type: action,
-        city: city,
-        store: store
-      });
+    // Map 3 distinct event names for GA4 & GTM
+    let eventName = 'store_action';
+    if (action === 'get_directions' || action === 'find_nearest') {
+      eventName = 'store_get_directions';
+    } else if (action === 'call' || action === 'call_picker') {
+      eventName = 'store_call';
+    } else if (action === 'whatsapp') {
+      eventName = 'store_whatsapp';
     }
+
+    const eventParams = {
+      event_category: 'store_locator',
+      action_type: action,
+      city: city,
+      store: store
+    };
+
+    // Google Analytics 4 (gtag)
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams);
+    }
+
+    // Google Tag Manager (dataLayer)
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      ...eventParams
+    });
 
     // Meta Pixel
     if (typeof window.fbq === 'function') {
