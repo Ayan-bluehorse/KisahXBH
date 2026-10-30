@@ -173,21 +173,36 @@
 
               <div class="article-content-wrap">
                 {%- assign article_category = '' -%}
-                {%- assign meta_badge = article.metafields.custom.category_badges.value | default: article.metafields.custom.category_badges -%}
+                {%- assign meta_badge = article.metafields.custom.category_badges -%}
                 {%- if meta_badge == blank -%}
-                  {%- assign meta_badge = article.metafields.custom.category_badge.value | default: article.metafields.custom.category_badge -%}
+                  {%- assign meta_badge = article.metafields.custom.category_badge -%}
                 {%- endif -%}
                 {%- if meta_badge != blank -%}
-                  {%- if meta_badge.first != blank -%}
-                    {%- assign article_category = meta_badge.first -%}
+                  {%- if meta_badge.type contains 'list' -%}
+                    {%- for item in meta_badge.value -%}
+                      {%- if item != blank -%}
+                        {%- assign article_category = item | strip -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
                   {%- else -%}
-                    {%- assign article_category = meta_badge | strip -%}
+                    {%- assign article_category = meta_badge.value | default: meta_badge | strip -%}
                   {%- endif -%}
+                {%- endif -%}
+                {%- if article_category == blank -%}
+                  {%- for tag in article.tags -%}
+                    {%- unless tag contains '_' -%}
+                      {%- if tag.size <= 30 and tag.size >= 2 -%}
+                        {%- assign article_category = tag -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endunless -%}
+                  {%- endfor -%}
                 {%- endif -%}
 
                 {%- if article_category != blank -%}
                 <div class="article-category-badge">
-                  <span class="article-category-pill">{{ article_category }}</span>
+                  <a href="{{ blog.url }}/tagged/{{ article_category | handle }}" class="article-category-pill">{{ article_category }}</a>
                 </div>
                 {%- endif -%}
 
