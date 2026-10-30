@@ -108,6 +108,106 @@
     </details>
   {%- endif -%}
 
+  {%- comment -%} Product FAQ Accordion Item (reads from custom.product_faq) {%- endcomment -%}
+  {%- assign product_faq_raw = product.metafields.custom.product_faq -%}
+  {%- assign product_faq_val = product_faq_raw.value | default: product_faq_raw -%}
+
+  {%- assign product_faq_items = blank -%}
+  {%- if product_faq_val.faqs != blank -%}
+    {%- assign product_faq_items = product_faq_val.faqs -%}
+  {%- elsif product_faq_val.items != blank -%}
+    {%- assign product_faq_items = product_faq_val.items -%}
+  {%- elsif product_faq_val.questions != blank -%}
+    {%- assign product_faq_items = product_faq_val.questions -%}
+  {%- elsif product_faq_val != blank -%}
+    {%- assign product_faq_items = product_faq_val -%}
+  {%- endif -%}
+
+  {%- assign has_product_faq = false -%}
+  {%- if product_faq_items != blank and product_faq_items != empty -%}
+    {%- for item in product_faq_items -%}
+      {%- assign q_test = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip -%}
+      {%- assign a_test = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip -%}
+      {%- if q_test != blank and a_test != blank -%}
+        {%- assign has_product_faq = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if has_product_faq -%}
+    <details class="pdp-accordion-item" id="pdp-acc-faq">
+      <summary class="pdp-accordion-summary">
+        <span class="pdp-accordion-title">Frequently Asked Questions</span>
+        <span class="pdp-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="pdp-accordion-content">
+        <div class="pdp-faq-list" role="region" aria-label="Product Frequently Asked Questions">
+          {%- for item in product_faq_items -%}
+            {%- assign q = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip -%}
+            {%- assign a = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip -%}
+            {%- if q != blank and a != blank -%}
+              <details class="pdp-faq-item">
+                <summary class="pdp-faq-summary">
+                  <span class="pdp-faq-question">{{ q }}</span>
+                  <span class="pdp-faq-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="pdp-faq-answer">
+                  {%- if a contains '<p>' or a contains '<div>' -%}
+                    {{ a }}
+                  {%- else -%}
+                    <p>{{ a | newline_to_br }}</p>
+                  {%- endif -%}
+                </div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Schema.org FAQPage for Google Rich Snippets {%- endcomment -%}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {%- assign first_pfaq = true -%}
+            {%- for item in product_faq_items -%}
+              {%- assign q_clean = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip | strip_html -%}
+              {%- assign a_clean = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip | strip_html -%}
+              {%- if q_clean != blank and a_clean != blank -%}
+                {%- unless first_pfaq -%},{%- endunless -%}
+                {
+                  "@type": "Question",
+                  "name": {{ q_clean | json }},
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ a_clean | json }}
+                  }
+                }
+                {%- assign first_pfaq = false -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }
+        </script>
+      </div>
+    </details>
+  {%- elsif product_faq_val != blank -%}
+    {%- comment -%} Fallback container if product_faq_val was passed as raw JSON string {%- endcomment -%}
+    <details class="pdp-accordion-item" id="pdp-acc-faq" data-pdp-faq-fallback style="display:none;">
+      <summary class="pdp-accordion-summary">
+        <span class="pdp-accordion-title">Frequently Asked Questions</span>
+        <span class="pdp-accordion-icon" aria-hidden="true"></span>
+      </summary>
+      <div class="pdp-accordion-content">
+        <div class="pdp-faq-list"></div>
+        <script type="application/json" class="pdp-faq-raw-json">
+          {{ product_faq_val | json }}
+        </script>
+      </div>
+    </details>
+  {%- endif -%}
+
   <details class="pdp-accordion-item" id="pdp-acc-ship"{% unless has_specs or has_desc %} open{% endunless %}>
     <summary class="pdp-accordion-summary">
       <span class="pdp-accordion-title">Shipping &amp; Returns</span>
@@ -237,6 +337,91 @@
     color: #1E1E1E;
     font-weight: 400;
   }
+  /* PDP Sub-FAQ Accordion Styles */
+  .pdp-faq-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2px;
+  }
+  .pdp-faq-item {
+    border-bottom: 1px solid #F0F0F2;
+    transition: background-color 0.2s ease;
+  }
+  .pdp-faq-item:first-child {
+    border-top: 1px solid #F0F0F2;
+  }
+  details.pdp-faq-item > summary.pdp-faq-summary {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 12px 0 !important;
+    cursor: pointer !important;
+    list-style: none !important;
+    user-select: none !important;
+  }
+  details.pdp-faq-item > summary.pdp-faq-summary::-webkit-details-marker,
+  details.pdp-faq-item > summary.pdp-faq-summary::marker {
+    display: none !important;
+    content: "" !important;
+  }
+  .pdp-faq-question {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1E1E1E;
+    line-height: 1.4;
+    padding-right: 14px;
+    flex: 1;
+    text-align: left;
+  }
+  .pdp-faq-toggle {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    display: inline-block;
+    margin-right: 2px;
+  }
+  .pdp-faq-toggle::before,
+  .pdp-faq-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #555555;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .pdp-faq-toggle::before {
+    width: 12px;
+    height: 1.5px;
+    margin-top: -0.75px;
+    margin-left: -6px;
+  }
+  .pdp-faq-toggle::after {
+    width: 1.5px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -0.75px;
+  }
+  .pdp-faq-item[open] > .pdp-faq-summary .pdp-faq-toggle::after {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  .pdp-faq-answer {
+    padding: 2px 0 14px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #4A4A4A;
+  }
+  .pdp-faq-answer p {
+    margin: 0 0 8px 0;
+  }
+  .pdp-faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+  .pdp-faq-answer a {
+    color: #000000;
+    text-decoration: underline;
+  }
   .pdp-desc-body,
   .pdp-ship-body {
     font-size: 14px;
@@ -250,17 +435,101 @@
     function initPdpAccordion() {
       var group = document.getElementById('pdp-accordion-group');
       if (!group) return;
-      var items = group.querySelectorAll('.pdp-accordion-item');
-      items.forEach(function(item) {
+
+      // Top-level PDP accordion items (only direct details children of group)
+      var mainItems = group.querySelectorAll(':scope > .pdp-accordion-item');
+      mainItems.forEach(function(item) {
         item.addEventListener('toggle', function() {
           if (item.open) {
-            items.forEach(function(other) {
+            mainItems.forEach(function(other) {
               if (other !== item) other.removeAttribute('open');
             });
           }
         });
       });
+
+      // Sub-FAQ items toggle (exclusive within the sub-FAQ list)
+      var faqItems = group.querySelectorAll('.pdp-faq-item');
+      faqItems.forEach(function(fItem) {
+        fItem.addEventListener('toggle', function() {
+          if (fItem.open) {
+            faqItems.forEach(function(otherFaq) {
+              if (otherFaq !== fItem && otherFaq.open) {
+                otherFaq.open = false;
+              }
+            });
+          }
+        });
+      });
+
+      // Client-side fallback if custom.product_faq arrived as raw JSON string
+      var fallbacks = group.querySelectorAll('[data-pdp-faq-fallback]');
+      fallbacks.forEach(function(wrapper) {
+        if (wrapper.dataset.initialized) return;
+        wrapper.dataset.initialized = 'true';
+
+        var scriptEl = wrapper.querySelector('.pdp-faq-raw-json');
+        var container = wrapper.querySelector('.pdp-faq-list');
+        if (!scriptEl || !container) return;
+
+        try {
+          var raw = JSON.parse(scriptEl.textContent.trim());
+          if (typeof raw === 'string') raw = JSON.parse(raw);
+          var items = raw.faqs || raw.items || raw.questions || raw;
+          var html = '';
+
+          function esc(s) {
+            var div = document.createElement('div');
+            div.textContent = s;
+            return div.innerHTML;
+          }
+
+          if (Array.isArray(items)) {
+            items.forEach(function(it) {
+              var q = it.question || it.title || it.q || it.heading;
+              var a = it.answer || it.content || it.description || it.text || it.body || it.a;
+              if (q && a) {
+                html += '<details class="pdp-faq-item">';
+                html += '<summary class="pdp-faq-summary"><span class="pdp-faq-question">' + esc(q) + '</span><span class="pdp-faq-toggle" aria-hidden="true"></span></summary>';
+                html += '<div class="pdp-faq-answer"><p>' + esc(a) + '</p></div>';
+                html += '</details>';
+              }
+            });
+          } else if (typeof items === 'object' && items !== null) {
+            Object.keys(items).forEach(function(k) {
+              var val = items[k];
+              if (k && val) {
+                html += '<details class="pdp-faq-item">';
+                html += '<summary class="pdp-faq-summary"><span class="pdp-faq-question">' + esc(k) + '</span><span class="pdp-faq-toggle" aria-hidden="true"></span></summary>';
+                html += '<div class="pdp-faq-answer"><p>' + esc(val) + '</p></div>';
+                html += '</details>';
+              }
+            });
+          }
+
+          if (html) {
+            container.innerHTML = html;
+            wrapper.style.display = '';
+
+            var newFaqItems = container.querySelectorAll('.pdp-faq-item');
+            newFaqItems.forEach(function(fItem) {
+              fItem.addEventListener('toggle', function() {
+                if (fItem.open) {
+                  newFaqItems.forEach(function(otherFaq) {
+                    if (otherFaq !== fItem && otherFaq.open) {
+                      otherFaq.open = false;
+                    }
+                  });
+                }
+              });
+            });
+          }
+        } catch(e) {
+          // ignore invalid JSON
+        }
+      });
     }
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initPdpAccordion);
     } else {
