@@ -373,38 +373,30 @@
     flex: 1;
     text-align: left;
   }
+  /* Sub-FAQ Chevron Arrow Toggle */
   .pdp-faq-toggle {
-    position: relative;
-    width: 12px;
-    height: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
     flex-shrink: 0;
-    display: inline-block;
-    margin-right: 2px;
+    margin-right: 4px;
   }
-  .pdp-faq-toggle::before,
   .pdp-faq-toggle::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #555555;
-    transition: transform 0.25s ease, opacity 0.2s ease;
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid #555555;
+    border-bottom: 1.5px solid #555555;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.25s ease, border-color 0.2s ease;
   }
-  .pdp-faq-toggle::before {
-    width: 12px;
-    height: 1.5px;
-    margin-top: -0.75px;
-    margin-left: -6px;
-  }
-  .pdp-faq-toggle::after {
-    width: 1.5px;
-    height: 12px;
-    margin-top: -6px;
-    margin-left: -0.75px;
-  }
+  /* When open: arrow rotates to point up */
   .pdp-faq-item[open] > .pdp-faq-summary .pdp-faq-toggle::after {
-    transform: rotate(90deg);
-    opacity: 0;
+    transform: rotate(-135deg) translateY(-1px);
+    border-color: #111111;
   }
   .pdp-faq-answer {
     padding: 2px 0 14px 0;
