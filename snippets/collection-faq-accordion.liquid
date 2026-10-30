@@ -1,0 +1,356 @@
+{%- comment -%}
+  Collection FAQ Accordion Snippet
+  Reads from collection.metafields.custom.collection_faq (Type: JSON)
+  Features:
+  - Renders outside of the 'Show More' description button
+  - Interactive plus/minus (+ / -) accordion
+  - Generous spacing & right padding (never touches adjacent columns or screen edges)
+  - Only renders when data is available (zero footprint if empty)
+  - Auto-outputs FAQPage Schema (JSON-LD) for Google search snippets
+{%- endcomment -%}
+
+{%- liquid
+  assign faq_raw = collection.metafields.custom.collection_faq
+  assign faq_val = faq_raw.value | default: faq_raw
+  assign faq_title = heading | default: 'Frequently Asked Questions'
+
+  assign faq_items = blank
+  if faq_val.faqs != blank
+    assign faq_items = faq_val.faqs
+  elsif faq_val.items != blank
+    assign faq_items = faq_val.items
+  elsif faq_val.questions != blank
+    assign faq_items = faq_val.questions
+  elsif faq_val != blank
+    assign faq_items = faq_val
+  endif
+
+  assign has_faqs = false
+  if faq_items != blank and faq_items != empty
+    for item in faq_items
+      assign q_test = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip
+      assign a_test = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip
+      if q_test != blank and a_test != blank
+        assign has_faqs = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
+{%- if has_faqs -%}
+  <div class="collection-faq-wrapper" data-collection-faq>
+    {%- if faq_title != blank -%}
+      <h3 class="collection-faq-heading">{{ faq_title }}</h3>
+    {%- endif -%}
+
+    <div class="collection-faq-accordion">
+      {%- for item in faq_items -%}
+        {%- assign q = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip -%}
+        {%- assign a = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip -%}
+        {%- if q != blank and a != blank -%}
+          <details class="collection-faq-item">
+            <summary class="collection-faq-summary">
+              <span class="collection-faq-question">{{ q }}</span>
+              <span class="collection-faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="collection-faq-answer">
+              {%- if a contains '<p>' or a contains '<div>' -%}
+                {{ a }}
+              {%- else -%}
+                <p>{{ a | newline_to_br }}</p>
+              {%- endif -%}
+            </div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Schema.org FAQPage for Google Search Rich Results {%- endcomment -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- assign first_item = true -%}
+        {%- for item in faq_items -%}
+          {%- assign q_clean = item.question | default: item.title | default: item.q | default: item.heading | default: item[0] | strip | strip_html -%}
+          {%- assign a_clean = item.answer | default: item.content | default: item.description | default: item.text | default: item.body | default: item.a | default: item[1] | strip | strip_html -%}
+          {%- if q_clean != blank and a_clean != blank -%}
+            {%- unless first_item -%},{%- endunless -%}
+            {
+              "@type": "Question",
+              "name": {{ q_clean | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ a_clean | json }}
+              }
+            }
+            {%- assign first_item = false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+    </script>
+  </div>
+{%- elsif faq_val != blank -%}
+  {%- comment -%} Fallback container if faq_val was provided as an unparsed JSON string {%- endcomment -%}
+  <div class="collection-faq-wrapper" data-collection-faq-fallback style="display:none;">
+    {%- if faq_title != blank -%}
+      <h3 class="collection-faq-heading">{{ faq_title }}</h3>
+    {%- endif -%}
+    <div class="collection-faq-accordion"></div>
+    <script type="application/json" class="collection-faq-raw-json">
+      {{ faq_val | json }}
+    </script>
+  </div>
+{%- endif -%}
+
+{%- if has_faqs or faq_val != blank -%}
+<style>
+/* Collection FAQ Accordion Styles */
+.collection-faq-wrapper {
+  margin-top: 32px;
+  margin-bottom: 28px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 25px; /* Ensures ample buffer from adjacent column/edge */
+}
+
+.collection-faq-heading {
+  font-family: var(--base-font-family);
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+}
+
+.collection-faq-accordion {
+  border-top: 1px solid #e5e5e5;
+  width: 100%;
+}
+
+.collection-faq-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.collection-faq-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 16px 0;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-family: var(--base-font-family);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #111111;
+  transition: color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.collection-faq-summary:hover {
+  color: #666666;
+}
+
+.collection-faq-summary::-webkit-details-marker,
+.collection-faq-summary::marker {
+  display: none;
+  content: "";
+}
+
+.collection-faq-question {
+  flex: 1;
+  padding-right: 20px;
+  text-align: left;
+}
+
+/* Plus / Minus Animated Icon */
+.collection-faq-icon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px; /* Safe inset so icon never touches container border */
+}
+
+.collection-faq-icon::before,
+.collection-faq-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #111111;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+/* Horizontal line (always visible) */
+.collection-faq-icon::before {
+  width: 14px;
+  height: 2px;
+  margin-top: -1px;
+  margin-left: -7px;
+}
+
+/* Vertical line (makes the +) */
+.collection-faq-icon::after {
+  width: 2px;
+  height: 14px;
+  margin-top: -7px;
+  margin-left: -1px;
+}
+
+/* When open: vertical line rotates 90deg and fades out -> becomes - (minus) */
+.collection-faq-item[open] > .collection-faq-summary .collection-faq-icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.collection-faq-answer {
+  padding: 4px 20px 18px 0;
+  font-family: var(--base-font-family);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #444444;
+}
+
+.collection-faq-answer p {
+  margin: 0 0 10px 0;
+}
+
+.collection-faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+.collection-faq-answer a {
+  color: #000000;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .collection-faq-wrapper {
+    margin-top: 24px;
+    margin-bottom: 20px;
+    padding-right: 12px;
+  }
+  .collection-faq-heading {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .collection-faq-summary {
+    font-size: 15px;
+    padding: 14px 14px 14px 0;
+  }
+  .collection-faq-question {
+    padding-right: 14px;
+  }
+  .collection-faq-answer {
+    font-size: 13.5px;
+    padding-bottom: 14px;
+    padding-right: 10px;
+  }
+}
+</style>
+
+<script>
+(function() {
+  function initCollectionFaq() {
+    // Accordion exclusive toggle (auto-close other open FAQs within the same accordion)
+    var accordions = document.querySelectorAll('.collection-faq-accordion');
+    accordions.forEach(function(accordion) {
+      var items = accordion.querySelectorAll('.collection-faq-item');
+      items.forEach(function(item) {
+        item.addEventListener('toggle', function() {
+          if (item.open) {
+            items.forEach(function(otherItem) {
+              if (otherItem !== item && otherItem.open) {
+                otherItem.open = false;
+              }
+            });
+          }
+        });
+      });
+    });
+
+    // Fallback parser if JSON was passed as raw unparsed string
+    var fallbacks = document.querySelectorAll('[data-collection-faq-fallback]');
+    fallbacks.forEach(function(wrapper) {
+      if (wrapper.dataset.initialized) return;
+      wrapper.dataset.initialized = 'true';
+
+      var scriptEl = wrapper.querySelector('.collection-faq-raw-json');
+      var container = wrapper.querySelector('.collection-faq-accordion');
+      if (!scriptEl || !container) return;
+
+      try {
+        var raw = JSON.parse(scriptEl.textContent.trim());
+        if (typeof raw === 'string') raw = JSON.parse(raw);
+        var items = raw.faqs || raw.items || raw.questions || raw;
+        var html = '';
+
+        if (Array.isArray(items)) {
+          items.forEach(function(it) {
+            var q = it.question || it.title || it.q || it.heading;
+            var a = it.answer || it.content || it.description || it.text || it.body || it.a;
+            if (q && a) {
+              html += '<details class="collection-faq-item">';
+              html += '<summary class="collection-faq-summary"><span class="collection-faq-question">' + escapeHtml(q) + '</span><span class="collection-faq-icon" aria-hidden="true"></span></summary>';
+              html += '<div class="collection-faq-answer"><p>' + escapeHtml(a) + '</p></div>';
+              html += '</details>';
+            }
+          });
+        } else if (typeof items === 'object' && items !== null) {
+          Object.keys(items).forEach(function(k) {
+            var val = items[k];
+            if (k && val) {
+              html += '<details class="collection-faq-item">';
+              html += '<summary class="collection-faq-summary"><span class="collection-faq-question">' + escapeHtml(k) + '</span><span class="collection-faq-icon" aria-hidden="true"></span></summary>';
+              html += '<div class="collection-faq-answer"><p>' + escapeHtml(val) + '</p></div>';
+              html += '</details>';
+            }
+          });
+        }
+
+        if (html) {
+          container.innerHTML = html;
+          wrapper.style.display = 'block';
+
+          var newItems = container.querySelectorAll('.collection-faq-item');
+          newItems.forEach(function(item) {
+            item.addEventListener('toggle', function() {
+              if (item.open) {
+                newItems.forEach(function(otherItem) {
+                  if (otherItem !== item && otherItem.open) {
+                    otherItem.open = false;
+                  }
+                });
+              }
+            });
+          });
+        }
+      } catch (e) {
+        // invalid JSON or empty, leave hidden
+      }
+    });
+
+    function escapeHtml(text) {
+      if (typeof text !== 'string') text = String(text);
+      var div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCollectionFaq);
+  } else {
+    initCollectionFaq();
+  }
+})();
+</script>
+{%- endif -%}

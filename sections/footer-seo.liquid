@@ -18,6 +18,19 @@ Footer SEO section with:
     assign seo_heading = collection.metafields.custom.footer_seo_heading
     assign seo_richtext = collection.metafields.custom.footer_seo_content
     assign popular_searches = collection.metafields.custom.popular_searches
+
+    assign faq_meta_check = collection.metafields.custom.collection_faq.value | default: collection.metafields.custom.collection_faq
+    if faq_meta_check != blank and faq_meta_check != empty
+      if seo_richtext contains '<h2><strong>FAQs'
+        assign seo_richtext = seo_richtext | split: '<h2><strong>FAQs' | first
+      elsif seo_richtext contains '<h2>FAQs'
+        assign seo_richtext = seo_richtext | split: '<h2>FAQs' | first
+      elsif seo_richtext contains '<H2><strong>FAQs'
+        assign seo_richtext = seo_richtext | split: '<H2><strong>FAQs' | first
+      elsif seo_richtext contains '<H2>FAQs'
+        assign seo_richtext = seo_richtext | split: '<H2>FAQs' | first
+      endif
+    endif
   elsif template.name == 'product'
     assign seo_heading = product.metafields.custom.footer_seo_heading
     assign seo_richtext = product.metafields.custom.footer_seo_description
@@ -69,6 +82,10 @@ Footer SEO section with:
         </button>
       {% endif %}
 
+      {% if template.name == 'collection' %}
+        {% render 'collection-faq-accordion', heading: section.settings.collection_faq_heading %}
+      {% endif %}
+
       {% if popular_searches != blank %}
         <div class="popular-searches">
           <h6>Popular Searches</h6>
@@ -108,10 +125,10 @@ Footer SEO section with:
 <style>
 .footer-seo-grid {
   display: flex;
-  gap: 0px;
+  gap: 40px;
   align-items: flex-start;
   flex-wrap: wrap;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 }
 
 .footer-seo-grid.homepage-layout {
@@ -120,27 +137,33 @@ Footer SEO section with:
 }
 
 .footer-left {
-  width: 60%;
-  padding-left:20px;
-  box-sizing:border-box;
+  width: calc(60% - 20px);
+  padding-left: 20px;
+  padding-right: 25px;
+  box-sizing: border-box;
 }
 
 .footer-right {
-  width: 40%;
+  width: calc(40% - 20px);
+  box-sizing: border-box;
 }
 
-.homepage-layout .footer-left{
-  width:100%;
+.homepage-layout .footer-left {
+  width: 100%;
+  padding-right: 20px;
 }
 
 @media (max-width: 768px) {
   .footer-seo-grid {
     flex-direction: column;
+    gap: 25px;
   }
 
   .footer-left,
   .footer-right {
     width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 
@@ -292,6 +315,12 @@ document.addEventListener('DOMContentLoaded', function () {
       "type": "html",
       "id": "home_popular_searches",
       "label": "Homepage Popular Searches"
+    },
+    {
+      "type": "text",
+      "id": "collection_faq_heading",
+      "label": "Collection FAQ Heading",
+      "default": "Frequently Asked Questions"
     }
   ],
   "presets": [
