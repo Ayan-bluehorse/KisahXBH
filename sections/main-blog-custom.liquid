@@ -182,16 +182,21 @@
 
           <div class="article-content-wrap">
             {%- assign article_category = '' -%}
-            {%- for tag in article.tags -%}
-              {%- unless tag contains '_' -%}
-                {%- assign article_category = tag -%}
-                {%- break -%}
-              {%- endunless -%}
-            {%- endfor -%}
+            {%- assign meta_badge = article.metafields.custom.category_badges.value | default: article.metafields.custom.category_badges -%}
+            {%- if meta_badge == blank -%}
+              {%- assign meta_badge = article.metafields.custom.category_badge.value | default: article.metafields.custom.category_badge -%}
+            {%- endif -%}
+            {%- if meta_badge != blank -%}
+              {%- if meta_badge.first != blank -%}
+                {%- assign article_category = meta_badge.first -%}
+              {%- else -%}
+                {%- assign article_category = meta_badge | strip -%}
+              {%- endif -%}
+            {%- endif -%}
 
             {%- if article_category != blank -%}
             <div class="article-category-badge">
-              <a href="{{ blog.url }}/tagged/{{ article_category | handle }}" class="article-category-pill">{{ article_category }}</a>
+              <span class="article-category-pill">{{ article_category }}</span>
             </div>
             {%- endif -%}
 
