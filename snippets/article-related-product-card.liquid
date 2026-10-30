@@ -1,0 +1,43 @@
+{%- comment -%}
+  Renders a compact related product card for the blog article sidebar.
+  Parameters:
+    - product: Product object
+{%- endcomment -%}
+
+{%- if product != blank and product.title != blank -%}
+  <div class="article-related-product">
+    <a href="{{ product.url }}" class="article-related-product__image-wrap">
+      {% if product.featured_image %}
+        <img
+          src="{{ product.featured_image | image_url: width: 200 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="75"
+          height="75"
+          loading="lazy"
+          class="article-related-product__image"
+        >
+      {% else %}
+        <div class="article-related-product__placeholder">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </a>
+
+    <div class="article-related-product__info">
+      <a href="{{ product.url }}" class="article-related-product__title">
+        {{ product.title | escape }}
+      </a>
+      <div class="article-related-product__prices">
+        <span class="article-related-product__price">
+          {{ product.price | money }}
+        </span>
+        {% if product.compare_at_price > product.price %}
+          <span class="article-related-product__compare-price">
+            {{ product.compare_at_price | money }}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+

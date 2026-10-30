@@ -1,81 +1,147 @@
 <style>
 #shopify-section-{{section.id}} .article-list{
-  gap:30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 #shopify-section-{{section.id}} .article-list .article{
     background: #FFFFFF;
-    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    width:30.33%;
-    padding:10px 10px 20px 10px;
+    border: 1px solid #ECECEC;
+    border-radius: 12px;
+    width: calc(33.333% - 16px);
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-#shopify-section-{{section.id}} .article-list .article__inner{
-    position:relative;
+#shopify-section-{{section.id}} .article-list .article:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
-#shopify-section-{{section.id}} .article-list .article__inner h3{
+#shopify-section-{{section.id}} .article-list .article .article-image{
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #f7f7f7;
+    margin: 0;
+}
+#shopify-section-{{section.id}} .article-list .article .article-image a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+#shopify-section-{{section.id}} .article-list .article .article-image img{
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+#shopify-section-{{section.id}} .article-list .article:hover .article-image img{
+    transform: scale(1.03);
+}
+#shopify-section-{{section.id}} .article-list .article .article-content-wrap{
+    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+#shopify-section-{{section.id}} .article-list .article .article-category-badge{
+    margin-bottom: 10px;
+}
+#shopify-section-{{section.id}} .article-list .article .article-category-pill{
+    display: inline-block;
+    background: #FCE8EC;
+    color: #C24361;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, color 0.2s;
+}
+#shopify-section-{{section.id}} .article-list .article .article-category-pill:hover{
+    background: #F9D5DD;
+    color: #A3334E;
+}
+#shopify-section-{{section.id}} .article-list .article .article__inner h3{
     font-style: normal; 
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 20px;
-    text-align: center;
-    text-decoration-line: underline;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.35;
+    text-align: left;
+    text-decoration: none;
     color: #000000;
-    font-family: var(--base-font-family);
- }
-#shopify-section-{{section.id}} .article-list .article__inner .rte{
-    margin-bottom:0;
+    font-family: var(--heading-font-family, inherit);
+    margin: 0 0 8px 0;
 }
-#shopify-section-{{section.id}} .article-list .article__inner .rte span{
+#shopify-section-{{section.id}} .article-list .article .article__inner h3 a{
+    color: #111111;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+#shopify-section-{{section.id}} .article-list .article .article__inner h3 a:hover{
+    color: #9C7049;
+}
+#shopify-section-{{section.id}} .article-list .article .article-card__date{
+    font-family: var(--base-font-family, inherit);
+    font-size: 13px;
+    color: #777777;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: 400;
+}
+#shopify-section-{{section.id}} .article-list .article .rte{
+    margin: 0 0 16px 0;
+    text-align: left;
+}
+#shopify-section-{{section.id}} .article-list .article .rte span{
     font-family: var(--base-font-family);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 16px;
-    color: #000000;
+    line-height: 1.55;
+    color: #555555;
     letter-spacing: 0;
 }
-#shopify-section-{{section.id}} .article-list .article__inner .meta .iconmeta.time{
-    font-family: var(--base-font-family);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 15px;
-    color: #000000;
+#shopify-section-{{section.id}} .article-list .article .article-card__footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F0F0F0;
+    padding-top: 14px;
+    margin-top: auto;
+    gap: 12px;
 }
-#shopify-section-{{section.id}} .article-list .article__inner .meta{
-  margin-top:15px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+#shopify-section-{{section.id}} .article-list .article .article-card__read-more{
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
 }
-#shopify-section-{{section.id}} .article-list .article__inner .meta .blog_share_svg svg{
-  width:25px;
-}
-#shopify-section-{{section.id}} .article__inner .blog-share{
-    background:#201747;
-    border-radius:50px;
-    padding:10px 8px;
-    position:absolute;
-    bottom:40px;
-    right:0;
-    opacity:0;
-    visibility:hidden;
-  }
-#shopify-section-{{section.id}} .article-list.article-layout--columns.article-layout--one-row .article:nth-child(3){
-    display:block;
-}
-#shopify-section-{{section.id}} .article.active .blog-share{
-   opacity:1;
-   visibility:visible;
+#shopify-section-{{section.id}} .article-list .article .article-card__read-more:hover{
+    color: #9C7049;
 }
 @media screen and (max-width:768px){
  #shopify-section-{{section.id}} .article-list{
-   display:flex;
-   flex-direction:column;
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
  }
-#shopify-section-{{section.id}} .article-list .article{
-    width:100%;
-}
+ #shopify-section-{{section.id}} .article-list .article{
+    width: 100%;
+ }
+ #shopify-section-{{section.id}} .article-list .article .article-content-wrap{
+    padding: 16px;
+ }
 }
 </style>
 
@@ -96,50 +162,59 @@
         <div class="article-list kmk article-layout--columns article-layout--one-row">
           {% for article in blog.articles limit: section.settings.post_limit %}
           <div class="article" data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
-             
             <div class="article__inner">
-               <h3><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
               {% if article.image %}
                 <div class="article-image">
                   <a href="{{ article.url }}">
-                    {%- render 'image' with article.image, sizes: '(min-width: 1024px) 440px, (min-width: 768px) 50vw, 100vw', custom_aspect_ratio: section.settings.crop_ratio -%}
+                    <img src="{{ article.image | image_url: width: 600 }}" loading="lazy" width="{{ article.image.width }}" height="{{ article.image.height }}" alt="{{ article.title | escape }}">
                   </a>
                 </div>
               {% endif %}
 
-             {% comment %} <h3><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>{% endcomment %}
+              <div class="article-content-wrap">
+                {%- assign article_category = '' -%}
+                {%- for tag in article.tags -%}
+                  {%- unless tag contains '_' -%}
+                    {%- assign article_category = tag -%}
+                    {%- break -%}
+                  {%- endunless -%}
+                {%- endfor -%}
 
-              {%- if section.settings.show_excerpts -%}
-                <div class="rte">
-                  {%- if article.excerpt.size > 0 -%}
-                    {{ article.excerpt }}
-                  {%- else -%}
-                    {{ article.content | strip_html | truncatewords: 30 }}
-                  {%- endif -%}
+                {%- if article_category != blank -%}
+                <div class="article-category-badge">
+                  <a href="{{ blog.url }}/tagged/{{ article_category | handle }}" class="article-category-pill">{{ article_category }}</a>
                 </div>
-              {%- endif -%}
+                {%- endif -%}
 
-              <div class="meta">
-                <span class="iconmeta time">
-                  {% if section.settings.show_date %}
-                 {%- comment -%}  {{ article.published_at | time_tag: format: 'date' }} {% endcomment %}
-                      {{ article.published_at | date: " %Y-%m-%d " }}
-                  {% endif %}
-                  {% if section.settings.show_author %}
-                    {% if section.settings.show_date %}&mdash;{% endif %}
-                    <span class="author">{{ article.author }}</span>
-                  {% endif %}
-                </span>
-                <div class="blog_share_svg">
-                {% render 'share-svg' %}
-               </div> 
+                <h3><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
+
+                {% if section.settings.show_date %}
+                  <div class="article-card__date">
+                    {{ article.published_at | date: "%B %d, %Y" }}
+                  </div>
+                {% endif %}
+
+                {%- if section.settings.show_excerpts -%}
+                  <div class="rte">
+                    <span>
+                      {%- if article.excerpt.size > 0 -%}
+                        {{ article.excerpt | strip_html | truncatewords: 20 }}
+                      {%- else -%}
+                        {{ article.content | strip_html | truncatewords: 20 }}
+                      {%- endif -%}
+                    </span>
+                  </div>
+                {%- endif -%}
+
+                <div class="article-card__footer">
+                  <a href="{{ article.url }}" class="article-card__read-more">View Post</a>
+                  {% render 'blog-social-share',
+                    share_title: article.title,
+                    share_url: article.url,
+                    share_image: article.image
+                  %}
+                </div>
               </div>
-                {% render 'mobile-soical-share'
-                  shareurl:blog.url,
-                 shareimage:article.image,
-                 share_title:blog.title,
-                 unique_id:"blog-share"
-               %}
             </div>
           </div>
           {% endfor %}

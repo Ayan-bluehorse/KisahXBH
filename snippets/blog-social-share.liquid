@@ -1,0 +1,135 @@
+{%- comment -%}
+  Renders clean social share buttons for blog cards and article pages.
+  Parameters:
+    - share_title: Title of article
+    - share_url: Full or relative URL
+    - share_image: Image object
+    - show_label: Boolean, whether to show 'SHARE' text (default: true)
+{%- endcomment -%}
+
+{%- liquid
+  assign full_share_url = share_url
+  unless full_share_url contains 'http://' or full_share_url contains 'https://'
+    assign full_share_url = shop.url | append: full_share_url
+  endunless
+  assign encoded_url = full_share_url | url_encode
+  assign encoded_title = share_title | strip_html | strip | url_encode
+  assign show_label = show_label | default: true
+-%}
+
+<div class="blog-social-share">
+  {% if show_label %}
+    <span class="blog-social-share__label">SHARE</span>
+  {% endif %}
+  <ul class="blog-social-share__list">
+    <li class="blog-social-share__item">
+      <a
+        class="blog-social-share__link blog-social-share__link--fb"
+        href="https://www.facebook.com/sharer/sharer.php?u={{ encoded_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on Facebook"
+        title="Share on Facebook"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </a>
+    </li>
+    <li class="blog-social-share__item">
+      <a
+        class="blog-social-share__link blog-social-share__link--x"
+        href="https://twitter.com/intent/tweet?text={{ encoded_title }}&amp;url={{ encoded_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on X"
+        title="Share on X"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </a>
+    </li>
+    {% if share_image %}
+      <li class="blog-social-share__item">
+        <a
+          class="blog-social-share__link blog-social-share__link--pin"
+          href="https://pinterest.com/pin/create/button/?url={{ encoded_url }}&amp;media={{ share_image | image_url: width: 1000 | url_encode }}&amp;description={{ encoded_title }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Share on Pinterest"
+          title="Share on Pinterest"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
+            <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.334 1.365-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+          </svg>
+        </a>
+      </li>
+    {% endif %}
+    <li class="blog-social-share__item">
+      <a
+        class="blog-social-share__link blog-social-share__link--wa"
+        href="https://api.whatsapp.com/send?text={{ encoded_title }}%20{{ encoded_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Share on WhatsApp"
+        title="Share on WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" aria-hidden="true">
+          <path d="M12.031 2c-5.508 0-9.989 4.479-9.989 9.985 0 1.761.458 3.479 1.328 4.996L2 22.067l5.244-1.376c1.464.799 3.111 1.22 4.787 1.22h.004c5.508 0 9.989-4.479 9.989-9.985 0-2.668-1.04-5.176-2.928-7.062C17.208 3.04 14.7 2 12.031 2zm0 18.28c-1.494 0-2.96-.401-4.24-1.161l-.304-.18-3.149.826.84-3.07-.197-.314a8.314 8.314 0 0 1-1.272-4.4c0-4.605 3.748-8.351 8.356-8.351 2.23 0 4.327.87 5.904 2.449a8.307 8.307 0 0 1 2.446 5.898c0 4.605-3.748 8.353-8.384 8.353zm4.587-6.257c-.252-.126-1.492-.736-1.723-.82-.231-.084-.399-.126-.567.126-.168.252-.651.82-.798.988-.147.168-.294.189-.546.063-.252-.126-1.064-.393-2.027-1.251-.749-.668-1.255-1.493-1.402-1.745-.147-.252-.016-.388.11-.513.113-.113.252-.294.378-.441.126-.147.168-.252.252-.42.084-.168.042-.315-.021-.441-.063-.126-.567-1.365-.777-1.87-.205-.494-.413-.427-.567-.435-.147-.008-.315-.008-.483-.008s-.441.063-.672.315c-.231.252-.882.861-.882 2.1s.903 2.436 1.029 2.604c.126.168 1.776 2.712 4.303 3.801.601.259 1.07.414 1.436.53.604.192 1.154.165 1.589.1.484-.072 1.492-.61 1.702-1.198.21-.588.21-1.092.147-1.198-.063-.105-.231-.168-.483-.294z"/>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<style>
+.blog-social-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.blog-social-share__label {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #333333;
+  text-transform: uppercase;
+  user-select: none;
+}
+.blog-social-share__list {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.blog-social-share__item {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
+}
+.blog-social-share__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F1F1F1;
+  color: #222222;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.blog-social-share__link:hover {
+  background: #111111;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+.blog-social-share__link svg {
+  display: block;
+}
+</style>
+

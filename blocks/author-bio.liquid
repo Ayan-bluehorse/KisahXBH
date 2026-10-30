@@ -1,11 +1,60 @@
 {% liquid
   assign bid = block.id | replace: '_', '' | downcase
+
+  # Author matching logic (Optional: allows multiple author blocks in theme customizer)
+  assign skip_block = false
+  assign match_author = block.settings.match_author | strip
+  if match_author != blank
+    assign current_author = article.author | strip | downcase
+    assign target_author = match_author | downcase
+    unless current_author contains target_author
+      assign skip_block = true
+    endunless
+  endif
+
+  # 1. Check if JSON metafield exists (custom.author_info or custom.author)
+  assign json_author = article.metafields.custom.author_info.value | default: article.metafields.custom.author.value
+  if json_author != blank
+    assign author_name = json_author.name | default: json_author.author_name
+    assign author_role = json_author.role | default: json_author.designation
+    assign author_bio = json_author.bio | default: json_author.description
+    assign author_avatar = json_author.image | default: json_author.avatar | default: json_author.photo
+  endif
+
+  # 2. Check individual article metafields
+  if author_name == blank
+    assign author_name = article.metafields.custom.author_name.value | default: article.metafields.custom.author_name
+  endif
+  if author_role == blank
+    assign author_role = article.metafields.custom.author_role.value | default: article.metafields.custom.author_role
+  endif
+  if author_bio == blank
+    assign author_bio = article.metafields.custom.author_bio.value | default: article.metafields.custom.author_bio
+  endif
+  if author_avatar == blank
+    assign author_avatar = article.metafields.custom.author_image.value | default: article.metafields.custom.author_image
+  endif
+
+  # 3. Fallback to block settings in Theme Editor
+  if author_name == blank
+    assign author_name = block.settings.name | default: article.author
+  endif
+  if author_role == blank
+    assign author_role = block.settings.role
+  endif
+  if author_bio == blank
+    assign author_bio = block.settings.bio
+  endif
+  if author_avatar == blank
+    assign author_avatar = block.settings.avatar
+  endif
 %}
 
+{% unless skip_block %}
 {% style %}
   .author-bio-{{ bid }} {
     background: {{ block.settings.section_bg }};
-    padding: 40px 20px;
+    padding: 30px 20px;
   }
 
   .author-bio-{{ bid }} .inner {
@@ -15,73 +64,83 @@
   }
 
   .author-bio-{{ bid }} .section-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 24px;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: #111111;
   }
 
   .author-bio-{{ bid }} .card {
-    background: {{ block.settings.card_bg }};
-    border-radius: 12px;
-    padding: 28px;
+    background: {{ block.settings.card_bg | default: '#FAF5F8' }};
+    border-radius: 10px;
+    padding: 24px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 22px;
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
   }
 
   .author-bio-{{ bid }} .avatar {
     flex-shrink: 0;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
+    width: 95px;
+    height: 95px;
+    border-radius: 8px;
     object-fit: cover;
-    border: 3px solid {{ block.settings.avatar_border }};
+    border: 2px solid {{ block.settings.avatar_border | default: '#EAEAEA' }};
   }
 
   .author-bio-{{ bid }} .avatar-placeholder {
     flex-shrink: 0;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
+    width: 95px;
+    height: 95px;
+    border-radius: 8px;
     background: #eee;
-    border: 3px solid {{ block.settings.avatar_border }};
+    border: 2px solid {{ block.settings.avatar_border | default: '#EAEAEA' }};
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
+  .author-bio-{{ bid }} .content {
+    flex: 1;
+  }
+
   .author-bio-{{ bid }} .content h3 {
     margin: 0 0 4px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 19px;
+    font-weight: 700;
+    color: #111111;
   }
 
   .author-bio-{{ bid }} .content .role {
-    margin: 0 0 10px;
-    font-size: 14px;
-    font-style: italic;
-    opacity: 0.65;
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .author-bio-{{ bid }} .content .bio {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.65;
-    opacity: 0.8;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #444444;
   }
 
   @media (max-width: 600px) {
     .author-bio-{{ bid }} .card {
       flex-direction: column;
       text-align: center;
+      padding: 20px 16px;
     }
     .author-bio-{{ bid }} .avatar,
     .author-bio-{{ bid }} .avatar-placeholder {
-      width: 90px;
-      height: 90px;
+      width: 85px;
+      height: 85px;
     }
     .author-bio-{{ bid }} .content {
       text-align: center;
@@ -96,15 +155,26 @@
     {% endunless %}
 
     <div class="card">
-      {% if block.settings.avatar %}
-        <img
-          class="avatar"
-          src="{{ block.settings.avatar | image_url: width: 220 }}"
-          alt="{{ block.settings.name | escape }}"
-          width="110"
-          height="110"
-          loading="lazy"
-        >
+      {% if author_avatar != blank %}
+        {% if author_avatar contains 'http://' or author_avatar contains 'https://' or author_avatar contains '//cdn.shopify.com' %}
+          <img
+            class="avatar"
+            src="{{ author_avatar }}"
+            alt="{{ author_name | escape }}"
+            width="95"
+            height="95"
+            loading="lazy"
+          >
+        {% else %}
+          <img
+            class="avatar"
+            src="{{ author_avatar | image_url: width: 220 }}"
+            alt="{{ author_name | escape }}"
+            width="95"
+            height="95"
+            loading="lazy"
+          >
+        {% endif %}
       {% else %}
         <div class="avatar-placeholder">
           {{ 'image' | placeholder_svg_tag }}
@@ -112,21 +182,22 @@
       {% endif %}
 
       <div class="content">
-        {% unless block.settings.name == blank %}
-          <h3>{{ block.settings.name }}</h3>
+        {% unless author_name == blank %}
+          <h3>{{ author_name }}</h3>
         {% endunless %}
 
-        {% unless block.settings.role == blank %}
-          <p class="role">{{ block.settings.role }}</p>
+        {% unless author_role == blank %}
+          <p class="role">{{ author_role }}</p>
         {% endunless %}
 
-        {% unless block.settings.bio == blank %}
-          <div class="bio">{{ block.settings.bio }}</div>
+        {% unless author_bio == blank %}
+          <div class="bio">{{ author_bio }}</div>
         {% endunless %}
       </div>
     </div>
   </div>
 </div>
+{% endunless %}
 
 {% schema %}
 {
@@ -141,7 +212,13 @@
       "type": "text",
       "id": "section_title",
       "label": "Section title",
-      "default": "About the author"
+      "default": "About the Author"
+    },
+    {
+      "type": "text",
+      "id": "match_author",
+      "label": "Show only for Author (Optional)",
+      "info": "Enter author name from Shopify Admin (e.g. Tanvi Jain). If left blank, shows for all posts as default."
     },
     {
       "type": "select",
@@ -168,7 +245,7 @@
       "type": "color",
       "id": "section_bg",
       "label": "Section background",
-      "default": "#f5f6f8"
+      "default": "rgba(0,0,0,0)"
     },
     {
       "type": "header",
@@ -178,11 +255,15 @@
       "type": "color",
       "id": "card_bg",
       "label": "Card background",
-      "default": "#ffffff"
+      "default": "#FAF5F8"
     },
     {
       "type": "header",
-      "content": "Author"
+      "content": "Author Details (Fallback)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Can be set per article using Metafields (custom.author_info or custom.author_name / custom.author_role / custom.author_bio / custom.author_image), or configured here as fallback."
     },
     {
       "type": "image_picker",
@@ -199,19 +280,19 @@
       "type": "text",
       "id": "name",
       "label": "Name",
-      "default": "Jane Doe"
+      "default": "Tanvi Jain"
     },
     {
       "type": "text",
       "id": "role",
       "label": "Role / Designation",
-      "default": "Content Writer"
+      "default": "Head of Design"
     },
     {
       "type": "richtext",
       "id": "bio",
       "label": "Bio",
-      "default": "<p>A passionate writer crafting content that connects and resonates with readers.</p>"
+      "default": "<p>Tanvi Jain is the Head of Design at Kisah, leading creative vision and contemporary ethnic menswear collections.</p>"
     }
   ],
   "presets": [

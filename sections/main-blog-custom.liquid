@@ -5,6 +5,9 @@
 .template-blog .page-header{
   padding:0;
 }
+.utility-bar {
+  display: none !important;
+}
  .template-blog .page-section-spacing{
    margin-top:8px;
  }
@@ -26,24 +29,7 @@
     margin-left:0;
  }
  .article-list.article-layout--columns .article{
-    width: 40.33%;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 15px 15px 30px 15px;
-    margin-bottom:20px;
     position:relative;
- }
- .article-list.article-layout--columns .article .article__inner h2{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 20px;
-    text-align: center;
-    color: #000000;
-    font-family: var(--base-font-family);
-    text-decoration: underline;
-    margin-bottom: 10px;
  }
   .article-list.article-layout--columns .article .article__inner .rte{
     margin:0;
@@ -184,88 +170,61 @@
     <div class="article__list_customz article-list article-layout--{{ section.settings.layout }}">
     
       {% for article in blog.articles %}
-    
-      <div class="article" data-cc-animate>
-        <div class="article__inner {% if section.settings.layout != 'columns' %}container container--reading-width{% endif %}">
-          
+      <div class="article modern-blog-card" data-cc-animate>
+        <div class="article__inner">
           {% if article.image %}
             <div class="article-image">
-              <a href="{{ article.url }}">
-                 <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+              <a href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+                <img src="{{ article.image | image_url: width: 800 }}" loading="lazy" width="{{ article.image.width }}" height="{{ article.image.height }}" alt="{{ article.image.alt | default: article.title | escape }}">
               </a>
             </div>
           {% endif %}
-    
-          <h2>{{ article.title | escape | link_to: article.url }}</h2>
-    
-          {%- if section.settings.show_excerpts -%}
-            <div class="rte cf">
-              {%- if article.excerpt.size > 0 -%}
-                {{ article.excerpt }}
-              {%- else -%}
-                {{ article.content | strip_html | truncatewords: 30 }}
-              {%- endif -%}
+
+          <div class="article-content-wrap">
+            {%- assign article_category = '' -%}
+            {%- for tag in article.tags -%}
+              {%- unless tag contains '_' -%}
+                {%- assign article_category = tag -%}
+                {%- break -%}
+              {%- endunless -%}
+            {%- endfor -%}
+
+            {%- if article_category != blank -%}
+            <div class="article-category-badge">
+              <a href="{{ blog.url }}/tagged/{{ article_category | handle }}" class="article-category-pill">{{ article_category }}</a>
             </div>
-          {%- endif -%}
-    
-          <div class="meta">
-            <span class="iconmeta time">
-              {% if section.settings.show_date %}
-                
-                {% assign now = 'now' | date: "%s" %}
-                {% assign published = article.published_at | date: "%s" %}
-                {% assign diff_seconds = now | minus: published %}
-                
-                {% assign diff_days = diff_seconds | divided_by: 86400 %}
-                {% assign diff_months = diff_days | divided_by: 30 %}
-                {% assign years = diff_months | divided_by: 12 %}
-                
-                {% if diff_days == 0 %}
-                  Today
-                {% elsif years >= 1 %}
-                  {{ years }} year{% if years > 1 %}s{% endif %} ago
-                {% elsif diff_months >= 1 %}
-                  {{ diff_months }} month{% if diff_months > 1 %}s{% endif %} ago
-                {% else %}
-                  {{ diff_days }} day{% if diff_days > 1 %}s{% endif %} ago
-                {% endif %}
-                
-                
-              {% endif %}
-              {% if section.settings.show_author %}
-                {% if section.settings.show_date %}&mdash;{% endif %}
-                <span class="author">{{ article.author }}</span>
-              {% endif %}
-            </span>
-    
-            {% if section.settings.show_article_tags %}
-            {% capture tag_markup %}
-            <div class="iconmeta tags">
-              <span class="label">{{ 'blogs.tags.label' | t }}:</span>
-              {% for tag in article.tags %}
-                {{ tag | link_to_tag: tag }}
-              {% endfor %}
-            </div>
-            {% endcapture %}
-            {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
+            {%- endif -%}
+
+            <h2 class="article-card__title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+
+            {% if section.settings.show_date %}
+              <div class="article-card__date">
+                {{ article.published_at | date: "%B %d, %Y" }}
+              </div>
             {% endif %}
-            {% if section.settings.show_share_icon %}
-            <div class="blog_share_svg">
-             {% render 'share-svg' %}
+
+            {%- if section.settings.show_excerpts -%}
+              <div class="article-card__excerpt">
+                {%- if article.excerpt.size > 0 -%}
+                  {{ article.excerpt | strip_html | truncatewords: 24 }}
+                {%- else -%}
+                  {{ article.content | strip_html | truncatewords: 24 }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <div class="article-card__footer">
+              <a href="{{ article.url }}" class="article-card__read-more">View Post</a>
+              {% if section.settings.show_share_icon %}
+                {% render 'blog-social-share',
+                  share_title: article.title,
+                  share_url: article.url,
+                  share_image: article.image
+                %}
+              {% endif %}
             </div>
-            {% endif %}
           </div>
         </div>
-                      
-        {% if section.settings.show_share_icon %}
-        {% render 'mobile-soical-share'
-               shareurl:blog.url,
-               shareimage:article.image,
-               share_title:blog.title,
-               unique_id:"blog-share"
-             %}
-        {% endif %}
-                      
       </div>
     
       {% else %}
@@ -281,168 +240,85 @@
                       
   <div class="article__right_container">
 
-      {% if blog.metafields.custom.article_list != blank %}
-      <div class="custom__article_slider">
-        <div class="article-list custom__article_slick">
-          {% for article_custom in blog.metafields.custom.article_list.value %}
-            {% assign article = articles[article_custom] %}
-            
-            <div class="article slick-slide" data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
-               
-              <div class="article__inner">
-                {% if article.image %}
-                  <div class="article-image">
-                    <a href="{{ article.url }}">
-                       <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
-                    </a>
-                  </div>
-                {% endif %}
-  
-                <div class="article__title_container">
-                 <h3 class="slider__article_title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
-                </div>
-                
-              </div>
-            </div> 
-            
-         {% endfor %}
-          </div>
+    {% comment %} Our Categories Widget (Slide 2) {% endcomment %}
+    <div class="sidebar-widget sidebar-categories-widget">
+      <div class="sidebar-widget__header">
+        <h3 class="sidebar-widget__title">{{ section.settings.categories_title | default: 'Our Categories' }}</h3>
+        <span class="sidebar-widget__line"></span>
       </div>
-      {% endif %}
-
-
-      {% if section.settings.blog != blank %}
-      <div class="custom__article_grid">
-        {% if section.settings.latest__posts_title != blank %}
-        <h3 class="latest__post_title">{{ section.settings.latest__posts_title }}</h3>
-        {% endif %}
-        {%- assign blogzz = blogs[section.settings.blog] -%}
-        <div class="article-list">
-          {% for article in blogzz.articles limit: section.settings.post_limit %}
-          <div class="article__grid_cust">
-             
-            <div class="custarticle__inner">
-              {% if article.image %}
-                <div class="custarticle-image">
-                  <a href="{{ article.url }}">
-                     <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
-                  </a>
-                </div>
-              {% endif %}
-
-              <div class="subtitle__container">
-                <div class="subtitle__overlay">
-
-                  {% if article.tags.size > 0 %}
-                  <div class="iconmeta tags">
-                    <span class="label">{{ 'blogs.tags.label' | t }}:</span>
-                    {% for tag in article.tags %}
-                      <span class="latest__tag">{{ tag | link_to_tag: tag }}</span>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-            
-                 <h3 class="article__grid_subtitle"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
-                </div>
-              </div>
-            
-            </div>
-          </div>
+      <ul class="sidebar-categories__list">
+        {% if section.settings.categories_menu != blank and linklists[section.settings.categories_menu].links.size > 0 %}
+          {% for link in linklists[section.settings.categories_menu].links %}
+            <li class="sidebar-categories__item{% if link.active %} is-active{% endif %}">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
           {% endfor %}
-        </div>
+        {% else %}
+          <li class="sidebar-categories__item{% unless current_tags %} is-active{% endunless %}">
+            <a href="{{ blog.url }}">All Categories</a>
+          </li>
+          {% for tag in blog.all_tags %}
+            {% unless tag contains '_' %}
+              <li class="sidebar-categories__item{% if current_tags contains tag %} is-active{% endif %}">
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+              </li>
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+
+    {% comment %} Popular Posts Widget (Slide 2) {% endcomment %}
+    <div class="sidebar-widget sidebar-popular-widget">
+      <div class="sidebar-widget__header">
+        <h3 class="sidebar-widget__title">{{ section.settings.popular_title | default: 'Popular Posts' }}</h3>
+        <span class="sidebar-widget__line"></span>
       </div>
-    {% endif %}
+      <div class="sidebar-popular-posts">
+        {%- if blog.metafields.custom.top_posts != blank -%}
+          {%- for article_custom in blog.metafields.custom.top_posts.value limit: 5 -%}
+            {%- assign pop_article = articles[article_custom] -%}
+            {%- if pop_article != blank -%}
+              <div class="sidebar-popular-item">
+                <a href="{{ pop_article.url }}" class="sidebar-popular-item__title">{{ pop_article.title | escape }}</a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign pop_blog = blogs[section.settings.blog] | default: blog -%}
+          {%- for pop_article in pop_blog.articles limit: 5 -%}
+            <div class="sidebar-popular-item">
+              <a href="{{ pop_article.url }}" class="sidebar-popular-item__title">{{ pop_article.title | escape }}</a>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
 
-    
-
-    {% if blog.metafields.custom.top_posts != blank %}
-    <div class="top__posts_grid">
-      <h3 class="top__posts_title">Top Posts</h3>
-      <div class="top__posts_grid_container">
-        {% for article_custom in blog.metafields.custom.top_posts.value %}
+    {% if blog.metafields.custom.article_list != blank %}
+    <div class="custom__article_slider">
+      <div class="article-list custom__article_slick">
+        {% for article_custom in blog.metafields.custom.article_list.value %}
           {% assign article = articles[article_custom] %}
-          
-          <div class="article top__posts_box">
-             
-            <div class="top__posts__inner">
+          <div class="article slick-slide" data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.15 }}s">
+            <div class="article__inner">
               {% if article.image %}
                 <div class="article-image">
                   <a href="{{ article.url }}">
-                     <img src="{{ article.image | image_url }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}">
+                     <img src="{{ article.image | image_url: width: 600 }}" loading="lazy" width="{{ article.image.width }}" height="{{ article.image.height }}" alt="{{ article.title | escape }}">
                   </a>
                 </div>
               {% endif %}
-
               <div class="article__title_container">
                <h3 class="slider__article_title"><a href="{{ article.url }}">{{ article.title | escape }}</a></h3>
-                <span class="iconmeta time">
-
-                  {% assign now = 'now' | date: "%s" %}
-                  {% assign published = article.published_at | date: "%s" %}
-                  {% assign diff_seconds = now | minus: published %}
-                  
-                  {% assign diff_days = diff_seconds | divided_by: 86400 %}
-                  {% assign diff_months = diff_days | divided_by: 30 %}
-                  {% assign years = diff_months | divided_by: 12 %}
-                  
-                  {% if diff_days == 0 %}
-                    Today
-                  {% elsif years >= 1 %}
-                    {{ years }} year{% if years > 1 %}s{% endif %} ago
-                  {% elsif diff_months >= 1 %}
-                    {{ diff_months }} month{% if diff_months > 1 %}s{% endif %} ago
-                  {% else %}
-                    {{ diff_days }} day{% if diff_days > 1 %}s{% endif %} ago
-                  {% endif %}
-          
-                  {% if section.settings.show_author %}
-                    {% if section.settings.show_date %}&mdash;{% endif %}
-                    <span class="author">{{ article.author }}</span>
-                  {% endif %}
-                </span>
               </div>
-              
-            </div>
-          </div> 
-          
-       {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
-    {% if section.settings.blog__recent != blank %}
-    <div class="recent__posts_grid mm">
-      <h3 class="recent__posts_title">{{ section.settings.recent__posts_title }}</h3>
-      {%- assign blogzx = blogs[section.settings.blog] -%}
-      <div class="recent__posts_grid_container">
-        {% for article_customq in blogzx.articles limit: section.settings.recent__post_limit %}
-        
-          <div class="article recent__posts_box">
-             
-            <div class="recent__posts__inner">
-
-              <div class="article__title_container">
-               <h3 class="slider__article_title"><a href="{{ article_customq.url }}">{{ article_customq.title | escape }}</a></h3>
-              </div>
-              
             </div>
           </div> 
         {% endfor %}
-        </div>
+      </div>
     </div>
     {% endif %}
 
-    
-    <div class="custom__article__tags_main">
-      <h3 class="recent__posts_title">Tag Cloud</h3>
-      {%- for tag in blog.all_tags -%}
-      {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
-      <a class="cust__article-tag" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
-      {%- endfor -%}
-    </div>
-
-        
-      
   </div>
 </div>
 
@@ -500,19 +376,217 @@
     padding: 0 0 28px;
     border-bottom: 1px solid rgba(24, 24, 24, .05);
 }
-#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
-    width: calc(33.33% - 15px);
-    background: transparent;
-    box-shadow: unset;
-    border: 0;
-    padding: 0;
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
 }
-#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article__inner .article-image img {
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
+    width: calc(50% - 12px);
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #f7f7f7;
+    margin: 0;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-image img {
     aspect-ratio: 16 / 9;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.4s ease;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article:hover .article-image img {
+    transform: scale(1.03);
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-content-wrap {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-category-badge {
+    margin-bottom: 10px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-category-pill {
+    display: inline-block;
+    background: #FCE8EC;
+    color: #C24361;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-transform: capitalize;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, color 0.2s;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-category-pill:hover {
+    background: #F9D5DD;
+    color: #A3334E;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__title {
+    font-family: var(--heading-font-family, inherit);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.35;
+    text-align: left;
+    color: #111111;
+    margin: 0 0 8px 0;
+    text-decoration: none;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__title a {
+    color: #111111;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__title a:hover {
+    color: #9C7049;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__date {
+    font-family: var(--base-font-family, inherit);
+    font-size: 13px;
+    color: #777777;
+    margin-bottom: 10px;
+    text-align: left;
+    font-weight: 400;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__excerpt {
+    font-family: var(--base-font-family, inherit);
+    font-size: 14px;
+    line-height: 1.55;
+    color: #555555;
+    margin-bottom: 16px;
+    text-align: left;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F0F0F0;
+    padding-top: 14px;
+    margin-top: auto;
+    gap: 12px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__read-more {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-card__read-more:hover {
+    color: #9C7049;
+}
+
+/* Sidebar Widgets (Slide 2) */
+#shopify-section-{{ section.id }} .sidebar-categories__list::-webkit-scrollbar {
+    width: 4px;
+}
+#shopify-section-{{ section.id }} .sidebar-categories__list::-webkit-scrollbar-thumb {
+    background: #E0E0E0;
+    border-radius: 4px;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-widget {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    border: 1px solid #EAEAEA;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-widget__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-widget__title {
+    font-family: var(--heading-font-family, inherit);
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+    white-space: nowrap;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-widget__line {
+    flex-grow: 1;
+    height: 2px;
+    background: #E5E5E5;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__list {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__item {
+    padding: 9px 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__item a {
+    font-size: 14px;
+    color: #333333;
+    text-decoration: none;
+    transition: color 0.2s, padding-left 0.2s;
+    display: block;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__item.is-active a,
+#shopify-section-{{ section.id }} .article__right_container .sidebar-categories__item a:hover {
+    color: #9C7049;
+    font-weight: 600;
+    padding-left: 4px;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-popular-posts {
+    display: flex;
+    flex-direction: column;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-popular-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #ECECEC;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-popular-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-popular-item__title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #111111;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+}
+#shopify-section-{{ section.id }} .article__right_container .sidebar-popular-item__title:hover {
+    color: #9C7049;
 }
 #shopify-section-{{ section.id }} .article__flex_container .article__right_container .custom__article_slider .article-list .article {
     padding: 0;
@@ -716,8 +790,11 @@
   
 @media only screen and (max-width: 767px) {
 #shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article {
-    width: calc(50% - 6px);
-    /* padding: 10px 10px 20px 10px; */
+    width: 100% !important;
+    margin-bottom: 16px;
+}
+#shopify-section-{{ section.id }} .article__flex_container .article__list_customz .article .article-content-wrap {
+    padding: 16px;
 }
 #shopify-section-{{ section.id }} .article__flex_container .custom__pagination-control {
     margin-top: 20px;
@@ -865,6 +942,28 @@ $('#shopify-section-{{ section.id }} .custom__article_slick').slick({
       "id": "show_facebook",
       "label": "Show Facebook sharing icon",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Sidebar: Categories & Popular Posts"
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories Title",
+      "default": "Our Categories"
+    },
+    {
+      "type": "link_list",
+      "id": "categories_menu",
+      "label": "Categories Menu (Optional)",
+      "info": "Select a custom menu for categories, or leave empty for curated categories."
+    },
+    {
+      "type": "text",
+      "id": "popular_title",
+      "label": "Popular Posts Title",
+      "default": "Popular Posts"
     },
     {
       "type": "header",

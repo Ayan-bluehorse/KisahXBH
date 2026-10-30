@@ -33,22 +33,25 @@
       "block_order": [
         "author_bio_nVyzd4"
       ],
-      "custom_css": [
-        ".blog_share_svg {display: none;}"
-      ],
+      "custom_css": [],
       "settings": {
         "show_date": true,
         "show_author": false,
-        "show_article_tags": false,
-        "show_sharing_icons": false,
-        "show_twitter": false,
-        "show_facebook": false,
-        "show_pinterest": false,
+        "show_article_tags": true,
+        "show_sharing_icons": true,
+        "show_twitter": true,
+        "show_facebook": true,
+        "show_pinterest": true,
         "show_featured_image": true,
         "full_width_image": false,
         "featured_image_height": "natural",
         "enable_title_overlay": false,
-        "overlay_style": "shadow"
+        "overlay_style": "shadow",
+        "show_related_sidebar": true,
+        "related_sidebar_title": "RELATED PRODUCTS",
+        "show_cta_button": true,
+        "cta_button_text": "Shop Our Collection",
+        "cta_button_url": "/collections/all"
       }
     },
     "custom_liquid_8mA49Y": {

@@ -21,9 +21,7 @@
 #shopify-section-{{section.id}} .pagination-row .next a .icon--small svg{
    transform: rotate(180deg);
 }
-#shopify-section-{{section.id}} .main-article-svg-container{
-    position:relative;
-}
+
 #shopify-section-{{section.id}} .main-article-svg-container .blog_share_svg{
     float:right;
 }
@@ -49,6 +47,195 @@
     line-height: 15px;
     color: #000000;
 
+}
+
+/* Blog Article Sidebar, Related Products & CTA (Slide 4 & 5) */
+.article-layout-with-sidebar {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+.article-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+.article-sidebar__inner {
+  background: #FFFFFF;
+  border: 1px solid #EAEAEA;
+  border-radius: 12px;
+  padding: 22px 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+.article-sidebar__header {
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #E5E5E5;
+}
+.article-sidebar__title {
+  font-family: var(--heading-font-family, inherit);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #111111;
+  text-transform: uppercase;
+  margin: 0;
+}
+.article-sidebar__products {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.article-related-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F5F5F5;
+}
+.article-related-product:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.article-related-product__image-wrap {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #EAEAEA;
+  display: block;
+  background: #fafafa;
+}
+.article-related-product__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.article-related-product__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eee;
+}
+.article-related-product__placeholder svg {
+  width: 60%;
+  height: 60%;
+  opacity: 0.4;
+}
+.article-related-product__info {
+  flex: 1;
+  min-width: 0;
+}
+.article-related-product__title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #111111;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.article-related-product__title:hover {
+  color: #9C7049;
+}
+.article-related-product__prices {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.article-related-product__price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111111;
+}
+.article-related-product__compare-price {
+  font-size: 12px;
+  color: #888888;
+  text-decoration: line-through;
+}
+.article-main-body {
+  flex: 1;
+  min-width: 0;
+}
+.article-cta-row {
+  margin: 36px 0 28px;
+  text-align: center;
+}
+.article-cta-btn {
+  display: inline-block;
+  background: #C24361;
+  color: #FFFFFF !important;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 13px 36px;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(194, 67, 97, 0.25);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.article-cta-btn:hover {
+  background: #A3334E;
+  color: #FFFFFF !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(194, 67, 97, 0.35);
+}
+.article-share-row {
+  margin: 28px 0;
+  padding: 16px 0;
+  border-top: 1px solid #ECECEC;
+  border-bottom: 1px solid #ECECEC;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .article-layout-with-sidebar {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .article-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+  align-self: flex-start;
+}
+  .article-main-body {
+    order: 1;
+  }
+  .article-sidebar__products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .article-related-product {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 600px) {
+  .article-sidebar__products {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 
@@ -95,17 +282,6 @@
     {% endif %}
   </div>
 {% endif %}
-  <div class="main-article-svg-container container">
-        <div class="blog_share_svg ">
-              {% render 'share-svg' %}
-         </div> 
-            {% render 'mobile-soical-share'
-                shareurl:article.url,
-               shareimage:article.image,
-               share_title:article.title,
-               unique_id:"blog-share"
-             %}
-  </div>
 {% if section.settings.enable_title_overlay == false or section.settings.show_featured_image == false or article.image == blank %}
   <div class="container" data-cc-animate>
       <div class="page-header cf">
@@ -114,69 +290,146 @@
   </div>
 {% endif %}
 
+{%- assign related_prod_limit = section.settings.related_limit | default: 4 -%}
+{%- capture related_products_markup -%}
+  {%- assign count = 0 -%}
+  {%- if article.metafields.custom.related_products != blank -%}
+    {%- for prod in article.metafields.custom.related_products.value limit: related_prod_limit -%}
+      {%- render 'article-related-product-card', product: prod -%}
+      {%- assign count = count | plus: 1 -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if count == 0 and section.settings.related_collection != blank -%}
+    {%- for prod in collections[section.settings.related_collection].products limit: related_prod_limit -%}
+      {%- render 'article-related-product-card', product: prod -%}
+      {%- assign count = count | plus: 1 -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if count == 0 -%}
+    {%- assign content_parts = article.content | split: 'href="' -%}
+    {%- assign used_handles = '' -%}
+    {%- for part in content_parts -%}
+      {%- if count >= related_prod_limit -%}{%- break -%}{%- endif -%}
+      {%- if part contains '/products/' -%}
+        {%- assign handle_raw = part | split: '/products/' | last -%}
+        {%- assign product_handle = handle_raw | split: '"' | first | split: '?' | first | split: '/' | first -%}
+        {%- unless used_handles contains product_handle -%}
+          {%- assign p = all_products[product_handle] -%}
+          {%- if p != blank and p.available -%}
+            {%- assign used_handles = used_handles | append: product_handle | append: ',' -%}
+            {%- render 'article-related-product-card', product: p -%}
+            {%- assign count = count | plus: 1 -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- if count < related_prod_limit and collections.all.products.size > 0 -%}
+    {%- for prod in collections.all.products -%}
+      {%- if count >= related_prod_limit -%}{%- break -%}{%- endif -%}
+      {%- unless used_handles contains prod.handle -%}
+        {%- render 'article-related-product-card', product: prod -%}
+        {%- assign count = count | plus: 1 -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign has_sidebar = false -%}
+{%- if section.settings.show_related_sidebar and related_products_markup != blank -%}
+  {%- assign has_sidebar = true -%}
+{%- endif -%}
+
 <div class="article article--main">
-  <div class="container container--reading-width">
+  <div class="container {% if has_sidebar %}article-layout-with-sidebar{% else %}container--reading-width{% endif %}">
 
-    <div class="rte cf " data-cc-animate>
-      {{ article.content }}
-    </div>
-
-    {% if section.settings.show_sharing_icons %}
-    <div class="lightly-spaced-row" data-cc-animate>
-      <div class="social-share flex items-center">
-        <p class="social-share__heading">{{ 'general.social.share_heading' | t }}</p>
-        {% render 'social-share',
-            share_twitter: section.settings.show_twitter,
-            share_facebook: section.settings.show_facebook,
-            share_pinterest: section.settings.show_pinterest,
-            share_title: article.title,
-            share_url: article.url,
-            share_image: article.image %}
-      </div>
-    </div>
+    {% if has_sidebar %}
+      <aside class="article-sidebar" data-cc-animate>
+        <div class="article-sidebar__inner">
+          <div class="article-sidebar__header">
+            <h3 class="article-sidebar__title">{{ section.settings.related_sidebar_title | default: 'RELATED PRODUCTS' }}</h3>
+          </div>
+          <div class="article-sidebar__products">
+            {{ related_products_markup }}
+          </div>
+        </div>
+      </aside>
     {% endif %}
 
-    {%- if section.settings.show_article_tags -%}
-      {% capture tag_markup %}
-        <div class="iconmeta tags">
-          <span class="label">{{ 'blogs.tags.label' | t }}:</span>
-          {% for tag in article.tags %}
-            {{ tag | link_to_tag: tag }}
-          {% endfor %}
-        </div>
-      {% endcapture %}
-    {%- endif -%}
+    <div class="article-main-body">
+      <div class="rte cf " data-cc-animate>
+        {{ article.content }}
+      </div>
 
-    <div class="meta" data-cc-animate>
-      {% if section.settings.show_date or section.settings.show_author %}
-        <span class="iconmeta time">
-          {% if section.settings.show_date %}
-            Updated: {{ article.updated_at | date: "%B %d, %Y" }}
-          {% endif %}
-          {% if section.settings.show_author %}
-            {% if section.settings.show_date %}&mdash;{% endif %}
-            <span class="author">{{ article.author }}</span>
-          {% endif %}
-        </span>
+      {%- assign cta_label = article.metafields.custom.cta_button_text.value | default: article.metafields.custom.cta_button_text | default: section.settings.cta_button_text -%}
+      {%- assign cta_url = article.metafields.custom.cta_button_url.value | default: article.metafields.custom.cta_button_url | default: section.settings.cta_button_url -%}
+      {%- if cta_url == blank and section.settings.related_collection != blank -%}
+        {%- assign cta_url = collections[section.settings.related_collection].url -%}
+      {%- endif -%}
+      {%- if cta_url == blank -%}
+        {%- assign cta_url = '/collections/all' -%}
+      {%- endif -%}
+
+      {% if section.settings.show_cta_button and cta_label != blank %}
+        <div class="article-cta-row" data-cc-animate>
+          <a href="{{ cta_url }}" class="article-cta-btn">
+            {{ cta_label | escape }}
+          </a>
+        </div>
       {% endif %}
 
-      {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
-    </div>
+      {% if section.settings.show_sharing_icons %}
+        <div class="article-share-row" data-cc-animate>
+          {% render 'blog-social-share',
+            share_title: article.title,
+            share_url: article.url,
+            share_image: article.image
+          %}
+        </div>
+      {% endif %}
 
-    <div class="pagination-row pagination-row-tabular" data-cc-animate>
-      <span class="prev">
-        {% if blog.previous_article %}
-        <a href="{{ blog.previous_article }}"><span class="icon--small icon-natcol has-ltr-icon">{% comment %}{% render 'icon-chevron-left' %}{% endcomment %} {% render 'previous-svg' %}</span> <span> Previous {% comment %}{{ 'blogs.pagination.older_articles' | t }}{% endcomment %}</span></a>
+      {%- if section.settings.show_article_tags -%}
+        {% capture tag_markup %}
+          <div class="iconmeta tags">
+            <span class="label">{{ 'blogs.tags.label' | t }}:</span>
+            {% for tag in article.tags %}
+              {{ tag | link_to_tag: tag }}
+            {% endfor %}
+          </div>
+        {% endcapture %}
+      {%- endif -%}
+
+      <div class="meta" data-cc-animate>
+        {% if section.settings.show_date or section.settings.show_author %}
+          <span class="iconmeta time">
+            {% if section.settings.show_date %}
+              Updated: {{ article.updated_at | date: "%B %d, %Y" }}
+            {% endif %}
+            {% if section.settings.show_author %}
+              {% if section.settings.show_date %}&mdash;{% endif %}
+              <span class="author">{{ article.author }}</span>
+            {% endif %}
+          </span>
         {% endif %}
-      </span>
-     {% comment %}
-      <span class="back">{{ 'blogs.article.back_to_blog' | t: title: blog.title | link_to: blog.url }}</span>
-     {% endcomment %}
-      <span class="next">
-        {% if blog.next_article %}
-        <a href="{{ blog.next_article }}"><span>Next{% comment %}{{ 'blogs.pagination.newer_articles' | t }}{% endcomment %}</span> <span class="icon--small icon-natcol has-ltr-icon">{% comment %}{% render 'icon-chevron-left' %}{% endcomment %} {% render 'previous-svg' %}</span></a>
-        {% endif %}
-      </span>
+
+        {% if tag_markup contains '</a>' %}{{ tag_markup }}{% endif %}
+      </div>
+
+      <div class="pagination-row pagination-row-tabular" data-cc-animate>
+        <span class="prev">
+          {% if blog.previous_article %}
+          <a href="{{ blog.previous_article }}"><span class="icon--small icon-natcol has-ltr-icon">{% render 'previous-svg' %}</span> <span> Previous</span></a>
+          {% endif %}
+        </span>
+        <span class="next">
+          {% if blog.next_article %}
+          <a href="{{ blog.next_article }}"><span>Next</span> <span class="icon--small icon-natcol has-ltr-icon">{% render 'previous-svg' %}</span></a>
+          {% endif %}
+        </span>
+      </div>
     </div>
 
   </div>
@@ -257,14 +510,6 @@
 {% endfor %}
 
 {% render 'structured-data-article', article: article %}
-<script>
- var click = document.querySelector('#shopify-section-{{ section.id }} .main-article-svg-container .blog_share_svg svg');
-  console.log(click, 'click');
- var sharesvg = document.querySelector('.main-article-svg-container');
-  click.addEventListener('click', function(){
-    sharesvg.classList.toggle("active");
-  });
-</script>
 {% schema %}
 {
   "name": "Article pages",
@@ -287,6 +532,57 @@
       "id": "show_article_tags",
       "label": "Show article tags",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Related Products Sidebar (Slide 4)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related_sidebar",
+      "label": "Show related products sidebar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_sidebar_title",
+      "label": "Sidebar Title",
+      "default": "RELATED PRODUCTS"
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Fallback Collection"
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "label": "Number of products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Shop / Collection CTA Button (Slide 4)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta_button",
+      "label": "Show Shop CTA Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Label",
+      "default": "Shop Our Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_url",
+      "label": "CTA Button URL"
     },
     {
       "type": "header",
