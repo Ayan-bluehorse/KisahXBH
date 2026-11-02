@@ -642,7 +642,7 @@
         "story_3rQzAU": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-3.jpg",
+            "image": "shopify://shop_images/customer-story-3.webp",
             "fallback_image_url": "",
             "badge": "03",
             "label": "THE FAMILY EDIT",
@@ -655,7 +655,7 @@
         "story_HXi9NH": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-4.jpg",
+            "image": "shopify://shop_images/customer-story-4.webp",
             "fallback_image_url": "",
             "badge": "04",
             "label": "MEHENDI NIGHT",
@@ -668,7 +668,7 @@
         "story_ejAkdf": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-5.jpg",
+            "image": "shopify://shop_images/customer-story-5.webp",
             "fallback_image_url": "",
             "badge": "05",
             "label": "DIWALI TOGETHER",
@@ -681,7 +681,7 @@
         "story_t6nLpY": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-6.jpg",
+            "image": "shopify://shop_images/customer-story-6.webp",
             "fallback_image_url": "",
             "badge": "06",
             "label": "FRIENDS & FESTIVITIES",
@@ -694,7 +694,7 @@
         "story_pK4rB9": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-7.jpg",
+            "image": "shopify://shop_images/customer-story-7.webp",
             "fallback_image_url": "",
             "badge": "07",
             "label": "THE COORDINATED EDIT",
@@ -707,7 +707,7 @@
         "story_F4ftm3": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-8.jpg",
+            "image": "shopify://shop_images/customer-story-8.webp",
             "fallback_image_url": "",
             "badge": "08",
             "label": "RAKHI MOMENTS",
