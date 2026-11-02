@@ -616,7 +616,7 @@
         "story_3zmDgD": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-1.png",
+            "image": "shopify://shop_images/customer-story-1.webp",
             "fallback_image_url": "",
             "badge": "01",
             "label": "THE WEDDING SQUAD",
@@ -629,7 +629,7 @@
         "story_VzUfRx": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-2.jpg",
+            "image": "shopify://shop_images/customer-story-2.webp",
             "fallback_image_url": "",
             "badge": "02",
             "label": "THE BAARAT",
