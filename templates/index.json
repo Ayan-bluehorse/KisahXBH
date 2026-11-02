@@ -15,8 +15,8 @@
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.webp",
-            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.webp",
+            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.jpg",
+            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.jpg",
             "link": "shopify://pages/diwali",
             "button-name": "",
             "button-link": ""
@@ -616,7 +616,7 @@
         "story_3zmDgD": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-1.webp",
+            "image": "shopify://shop_images/customer-story-1.png",
             "fallback_image_url": "",
             "badge": "01",
             "label": "THE WEDDING SQUAD",
@@ -629,7 +629,7 @@
         "story_VzUfRx": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-2.webp",
+            "image": "shopify://shop_images/customer-story-2.jpg",
             "fallback_image_url": "",
             "badge": "02",
             "label": "THE BAARAT",
