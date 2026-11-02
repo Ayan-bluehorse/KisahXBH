@@ -56,8 +56,8 @@
         "slide_banner_FgzJMq": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Sheer_Desktop.png",
-            "mob-img": "shopify://shop_images/Sheer_Mobile.png",
+            "desk-img": "shopify://shop_images/Sheer_Desktop.webp",
+            "mob-img": "shopify://shop_images/Sheer_Mobile.webp",
             "link": "https://kisah.in/collections/sheer",
             "button-name": "",
             "button-link": ""
