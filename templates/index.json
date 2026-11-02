@@ -15,8 +15,8 @@
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.jpg",
-            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.jpg",
+            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.webp",
+            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.webp",
             "link": "shopify://pages/diwali",
             "button-name": "",
             "button-link": ""
@@ -25,8 +25,8 @@
         "slide_banner_HbQBTL": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.17.15_PM.jpg",
-            "mob-img": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.29.56_PM.jpg",
+            "desk-img": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.17.15_PM.webp",
+            "mob-img": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.29.56_PM.webp",
             "link": "shopify://pages/wedding",
             "button-name": "",
             "button-link": ""
@@ -35,8 +35,8 @@
         "slide_banner_d8WAgW": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/image_7.png",
-            "mob-img": "shopify://shop_images/image_8.png",
+            "desk-img": "shopify://shop_images/image_7.webp",
+            "mob-img": "shopify://shop_images/image_8.webp",
             "link": "https://kisah.in/collections/haldi-1",
             "button-name": "",
             "button-link": ""
@@ -616,7 +616,7 @@
         "story_3zmDgD": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-1.png",
+            "image": "shopify://shop_images/customer-story-1.webp",
             "fallback_image_url": "",
             "badge": "01",
             "label": "THE WEDDING SQUAD",
@@ -629,7 +629,7 @@
         "story_VzUfRx": {
           "type": "story",
           "settings": {
-            "image": "shopify://shop_images/customer-story-2.jpg",
+            "image": "shopify://shop_images/customer-story-2.webp",
             "fallback_image_url": "",
             "badge": "02",
             "label": "THE BAARAT",
