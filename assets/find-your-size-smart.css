@@ -1,0 +1,766 @@
+/* ==========================================================================
+   Find Your Size (FYS) Smart Sizing & Collection Filter System
+   ========================================================================== */
+
+:root {
+  --fys-navy: #201747;
+  --fys-ink: #1B1226;
+  --fys-gold: #C5A467;
+  --fys-gold-light: #FFF9F0;
+  --fys-cream: #FFFDF9;
+  --fys-border: #EADBCC;
+  --fys-wa: #128C4A;
+}
+
+/* 1. Size Filter Chip Bar (Collection & Search Header) */
+.fys-size-chip-bar {
+  display: inline-flex;
+  align-items: center;
+  background: var(--fys-cream);
+  border: 1px solid var(--fys-border);
+  border-radius: 99px;
+  padding: 8px 18px;
+  margin: 12px 0 16px;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(32, 23, 71, 0.04);
+  transition: all 0.25s ease;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.fys-size-chip-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.fys-size-chip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--fys-navy);
+  font-weight: 500;
+}
+
+.fys-chip-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--fys-gold);
+  stroke: var(--fys-gold);
+  flex-shrink: 0;
+}
+
+.fys-size-chip-label strong {
+  font-weight: 700;
+  color: var(--fys-navy);
+}
+
+.fys-chip-badge {
+  background: var(--fys-navy);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.02em;
+}
+
+.fys-size-chip-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fys-chip-btn {
+  background: none;
+  border: none;
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.fys-chip-btn--change {
+  color: var(--fys-navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fys-chip-btn--change:hover {
+  color: var(--fys-gold);
+}
+
+.fys-chip-divider {
+  color: #D6CCBE;
+  font-size: 13px;
+}
+
+.fys-chip-btn--clear {
+  color: #7A7062;
+  font-weight: 500;
+}
+
+.fys-chip-btn--clear:hover {
+  color: #C0392B;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+/* 2. Rare Size Custom Tailoring Strip (Collection Header Banner) */
+.fys-rare-size-strip {
+  background: var(--fys-cream);
+  border: 1px solid var(--fys-border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(32, 23, 71, 0.03);
+  box-sizing: border-box;
+}
+
+.fys-rare-size-strip__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.fys-rare-size-strip__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.fys-rare-size-strip__text {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #4A4036;
+}
+
+.fys-rare-size-strip__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fys-wa);
+  color: #ffffff !important;
+  padding: 9px 18px;
+  border-radius: 99px;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(18, 140, 74, 0.25);
+  transition: all 0.2s ease;
+}
+
+.fys-rare-size-strip__btn:hover {
+  background: #0E743C;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(18, 140, 74, 0.35);
+}
+
+.fys-rare-size-strip__btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* 3. Low Inventory & Empty State Guardrail */
+.fys-guardrail {
+  margin: 32px auto;
+  max-width: 620px;
+  text-align: center;
+  padding: 28px 24px;
+  background: var(--fys-cream);
+  border: 1px solid var(--fys-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(32, 23, 71, 0.04);
+  box-sizing: border-box;
+}
+
+.fys-guardrail__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  margin: 0 0 8px;
+}
+
+.fys-guardrail__desc {
+  font-size: 14px;
+  color: #5C5549;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.fys-guardrail__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.fys-guardrail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 99px;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 13.5px;
+  transition: all 0.2s ease;
+}
+
+.fys-guardrail-btn--wa {
+  background: var(--fys-wa);
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(18, 140, 74, 0.25);
+}
+
+.fys-guardrail-btn--wa:hover {
+  background: #0E743C;
+}
+
+.fys-guardrail-btn--ghost {
+  background: #ffffff;
+  color: var(--fys-navy) !important;
+  border: 1px solid #E0D7C9;
+}
+
+.fys-guardrail-btn--ghost:hover {
+  background: var(--fys-cream);
+  border-color: var(--fys-navy);
+}
+
+@media (max-width: 768px) {
+  .fys-rare-size-strip {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 14px;
+  }
+  .fys-rare-size-strip__left {
+    align-items: flex-start;
+  }
+  .fys-rare-size-strip__btn {
+    justify-content: center;
+    width: 100%;
+    padding: 11px 18px;
+  }
+}
+
+
+.fys-guardrail-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.fys-guardrail-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FFEAC2;
+  color: #B45309;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fys-guardrail-content {
+  flex: 1;
+}
+
+.fys-guardrail-content h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.fys-guardrail-content p {
+  font-size: 14px;
+  color: #5C5549;
+  line-height: 1.45;
+  margin: 0 0 16px;
+  max-width: 620px;
+}
+
+.fys-guardrail-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fys-guardrail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 99px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.fys-guardrail-btn--wa {
+  background: var(--fys-wa);
+  color: #fff;
+  border-color: var(--fys-wa);
+}
+
+.fys-guardrail-btn--wa:hover {
+  background: #0E743C;
+}
+
+.fys-guardrail-btn--ghost {
+  background: #fff;
+  color: var(--fys-navy);
+  border-color: var(--fys-border);
+}
+
+.fys-guardrail-btn--ghost:hover {
+  background: var(--fys-cream);
+  border-color: var(--fys-navy);
+}
+
+.fys-guardrail-divider {
+  margin: 36px 0 20px;
+  text-align: center;
+  position: relative;
+}
+
+.fys-guardrail-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--fys-border);
+  z-index: 1;
+}
+
+.fys-guardrail-divider span {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8C8270;
+}
+
+/* 3. PDP Out of Stock Notice */
+.fys-pdp-oos-notice {
+  background: #FFF2F0;
+  border: 1px solid #FFCCC7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #CF1322;
+  font-weight: 500;
+}
+
+.fys-pdp-oos-notice svg {
+  stroke: #CF1322;
+  flex-shrink: 0;
+}
+
+.fys-pdp-oos-notice strong {
+  font-weight: 700;
+}
+
+.fys-pdp-oos-alert-box {
+  background: #FFFBE6;
+  border: 1.5px solid #FFE58F;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 14px 0;
+}
+
+.fys-pdp-oos-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D46B08;
+  margin-bottom: 4px;
+}
+
+.fys-pdp-oos-desc {
+  font-size: 13px;
+  color: #614700;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.fys-pdp-oos-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* 4. PDP Similar Styles in Size Carousel */
+.fys-similar-section {
+  margin: 36px 0 20px;
+  border-top: 1px solid var(--fys-border);
+  padding-top: 24px;
+}
+
+.fys-similar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.fys-similar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  margin: 0;
+}
+
+.fys-similar-all {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fys-saffron);
+  text-decoration: none;
+}
+
+.fys-similar-all:hover {
+  text-decoration: underline;
+}
+
+.fys-similar-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(140px, 160px);
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fys-similar-card {
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--fys-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fys-similar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.fys-similar-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+
+.fys-similar-card-info {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fys-similar-card-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fys-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fys-similar-card-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fys-navy);
+}
+
+.fys-similar-card-badge {
+  font-size: 10.5px;
+  color: var(--fys-wa);
+  font-weight: 700;
+}
+
+/* 5. Size Picker Popup Modal */
+.fys-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 14, 46, 0.65);
+  z-index: 99998;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.fys-modal-backdrop.is-open {
+  display: block;
+  opacity: 1;
+}
+
+.fys-size-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.94);
+  background: #ffffff;
+  border: 1px solid #E8E2D8;
+  border-radius: 18px;
+  padding: 26px 24px;
+  width: calc(100% - 32px);
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(32, 23, 71, 0.28);
+  z-index: 99999;
+  display: none;
+  opacity: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.fys-size-modal.is-open {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.fys-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.fys-modal-head h3 {
+  font-family: "Playfair Display", Georgia, serif, -apple-system, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.fys-modal-close {
+  background: var(--fys-cream);
+  border: 1px solid var(--fys-border);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  color: #5C5549;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.fys-modal-close:hover {
+  background: var(--fys-navy);
+  color: #fff;
+  border-color: var(--fys-navy);
+}
+
+.fys-modal-sub {
+  font-size: 13px;
+  color: #6B6255;
+  margin: 0 0 18px;
+  line-height: 1.45;
+}
+
+.fys-size-grid,
+.fys-modal-sizes-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 10px !important;
+  margin: 0 0 18px 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.fys-size-opt,
+.fys-modal-size-btn {
+  background: var(--fys-cream) !important;
+  border: 1.5px solid var(--fys-border) !important;
+  border-radius: 12px !important;
+  padding: 12px 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-decoration: none !important;
+  font-family: inherit !important;
+  outline: none !important;
+}
+
+.fys-size-opt:hover,
+.fys-modal-size-btn:hover {
+  background: #ffffff !important;
+  border-color: var(--fys-navy) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(32, 23, 71, 0.08);
+}
+
+.fys-size-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--fys-navy);
+  line-height: 1.1;
+  display: block;
+}
+
+.fys-size-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #8C8270;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+  display: block;
+}
+
+.fys-size-opt.is-active,
+.fys-modal-size-btn.is-active {
+  background: var(--fys-navy) !important;
+  border-color: var(--fys-navy) !important;
+  box-shadow: 0 6px 16px rgba(32, 23, 71, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+.fys-size-opt.is-active .fys-size-num,
+.fys-modal-size-btn.is-active .fys-size-num {
+  color: #ffffff !important;
+}
+
+.fys-size-opt.is-active .fys-size-label,
+.fys-modal-size-btn.is-active .fys-size-label {
+  color: var(--fys-saffron) !important;
+  font-weight: 700 !important;
+}
+
+.fys-modal-footer {
+  border-top: 1px solid var(--fys-border);
+  padding-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fys-modal-clear-link {
+  background: none;
+  border: none;
+  color: #8C8270;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+  font-family: inherit;
+}
+
+.fys-modal-clear-link:hover {
+  color: #CF1322;
+}
+
+.fys-modal-help-text {
+  font-size: 11.5px;
+  color: #A89F91;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .fys-size-chip-bar {
+    width: 100%;
+    border-radius: 8px;
+  }
+  .fys-guardrail {
+    padding: 16px;
+  }
+}
+
+.fys-oos-inline-pill {
+  display: block;
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #B45309;
+  background: #FFFBE6;
+  border: 1px solid #FFE58F;
+  border-radius: 99px;
+  padding: 4px 14px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fys-continue.fys-btn--oos {
+  background: #B45309 !important;
+  color: #fff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-weight: 700 !important;
+}
+
+.fys-continue.fys-btn--oos:hover {
+  background: #92400E !important;
+}
+

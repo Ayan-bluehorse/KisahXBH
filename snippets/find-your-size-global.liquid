@@ -1,0 +1,13 @@
+{% comment %}
+  Find Your Size (FYS) — Global Integration Snippet
+  Loads global CSS, customer state, and the FYS Smart Sizing engine across all pages.
+{% endcomment %}
+
+{{ 'find-your-size-smart.css' | asset_url | stylesheet_tag }}
+
+<script>
+  window.__fys_customer_saved_size = {% if customer and customer.metafields.custom.fys_recommended_size != blank %}{{ customer.metafields.custom.fys_recommended_size | json }}{% else %}null{% endif %};
+</script>
+
+<script src="{{ 'find-your-size-global.js' | asset_url }}" defer></script>
+

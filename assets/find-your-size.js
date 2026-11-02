@@ -518,6 +518,13 @@
         answersWrap.appendChild(btn);
       });
 
+      // Save globally across sessions (LocalStorage + Cookie + Cart attribute)
+      if (window.FYS && typeof window.FYS.saveSize === 'function') {
+        window.FYS.saveSize(size, build);
+      }
+
+      var isAvailable = checkSizeAvailable(size);
+
       // Garment breakdown
       var breakdown = root.querySelector('[data-fys-breakdown]');
       if (breakdown) {
@@ -537,19 +544,49 @@
         });
       }
 
-      // Size on the primary button
+      // Size on the primary button / OOS handling
+      var useBtn = root.querySelector('[data-fys-use-size]');
       var btnSize = root.querySelector('[data-fys-btn-size]');
-      if (btnSize) btnSize.textContent = size;
-
-      // Slim note
       var note = root.querySelector('[data-fys-slim-note]');
       var slimSize = root.querySelector('[data-fys-slim-size]');
-      var idx = SIZES.indexOf(size);
-      if (idx > 0) {
-        note.hidden = false;
-        slimSize.textContent = SIZES[idx - 1];
+
+      if (!isAvailable) {
+        // Out of Stock in this style: DO NOT push into another size or suggest slim
+        if (note) note.hidden = true;
+        if (useBtn) {
+          useBtn.innerHTML = 'View In-Stock Styles in Size ' + size + ' &rarr;';
+          useBtn.classList.add('fys-btn--oos');
+        }
+
+        var resultH = root.querySelector('.fys-result-h');
+        if (resultH) {
+          resultH.innerHTML = 'Your recommended size is <span data-fys-size-label>' + (SIZE_NAMES[size] || '') + ' &mdash; ' + size + '</span><span class="fys-oos-inline-pill">Sold Out in this style</span>';
+        }
+
+        // Track OOS shown
+        trackFysEvent('fys_pdp_oos_shown', {
+          product_id: productId,
+          product_handle: productHandle,
+          recommended_size: size
+        });
       } else {
-        note.hidden = true;
+        if (btnSize) btnSize.textContent = size;
+        if (useBtn) {
+          useBtn.innerHTML = 'Select Size <span data-fys-btn-size>' + size + '</span>';
+          useBtn.classList.remove('fys-btn--oos');
+        }
+
+        // Slim note (only if in stock)
+        var idx = SIZES.indexOf(size);
+        if (idx > 0 && note && slimSize) {
+          note.hidden = false;
+          slimSize.textContent = SIZES[idx - 1];
+        } else if (note) {
+          note.hidden = true;
+        }
+
+        // Auto-select size in PDP variant picker
+        autoSelectVariant(size);
       }
 
       // Support link — WhatsApp
@@ -563,9 +600,6 @@
         supportLink.target = '_blank';
         supportLink.rel = 'noopener';
       }
-
-      // Auto-select size in PDP variant picker
-      autoSelectVariant(size);
 
       // Log to Google Sheets
       logSubmission(size, build);
@@ -581,22 +615,31 @@
         feet: state.feet,
         inches: state.inch,
         weight_kg: state.kg,
-        size_available: availableSizes.indexOf(String(size)) !== -1,
+        size_available: isAvailable,
         device: window.innerWidth <= 749 ? 'mobile' : 'desktop'
+      });
+    }
+
+    /* ---- Check if size is in available sizes (handles "40" and "M-40") ---- */
+    function checkSizeAvailable(size) {
+      var sStr = String(size).trim();
+      return availableSizes.some(function (v) {
+        var str = String(v).trim();
+        return str === sStr || str.endsWith('-' + sStr) || ('-' + str).indexOf('-' + sStr) !== -1;
       });
     }
 
     /* ---- Auto-select size in the PDP variant picker ---- */
     function autoSelectVariant(size) {
-      var sizeStr = String(size);
+      var sizeStr = String(size).trim();
 
       // Find the matching radio input inside the variant picker
       var radios = document.querySelectorAll('.option-selector__btns input[type="radio"].js-option');
       for (var i = 0; i < radios.length; i++) {
         var radio = radios[i];
         var val = (radio.value || '').trim();
-        // The radio value is the raw size number, e.g. "42"
-        if (val === sizeStr) {
+        // Matches e.g. "40" or "M-40"
+        if (val === sizeStr || val.endsWith('-' + sizeStr) || ('-' + val).indexOf('-' + sizeStr) !== -1) {
           // Click the associated label (which checks the radio and fires change)
           var label = document.querySelector('label[for="' + radio.id + '"]');
           if (label) {
@@ -615,6 +658,19 @@
     var useSizeBtn = root.querySelector('[data-fys-use-size]');
     if (useSizeBtn) {
       useSizeBtn.addEventListener('click', function () {
+        var isAvailable = checkSizeAvailable(state.result);
+        if (!isAvailable) {
+          var destUrl = '/collections/all?filter.v.option.size=' + state.result + '&filter.v.availability=1';
+          trackFysEvent('fys_pdp_oos_redirect', {
+            product_id: productId,
+            product_handle: productHandle,
+            recommended_size: state.result,
+            destination_url: destUrl
+          });
+          window.location.href = destUrl;
+          return;
+        }
+
         trackFysEvent('find_your_size_select', {
           product_id: productId,
           product_handle: productHandle,
