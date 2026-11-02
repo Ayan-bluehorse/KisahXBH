@@ -15,8 +15,8 @@
         "slide_banner_Xp6ga7": {
           "type": "slide_banner",
           "settings": {
-            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.jpg",
-            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.jpg",
+            "desk-img": "shopify://shop_images/Highest_Fashion_Desktop.webp",
+            "mob-img": "shopify://shop_images/Highest_Fashion_Mobile.webp",
             "link": "shopify://pages/diwali",
             "button-name": "",
             "button-link": ""
