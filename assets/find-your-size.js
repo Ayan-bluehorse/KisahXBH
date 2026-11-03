@@ -119,15 +119,13 @@
   function trackFysEvent(eventName, params) {
     params = params || {};
     try {
-      window.dataLayer = window.dataLayer || [];
-      var dlPayload = { event: eventName };
-      for (var k in params) {
-        if (Object.prototype.hasOwnProperty.call(params, k)) dlPayload[k] = params[k];
-      }
-      window.dataLayer.push(dlPayload);
-    } catch (e) {}
-    try {
-      if (typeof window.gtag === 'function') {
+      if (window.dataLayer && typeof window.dataLayer.push === 'function') {
+        var dlPayload = { event: eventName };
+        for (var k in params) {
+          if (Object.prototype.hasOwnProperty.call(params, k)) dlPayload[k] = params[k];
+        }
+        window.dataLayer.push(dlPayload);
+      } else if (typeof window.gtag === 'function') {
         window.gtag('event', eventName, params);
       }
     } catch (e) {}

@@ -169,13 +169,6 @@
       results_count: 0,
       timestamp: new Date().toISOString()
     });
-
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'view_search_results', {
-        search_term: query,
-        results_count: 0
-      });
-    }
   }
 
   function monitorZeroResults() {

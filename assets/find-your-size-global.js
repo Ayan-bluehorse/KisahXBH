@@ -113,13 +113,10 @@
     payload.fys_ab_variant = abVariant;
     payload.timestamp = new Date().toISOString();
 
-    // 1. dataLayer (GTM)
+    // Prefer dataLayer (GTM / GA4 single source of truth to avoid duplicate events)
     if (window.dataLayer && typeof window.dataLayer.push === 'function') {
       window.dataLayer.push(payload);
-    }
-
-    // 2. gtag (GA4)
-    if (typeof window.gtag === 'function') {
+    } else if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, payload);
     }
 

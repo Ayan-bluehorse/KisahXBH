@@ -2141,12 +2141,24 @@ a.ksl-btn--ghost:hover,
   });
 
   /* 7. Analytics: GA4 & Meta Pixel event tracking */
+  let lastTrackTime = 0;
+  let lastTrackKey = '';
+
   root.addEventListener('click', e => {
     const t = e.target.closest('[data-track-cta]');
     if (!t) return;
     const action = t.dataset.trackCta;
     const city = t.dataset.trackCity || cityName;
     const store = t.dataset.trackStore || 'General';
+
+    // Prevent duplicate triggers from event bubbling or rapid double clicks (500ms debounce)
+    const now = Date.now();
+    const trackKey = action + '_' + city + '_' + store;
+    if (trackKey === lastTrackKey && (now - lastTrackTime) < 500) {
+      return;
+    }
+    lastTrackTime = now;
+    lastTrackKey = trackKey;
 
     // Map 3 distinct event names for GA4 & GTM
     let eventName = 'store_action';
@@ -2165,12 +2177,7 @@ a.ksl-btn--ghost:hover,
       store: store
     };
 
-    // Google Analytics 4 (gtag)
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, eventParams);
-    }
-
-    // Google Tag Manager (dataLayer)
+    // Google Tag Manager (dataLayer) - Single dispatch prevents double event firing in GTM & GA4
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
