@@ -130,9 +130,6 @@ Parameters:
         <div class="image-cont {% if show_hover_image %}image-cont--with-secondary-image {% if aspect_ratios_same %}image-cont--same-aspect-ratio{% endif %}{% endif %}">
           <a class="product-link{% if settings.quickbuy_style == 'whole' %}{% unless no_quick_buy %} quickbuy-toggle{% endunless %}{% endif %}" href="{{ product_url }}" aria-hidden="true" tabindex="-1">
             <div class="image-label-wrap">
-              {% if product_index and products_total %}
-                <span class="product-block__position-badge">{{ product_index }}/{{ products_total }}</span>
-              {% endif %}
               <div>
                 {%- if show_hover_image -%}
                   <div class="product-block__image product-block__image--primary{% if product.featured_media.id == product.media.first.id %}{% assign active_media_found = true %} product-block__image--active{% endif %}{% if product_images.last.id == product.featured_media.id %} product-block__image--show-on-hover{% endif %}" data-media-id="{{ product.media.first.id }}">

@@ -162,7 +162,9 @@
     <!-- Quick Filter Tabs -->
     {%- if section.settings.show_filter_tabs -%}
       <div class="diwali-feed-tabs-{{ sid }}" role="tablist">
-        <a href="#all-diwali-styles" class="diwali-feed-tab-{{ sid }} is-active" data-collection-tab="all" role="tab" aria-selected="true">All Styles</a>
+        {%- if section.settings.show_all_styles_tab -%}
+          <a href="#all-diwali-styles" class="diwali-feed-tab-{{ sid }} is-active" data-collection-tab="all" role="tab" aria-selected="true">All Styles</a>
+        {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'filter_tab' -%}
             {%- liquid
@@ -174,8 +176,12 @@
               if tab_url == blank
                 assign tab_url = '/collections/all'
               endif
+              assign is_first_active = false
+              if forloop.first and section.settings.show_all_styles_tab != true
+                assign is_first_active = true
+              endif
             -%}
-            <a href="{{ tab_url }}" class="diwali-feed-tab-{{ sid }}" data-collection-tab="{{ block.settings.collection | default: block.id }}" role="tab" aria-selected="false" {{ block.shopify_attributes }}>
+            <a href="{{ tab_url }}" class="diwali-feed-tab-{{ sid }}{% if is_first_active %} is-active{% endif %}" data-collection-tab="{{ block.settings.collection | default: block.id }}" role="tab" aria-selected="{% if is_first_active %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>
               {{ block.settings.title | default: tab_coll.title }}
             </a>
           {%- endif -%}
@@ -858,6 +864,12 @@
       "type": "checkbox",
       "id": "show_filter_tabs",
       "label": "Show quick filter tabs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_styles_tab",
+      "label": "Show 'All Styles' tab",
       "default": true
     },
     {

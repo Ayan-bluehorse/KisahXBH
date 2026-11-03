@@ -139,6 +139,7 @@
         "grid": 4,
         "grid_mobile": "2",
         "show_filter_tabs": true,
+        "show_all_styles_tab": false,
         "enable_filtering": true,
         "enable_sorting": true,
         "pad_top": 16,
