@@ -236,52 +236,21 @@
   /* -------------------------------------------------------------------------
    * 4. SEARCHANISE SIZE-INCLUSIVENESS RE-RANKING (S/M/L/XL Prioritization)
    * ------------------------------------------------------------------------- */
-  // function scoreSnizeCard(card) {
-  //   if (!card) return 0;
+  function scoreSnizeCard(card) {
+    if (!card) return 0;
 
-  //   // Check availability markers on Searchanise product cards
-  //   var isOOS = card.classList.contains('snize-out-of-stock') ||
-  //     card.querySelector('.snize-out-of-stock') !== null ||
-  //     card.getAttribute('data-stock') === '0';
+    // Check availability markers on Searchanise product cards
+    var isOOS = card.classList.contains('snize-out-of-stock') ||
+      card.querySelector('.snize-out-of-stock') !== null ||
+      card.getAttribute('data-stock') === '0';
 
-  //   if (isOOS) return -100000;
+    if (isOOS) return -100000;
 
-  //   // Inspect size chips/swatches if Searchanise renders them
-  //   var swatches = Array.from(card.querySelectorAll(
-  //     '.snize-swatch, .snize-option-value, [data-option-name="Size"] span, .product-block-options__item'
-  //   ));
-function scoreSnizeCard(card) {
-  if (!card) return -100000;
+    // Inspect size chips/swatches if Searchanise renders them
+    var swatches = Array.from(card.querySelectorAll(
+      '.snize-swatch, .snize-option-value, [data-option-name="Size"] span, .product-block-options__item'
+    ));
 
-  // Check product-level out of stock
-  if (
-    card.classList.contains('snize-out-of-stock') ||
-    card.querySelector('.snize-out-of-stock') ||
-    card.getAttribute('data-stock') === '0'
-  ) {
-    return -100000;
-  }
-
-  // Get all visible variant sizes
-  const variants = [...card.querySelectorAll('.snize-size')];
-
-  // If variant information is missing, move to bottom
-  if (!variants.length) {
-    return -100000;
-  }
-
-  // If even one variant is unavailable, move to bottom
-  const hasOutOfStockVariant = variants.some(variant =>
-    variant.classList.contains('snize-size-unavailable')
-  );
-
-  if (hasOutOfStockVariant) {
-    return -100000;
-  }
-
-  // All displayed variants are available
-  return 100000;
-}
     var sizeS = false;
     var sizeM = false;
     var sizeL = false;
