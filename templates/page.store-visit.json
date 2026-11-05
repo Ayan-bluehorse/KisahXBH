@@ -205,13 +205,13 @@
           "type": "store",
           "settings": {
             "name": "Pacific Mall",
-            "address": "Pacific Mall, Jaipur, Rajasthan 302001",
+            "address": "SF-26, Second Floor, Pacific Mall, 42. VT Rd. opposite Ryan International School, Ward 27, Sector 5, Mansarovar, Jaipur - 302020",
             "phone": "+91 81009 93480",
             "rating": "5.0",
-            "reviews": "Opening Soon",
-            "maps_url": "https://maps.google.com/?q=Pacific+Mall+Jaipur",
-            "lat": "26.9124",
-            "lng": "75.7873"
+            "reviews": "11:00 AM – 10:00 PM",
+            "maps_url": "https://www.google.com/maps/search/?api=1&query=KISAH+SF-26+Pacific+Mall+VT+Rd+Mansarovar+Jaipur+302020",
+            "lat": "26.8639117",
+            "lng": "75.7676893"
           }
         },
         "cat_kurta_sets": {
