@@ -1,5 +1,5 @@
-<!-- Elevate - 2026-09-10T07:05:25.803Z -->
-{%- if content_for_header contains "elevateab.app" -%}
+<!-- Elevate - 2026-11-05T12:08:14.408Z -->
+{%- if content_for_header contains "elevateab.app" or metaobjects['app--4623321--install_status'].values.size > 0 -%}
   {%- unless request.design_mode -%}
     <script>
       const environment = { rootUrl: '{{ routes.root_url }}', themeId: {{ theme.id }}, themeRole: '{{ theme.role }}', activeCurrency: '{{ localization.country.currency.iso_code | default: shop.currency }}', template: { suffix: '{{ template.suffix }}', type: '{{ template.name }}' }, isThemePreview: {% if content_for_header contains "previewBarInjector.init();" or content_for_header contains "https://cdn.shopify.com/shopifycloud/preview-bar/preview-bar-modules.js" %}true{% else %}false{% endif %}, customerData: {% if customer %}{ loggedIn: true, id: {{ customer.id | json }}, ordersCount: {{ customer.orders_count | json }}, totalSpent: {{ customer.total_spent | json }}, tags: {{ customer.tags | json }} }{% else %}{ loggedIn: false }{% endif %} };
