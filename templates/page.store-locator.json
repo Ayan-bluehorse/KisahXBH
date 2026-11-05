@@ -238,6 +238,7 @@
         "store_jai_pacific": {
           "type": "store",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-11-05_at_6.13.24_PM.jpg",
             "image_position": "center",
             "name": "Pacific Mall",
             "city": "Jaipur",
