@@ -235,59 +235,129 @@
 
   /* -------------------------------------------------------------------------
    * 4. SEARCHANISE SIZE-INCLUSIVENESS RE-RANKING (S/M/L/XL Prioritization)
+   *    Identical logic to collection page stockRank (snippets/infinite-scroll.liquid):
+   *    - Rank 0: 100% available variants (all sizes in stock)
+   *    - Rank 1: Full core run (S, M, L, XL in stock)
+   *    - Rank 2: S, M, L in stock
+   *    - Rank 3: M, L in stock
+   *    - Rank 4: M only in stock
+   *    - Rank 5: Broken size runs / other single sizes
+   *    - Rank 99: Fully out of stock -> bottom
    * ------------------------------------------------------------------------- */
-  function scoreSnizeCard(card) {
-    if (!card) return 0;
+  var snizeItemDataCache = {};
+  var isReorderingSnize = false;
 
-    // Check availability markers on Searchanise product cards
-    var isOOS = card.classList.contains('snize-out-of-stock') ||
-      card.querySelector('.snize-out-of-stock') !== null ||
-      card.getAttribute('data-stock') === '0';
+  // Extract numeric or standard size key from a variant size string (e.g. 'S-38' -> 's', '38')
+  function normalizeSizeTokens(sizeStr) {
+    if (!sizeStr) return '';
+    return String(sizeStr).toLowerCase().trim();
+  }
 
-    if (isOOS) return -100000;
+  function computeItemStockRank(itemData) {
+    if (!itemData) return 5;
 
-    // Inspect size chips/swatches if Searchanise renders them
-    var swatches = Array.from(card.querySelectorAll(
-      '.snize-swatch, .snize-option-value, [data-option-name="Size"] span, .product-block-options__item'
-    ));
+    var variants = itemData.shopify_variants;
+    if (!Array.isArray(variants) || variants.length === 0) {
+      if (itemData.quantity_total === 0 || itemData.quantity === 0) return 99;
+      return 5;
+    }
 
+    var totalVariants = variants.length;
+    var availableVariants = 0;
     var sizeS = false;
     var sizeM = false;
     var sizeL = false;
     var sizeXL = false;
-    var availableCount = 0;
 
-    if (swatches.length > 0) {
-      swatches.forEach(function (sw) {
-        var isUnavailable = sw.classList.contains('snize-disabled') ||
-          sw.classList.contains('snize-out-of-stock') ||
-          sw.classList.contains('snize-unavailable') ||
-          sw.classList.contains('product-block-options__item--unavailable');
-
-        if (!isUnavailable) availableCount++;
-
-        var txt = (sw.textContent || '').toLowerCase().trim();
-        if (!isUnavailable) {
-          if (txt === 's' || txt === 's-38' || txt === '38' || txt === 'small') sizeS = true;
-          if (txt === 'm' || txt === 'm-40' || txt === '40' || txt === 'medium') sizeM = true;
-          if (txt === 'l' || txt === 'l-42' || txt === '42' || txt === 'large') sizeL = true;
-          if (txt === 'xl' || txt === 'xl-44' || txt === '44' || txt === 'extra large') sizeXL = true;
+    variants.forEach(function (v) {
+      var isAvail = (v.available === '1' || v.available === 1 || v.available === true);
+      if (isAvail) {
+        availableVariants++;
+        var sizeVal = '';
+        if (v.options && v.options.Size) {
+          sizeVal = normalizeSizeTokens(v.options.Size);
+        } else if (v.options) {
+          for (var opt in v.options) {
+            if (/size/i.test(opt)) {
+              sizeVal = normalizeSizeTokens(v.options[opt]);
+              break;
+            }
+          }
         }
-      });
+        if (!sizeVal && v.title) {
+          sizeVal = normalizeSizeTokens(v.title);
+        }
 
-      // Rank according to core size completeness
-      if (sizeS && sizeM && sizeL && sizeXL) return 10000; // Rank 1: Full core run (S, M, L, XL)
-      if (sizeS && sizeM && sizeL) return 8000;            // Rank 2: S, M, L
-      if (sizeM && sizeL) return 6000;                    // Rank 3: M, L
-      if (sizeM) return 4000;                             // Rank 4: M
-      if (availableCount > 1) return 2000;                // Rank 5: Multi-size broken
-      return 1000;                                        // Rank 6: Single obscure size only
+        // Check core size presence (S=38, M=40, L=42, XL=44)
+        if (sizeVal === 's' || sizeVal === 's-38' || sizeVal === '38' || sizeVal.indexOf('s-') === 0 || sizeVal.indexOf('s ') === 0) {
+          sizeS = true;
+        }
+        if (sizeVal === 'm' || sizeVal === 'm-40' || sizeVal === '40' || sizeVal.indexOf('m-') === 0 || sizeVal.indexOf('m ') === 0) {
+          sizeM = true;
+        }
+        if (sizeVal === 'l' || sizeVal === 'l-42' || sizeVal === '42' || sizeVal.indexOf('l-') === 0 || sizeVal.indexOf('l ') === 0) {
+          sizeL = true;
+        }
+        if (sizeVal === 'xl' || sizeVal === 'xl-44' || sizeVal === '44' || sizeVal.indexOf('xl-') === 0 || sizeVal.indexOf('xl ') === 0) {
+          sizeXL = true;
+        }
+      }
+    });
+
+    // Exact matching logic from snippets/infinite-scroll.liquid:
+    if (availableVariants === 0) return 99; // fully out of stock -> bottom
+    if (totalVariants > 0 && availableVariants === totalVariants) return 0; // 100% available -> absolute top
+    if (sizeS && sizeM && sizeL && sizeXL) return 1; // full core run S, M, L, XL
+    if (sizeS && sizeM && sizeL) return 2; // S, M, L
+    if (sizeM && sizeL) return 3; // M, L
+    if (sizeM) return 4; // M only
+    return 5; // other broken combinations
+  }
+
+  function getCardStockRank(card) {
+    if (!card) return 5;
+
+    // Check DOM out of stock markers first
+    if (card.classList.contains('snize-out-of-stock') || card.getAttribute('data-stock') === '0') {
+      return 99;
     }
 
-    return 5000; // Neutral if no swatches rendered in DOM
+    var pid = card.getAttribute('data-original-product-id') ||
+      card.getAttribute('data-product-id') ||
+      (card.id && card.id.indexOf('snize-product-') === 0 ? card.id.replace('snize-product-', '') : null);
+
+    // Try live Searchanise item data cache
+    var itemData = pid ? snizeItemDataCache[String(pid)] : null;
+
+    // Try jQuery data attached by Searchanise widget
+    if (!itemData && window.Searchanise && window.Searchanise.$) {
+      try {
+        itemData = window.Searchanise.$(card).data('snize_item_data');
+      } catch (e) {}
+    }
+    if (!itemData && window.jQuery) {
+      try {
+        itemData = window.jQuery(card).data('snize_item_data');
+      } catch (e) {}
+    }
+
+    if (itemData) {
+      var calculatedRank = computeItemStockRank(itemData);
+      card.setAttribute('data-stock-rank', calculatedRank);
+      return calculatedRank;
+    }
+
+    // Fallback: Check if card has stored rank attribute
+    if (card.hasAttribute('data-stock-rank')) {
+      return parseInt(card.getAttribute('data-stock-rank'), 10);
+    }
+
+    return 5; // default fallback rank
   }
 
   function reorderSnizeGrid() {
+    if (isReorderingSnize) return;
+
     var grid = document.querySelector(
       '#snize-search-results-grid, ' +
       '#snize_results .snize-horizontal-view, ' +
@@ -298,7 +368,7 @@
 
     var items = Array.from(grid.children).filter(function (el) {
       return el.classList.contains('snize-product') ||
-        el.classList.contains('snize-item') ||
+        (el.id && el.id.indexOf('snize-product-') === 0) ||
         el.hasAttribute('data-id');
     });
 
@@ -307,14 +377,15 @@
     var scored = items.map(function (item, idx) {
       return {
         item: item,
-        score: scoreSnizeCard(item),
+        rank: getCardStockRank(item),
         originalIndex: idx
       };
     });
 
-    // Sort descending by score, preserving original order on tie
+    // Sort ascending by rank: 0 (100% stock) -> 1 (Full core S/M/L/XL) -> 2 -> 3 -> 4 -> 5 -> 99 (OOS)
+    // On equal rank, preserve Searchanise's original relevance order
     scored.sort(function (a, b) {
-      if (b.score !== a.score) return b.score - a.score;
+      if (a.rank !== b.rank) return a.rank - b.rank;
       return a.originalIndex - b.originalIndex;
     });
 
@@ -327,27 +398,74 @@
     }
 
     if (needsReorder) {
-      scored.forEach(function (entry) {
-        grid.appendChild(entry.item);
+      isReorderingSnize = true;
+      try {
+        scored.forEach(function (entry) {
+          grid.appendChild(entry.item);
+        });
+      } finally {
+        setTimeout(function () {
+          isReorderingSnize = false;
+        }, 50);
+      }
+    }
+  }
+
+  function registerSnizeItems(data) {
+    if (data && Array.isArray(data.items)) {
+      data.items.forEach(function (item) {
+        if (item && item.product_id) {
+          snizeItemDataCache[String(item.product_id)] = item;
+        }
       });
+      setTimeout(reorderSnizeGrid, 60);
+      setTimeout(reorderSnizeGrid, 250);
     }
   }
 
   function initSnizeReordering() {
-    // 1. Hook Searchanise callback if available
+    // 1. Hook Searchanise DataRequestEnd document event (native + jQuery)
+    document.addEventListener('Searchanise.DataRequestEnd', function (e) {
+      var data = e.detail && e.detail.data ? e.detail.data : null;
+      if (data) registerSnizeItems(data);
+    });
+
+    // Searchanise fires jQuery custom events on document
+    var hookJQueryEvent = function ($jq) {
+      if ($jq && $jq(document) && $jq(document).on) {
+        $jq(document).on('Searchanise.DataRequestEnd', function (event, type, params, data) {
+          registerSnizeItems(data);
+        });
+        $jq(document).on('Searchanise.ResultsUpdated', function () {
+          setTimeout(reorderSnizeGrid, 100);
+        });
+      }
+    };
+
+    if (window.Searchanise && window.Searchanise.$) {
+      hookJQueryEvent(window.Searchanise.$);
+    }
+    if (window.jQuery) {
+      hookJQueryEvent(window.jQuery);
+    }
+
+    // 2. Hook Searchanise Callback API if present
     if (window.Searchanise && window.Searchanise.Callbacks) {
       try {
-        window.Searchanise.Callbacks.Add('AfterSearch', function () {
-          setTimeout(reorderSnizeGrid, 150);
+        window.Searchanise.Callbacks.Add('AfterSearch', function (res) {
+          if (res) registerSnizeItems(res);
+          setTimeout(reorderSnizeGrid, 100);
         });
       } catch (e) {}
     }
 
-    // 2. Observer for Searchanise search results mount
+    // 3. Observer for Searchanise search results mount and mutation
     var searchContainer = document.getElementById('snize_results') || document.querySelector('.snize-search-results');
     if (searchContainer) {
       var gridObserver = new MutationObserver(function () {
-        reorderSnizeGrid();
+        if (!isReorderingSnize) {
+          reorderSnizeGrid();
+        }
       });
       gridObserver.observe(searchContainer, { childList: true, subtree: true });
     }
