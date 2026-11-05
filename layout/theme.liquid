@@ -33,7 +33,11 @@
 <link rel="preconnect" href="https://pdp.gokwik.co" crossorigin>
 <link rel="preconnect" href="https://api.gokwik.co" crossorigin>
 <link rel="preconnect" href="https://cdn.gokwik.co" crossorigin>
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://pdp.gokwik.co">
 <link rel="dns-prefetch" href="https://api.gokwik.co">
 <link rel="dns-prefetch" href="https://cdn.gokwik.co">
@@ -73,8 +77,14 @@
       s.async = true;
       document.head.appendChild(s);
     }
-    window.addEventListener('kisah:delayed-apps-trigger', loadGtagScript, { once: true });
-    setTimeout(loadGtagScript, 4000);
+    // Fast-path: Fire immediately for paid ad traffic (Meta/Google ads) to capture fast in-app bounces
+    var isPaidAdTraffic = /[?&](fbclid|gclid|wbraid|gbraid|utm_source|utm_campaign|utm_medium)=/i.test(window.location.search);
+    if (isPaidAdTraffic) {
+      loadGtagScript();
+    } else {
+      window.addEventListener('kisah:delayed-apps-trigger', loadGtagScript, { once: true });
+      setTimeout(loadGtagScript, 4000);
+    }
   </script>
 {% render 'ga-order-link' %}
   <!-- Gokwik theme code start -->
@@ -267,10 +277,20 @@
         loaded = true;
         window.dispatchEvent(new Event('kisah:delayed-apps-trigger'));
       }
-      ['touchstart', 'mouseover', 'scroll', 'keydown'].forEach(function(evt) {
-        window.addEventListener(evt, triggerAppDelay, { passive: true, once: true });
-      });
-      setTimeout(triggerAppDelay, 3500);
+      var isPaidTraffic = /[?&](fbclid|gclid|wbraid|gbraid|utm_source|utm_campaign|utm_medium)=/i.test(window.location.search);
+      if (isPaidTraffic) {
+        // Fast-path: Dispatch immediately for paid ad landing pages to ensure all pixels & tags initialize
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', triggerAppDelay, { once: true });
+        } else {
+          triggerAppDelay();
+        }
+      } else {
+        ['touchstart', 'mouseover', 'scroll', 'keydown'].forEach(function(evt) {
+          window.addEventListener(evt, triggerAppDelay, { passive: true, once: true });
+        });
+        setTimeout(triggerAppDelay, 3500);
+      }
     })();
   </script>
 
