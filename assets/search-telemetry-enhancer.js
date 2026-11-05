@@ -234,32 +234,31 @@
   }
 
   /* -------------------------------------------------------------------------
-   * 4. SEARCHANISE SIZE-INCLUSIVENESS RE-RANKING (S/M/L/XL Prioritization)
-   *    Identical logic to collection page stockRank (snippets/infinite-scroll.liquid):
-   *    - Rank 0: 100% available variants (all sizes in stock)
-   *    - Rank 1: Full core run (S, M, L, XL in stock)
-   *    - Rank 2: S, M, L in stock
-   *    - Rank 3: M, L in stock
-   *    - Rank 4: M only in stock
-   *    - Rank 5: Broken size runs / other single sizes
-   *    - Rank 99: Fully out of stock -> bottom
+   * 4. SEARCHANISE SIZE-INCLUSIVENESS & STOCK-TIER RE-RANKING
+   *    Parity with collection infinite-scroll.liquid:
+   *    Supports all 28+ sizes (Kids, Adult S-5XL, Plus 6XL-7XL, Footwear, One-Size):
+   *    - Rank 0: 100% available variants (all sizes of the product in stock)
+   *    - Rank 1: High Availability (>= 75% in stock OR all core S/M/L/XL in stock)
+   *    - Rank 2: Primary Tier (>= 50% variants in stock - matches infinite-scroll.liquid)
+   *    - Rank 3: Moderate (>= 33% variants in stock)
+   *    - Rank 4: Broken Run (< 33% in stock, e.g. only 1 or 2 sizes left out of many)
+   *    - Rank 99: Fully out of stock (0 variants available) -> Bottom
    * ------------------------------------------------------------------------- */
   var snizeItemDataCache = {};
   var isReorderingSnize = false;
 
-  // Extract numeric or standard size key from a variant size string (e.g. 'S-38' -> 's', '38')
   function normalizeSizeTokens(sizeStr) {
     if (!sizeStr) return '';
     return String(sizeStr).toLowerCase().trim();
   }
 
   function computeItemStockRank(itemData) {
-    if (!itemData) return 5;
+    if (!itemData) return 4;
 
     var variants = itemData.shopify_variants;
     if (!Array.isArray(variants) || variants.length === 0) {
       if (itemData.quantity_total === 0 || itemData.quantity === 0) return 99;
-      return 5;
+      return 4;
     }
 
     var totalVariants = variants.length;
@@ -288,7 +287,7 @@
           sizeVal = normalizeSizeTokens(v.title);
         }
 
-        // Check core size presence (S=38, M=40, L=42, XL=44)
+        // Check standard core sizes if product has them
         if (sizeVal === 's' || sizeVal === 's-38' || sizeVal === '38' || sizeVal.indexOf('s-') === 0 || sizeVal.indexOf('s ') === 0) {
           sizeS = true;
         }
@@ -304,18 +303,29 @@
       }
     });
 
-    // Exact matching logic from snippets/infinite-scroll.liquid:
-    if (availableVariants === 0) return 99; // fully out of stock -> bottom
-    if (totalVariants > 0 && availableVariants === totalVariants) return 0; // 100% available -> absolute top
-    if (sizeS && sizeM && sizeL && sizeXL) return 1; // full core run S, M, L, XL
-    if (sizeS && sizeM && sizeL) return 2; // S, M, L
-    if (sizeM && sizeL) return 3; // M, L
-    if (sizeM) return 4; // M only
-    return 5; // other broken combinations
+    // 1. Fully out of stock -> Absolute bottom
+    if (availableVariants === 0) return 99;
+
+    // 2. 100% of variants in stock (works for Kids, Plus Size, Mojaris, and Mens!) -> Top priority
+    if (totalVariants > 0 && availableVariants === totalVariants) return 0;
+
+    var ratio = totalVariants > 0 ? (availableVariants / totalVariants) : 0;
+
+    // 3. Core run full (S, M, L, XL in stock) OR >= 75% of variants in stock
+    if ((sizeS && sizeM && sizeL && sizeXL) || ratio >= 0.75) return 1;
+
+    // 4. Primary tier (at least 50% of variants in stock - infinite-scroll.liquid standard)
+    if (ratio >= 0.50 || (sizeM && sizeL && sizeS)) return 2;
+
+    // 5. Moderate tier (at least 33% in stock)
+    if (ratio >= 0.33 || (sizeM && sizeL) || sizeM) return 3;
+
+    // 6. Severely broken run (e.g. 1 single size left out of 4+ sizes) -> Demoted
+    return 4;
   }
 
   function getCardStockRank(card) {
-    if (!card) return 5;
+    if (!card) return 4;
 
     // Check DOM out of stock markers first
     if (card.classList.contains('snize-out-of-stock') || card.getAttribute('data-stock') === '0') {
@@ -324,7 +334,8 @@
 
     var pid = card.getAttribute('data-original-product-id') ||
       card.getAttribute('data-product-id') ||
-      (card.id && card.id.indexOf('snize-product-') === 0 ? card.id.replace('snize-product-', '') : null);
+      (card.id && card.id.indexOf('snize-product-') === 0 ? card.id.replace('snize-product-', '') : null) ||
+      (card.id && card.id.indexOf('snize-ac-product-') === 0 ? card.id.replace('snize-ac-product-', '') : null);
 
     // Try live Searchanise item data cache
     var itemData = pid ? snizeItemDataCache[String(pid)] : null;
@@ -347,68 +358,76 @@
       return calculatedRank;
     }
 
-    // Fallback: Check if card has stored rank attribute
     if (card.hasAttribute('data-stock-rank')) {
       return parseInt(card.getAttribute('data-stock-rank'), 10);
     }
 
-    return 5; // default fallback rank
+    return 4; // default fallback rank
   }
 
-  function reorderSnizeGrid() {
+  function reorderSnizeGrids() {
     if (isReorderingSnize) return;
 
-    var grid = document.querySelector(
-      '#snize-search-results-grid, ' +
-      '#snize_results .snize-horizontal-view, ' +
-      '#snize_results .snize-main-panel ul, ' +
-      '.snize-search-results-main-content ul'
-    );
-    if (!grid) return;
+    // Target both Search Results page and Autocomplete dropdown grids
+    var gridSelectors = [
+      'ul.snize-search-results-content',
+      '#snize-search-results-grid',
+      '#snize_results .snize-horizontal-view',
+      '#snize_results .snize-main-panel ul',
+      '.snize-search-results-main-content ul',
+      '#snize-ac-items-container-4',
+      '#snize-ac-items-container-1',
+      'ul.snize-ac-results-singlecolumn-list',
+      'ul.snize-ac-results-list'
+    ];
 
-    var items = Array.from(grid.children).filter(function (el) {
-      return el.classList.contains('snize-product') ||
-        (el.id && el.id.indexOf('snize-product-') === 0) ||
-        el.hasAttribute('data-id');
-    });
+    var grids = document.querySelectorAll(gridSelectors.join(', '));
+    if (!grids || grids.length === 0) return;
 
-    if (items.length <= 1) return;
+    grids.forEach(function (grid) {
+      var items = Array.from(grid.children).filter(function (el) {
+        return el.classList.contains('snize-product') ||
+          (el.id && (el.id.indexOf('snize-product-') === 0 || el.id.indexOf('snize-ac-product-') === 0)) ||
+          el.hasAttribute('data-id');
+      });
 
-    var scored = items.map(function (item, idx) {
-      return {
-        item: item,
-        rank: getCardStockRank(item),
-        originalIndex: idx
-      };
-    });
+      if (items.length <= 1) return;
 
-    // Sort ascending by rank: 0 (100% stock) -> 1 (Full core S/M/L/XL) -> 2 -> 3 -> 4 -> 5 -> 99 (OOS)
-    // On equal rank, preserve Searchanise's original relevance order
-    scored.sort(function (a, b) {
-      if (a.rank !== b.rank) return a.rank - b.rank;
-      return a.originalIndex - b.originalIndex;
-    });
+      var scored = items.map(function (item, idx) {
+        return {
+          item: item,
+          rank: getCardStockRank(item),
+          originalIndex: idx
+        };
+      });
 
-    var needsReorder = false;
-    for (var i = 0; i < scored.length; i++) {
-      if (scored[i].originalIndex !== i) {
-        needsReorder = true;
-        break;
+      // Sort ascending by rank: 0 (100% in stock) -> 1 (>=75%) -> 2 (>=50%) -> 3 -> 4 (Broken/single size) -> 99 (OOS)
+      scored.sort(function (a, b) {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        return a.originalIndex - b.originalIndex;
+      });
+
+      var needsReorder = false;
+      for (var i = 0; i < scored.length; i++) {
+        if (scored[i].originalIndex !== i) {
+          needsReorder = true;
+          break;
+        }
       }
-    }
 
-    if (needsReorder) {
-      isReorderingSnize = true;
-      try {
-        scored.forEach(function (entry) {
-          grid.appendChild(entry.item);
-        });
-      } finally {
-        setTimeout(function () {
-          isReorderingSnize = false;
-        }, 50);
+      if (needsReorder) {
+        isReorderingSnize = true;
+        try {
+          scored.forEach(function (entry) {
+            grid.appendChild(entry.item);
+          });
+        } finally {
+          setTimeout(function () {
+            isReorderingSnize = false;
+          }, 50);
+        }
       }
-    }
+    });
   }
 
   function registerSnizeItems(data) {
@@ -418,8 +437,8 @@
           snizeItemDataCache[String(item.product_id)] = item;
         }
       });
-      setTimeout(reorderSnizeGrid, 60);
-      setTimeout(reorderSnizeGrid, 250);
+      setTimeout(reorderSnizeGrids, 50);
+      setTimeout(reorderSnizeGrids, 200);
     }
   }
 
@@ -436,8 +455,8 @@
         $jq(document).on('Searchanise.DataRequestEnd', function (event, type, params, data) {
           registerSnizeItems(data);
         });
-        $jq(document).on('Searchanise.ResultsUpdated', function () {
-          setTimeout(reorderSnizeGrid, 100);
+        $jq(document).on('Searchanise.ResultsUpdated Searchanise.AutocompleteUpdated', function () {
+          setTimeout(reorderSnizeGrids, 80);
         });
       }
     };
@@ -454,21 +473,34 @@
       try {
         window.Searchanise.Callbacks.Add('AfterSearch', function (res) {
           if (res) registerSnizeItems(res);
-          setTimeout(reorderSnizeGrid, 100);
+          setTimeout(reorderSnizeGrids, 80);
         });
       } catch (e) {}
     }
 
     // 3. Observer for Searchanise search results mount and mutation
-    var searchContainer = document.getElementById('snize_results') || document.querySelector('.snize-search-results');
-    if (searchContainer) {
+    var observerTargets = document.querySelectorAll('#snize_results, .snize-search-results, .snize-ac-results');
+    if (observerTargets.length > 0) {
       var gridObserver = new MutationObserver(function () {
         if (!isReorderingSnize) {
-          reorderSnizeGrid();
+          reorderSnizeGrids();
         }
       });
-      gridObserver.observe(searchContainer, { childList: true, subtree: true });
+      observerTargets.forEach(function (t) {
+        gridObserver.observe(t, { childList: true, subtree: true });
+      });
     }
+
+    // Also observe document.body for dynamic mounting of autocomplete dropdown
+    var bodyObserver = new MutationObserver(function () {
+      if (!isReorderingSnize) {
+        var acDropdown = document.querySelector('.snize-ac-results, #snize_autocomplete');
+        if (acDropdown) {
+          reorderSnizeGrids();
+        }
+      }
+    });
+    bodyObserver.observe(document.body, { childList: true });
   }
 
   /* -------------------------------------------------------------------------
