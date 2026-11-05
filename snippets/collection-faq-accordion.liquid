@@ -260,22 +260,6 @@
 <script>
 (function() {
   function initCollectionFaq() {
-    // Accordion exclusive toggle (auto-close other open FAQs within the same accordion)
-    var accordions = document.querySelectorAll('.collection-faq-accordion');
-    accordions.forEach(function(accordion) {
-      var items = accordion.querySelectorAll('.collection-faq-item');
-      items.forEach(function(item) {
-        item.addEventListener('toggle', function() {
-          if (item.open) {
-            items.forEach(function(otherItem) {
-              if (otherItem !== item && otherItem.open) {
-                otherItem.open = false;
-              }
-            });
-          }
-        });
-      });
-    });
 
     // Fallback parser if JSON was passed as raw unparsed string
     var fallbacks = document.querySelectorAll('[data-collection-faq-fallback]');
@@ -320,18 +304,6 @@
           container.innerHTML = html;
           wrapper.style.display = 'block';
 
-          var newItems = container.querySelectorAll('.collection-faq-item');
-          newItems.forEach(function(item) {
-            item.addEventListener('toggle', function() {
-              if (item.open) {
-                newItems.forEach(function(otherItem) {
-                  if (otherItem !== item && otherItem.open) {
-                    otherItem.open = false;
-                  }
-                });
-              }
-            });
-          });
         }
       } catch (e) {
         // invalid JSON or empty, leave hidden
