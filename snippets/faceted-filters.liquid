@@ -362,6 +362,11 @@
           assign clean_clear_url = clean_clear_url | append: '?filter.v.availability=1'
         endif
       endif
+      if clean_clear_url contains '?'
+        assign clean_clear_url = clean_clear_url | append: '&fys_dismissed=1'
+      else
+        assign clean_clear_url = clean_clear_url | append: '?fys_dismissed=1'
+      endif
     -%}
     <button class="kisah-btn kisah-btn--ghost" id="kisahClearAll" type="button" data-clear-url="{{ clean_clear_url }}">Clear all</button>
     {% liquid

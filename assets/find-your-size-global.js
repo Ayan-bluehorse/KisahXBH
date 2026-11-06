@@ -367,9 +367,31 @@
     var search = window.location.search;
     var params = new URLSearchParams(search);
     var activeSizeInUrl = params.get('filter.v.option.size');
+    var isAvailabilityFiltered = params.get('filter.v.availability') === '1';
+    var savedSize = FYS.getSavedSize();
+    var isDismissed = FYS.isFilterDismissed();
 
-    // Note: Do not auto-redirect collections on load so users can freely browse all styles.
-    // If the URL has an active size filter, render the informational chip bar.
+    if (params.get('fys_dismissed') === '1' || params.get('fys_clear') === '1') {
+      isDismissed = true;
+      FYS.dismissFilter();
+    }
+
+    // 1. Auto-filtering: If user has a saved size, not dismissed, and URL lacks size filter:
+    if (savedSize && !isDismissed && !activeSizeInUrl) {
+      params.set('filter.v.option.size', getFilterParamValue(savedSize));
+      params.set('filter.v.availability', '1');
+      params.delete('page');
+
+      trackEvent('fys_filter_applied', {
+        size: savedSize,
+        collection: window.location.pathname,
+        source: 'auto'
+      });
+
+      window.location.replace(window.location.pathname + '?' + params.toString() + window.location.hash);
+      return;
+    }
+
     if (activeSizeInUrl) {
       renderChipBar(normalizeSize(activeSizeInUrl));
     }
@@ -453,6 +475,7 @@
         });
         keysToDelete.forEach(function (k) { p.delete(k); });
         p.delete('page');
+        p.set('fys_dismissed', '1');
 
         if (!p.has('filter.v.availability')) {
           p.set('filter.v.availability', '1');
@@ -500,14 +523,13 @@
     initPDP();
   }
 
-  // Clear saved size and dismiss filter if user clicks theme Clear all or removes size chip
+  // Dismiss filter if user clicks theme Clear all or removes size chip
   document.addEventListener('click', function (e) {
     var target = e.target;
     if (!target) return;
 
     if (target.closest('.kisah-achip--clear') || target.closest('#kisahClearAll')) {
       FYS.dismissFilter();
-      FYS.clearSavedSize();
       return;
     }
 
@@ -517,7 +539,9 @@
       var href = chip.getAttribute('href') || '';
       if (/36|38|40|42|44|46|48|50|52/i.test(text) || href.indexOf('size') !== -1) {
         FYS.dismissFilter();
-        FYS.clearSavedSize();
+        if (href && href.indexOf('fys_dismissed=1') === -1) {
+          chip.setAttribute('href', href + (href.indexOf('?') !== -1 ? '&' : '?') + 'fys_dismissed=1');
+        }
       }
     }
   }, true);

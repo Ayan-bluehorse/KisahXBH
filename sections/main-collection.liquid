@@ -15,14 +15,64 @@
     (function() {
       try {
         var isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+        if (isBot) return;
         var search = window.location.search;
-        if (!isBot && !search.includes('filter.v.availability')) {
-          var p = new URLSearchParams(search);
+        var p = new URLSearchParams(search);
+        var changed = false;
+
+        if (!search.includes('filter.v.availability')) {
           p.set('filter.v.availability', '1');
+          changed = true;
+        }
+
+        var isDismissed = false;
+        try { isDismissed = sessionStorage.getItem('fys_filter_dismissed') === 'true'; } catch(e){}
+        if (!isDismissed) {
+          isDismissed = /(?:^|;\s*)_fys_dismissed=1/.test(document.cookie);
+        }
+        if (search.includes('fys_dismissed=1') || search.includes('fys_clear=1')) {
+          isDismissed = true;
+          try { sessionStorage.setItem('fys_filter_dismissed', 'true'); } catch(e){}
+          document.cookie = '_fys_dismissed=1; path=/; max-age=86400; SameSite=Lax';
+        }
+
+        // A/B test variant check
+        var abMatch = document.cookie.match(/(?:^|;\s*)_fys_ab_variant=([^;]+)/);
+        var abVal = abMatch ? decodeURIComponent(abMatch[1]) : null;
+        var forcedAb = p.get('fys_ab');
+        if (forcedAb) {
+          abVal = (forcedAb.toLowerCase() === 'b' || forcedAb.toLowerCase() === 'variant_b') ? 'variant_b' : 'variant_a';
+        }
+        var isControl = (abVal === 'variant_a');
+
+        if (!isControl && !isDismissed && !search.includes('filter.v.option.size')) {
+          var savedSize = null;
+          try {
+            savedSize = localStorage.getItem('fys_saved_size');
+            if (!savedSize) {
+              var m = document.cookie.match(/(?:^|;\s*)_fys_size=([^;]+)/);
+              if (m) savedSize = decodeURIComponent(m[1]);
+            }
+          } catch(e){}
+          if (savedSize) {
+            var raw = String(savedSize).trim();
+            var numMatch = raw.match(/(?:^|[^\d])(36|38|40|42|44|46|48|50|52)(?:$|[^\d])/);
+            var num = numMatch ? numMatch[1] : raw;
+            var sizeFilterMap = {
+              '36':'XS-36','38':'S-38','40':'M-40','42':'L-42','44':'XL-44',
+              '46':'2XL-46','48':'3XL-48','50':'4XL-50','52':'5XL-52'
+            };
+            var filterVal = sizeFilterMap[num] || num;
+            p.set('filter.v.option.size', filterVal);
+            changed = true;
+          }
+        }
+
+        if (changed) {
           var newUrl = window.location.pathname + '?' + p.toString() + window.location.hash;
           window.location.replace(newUrl);
         }
-      } catch (e) {}
+      } catch(e) {}
     })();
   </script>
 {%- endif -%}
@@ -290,7 +340,7 @@
             {%- continue -%}
           {%- endif -%}
           {%- for value in filter.active_values -%}
-            <a class="kisah-achip" href="{{ value.url_to_remove }}">
+            <a class="kisah-achip" href="{{ value.url_to_remove }}{% if filter.param_name contains 'size' or filter.label contains 'Size' %}{% if value.url_to_remove contains '?' %}&{% else %}?{% endif %}fys_dismissed=1{% endif %}">
               {{ value.label }}
               <span class="close-x">&times;</span>
             </a>
@@ -302,7 +352,7 @@
             </a>
           {%- endif -%}
         {%- endfor -%}
-        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1{% endif %}">Clear all</a>
+        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1&fys_dismissed=1{% else %}?fys_dismissed=1{% endif %}">Clear all</a>
       </div>
     {%- endif -%}
 
@@ -312,6 +362,40 @@
       {% endif %}
 
       <div class="filters-adjacent collection-listing" data-ajax-container>
+        {%- liquid
+          assign is_rare_size_filtered = false
+          assign rare_size_label = ''
+          for filter in collection.filters
+            if filter.param_name contains 'size' or filter.label contains 'Size'
+              for val in filter.active_values
+                assign v_down = val.value | downcase
+                if v_down contains '36' or v_down contains '46' or v_down contains '48' or v_down contains '50' or v_down contains '52'
+                  assign is_rare_size_filtered = true
+                  assign rare_size_label = val.label
+                endif
+              endfor
+            endif
+          endfor
+        -%}
+        {% if is_rare_size_filtered and collection.products.size > 0 %}
+          <div class="fys-rare-size-strip">
+            <div class="fys-rare-size-strip__left">
+              <svg class="fys-rare-size-strip__icon" viewBox="0 0 24 24" fill="#C5A467" aria-hidden="true">
+                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4771 12 22C12 16.4771 16.4771 12 22 12C16.4771 12 12 7.52285 12 2Z"/>
+                <path d="M19 1C19 2.65685 17.6569 4 16 4C17.6569 4 19 5.34315 19 7C19 5.34315 20.3431 4 22 4C20.3431 4 19 2.65685 19 1Z" opacity="0.8"/>
+              </svg>
+              <span class="fys-rare-size-strip__text">
+                Sizes 36 and 46–52 are handcrafted in smaller batches. Looking for another design in your size? We can custom-craft almost any Kisah design to your exact measurements.
+              </span>
+            </div>
+            <a href="https://wa.me/918100993480?text=Hi%20Kisah%2C%20I%20wear%20size%20{{ rare_size_label | default: 'custom' }}%20and%20want%20to%20know%20about%20custom-tailored%20options%20for%20this%20collection." target="_blank" rel="noopener" class="fys-rare-size-strip__btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.031 0C5.397 0 .012 5.385.012 12.019c0 2.118.553 4.186 1.605 6.008L0 24l6.167-1.618a11.968 11.968 0 0 0 5.864 1.53h.005c6.634 0 12.019-5.385 12.019-12.019 0-3.21-1.25-6.226-3.52-8.496A11.944 11.944 0 0 0 12.031 0zm0 21.996h-.004a9.96 9.96 0 0 1-5.074-1.39l-.364-.216-3.77.989 1.006-3.676-.237-.377a9.957 9.957 0 0 1-1.532-5.307c0-5.503 4.478-9.98 9.985-9.98a9.92 9.92 0 0 1 7.059 2.927 9.914 9.914 0 0 1 2.924 7.057c0 5.503-4.478 9.98-9.987 9.98zm5.474-7.472c-.3-.15-1.776-.876-2.05-.976-.275-.1-.475-.15-.675.15s-.775.976-.95 1.176c-.175.2-.35.225-.65.075s-1.272-.469-2.423-1.496c-.896-.799-1.501-1.787-1.676-2.087s-.019-.462.131-.611c.135-.134.3-.35.45-.525s.2-.3.3-.5c.1-.2.05-.375-.025-.525s-.675-1.625-.925-2.226c-.243-.584-.49-.505-.675-.514-.175-.009-.375-.009-.575-.009s-.525.075-.8.375c-.275.3-1.05 1.026-1.05 2.502s1.075 2.902 1.225 3.102 2.115 3.23 5.124 4.531c.716.31 1.275.495 1.71.634.719.229 1.374.197 1.892.12.577-.086 1.776-.726 2.026-1.426.25-.7.25-1.3.175-1.426-.075-.125-.275-.2-.575-.35z"/>
+              </svg>
+              <span>Custom Tailor on WhatsApp &rarr;</span>
+            </a>
+          </div>
+        {% endif %}
         {% if collection.products.size == 0 %}
           <div class="fys-guardrail">
             <h3 class="fys-guardrail__title">No ready-to-ship styles in this size right now</h3>
