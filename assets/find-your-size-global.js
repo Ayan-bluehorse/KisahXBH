@@ -361,32 +361,15 @@
 
     if (!isCollection && !isSearch) return;
 
-    // Control Group: In Variant A, do not auto-filter or show chip bar
+    // Control Group: In Variant A, do not show chip bar
     if (abVariant === 'variant_a') return;
 
     var search = window.location.search;
     var params = new URLSearchParams(search);
     var activeSizeInUrl = params.get('filter.v.option.size');
-    var isAvailabilityFiltered = params.get('filter.v.availability') === '1';
-    var savedSize = FYS.getSavedSize();
-    var isDismissed = FYS.isFilterDismissed();
 
-    // 1. Auto-filtering: If user has a saved size, not dismissed, and URL lacks size filter:
-    if (savedSize && !isDismissed && !activeSizeInUrl) {
-      params.set('filter.v.option.size', getFilterParamValue(savedSize));
-      params.set('filter.v.availability', '1');
-      params.delete('page');
-
-      trackEvent('fys_filter_applied', {
-        size: savedSize,
-        collection: window.location.pathname,
-        source: 'auto'
-      });
-
-      window.location.replace(window.location.pathname + '?' + params.toString() + window.location.hash);
-      return;
-    }
-
+    // Note: Do not auto-redirect collections on load so users can freely browse all styles.
+    // If the URL has an active size filter, render the informational chip bar.
     if (activeSizeInUrl) {
       renderChipBar(normalizeSize(activeSizeInUrl));
     }
@@ -454,6 +437,7 @@
       clearBtn.addEventListener('click', function (e) {
         e.preventDefault();
         FYS.dismissFilter();
+        FYS.clearSavedSize();
 
         trackEvent('fys_filter_cleared', {
           size: size,
@@ -515,6 +499,28 @@
     initCollectionOrSearch();
     initPDP();
   }
+
+  // Clear saved size and dismiss filter if user clicks theme Clear all or removes size chip
+  document.addEventListener('click', function (e) {
+    var target = e.target;
+    if (!target) return;
+
+    if (target.closest('.kisah-achip--clear') || target.closest('#kisahClearAll')) {
+      FYS.dismissFilter();
+      FYS.clearSavedSize();
+      return;
+    }
+
+    var chip = target.closest('.kisah-achip');
+    if (chip) {
+      var text = chip.textContent || '';
+      var href = chip.getAttribute('href') || '';
+      if (/36|38|40|42|44|46|48|50|52/i.test(text) || href.indexOf('size') !== -1) {
+        FYS.dismissFilter();
+        FYS.clearSavedSize();
+      }
+    }
+  }, true);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', onReady);
