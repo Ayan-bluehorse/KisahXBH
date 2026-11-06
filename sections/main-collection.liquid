@@ -30,11 +30,6 @@
         if (!isDismissed) {
           isDismissed = /(?:^|;\s*)_fys_dismissed=1/.test(document.cookie);
         }
-        if (search.includes('fys_dismissed=1') || search.includes('fys_clear=1')) {
-          isDismissed = true;
-          try { sessionStorage.setItem('fys_filter_dismissed', 'true'); } catch(e){}
-          document.cookie = '_fys_dismissed=1; path=/; max-age=86400; SameSite=Lax';
-        }
 
         // A/B test variant check
         var abMatch = document.cookie.match(/(?:^|;\s*)_fys_ab_variant=([^;]+)/);
@@ -340,7 +335,7 @@
             {%- continue -%}
           {%- endif -%}
           {%- for value in filter.active_values -%}
-            <a class="kisah-achip" href="{{ value.url_to_remove }}{% if filter.param_name contains 'size' or filter.label contains 'Size' %}{% if value.url_to_remove contains '?' %}&{% else %}?{% endif %}fys_dismissed=1{% endif %}">
+            <a class="kisah-achip" href="{{ value.url_to_remove }}">
               {{ value.label }}
               <span class="close-x">&times;</span>
             </a>
@@ -352,7 +347,7 @@
             </a>
           {%- endif -%}
         {%- endfor -%}
-        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1&fys_dismissed=1{% else %}?fys_dismissed=1{% endif %}">Clear all</a>
+        <a class="kisah-achip kisah-achip--clear" href="{{ collection.url }}{% if in_stock_total > 0 %}?filter.v.availability=1{% endif %}">Clear all</a>
       </div>
     {%- endif -%}
 

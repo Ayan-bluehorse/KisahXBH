@@ -361,7 +361,7 @@
 
     if (!isCollection && !isSearch) return;
 
-    // Control Group: In Variant A, do not show chip bar
+    // Control Group: In Variant A, do not auto-filter or show chip bar
     if (abVariant === 'variant_a') return;
 
     var search = window.location.search;
@@ -370,11 +370,6 @@
     var isAvailabilityFiltered = params.get('filter.v.availability') === '1';
     var savedSize = FYS.getSavedSize();
     var isDismissed = FYS.isFilterDismissed();
-
-    if (params.get('fys_dismissed') === '1' || params.get('fys_clear') === '1') {
-      isDismissed = true;
-      FYS.dismissFilter();
-    }
 
     // 1. Auto-filtering: If user has a saved size, not dismissed, and URL lacks size filter:
     if (savedSize && !isDismissed && !activeSizeInUrl) {
@@ -459,7 +454,6 @@
       clearBtn.addEventListener('click', function (e) {
         e.preventDefault();
         FYS.dismissFilter();
-        FYS.clearSavedSize();
 
         trackEvent('fys_filter_cleared', {
           size: size,
@@ -475,7 +469,6 @@
         });
         keysToDelete.forEach(function (k) { p.delete(k); });
         p.delete('page');
-        p.set('fys_dismissed', '1');
 
         if (!p.has('filter.v.availability')) {
           p.set('filter.v.availability', '1');
@@ -522,29 +515,6 @@
     initCollectionOrSearch();
     initPDP();
   }
-
-  // Dismiss filter if user clicks theme Clear all or removes size chip
-  document.addEventListener('click', function (e) {
-    var target = e.target;
-    if (!target) return;
-
-    if (target.closest('.kisah-achip--clear') || target.closest('#kisahClearAll')) {
-      FYS.dismissFilter();
-      return;
-    }
-
-    var chip = target.closest('.kisah-achip');
-    if (chip) {
-      var text = chip.textContent || '';
-      var href = chip.getAttribute('href') || '';
-      if (/36|38|40|42|44|46|48|50|52/i.test(text) || href.indexOf('size') !== -1) {
-        FYS.dismissFilter();
-        if (href && href.indexOf('fys_dismissed=1') === -1) {
-          chip.setAttribute('href', href + (href.indexOf('?') !== -1 ? '&' : '?') + 'fys_dismissed=1');
-        }
-      }
-    }
-  }, true);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', onReady);
