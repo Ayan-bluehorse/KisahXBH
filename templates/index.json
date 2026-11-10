@@ -98,8 +98,8 @@
         "slide_r6kMkU": {
           "type": "slide",
           "settings": {
-            "desk_img": "shopify://shop_images/Banner02_Desktop_Afterhours_Party_Edit.png",
-            "mob_img": "shopify://shop_images/Banner02_Mobile_Afterhours_Fashion_Campaign.png",
+            "desk_img": "shopify://shop_images/Cocktail_Banner_Desktop.jpg",
+            "mob_img": "shopify://shop_images/Cocktail_Banner_Mobile.jpg",
             "btn_link": "shopify://collections/cocktail",
             "eyebrow": "",
             "heading": "",
