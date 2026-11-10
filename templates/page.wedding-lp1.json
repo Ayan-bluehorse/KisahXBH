@@ -87,7 +87,7 @@
           "type": "slide-images",
           "settings": {
             "img": "shopify://shop_images/Group_237823.png",
-            "link": "shopify://collections/haldi",
+            "link": "shopify://collections/haldi-hues",
             "text": ""
           }
         },
@@ -158,7 +158,7 @@
           "disabled": true,
           "settings": {
             "img": "shopify://shop_images/Haldi.jpg",
-            "link": "shopify://collections/haldi",
+            "link": "shopify://collections/haldi-hues",
             "text": ""
           }
         }

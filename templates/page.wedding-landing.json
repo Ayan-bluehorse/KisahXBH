@@ -102,7 +102,7 @@
           "type": "filter_tab",
           "settings": {
             "title": "Haldi",
-            "collection": "haldi",
+            "collection": "haldi-hues",
             "custom_link": "/collections/haldi"
           }
         },
