@@ -177,6 +177,7 @@
         "item_4ygcpV",
         "item_FTkVyb"
       ],
+      "disabled": true,
       "name": "Shop by Category",
       "settings": {
         "heading": "Shop by Category",
@@ -195,6 +196,7 @@
           "settings": {
             "image": "shopify://shop_images/WEDDING_f9468051-8ad0-4d6f-91bc-c7fb08b111cc.png",
             "title": "Wedding",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/wedding"
           }
         },
@@ -203,6 +205,7 @@
           "settings": {
             "image": "shopify://shop_images/SANGEET_505868a0-9310-454e-8218-4cabbdb6f5ef.png",
             "title": "Sangeet",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/sangeet"
           }
         },
@@ -211,6 +214,7 @@
           "settings": {
             "image": "shopify://shop_images/MEHENDI_0147a484-8636-4cec-8fe3-f59ffa66e6c9.png",
             "title": "Mehendi",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/mehendi"
           }
         },
@@ -219,6 +223,7 @@
           "settings": {
             "image": "shopify://shop_images/HALDI_2234841e-e5a8-4f9a-83a5-9dd4340c1ea0.png",
             "title": "Haldi",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/haldi-1"
           }
         },
@@ -227,6 +232,7 @@
           "settings": {
             "image": "shopify://shop_images/reception_a13be2ec-d8bc-475b-a162-73529c90c1ee.jpg",
             "title": "Reception",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/reception"
           }
         },
@@ -235,6 +241,7 @@
           "settings": {
             "image": "shopify://shop_images/HOUSE_CELEBRATION_2e198786-9b56-473e-a099-739c4fb5a352.png",
             "title": "House Celebration",
+            "subtitle": "Sets and jackets for the main event",
             "link": "shopify://collections/house-celebration"
           }
         }
@@ -247,9 +254,14 @@
         "item_pJdh9h",
         "item_EeAn3b"
       ],
+      "disabled": true,
       "name": "Shop by Occasion",
       "settings": {
+        "eyebrow": "SHOP BY OCCASION",
         "heading": "Shop by Occasion",
+        "subtitle": "Pick the function. We'll show what works for it.",
+        "link_text": "ALL OCCASIONS",
+        "link_url": "",
         "bg_color": "#ffffff",
         "desk_padding_top": 24,
         "desk_padding_bottom": 0,
