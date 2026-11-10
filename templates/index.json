@@ -86,8 +86,8 @@
         "slide_iyAcdj": {
           "type": "slide",
           "settings": {
-            "desk_img": "shopify://shop_images/Banner01_Desktop_Luxury_Wedding_Edit_Fashion_Banner.png",
-            "mob_img": "shopify://shop_images/Banner01_Mobile_Wedding_Edit_Celebration_Poster.png",
+            "desk_img": "shopify://shop_images/Luxury_Wedding_Edit_Celebration.png",
+            "mob_img": "shopify://shop_images/Outlined_Wedding_Edit_Fashion_Poster.png",
             "btn_link": "shopify://pages/wedding",
             "eyebrow": "",
             "heading": "",
