@@ -360,87 +360,6 @@
         "mob_padding_bottom": 36
       }
     },
-    "v5_shop_by_occasion_YkVBXW": {
-      "type": "v5-shop-by-occasion",
-      "blocks": {
-        "item_4j3iFY": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WEDDING_f9468051-8ad0-4d6f-91bc-c7fb08b111cc.png",
-            "title": "Wedding",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/wedding"
-          }
-        },
-        "item_WxJUy4": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/SANGEET_505868a0-9310-454e-8218-4cabbdb6f5ef.png",
-            "title": "Sangeet",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/sangeet"
-          }
-        },
-        "item_XKe4mi": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/MEHENDI_0147a484-8636-4cec-8fe3-f59ffa66e6c9.png",
-            "title": "Mehendi",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/mehendi"
-          }
-        },
-        "item_UtLmyX": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/HALDI_2234841e-e5a8-4f9a-83a5-9dd4340c1ea0.png",
-            "title": "Haldi",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/haldi-1"
-          }
-        },
-        "item_pJdh9h": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/reception_a13be2ec-d8bc-475b-a162-73529c90c1ee.jpg",
-            "title": "Reception",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/reception"
-          }
-        },
-        "item_EeAn3b": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-11-10_at_5.11.38_PM.jpg",
-            "title": "Cocktail",
-            "subtitle": "Dark jackets and sequins for after the vows",
-            "link": "shopify://collections/cocktail"
-          }
-        }
-      },
-      "block_order": [
-        "item_4j3iFY",
-        "item_WxJUy4",
-        "item_XKe4mi",
-        "item_UtLmyX",
-        "item_pJdh9h",
-        "item_EeAn3b"
-      ],
-      "name": "Shop by Occasion",
-      "settings": {
-        "eyebrow": "SHOP BY OCCASION",
-        "heading": "Shop by Occasion",
-        "subtitle": "Pick the function. We'll show what works for it.",
-        "link_text": "",
-        "link_url": "",
-        "bg_color": "#ffffff",
-        "desk_columns": 6,
-        "desk_padding_top": 24,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 12,
-        "mob_padding_bottom": 0
-      }
-    },
     "v5_find_your_look_EHbamc": {
       "type": "v5-find-your-look",
       "blocks": {
@@ -1511,7 +1430,6 @@
     "v5_shop_by_occasion_w7jWtw",
     "banner_with_text_xmBXxb",
     "v5_bestsellers_tabbed_etTrbG",
-    "v5_shop_by_occasion_YkVBXW",
     "v5_find_your_look_EHbamc",
     "v5_kisah_stores_mzNqPm",
     "v5_customer_stories_WLwrT3",
