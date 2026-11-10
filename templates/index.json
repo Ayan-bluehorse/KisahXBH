@@ -139,11 +139,13 @@
         "slide_YWcziK",
         "slide_DqFqYx"
       ],
+      "disabled": true,
       "name": "V5 Hero Banner",
       "settings": {}
     },
     "v5_trust_strip_QFPjyJ": {
       "type": "v5-trust-strip",
+      "disabled": true,
       "name": "Trust Strip",
       "settings": {
         "bg_color": "#ffffff",
@@ -223,6 +225,7 @@
         "item_CwmNe8",
         "item_3fUUHJ"
       ],
+      "disabled": true,
       "name": "Shop by Occasion (Week)",
       "settings": {
         "eyebrow": "SHOP BY OCCASION",
