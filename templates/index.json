@@ -346,6 +346,20 @@
         "show_dots": true
       }
     },
+    "v5_bestsellers_tabbed_etTrbG": {
+      "type": "v5-bestsellers-tabbed",
+      "name": "Bestsellers (Tabbed Rail)",
+      "settings": {
+        "eyebrow": "BESTSELLERS",
+        "heading": "What's selling right now",
+        "view_all_text": "VIEW MORE",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 52,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 36
+      }
+    },
     "v5_shop_by_occasion_YkVBXW": {
       "type": "v5-shop-by-occasion",
       "blocks": {
@@ -425,20 +439,6 @@
         "desk_padding_bottom": 0,
         "mob_padding_top": 12,
         "mob_padding_bottom": 0
-      }
-    },
-    "v5_bestsellers_tabbed_etTrbG": {
-      "type": "v5-bestsellers-tabbed",
-      "name": "Bestsellers (Tabbed Rail)",
-      "settings": {
-        "eyebrow": "BESTSELLERS",
-        "heading": "What's selling right now",
-        "view_all_text": "VIEW MORE",
-        "bg_color": "#ffffff",
-        "desk_padding_top": 44,
-        "desk_padding_bottom": 52,
-        "mob_padding_top": 32,
-        "mob_padding_bottom": 36
       }
     },
     "v5_find_your_look_EHbamc": {
@@ -1510,8 +1510,8 @@
     "v5_trust_strip_QFPjyJ",
     "v5_shop_by_occasion_w7jWtw",
     "banner_with_text_xmBXxb",
-    "v5_shop_by_occasion_YkVBXW",
     "v5_bestsellers_tabbed_etTrbG",
+    "v5_shop_by_occasion_YkVBXW",
     "v5_find_your_look_EHbamc",
     "v5_kisah_stores_mzNqPm",
     "v5_customer_stories_WLwrT3",
