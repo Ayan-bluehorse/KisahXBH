@@ -69,7 +69,6 @@
         "item_rfmHVa",
         "item_bzr7HH"
       ],
-      "disabled": true,
       "name": "Shop by Category",
       "settings": {
         "heading": "Shop by category",
@@ -139,13 +138,11 @@
         "slide_YWcziK",
         "slide_DqFqYx"
       ],
-      "disabled": true,
       "name": "V5 Hero Banner",
       "settings": {}
     },
     "v5_trust_strip_QFPjyJ": {
       "type": "v5-trust-strip",
-      "disabled": true,
       "name": "Trust Strip",
       "settings": {
         "bg_color": "#ffffff",
@@ -225,7 +222,6 @@
         "item_CwmNe8",
         "item_3fUUHJ"
       ],
-      "disabled": true,
       "name": "Shop by Occasion (Week)",
       "settings": {
         "eyebrow": "SHOP BY OCCASION",
@@ -340,6 +336,7 @@
         "slide_banner_DhgQ4b",
         "slide_banner_NJiUWz"
       ],
+      "disabled": true,
       "settings": {
         "whats-app-link": "",
         "desk-padding-top": 0,
@@ -409,7 +406,6 @@
         "item_4ygcpV",
         "item_FTkVyb"
       ],
-      "disabled": true,
       "name": "Shop by Category",
       "settings": {
         "heading": "Shop by Category",
@@ -472,10 +468,10 @@
         "item_EeAn3b": {
           "type": "item",
           "settings": {
-            "image": "shopify://shop_images/HOUSE_CELEBRATION_2e198786-9b56-473e-a099-739c4fb5a352.png",
-            "title": "House Celebration",
-            "subtitle": "Sets and jackets for the main event",
-            "link": "shopify://collections/house-celebration"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-11-10_at_5.11.38_PM.jpg",
+            "title": "Cocktail",
+            "subtitle": "Dark jackets and sequins for after the vows",
+            "link": "shopify://collections/cocktail"
           }
         }
       },
@@ -487,13 +483,12 @@
         "item_pJdh9h",
         "item_EeAn3b"
       ],
-      "disabled": true,
       "name": "Shop by Occasion",
       "settings": {
         "eyebrow": "SHOP BY OCCASION",
         "heading": "Shop by Occasion",
         "subtitle": "Pick the function. We'll show what works for it.",
-        "link_text": "ALL OCCASIONS",
+        "link_text": "",
         "link_url": "",
         "bg_color": "#ffffff",
         "desk_columns": 6,
@@ -505,7 +500,6 @@
     },
     "v5_bestsellers_tabbed_etTrbG": {
       "type": "v5-bestsellers-tabbed",
-      "disabled": true,
       "name": "Bestsellers (Tabbed Rail)",
       "settings": {
         "eyebrow": "BESTSELLERS",
@@ -535,7 +529,7 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.45_PM.jpg",
             "title": "Pastels",
-            "swatch_color": "#D3DCD6",
+            "swatch_color": "#d3dcd6",
             "link": "shopify://collections/pastel"
           }
         },
@@ -544,7 +538,7 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_702e12da-cdc0-4bc6-afde-b01784c1da28.jpg",
             "title": "Blue",
-            "swatch_color": "#077EE7",
+            "swatch_color": "#077ee7",
             "link": "shopify://collections/blue"
           }
         },
@@ -553,7 +547,7 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_2.webp",
             "title": "Yellow",
-            "swatch_color": "#E5A835",
+            "swatch_color": "#e5a835",
             "link": "shopify://collections/marigold-edit"
           }
         },
@@ -580,7 +574,7 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_1.jpg",
             "title": "White",
-            "swatch_color": "#F4F0EA",
+            "swatch_color": "#f4f0ea",
             "link": "shopify://collections/white-ivories"
           }
         },
@@ -648,7 +642,6 @@
         "style_hmEmbD",
         "style_xca88U"
       ],
-      "disabled": true,
       "name": "Find your look (Tabs)",
       "settings": {
         "eyebrow": "FIND YOUR LOOK",
@@ -662,20 +655,6 @@
     },
     "v5_kisah_stores_mzNqPm": {
       "type": "v5-kisah-stores",
-      "disabled": false,
-      "name": "Kisah Stores",
-      "settings": {
-        "eyebrow": "KISAH STORES",
-        "heading": "Try it on before the function",
-        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
-        "link_text": "ALL STORES",
-        "link_url": "/pages/store-locator",
-        "bg_color": "#F8F8F3",
-        "desk_padding_top": 44,
-        "desk_padding_bottom": 52,
-        "mob_padding_top": 32,
-        "mob_padding_bottom": 36
-      },
       "blocks": {
         "store_gariahat": {
           "type": "store",
@@ -823,360 +802,19 @@
         "store_malad",
         "store_vizag",
         "store_coming_soon"
-      ]
-    },
-    "v5_shop_by_colour_y7aKUB": {
-      "type": "v5-shop-by-colour",
-      "blocks": {
-        "item_63DGcX": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM.webp",
-            "title": "Black",
-            "swatch_color": "#1c1c1e",
-            "link": "shopify://collections/midnight-monochromes"
-          }
-        },
-        "item_jQxVtr": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.45_PM.webp",
-            "title": "Pastels",
-            "swatch_color": "#d3dcd6",
-            "link": "shopify://collections/pastel"
-          }
-        },
-        "item_WgEddV": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_702e12da-cdc0-4bc6-afde-b01784c1da28.jpg",
-            "title": "Blue",
-            "swatch_color": "#077ee7",
-            "link": "shopify://collections/blue"
-          }
-        },
-        "item_brNQXA": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_2.webp",
-            "title": "Yellow",
-            "swatch_color": "#e5a835",
-            "link": "shopify://collections/marigold-edit"
-          }
-        },
-        "item_4dERPx": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM.webp",
-            "title": "Pink",
-            "swatch_color": "#d99fa5",
-            "link": "shopify://collections/blush-rose"
-          }
-        },
-        "item_XHmgAm": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_2.webp",
-            "title": "Green",
-            "swatch_color": "#4a6050",
-            "link": "shopify://collections/earth-green"
-          }
-        },
-        "item_e4Ywxm": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_1.jpg",
-            "title": "White",
-            "swatch_color": "#f4f0ea",
-            "link": "shopify://collections/white-ivories"
-          }
-        }
-      },
-      "block_order": [
-        "item_63DGcX",
-        "item_jQxVtr",
-        "item_WgEddV",
-        "item_brNQXA",
-        "item_4dERPx",
-        "item_XHmgAm",
-        "item_e4Ywxm"
       ],
-      "name": "Shop by Colour",
+      "name": "Kisah Stores",
       "settings": {
-        "heading": "Shop by Colour",
-        "bg_color": "#ffffff",
-        "desk_padding_top": 24,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 12,
-        "mob_padding_bottom": 0
-      }
-    },
-    "v5_shop_by_style_aj6Hpd": {
-      "type": "v5-shop-by-style",
-      "blocks": {
-        "item_6Mi83d": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_2.webp",
-            "title": "Mirror & Folk",
-            "link": "shopify://collections/mirror-folk"
-          }
-        },
-        "item_Tk9Uqd": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM_1.webp",
-            "title": "The Printed Man",
-            "link": "shopify://collections/the-printed-man"
-          }
-        },
-        "item_GyKn6U": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.25_PM.webp",
-            "title": "Embroidery",
-            "link": "shopify://collections/embroidery"
-          }
-        },
-        "item_tn8Lka": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM.webp",
-            "title": "Ombre & Gradient",
-            "link": "shopify://collections/ombre-gradient"
-          }
-        },
-        "item_B3bBrN": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM.webp",
-            "title": "Floral",
-            "link": "shopify://collections/floral"
-          }
-        },
-        "item_hinFKi": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_1.webp",
-            "title": "Minimal Edit",
-            "link": "shopify://collections/minimal-edit"
-          }
-        }
-      },
-      "block_order": [
-        "item_6Mi83d",
-        "item_Tk9Uqd",
-        "item_GyKn6U",
-        "item_tn8Lka",
-        "item_B3bBrN",
-        "item_hinFKi"
-      ],
-      "name": "Shop by Style",
-      "settings": {
-        "heading": "Shop by Style",
-        "bg_color": "#ffffff",
-        "desk_padding_top": 24,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 12,
-        "mob_padding_bottom": 0
-      }
-    },
-    "v5_kisah_journal_iGJQq9": {
-      "type": "v5-kisah-journal",
-      "blocks": {
-        "chapter_BgWh7H": {
-          "type": "chapter",
-          "settings": {
-            "tab_title": "Puja & Ritual",
-            "is_dark": false,
-            "bg_color": "#eee4d9",
-            "text_color": "#2b2222",
-            "headline": "Same rituals.\nYour signature.",
-            "story": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories.",
-            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
-            "cta_text": "Explore Puja & Rituals",
-            "cta_link": "shopify://collections/diwali-puja",
-            "images_count": "auto",
-            "look1_img": "shopify://shop_images/KA-1064-01_bf8122c1-6867-4732-b294-d4c525b77f97.webp",
-            "look1_fallback": "",
-            "look1_name": "Floral expression",
-            "look1_link": "shopify://products/men-multi-printed-floral-only-kurta-ka-1064",
-            "look2_img": "shopify://shop_images/file_1746b5fa-3eb1-47b2-8724-277fd4ff86a0.webp",
-            "look2_fallback": "",
-            "look2_name": "Wine & palms",
-            "look2_link": "/products/wine-kurta-with-palm-embroidery-ka-1187",
-            "look3_img": "shopify://shop_images/ka-1328-1.webp",
-            "look3_fallback": "",
-            "look3_name": "Olive texture",
-            "look3_link": "shopify://products/kisah-mens-mid-kurta-wide-leg-trouser-set-ka-1328-r103",
-            "look4_fallback": "",
-            "look4_name": "",
-            "look4_link": ""
-          }
-        },
-        "chapter_6ynrJU": {
-          "type": "chapter",
-          "settings": {
-            "tab_title": "Art & Print",
-            "is_dark": false,
-            "bg_color": "#e5eadf",
-            "text_color": "#203025",
-            "headline": "Wear a little\nimagination.",
-            "story": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss.",
-            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
-            "cta_text": "Explore Art & Floral designs",
-            "cta_link": "/collections/the-printed-man",
-            "images_count": "auto",
-            "look1_img": "shopify://shop_images/KA-1082-T306-01.webp",
-            "look1_fallback": "",
-            "look1_name": "Navy floral kurta set",
-            "look1_link": "shopify://products/ka-1082-t306-men-blue-printed-floral-kurta-trouser-set",
-            "look2_img": "shopify://shop_images/file_f9d4ad3a-5862-43fd-b8a1-b39a55852b05.webp",
-            "look2_fallback": "",
-            "look2_name": "Black floral jacket set",
-            "look2_link": "shopify://products/black-cotton-silk-floral-jacket-mid-kurta-trouser-set-ka-0863-5706-t303",
-            "look3_img": "shopify://shop_images/Kisah8599.webp",
-            "look3_fallback": "",
-            "look3_name": "Blue floral Nehru set",
-            "look3_link": "shopify://products/kisah-men-green-woven-design-floral-kurta-jacket-trouser-set-ka-0941-5533-t306",
-            "look4_fallback": "",
-            "look4_name": "",
-            "look4_link": ""
-          }
-        },
-        "chapter_i9xLE4": {
-          "type": "chapter",
-          "settings": {
-            "tab_title": "Modern Form",
-            "is_dark": false,
-            "bg_color": "#ece6e1",
-            "text_color": "#28201a",
-            "headline": "A modern\npoint of view.",
-            "story": "A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist.",
-            "expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
-            "cta_text": "Explore Modern Silhouettes",
-            "cta_link": "shopify://collections/fusion-wear",
-            "images_count": "auto",
-            "look1_img": "shopify://shop_images/ka-1303-1.webp",
-            "look1_fallback": "",
-            "look1_name": "Multicolour embroidered zip kurta",
-            "look1_link": "shopify://products/kisah-mens-zip-kurta-ka-1303",
-            "look2_img": "shopify://shop_images/KA-5653-01.webp",
-            "look2_fallback": "",
-            "look2_name": "Black embroidered bomber",
-            "look2_link": "shopify://products/ka-5653-men-black-embroidered-bomber-jacket-with-thread-work",
-            "look3_fallback": "",
-            "look3_name": "",
-            "look3_link": "",
-            "look4_fallback": "",
-            "look4_name": "",
-            "look4_link": ""
-          }
-        },
-        "chapter_YgxFX3": {
-          "type": "chapter",
-          "settings": {
-            "tab_title": "After Dark",
-            "is_dark": true,
-            "bg_color": "#191522",
-            "text_color": "#ffffff",
-            "headline": "The lights are on.\nSo are you.",
-            "story": "Kisah’s modern take on zardozi & crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings & after-parties.",
-            "expression": "The new expressionA sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.",
-            "cta_text": "Explore After Dark Look",
-            "cta_link": "shopify://collections/afterparty",
-            "images_count": "auto",
-            "look1_img": "shopify://shop_images/KA-5654-01.webp",
-            "look1_fallback": "",
-            "look1_name": "Wine sequinned bomber",
-            "look1_link": "shopify://products/ka-5654-men-wine-embellished-bomber-jacket-with-sequence",
-            "look2_img": "shopify://shop_images/file_77a9de6e-8df3-42e1-b2e4-715d51d25e70.webp",
-            "look2_fallback": "",
-            "look2_name": "Peach ombré zipped kurta",
-            "look2_link": "shopify://products/peach-ombre-cotton-silk-zipped-kurta-ka-1247",
-            "look3_fallback": "",
-            "look3_name": "",
-            "look3_link": "",
-            "look4_fallback": "",
-            "look4_name": "",
-            "look4_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "chapter_BgWh7H",
-        "chapter_6ynrJU",
-        "chapter_i9xLE4",
-        "chapter_YgxFX3"
-      ],
-      "name": "Festive Style Story",
-      "settings": {
-        "kicker": "THE KISAH JOURNAL / THE FESTIVE STYLE STORY",
-        "title": "Men’s Diwali fashion.",
-        "subtitle": "One festival. Many occasions. Many Expressions",
-        "link_text": "",
-        "link_url": "",
-        "bg_color": "#f5f0e8",
-        "desk_padding_top": 36,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 28,
-        "mob_padding_bottom": 0,
-        "tab_1_title": "Puja & Ritual",
-        "ch1_bg": "#eee4d9",
-        "ch1_text": "#2b2222",
-        "ch1_headline": "Same rituals.\nYour signature.",
-        "ch1_story": "The kurta holds family memories, festive rituals and memories of the first diya. This season, make your own signature memories with attires that capture your expressions & stories.",
-        "ch1_expression": "Floral, olive, wine or midnight blue: choose your colour and expression.",
-        "ch1_cta_text": "Explore Puja & Rituals",
-        "ch1_cta_link": "",
-        "ch1_look1_name": "Floral expression",
-        "ch1_look1_link": "",
-        "ch1_look2_name": "Wine & palms",
-        "ch1_look2_link": "",
-        "ch1_look3_name": "Olive texture",
-        "ch1_look3_link": "",
-        "tab_2_title": "Art & Print",
-        "ch2_bg": "#e5eadf",
-        "ch2_text": "#203025",
-        "ch2_headline": "Wear a little\nimagination.",
-        "ch2_story": "Flowers on menswear date back to Mohenjodaro—the famous steatite “Priest-King” sculpture depicts a shawl decorated with a trefoil. From then to the Mughals & Nawabs, florals on menswear signify status, masculinity, triumph & spiritual bliss.",
-        "ch2_cta_text": "Explore Art & Floral designs",
-        "ch2_cta_link": "",
-        "ch2_look1_name": "Navy floral kurta set",
-        "ch2_look1_link": "",
-        "ch2_look2_name": "Black floral jacket set",
-        "ch2_look2_link": "",
-        "ch2_look3_name": "Blue floral Nehru set",
-        "ch2_look3_link": "",
-        "tab_3_title": "Modern Form",
-        "ch3_bg": "#e3e7ea",
-        "ch3_text": "#1f2d38",
-        "ch3_headline": "A modern\npoint of view.",
-        "ch3_story": "A small change, like a front zip, can elevate a familiar look. An embroidered zip kurta or a statement bomber gives festive dressing a strong modern twist.",
-        "ch3_cta_text": "Explore Modern Silhouette",
-        "ch3_cta_link": "",
-        "ch3_look1_name": "Multicolour embroidered zip kurta",
-        "ch3_look1_link": "",
-        "ch3_look2_name": "Black embroidered bomber",
-        "ch3_look2_link": "",
-        "ch3_look3_name": "",
-        "ch3_look3_link": "",
-        "tab_4_title": "After Dark",
-        "ch4_bg": "#191522",
-        "ch4_text": "#ffffff",
-        "ch4_headline": "The lights are on.\nSo are you.",
-        "ch4_story": "Kisah’s modern take on zardozi & crafted styles that literally shimmered under the flicker of royal evening torches. A sharp, maximalist “after-dark” aesthetic built for social evenings & after-parties.",
-        "ch4_expression": "A sequinned jacket, gold print or ombré drape brings expression through light, colour and movement.",
-        "ch4_cta_text": "Explore After Dark Look",
-        "ch4_cta_link": "",
-        "ch4_look1_name": "Wine sequinned bomber",
-        "ch4_look1_link": "",
-        "ch4_look2_name": "Peach ombré zipped kurta",
-        "ch4_look2_link": "",
-        "ch4_look3_name": "",
-        "ch4_look3_link": "",
-        "ch4_look4_name": "",
-        "ch4_look4_link": ""
+        "eyebrow": "KISAH STORES",
+        "heading": "Try it on before the function",
+        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
+        "link_text": "ALL STORES",
+        "link_url": "/pages/store-locator",
+        "bg_color": "#f8f8f3",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 52,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 36
       }
     },
     "v5_customer_stories_WLwrT3": {
@@ -1948,9 +1586,6 @@
     "v5_bestsellers_tabbed_etTrbG",
     "v5_find_your_look_EHbamc",
     "v5_kisah_stores_mzNqPm",
-    "v5_shop_by_colour_y7aKUB",
-    "v5_shop_by_style_aj6Hpd",
-    "v5_kisah_journal_iGJQq9",
     "v5_customer_stories_WLwrT3",
     "ceremony_carousel_hhd6Ke",
     "trust_badges_bar_nePxQ9",
