@@ -9,6 +9,7 @@
 
 {%- liquid
   assign sid = section.id
+  assign desk_card_size = section.settings.desk_card_size | default: 150
 -%}
 
 <section 
@@ -60,12 +61,12 @@
                     srcset="{{ block.settings.image | image_url: width: 180 }} 180w,
                             {{ block.settings.image | image_url: width: 280 }} 280w,
                             {{ block.settings.image | image_url: width: 360 }} 360w"
-                    sizes="(max-width: 768px) 76px, 100px"
+                    sizes="(max-width: 768px) 76px, {{ desk_card_size }}px"
                     alt="{{ item_title | escape }}"
                     loading="lazy"
                     decoding="async"
-                    width="100"
-                    height="100"
+                    width="{{ desk_card_size }}"
+                    height="{{ desk_card_size }}"
                     class="v5-cat-img"
                   >
                 {%- else -%}
@@ -237,27 +238,46 @@
       padding-bottom: {{ section.settings.desk_padding_bottom | default: 24 }}px !important;
     }
     .v5-revamp-cats .v5-cats-title {
-      font-size: 30px;
-      margin-bottom: 22px;
+      font-size: 32px;
+      margin-bottom: 24px;
     }
     .v5-revamp-cats .v5-cats-track {
-      gap: 16px;
+      gap: 20px;
       justify-content: center;
       padding-bottom: 8px;
     }
     .v5-revamp-cats .v5-cat-item {
-      flex: 0 0 100px;
-      max-width: 100px;
+      flex: 0 0 {{ desk_card_size | times: 0.85 | round }}px;
+      max-width: {{ desk_card_size | times: 0.85 | round }}px;
     }
     .v5-revamp-cats .v5-cat-media {
-      width: 100px;
-      height: 100px;
+      width: {{ desk_card_size | times: 0.85 | round }}px;
+      height: {{ desk_card_size | times: 0.85 | round }}px;
+      margin-bottom: 10px;
     }
     .v5-revamp-cats .v5-cat-name {
-      font-size: 12.5px;
+      font-size: 13px;
     }
     .v5-revamp-cats .v5-cats-arrow {
       display: flex;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .v5-revamp-cats .v5-cats-track {
+      gap: 24px;
+    }
+    .v5-revamp-cats .v5-cat-item {
+      flex: 0 0 {{ desk_card_size }}px;
+      max-width: {{ desk_card_size }}px;
+    }
+    .v5-revamp-cats .v5-cat-media {
+      width: {{ desk_card_size }}px;
+      height: {{ desk_card_size }}px;
+      margin-bottom: 12px;
+    }
+    .v5-revamp-cats .v5-cat-name {
+      font-size: 14px;
     }
   }
 </style>
@@ -318,6 +338,16 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "desk_card_size",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Desktop Card Size",
+      "default": 150
     },
     {
       "type": "range",
