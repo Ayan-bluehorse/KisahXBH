@@ -35,7 +35,7 @@
           assign heading = block.settings.heading
           assign subhead = block.settings.subheading
           assign btn_text = block.settings.btn_text
-          assign btn_link = block.settings.btn_link | default: '/pages/wedding'
+          assign btn_link = block.settings.btn_link
           assign has_copy = false
           if eyebrow != blank or heading != blank or subhead != blank or btn_text != blank
             assign has_copy = true
@@ -50,7 +50,7 @@
           {{ block.shopify_attributes }}
           {% unless is_active %}inert aria-hidden="true"{% endunless %}
         >
-          {%- if has_copy == false and btn_link != blank -%}
+          {%- if btn_link != blank -%}
             <a href="{{ btn_link }}" class="v5-hero-slide-link" aria-label="Banner Link"></a>
           {%- endif -%}
 
@@ -362,11 +362,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 3;
+    z-index: 6;
     color: #ffffff;
     padding: 0 16px 24px;
     box-sizing: border-box;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 0 2px 14px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+  }
+  .v5-hero-ctas,
+  .v5-hero-btn {
+    pointer-events: auto;
   }
   .v5-hero-eyebrow {
     font-family: var(--base-font-family, sans-serif);
@@ -606,45 +611,36 @@
           "label": "Mobile Image (800x1067 recommended)"
         },
         {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Banner Link"
+        },
+        {
           "type": "text",
           "id": "eyebrow",
-          "label": "Eyebrow Text",
-          "default": "FOR FESTIVE & PUJAS"
+          "label": "Eyebrow Text (Optional)"
         },
         {
           "type": "textarea",
           "id": "heading",
-          "label": "Heading",
-          "default": "One festival.\nMany occasions."
+          "label": "Heading (Optional)"
         },
         {
           "type": "textarea",
           "id": "subheading",
-          "label": "Subheading",
-          "default": "Puja mornings, family lunches, card nights. A look for each."
+          "label": "Subheading (Optional)"
         },
         {
           "type": "text",
           "id": "btn_text",
-          "label": "Button Text",
-          "default": "SHOP FESTIVE EDIT"
-        },
-        {
-          "type": "url",
-          "id": "btn_link",
-          "label": "Button Link"
+          "label": "Button Text (Optional)"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "V5 Hero Banner",
-      "blocks": [
-        {
-          "type": "slide"
-        }
-      ]
+      "name": "V5 Hero Banner"
     }
   ]
 }
