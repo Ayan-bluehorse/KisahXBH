@@ -346,77 +346,6 @@
         "show_dots": true
       }
     },
-    "v5_shop_by_category_KpXJQD": {
-      "type": "v5-shop-by-category",
-      "blocks": {
-        "item_gTWNJW": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM.jpg",
-            "title": "Kurta and Short Kurta",
-            "link": "shopify://collections/kurta-short-kurta"
-          }
-        },
-        "item_wPNmDU": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM_2.webp",
-            "title": "Kurta Sets",
-            "link": "shopify://collections/kurta-sets"
-          }
-        },
-        "item_B7FqMx": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.22_PM_1.jpg",
-            "title": "Nehru Jacket",
-            "link": "shopify://collections/nehru-jackets"
-          }
-        },
-        "item_PFRBzr": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM_1_1.webp",
-            "title": "Indowestern",
-            "link": "shopify://collections/indowestern-check"
-          }
-        },
-        "item_4ygcpV": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_3.49.21_PM.webp",
-            "title": "Bandhgala",
-            "link": "https://kisah.in/collections/jodhpuri-bandhgala"
-          }
-        },
-        "item_FTkVyb": {
-          "type": "item",
-          "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-24_at_12.49.57_AM.webp",
-            "title": "Sherwanis",
-            "link": "shopify://collections/sherwani-achkans"
-          }
-        }
-      },
-      "block_order": [
-        "item_gTWNJW",
-        "item_wPNmDU",
-        "item_B7FqMx",
-        "item_PFRBzr",
-        "item_4ygcpV",
-        "item_FTkVyb"
-      ],
-      "name": "Shop by Category",
-      "settings": {
-        "heading": "Shop by Category",
-        "bg_color": "#ffffff",
-        "desk_card_size": 150,
-        "desk_padding_top": 24,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 14,
-        "mob_padding_bottom": 0
-      }
-    },
     "v5_shop_by_occasion_YkVBXW": {
       "type": "v5-shop-by-occasion",
       "blocks": {
@@ -1581,7 +1510,6 @@
     "v5_trust_strip_QFPjyJ",
     "v5_shop_by_occasion_w7jWtw",
     "banner_with_text_xmBXxb",
-    "v5_shop_by_category_KpXJQD",
     "v5_shop_by_occasion_YkVBXW",
     "v5_bestsellers_tabbed_etTrbG",
     "v5_find_your_look_EHbamc",
