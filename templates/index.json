@@ -503,6 +503,180 @@
         "mob_padding_bottom": 0
       }
     },
+    "v5_bestsellers_tabbed_etTrbG": {
+      "type": "v5-bestsellers-tabbed",
+      "disabled": true,
+      "name": "Bestsellers (Tabbed Rail)",
+      "settings": {
+        "eyebrow": "BESTSELLERS",
+        "heading": "What's selling right now",
+        "view_all_text": "VIEW MORE",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 52,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 36
+      }
+    },
+    "v5_find_your_look_EHbamc": {
+      "type": "v5-find-your-look",
+      "blocks": {
+        "colour_7TetPJ": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM.webp",
+            "title": "Black",
+            "swatch_color": "#1c1c1e",
+            "link": "shopify://collections/midnight-monochromes"
+          }
+        },
+        "colour_PFjdGk": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.45_PM.jpg",
+            "title": "Pastels",
+            "swatch_color": "#D3DCD6",
+            "link": "shopify://collections/pastel"
+          }
+        },
+        "colour_8MGRBy": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_702e12da-cdc0-4bc6-afde-b01784c1da28.jpg",
+            "title": "Blue",
+            "swatch_color": "#077EE7",
+            "link": "shopify://collections/blue"
+          }
+        },
+        "colour_aAGUBF": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_2.webp",
+            "title": "Yellow",
+            "swatch_color": "#E5A835",
+            "link": "shopify://collections/marigold-edit"
+          }
+        },
+        "colour_VCBFkq": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM.webp",
+            "title": "Pink",
+            "swatch_color": "#1c1c1e",
+            "link": "shopify://collections/blush-rose"
+          }
+        },
+        "colour_qtqEhJ": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.44_PM_2.webp",
+            "title": "Green",
+            "swatch_color": "#1c1c1e",
+            "link": "shopify://collections/earth-green"
+          }
+        },
+        "colour_EqFXDL": {
+          "type": "colour",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_4.06.46_PM_1.jpg",
+            "title": "White",
+            "swatch_color": "#F4F0EA",
+            "link": "shopify://collections/white-ivories"
+          }
+        },
+        "style_RfBGgz": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_2.webp",
+            "title": "Mirror & Folk",
+            "link": "shopify://collections/mirror-folk"
+          }
+        },
+        "style_Y66AzW": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM_1.webp",
+            "title": "The Printed Man",
+            "link": "shopify://collections/the-printed-man"
+          }
+        },
+        "style_r8cBnk": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.25_PM.webp",
+            "title": "Embroidery",
+            "link": "shopify://collections/embroidery"
+          }
+        },
+        "style_7QJcEy": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.27_PM.webp",
+            "title": "Ombre & Gradient",
+            "link": "shopify://collections/ombre-gradient"
+          }
+        },
+        "style_hmEmbD": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM.webp",
+            "title": "Floral",
+            "link": "shopify://collections/floral"
+          }
+        },
+        "style_xca88U": {
+          "type": "style",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-23_at_5.14.26_PM_1.webp",
+            "title": "Minimal Edit",
+            "link": "shopify://collections/minimal-edit"
+          }
+        }
+      },
+      "block_order": [
+        "colour_7TetPJ",
+        "colour_PFjdGk",
+        "colour_8MGRBy",
+        "colour_aAGUBF",
+        "colour_VCBFkq",
+        "colour_qtqEhJ",
+        "colour_EqFXDL",
+        "style_RfBGgz",
+        "style_Y66AzW",
+        "style_r8cBnk",
+        "style_7QJcEy",
+        "style_hmEmbD",
+        "style_xca88U"
+      ],
+      "disabled": true,
+      "name": "Find your look (Tabs)",
+      "settings": {
+        "eyebrow": "FIND YOUR LOOK",
+        "heading": "By colour or by style",
+        "bg_color": "#ffffff",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 40,
+        "mob_padding_top": 28,
+        "mob_padding_bottom": 28
+      }
+    },
+    "v5_kisah_stores_mzNqPm": {
+      "type": "v5-kisah-stores",
+      "disabled": true,
+      "name": "Kisah Stores",
+      "settings": {
+        "eyebrow": "KISAH STORES",
+        "heading": "Try it on before the function",
+        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
+        "link_text": "ALL STORES",
+        "link_url": "",
+        "bg_color": "#fbf8f3",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 52,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 36
+      }
+    },
     "v5_shop_by_colour_y7aKUB": {
       "type": "v5-shop-by-colour",
       "blocks": {
@@ -1623,6 +1797,9 @@
     "banner_with_text_xmBXxb",
     "v5_shop_by_category_KpXJQD",
     "v5_shop_by_occasion_YkVBXW",
+    "v5_bestsellers_tabbed_etTrbG",
+    "v5_find_your_look_EHbamc",
+    "v5_kisah_stores_mzNqPm",
     "v5_shop_by_colour_y7aKUB",
     "v5_shop_by_style_aj6Hpd",
     "v5_kisah_journal_iGJQq9",
