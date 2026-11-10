@@ -17,6 +17,81 @@
           "name": "Author Bio",
           "settings": {
             "section_title": "",
+            "match_author": "",
+            "alignment": "center",
+            "max_width": 900,
+            "section_bg": "rgba(0,0,0,0)",
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/user.png",
+            "avatar_border": "#dddddd",
+            "name": "Tanvi Jain",
+            "role": "Head of Design",
+            "bio": "<p>Tanvi Jain is the Head of Design at Kisah, where she leads the creative vision behind the brand’s contemporary ethnic menswear collections. With a keen eye for detail and a deep understanding of evolving fashion trends, she blends traditional craftsmanship with modern design sensibilities. At Kisah, she continues to shape collections that resonate with the modern man, ensuring every outfit is both timeless and trend-forward.</p>"
+          },
+          "blocks": {}
+        },
+        "author_bio_YfGhM8": {
+          "type": "author-bio",
+          "name": "Author Bio",
+          "settings": {
+            "section_title": "",
+            "match_author": "",
+            "alignment": "center",
+            "max_width": 900,
+            "section_bg": "rgba(0,0,0,0)",
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/user.png",
+            "avatar_border": "#dddddd",
+            "name": "Ajay Kumar",
+            "role": "Head of Brand & Marketing",
+            "bio": "<p>As the Head of Brand & Marketing at Kisah, Ajay brings together fashion, culture, and changing consumer preferences to explore the evolving world of men's celebration wear. With an understanding of modern wedding trends, occasion-based dressing, and contemporary style preferences, he shares practical fashion insights to help men dress confidently for every occasion. From decoding contemporary wedding dress codes to exploring the latest ethnic wear trends, Ajay makes Kisah’s menswear more expressive, accessible, and exciting.</p>"
+          },
+          "blocks": {}
+        },
+        "author_bio_fVA7nF": {
+          "type": "author-bio",
+          "name": "Author Bio",
+          "settings": {
+            "section_title": "",
+            "match_author": "",
+            "alignment": "center",
+            "max_width": 900,
+            "section_bg": "rgba(0,0,0,0)",
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/user.png",
+            "avatar_border": "#dddddd",
+            "name": "Aastha Jain",
+            "role": "Curator",
+            "bio": "<p>Aastha is the Curator at Kisah, bridging the gap between raw design, cultural storytelling, and commercial appeal. With a deep appreciation for Indian heritage and contemporary fashion, she brings together evolving style sensibilities, traditional influences, and modern design perspectives to shape the world of men's ethnic wear. With in-depth research on wedding outfits, festive styling, fabrics, and menswear trends, Aastha implements fresh, relevant, and expressive fashion choices at Kisah for the modern man.</p>"
+          },
+          "blocks": {}
+        },
+        "author_bio_WwTJnx": {
+          "type": "author-bio",
+          "name": "Author Bio",
+          "disabled": true,
+          "settings": {
+            "section_title": "",
+            "match_author": "",
+            "alignment": "center",
+            "max_width": 900,
+            "section_bg": "rgba(0,0,0,0)",
+            "card_bg": "#ffffff",
+            "avatar": "shopify://shop_images/user.png",
+            "avatar_border": "#dddddd",
+            "name": "Tanvi Jain",
+            "role": "Head of Design",
+            "bio": "<p>Tanvi Jain is the Head of Design at Kisah, where she leads the creative vision behind the brand’s contemporary ethnic menswear collections. With a keen eye for detail and a deep understanding of evolving fashion trends, she blends traditional craftsmanship with modern design sensibilities. At Kisah, she continues to shape collections that resonate with the modern man, ensuring every outfit is both timeless and trend-forward.</p>"
+          },
+          "blocks": {}
+        },
+        "author_bio_GUjqMa": {
+          "type": "author-bio",
+          "name": "Author Bio",
+          "disabled": true,
+          "settings": {
+            "section_title": "",
+            "match_author": "",
             "alignment": "center",
             "max_width": 900,
             "section_bg": "rgba(0,0,0,0)",
@@ -31,13 +106,24 @@
         }
       },
       "block_order": [
-        "author_bio_nVyzd4"
+        "author_bio_nVyzd4",
+        "author_bio_YfGhM8",
+        "author_bio_fVA7nF",
+        "author_bio_WwTJnx",
+        "author_bio_GUjqMa"
       ],
       "custom_css": [],
       "settings": {
         "show_date": true,
         "show_author": false,
         "show_article_tags": true,
+        "show_related_sidebar": true,
+        "related_sidebar_title": "RELATED PRODUCTS",
+        "related_collection": "",
+        "related_limit": 4,
+        "show_cta_button": true,
+        "cta_button_text": "Shop Our Collection",
+        "cta_button_url": "/collections/all",
         "show_sharing_icons": true,
         "show_twitter": true,
         "show_facebook": true,
@@ -46,12 +132,7 @@
         "full_width_image": false,
         "featured_image_height": "natural",
         "enable_title_overlay": false,
-        "overlay_style": "shadow",
-        "show_related_sidebar": true,
-        "related_sidebar_title": "RELATED PRODUCTS",
-        "show_cta_button": true,
-        "cta_button_text": "Shop Our Collection",
-        "cta_button_url": "/collections/all"
+        "overlay_style": "shadow"
       }
     },
     "custom_liquid_8mA49Y": {
