@@ -35,7 +35,7 @@
           "name": "Author Bio",
           "settings": {
             "section_title": "",
-            "match_author": "",
+            "match_author": "Ajay Kumar",
             "alignment": "center",
             "max_width": 900,
             "section_bg": "rgba(0,0,0,0)",
@@ -53,7 +53,7 @@
           "name": "Author Bio",
           "settings": {
             "section_title": "",
-            "match_author": "",
+            "match_author": "Aastha Jain",
             "alignment": "center",
             "max_width": 900,
             "section_bg": "rgba(0,0,0,0)",
