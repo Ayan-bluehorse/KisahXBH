@@ -12,6 +12,7 @@
 
 {%- liquid
   assign sid = section.id
+  assign desk_cols = section.settings.desk_columns | default: 6
 -%}
 
 <section 
@@ -88,16 +89,16 @@
               <div class="v5-occ-media">
                 {%- if block.settings.image != blank -%}
                   <img
-                    src="{{ block.settings.image | image_url: width: 450 }}"
+                    src="{{ block.settings.image | image_url: width: 600 }}"
                     srcset="{{ block.settings.image | image_url: width: 200 }} 200w,
                             {{ block.settings.image | image_url: width: 350 }} 350w,
-                            {{ block.settings.image | image_url: width: 450 }} 450w"
-                    sizes="(max-width: 768px) 148px, (max-width: 1200px) 14vw, 175px"
+                            {{ block.settings.image | image_url: width: 600 }} 600w"
+                    sizes="(max-width: 768px) 148px, (max-width: 1200px) 18vw, 240px"
                     alt="{{ item_title | escape }}"
                     loading="lazy"
                     decoding="async"
-                    width="175"
-                    height="218"
+                    width="240"
+                    height="300"
                     class="v5-occ-img"
                   >
                 {%- else -%}
@@ -314,8 +315,8 @@
     }
     .v5-revamp-occ .v5-occ-track {
       display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat({{ desk_cols }}, minmax(0, 1fr));
+      gap: 20px;
       overflow: visible;
       padding-bottom: 0;
     }
@@ -325,12 +326,14 @@
     }
     .v5-revamp-occ .v5-occ-media {
       aspect-ratio: 4 / 5;
+      margin-bottom: 12px;
     }
     .v5-revamp-occ .v5-occ-name {
-      font-size: 18px;
+      font-size: 19px;
+      margin-bottom: 5px;
     }
     .v5-revamp-occ .v5-occ-desc {
-      font-size: 12px;
+      font-size: 12.5px;
     }
     .v5-revamp-occ .v5-occ-arrow {
       display: none !important;
@@ -421,6 +424,15 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#fbf8f3"
+    },
+    {
+      "type": "range",
+      "id": "desk_columns",
+      "min": 4,
+      "max": 7,
+      "step": 1,
+      "label": "Desktop Columns",
+      "default": 6
     },
     {
       "type": "range",
