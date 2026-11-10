@@ -12,13 +12,6 @@
     "wedding_landing": {
       "type": "diwali-landing",
       "blocks": {
-        "circle_1": {
-          "type": "occasion_circle",
-          "settings": {
-            "title": "House Celebration",
-            "link": "/collections/house-celebration"
-          }
-        },
         "circle_2": {
           "type": "occasion_circle",
           "settings": {
@@ -53,6 +46,13 @@
             "title": "Reception",
             "link": "/collections/reception"
           }
+        },
+        "circle_1": {
+          "type": "occasion_circle",
+          "settings": {
+            "title": "House Celebration",
+            "link": "/collections/house-celebration"
+          }
         }
       },
       "block_order": [
@@ -74,28 +74,12 @@
     "wedding_feed": {
       "type": "diwali-collection-feed",
       "blocks": {
-        "tab_1": {
-          "type": "filter_tab",
-          "settings": {
-            "title": "Cocktail",
-            "collection": "cocktail",
-            "custom_link": "/collections/cocktail"
-          }
-        },
         "tab_2": {
           "type": "filter_tab",
           "settings": {
             "title": "Wedding",
             "collection": "wedding",
-            "custom_link": "/collections/wedding"
-          }
-        },
-        "tab_3": {
-          "type": "filter_tab",
-          "settings": {
-            "title": "Haldi",
-            "collection": "haldi",
-            "custom_link": "/collections/haldi"
+            "custom_link": "/collections/wedding-edit"
           }
         },
         "tab_4": {
@@ -114,12 +98,28 @@
             "custom_link": "/collections/sangeet"
           }
         },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Haldi",
+            "collection": "haldi",
+            "custom_link": "/collections/haldi"
+          }
+        },
         "tab_6": {
           "type": "filter_tab",
           "settings": {
             "title": "Reception",
             "collection": "reception",
             "custom_link": "/collections/reception"
+          }
+        },
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Cocktail",
+            "collection": "cocktail",
+            "custom_link": "/collections/cocktail"
           }
         }
       },
