@@ -69,6 +69,7 @@
         "item_rfmHVa",
         "item_bzr7HH"
       ],
+      "disabled": true,
       "name": "Shop by Category",
       "settings": {
         "heading": "Shop by category",
