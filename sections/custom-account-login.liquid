@@ -203,7 +203,7 @@
                {%- if images[navicons] != blank -%}
                   {{ 
                      images[navicons]
-                     | image_url: width: 40, height: auto
+                     | image_url: width: 40
                      | image_tag:
                        alt:images[navicons].alt,
                        class: 'user-nav-icon',
@@ -282,7 +282,7 @@
           {% if customer.default_address != nil and customer.default_address != blank %}
             <p> {{ customer.default_address.address1 }}, {% if customer.default_address.address2 != "" and customer.default_address.address2 != blank %}
              {{ customer.default_address.address2 }},
-            {% endif %}{{ customer.default_address.city }}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}
+            {% endif %}{{ customer.default_address.city }}, {% if customer.default_address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}
             {{ customer.default_address.zip }}</p>
           {% endif %}
         </div>
@@ -290,7 +290,7 @@
       </div>
        <div class="logout-edit"> 
         <a class="underline custom-link view-address" href="{{ routes.account_addresses_url }}">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
-         <a href="/account/logout" class="profile-login">Logout</a>
+         <a href="{{ routes.account_logout_url }}" class="profile-login">Logout</a>
         </div>
     </div>
 

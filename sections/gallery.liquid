@@ -160,13 +160,13 @@
           {%- if block.settings.link != blank -%}</a>{%- endif -%}
         </div>
       {%- endfor -%}
-    </div>
 
-    {%- if section.settings.enable_carousel -%}
+      {%- if section.settings.enable_carousel -%}
+          </div>
         </div>
-      </div>
-    </carousel-slider>
-    {%- endif -%}
+      </carousel-slider>
+      {%- endif -%}
+    </div>
 
     {%- unless section.settings.full_width -%}</div>{%- endunless -%}
   </div>
