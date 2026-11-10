@@ -192,7 +192,7 @@
             "image": "shopify://shop_images/HALDI_2234841e-e5a8-4f9a-83a5-9dd4340c1ea0.png",
             "title": "Haldi",
             "subtitle": "Yellows and prints that can take a splash",
-            "link": "shopify://collections/haldi-1"
+            "link": "shopify://collections/haldi"
           }
         },
         "item_CwmNe8": {
@@ -277,7 +277,7 @@
           "settings": {
             "desk-img": "shopify://shop_images/Peak_Haldi_Josh_Desktop.jpg",
             "mob-img": "shopify://shop_images/Peak_Haldi_Josh_Mobile.jpg",
-            "link": "shopify://collections/haldi-1",
+            "link": "shopify://collections/haldi",
             "button-name": "",
             "button-link": ""
           }
