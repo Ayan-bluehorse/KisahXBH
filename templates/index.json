@@ -81,6 +81,163 @@
         "mob_padding_bottom": 12
       }
     },
+    "v5_hero_banner_q99GrE": {
+      "type": "v5-hero-banner",
+      "blocks": {
+        "slide_iyAcdj": {
+          "type": "slide",
+          "settings": {
+            "desk_img": "shopify://shop_images/Banner01_Desktop_Luxury_Wedding_Edit_Fashion_Banner.png",
+            "mob_img": "shopify://shop_images/Banner01_Mobile_Wedding_Edit_Celebration_Poster.png",
+            "btn_link": "shopify://pages/wedding",
+            "eyebrow": "",
+            "heading": "",
+            "subheading": "",
+            "btn_text": ""
+          }
+        },
+        "slide_r6kMkU": {
+          "type": "slide",
+          "settings": {
+            "desk_img": "shopify://shop_images/Banner02_Desktop_Afterhours_Party_Edit.png",
+            "mob_img": "shopify://shop_images/Banner02_Mobile_Afterhours_Fashion_Campaign.png",
+            "btn_link": "shopify://collections/cocktail",
+            "eyebrow": "",
+            "heading": "",
+            "subheading": "",
+            "btn_text": ""
+          }
+        },
+        "slide_YWcziK": {
+          "type": "slide",
+          "settings": {
+            "desk_img": "shopify://shop_images/Banner03_Desktop_The_Dhoom_Squad_Wedding_Style_Banner_1.png",
+            "mob_img": "shopify://shop_images/Banner03_MobileThe_Dhoom_Squad_Wedding_Style.png",
+            "btn_link": "shopify://pages/groom-squad-edit",
+            "eyebrow": "",
+            "heading": "",
+            "subheading": "",
+            "btn_text": ""
+          }
+        },
+        "slide_DqFqYx": {
+          "type": "slide",
+          "settings": {
+            "desk_img": "shopify://shop_images/Banner04_Sheer-Edit_Desktop_1400x692_74c0babc-2bda-473b-82a3-8951300f688d.jpg",
+            "mob_img": "shopify://shop_images/Banner04_Sheer-Edit_Mobile_1200x1600_caf3e390-1c93-4cd7-92b5-8ca62ee699b6.jpg",
+            "btn_link": "shopify://collections/sheer",
+            "eyebrow": "",
+            "heading": "",
+            "subheading": "",
+            "btn_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_iyAcdj",
+        "slide_r6kMkU",
+        "slide_YWcziK",
+        "slide_DqFqYx"
+      ],
+      "name": "V5 Hero Banner",
+      "settings": {}
+    },
+    "v5_trust_strip_QFPjyJ": {
+      "type": "v5-trust-strip",
+      "name": "Trust Strip",
+      "settings": {
+        "bg_color": "#ffffff",
+        "padding_top": 14,
+        "padding_bottom": 14,
+        "b1_title": "Cash on delivery",
+        "b1_sub": "Pay when it arrives",
+        "b2_title": "7-day return",
+        "b2_sub": "& exchange",
+        "b3_title": "Money-back",
+        "b3_sub": "guarantee"
+      }
+    },
+    "v5_shop_by_occasion_w7jWtw": {
+      "type": "v5-shop-by-occasion",
+      "blocks": {
+        "item_XgAkkk": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WEDDING_f9468051-8ad0-4d6f-91bc-c7fb08b111cc.png",
+            "title": "Wedding",
+            "subtitle": "Sets and jackets for the main event",
+            "link": ""
+          }
+        },
+        "item_nQmqAB": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/SANGEET_505868a0-9310-454e-8218-4cabbdb6f5ef.png",
+            "title": "Sangeet",
+            "subtitle": "Jacket sets with some shine for the dance floor",
+            "link": "shopify://collections/sangeet"
+          }
+        },
+        "item_EgdcFY": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/mehendi_kurta.jpg",
+            "title": "Mehendi",
+            "subtitle": "Florals and easy cuts for long afternoons",
+            "link": ""
+          }
+        },
+        "item_tn9L7x": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/HALDI_2234841e-e5a8-4f9a-83a5-9dd4340c1ea0.png",
+            "title": "Haldi",
+            "subtitle": "Yellows and prints that can take a splash",
+            "link": "shopify://collections/haldi-1"
+          }
+        },
+        "item_CwmNe8": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/reception_a13be2ec-d8bc-475b-a162-73529c90c1ee.jpg",
+            "title": "Reception",
+            "subtitle": "Sharp bandhgalas and indo-westerns",
+            "link": "shopify://collections/reception"
+          }
+        },
+        "item_3fUUHJ": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-11-10_at_5.11.38_PM.jpg",
+            "title": "Cocktail",
+            "subtitle": "Dark jackets and sequins for after the vows",
+            "link": "shopify://collections/cocktail"
+          }
+        }
+      },
+      "block_order": [
+        "item_XgAkkk",
+        "item_nQmqAB",
+        "item_EgdcFY",
+        "item_tn9L7x",
+        "item_CwmNe8",
+        "item_3fUUHJ"
+      ],
+      "name": "Shop by Occasion (Week)",
+      "settings": {
+        "eyebrow": "SHOP BY OCCASION",
+        "heading": "The wedding week",
+        "subtitle": "Pick the function. We'll show what works for it.",
+        "link_text": "",
+        "link_url": "",
+        "bg_color": "#fbf8f3",
+        "desk_columns": 6,
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 44,
+        "mob_padding_top": 28,
+        "mob_padding_bottom": 28
+      }
+    },
     "banner_with_text_xmBXxb": {
       "type": "banner-with-text",
       "blocks": {
@@ -1457,6 +1614,9 @@
   },
   "order": [
     "v5_shop_by_category_er99Ki",
+    "v5_hero_banner_q99GrE",
+    "v5_trust_strip_QFPjyJ",
+    "v5_shop_by_occasion_w7jWtw",
     "banner_with_text_xmBXxb",
     "v5_shop_by_category_KpXJQD",
     "v5_shop_by_occasion_YkVBXW",
