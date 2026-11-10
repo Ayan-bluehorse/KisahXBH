@@ -1,0 +1,730 @@
+{% comment %}
+  Kisah Homepage Revamp - Kisah Stores ("Try it on before the function")
+  - Matches Screenshot 4 & Prototype
+  - Eyebrow: KISAH STORES
+  - Heading: Try it on before the function (var(--heading-font-family))
+  - Subtitle: 12 stores in 5 cities. See the fabric, check the fit, take it home the same day.
+  - Right Link: ALL STORES
+  - City Filter Pills: All 12, Kolkata 4, Bengaluru 4, Hyderabad 2, Mumbai 1, Visakhapatnam 1
+  - Store Cards: Image, City, Name, DIRECTIONS & STORE PAGE links
+  - "Opening soon" card for Gurgaon & Jaipur
+  - Desktop: 4 visible cards with scroll arrow
+  - Mobile: Smooth horizontal swipe
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section 
+  id="shopify-section-{{ sid }}" 
+  class="v5-revamp-stores"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#fbf8f3' }};
+    padding-top: {{ section.settings.mob_padding_top | default: 32 }}px;
+    padding-bottom: {{ section.settings.mob_padding_bottom | default: 36 }}px;
+  "
+>
+  <div class="v5-stores-wrap">
+    <div class="v5-stores-header">
+      <div class="v5-stores-titles">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="v5-stores-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="v5-stores-title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="v5-stores-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.link_text != blank -%}
+        <a href="{{ section.settings.link_url | default: '/pages/store-locator' }}" class="v5-stores-all-link">
+          {{ section.settings.link_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- City Filter Pills -->
+    <div class="v5-stores-pills" role="group" aria-label="Filter stores by city">
+      <button type="button" class="v5-store-pill is-active" data-city="All">All <span class="v5-pill-count">12</span></button>
+      <button type="button" class="v5-store-pill" data-city="Kolkata">Kolkata <span class="v5-pill-count">4</span></button>
+      <button type="button" class="v5-store-pill" data-city="Bengaluru">Bengaluru <span class="v5-pill-count">4</span></button>
+      <button type="button" class="v5-store-pill" data-city="Hyderabad">Hyderabad <span class="v5-pill-count">2</span></button>
+      <button type="button" class="v5-store-pill" data-city="Mumbai">Mumbai <span class="v5-pill-count">1</span></button>
+      <button type="button" class="v5-store-pill" data-city="Visakhapatnam">Visakhapatnam <span class="v5-pill-count">1</span></button>
+    </div>
+
+    <!-- Rail Wrapper -->
+    <div class="v5-stores-rail-wrapper">
+      <button 
+        type="button" 
+        class="v5-stores-arrow v5-stores-arrow--prev is-hidden" 
+        data-stores-prev="{{ sid }}" 
+        aria-label="Previous stores"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="v5-stores-track" id="v5-stores-track-{{ sid }}">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'store' -%}
+              <article class="v5-store-card" data-city="{{ block.settings.city }}" {{ block.shopify_attributes }}>
+                <div class="v5-store-media">
+                  <a href="{{ block.settings.page_url | default: '/pages/store-locator' }}" class="v5-store-img-link" aria-label="{{ block.settings.title | escape }}, {{ block.settings.city }}">
+                    {%- if block.settings.image != blank -%}
+                      <img
+                        src="{{ block.settings.image | image_url: width: 450 }}"
+                        srcset="{{ block.settings.image | image_url: width: 250 }} 250w,
+                                {{ block.settings.image | image_url: width: 350 }} 350w,
+                                {{ block.settings.image | image_url: width: 450 }} 450w"
+                        sizes="(max-width: 768px) 72vw, (max-width: 1200px) 25vw, 320px"
+                        alt="{{ block.settings.title | escape }} storefront"
+                        loading="lazy"
+                        decoding="async"
+                        width="300"
+                        height="300"
+                        class="v5-store-img"
+                      >
+                    {%- else -%}
+                      <div class="v5-store-placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+                    {%- endif -%}
+                  </a>
+                </div>
+                <div class="v5-store-body">
+                  <span class="v5-store-city">{{ block.settings.city }}</span>
+                  <h3 class="v5-store-name">{{ block.settings.title }}</h3>
+                  <div class="v5-store-acts">
+                    <a href="{{ block.settings.directions_url | default: '#' }}" target="_blank" rel="noopener">DIRECTIONS</a>
+                    <a href="{{ block.settings.page_url | default: '/pages/store-locator' }}">STORE PAGE</a>
+                  </div>
+                </div>
+              </article>
+            {%- elsif block.type == 'coming_soon' -%}
+              <article class="v5-store-card v5-store-soon" data-city="All" {{ block.shopify_attributes }}>
+                <div class="v5-soon-content">
+                  <span class="v5-soon-eyebrow">{{ block.settings.eyebrow | default: 'OPENING SOON' }}</span>
+                  <h3 class="v5-soon-title">{{ block.settings.title | default: 'Two new cities' }}</h3>
+                  <ul class="v5-soon-list">
+                    {%- if block.settings.city_1 != blank -%}
+                      <li>
+                        <b>{{ block.settings.city_1 }}</b>
+                        <span>{{ block.settings.location_1 }}</span>
+                      </li>
+                    {%- endif -%}
+                    {%- if block.settings.city_2 != blank -%}
+                      <li>
+                        <b>{{ block.settings.city_2 }}</b>
+                        <span>{{ block.settings.location_2 }}</span>
+                      </li>
+                    {%- endif -%}
+                  </ul>
+                </div>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} KOLKATA STORES {%- endcomment -%}
+          {%- render 'revamp-store-card', city: 'Kolkata', name: 'Kisah Gariahat', img: 's-gariahat.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Gariahat+Kolkata', page: '/pages/kolkata' -%}
+          {%- render 'revamp-store-card', city: 'Kolkata', name: 'Kisah Lake Mall', img: 's-lakemall.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Lake+Mall+Kolkata', page: '/pages/kolkata' -%}
+          {%- render 'revamp-store-card', city: 'Kolkata', name: 'Kisah Lindsay Street', img: 's-lindsay.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Lindsay+Street+Kolkata', page: '/pages/kolkata' -%}
+          {%- render 'revamp-store-card', city: 'Kolkata', name: 'Kisah Allenby Road', img: 's-allenby.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Allenby+Road+Kolkata', page: '/pages/kolkata' -%}
+
+          {%- comment -%} BENGALURU STORES {%- endcomment -%}
+          {%- render 'revamp-store-card', city: 'Bengaluru', name: 'Kisah Indiranagar', img: 's-indiranagar.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Indiranagar+Bengaluru', page: '/pages/bengaluru' -%}
+          {%- render 'revamp-store-card', city: 'Bengaluru', name: 'Kisah Phoenix Marketcity', img: 's-phoenix.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Phoenix+Marketcity+Bengaluru', page: '/pages/bengaluru' -%}
+          {%- render 'revamp-store-card', city: 'Bengaluru', name: 'Kisah Jayanagar', img: 's-jayanagar.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Jayanagar+Bengaluru', page: '/pages/bengaluru' -%}
+          {%- render 'revamp-store-card', city: 'Bengaluru', name: 'Kisah Commercial Street', img: 's-commercial.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Commercial+Street+Bengaluru', page: '/pages/bengaluru' -%}
+
+          {%- comment -%} HYDERABAD STORES {%- endcomment -%}
+          {%- render 'revamp-store-card', city: 'Hyderabad', name: 'Kisah Sarath City Capital Mall', img: 's-sarath.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Sarath+City+Capital+Mall+Hyderabad', page: '/pages/hyderabad' -%}
+          {%- render 'revamp-store-card', city: 'Hyderabad', name: 'Kisah Himayat Nagar', img: 's-himayat.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Himayat+Nagar+Hyderabad', page: '/pages/hyderabad' -%}
+
+          {%- comment -%} MUMBAI STORE {%- endcomment -%}
+          {%- render 'revamp-store-card', city: 'Mumbai', name: 'Kisah Infiniti Mall, Malad', img: 's-malad.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Infiniti+Mall+Malad+Mumbai', page: '/pages/mumbai' -%}
+
+          {%- comment -%} VISAKHAPATNAM STORE {%- endcomment -%}
+          {%- render 'revamp-store-card', city: 'Visakhapatnam', name: 'Kisah Inorbit Mall', img: 's-vizag.webp', maps: 'https://www.google.com/maps/search/?api=1&query=KISAH+Inorbit+Mall+Visakhapatnam', page: '/pages/visakhapatnam' -%}
+
+          {%- comment -%} OPENING SOON CARD {%- endcomment -%}
+          <article class="v5-store-card v5-store-soon" data-city="All">
+            <div class="v5-soon-content">
+              <span class="v5-soon-eyebrow">OPENING SOON</span>
+              <h3 class="v5-soon-title">Two new cities</h3>
+              <ul class="v5-soon-list">
+                <li>
+                  <b>Gurgaon</b>
+                  <span>Jewel M3M Mall</span>
+                </li>
+                <li>
+                  <b>Jaipur</b>
+                  <span>Pacific Mall</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        {%- endif -%}
+      </div>
+
+      <button 
+        type="button" 
+        class="v5-stores-arrow v5-stores-arrow--next is-hidden" 
+        data-stores-next="{{ sid }}" 
+        aria-label="Next stores"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ sid }} {
+    width: 100%;
+    display: block;
+  }
+  .v5-revamp-stores {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .v5-revamp-stores .v5-stores-wrap {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .v5-revamp-stores .v5-stores-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 18px;
+    gap: 16px;
+  }
+  .v5-revamp-stores .v5-stores-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .v5-revamp-stores .v5-stores-eyebrow {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #7a1a2e;
+  }
+  .v5-revamp-stores .v5-stores-title {
+    font-family: var(--heading-font-family, "Playfair Display", serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.15;
+    color: #171717;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .v5-revamp-stores .v5-stores-subtitle {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 13px;
+    line-height: 1.4;
+    color: #666666;
+    margin: 0;
+  }
+  .v5-revamp-stores .v5-stores-all-link {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #171717;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+
+  /* Pills */
+  .v5-revamp-stores .v5-stores-pills {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 22px;
+    padding-bottom: 2px;
+  }
+  .v5-revamp-stores .v5-stores-pills::-webkit-scrollbar {
+    display: none;
+  }
+  .v5-revamp-stores .v5-store-pill {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #171717;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .v5-revamp-stores .v5-store-pill:hover {
+    border-color: #171717;
+  }
+  .v5-revamp-stores .v5-store-pill.is-active {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+  }
+  .v5-revamp-stores .v5-pill-count {
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  /* Track */
+  .v5-revamp-stores .v5-stores-rail-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .v5-revamp-stores .v5-stores-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 2px 14px;
+  }
+  .v5-revamp-stores .v5-stores-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Store Card */
+  .v5-revamp-stores .v5-store-card {
+    flex: 0 0 240px;
+    max-width: 240px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 0 !important; /* Sharp corners */
+    overflow: hidden;
+    scroll-snap-align: start;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .v5-revamp-stores .v5-store-card.is-hidden {
+    display: none !important;
+  }
+  .v5-revamp-stores .v5-store-media {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0 !important; /* Sharp corners */
+    overflow: hidden;
+    background: #171717;
+  }
+  .v5-revamp-stores .v5-store-img-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 !important;
+  }
+  .v5-revamp-stores .v5-store-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0 !important; /* Sharp corners */
+    transition: transform 0.5s ease;
+  }
+  .v5-revamp-stores .v5-store-card:hover .v5-store-img {
+    transform: scale(1.05);
+  }
+  .v5-revamp-stores .v5-store-body {
+    padding: 14px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .v5-revamp-stores .v5-store-city {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888888;
+    margin-bottom: 4px;
+  }
+  .v5-revamp-stores .v5-store-name {
+    font-family: var(--heading-font-family, serif);
+    font-size: 17px;
+    font-weight: 500;
+    color: #171717;
+    margin: 0 0 14px;
+    line-height: 1.25;
+  }
+  .v5-revamp-stores .v5-store-acts {
+    display: flex;
+    gap: 14px;
+    margin-top: auto;
+  }
+  .v5-revamp-stores .v5-store-acts a {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #171717;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Opening Soon Card */
+  .v5-revamp-stores .v5-store-soon {
+    background: #171717;
+    color: #ffffff;
+    justify-content: center;
+    padding: 24px 20px;
+  }
+  .v5-revamp-stores .v5-soon-eyebrow {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #e5a835;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .v5-revamp-stores .v5-soon-title {
+    font-family: var(--heading-font-family, serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 16px;
+  }
+  .v5-revamp-stores .v5-soon-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .v5-revamp-stores .v5-soon-list li {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--base-font-family, sans-serif);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 8px;
+  }
+  .v5-revamp-stores .v5-soon-list b {
+    font-size: 13.5px;
+    color: #ffffff;
+  }
+  .v5-revamp-stores .v5-soon-list span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* Arrows */
+  .v5-revamp-stores .v5-stores-arrow {
+    display: none;
+    position: absolute;
+    top: calc(45% - 18px);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    color: #171717;
+    transition: all 0.2s ease;
+  }
+  .v5-revamp-stores .v5-stores-arrow:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+  }
+  .v5-revamp-stores .v5-stores-arrow--prev {
+    left: -14px;
+  }
+  .v5-revamp-stores .v5-stores-arrow--next {
+    right: -14px;
+  }
+  .v5-revamp-stores .v5-stores-arrow.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (min-width: 992px) {
+    .v5-revamp-stores {
+      padding-top: {{ section.settings.desk_padding_top | default: 44 }}px !important;
+      padding-bottom: {{ section.settings.desk_padding_bottom | default: 52 }}px !important;
+    }
+    .v5-revamp-stores .v5-stores-title {
+      font-size: 32px;
+    }
+    .v5-revamp-stores .v5-stores-subtitle {
+      font-size: 14px;
+    }
+    .v5-revamp-stores .v5-stores-track {
+      gap: 20px;
+    }
+    .v5-revamp-stores .v5-store-card {
+      flex: 0 0 calc((100% - 60px) / 4);
+      max-width: calc((100% - 60px) / 4);
+    }
+    .v5-revamp-stores .v5-stores-arrow {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sid = '{{ sid }}';
+    var sectionEl = document.getElementById('shopify-section-' + sid);
+    if (!sectionEl) return;
+
+    var pills = sectionEl.querySelectorAll('.v5-store-pill');
+    var cards = sectionEl.querySelectorAll('.v5-store-card');
+    var track = document.getElementById('v5-stores-track-' + sid);
+    var prevBtn = sectionEl.querySelector('[data-stores-prev="' + sid + '"]');
+    var nextBtn = sectionEl.querySelector('[data-stores-next="' + sid + '"]');
+
+    // City Filter
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var city = this.getAttribute('data-city');
+
+        pills.forEach(function(p) { p.classList.toggle('is-active', p === pill); });
+
+        cards.forEach(function(card) {
+          var cardCity = card.getAttribute('data-city');
+          if (city === 'All' || cardCity === city) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+
+        if (track) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        }
+        setTimeout(checkArrows, 100);
+      });
+    });
+
+    // Arrows
+    function checkArrows() {
+      if (!prevBtn || !nextBtn || !track) return;
+      var canScroll = track.scrollWidth > track.clientWidth + 4;
+      if (!canScroll) {
+        prevBtn.classList.add('is-hidden');
+        nextBtn.classList.add('is-hidden');
+        return;
+      }
+      var sl = track.scrollLeft;
+      var max = track.scrollWidth - track.clientWidth - 4;
+      if (sl <= 4) prevBtn.classList.add('is-hidden'); else prevBtn.classList.remove('is-hidden');
+      if (sl >= max) nextBtn.classList.add('is-hidden'); else nextBtn.classList.remove('is-hidden');
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' });
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' });
+      });
+    }
+
+    if (track) {
+      track.addEventListener('scroll', checkArrows, { passive: true });
+    }
+    window.addEventListener('resize', checkArrows, { passive: true });
+    setTimeout(checkArrows, 120);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Kisah Stores",
+  "tag": "section",
+  "class": "v5-kisah-stores-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "KISAH STORES"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Try it on before the function"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Header Link Text",
+      "default": "ALL STORES"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Header Link URL"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fbf8f3"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Top Padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Bottom Padding",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store",
+      "settings": [
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Kolkata"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Store Name",
+          "default": "Kisah Gariahat"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Store Front Image"
+        },
+        {
+          "type": "url",
+          "id": "directions_url",
+          "label": "Google Maps Directions URL"
+        },
+        {
+          "type": "url",
+          "id": "page_url",
+          "label": "Store Page URL"
+        }
+      ]
+    },
+    {
+      "type": "coming_soon",
+      "name": "Opening Soon",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow Text",
+          "default": "OPENING SOON"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Two new cities"
+        },
+        {
+          "type": "text",
+          "id": "city_1",
+          "label": "City 1",
+          "default": "Gurgaon"
+        },
+        {
+          "type": "text",
+          "id": "location_1",
+          "label": "Location 1",
+          "default": "Jewel M3M Mall"
+        },
+        {
+          "type": "text",
+          "id": "city_2",
+          "label": "City 2",
+          "default": "Jaipur"
+        },
+        {
+          "type": "text",
+          "id": "location_2",
+          "label": "Location 2",
+          "default": "Pacific Mall"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kisah Stores"
+    }
+  ]
+}
+{% endschema %}

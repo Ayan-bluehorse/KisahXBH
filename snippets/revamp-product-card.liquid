@@ -1,0 +1,173 @@
+{% comment %}
+  Kisah Revamp Product Card Snippet
+  - Matches Prototype HTML (.card) & Image 2
+  - Dynamic with Shopify `product` object (or standalone fallbacks)
+  - 3:4 Aspect Ratio Image Box (sharp corners)
+  - Floating round wishlist heart (top-right)
+  - 2-line clamped title (sans-serif)
+  - Price row: Bold price + Strikethrough compare price + Red discount %
+  - Size chips (In-stock vs Out-of-stock)
+  - ADD TO BAG button with instant AJAX cart addition & drawer trigger
+{% endcomment %}
+
+{%- liquid
+  if product != blank
+    assign p_url = product.url
+    assign p_title = product.title
+    assign p_price = product.price | money_without_trailing_zeros
+    assign p_primary_img = product.featured_media | default: product.featured_image
+    assign p_secondary_img = product.media[1]
+    
+    if product.compare_at_price > product.price
+      assign p_compare = product.compare_at_price | money_without_trailing_zeros
+      assign p_discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round | append: '% off'
+    else
+      assign p_compare = ''
+      assign p_discount = ''
+    endif
+    
+    assign first_avail_variant = product.selected_or_first_available_variant
+  else
+    assign p_url = url | default: '#'
+    assign p_title = title | default: 'Kisah Ethnic Wear'
+    assign p_price = price | default: '₹3,499'
+    assign p_compare = mrp
+    assign p_discount = disc
+  endif
+-%}
+
+<article class="v5-pcard" data-product-id="{{ product.id | default: 0 }}">
+  <!-- 3:4 Media Box -->
+  <div class="v5-pcard-media">
+    <a href="{{ p_url }}" class="v5-pcard-img-link" aria-label="{{ p_title | escape }}">
+      {%- if p_primary_img != blank -%}
+        <img
+          src="{{ p_primary_img | image_url: width: 600 }}"
+          srcset="
+            {{ p_primary_img | image_url: width: 240 }} 240w,
+            {{ p_primary_img | image_url: width: 360 }} 360w,
+            {{ p_primary_img | image_url: width: 500 }} 500w,
+            {{ p_primary_img | image_url: width: 600 }} 600w
+          "
+          sizes="(max-width: 768px) 160px, 240px"
+          alt="{{ p_title | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="300"
+          height="400"
+          class="v5-pcard-img v5-pcard-img--primary"
+        >
+        {%- if p_secondary_img != blank -%}
+          <img
+            src="{{ p_secondary_img | image_url: width: 600 }}"
+            alt="{{ p_title | escape }}"
+            loading="lazy"
+            decoding="async"
+            width="300"
+            height="400"
+            class="v5-pcard-img v5-pcard-img--secondary"
+          >
+        {%- endif -%}
+      {%- elsif img != blank -%}
+        <img
+          src="{{ img | asset_url }}"
+          alt="{{ p_title | escape }}"
+          loading="lazy"
+          decoding="async"
+          width="300"
+          height="400"
+          class="v5-pcard-img v5-pcard-img--primary"
+        >
+      {%- else -%}
+        <div class="v5-pcard-fallback">{{ p_title | slice: 0, 1 }}</div>
+      {%- endif -%}
+    </a>
+
+    <!-- Floating Circular Wishlist Button -->
+    <button 
+      type="button" 
+      class="v5-pcard-wish" 
+      aria-label="Save to wishlist"
+      onclick="this.classList.toggle('is-saved');"
+    >
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20s-7-4.4-9-9a4.8 4.8 0 0 1 9-3 4.8 4.8 0 0 1 9 3c-2 4.6-9 9-9 9z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Details -->
+  <div class="v5-pcard-body">
+    <h3 class="v5-pcard-title">
+      <a href="{{ p_url }}">{{ p_title }}</a>
+    </h3>
+
+    <!-- Price Row -->
+    <div class="v5-pcard-price">
+      <b>{{ p_price }}</b>
+      {%- if p_compare != blank and p_compare != '' -%}
+        <s>{{ p_compare }}</s>
+      {%- endif -%}
+      {%- if p_discount != blank and p_discount != '' -%}
+        <em>{{ p_discount }}</em>
+      {%- endif -%}
+    </div>
+
+    <!-- Size Chips (if product has sizes) -->
+    {%- if product != blank and product.options_with_values != blank -%}
+      {%- assign size_option = nil -%}
+      {%- for opt in product.options_with_values -%}
+        {%- assign opt_down = opt.name | downcase -%}
+        {%- if opt_down == 'size' or opt_down == 'sizes' -%}
+          {%- assign size_option = opt -%}
+          {%- assign size_opt_idx = forloop.index0 -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if size_option != blank and size_option.values.size > 0 -%}
+        <div class="v5-pcard-sizes" aria-label="Available sizes">
+          {%- for val in size_option.values -%}
+            {%- liquid
+              assign is_avail = false
+              assign variant_id = nil
+              for v in product.variants
+                if v.options[size_opt_idx] == val
+                  if v.available
+                    assign is_avail = true
+                    assign variant_id = v.id
+                    break
+                  endif
+                  if variant_id == nil
+                    assign variant_id = v.id
+                  endif
+                endif
+              endfor
+            -%}
+            <a 
+              href="{{ p_url }}?variant={{ variant_id }}" 
+              class="v5-size-chip {% if is_avail %}is-available{% else %}is-oos{% endif %}"
+              title="Size {{ val | escape }} - {% if is_avail %}In Stock{% else %}Out of Stock{% endif %}"
+            >
+              {{ val | escape }}
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- ADD TO BAG Button -->
+    {%- if first_avail_variant.id != blank -%}
+      <button 
+        type="button" 
+        class="v5-pcard-add-btn" 
+        data-variant-id="{{ first_avail_variant.id }}"
+        onclick="v5AddToCart(this, '{{ first_avail_variant.id }}')"
+      >
+        ADD TO BAG
+      </button>
+    {%- else -%}
+      <a href="{{ p_url }}" class="v5-pcard-add-btn">VIEW PRODUCT</a>
+    {%- endif -%}
+  </div>
+</article>

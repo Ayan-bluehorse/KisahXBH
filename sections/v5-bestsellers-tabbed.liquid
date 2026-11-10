@@ -1,0 +1,735 @@
+{% comment %}
+  Kisah Homepage Revamp - Bestsellers Tabbed Rail ("What's selling right now")
+  - Matches Prototype HTML (.card) & Image 2
+  - Eyebrow: BESTSELLERS
+  - Heading: What's selling right now (var(--heading-font-family))
+  - Top-Right Link: VIEW ALL
+  - Tabs: THIS MONTH | WEDDING | SANGEET | MEHENDI | HALDI (no bottom line)
+  - Product Cards: 3:4 photo, Wishlist Heart, Title, Price, Compare Price, Discount %, Size Chips, ADD TO BAG
+  - Desktop: 4 visible cards with smooth arrow navigation
+  - Mobile: Touch swipe rail
+{% endcomment %}
+
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section 
+  id="shopify-section-{{ sid }}" 
+  class="v5-revamp-bestsellers"
+  style="
+    background-color: {{ section.settings.bg_color | default: '#ffffff' }};
+    padding-top: {{ section.settings.mob_padding_top | default: 32 }}px;
+    padding-bottom: {{ section.settings.mob_padding_bottom | default: 36 }}px;
+  "
+>
+  <div class="v5-bs-wrap">
+    <div class="v5-bs-header">
+      <div class="v5-bs-titles">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="v5-bs-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="v5-bs-title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_text != blank -%}
+        <a href="{{ section.settings.view_all_link | default: '/collections/best-sellers' }}" class="v5-bs-view-all">
+          {{ section.settings.view_all_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- Tabs -->
+    <div class="v5-bs-tabs" role="tablist" aria-label="Bestsellers by occasion">
+      <button type="button" class="v5-bs-tab is-active" role="tab" data-bs-tab="month-{{ sid }}" aria-selected="true">THIS MONTH</button>
+      <button type="button" class="v5-bs-tab" role="tab" data-bs-tab="wedding-{{ sid }}" aria-selected="false">WEDDING</button>
+      <button type="button" class="v5-bs-tab" data-bs-tab="sangeet-{{ sid }}" role="tab" aria-selected="false">SANGEET</button>
+      <button type="button" class="v5-bs-tab" data-bs-tab="mehendi-{{ sid }}" role="tab" aria-selected="false">MEHENDI</button>
+      <button type="button" class="v5-bs-tab" data-bs-tab="haldi-{{ sid }}" role="tab" aria-selected="false">HALDI</button>
+    </div>
+
+    <!-- TAB PANELS -->
+    {%- assign tab_keys = 'month,wedding,sangeet,mehendi,haldi' | split: ',' -%}
+
+    {%- for tkey in tab_keys -%}
+      <div 
+        class="v5-bs-panel {% if forloop.first %}is-active{% endif %}" 
+        id="panel-{{ tkey }}-{{ sid }}" 
+        role="tabpanel"
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        <div class="v5-bs-rail-wrapper">
+          <button 
+            type="button" 
+            class="v5-bs-arrow v5-bs-arrow--prev is-hidden" 
+            data-bs-prev="{{ tkey }}-{{ sid }}" 
+            aria-label="Previous products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <div class="v5-bs-track" id="track-{{ tkey }}-{{ sid }}">
+            {%- liquid
+              assign matching_col = null
+              for block in section.blocks
+                if block.settings.tab_key == tkey and block.settings.collection != blank
+                  assign matching_col = block.settings.collection
+                  break
+                endif
+              endfor
+
+              if matching_col == blank
+                if tkey == 'month'
+                  assign matching_col = collections['best-sellers'] | default: collections['bestsellers']
+                elsif tkey == 'wedding'
+                  assign matching_col = collections['wedding']
+                elsif tkey == 'sangeet'
+                  assign matching_col = collections['sangeet']
+                elsif tkey == 'mehendi'
+                  assign matching_col = collections['mehendi']
+                elsif tkey == 'haldi'
+                  assign matching_col = collections['haldi-1'] | default: collections['haldi']
+                endif
+              endif
+
+              if matching_col == blank or matching_col.products.size == 0
+                assign matching_col = collections['all']
+              endif
+            -%}
+
+            {%- if matching_col != blank and matching_col.products.size > 0 -%}
+              {%- for product in matching_col.products limit: 12 -%}
+                <div class="v5-bs-slide">
+                  {% render 'revamp-product-card', product: product %}
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          <button 
+            type="button" 
+            class="v5-bs-arrow v5-bs-arrow--next is-hidden" 
+            data-bs-next="{{ tkey }}-{{ sid }}" 
+            aria-label="Next products"
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    {%- endfor -%}
+
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ sid }} {
+    width: 100%;
+    display: block;
+  }
+  .v5-revamp-bestsellers {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .v5-revamp-bestsellers .v5-bs-wrap {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .v5-revamp-bestsellers .v5-bs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 14px;
+    gap: 16px;
+  }
+  .v5-revamp-bestsellers .v5-bs-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .v5-revamp-bestsellers .v5-bs-eyebrow {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #7a1a2e;
+  }
+  .v5-revamp-bestsellers .v5-bs-title {
+    font-family: var(--heading-font-family, "Playfair Display", serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.15;
+    color: #171717;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .v5-revamp-bestsellers .v5-bs-view-all {
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #171717;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+    padding-bottom: 2px;
+  }
+
+  /* Tabs without bottom border line */
+  .v5-revamp-bestsellers .v5-bs-tabs {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 20px;
+  }
+  .v5-revamp-bestsellers .v5-bs-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .v5-revamp-bestsellers .v5-bs-tab {
+    background: transparent;
+    border: none;
+    padding: 8px 0 10px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #767676;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .v5-revamp-bestsellers .v5-bs-tab:hover {
+    color: #171717;
+  }
+  .v5-revamp-bestsellers .v5-bs-tab.is-active {
+    color: #171717;
+  }
+  .v5-revamp-bestsellers .v5-bs-tab.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #171717;
+  }
+
+  /* Panel & Track */
+  .v5-revamp-bestsellers .v5-bs-panel {
+    display: none;
+    width: 100%;
+  }
+  .v5-revamp-bestsellers .v5-bs-panel.is-active {
+    display: block;
+  }
+  .v5-revamp-bestsellers .v5-bs-rail-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .v5-revamp-bestsellers .v5-bs-track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 2px 2px 14px;
+  }
+  .v5-revamp-bestsellers .v5-bs-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Product Card Slide */
+  .v5-revamp-bestsellers .v5-bs-slide {
+    flex: 0 0 240px;
+    max-width: 240px;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    display: flex;
+  }
+
+  /* Exact Card Design from Prototype (.card) */
+  .v5-pcard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: #ffffff;
+    box-sizing: border-box;
+    text-align: left;
+    border-radius: 0 !important;
+  }
+  .v5-pcard-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #fbf8f3;
+    margin-bottom: 8px;
+    border-radius: 0 !important;
+  }
+  .v5-pcard-img-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 0 !important;
+  }
+  .v5-pcard-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 15%;
+    display: block;
+    border-radius: 0 !important;
+    transition: transform 0.45s ease, opacity 0.3s ease;
+  }
+  .v5-pcard-img--secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+  }
+  .v5-pcard:hover .v5-pcard-img--primary {
+    transform: scale(1.035);
+  }
+  .v5-pcard:hover .v5-pcard-img--secondary {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+  .v5-pcard-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--heading-font-family, serif);
+    font-size: 28px;
+    color: #888;
+    background: #f4f0ea;
+  }
+
+  /* Floating Circular Wishlist Button */
+  .v5-pcard-wish {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.92);
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 4;
+    padding: 0;
+    color: #171717;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .v5-pcard-wish:hover {
+    transform: scale(1.08);
+  }
+  .v5-pcard-wish.is-saved svg {
+    fill: #c16452;
+    stroke: #c16452;
+  }
+
+  /* Card Body */
+  .v5-pcard-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 2px;
+    box-sizing: border-box;
+  }
+  .v5-pcard-title {
+    margin: 0 0 6px 0;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #171717;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 35px;
+  }
+  .v5-pcard-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .v5-pcard-title a:hover {
+    color: #c16452;
+  }
+
+  /* Price Row */
+  .v5-pcard-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 13px;
+  }
+  .v5-pcard-price b {
+    font-weight: 700;
+    color: #171717;
+    font-size: 14px;
+  }
+  .v5-pcard-price s {
+    color: #888888;
+    font-size: 12.5px;
+    text-decoration: line-through;
+  }
+  .v5-pcard-price em {
+    font-style: normal;
+    color: #c20000;
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+
+  /* Size Chips */
+  .v5-pcard-sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 5px;
+    margin-bottom: 10px;
+  }
+  .v5-size-chip {
+    display: inline-block;
+    padding: 3px 6px;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid #e0e0e0;
+    color: #171717;
+    text-decoration: none;
+    background: #ffffff;
+    border-radius: 0 !important;
+    transition: all 0.15s ease;
+    line-height: 1.2;
+  }
+  .v5-size-chip.is-available:hover {
+    border-color: #171717;
+    background: #f7f7f7;
+  }
+  .v5-size-chip.is-oos {
+    color: #bbbbbb;
+    border-color: #eeeeee;
+    background: #fafafa;
+    text-decoration: line-through;
+  }
+
+  /* ADD TO BAG Button */
+  .v5-pcard-add-btn {
+    margin-top: auto;
+    width: 100%;
+    min-height: 38px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #171717;
+    background: #ffffff;
+    color: #171717;
+    font-family: var(--base-font-family, sans-serif);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    box-sizing: border-box;
+  }
+  .v5-pcard-add-btn:hover {
+    background: #171717;
+    color: #ffffff;
+  }
+  .v5-pcard-add-btn.is-added {
+    background: #2f7a4f !important;
+    border-color: #2f7a4f !important;
+    color: #ffffff !important;
+  }
+
+  /* Arrows */
+  .v5-revamp-bestsellers .v5-bs-arrow {
+    display: none;
+    position: absolute;
+    top: calc(42% - 18px);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    color: #171717;
+    transition: all 0.2s ease;
+  }
+  .v5-revamp-bestsellers .v5-bs-arrow:hover {
+    background: #171717;
+    color: #ffffff;
+    border-color: #171717;
+  }
+  .v5-revamp-bestsellers .v5-bs-arrow--prev {
+    left: -14px;
+  }
+  .v5-revamp-bestsellers .v5-bs-arrow--next {
+    right: -14px;
+  }
+  .v5-revamp-bestsellers .v5-bs-arrow.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (min-width: 992px) {
+    .v5-revamp-bestsellers {
+      padding-top: {{ section.settings.desk_padding_top | default: 44 }}px !important;
+      padding-bottom: {{ section.settings.desk_padding_bottom | default: 52 }}px !important;
+    }
+    .v5-revamp-bestsellers .v5-bs-title {
+      font-size: 32px;
+    }
+    .v5-revamp-bestsellers .v5-bs-track {
+      gap: 20px;
+    }
+    .v5-revamp-bestsellers .v5-bs-slide {
+      flex: 0 0 calc((100% - 60px) / 4);
+      max-width: calc((100% - 60px) / 4);
+    }
+    .v5-revamp-bestsellers .v5-bs-arrow {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var sid = '{{ sid }}';
+    var sectionEl = document.getElementById('shopify-section-' + sid);
+    if (!sectionEl) return;
+
+    var tabs = sectionEl.querySelectorAll('.v5-bs-tab');
+    var panels = sectionEl.querySelectorAll('.v5-bs-panel');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var targetKey = this.getAttribute('data-bs-tab');
+        
+        tabs.forEach(function(t) {
+          var isCurrent = (t === tab);
+          t.classList.toggle('is-active', isCurrent);
+          t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        });
+
+        panels.forEach(function(p) {
+          var isCurrent = p.id === ('panel-' + targetKey);
+          p.classList.toggle('is-active', isCurrent);
+          if (isCurrent) {
+            p.removeAttribute('hidden');
+          } else {
+            p.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+
+    ['month', 'wedding', 'sangeet', 'mehendi', 'haldi'].forEach(function(tkey) {
+      var track = document.getElementById('track-' + tkey + '-' + sid);
+      var prevBtn = sectionEl.querySelector('[data-bs-prev="' + tkey + '-' + sid + '"]');
+      var nextBtn = sectionEl.querySelector('[data-bs-next="' + tkey + '-' + sid + '"]');
+      if (!track || !prevBtn || !nextBtn) return;
+
+      function check() {
+        var canScroll = track.scrollWidth > track.clientWidth + 4;
+        if (!canScroll) {
+          prevBtn.classList.add('is-hidden');
+          nextBtn.classList.add('is-hidden');
+          return;
+        }
+        var sl = track.scrollLeft;
+        var max = track.scrollWidth - track.clientWidth - 4;
+        if (sl <= 4) prevBtn.classList.add('is-hidden'); else prevBtn.classList.remove('is-hidden');
+        if (sl >= max) nextBtn.classList.add('is-hidden'); else nextBtn.classList.remove('is-hidden');
+      }
+
+      prevBtn.addEventListener('click', function() {
+        track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', function() {
+        track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' });
+      });
+
+      track.addEventListener('scroll', check, { passive: true });
+      window.addEventListener('resize', check, { passive: true });
+      setTimeout(check, 120);
+    });
+
+    // Global Add to Bag Handler
+    window.v5AddToCart = function(btn, variantId) {
+      if (!variantId) return;
+      var origText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'ADDING...';
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: [{ id: Number(variantId), quantity: 1 }] })
+      })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        btn.textContent = 'ADDED ✓';
+        btn.classList.add('is-added');
+        
+        // Open cart drawer if available
+        document.dispatchEvent(new CustomEvent('theme:open-cart-drawer', { bubbles: true }));
+        window.dispatchEvent(new CustomEvent('helium:cart-drawer:open', { detail: { instant: true } }));
+        if (window.theme && window.theme.cart && typeof window.theme.cart.getCart === 'function') {
+          window.theme.cart.getCart();
+        }
+
+        setTimeout(function() {
+          btn.textContent = origText;
+          btn.classList.remove('is-added');
+          btn.disabled = false;
+        }, 2200);
+      })
+      .catch(function(err) {
+        console.error('Add to cart error:', err);
+        btn.textContent = origText;
+        btn.disabled = false;
+      });
+    };
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Bestsellers Rail",
+  "tag": "section",
+  "class": "v5-bestsellers-tabbed-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "BESTSELLERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What's selling right now"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Link Text",
+      "default": "VIEW ALL"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All URL"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Top Padding",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "desk_padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop Bottom Padding",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Top Padding",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "mob_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab_collection",
+      "name": "Tab Collection Override",
+      "settings": [
+        {
+          "type": "select",
+          "id": "tab_key",
+          "label": "Tab",
+          "options": [
+            { "value": "month", "label": "THIS MONTH" },
+            { "value": "wedding", "label": "WEDDING" },
+            { "value": "sangeet", "label": "SANGEET" },
+            { "value": "mehendi", "label": "MEHENDI" },
+            { "value": "haldi", "label": "HALDI" }
+          ],
+          "default": "month"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bestsellers (Tabbed Rail)"
+    }
+  ]
+}
+{% endschema %}

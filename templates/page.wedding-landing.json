@@ -77,9 +77,9 @@
         "tab_1": {
           "type": "filter_tab",
           "settings": {
-            "title": "House Celebration",
-            "collection": "house-celebration",
-            "custom_link": "/collections/house-celebration"
+            "title": "Cocktail",
+            "collection": "cocktail",
+            "custom_link": "/collections/cocktail"
           }
         },
         "tab_2": {
@@ -125,9 +125,9 @@
       },
       "block_order": [
         "tab_2",
-        "tab_3",
         "tab_4",
         "tab_5",
+        "tab_3",
         "tab_6",
         "tab_1"
       ],

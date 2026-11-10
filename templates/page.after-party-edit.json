@@ -1,0 +1,98 @@
+{
+  "sections": {
+    "after_party_feed": {
+      "type": "diwali-collection-feed",
+      "blocks": {
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Cocktail",
+            "collection": "cocktail",
+            "custom_link": "/collections/cocktail"
+          }
+        },
+        "tab_2": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "After party",
+            "collection": "after-party",
+            "custom_link": "/collections/after-party"
+          }
+        },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Sheer",
+            "collection": "sheer",
+            "custom_link": "/collections/sheer"
+          }
+        },
+        "tab_4": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Black",
+            "collection": "midnight-monochromes",
+            "custom_link": "/collections/midnight-monochromes"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "tab_4"
+      ],
+      "settings": {
+        "title": "After Party Edit",
+        "subtitle": "Late nights, cocktails & high glam",
+        "collection": "cocktail",
+        "products_per_page": 16,
+        "grid": 4,
+        "grid_mobile": "2",
+        "show_filter_tabs": true,
+        "show_all_styles_tab": false,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "pad_top": 16,
+        "pad_bottom": 32,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    },
+    "after_party_seo_faq": {
+      "type": "diwali-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the After Party Edit?",
+            "answer": "The After Party Edit highlights contemporary, edgy ethnic styles for evening receptions, cocktail soirees, and midnight wedding celebrations."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What makes the Sheer and Midnight Black collections special?",
+            "answer": "Crafted with translucent woven textures, dark monochromes, and subtle sequin accents, these pieces are tailored for low-light glamorous settings."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ],
+      "settings": {
+        "story_title": "After Party & Cocktail Edit",
+        "story_content": "<p>When the ceremonies transition into midnight celebration, elevate your look with sharp monochromes, modern sheer textures, and asymmetric Indo-Western cuts tailored for cocktail hours.</p>",
+        "faq_title": "Frequently Asked Questions",
+        "show_usp_strip": true,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    }
+  },
+  "order": [
+    "after_party_feed",
+    "after_party_seo_faq"
+  ]
+}

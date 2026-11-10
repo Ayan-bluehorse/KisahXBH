@@ -1,0 +1,124 @@
+{
+  "sections": {
+    "squad_feed": {
+      "type": "diwali-collection-feed",
+      "blocks": {
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Kurtas",
+            "collection": "kurta-short-kurta",
+            "custom_link": "/collections/kurta-short-kurta"
+          }
+        },
+        "tab_2": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Kurta sets",
+            "collection": "kurta-sets",
+            "custom_link": "/collections/kurta-sets"
+          }
+        },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Sheer",
+            "collection": "sheer",
+            "custom_link": "/collections/sheer"
+          }
+        },
+        "tab_4": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Sherwani",
+            "collection": "sherwani-achkans",
+            "custom_link": "/collections/sherwani-achkans"
+          }
+        },
+        "tab_5": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Indowestern",
+            "collection": "indowestern-sets",
+            "custom_link": "/collections/indowestern-sets"
+          }
+        },
+        "tab_6": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Jodhpuri",
+            "collection": "jodhpuri-bandhgala",
+            "custom_link": "/collections/jodhpuri-bandhgala"
+          }
+        }
+      },
+      "block_order": [
+        "tab_1",
+        "tab_2",
+        "tab_3",
+        "tab_4",
+        "tab_5",
+        "tab_6"
+      ],
+      "settings": {
+        "title": "Groom Squad Edit",
+        "subtitle": "Coordinated looks for brothers, cousins and best friends",
+        "collection": "kurta-sets",
+        "products_per_page": 16,
+        "grid": 4,
+        "grid_mobile": "2",
+        "show_filter_tabs": true,
+        "show_all_styles_tab": false,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "pad_top": 16,
+        "pad_bottom": 32,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    },
+    "squad_seo_faq": {
+      "type": "diwali-seo-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the Groom Squad Edit?",
+            "answer": "The Groom Squad Edit is designed specifically for brothers, cousins, and groomsmen who want complementary, cohesive ethnic outfits without looking like an identical uniform."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can we order multiple coordinated sets for all groomsmen?",
+            "answer": "Yes! Our collections feature wide sizing from XS to 7XL with ready inventory, allowing whole groups to order coordinated color palettes and matching embroidery motifs."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What fabric options are available for groomsmen?",
+            "answer": "We offer breathable pure silks, cotton blends for daytime rituals, rich jacquard weaves, and our signature Sheer collection for evening functions."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
+      "settings": {
+        "story_title": "Groom Squad & Dulhe Ki Toli",
+        "story_content": "<p>Matching, without the uniform. Whether it's high-energy Baraat dance entries, spirited Sangeet performances, or intimate Haldi splashes, Kisah delivers stylish coordinated looks that make your squad stand out.</p>",
+        "faq_title": "Frequently Asked Questions",
+        "show_usp_strip": true,
+        "bg_color": "#fdfcf9",
+        "text_color": "#141414"
+      }
+    }
+  },
+  "order": [
+    "squad_feed",
+    "squad_seo_faq"
+  ]
+}

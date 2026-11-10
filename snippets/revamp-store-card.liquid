@@ -1,0 +1,43 @@
+{% comment %}
+  Kisah Revamp Store Card Snippet
+{% endcomment %}
+<article class="v5-store-card" data-city="{{ city }}">
+  <div class="v5-store-media">
+    <a href="{{ page | default: '/pages/store-locator' }}" class="v5-store-img-link" aria-label="{{ name | escape }}, {{ city }}">
+      {%- if img contains '//' or img contains 'http' -%}
+        <img
+          src="{{ img }}"
+          alt="{{ name | escape }} storefront"
+          loading="lazy"
+          decoding="async"
+          width="300"
+          height="300"
+          class="v5-store-img"
+          style="border-radius: 0 !important;"
+        >
+      {%- elsif img != blank -%}
+        <img
+          src="{{ img | asset_url }}"
+          alt="{{ name | escape }} storefront"
+          loading="lazy"
+          decoding="async"
+          width="300"
+          height="300"
+          class="v5-store-img"
+          style="border-radius: 0 !important;"
+        >
+      {%- else -%}
+        <div class="v5-store-placeholder" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #e8e2d8;">{{ 'image' | placeholder_svg_tag }}</div>
+      {%- endif -%}
+    </a>
+  </div>
+  <div class="v5-store-body">
+    <span class="v5-store-city">{{ city }}</span>
+    <h3 class="v5-store-name">{{ name }}</h3>
+    <div class="v5-store-acts">
+      <a href="{{ maps | default: '#' }}" target="_blank" rel="noopener">DIRECTIONS</a>
+      <a href="{{ page | default: '/pages/store-locator' }}">STORE PAGE</a>
+    </div>
+  </div>
+</article>
+
