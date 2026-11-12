@@ -836,6 +836,11 @@
           "footer_checkout_html": "<span>CHECKOUT</span><span class=\"kisah-cta-total\"></span>",
           "enable_free_gift_transform": false
         }
+      },
+      "377650522495455440": {
+        "type": "shopify://apps/elevate-ab-testing/blocks/abtester/4ce51acb-a9f5-4e05-ae92-4c018aa51124",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
