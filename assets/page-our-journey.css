@@ -24,10 +24,10 @@ body.template-suffix-our-journey #pagefooter .footer-seo-wrapper {
   --oj-cream: #e8dfd0;
   --oj-gold: #bb8750;
   --oj-bright: #dbad68;
-  --oj-serif: "Bodoni Moda", var(--heading-font-family, serif);
-  --oj-sans: "Manrope", var(--base-font-family, sans-serif);
-  --oj-nav: "Manrope", var(--nav-font-family, sans-serif);
-  --oj-logo: "Bodoni Moda", var(--logo-font-family, serif);
+  --oj-serif: var(--heading-font-family);
+  --oj-sans: var(--base-font-family);
+  --oj-nav: var(--nav-font-family, var(--base-font-family));
+  --oj-logo: var(--heading-font-family);
 
   background-color: var(--oj-paper);
   color: var(--oj-ink);

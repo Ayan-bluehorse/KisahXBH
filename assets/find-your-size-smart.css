@@ -583,7 +583,7 @@
 }
 
 .fys-modal-head h3 {
-  font-family: "Playfair Display", Georgia, serif, -apple-system, sans-serif;
+  font-family: var(--heading-font-family);
   font-size: 21px;
   font-weight: 700;
   color: var(--fys-navy);

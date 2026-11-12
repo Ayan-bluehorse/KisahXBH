@@ -425,20 +425,16 @@
   margin-top: 22px;
   flex-wrap: wrap;
 }
-/* GenerisSansW01-Medium has no @font-face in this theme; Regular is the
-   nearest declared face, so it carries the fallback. */
 .fys-exchange {
-  font-family: 'GenerisSansW01-Medium', 'Generis Sans W01 Regular', sans-serif !important;
+  font-family: var(--base-font-family) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 20.8px !important;
   color: #000000;
   margin-top: 16px;
 }
-/* the declared face is "Generis Sans W01 Regular"; the hyphenated name has no
-   @font-face, so it sits first and the declared one resolves. */
 .fys-support {
-  font-family: 'GenerisSansW01-Regular', 'Generis Sans W01 Regular', sans-serif !important;
+  font-family: var(--base-font-family) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 20.8px !important;

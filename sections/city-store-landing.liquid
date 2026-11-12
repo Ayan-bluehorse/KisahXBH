@@ -98,8 +98,7 @@
   assign ally_phone = section.settings.ally_phone | default: '918100993480' | replace: ' ', '' | replace: '+', ''
 -%}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Trirong:wght@500;600&display=swap">
+{% comment %} Typography uses global --heading-font-family (Newsreader) and --base-font-family (Manrope) {% endcomment %}
 
 <style>
 .ksl-page {
@@ -113,8 +112,8 @@
   --paper: #FFFFFF;
   --gold: #8F6A06;
   --wa: #128C4A;
-  --font: "Manrope", -apple-system, "Segoe UI", Roboto, sans-serif;
-  --serif: "Trirong", "Lora", Georgia, serif;
+  --font: var(--base-font-family);
+  --serif: var(--heading-font-family);
   font-family: var(--font);
   font-size: 15px;
   line-height: 1.5;

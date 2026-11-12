@@ -1,16 +1,13 @@
 /* ==========================================================================
    KISAH NAVRATRI FESTIVE EXPERIENCE — ACTIVE DESIGN SYSTEM & SECTIONS
    Typography System:
-   1. All Headings: Bodoni Moda (Google Fonts)
-   2. Rest of Site (approx. 85%): Manrope (Google Fonts)
+   1. All Headings: Global Heading Font (--heading-font-family: Newsreader)
+   2. Rest of Site (approx. 85%): Global Body Font (--base-font-family: Manrope)
    ========================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@300;400;500;600;700;800&display=swap");
-
 :root {
-  --font-navratri-heading: "Bodoni Moda", Georgia, serif;
-  --font-navratri-body:
-    "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-navratri-heading: var(--heading-font-family);
+  --font-navratri-body: var(--base-font-family);
 }
 
 /* ==========================================================================
@@ -146,7 +143,7 @@ body.template-suffix-navratri2026,
 .cp-color-grid-heading-celebrate,
 .cp-review-heading {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   color: #111111 !important;
   font-weight: 600 !important;
   letter-spacing: 0.02em !important;
@@ -593,7 +590,7 @@ body.template-suffix-navratri2026,
 .cp-navratri-collection-head__title,
 .template-page .cp-navratri-collection-head__title {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   font-size: clamp(26px, 3.6vw, 42px) !important;
   font-weight: 600 !important;
   line-height: 1.15 !important;
@@ -609,7 +606,7 @@ body.template-suffix-navratri2026,
 .template-page .cp-navratri-collection-head__highlight,
 .cp-navratri-collection-head__title .cp-navratri-collection-head__highlight {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   font-size: 1em !important;
   font-weight: 500 !important;
   line-height: inherit !important;
@@ -797,7 +794,7 @@ body.template-suffix-navratri2026,
 
 .cp-navratri-gateway__title {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   font-size: clamp(24px, 3.2vw, 36px);
   color: #111111;
   font-weight: 600;
@@ -1358,7 +1355,7 @@ body.template-suffix-navratri2026,
 
 .cp-navratri-categories__title {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   font-size: clamp(24px, 3.2vw, 36px);
   color: #111111;
   font-weight: 600;
@@ -1689,7 +1686,7 @@ body.template-suffix-navratri2026,
 
 .cp-navratri-pcarousel__title {
   font-family:
-    var(--font-navratri-heading), "Bodoni Moda", Georgia, serif !important;
+    var(--font-navratri-heading) !important;
   font-size: clamp(24px, 3.2vw, 36px) !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
