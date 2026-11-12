@@ -575,12 +575,230 @@
     updateSectionSummaries();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFilterSheet);
-  } else {
+  // --- Sticky Filter & Sort Control Bar (Collections & Landing Pages) ---
+  function initStickyFilterBar() {
+    if (window.__kisahStickyCtrlInit) {
+      if (typeof window.__kisahStickyCtrlRefresh === 'function') {
+        window.__kisahStickyCtrlRefresh();
+      }
+      return;
+    }
+    window.__kisahStickyCtrlInit = true;
+
+    const stateMap = new WeakMap();
+    const managedBars = new Set();
+    let stickyRaf = null;
+    let lastHeaderEl = null;
+    let headerObserver = null;
+
+    function ensureSpacer(ctrl) {
+      let state = stateMap.get(ctrl);
+      if (state && state.spacer && state.spacer.isConnected) {
+        return state;
+      }
+
+      let spacer = ctrl.nextElementSibling && ctrl.nextElementSibling.classList.contains('kisah-ctrl-spacer')
+        ? ctrl.nextElementSibling
+        : null;
+
+      if (!spacer) {
+        spacer = document.createElement('div');
+        spacer.className = 'kisah-ctrl-spacer';
+        spacer.setAttribute('aria-hidden', 'true');
+        ctrl.insertAdjacentElement('afterend', spacer);
+      }
+
+      state = {
+        ctrl,
+        spacer,
+        wasSticky: false,
+        animateRaf: null,
+        metrics: null
+      };
+      stateMap.set(ctrl, state);
+      managedBars.add(ctrl);
+      return state;
+    }
+
+    function captureMetrics(state, rect) {
+      const cs = window.getComputedStyle(state.ctrl);
+      state.metrics = {
+        height: rect.height || state.ctrl.offsetHeight || 44,
+        marginTop: cs.marginTop,
+        marginBottom: cs.marginBottom,
+        padLeft: parseFloat(cs.paddingLeft) || 14,
+        padRight: parseFloat(cs.paddingRight) || 14
+      };
+    }
+
+    function getHeaderOffset(header) {
+      if (!header || !header.classList.contains('kisah-header--fixed')) {
+        return 0;
+      }
+      if (header.classList.contains('kisah-header--hidden')) {
+        return 0;
+      }
+      return header.offsetHeight || 0;
+    }
+
+    function getGridBound(ctrl) {
+      const sectionScope = ctrl.closest('.shopify-section') || ctrl.parentElement;
+      if (!sectionScope) return null;
+      return sectionScope.querySelector('[data-feed-container], .filters-adjacent.collection-listing, .collection-listing, #product-grid') || sectionScope;
+    }
+
+    function observeHeader(header) {
+      if (header === lastHeaderEl) return;
+      if (headerObserver) {
+        headerObserver.disconnect();
+        headerObserver = null;
+      }
+      lastHeaderEl = header;
+      if (!header || typeof MutationObserver === 'undefined') return;
+
+      // Sync sticky bar immediately in the same frame when the smart header toggles visibility
+      headerObserver = new MutationObserver(() => {
+        if (stickyRaf !== null) {
+          window.cancelAnimationFrame(stickyRaf);
+          stickyRaf = null;
+        }
+        updateStickyBars();
+      });
+      headerObserver.observe(header, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    function unstick(state) {
+      const { ctrl, spacer } = state;
+      if (state.animateRaf) {
+        window.cancelAnimationFrame(state.animateRaf);
+        state.animateRaf = null;
+      }
+      ctrl.classList.remove('kisah-ctrl--sticky', 'kisah-ctrl--animate', 'kisah-ctrl--past-end');
+      ctrl.style.removeProperty('--kisah-ctrl-y');
+      ctrl.style.removeProperty('--kisah-ctrl-sticky-pl');
+      ctrl.style.removeProperty('--kisah-ctrl-sticky-pr');
+      if (spacer) spacer.classList.remove('is-active');
+      state.wasSticky = false;
+    }
+
+    function updateStickyBars() {
+      stickyRaf = null;
+      const header = document.querySelector('.section-header');
+      observeHeader(header);
+      const headerOffset = getHeaderOffset(header);
+      const docWidth = document.documentElement.clientWidth || window.innerWidth;
+
+      managedBars.forEach((ctrl) => {
+        if (!ctrl.isConnected) {
+          managedBars.delete(ctrl);
+          return;
+        }
+
+        const state = ensureSpacer(ctrl);
+        const isSticky = ctrl.classList.contains('kisah-ctrl--sticky');
+        const boxEl = isSticky ? state.spacer : ctrl;
+        const boxRect = boxEl.getBoundingClientRect();
+
+        if (boxRect.width === 0 || (!isSticky && boxRect.height === 0)) {
+          if (isSticky) unstick(state);
+          return;
+        }
+
+        if (!isSticky && !state.metrics) {
+          captureMetrics(state, boxRect);
+        } else if (isSticky && !state.metrics) {
+          unstick(state);
+          const freshRect = ctrl.getBoundingClientRect();
+          if (freshRect.width === 0 || freshRect.height === 0) return;
+          captureMetrics(state, freshRect);
+        }
+
+        const barHeight = state.metrics.height || 44;
+        const gridBound = getGridBound(ctrl);
+        const gridRect = gridBound ? gridBound.getBoundingClientRect() : null;
+
+        if (gridRect && gridRect.height < barHeight * 2) {
+          if (state.wasSticky) unstick(state);
+          return;
+        }
+
+        const anchorTop = boxRect.top;
+        const shouldStick = anchorTop <= headerOffset;
+
+        if (!shouldStick) {
+          if (state.wasSticky) unstick(state);
+          return;
+        }
+
+        const endThreshold = headerOffset + barHeight + 16;
+        const isPastEnd = !!(gridRect && gridRect.bottom <= endThreshold);
+        const padLeft = Math.max(state.metrics.padLeft, boxRect.left + state.metrics.padLeft);
+        const padRight = Math.max(state.metrics.padRight, docWidth - boxRect.right + state.metrics.padRight);
+
+        ctrl.style.setProperty('--kisah-ctrl-y', `${headerOffset}px`);
+        ctrl.style.setProperty('--kisah-ctrl-sticky-pl', `${padLeft}px`);
+        ctrl.style.setProperty('--kisah-ctrl-sticky-pr', `${padRight}px`);
+
+        if (!state.wasSticky) {
+          state.spacer.style.height = `${barHeight}px`;
+          state.spacer.style.marginTop = state.metrics.marginTop;
+          state.spacer.style.marginBottom = state.metrics.marginBottom;
+          state.spacer.classList.add('is-active');
+          ctrl.classList.add('kisah-ctrl--sticky');
+          state.wasSticky = true;
+          // Enable transform transition one frame later so initial stick never jumps from y=0
+          state.animateRaf = window.requestAnimationFrame(() => {
+            state.animateRaf = null;
+            if (ctrl.classList.contains('kisah-ctrl--sticky')) {
+              ctrl.classList.add('kisah-ctrl--animate');
+            }
+          });
+        }
+
+        ctrl.classList.toggle('kisah-ctrl--past-end', isPastEnd);
+      });
+    }
+
+    function scheduleUpdate() {
+      if (stickyRaf !== null) return;
+      stickyRaf = window.requestAnimationFrame(updateStickyBars);
+    }
+
+    function scanStickyBars() {
+      document.querySelectorAll('.kisah-ctrl').forEach((ctrl) => {
+        ensureSpacer(ctrl);
+      });
+      updateStickyBars();
+    }
+
+    function onResize() {
+      managedBars.forEach((ctrl) => {
+        const state = stateMap.get(ctrl);
+        if (!state) return;
+        unstick(state);
+        state.metrics = null;
+      });
+      updateStickyBars();
+    }
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    window.__kisahStickyCtrlRefresh = scanStickyBars;
+
+    scanStickyBars();
+  }
+
+  function bootFilterSheetAndSticky() {
     initFilterSheet();
+    initStickyFilterBar();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootFilterSheetAndSticky);
+  } else {
+    bootFilterSheetAndSticky();
   }
 
   // Support Shopify Section & AJAX re-renders
-  document.addEventListener('shopify:section:load', initFilterSheet);
+  document.addEventListener('shopify:section:load', bootFilterSheetAndSticky);
 })();

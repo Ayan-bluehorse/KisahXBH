@@ -29,6 +29,59 @@
   box-shadow: 0 2px 6px rgba(32, 23, 71, 0.04);
 }
 
+.kisah-ctrl-spacer {
+  display: none;
+  width: 100%;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.kisah-ctrl-spacer.is-active {
+  display: block;
+}
+
+/* Higher specificity overrides landing-feed card overrides while keeping card mode unchanged */
+.shopify-section .kisah-ctrl.kisah-ctrl--sticky,
+.kisah-ctrl.kisah-ctrl--sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 1px solid var(--kisah-rule);
+  border-bottom: 1px solid var(--kisah-rule);
+  background: var(--kisah-paper);
+  padding: 10px var(--kisah-ctrl-sticky-pr, 14px) 10px var(--kisah-ctrl-sticky-pl, 14px);
+  z-index: 390;
+  box-shadow: 0 4px 14px rgba(32, 23, 71, 0.08);
+  transform: translate3d(0, var(--kisah-ctrl-y, 0px), 0);
+  will-change: transform, opacity;
+}
+
+.shopify-section .kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--animate,
+.kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--animate {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shopify-section .kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--past-end,
+.kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--past-end {
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: none;
+  transform: translate3d(0, calc(var(--kisah-ctrl-y, 0px) - 100%), 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shopify-section .kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--animate,
+  .kisah-ctrl.kisah-ctrl--sticky.kisah-ctrl--animate {
+    transition: none;
+  }
+}
+
 .kisah-ctrl__n {
   flex: 1;
   font-size: 13px;
