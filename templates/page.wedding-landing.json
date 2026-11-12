@@ -134,7 +134,7 @@
       "settings": {
         "title": "All Wedding styles",
         "subtitle": "Sorted by most bought",
-        "collection": "wedding",
+        "collection": "wedding-edit",
         "products_per_page": 16,
         "grid": 4,
         "grid_mobile": "2",
