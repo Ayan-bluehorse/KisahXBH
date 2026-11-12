@@ -36,12 +36,20 @@
             "custom_link": "/collections/kurta-sets"
           }
         },
+        "tab_6": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "bandhgalas",
+            "collection": "jodhpuri-bandhgala",
+            "custom_link": "/collections/jodhpuri-bandhgala"
+          }
+        },
         "tab_1": {
           "type": "filter_tab",
           "settings": {
-            "title": "Kurtas",
+            "title": "kurta jacket sets",
             "collection": "kurta-short-kurta",
-            "custom_link": "/collections/kurta-short-kurta"
+            "custom_link": "shopify://collections/kurtajacketset"
           }
         },
         "tab_3": {
@@ -51,23 +59,15 @@
             "collection": "sheer",
             "custom_link": "/collections/sheer"
           }
-        },
-        "tab_6": {
-          "type": "filter_tab",
-          "settings": {
-            "title": "bandhgalas",
-            "collection": "jodhpuri-bandhgala",
-            "custom_link": "/collections/jodhpuri-bandhgala"
-          }
         }
       },
       "block_order": [
         "tab_5",
         "tab_4",
         "tab_2",
+        "tab_6",
         "tab_1",
-        "tab_3",
-        "tab_6"
+        "tab_3"
       ],
       "settings": {
         "title": "Groom Squad Edit",
