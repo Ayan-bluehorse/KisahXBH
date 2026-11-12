@@ -33,14 +33,6 @@
             "enable_product_reviews_by_price": true
           }
         },
-        "brand_rating": {
-          "type": "brand-rating",
-          "settings": {
-            "fallback_handles": "",
-            "background_color": "#fff3da",
-            "text_color": "#1f1f1f"
-          }
-        },
         "vendor": {
           "type": "vendor",
           "disabled": true,
@@ -76,7 +68,8 @@
             "enable_dynamic_availability": true,
             "enable_size_chart": true,
             "size_chart_variant": "Size",
-            "size_chart_page": ""
+            "size_chart_page": "",
+            "model_size_info": ""
           }
         },
         "offer_box_YYqAET": {
@@ -107,13 +100,11 @@
             "show_insta": true,
             "show_print": true,
             "show_whatsapp": true,
-            "help_whatsapp_number": "918100993480"
-          }
-        },
-        "recommendation_PrFffR": {
-          "type": "recommendation",
-          "settings": {
-            "recommendation_title": "More ways to style"
+            "show_help_chat": true,
+            "help_text": "For help with sizing, delivery or anything else,",
+            "help_link_text": "Chat with us",
+            "help_whatsapp_number": "918100993480",
+            "help_whatsapp_message": "Hi"
           }
         },
         "pre_order_restock_notifier_back_in_stock_notifier_FXpDgt": {
@@ -204,6 +195,12 @@
             "text4": ""
           }
         },
+        "recommendation_PrFffR": {
+          "type": "recommendation",
+          "settings": {
+            "recommendation_title": "More ways to style"
+          }
+        },
         "trust_icons_LymzYd": {
           "type": "trust-icons",
           "settings": {
@@ -268,11 +265,15 @@
         "judge_me_reviews_preview_badge_REUDXR"
       ],
       "settings": {
+        "show_contains": true,
+        "contains_default_tab": "",
+        "contains_text": "Contains",
         "show_breadcrumbs": true,
         "show_location_underneath": false,
         "inventory_transfers_enable": true,
         "kid-size-image": "shopify://shop_images/vector_2-01_1_1_1.png",
         "size-image": "shopify://shop_images/output-onlinepngtools.png",
+        "sizechart_help_whatsapp": "918100993480",
         "enable_sticky_columns": false,
         "gallery_size": "medium",
         "gallery_layout": "carousel-beside",
@@ -296,6 +297,66 @@
         "desk-padding-bottom": 20,
         "mob-padding-top": 0,
         "mob-padding-bottom": 16
+      }
+    },
+    "apps_UFMwwi": {
+      "type": "apps",
+      "blocks": {
+        "helium_analytics_ai_agent_product_recommendation_i9yd7V": {
+          "type": "shopify://apps/helium-analytics-ai-agent/blocks/product-recommendation/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
+          "settings": {
+            "template_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "strategy_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
+            "use_shop_metafield": false,
+            "heading": "Recommended Products",
+            "heading_color": "#000000",
+            "font_family": "inherit",
+            "heading_font_family": "inherit",
+            "heading_alignment": "left",
+            "heading_size": 32,
+            "heading_size_mobile": 24,
+            "heading_font_weight": "inherit",
+            "heading_transform": "none",
+            "header_margin_bottom": 30,
+            "limit": 4,
+            "hide_if_below_min_products": false,
+            "min_products_threshold": 4,
+            "lane_limit": 500,
+            "columns_desktop": 4,
+            "columns_mobile": 2,
+            "grid_gap": 20,
+            "layout_mode": "grid",
+            "slider_item_width": 280,
+            "slider_card_width_mobile": 40,
+            "tag_groups_layout": "stacked",
+            "card_mode": "helium_card",
+            "enable_infinite_scroll": false,
+            "infinite_scroll_step": 25,
+            "enable_cutsize_filter": true,
+            "cutsize_threshold": 50,
+            "margin_top": 32,
+            "margin_bottom": 32,
+            "grid_selector": ".product-grid, ul.product-grid, #product-grid, .grid",
+            "card_selector": "[data-product-id], .product-card, li",
+            "search_section_id": "main-search",
+            "search_cards_per_page": 4,
+            "enable_oos_nudge": false,
+            "enable_oos_modal": false,
+            "oos_modal_title": "You May Also Like",
+            "oos_modal_title_size": 24,
+            "oos_modal_subtitle": "<p>We found some great alternatives for you.</p>",
+            "oos_modal_subtitle_size": 16,
+            "oos_modal_max_width": 900,
+            "oos_modal_max_height_desktop": 90,
+            "oos_modal_max_height_mobile": 95
+          }
+        }
+      },
+      "block_order": [
+        "helium_analytics_ai_agent_product_recommendation_i9yd7V"
+      ],
+      "settings": {
+        "full_width": false
       }
     },
     "cp_review_slider_NUtQCW": {
@@ -568,66 +629,6 @@
         "full_width": false
       }
     },
-    "apps_UFMwwi": {
-      "type": "apps",
-      "blocks": {
-        "helium_analytics_ai_agent_product_recommendation_i9yd7V": {
-          "type": "shopify://apps/helium-analytics-ai-agent/blocks/product-recommendation/bd7f751b-63f8-4aea-b99c-3592ca942aa9",
-          "settings": {
-            "template_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
-            "strategy_id": "400408aa-c32d-4258-ac64-c92786ea36f1",
-            "use_shop_metafield": false,
-            "heading": "Recommended Products",
-            "heading_color": "#000000",
-            "font_family": "inherit",
-            "heading_font_family": "inherit",
-            "heading_alignment": "left",
-            "heading_size": 32,
-            "heading_size_mobile": 24,
-            "heading_font_weight": "inherit",
-            "heading_transform": "none",
-            "header_margin_bottom": 30,
-            "limit": 4,
-            "hide_if_below_min_products": false,
-            "min_products_threshold": 4,
-            "lane_limit": 500,
-            "columns_desktop": 4,
-            "columns_mobile": 2,
-            "grid_gap": 20,
-            "layout_mode": "grid",
-            "slider_item_width": 280,
-            "slider_card_width_mobile": 40,
-            "tag_groups_layout": "stacked",
-            "card_mode": "helium_card",
-            "enable_infinite_scroll": false,
-            "infinite_scroll_step": 25,
-            "enable_cutsize_filter": true,
-            "cutsize_threshold": 50,
-            "margin_top": 32,
-            "margin_bottom": 32,
-            "grid_selector": ".product-grid, ul.product-grid, #product-grid, .grid",
-            "card_selector": "[data-product-id], .product-card, li",
-            "search_section_id": "main-search",
-            "search_cards_per_page": 4,
-            "enable_oos_nudge": false,
-            "enable_oos_modal": false,
-            "oos_modal_title": "You May Also Like",
-            "oos_modal_title_size": 24,
-            "oos_modal_subtitle": "<p>We found some great alternatives for you.</p>",
-            "oos_modal_subtitle_size": 16,
-            "oos_modal_max_width": 900,
-            "oos_modal_max_height_desktop": 90,
-            "oos_modal_max_height_mobile": 95
-          }
-        }
-      },
-      "block_order": [
-        "helium_analytics_ai_agent_product_recommendation_i9yd7V"
-      ],
-      "settings": {
-        "full_width": false
-      }
-    },
     "custom_liquid_TCcGEx": {
       "type": "custom-liquid",
       "name": "Custom Liquid",
@@ -640,12 +641,12 @@
   "order": [
     "main",
     "bundleproduct_DxCWND",
+    "apps_UFMwwi",
     "cp_review_slider_NUtQCW",
     "related-products",
     "17195539445e36f021",
     "1769847277a8abb1ca",
     "apps_UKL7EG",
-    "apps_UFMwwi",
     "custom_liquid_TCcGEx"
   ]
 }
