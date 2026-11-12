@@ -12,28 +12,12 @@
     "squad_feed": {
       "type": "diwali-collection-feed",
       "blocks": {
-        "tab_1": {
+        "tab_5": {
           "type": "filter_tab",
           "settings": {
-            "title": "Kurtas",
-            "collection": "kurta-short-kurta",
-            "custom_link": "/collections/kurta-short-kurta"
-          }
-        },
-        "tab_2": {
-          "type": "filter_tab",
-          "settings": {
-            "title": "Kurta sets",
-            "collection": "kurta-sets",
-            "custom_link": "/collections/kurta-sets"
-          }
-        },
-        "tab_3": {
-          "type": "filter_tab",
-          "settings": {
-            "title": "Sheer",
-            "collection": "sheer",
-            "custom_link": "/collections/sheer"
+            "title": "Indowestern",
+            "collection": "indowestern-sets",
+            "custom_link": "/collections/indowestern-sets"
           }
         },
         "tab_4": {
@@ -44,29 +28,45 @@
             "custom_link": "/collections/sherwani-achkans"
           }
         },
-        "tab_5": {
+        "tab_2": {
           "type": "filter_tab",
           "settings": {
-            "title": "Indowestern",
-            "collection": "indowestern-sets",
-            "custom_link": "/collections/indowestern-sets"
+            "title": "Kurta sets",
+            "collection": "kurta-sets",
+            "custom_link": "/collections/kurta-sets"
+          }
+        },
+        "tab_1": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Kurtas",
+            "collection": "kurta-short-kurta",
+            "custom_link": "/collections/kurta-short-kurta"
+          }
+        },
+        "tab_3": {
+          "type": "filter_tab",
+          "settings": {
+            "title": "Sheer",
+            "collection": "sheer",
+            "custom_link": "/collections/sheer"
           }
         },
         "tab_6": {
           "type": "filter_tab",
           "settings": {
-            "title": "Jodhpuri",
+            "title": "bandhgalas",
             "collection": "jodhpuri-bandhgala",
             "custom_link": "/collections/jodhpuri-bandhgala"
           }
         }
       },
       "block_order": [
-        "tab_1",
-        "tab_2",
-        "tab_3",
-        "tab_4",
         "tab_5",
+        "tab_4",
+        "tab_2",
+        "tab_1",
+        "tab_3",
         "tab_6"
       ],
       "settings": {
