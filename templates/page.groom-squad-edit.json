@@ -54,6 +54,7 @@
         },
         "tab_3": {
           "type": "filter_tab",
+          "disabled": true,
           "settings": {
             "title": "Sheer",
             "collection": "sheer",
