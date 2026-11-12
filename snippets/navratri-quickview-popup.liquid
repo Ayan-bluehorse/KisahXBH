@@ -25,6 +25,9 @@
   </div>
 </div>
 
+{%- unless template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' or template.suffix contains 'groom-squad' or request.path contains 'groom-squad' or template.suffix contains 'after-party' or request.path contains 'after-party' -%}
+  {{ 'navratri.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
 {{ 'find-your-size.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'find-your-size.js' | asset_url }}" defer></script>
 
@@ -437,8 +440,12 @@
                   document.body.classList.contains('template-suffix-wedding-landing') ||
                   document.body.classList.contains('template-suffix-wedding') ||
                   document.body.classList.contains('template-wedding') ||
+                  document.body.classList.contains('template-suffix-groom-squad-edit') ||
+                  document.body.classList.contains('template-suffix-after-party-edit') ||
                   window.location.pathname.indexOf('/diwali') !== -1 ||
                   window.location.pathname.indexOf('/wedding') !== -1 ||
+                  window.location.pathname.indexOf('/groom-squad') !== -1 ||
+                  window.location.pathname.indexOf('/after-party') !== -1 ||
                   window.location.search.indexOf('wedding') !== -1;
     if (!inScope) {
       // Do NOT intercept on default collection, list, or search pages!

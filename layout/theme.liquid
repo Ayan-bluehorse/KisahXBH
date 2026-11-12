@@ -134,7 +134,7 @@
    {% if request.page_type == 'collection' %}
   {{ 'collections.css' | asset_url | stylesheet_tag }}
 {% endif %}
-  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' -%}
+  {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' or template.suffix contains 'groom-squad' or request.path contains 'groom-squad' or template.suffix contains 'after-party' or request.path contains 'after-party' -%}
     {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
