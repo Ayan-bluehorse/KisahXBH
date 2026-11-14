@@ -501,6 +501,136 @@
         "mob_padding_bottom": 28
       }
     },
+    "v5_customer_stories_WLwrT3": {
+      "type": "v5-customer-stories",
+      "blocks": {
+        "story_3zmDgD": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-1.webp",
+            "fallback_image_url": "",
+            "badge": "01",
+            "label": "THE WEDDING SQUAD",
+            "title": "LA glam. Indian soul.",
+            "quote": "Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad!",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_VzUfRx": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-2.webp",
+            "fallback_image_url": "",
+            "badge": "02",
+            "label": "THE BAARAT",
+            "title": "The baarat, in full colour.",
+            "quote": "Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_3rQzAU": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-3.webp",
+            "fallback_image_url": "",
+            "badge": "03",
+            "label": "THE FAMILY EDIT",
+            "title": "Together, in every detail.",
+            "quote": "Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_HXi9NH": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-4.webp",
+            "fallback_image_url": "",
+            "badge": "04",
+            "label": "MEHENDI NIGHT",
+            "title": "A Mehendi to remember.",
+            "quote": "Ordered these outfits for my cousin’s Mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_ejAkdf": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-5.webp",
+            "fallback_image_url": "",
+            "badge": "05",
+            "label": "DIWALI TOGETHER",
+            "title": "Every generation. One celebration.",
+            "quote": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        "story_t6nLpY": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-6.webp",
+            "fallback_image_url": "",
+            "badge": "06",
+            "label": "FRIENDS & FESTIVITIES",
+            "title": "Made for the baarat.",
+            "quote": "We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/wedding"
+          }
+        },
+        "story_pK4rB9": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-7.webp",
+            "fallback_image_url": "",
+            "badge": "07",
+            "label": "THE COORDINATED EDIT",
+            "title": "A moment worth matching.",
+            "quote": "Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        },
+        "story_F4ftm3": {
+          "type": "story",
+          "settings": {
+            "image": "shopify://shop_images/customer-story-8.webp",
+            "fallback_image_url": "",
+            "badge": "08",
+            "label": "RAKHI MOMENTS",
+            "title": "Rakhi, in good company.",
+            "quote": "Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.",
+            "button_text": "SEE THE EDIT",
+            "button_link": "/collections/festive-collection"
+          }
+        }
+      },
+      "block_order": [
+        "story_3zmDgD",
+        "story_VzUfRx",
+        "story_3rQzAU",
+        "story_HXi9NH",
+        "story_ejAkdf",
+        "story_t6nLpY",
+        "story_pK4rB9",
+        "story_F4ftm3"
+      ],
+      "name": "Customer Stories",
+      "settings": {
+        "kicker": "KISAH / WORN & LOVED",
+        "title": "Customer Stories",
+        "subtitle": "Real people. Their celebrations. Their Kisah.",
+        "bg_color": "#f5f0e8",
+        "desk_padding_top": 40,
+        "desk_padding_bottom": 0,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 0
+      }
+    },
     "v5_kisah_stores_mzNqPm": {
       "type": "v5-kisah-stores",
       "blocks": {
@@ -663,136 +793,6 @@
         "desk_padding_bottom": 52,
         "mob_padding_top": 32,
         "mob_padding_bottom": 36
-      }
-    },
-    "v5_customer_stories_WLwrT3": {
-      "type": "v5-customer-stories",
-      "blocks": {
-        "story_3zmDgD": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-1.webp",
-            "fallback_image_url": "",
-            "badge": "01",
-            "label": "THE WEDDING SQUAD",
-            "title": "LA glam. Indian soul.",
-            "quote": "Our wedding was this magical mix of LA glam and Indian traditions, and Kisah totally came thru for the groom’s squad!",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/wedding"
-          }
-        },
-        "story_VzUfRx": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-2.webp",
-            "fallback_image_url": "",
-            "badge": "02",
-            "label": "THE BAARAT",
-            "title": "The baarat, in full colour.",
-            "quote": "Bought these matching kurtas for all the baaratis and they looked fantastic. The quality was excellent, the fit was good, and they suited everyone really well.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/wedding"
-          }
-        },
-        "story_3rQzAU": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-3.webp",
-            "fallback_image_url": "",
-            "badge": "03",
-            "label": "THE FAMILY EDIT",
-            "title": "Together, in every detail.",
-            "quote": "Ordered these matching outfits and they turned out really nice. Easy to wear, elegant embroidery, and the family looked well coordinated.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/wedding"
-          }
-        },
-        "story_HXi9NH": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-4.webp",
-            "fallback_image_url": "",
-            "badge": "04",
-            "label": "MEHENDI NIGHT",
-            "title": "A Mehendi to remember.",
-            "quote": "Ordered these outfits for my cousin’s Mehendi night. The family looked coordinated and classy, very comfortable to wear, and we received many compliments.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/wedding"
-          }
-        },
-        "story_ejAkdf": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-5.webp",
-            "fallback_image_url": "",
-            "badge": "05",
-            "label": "DIWALI TOGETHER",
-            "title": "Every generation. One celebration.",
-            "quote": "This Diwali, from the oldest to the youngest in our family, everyone was perfectly coordinated in Kisah. The outfits were elegant, comfortable, and drew so many compliments. A perfect festive look for all of us.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/festive-collection"
-          }
-        },
-        "story_t6nLpY": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-6.webp",
-            "fallback_image_url": "",
-            "badge": "06",
-            "label": "FRIENDS & FESTIVITIES",
-            "title": "Made for the baarat.",
-            "quote": "We wore these kurtas for a friend’s baarat and they stood out. The fabric was great, comfortable all evening, and we got so many compliments.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/wedding"
-          }
-        },
-        "story_pK4rB9": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-7.webp",
-            "fallback_image_url": "",
-            "badge": "07",
-            "label": "THE COORDINATED EDIT",
-            "title": "A moment worth matching.",
-            "quote": "Got these matching kurtas and the fit was perfect. Comfortable to wear, the pictures came out great, and everyone loved the coordinated look.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/festive-collection"
-          }
-        },
-        "story_F4ftm3": {
-          "type": "story",
-          "settings": {
-            "image": "shopify://shop_images/customer-story-8.webp",
-            "fallback_image_url": "",
-            "badge": "08",
-            "label": "RAKHI MOMENTS",
-            "title": "Rakhi, in good company.",
-            "quote": "Picked these kurtas for Rakhi and they looked beautiful. The print was elegant, the fit was good, and even the kids looked really nice in them.",
-            "button_text": "SEE THE EDIT",
-            "button_link": "/collections/festive-collection"
-          }
-        }
-      },
-      "block_order": [
-        "story_3zmDgD",
-        "story_VzUfRx",
-        "story_3rQzAU",
-        "story_HXi9NH",
-        "story_ejAkdf",
-        "story_t6nLpY",
-        "story_pK4rB9",
-        "story_F4ftm3"
-      ],
-      "name": "Customer Stories",
-      "settings": {
-        "kicker": "KISAH / WORN & LOVED",
-        "title": "Customer Stories",
-        "subtitle": "Real people. Their celebrations. Their Kisah.",
-        "bg_color": "#f5f0e8",
-        "desk_padding_top": 40,
-        "desk_padding_bottom": 0,
-        "mob_padding_top": 32,
-        "mob_padding_bottom": 0
       }
     },
     "ceremony_carousel_hhd6Ke": {
@@ -1431,8 +1431,8 @@
     "banner_with_text_xmBXxb",
     "v5_bestsellers_tabbed_etTrbG",
     "v5_find_your_look_EHbamc",
-    "v5_kisah_stores_mzNqPm",
     "v5_customer_stories_WLwrT3",
+    "v5_kisah_stores_mzNqPm",
     "ceremony_carousel_hhd6Ke",
     "trust_badges_bar_nePxQ9",
     "ceremony_carousel_J7BmUm",
