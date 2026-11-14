@@ -631,170 +631,6 @@
         "mob_padding_bottom": 0
       }
     },
-    "v5_kisah_stores_mzNqPm": {
-      "type": "v5-kisah-stores",
-      "blocks": {
-        "store_gariahat": {
-          "type": "store",
-          "settings": {
-            "city": "Kolkata",
-            "title": "Kisah Gariahat",
-            "image": "shopify://shop_images/Gariahat.png",
-            "directions_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
-            "page_url": "/pages/kolkata"
-          }
-        },
-        "store_lake_mall": {
-          "type": "store",
-          "settings": {
-            "city": "Kolkata",
-            "title": "Kisah Lake Mall",
-            "image": "shopify://shop_images/lake_mall_image.jpg",
-            "directions_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
-            "page_url": "/pages/kolkata"
-          }
-        },
-        "store_lindsay": {
-          "type": "store",
-          "settings": {
-            "city": "Kolkata",
-            "title": "Kisah Lindsay Street",
-            "image": "shopify://shop_images/lindsay_street.jpg",
-            "directions_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
-            "page_url": "/pages/kolkata"
-          }
-        },
-        "store_allenby": {
-          "type": "store",
-          "settings": {
-            "city": "Kolkata",
-            "title": "Kisah Allenby Road",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-09_at_6.08.13_PM.jpg",
-            "directions_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
-            "page_url": "/pages/kolkata"
-          }
-        },
-        "store_indiranagar": {
-          "type": "store",
-          "settings": {
-            "city": "Bengaluru",
-            "title": "Kisah Indiranagar",
-            "image": "shopify://shop_images/blr_store_image.jpg",
-            "directions_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
-            "page_url": "/pages/bengaluru"
-          }
-        },
-        "store_phoenix": {
-          "type": "store",
-          "settings": {
-            "city": "Bengaluru",
-            "title": "Kisah Phoenix Marketcity",
-            "image": "shopify://shop_images/phoenix_store.png",
-            "directions_url": "https://www.google.com/maps/place/Phoenix+Market+City,+Devasandra+Industrial+Estate,+Mahadevapura,+Bengaluru,+Karnataka+560048/@12.9969953,77.6941613,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae110b020b972b:0x6a82edb8daff233d!8m2!3d12.9969953!4d77.6967362!16s%2Fg%2F12hks66tc?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
-            "page_url": "/pages/bengaluru"
-          }
-        },
-        "store_jayanagar": {
-          "type": "store",
-          "settings": {
-            "city": "Bengaluru",
-            "title": "Kisah Jayanagar",
-            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
-            "directions_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
-            "page_url": "/pages/bengaluru"
-          }
-        },
-        "store_commercial": {
-          "type": "store",
-          "settings": {
-            "city": "Bengaluru",
-            "title": "Kisah Commercial Street",
-            "image": "shopify://shop_images/commercial_street.png",
-            "directions_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
-            "page_url": "/pages/bengaluru"
-          }
-        },
-        "store_sarath_city": {
-          "type": "store",
-          "settings": {
-            "city": "Hyderabad",
-            "title": "Kisah Sarath City Mall",
-            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
-            "directions_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
-            "page_url": "/pages/hyderabad"
-          }
-        },
-        "store_himayat": {
-          "type": "store",
-          "settings": {
-            "city": "Hyderabad",
-            "title": "Kisah Himayat Nagar",
-            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
-            "directions_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
-            "page_url": "/pages/hyderabad"
-          }
-        },
-        "store_malad": {
-          "type": "store",
-          "settings": {
-            "city": "Mumbai",
-            "title": "Kisah Infiniti Mall, Malad",
-            "image": "shopify://shop_images/malad_store.png",
-            "directions_url": "https://www.google.com/maps/place/Infiniti+Mall+-+Malad+West/@19.184753,72.8341927,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b6ee06ebad2b:0x9c288235c433657d!8m2!3d19.184753!4d72.8341927!16s%2Fg%2F11dfjxxdbn?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
-            "page_url": "/pages/mumbai"
-          }
-        },
-        "store_vizag": {
-          "type": "store",
-          "settings": {
-            "city": "Visakhapatnam",
-            "title": "Kisah Inorbit Mall",
-            "image": "shopify://shop_images/vizag.png",
-            "directions_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
-            "page_url": "/pages/visakhapatnam"
-          }
-        },
-        "store_coming_soon": {
-          "type": "coming_soon",
-          "settings": {
-            "eyebrow": "OPENING SOON",
-            "title": "Two new cities",
-            "city_1": "Gurgaon",
-            "location_1": "Jewel M3M Mall",
-            "city_2": "Jaipur",
-            "location_2": "Pacific Mall"
-          }
-        }
-      },
-      "block_order": [
-        "store_gariahat",
-        "store_lake_mall",
-        "store_lindsay",
-        "store_allenby",
-        "store_indiranagar",
-        "store_phoenix",
-        "store_jayanagar",
-        "store_commercial",
-        "store_sarath_city",
-        "store_himayat",
-        "store_malad",
-        "store_vizag",
-        "store_coming_soon"
-      ],
-      "name": "Kisah Stores",
-      "settings": {
-        "eyebrow": "KISAH STORES",
-        "heading": "Try it on before the function",
-        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
-        "link_text": "ALL STORES",
-        "link_url": "/pages/store-locator",
-        "bg_color": "#f8f8f3",
-        "desk_padding_top": 44,
-        "desk_padding_bottom": 52,
-        "mob_padding_top": 32,
-        "mob_padding_bottom": 36
-      }
-    },
     "ceremony_carousel_hhd6Ke": {
       "type": "ceremony-carousel",
       "blocks": {
@@ -1280,6 +1116,170 @@
         "full_width": false
       }
     },
+    "v5_kisah_stores_mzNqPm": {
+      "type": "v5-kisah-stores",
+      "blocks": {
+        "store_gariahat": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "title": "Kisah Gariahat",
+            "image": "shopify://shop_images/Gariahat.png",
+            "directions_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
+            "page_url": "/pages/kolkata"
+          }
+        },
+        "store_lake_mall": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "title": "Kisah Lake Mall",
+            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "directions_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
+            "page_url": "/pages/kolkata"
+          }
+        },
+        "store_lindsay": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "title": "Kisah Lindsay Street",
+            "image": "shopify://shop_images/lindsay_street.jpg",
+            "directions_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
+            "page_url": "/pages/kolkata"
+          }
+        },
+        "store_allenby": {
+          "type": "store",
+          "settings": {
+            "city": "Kolkata",
+            "title": "Kisah Allenby Road",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-10-09_at_6.08.13_PM.jpg",
+            "directions_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
+            "page_url": "/pages/kolkata"
+          }
+        },
+        "store_indiranagar": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "title": "Kisah Indiranagar",
+            "image": "shopify://shop_images/blr_store_image.jpg",
+            "directions_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
+            "page_url": "/pages/bengaluru"
+          }
+        },
+        "store_phoenix": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "title": "Kisah Phoenix Marketcity",
+            "image": "shopify://shop_images/phoenix_store.png",
+            "directions_url": "https://www.google.com/maps/place/Phoenix+Market+City,+Devasandra+Industrial+Estate,+Mahadevapura,+Bengaluru,+Karnataka+560048/@12.9969953,77.6941613,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae110b020b972b:0x6a82edb8daff233d!8m2!3d12.9969953!4d77.6967362!16s%2Fg%2F12hks66tc?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
+            "page_url": "/pages/bengaluru"
+          }
+        },
+        "store_jayanagar": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "title": "Kisah Jayanagar",
+            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
+            "directions_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
+            "page_url": "/pages/bengaluru"
+          }
+        },
+        "store_commercial": {
+          "type": "store",
+          "settings": {
+            "city": "Bengaluru",
+            "title": "Kisah Commercial Street",
+            "image": "shopify://shop_images/commercial_street.png",
+            "directions_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
+            "page_url": "/pages/bengaluru"
+          }
+        },
+        "store_sarath_city": {
+          "type": "store",
+          "settings": {
+            "city": "Hyderabad",
+            "title": "Kisah Sarath City Mall",
+            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "directions_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
+            "page_url": "/pages/hyderabad"
+          }
+        },
+        "store_himayat": {
+          "type": "store",
+          "settings": {
+            "city": "Hyderabad",
+            "title": "Kisah Himayat Nagar",
+            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
+            "directions_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
+            "page_url": "/pages/hyderabad"
+          }
+        },
+        "store_malad": {
+          "type": "store",
+          "settings": {
+            "city": "Mumbai",
+            "title": "Kisah Infiniti Mall, Malad",
+            "image": "shopify://shop_images/malad_store.png",
+            "directions_url": "https://www.google.com/maps/place/Infiniti+Mall+-+Malad+West/@19.184753,72.8341927,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b6ee06ebad2b:0x9c288235c433657d!8m2!3d19.184753!4d72.8341927!16s%2Fg%2F11dfjxxdbn?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
+            "page_url": "/pages/mumbai"
+          }
+        },
+        "store_vizag": {
+          "type": "store",
+          "settings": {
+            "city": "Visakhapatnam",
+            "title": "Kisah Inorbit Mall",
+            "image": "shopify://shop_images/vizag.png",
+            "directions_url": "https://maps.app.goo.gl/kDVXDMs3BhAE9QNY7",
+            "page_url": "/pages/visakhapatnam"
+          }
+        },
+        "store_coming_soon": {
+          "type": "coming_soon",
+          "settings": {
+            "eyebrow": "OPENING SOON",
+            "title": "Two new cities",
+            "city_1": "Gurgaon",
+            "location_1": "Jewel M3M Mall",
+            "city_2": "Jaipur",
+            "location_2": "Pacific Mall"
+          }
+        }
+      },
+      "block_order": [
+        "store_gariahat",
+        "store_lake_mall",
+        "store_lindsay",
+        "store_allenby",
+        "store_indiranagar",
+        "store_phoenix",
+        "store_jayanagar",
+        "store_commercial",
+        "store_sarath_city",
+        "store_himayat",
+        "store_malad",
+        "store_vizag",
+        "store_coming_soon"
+      ],
+      "name": "Kisah Stores",
+      "settings": {
+        "eyebrow": "KISAH STORES",
+        "heading": "Try it on before the function",
+        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
+        "link_text": "ALL STORES",
+        "link_url": "/pages/store-locator",
+        "bg_color": "#f8f8f3",
+        "desk_padding_top": 44,
+        "desk_padding_bottom": 52,
+        "mob_padding_top": 32,
+        "mob_padding_bottom": 36
+      }
+    },
     "testimonials_BCezKC": {
       "type": "testimonials",
       "blocks": {
@@ -1432,13 +1432,13 @@
     "v5_bestsellers_tabbed_etTrbG",
     "v5_find_your_look_EHbamc",
     "v5_customer_stories_WLwrT3",
-    "v5_kisah_stores_mzNqPm",
     "ceremony_carousel_hhd6Ke",
     "trust_badges_bar_nePxQ9",
     "ceremony_carousel_J7BmUm",
     "ceremony_carousel_by3ymb",
     "ceremony_carousel_YLW44H",
     "apps_9iBKGp",
+    "v5_kisah_stores_mzNqPm",
     "testimonials_BCezKC"
   ]
 }
