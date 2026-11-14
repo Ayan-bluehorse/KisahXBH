@@ -2159,16 +2159,9 @@ a.ksl-btn--ghost:hover,
     lastTrackTime = now;
     lastTrackKey = trackKey;
 
-    // Map 3 distinct event names for GA4 & GTM
-    let eventName = 'store_action';
-    if (action === 'get_directions' || action === 'find_nearest') {
-      eventName = 'store_get_directions';
-    } else if (action === 'call' || action === 'call_picker') {
-      eventName = 'store_call';
-    } else if (action === 'whatsapp') {
-      eventName = 'store_whatsapp';
-    }
-
+    // One event name for every store CTA (DG-087). What was tapped is in the params:
+    // action_type = get_directions | find_nearest | call | call_picker | whatsapp
+    const eventName = 'store_action';
     const eventParams = {
       event_category: 'store_locator',
       action_type: action,
@@ -2176,7 +2169,15 @@ a.ksl-btn--ghost:hover,
       store: store
     };
 
-    // Google Tag Manager (dataLayer) - Single dispatch prevents double event firing in GTM & GA4
+    // GA4 - sent directly with gtag. GTM-5WFNGGK8 has NO tag for store_action, so this call is
+    // the only path into GA4; a dataLayer push alone never reaches GA4 (that is what broke store
+    // tracking on 2026-11-03). If a GTM GA4 tag for store_action is ever added, remove this call
+    // at the same time, or every tap will be counted twice.
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams);
+    }
+
+    // dataLayer - for GTM triggers only (does not send anything to GA4 by itself)
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,

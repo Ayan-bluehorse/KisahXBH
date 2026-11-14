@@ -118,16 +118,22 @@
   /* Fire to dataLayer (GTM / Elevar) + gtag (GA4 G-31X587J1SK) */
   function trackFysEvent(eventName, params) {
     params = params || {};
+    // GA4 - sent directly with gtag. GTM has no tags for fys_* events, so this is the only path into
+    // GA4. Keep it independent of the dataLayer push (window.dataLayer always exists on kisah.in,
+    // so an else-branch here never runs - that is what broke fys_* tracking on 2026-11-03).
     try {
-      if (window.dataLayer && typeof window.dataLayer.push === 'function') {
-        var dlPayload = { event: eventName };
-        for (var k in params) {
-          if (Object.prototype.hasOwnProperty.call(params, k)) dlPayload[k] = params[k];
-        }
-        window.dataLayer.push(dlPayload);
-      } else if (typeof window.gtag === 'function') {
+      if (typeof window.gtag === 'function') {
         window.gtag('event', eventName, params);
       }
+    } catch (e) {}
+    // dataLayer - for GTM triggers only (does not send anything to GA4 by itself)
+    try {
+      window.dataLayer = window.dataLayer || [];
+      var dlPayload = { event: eventName };
+      for (var k in params) {
+        if (Object.prototype.hasOwnProperty.call(params, k)) dlPayload[k] = params[k];
+      }
+      window.dataLayer.push(dlPayload);
     } catch (e) {}
   }
 

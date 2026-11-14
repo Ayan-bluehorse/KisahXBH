@@ -3,7 +3,7 @@
  * Kisah Online - D2C GA4 & Merchandising Optimization
  * 
  * 1. Autocomplete Product & Suggestion Clicks -> Sends GA4 'search', 'select_item', and 'search_autocomplete_click'
- * 2. 0-Result Search Detection -> Sends GA4 'view_search_results' (results_count: 0) & 'search_zero_results'
+ * 2. 0-Result Search Detection -> Sends GA4 'search_zero_results' (gtag) + dataLayer 'view_search_results' / 'search_zero_results'
  * 3. Pageview De-duplication Guard -> Prevents Searchanise virtual pageviews on scroll/filter changes
  * 4. Size-Inclusiveness Sorter -> Re-orders Searchanise results so core sizes (S, M, L, XL) rank highest
  */
@@ -169,6 +169,16 @@
       results_count: 0,
       timestamp: new Date().toISOString()
     });
+
+    // GA4 - sent directly with gtag (GTM has no tag for these dataLayer events, so they never reach
+    // GA4 on their own). Sent as one distinct event so zero-result searches don't inflate the
+    // existing view_search_results count.
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'search_zero_results', {
+        search_term: query,
+        results_count: 0
+      });
+    }
   }
 
   function monitorZeroResults() {

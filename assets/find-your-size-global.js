@@ -109,16 +109,23 @@
   /* ---------------- Telemetry Tracking ---------------- */
   function trackEvent(eventName, payload) {
     payload = payload || {};
-    payload.event = eventName;
     payload.fys_ab_variant = abVariant;
     payload.timestamp = new Date().toISOString();
 
-    // Prefer dataLayer (GTM / GA4 single source of truth to avoid duplicate events)
-    if (window.dataLayer && typeof window.dataLayer.push === 'function') {
-      window.dataLayer.push(payload);
-    } else if (typeof window.gtag === 'function') {
+    // GA4 - sent directly with gtag. GTM has no tags for FYS events, so this is the only path into
+    // GA4. Do NOT make it an else-branch of the dataLayer push: window.dataLayer always exists on
+    // kisah.in, so the gtag branch never ran and FYS GA4 events went dark from 2026-11-03.
+    if (typeof window.gtag === 'function') {
       window.gtag('event', eventName, payload);
     }
+
+    // dataLayer - for GTM triggers only (does not send anything to GA4 by itself)
+    window.dataLayer = window.dataLayer || [];
+    var dlPayload = { event: eventName };
+    for (var k in payload) {
+      if (Object.prototype.hasOwnProperty.call(payload, k)) dlPayload[k] = payload[k];
+    }
+    window.dataLayer.push(dlPayload);
 
     // Debug log in dev
     if (window.__FYS_DEBUG__) {
