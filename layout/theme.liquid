@@ -382,6 +382,10 @@
  <script type="text/javascript">
     function initClarity() {
       if (window.__clarity_inited) return;
+      if (document.querySelector('script[src*="clarity.ms"]') || (window.clarity && window.clarity.v)) {
+        window.__clarity_inited = true;
+        return;
+      }
       window.__clarity_inited = true;
       (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
