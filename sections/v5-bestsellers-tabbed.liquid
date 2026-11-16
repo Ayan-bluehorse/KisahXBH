@@ -54,6 +54,9 @@
         role="tabpanel"
         {% unless forloop.first %}hidden{% endunless %}
       >
+        {%- unless forloop.first -%}
+          <template class="v5-bs-template">
+        {%- endunless -%}
         <div class="v5-bs-rail-wrapper">
           <button 
             type="button" 
@@ -123,6 +126,9 @@
             </a>
           </div>
         {%- endif -%}
+        {%- unless forloop.first -%}
+          </template>
+        {%- endunless -%}
       </div>
     {%- endfor -%}
 
@@ -565,33 +571,13 @@
     var tabs = sectionEl.querySelectorAll('.v5-bs-tab');
     var panels = sectionEl.querySelectorAll('.v5-bs-panel');
 
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var targetKey = this.getAttribute('data-bs-tab');
-        
-        tabs.forEach(function(t) {
-          var isCurrent = (t === tab);
-          t.classList.toggle('is-active', isCurrent);
-          t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
-        });
-
-        panels.forEach(function(p) {
-          var isCurrent = p.id === ('panel-' + targetKey);
-          p.classList.toggle('is-active', isCurrent);
-          if (isCurrent) {
-            p.removeAttribute('hidden');
-          } else {
-            p.setAttribute('hidden', '');
-          }
-        });
-      });
-    });
-
-    ['month', 'wedding', 'sangeet', 'mehendi', 'haldi'].forEach(function(tkey) {
+    function initTrack(tkey) {
       var track = document.getElementById('track-' + tkey + '-' + sid);
       var prevBtn = sectionEl.querySelector('[data-bs-prev="' + tkey + '-' + sid + '"]');
       var nextBtn = sectionEl.querySelector('[data-bs-next="' + tkey + '-' + sid + '"]');
       if (!track || !prevBtn || !nextBtn) return;
+      if (track.dataset.inited === 'true') return;
+      track.dataset.inited = 'true';
 
       function check() {
         var canScroll = track.scrollWidth > track.clientWidth + 4;
@@ -616,7 +602,38 @@
       track.addEventListener('scroll', check, { passive: true });
       window.addEventListener('resize', check, { passive: true });
       setTimeout(check, 120);
+    }
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var targetKey = this.getAttribute('data-bs-tab');
+        
+        tabs.forEach(function(t) {
+          var isCurrent = (t === tab);
+          t.classList.toggle('is-active', isCurrent);
+          t.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        });
+
+        panels.forEach(function(p) {
+          var isCurrent = p.id === ('panel-' + targetKey);
+          p.classList.toggle('is-active', isCurrent);
+          if (isCurrent) {
+            p.removeAttribute('hidden');
+            var tpl = p.querySelector('template.v5-bs-template');
+            if (tpl) {
+              p.appendChild(tpl.content.cloneNode(true));
+              tpl.remove();
+              var rawKey = targetKey.replace('-' + sid, '');
+              initTrack(rawKey);
+            }
+          } else {
+            p.setAttribute('hidden', '');
+          }
+        });
+      });
     });
+
+    initTrack('month');
 
     // Global Add to Bag Handler
     window.v5AddToCart = function(btn, variantId) {

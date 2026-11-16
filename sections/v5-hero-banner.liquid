@@ -57,11 +57,25 @@
           <!-- Background Picture -->
           <picture class="v5-hero-pic">
             {%- if mob_img != blank -%}
-              <source media="(max-width: 768px)" srcset="{{ mob_img | image_url: width: 800 }}">
+              <source 
+                media="(max-width: 768px)" 
+                srcset="
+                  {{ mob_img | image_url: width: 450 }} 450w,
+                  {{ mob_img | image_url: width: 750 }} 750w,
+                  {{ mob_img | image_url: width: 900 }} 900w
+                "
+                sizes="100vw"
+              >
             {%- endif -%}
             {%- if desk_img != blank -%}
               <img 
                 src="{{ desk_img | image_url: width: 2000 }}" 
+                srcset="
+                  {{ desk_img | image_url: width: 1200 }} 1200w,
+                  {{ desk_img | image_url: width: 1600 }} 1600w,
+                  {{ desk_img | image_url: width: 2000 }} 2000w
+                "
+                sizes="(max-width: 768px) 100vw, 100vw"
                 alt="{{ heading | default: block.settings.desk_img.alt | default: 'Kisah Campaign' | escape }}" 
                 class="v5-hero-img"
                 loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"

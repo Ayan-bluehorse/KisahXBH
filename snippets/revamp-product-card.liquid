@@ -58,15 +58,22 @@
           class="v5-pcard-img v5-pcard-img--primary"
         >
         {%- if p_secondary_img != blank -%}
-          <img
-            src="{{ p_secondary_img | image_url: width: 600 }}"
-            alt="{{ p_title | escape }}"
-            loading="lazy"
-            decoding="async"
-            width="300"
-            height="400"
-            class="v5-pcard-img v5-pcard-img--secondary"
-          >
+          <picture class="v5-pcard-sec-pic" style="display: contents;">
+            <source media="(min-width: 769px)" srcset="
+              {{ p_secondary_img | image_url: width: 240 }} 240w,
+              {{ p_secondary_img | image_url: width: 360 }} 360w,
+              {{ p_secondary_img | image_url: width: 500 }} 500w
+            " sizes="240px">
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3C/svg%3E"
+              alt="{{ p_title | escape }}"
+              loading="lazy"
+              decoding="async"
+              width="300"
+              height="400"
+              class="v5-pcard-img v5-pcard-img--secondary"
+            >
+          </picture>
         {%- endif -%}
       {%- elsif img != blank -%}
         <img
