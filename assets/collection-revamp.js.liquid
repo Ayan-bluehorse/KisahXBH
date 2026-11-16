@@ -933,7 +933,9 @@ product-form.js-product.product-info.quickbuy-content {
           newDetail.querySelectorAll(".more").forEach((el) => (el.href = productUrl));
           newDetail.querySelectorAll(".product-title").forEach((el) => {
             el.innerHTML = `<a href="">${el.innerHTML}</a>`;
-            el.firstElementChild.href = productUrl;
+            if (el.firstElementChild) {
+              el.firstElementChild.href = productUrl;
+            }
           });
           newDetail.querySelectorAll(".show-gallery").forEach((el) => { el.classList.remove("show-gallery"); el.href = productUrl; });
           newDetail.querySelectorAll(".not-in-quickbuy").forEach((el) => el.remove());
@@ -993,6 +995,8 @@ product-form.js-product.product-info.quickbuy-content {
               if (navigator.share) {
                 navigator.share({ title: document.title, text: "Check out this link", url: location.href })
                   .catch((e) => console.log("Error sharing", e));
+              } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(location.href).catch(() => {});
               }
             });
           });

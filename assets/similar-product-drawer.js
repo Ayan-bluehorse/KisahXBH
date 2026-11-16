@@ -534,8 +534,11 @@
 
   // Event listener for clicks
   document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!target || typeof target.closest !== 'function' || !target.classList) return;
+
     // Close drawer when clicking outside
-    if (e.target.classList.contains('cp-similar-drawer') && !e.target.closest('.cp-similar-inner') && !document.querySelector('.cp-size-popup.active') && !chartOpen()) {
+    if (target.classList.contains('cp-similar-drawer') && !target.closest('.cp-similar-inner') && !document.querySelector('.cp-size-popup.active') && !chartOpen()) {
       console.log('Closing drawer due to outside click'); // Debug
       document.querySelector('.cp-similar-drawer')?.remove();
       document.body.classList.remove('cp-stop-scroll');
@@ -544,7 +547,7 @@
     }
 
     // Close button for drawer
-    if (e.target.classList.contains('cp-close')) {
+    if (target.classList.contains('cp-close')) {
       if (document.querySelector('.cp-size-popup.active')) {
         console.log('Preventing drawer close due to active size popup'); // Debug
         e.preventDefault();
@@ -558,22 +561,25 @@
     }
 
     // Add to cart button
-    if (e.target.classList.contains('cp-atc-btn') || e.target.closest('.cp-atc-btn')) {
+    if (target.classList.contains('cp-atc-btn') || target.closest('.cp-atc-btn')) {
       console.log('Add to cart button clicked'); // Debug
-      const card = e.target.closest('.cp-similar-card');
-      const hasVariants = card.dataset.hasVariants === 'true';
+      const card = target.closest('.cp-similar-card');
+      if (!card) return;
+      const hasVariants = card.dataset ? card.dataset.hasVariants === 'true' : false;
 
       if (hasVariants) {
         console.log('Opening size popup for product with variants'); // Debug
         ensureGlobalSizePopup();
         const popup = document.querySelector('.cp-size-popup.global');
+        if (!popup) return;
         const list = popup.querySelector('.cp-sizes');
+        if (!list) return;
         const variants = JSON.parse((card.getAttribute('data-variants') || '[]').replace(/&quot;/g, '"'));
         list.innerHTML = variants.map(v => `<p data-id="${v.id}">${v.label}</p>`).join('');
         popup.classList.add('active');
         document.body.classList.add('cp-stop-scroll');
       } else {
-        const id = card.dataset.vid;
+        const id = card.dataset ? card.dataset.vid : null;
         if (!id) {
           console.warn('Product ID not found'); // Debug
           return alert('Product ID not found');
@@ -583,11 +589,12 @@
     }
 
     // Size selection done button
-    if (e.target.classList.contains('cp-size-done')) {
+    if (target.classList.contains('cp-size-done')) {
       console.log('Size done button clicked'); // Debug
       const popup = document.querySelector('.cp-size-popup');
+      if (!popup) return;
       const active = popup.querySelector('p.active');
-      const id = active?.dataset.id;
+      const id = active?.dataset?.id;
       if (!id) {
         console.warn('No size selected'); // Debug
         return alert('Please select a size');
@@ -596,33 +603,35 @@
     }
 
     // Close size popup
-    if (e.target.classList.contains('cp-size-close')) {
+    if (target.classList.contains('cp-size-close')) {
       console.log('Closing size popup'); // Debug
       const popup = document.querySelector('.cp-size-popup');
-      popup.classList.remove('active');
+      popup?.classList.remove('active');
       if (!document.querySelector('.cp-similar-drawer')) document.body.classList.remove('cp-stop-scroll');
       document.documentElement.classList.remove('cp-chart-open');
     }
 
     // Size selection
-    if (e.target.matches('.cp-sizes p')) {
-      console.log('Size selected:', e.target.textContent); // Debug
-      const parent = e.target.parentElement;
-      parent.querySelectorAll('p').forEach((el) => el.classList.remove('active'));
-      e.target.classList.add('active');
+    if (target.matches && target.matches('.cp-sizes p')) {
+      console.log('Size selected:', target.textContent); // Debug
+      const parent = target.parentElement;
+      if (parent) {
+        parent.querySelectorAll('p').forEach((el) => el.classList.remove('active'));
+      }
+      target.classList.add('active');
     }
 
     // Close size popup when clicking outside
-    if (e.target.classList.contains('cp-size-popup') && !e.target.closest('.cp-size-popup-inner') && !chartOpen()) {
+    if (target.classList.contains('cp-size-popup') && !target.closest('.cp-size-popup-inner') && !chartOpen()) {
       console.log('Closing size popup due to outside click'); // Debug
       const popup = document.querySelector('.cp-size-popup');
-      popup.classList.remove('active');
+      popup?.classList.remove('active');
       if (!document.querySelector('.cp-similar-drawer')) document.body.classList.remove('cp-stop-scroll');
       document.documentElement.classList.remove('cp-chart-open');
     }
 
     // Size chart link
-    if (e.target.classList.contains('cp-size-chart-link')) {
+    if (target.classList.contains('cp-size-chart-link')) {
       console.log('Size chart link clicked'); // Debug
       e.preventDefault();
       const trigger = document.querySelector('a.trigger-pop-up.option-selector');
@@ -638,13 +647,13 @@
 
   // Size chart event listeners
   document.addEventListener('pointerdown', (e) => {
-    if (e.target.closest(chartSelectors)) {
+    if (e.target && typeof e.target.closest === 'function' && e.target.closest(chartSelectors)) {
       console.log('Size chart interaction detected (pointerdown)'); // Debug
       holdChart(4000);
     }
   }, true);
   document.addEventListener('touchstart', (e) => {
-    if (e.target.closest(chartSelectors)) {
+    if (e.target && typeof e.target.closest === 'function' && e.target.closest(chartSelectors)) {
       console.log('Size chart interaction detected (touchstart)'); // Debug
       holdChart(4000);
     }

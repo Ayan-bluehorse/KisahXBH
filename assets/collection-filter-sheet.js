@@ -621,9 +621,10 @@
     }
 
     function captureMetrics(state, rect) {
+      if (!state || !state.ctrl || !(state.ctrl instanceof Element)) return;
       const cs = window.getComputedStyle(state.ctrl);
       state.metrics = {
-        height: rect.height || state.ctrl.offsetHeight || 44,
+        height: (rect && rect.height) || state.ctrl.offsetHeight || 44,
         marginTop: cs.marginTop,
         marginBottom: cs.marginBottom,
         padLeft: parseFloat(cs.paddingLeft) || 14,

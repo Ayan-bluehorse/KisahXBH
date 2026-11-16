@@ -326,11 +326,13 @@ theme.insertAndReveal = (el, target, iaeCmd, delay) => {
   const initialDelay = delay || 10;
   el.classList.add('merge-add-wrapper');
   target.insertAdjacentElement(iaeCmd, el);
-  el.style.height = `${el.firstElementChild.clientHeight}px`;
+  if (el.firstElementChild) {
+    el.style.height = `${el.firstElementChild.clientHeight}px`;
+  }
 
-  const cs = getComputedStyle(el);
-  const fadeDuration = parseFloat(cs.getPropertyValue('--fade-duration')) * 1000;
-  const slideDuration = parseFloat(cs.getPropertyValue('--slide-duration')) * 1000;
+  const cs = (el instanceof Element) ? getComputedStyle(el) : null;
+  const fadeDuration = cs ? parseFloat(cs.getPropertyValue('--fade-duration')) * 1000 : 300;
+  const slideDuration = cs ? parseFloat(cs.getPropertyValue('--slide-duration')) * 1000 : 300;
 
   setTimeout(() => {
     el.classList.add('merge-add-wrapper--slide');
@@ -2199,13 +2201,17 @@ const MainNavigation = class extends HTMLElement {
 
        if (doOpen) {
          delEl.parentElement.classList.add('navigation__item--open');
-          // delEl.nextElementSibling.style.height= `${delEl.nextElementSibling.firstElementChild}px`;
-           delEl.nextElementSibling.style.height= delEl.nextElementSibling.firstElementChild.style.height='100%';
-             
-       
+         if (delEl.nextElementSibling) {
+           delEl.nextElementSibling.style.height = '100%';
+           if (delEl.nextElementSibling.firstElementChild) {
+             delEl.nextElementSibling.firstElementChild.style.height = '100%';
+           }
+         }
        } else {
          delEl.parentElement.classList.remove('navigation__item--open');
-         delEl.nextElementSibling.style.height= '';
+         if (delEl.nextElementSibling) {
+           delEl.nextElementSibling.style.height = '';
+         }
        }
         
       // set text in header
@@ -2215,7 +2221,10 @@ const MainNavigation = class extends HTMLElement {
       // this.mobileDrawer.querySelector('.mobile-nav-title').innerText = delEl.previousElementSibling.innerText;
 
       // position under header
-      delEl.nextElementSibling.style.top = `${Math.ceil(this.mobileDrawer.querySelector('.navigation__mobile-header').clientHeight + 1)}px`;
+      const mobHeader = this.mobileDrawer ? this.mobileDrawer.querySelector('.navigation__mobile-header') : null;
+      if (delEl.nextElementSibling && mobHeader) {
+        delEl.nextElementSibling.style.top = `${Math.ceil(mobHeader.clientHeight + 1)}px`;
+      }
 
       // scroll container
        this.mobileDrawer.closest('.mobile-navigation-drawer').scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -2249,10 +2258,15 @@ const MainNavigation = class extends HTMLElement {
       const doOpen = !delEl.parentElement.classList.contains('navigation__item--open');
        if (doOpen) {
          delEl.parentElement.classList.add('navigation__item--open');
-         delEl.nextElementSibling.style.height = `${delEl.nextElementSibling.firstElementChild.clientHeight}px`;
+         if (delEl.nextElementSibling) {
+           const childH = delEl.nextElementSibling.firstElementChild ? delEl.nextElementSibling.firstElementChild.clientHeight : 0;
+           delEl.nextElementSibling.style.height = `${childH}px`;
+         }
        } else {
          delEl.parentElement.classList.remove('navigation__item--open');
-         delEl.nextElementSibling.style.height = '';
+         if (delEl.nextElementSibling) {
+           delEl.nextElementSibling.style.height = '';
+         }
        }
     });
   }

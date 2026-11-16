@@ -2779,8 +2779,10 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.toggle('active');
         document.querySelector('.title_share_button').classList.toggle('active');
       }
-       document.querySelector('.share-product-button').addEventListener('click',  share )
-       document.querySelector('.mob-share-product-button').addEventListener('click', mobShare )
+       const shareBtn = document.querySelector('.share-product-button');
+       if (shareBtn) shareBtn.addEventListener('click', share);
+       const mobShareBtn = document.querySelector('.mob-share-product-button');
+       if (mobShareBtn) mobShareBtn.addEventListener('click', mobShare);
 
   });
    const sizedrawer = document.querySelector('.size-chart-drawer')
@@ -2793,9 +2795,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
     function toggleModal() {
       // modal.classList.toggle('show-pop-up');
-      sizedrawer.classList.toggle('open');
-      overlay.classList.toggle('is-visible');
-      body.classList.toggle('scroll');
+      if (sizedrawer) sizedrawer.classList.toggle('open');
+      if (overlay) overlay.classList.toggle('is-visible');
+      if (body) body.classList.toggle('scroll');
     }
 
     function windowOnClick(event) {
@@ -2804,10 +2806,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    trigger.addEventListener('click', toggleModal);
-    drawerclosebtn.addEventListener('click', toggleModal);
-    closeButton.addEventListener('click', toggleModal);
-    window.addEventListener('click', windowOnClick);
+    if (trigger) trigger.addEventListener('click', toggleModal);
+    if (drawerclosebtn) drawerclosebtn.addEventListener('click', toggleModal);
+    if (closeButton) closeButton.addEventListener('click', toggleModal);
+    if (overlay) window.addEventListener('click', windowOnClick);
 
 
 
@@ -2818,13 +2820,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     function nativeShare() {
-    navigator.share({
-      title: document.title,
-      text: 'Check out this link',
-      url: location.href,
-    })
-    .then(() => console.log('Successful share'))
-    .catch((error) => console.log('Error sharing', error));
+    if (navigator.share) {
+      navigator.share({
+        title: document.title,
+        text: 'Check out this link',
+        url: location.href,
+      })
+      .then(() => console.log('Successful share'))
+      .catch((error) => console.log('Error sharing', error));
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(location.href).then(() => {
+        alert('Link copied to clipboard');
+      }).catch(() => {});
+    }
   }
 </script>
 
