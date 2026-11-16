@@ -24,25 +24,6 @@
           return _origGCS.call(window, el, pseudo);
         };
       } catch(e) {}
-
-      // KSW-0035: Block stale dead ScriptTag (indiagstapp.com timeout)
-      try {
-        var _scriptDesc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src');
-        if (_scriptDesc && _scriptDesc.set) {
-          var _nativeSrcSet = _scriptDesc.set;
-          Object.defineProperty(HTMLScriptElement.prototype, 'src', {
-            set: function(val) {
-              if (typeof val === 'string' && val.indexOf('indiagstapp.com') !== -1) {
-                return;
-              }
-              return _nativeSrcSet.call(this, val);
-            },
-            get: _scriptDesc.get,
-            configurable: true,
-            enumerable: true
-          });
-        }
-      } catch(e) {}
     })();
   </script>
   {% render 'elevateab' %}
@@ -289,15 +270,7 @@
     {{ 'animate-on-scroll.css' | asset_url | stylesheet_tag: preload: true }}
   {% endif %}
 
-  {%- capture header_content -%}{{ content_for_header }}{%- endcapture -%}
-  {%- comment %} KSW-0035: Eliminate dead India GST app ScriptTag from content_for_header {%- endcomment %}
-  {%- assign header_content = header_content | remove: ',"https:\/\/indiagstapp.com\/public\/gst\/assets\/js\/gst_script.js?store=703\u0026shop=kisahonline.myshopify.com"' -%}
-  {%- assign header_content = header_content | remove: '"https:\/\/indiagstapp.com\/public\/gst\/assets\/js\/gst_script.js?store=703\u0026shop=kisahonline.myshopify.com",' -%}
-  {%- assign header_content = header_content | remove: '"https:\/\/indiagstapp.com\/public\/gst\/assets\/js\/gst_script.js?store=703\u0026shop=kisahonline.myshopify.com"' -%}
-  {%- assign header_content = header_content | remove: ',"https://indiagstapp.com/public/gst/assets/js/gst_script.js?store=703&shop=kisahonline.myshopify.com"' -%}
-  {%- assign header_content = header_content | remove: '"https://indiagstapp.com/public/gst/assets/js/gst_script.js?store=703&shop=kisahonline.myshopify.com",' -%}
-  {%- assign header_content = header_content | remove: '"https://indiagstapp.com/public/gst/assets/js/gst_script.js?store=703&shop=kisahonline.myshopify.com"' -%}
-  {{ header_content }}
+  {{ content_for_header }}
 
   <!-- Third-party App Interaction Delay Optimizer -->
   <script>
