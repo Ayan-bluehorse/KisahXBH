@@ -1239,15 +1239,25 @@
             "page_url": "/pages/visakhapatnam"
           }
         },
+        "store_jaipur": {
+          "type": "store",
+          "settings": {
+            "city": "Jaipur",
+            "title": "Kisah Pacific Mall",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-11-05_at_6.13.24_PM.jpg",
+            "directions_url": "https://www.google.com/maps/place/Pacific+Mall+Jaipur/@26.8637255,75.7676251,20z/data=!4m12!1m5!3m4!2zMjbCsDUxJzUwLjAiTiA3NcKwNDYnMDMuMCJF!8m2!3d26.863893!4d75.767496!3m5!1s0x396db5000bcdf205:0xd1e65b1f3baea13f!8m2!3d26.8639117!4d75.7676893!16s%2Fg%2F11nc8q_ybz?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D",
+            "page_url": "/pages/jaipur"
+          }
+        },
         "store_coming_soon": {
           "type": "coming_soon",
           "settings": {
             "eyebrow": "OPENING SOON",
-            "title": "Two new cities",
+            "title": "New city",
             "city_1": "Gurgaon",
             "location_1": "Jewel M3M Mall",
-            "city_2": "Jaipur",
-            "location_2": "Pacific Mall"
+            "city_2": "",
+            "location_2": ""
           }
         }
       },
@@ -1264,13 +1274,14 @@
         "store_himayat",
         "store_malad",
         "store_vizag",
+        "store_jaipur",
         "store_coming_soon"
       ],
       "name": "Kisah Stores",
       "settings": {
         "eyebrow": "KISAH STORES",
         "heading": "Try it on before the function",
-        "subtitle": "12 stores in 5 cities. See the fabric, check the fit, take it home the same day.",
+        "subtitle": "13 stores in 6 cities. See the fabric, check the fit, take it home the same day.",
         "link_text": "ALL STORES",
         "link_url": "/pages/store-locator",
         "bg_color": "#f8f8f3",

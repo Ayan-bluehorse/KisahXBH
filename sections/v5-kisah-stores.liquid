@@ -45,14 +45,41 @@
       {%- endif -%}
     </div>
 
+    {%- liquid
+      assign store_count = 0
+      assign cities_raw = ''
+      for block in section.blocks
+        if block.type == 'store' and block.settings.city != blank
+          assign store_count = store_count | plus: 1
+          assign c = block.settings.city | strip
+          assign cities_raw = cities_raw | append: c | append: ','
+        endif
+      endfor
+      if store_count == 0
+        assign store_count = 13
+        assign cities_array = 'Kolkata,Bengaluru,Hyderabad,Mumbai,Visakhapatnam,Jaipur' | split: ','
+      else
+        assign cities_array = cities_raw | split: ',' | uniq
+      endif
+    -%}
+
     <!-- City Filter Pills -->
     <div class="v5-stores-pills" role="group" aria-label="Filter stores by city">
-      <button type="button" class="v5-store-pill is-active" data-city="All">All <span class="v5-pill-count">12</span></button>
-      <button type="button" class="v5-store-pill" data-city="Kolkata">Kolkata <span class="v5-pill-count">4</span></button>
-      <button type="button" class="v5-store-pill" data-city="Bengaluru">Bengaluru <span class="v5-pill-count">4</span></button>
-      <button type="button" class="v5-store-pill" data-city="Hyderabad">Hyderabad <span class="v5-pill-count">2</span></button>
-      <button type="button" class="v5-store-pill" data-city="Mumbai">Mumbai <span class="v5-pill-count">1</span></button>
-      <button type="button" class="v5-store-pill" data-city="Visakhapatnam">Visakhapatnam <span class="v5-pill-count">1</span></button>
+      <button type="button" class="v5-store-pill is-active" data-city="All">All <span class="v5-pill-count">{{ store_count }}</span></button>
+      {%- for city in cities_array -%}
+        {%- if city != blank -%}
+          {%- assign c_count = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'store' and block.settings.city == city -%}
+              {%- assign c_count = c_count | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if c_count == 0 -%}
+            {%- if city == 'Kolkata' or city == 'Bengaluru' -%}{%- assign c_count = 4 -%}{%- elsif city == 'Hyderabad' -%}{%- assign c_count = 2 -%}{%- else -%}{%- assign c_count = 1 -%}{%- endif -%}
+          {%- endif -%}
+          <button type="button" class="v5-store-pill" data-city="{{ city | escape }}">{{ city }} <span class="v5-pill-count">{{ c_count }}</span></button>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <!-- Rail Wrapper -->
