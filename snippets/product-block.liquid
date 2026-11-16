@@ -135,7 +135,7 @@ Parameters:
                   <div class="product-block__image product-block__image--primary{% if product.featured_media.id == product.media.first.id %}{% assign active_media_found = true %} product-block__image--active{% endif %}{% if product_images.last.id == product.featured_media.id %} product-block__image--show-on-hover{% endif %}" data-media-id="{{ product.media.first.id }}">
                     {%- render 'image' with product.media.first.preview_image, loading: loading, fetchpriority: fetchpriority, size_cols_mobile: 2, size_cols_desktop: size_cols_desktop, custom_aspect_ratio: custom_aspect_ratio, custom_crop: custom_crop -%}
                   </div>
-                   {%- for media in product_images offset: 1 limit: 2 -%}
+                   {%- for media in product_images offset: 1 limit: 1 -%}
                     {%- liquid
                       assign image_state_class = ''
                       if media.id == product.featured_media.id
@@ -153,7 +153,23 @@ Parameters:
                     <div class="product-block__image product-block__image--secondary {{ image_state_class }}"
                         data-media-id="{{ media.id }}"
                         data-image-index="{{ forloop.index }}">
-                      {%- render 'image' with media.preview_image, loading: hover_loading, size_cols_mobile: 2, size_cols_desktop: size_cols_desktop, custom_aspect_ratio: custom_aspect_ratio, custom_crop: custom_crop -%}
+                      <picture class="product-block__sec-pic" style="display: contents;">
+                        <source media="(min-width: 769px)" srcset="
+                          {{ media.preview_image | image_url: width: 240 }} 240w,
+                          {{ media.preview_image | image_url: width: 360 }} 360w,
+                          {{ media.preview_image | image_url: width: 480 }} 480w,
+                          {{ media.preview_image | image_url: width: 600 }} 600w
+                        " sizes="(min-width: 1440px) 360px, (min-width: 768px) 25vw, 50vw">
+                        <img
+                          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3C/svg%3E"
+                          alt="{{ media.preview_image.alt | default: product.title | escape }}"
+                          loading="lazy"
+                          decoding="async"
+                          width="{{ media.preview_image.width | default: 360 }}"
+                          height="{{ media.preview_image.height | default: 540 }}"
+                          class="theme-img"
+                        >
+                      </picture>
                     </div>
                   {%- endfor -%}
                 {%- else -%}

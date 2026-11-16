@@ -13677,3 +13677,16 @@ body.template-suffix-wedding-lp2 .wedding-collection-grid-wrapper .tab-collectio
 .product-block__position-badge {
   display: none !important;
 }
+
+/* Mobile Collection Performance Optimization */
+@media (max-width: 768px) {
+  .product-block__image--secondary,
+  .product-block__image-dots,
+  .image-page-button {
+    display: none !important;
+  }
+  .collection-listing .product-grid .product-block:nth-child(n+7) {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 360px;
+  }
+}
