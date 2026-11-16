@@ -42,6 +42,9 @@
 <link rel="dns-prefetch" href="https://api.gokwik.co">
 <link rel="dns-prefetch" href="https://cdn.gokwik.co">
 <!-- FontAwesome CSS Removed for Performance -->
+{%- if request.page_type == 'product' and product.featured_media != blank -%}
+  <link rel="preload" as="image" href="{{ product.featured_media | image_url: width: 720 }}" fetchpriority="high">
+{%- endif -%}
 
 <!-- n-identify START -->
 {% if customer %}<script>(function(){var s=window.nitroSettings=window.nitroSettings||{},p=typeof s.ready==='function'?s.ready:null;s.ready=function(a,b,c){if(p){try{p.call(this,a,b,c)}catch(e){}}try{window.nitro.identify({{ customer.email | base64_encode | base64_encode | json }},null,null,{source:'shfp'})}catch(e){}}})();</script>{% endif %}

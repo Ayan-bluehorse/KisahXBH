@@ -1,5 +1,3 @@
-<script src="{{ 'similar-product-drawer.js' | asset_url }}" defer></script>
-
 {{ 'product.css' | asset_url | stylesheet_tag: preload: true }}
 {{ 'key-highlight.css' | asset_url | stylesheet_tag: preload: true }}
 
@@ -652,11 +650,13 @@
                   {%- liquid
                     if forloop.index0 == initial_slide
                       assign loading = 'eager'
+                      assign fetchpriority = 'high'
                     else
                       assign loading = 'lazy'
+                      assign fetchpriority = 'auto'
                     endif
 
-                    render 'media', media: media, product: product, min_aspect_ratio: min_aspect_ratio, loading: loading
+                    render 'media', media: media, product: product, min_aspect_ratio: min_aspect_ratio, loading: loading, fetchpriority: fetchpriority
                   -%}
 
                   {%- if media.media_type == 'image' and section.settings.enable_zoom -%}
@@ -907,7 +907,13 @@
                     assign loading = 'lazy'
                   endif
 
-                  render 'media', media: media, product: product, min_aspect_ratio: min_aspect_ratio, loading: loading, in_collage: true
+                  if forloop.first
+                    assign fetchpriority = 'high'
+                  else
+                    assign fetchpriority = 'auto'
+                  endif
+
+                  render 'media', media: media, product: product, min_aspect_ratio: min_aspect_ratio, loading: loading, fetchpriority: fetchpriority, in_collage: true
                 -%}
                 {%- if media.media_type == 'image' and section.settings.enable_zoom -%}
                   </a>
