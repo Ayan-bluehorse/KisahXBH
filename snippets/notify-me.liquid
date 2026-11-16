@@ -299,15 +299,11 @@ function notifyOnWhatsApp(){
 }
 
 document.addEventListener('on:variant:change', (e) => {
-  console.log(e.detail.variant)
-  if(e.detail.variant.available){
-    // document.querySelector(".section-main-product .buy-buttons-row #notify__master").style.display = "none";
-    document.querySelector(".section-main-product .buy-buttons-row .notifyme__master_container").style.display = "none";
-  }
-  else
-  {
-    // document.querySelector(".section-main-product .buy-buttons-row #notify__master").style.display = "block";
-    document.querySelector(".section-main-product .buy-buttons-row .notifyme__master_container").style.display = "block";
+  if (e.detail && e.detail.variant) {
+    var container = document.querySelector(".section-main-product .buy-buttons-row .notifyme__master_container");
+    if (container) {
+      container.style.display = e.detail.variant.available ? "none" : "block";
+    }
   }
 });
 

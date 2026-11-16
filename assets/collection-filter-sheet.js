@@ -514,7 +514,6 @@
       };
 
       cb.addEventListener('change', handleCheckboxChange);
-      cb.addEventListener('input', handleCheckboxChange);
     });
 
     // --- Apply Button / Form Submission ---
