@@ -31,14 +31,8 @@
           isDismissed = /(?:^|;\s*)_fys_dismissed=1/.test(document.cookie);
         }
 
-        // A/B test variant check
-        var abMatch = document.cookie.match(/(?:^|;\s*)_fys_ab_variant=([^;]+)/);
-        var abVal = abMatch ? decodeURIComponent(abMatch[1]) : null;
-        var forcedAb = p.get('fys_ab');
-        if (forcedAb) {
-          abVal = (forcedAb.toLowerCase() === 'b' || forcedAb.toLowerCase() === 'variant_b') ? 'variant_b' : 'variant_a';
-        }
-        var isControl = (abVal === 'variant_a');
+        // Size chip A/B test concluded: permanently locked to modified variant (variant_b)
+        var isControl = false;
 
         if (!isControl && !isDismissed && !search.includes('filter.v.option.size')) {
           var savedSize = null;

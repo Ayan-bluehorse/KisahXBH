@@ -73,24 +73,10 @@
     } catch (e) {}
   }
 
-  /* ---------------- A/B Test Variant Assignment (50/50 Split + URL Override) ---------------- */
+  /* ---------------- Size Chip A/B Test Paused: 100% Rollout to Modified (variant_b) ---------------- */
   function getAbVariant() {
-    // 1. URL parameter override: ?fys_ab=b or ?fys_ab=a (allows immediate manual QA)
-    var urlParams = new URLSearchParams(window.location.search);
-    var forced = urlParams.get('fys_ab');
-    if (forced) {
-      forced = (forced.toLowerCase() === 'b' || forced.toLowerCase() === 'variant_b') ? 'variant_b' : 'variant_a';
-      setCookie('_fys_ab_variant', forced, 30);
-      return forced;
-    }
-
-    // 2. Cookie lookup
-    var variant = getCookie('_fys_ab_variant');
-    if (!variant) {
-      variant = Math.random() < 0.5 ? 'variant_a' : 'variant_b';
-      setCookie('_fys_ab_variant', variant, 30);
-    }
-    return variant;
+    setCookie('_fys_ab_variant', 'variant_b', 365);
+    return 'variant_b';
   }
 
   var abVariant = getAbVariant();
