@@ -575,6 +575,7 @@
           weight_kg: state.kg,
           version: 'v2',
           variant: state.variant,
+          fys_ab_variant: state.variant,
           usual_size: state.usualSize || '',
           size_available: false,
           device: window.innerWidth <= 749 ? 'mobile' : 'desktop'
@@ -718,6 +719,7 @@
         weight_kg: state.kg,
         version: 'v2',
         variant: state.variant,
+        fys_ab_variant: state.variant,
         usual_size: state.usualSize || '',
         size_available: isAvailable,
         device: window.innerWidth <= 749 ? 'mobile' : 'desktop'
