@@ -9,31 +9,23 @@
      CONFIG
      ========================================================================== */
   var CONFIG = {
-    // Two-stage model coefficients (size_lookup.json v1, 2026-08-07)
+    // Two-stage model coefficients & thresholds (v2, size_fit/size_reco_v2.py)
     A0: 30.5317, A1: -0.06684, A2: 0.26733,   // chest_in = A0 + A1*h_cm + A2*w_kg
     B0: 9.6504,  B1: 0.77847,                   // raw_size = B0 + B1*chest_in
-    FIT_THRESHOLD: { slim: 0.65, regular: 0.50, broad: 0.35 },
+    ROUND_UP_AT: { regular: 0.75, broad: 0.75, slim: 0.85 },
     MIN_SIZE: 36,
     MAX_SIZE: 52,
-    // Crosswalk lookup tables (size_lookup.json v1 → crosswalks)
-    CROSSWALK_KURTA: {
-      S:   { size: 36, share: 0.64 },
-      M:   { size: 38, share: 0.47 },
-      L:   { size: 40, share: 0.44 },
-      XL:  { size: 42, share: 0.57 },
-      XXL: { size: 44, share: 1.0 }
-    },
-    CROSSWALK_SHIRT: {
-      '39': { size: 36, share: 0.42 },
-      '40': { size: 40, share: 0.64 },
-      '42': { size: 42, share: 0.75 },
-      '44': { size: 44, share: 1.0 }
-    },
+    MIN_HEIGHT_CM: 145,
+    MAX_HEIGHT_CM: 200,
+    MIN_WEIGHT_KG: 42,
+    MAX_WEIGHT_KG: 135,
     WHATSAPP_NUMBER: '918100993480',
     COOKIE_NAME: '_fys_cid',
     COOKIE_DAYS: 365 * 2,
     LS_KEY: 'fys_inputs',
-    LS_COUNTER_KEY: 'fys_widget_opens'
+    LS_COUNTER_KEY: 'fys_widget_opens',
+    AB_LS_KEY: 'fys_ab_variant',
+    AB_COOKIE_NAME: '_fys_ab_variant'
   };
 
   var SIZES = [36, 38, 40, 42, 44, 46, 48, 50, 52];
@@ -56,35 +48,64 @@
   /* ==========================================================================
      UTILITIES
      ========================================================================== */
-  function feetInchesToCm(ft, inch) { return (ft * 12 + inch) * 2.54; }
-
-  /**
-   * Crosswalk refiner: if the crosswalk-mapped Kisah size differs from the
-   * primary (height/weight) prediction by exactly one size (±2), return the
-   * crosswalk size when its share >= 0.6, otherwise return null.
-   * Never overrides by more than one size step.
-   */
-  function applyCrosswalk(primarySize, crosswalkEntry) {
-    if (!crosswalkEntry) return null;
-    var xSize = crosswalkEntry.size;
-    var diff = Math.abs(xSize - primarySize);
-    // Only nudge by exactly one size step (sizes are even: 36,38,40...)
-    if (diff !== 2) return null;
-    return xSize;
+  function ftInToCm(ft, inch) {
+    return (ft * 12 + inch) * 2.54;
   }
 
-  function predictSize(ft, inch, kg, fitPref) {
-    var hCm = feetInchesToCm(ft, inch);
-    // Stage A: predict chest from height + weight
-    var chest = CONFIG.A0 + CONFIG.A1 * hCm + CONFIG.A2 * kg;
-    // Stage B: predict raw size from chest
+  function recommendSize(heightCm, weightKg, build) {
+    build = (build || 'regular').toLowerCase();
+    if (heightCm < CONFIG.MIN_HEIGHT_CM || heightCm > CONFIG.MAX_HEIGHT_CM ||
+        weightKg < CONFIG.MIN_WEIGHT_KG || weightKg > CONFIG.MAX_WEIGHT_KG) {
+      return { size: null, band: null, version: 'v2' };
+    }
+    var chest = CONFIG.A0 + CONFIG.A1 * heightCm + CONFIG.A2 * weightKg;
     var raw = CONFIG.B0 + CONFIG.B1 * chest;
-    // Fit-preference snapping (slim rounds up later, broad rounds up earlier)
-    var threshold = CONFIG.FIT_THRESHOLD[fitPref] || 0.5;
     var lower = Math.floor(raw / 2) * 2;
     var frac = (raw - lower) / 2;
+    var threshold = (CONFIG.ROUND_UP_AT && CONFIG.ROUND_UP_AT[build] !== undefined)
+      ? CONFIG.ROUND_UP_AT[build]
+      : 0.75;
     var size = frac >= threshold ? lower + 2 : lower;
-    return Math.max(CONFIG.MIN_SIZE, Math.min(CONFIG.MAX_SIZE, size));
+    size = Math.min(Math.max(size, CONFIG.MIN_SIZE), CONFIG.MAX_SIZE);
+    var band = size >= 46 ? [size, Math.min(size + 2, CONFIG.MAX_SIZE)] : null;
+    return { size: size, band: band, version: 'v2' };
+  }
+
+  /* 50/50 sticky A/B variant assignment */
+  function getOrAssignAbVariant() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var q = params.get('fys_ab');
+      if (q) {
+        var v = q.toUpperCase() === 'B' ? 'B' : 'A';
+        try { localStorage.setItem(CONFIG.AB_LS_KEY, v); } catch (e) {}
+        setAbCookie(CONFIG.AB_COOKIE_NAME, v, 365);
+        return v;
+      }
+    } catch (e) {}
+
+    try {
+      var ls = localStorage.getItem(CONFIG.AB_LS_KEY);
+      if (ls === 'A' || ls === 'B') return ls;
+    } catch (e) {}
+
+    var m = document.cookie.match(new RegExp('(?:^|; )' + CONFIG.AB_COOKIE_NAME + '=([^;]*)'));
+    if (m && (m[1] === 'A' || m[1] === 'B')) {
+      try { localStorage.setItem(CONFIG.AB_LS_KEY, m[1]); } catch (e) {}
+      return m[1];
+    }
+
+    var assigned = Math.random() < 0.5 ? 'A' : 'B';
+    try { localStorage.setItem(CONFIG.AB_LS_KEY, assigned); } catch (e) {}
+    setAbCookie(CONFIG.AB_COOKIE_NAME, assigned, 365);
+    return assigned;
+  }
+
+  function setAbCookie(name, val, days) {
+    try {
+      var exp = new Date(Date.now() + (days || 365) * 86400000).toUTCString();
+      document.cookie = name + '=' + val + '; expires=' + exp + '; path=/; SameSite=Lax';
+    } catch (e) {}
   }
 
   function uuid() {
@@ -190,7 +211,16 @@
     var inInch = root.querySelector('[data-fys-inch]');
     var inKg   = root.querySelector('[data-fys-kg]');
 
-    var state = { step: 0, feet: 5, inch: 8, kg: 70, build: null, result: null };
+    var state = {
+      step: 0,
+      feet: 5,
+      inch: 8,
+      kg: 70,
+      build: null,
+      usualSize: '',
+      result: null,
+      variant: getOrAssignAbVariant()
+    };
 
     // Load saved inputs
     var saved = loadInputs();
@@ -236,7 +266,7 @@
         sc.classList.toggle('is-active', Number(sc.dataset.screen) === n);
       });
       paintStepper();
-      if (n === 3) renderResult();
+      if (n === 4) renderResult();
     }
 
     stepBtns.forEach(function (s) {
@@ -314,7 +344,7 @@
       })(backBtns[bi]);
     }
 
-    /* ---- Build cards ---- */
+    /* ---- Build cards (Screen 2 -> Screen 3) ---- */
     var builds = Array.prototype.slice.call(root.querySelectorAll('.fys-build'));
     builds.forEach(function (b) {
       b.addEventListener('click', function () {
@@ -334,59 +364,42 @@
       });
     });
 
-    /* ---- Crosswalk refiner ---- */
-    var crosswalkWrap   = root.querySelector('[data-fys-crosswalk]');
-    var crosswalkToggle = root.querySelector('[data-fys-crosswalk-toggle]');
-    var crosswalkBody   = root.querySelector('[data-fys-crosswalk-body]');
-    var crosswalkNote   = root.querySelector('[data-fys-crosswalk-note]');
-    var kurtaPills      = Array.prototype.slice.call(root.querySelectorAll('[data-kurta]'));
-    var shirtPills      = Array.prototype.slice.call(root.querySelectorAll('[data-shirt]'));
+    /* ---- Usual kurta size (Screen 3 -> Screen 4) ---- */
+    var usualPills = Array.prototype.slice.call(root.querySelectorAll('.fys-usual-pill'));
+    var skipUsualBtn = root.querySelector('[data-fys-skip-usual]');
 
-    if (crosswalkToggle) {
-      crosswalkToggle.addEventListener('click', function () {
-        var isOpen = crosswalkWrap.classList.toggle('is-open');
-        crosswalkBody.hidden = !isOpen;
-      });
-    }
-
-    function handleCrosswalkSelection(table, key) {
-      var entry = table[key];
-      var primarySize = state.result;
-      var nudged = applyCrosswalk(primarySize, entry);
-      if (nudged !== null && nudged !== primarySize) {
-        var sizeName = SIZE_NAMES[nudged] || '';
-        var lead = entry.share >= 0.6;
-        if (lead) {
-          crosswalkNote.innerHTML = 'Based on your input, we\'d suggest size <b>' + sizeName + ' — ' + nudged + '</b>. ' +
-            'Your measurements point to ' + primarySize + '.';
-        } else {
-          crosswalkNote.innerHTML = 'You might also consider size <b>' + sizeName + ' — ' + nudged + '</b> based on your input.';
-        }
-        crosswalkNote.hidden = false;
-      } else {
-        crosswalkNote.hidden = true;
-      }
-    }
-
-    kurtaPills.forEach(function (pill) {
+    usualPills.forEach(function (pill) {
       pill.addEventListener('click', function () {
-        kurtaPills.forEach(function (p) { p.classList.remove('is-selected'); });
+        usualPills.forEach(function (p) {
+          p.classList.remove('is-selected');
+          p.setAttribute('aria-checked', 'false');
+        });
         pill.classList.add('is-selected');
-        // Deselect shirt pills
-        shirtPills.forEach(function (p) { p.classList.remove('is-selected'); });
-        handleCrosswalkSelection(CONFIG.CROSSWALK_KURTA, pill.dataset.kurta);
+        pill.setAttribute('aria-checked', 'true');
+        state.usualSize = pill.dataset.usual || '';
+        trackFysEvent('fys_usual_size', {
+          product_id: productId,
+          product_handle: productHandle,
+          usual_size: state.usualSize
+        });
+        setTimeout(function () { goTo(4); }, 180);
       });
     });
 
-    shirtPills.forEach(function (pill) {
-      pill.addEventListener('click', function () {
-        shirtPills.forEach(function (p) { p.classList.remove('is-selected'); });
-        pill.classList.add('is-selected');
-        // Deselect kurta pills
-        kurtaPills.forEach(function (p) { p.classList.remove('is-selected'); });
-        handleCrosswalkSelection(CONFIG.CROSSWALK_SHIRT, pill.dataset.shirt);
+    if (skipUsualBtn) {
+      skipUsualBtn.addEventListener('click', function () {
+        state.usualSize = '';
+        usualPills.forEach(function (p) {
+          p.classList.remove('is-selected');
+          p.setAttribute('aria-checked', 'false');
+        });
+        trackFysEvent('fys_usual_size_skipped', {
+          product_id: productId,
+          product_handle: productHandle
+        });
+        goTo(4);
       });
-    });
+    }
 
     /* ---- Size data -> order --------------------------------------------
        Sent as custom attributes on two channels, never as the order note:
@@ -404,8 +417,10 @@
         '_sr_height': st.feet + "'" + st.inch + '"',
         '_sr_weight': st.kg + 'kg',
         '_sr_pref': st.build || 'regular',
-        '_sr_reco': String(size),
-        '_sr_version': 'v1'
+        '_sr_reco': size ? String(size) : '',
+        '_sr_version': 'v2',
+        '_sr_variant': st.variant || 'A',
+        '_sr_usual': st.usualSize || ''
       };
     }
 
@@ -482,45 +497,121 @@
 
     /* ---- Render result ---- */
     function renderResult() {
+      var heightCm = ftInToCm(state.feet, state.inch);
       var build = state.build || 'regular';
-      var size = predictSize(state.feet, state.inch, state.kg, build);
-      state.result = size;
-
-      // Reset crosswalk state on each result render
-      kurtaPills.forEach(function (p) { p.classList.remove('is-selected'); });
-      shirtPills.forEach(function (p) { p.classList.remove('is-selected'); });
-      if (crosswalkNote) crosswalkNote.hidden = true;
-      if (crosswalkWrap) crosswalkWrap.classList.remove('is-open');
-      if (crosswalkBody) crosswalkBody.hidden = true;
+      var res = recommendSize(heightCm, state.kg, build);
+      state.result = res;
 
       // Save inputs
       saveInputs({ feet: state.feet, inch: state.inch, kg: state.kg });
 
+      var normalView = root.querySelector('[data-fys-result-normal]');
+      var oorView = root.querySelector('[data-fys-result-oor]');
+
+      // Helper for editable answer chips
+      function renderAnswerChips(targetEl) {
+        if (!targetEl) return;
+        targetEl.innerHTML = '';
+        var penSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+        var answers = [
+          { txt: state.feet + "' " + state.inch + '"', step: 0 },
+          { txt: state.kg + ' kg', step: 1 },
+          { txt: build.charAt(0).toUpperCase() + build.slice(1), step: 2 }
+        ];
+        if (state.usualSize) {
+          answers.push({ txt: 'Usually ' + state.usualSize, step: 3 });
+        }
+        answers.forEach(function (a) {
+          var btn = document.createElement('button');
+          btn.className = 'fys-answer';
+          btn.innerHTML = a.txt + penSvg;
+          btn.setAttribute('aria-label', 'Edit: ' + a.txt);
+          btn.addEventListener('click', function () { goTo(a.step); });
+          targetEl.appendChild(btn);
+        });
+      }
+
+      // OUT OF BOUNDS HANDLING
+      if (!res.size) {
+        if (normalView) normalView.hidden = true;
+        if (oorView) oorView.hidden = false;
+
+        var oorAnswersWrap = root.querySelector('[data-fys-oor-answers]');
+        renderAnswerChips(oorAnswersWrap);
+
+        var oorWaBtn = root.querySelector('[data-fys-oor-whatsapp]');
+        if (oorWaBtn) {
+          var waOorMsg = encodeURIComponent(
+            'Hi, I used the Find Your Size tool for ' + productTitle +
+            ' with height ' + state.feet + "'" + state.inch + '" and weight ' + state.kg +
+            'kg, but my measurements fall outside the standard range. Could you help me with sizing?'
+          );
+          oorWaBtn.href = 'https://wa.me/' + whatsapp + '?text=' + waOorMsg;
+        }
+
+        var oorSizeChartBtn = root.querySelector('[data-fys-oor-size-chart]');
+        if (oorSizeChartBtn) {
+          oorSizeChartBtn.onclick = function () {
+            var chartTrigger = document.querySelector('.size-chart-link button, .size-chart-trigger, .ss-size-chart-trigger, [data-modal*="size-chart"] button');
+            if (chartTrigger) {
+              chartTrigger.click();
+            } else {
+              var scDrawer = document.querySelector('.size-chart-drawer, .variant-size-chart, .size-chart-content');
+              if (scDrawer) scDrawer.scrollIntoView({ behavior: 'smooth' });
+            }
+          };
+        }
+
+        // GA4 / GTM
+        trackFysEvent('find_your_size_complete', {
+          product_id: productId,
+          product_title: productTitle,
+          product_handle: productHandle,
+          recommended_size: 'out_of_range',
+          size_label: 'Out of range',
+          body_type: build,
+          feet: state.feet,
+          inches: state.inch,
+          weight_kg: state.kg,
+          version: 'v2',
+          variant: state.variant,
+          usual_size: state.usualSize || '',
+          size_available: false,
+          device: window.innerWidth <= 749 ? 'mobile' : 'desktop'
+        });
+
+        logSubmission(null, build);
+        return;
+      }
+
+      // NORMAL SIZE RECOMMENDATION
+      if (normalView) normalView.hidden = false;
+      if (oorView) oorView.hidden = true;
+
+      var size = res.size;
+
       // Badge
       var badge = root.querySelector('[data-fys-badge]');
-      badge.textContent = size;
+      if (badge) badge.textContent = size;
 
-      // Label
+      // Label with band support
       var label = root.querySelector('[data-fys-size-label]');
-      label.textContent = (SIZE_NAMES[size] || '') + ' — ' + size;
+      var sizeName = SIZE_NAMES[size] || '';
+      var labelText = sizeName + ' — ' + size;
+      if (res.band) {
+        labelText += ' (band ' + res.band[0] + '–' + res.band[1] + ')';
+      }
+      if (label) label.textContent = labelText;
+
+      // 50/50 A/B Test Variant B copy
+      var variantBNote = root.querySelector('[data-fys-variant-b-note]');
+      if (variantBNote) {
+        variantBNote.hidden = (state.variant !== 'B');
+      }
 
       // Answer chips (editable)
       var answersWrap = root.querySelector('[data-fys-answers]');
-      answersWrap.innerHTML = '';
-      var penSvg = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
-      var answers = [
-        { txt: state.feet + "' " + state.inch + '"', step: 0 },
-        { txt: state.kg + ' kg', step: 1 },
-        { txt: build.charAt(0).toUpperCase() + build.slice(1), step: 2 }
-      ];
-      answers.forEach(function (a) {
-        var btn = document.createElement('button');
-        btn.className = 'fys-answer';
-        btn.innerHTML = a.txt + penSvg;
-        btn.setAttribute('aria-label', 'Edit: ' + a.txt);
-        btn.addEventListener('click', function () { goTo(a.step); });
-        answersWrap.appendChild(btn);
-      });
+      renderAnswerChips(answersWrap);
 
       // Save globally across sessions (LocalStorage + Cookie + Cart attribute)
       if (window.FYS && typeof window.FYS.saveSize === 'function') {
@@ -564,14 +655,16 @@
 
         var resultH = root.querySelector('.fys-result-h');
         if (resultH) {
-          resultH.innerHTML = 'Your recommended size is <span data-fys-size-label>' + (SIZE_NAMES[size] || '') + ' &mdash; ' + size + '</span><span class="fys-oos-inline-pill">Sold Out in this style</span>';
+          resultH.innerHTML = 'Your recommended size is <span data-fys-size-label>' + labelText + '</span><span class="fys-oos-inline-pill">Sold Out in this style</span>';
         }
 
         // Track OOS shown
         trackFysEvent('fys_pdp_oos_shown', {
           product_id: productId,
           product_handle: productHandle,
-          recommended_size: size
+          recommended_size: size,
+          version: 'v2',
+          variant: state.variant
         });
       } else {
         if (btnSize) btnSize.textContent = size;
@@ -605,6 +698,9 @@
         supportLink.rel = 'noopener';
       }
 
+      // Order stamping (line item properties + cart attributes)
+      stampCartAttributes(state, size);
+
       // Log to Google Sheets
       logSubmission(size, build);
 
@@ -614,11 +710,15 @@
         product_title: productTitle,
         product_handle: productHandle,
         recommended_size: size,
-        size_label: (SIZE_NAMES[size] || '') + ' — ' + size,
+        size_band: res.band ? (res.band[0] + '-' + res.band[1]) : null,
+        size_label: labelText,
         body_type: build,
         feet: state.feet,
         inches: state.inch,
         weight_kg: state.kg,
+        version: 'v2',
+        variant: state.variant,
+        usual_size: state.usualSize || '',
         size_available: isAvailable,
         device: window.innerWidth <= 749 ? 'mobile' : 'desktop'
       });
@@ -662,13 +762,15 @@
     var useSizeBtn = root.querySelector('[data-fys-use-size]');
     if (useSizeBtn) {
       useSizeBtn.addEventListener('click', function () {
-        var isAvailable = checkSizeAvailable(state.result);
+        var sizeVal = state.result ? state.result.size : null;
+        if (!sizeVal) return;
+        var isAvailable = checkSizeAvailable(sizeVal);
         if (!isAvailable) {
-          var destUrl = '/collections/all?filter.v.option.size=' + state.result + '&filter.v.availability=1';
+          var destUrl = '/collections/all?filter.v.option.size=' + sizeVal + '&filter.v.availability=1';
           trackFysEvent('fys_pdp_oos_redirect', {
             product_id: productId,
             product_handle: productHandle,
-            recommended_size: state.result,
+            recommended_size: sizeVal,
             destination_url: destUrl
           });
           window.location.href = destUrl;
@@ -678,32 +780,42 @@
         trackFysEvent('find_your_size_select', {
           product_id: productId,
           product_handle: productHandle,
-          recommended_size: state.result,
-          body_type: state.build || 'regular'
+          recommended_size: sizeVal,
+          body_type: state.build || 'regular',
+          version: 'v2',
+          variant: state.variant,
+          usual_size: state.usualSize || ''
         });
-        autoSelectVariant(state.result);
-        stampCartAttributes(state, state.result);
+        autoSelectVariant(sizeVal);
+        stampCartAttributes(state, sizeVal);
         fys.classList.remove('is-open');
         trigger.setAttribute('aria-expanded', 'false');
       });
     }
 
     /* ---- Start over ---- */
-    var startOverBtn = root.querySelector('[data-fys-start-over]');
-    if (startOverBtn) {
-      startOverBtn.addEventListener('click', function () {
-        state = { step: 0, feet: 5, inch: 8, kg: 70, build: null, result: null };
+    var startOverBtns = root.querySelectorAll('[data-fys-start-over]');
+    for (var oi = 0; oi < startOverBtns.length; oi++) {
+      startOverBtns[oi].addEventListener('click', function () {
+        state = {
+          step: 0,
+          feet: 5,
+          inch: 8,
+          kg: 70,
+          build: null,
+          usualSize: '',
+          result: null,
+          variant: state.variant
+        };
         inFeet.value = 5; inInch.value = 8; inKg.value = 70;
         builds.forEach(function (x) {
           x.classList.remove('is-selected');
           x.setAttribute('aria-checked', 'false');
         });
-        // Reset crosswalk
-        kurtaPills.forEach(function (p) { p.classList.remove('is-selected'); });
-        shirtPills.forEach(function (p) { p.classList.remove('is-selected'); });
-        if (crosswalkNote) crosswalkNote.hidden = true;
-        if (crosswalkWrap) crosswalkWrap.classList.remove('is-open');
-        if (crosswalkBody) crosswalkBody.hidden = true;
+        usualPills.forEach(function (p) {
+          p.classList.remove('is-selected');
+          p.setAttribute('aria-checked', 'false');
+        });
         goTo(0);
       });
     }
@@ -728,9 +840,12 @@
           height: state.feet + "' " + state.inch + '"',
           weight_kg: state.kg,
           body_type: build,
-          recommended_size: size,
-          size_label: (SIZE_NAMES[size] || '') + ' — ' + size,
-          available: availableSizes.indexOf(String(size)) !== -1,
+          recommended_size: size || 'out_of_range',
+          size_label: size ? ((SIZE_NAMES[size] || '') + ' — ' + size) : 'Out of range',
+          version: 'v2',
+          variant: state.variant,
+          usual_size: state.usualSize || '',
+          available: size ? (availableSizes.indexOf(String(size)) !== -1) : false,
           device: window.innerWidth <= 749 ? 'mobile' : 'desktop',
           page_url: window.location.href
         };
