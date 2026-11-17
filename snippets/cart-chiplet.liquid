@@ -151,17 +151,10 @@
       window.OPEN_CART();
       return;
     }
-    if (window.Rebuy && window.Rebuy.SmartCart && typeof window.Rebuy.SmartCart.show === 'function') {
-      window.Rebuy.SmartCart.show();
-      return;
-    }
-    document.body.classList.add('rebuy-cart-visible');
     const cartLink = document.querySelector('a.cart-link, .cart-link, .header__icon--cart, button.cart-icon-bubble, [data-cart-drawer-trigger]');
     if (cartLink) {
       cartLink.click();
     }
-    window.dispatchEvent(new CustomEvent('rebuy:cart-show'));
-    window.dispatchEvent(new CustomEvent('rebuy:smartcart:open'));
     window.dispatchEvent(new CustomEvent('helium:cart-drawer:open'));
   }
 
@@ -250,8 +243,7 @@
       "product:add",
       "ajaxProduct:added",
       "ajaxCart:updated",
-      "ajaxify:cart:refresh",
-      "rebuy:cart-change"
+      "ajaxify:cart:refresh"
     ];
 
     CART_EVENTS.forEach(eventName => {

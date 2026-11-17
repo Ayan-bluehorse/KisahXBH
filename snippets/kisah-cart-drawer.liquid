@@ -54,13 +54,7 @@
       }
     }
 
-    // 2. Look for existing Rebuy recommendations widget
-    var rebuy = drawerRoot.querySelector('.rebuy-widget, .rebuy-cart-recommendations');
-    if (rebuy && rebuy.parentNode) {
-      return { parent: rebuy.parentNode, referenceNode: rebuy };
-    }
-
-    // 3. Fallback: Inside the drawer scroll container
+    // 2. Fallback: Inside the drawer scroll container
     var scroller = drawerRoot.querySelector('.overflow-y-auto, [class*="overflow-y-auto"], [class*="drawer-body"]');
     if (scroller) {
       return { parent: scroller, referenceNode: null };
