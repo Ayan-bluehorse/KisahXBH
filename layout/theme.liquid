@@ -210,7 +210,12 @@
 
   {%- unless heading_font.system? -%}
     <link rel="preload" as="font" href="{{ heading_font | font_url }}" type="font/woff2" crossorigin>
+    {%- assign heading_font_bold = heading_font | font_modify: 'weight', 'bolder' -%}
+    {%- if heading_font_bold -%}
+      <link rel="preload" as="font" href="{{ heading_font_bold | font_url }}" type="font/woff2" crossorigin>
+    {%- endif -%}
   {%- endunless -%}
+  <link rel="preload" as="font" href="https://kisah.in/cdn/fonts/newsreader/newsreader_n6.e6648a2ece97a1b03d7262a0f4551ab429abd3d9.woff2" type="font/woff2" crossorigin>
 
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');

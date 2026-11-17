@@ -80,7 +80,7 @@
                 class="v5-hero-img"
                 loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
                 fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
-                decoding="async"
+                decoding="{% if forloop.first %}sync{% else %}async{% endif %}"
                 width="2000"
                 height="989"
               >
@@ -599,7 +599,14 @@
       startTimer();
     });
 
-    startTimer();
+    // Start auto-play only after page load settles to protect LCP element & main-thread bandwidth
+    if (document.readyState === 'complete') {
+      setTimeout(startTimer, 3000);
+    } else {
+      window.addEventListener('load', function() {
+        setTimeout(startTimer, 3000);
+      }, { once: true });
+    }
   })();
 </script>
 
