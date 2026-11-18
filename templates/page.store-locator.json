@@ -23,7 +23,7 @@
         "store_kol_gariahat": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/Gariahat.png",
+            "image": "shopify://shop_images/Gariahat_jpg.jpg",
             "image_position": "center",
             "name": "Gariahat",
             "city": "Kolkata",
@@ -41,7 +41,7 @@
         "store_kol_lake_mall": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "image": "shopify://shop_images/Lakemall.jpg",
             "image_position": "center",
             "name": "Lake Mall",
             "city": "Kolkata",
@@ -59,7 +59,7 @@
         "store_kol_lindsay": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/lindsay_street.jpg",
+            "image": "shopify://shop_images/Lindsay_st.jpg",
             "image_position": "center",
             "name": "Lindsay Street",
             "city": "Kolkata",
@@ -77,7 +77,7 @@
         "store_kol_allenby": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-09_at_6.08.13_PM.jpg",
+            "image": "shopify://shop_images/Allenby_d256b3bc-ddbe-4035-b836-304549dcfbb7.png",
             "image_position": "75%",
             "name": "Allenby Road",
             "city": "Kolkata",
@@ -95,7 +95,7 @@
         "store_blr_indiranagar": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/blr_store_image.jpg",
+            "image": "shopify://shop_images/Indiranagar.jpg",
             "image_position": "center",
             "name": "Indiranagar",
             "city": "Bengaluru",
@@ -131,7 +131,7 @@
         "store_blr_jayanagar": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
+            "image": "shopify://shop_images/jayanagar.jpg",
             "image_position": "center",
             "name": "Jaya Nagar",
             "city": "Bengaluru",
@@ -149,7 +149,7 @@
         "store_blr_commercial": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/commercial_street.png",
+            "image": "shopify://shop_images/Commercial_st.jpg",
             "image_position": "center",
             "name": "Commercial Street",
             "city": "Bengaluru",
@@ -167,7 +167,7 @@
         "store_hyd_sarath": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "image": "shopify://shop_images/Sarath_city.jpg",
             "image_position": "center",
             "name": "Sarath City Mall",
             "city": "Hyderabad",
@@ -185,7 +185,7 @@
         "store_hyd_himayat": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
+            "image": "shopify://shop_images/Himayatnagar_Hyderabad.jpg",
             "image_position": "center",
             "name": "Himayat Nagar",
             "city": "Hyderabad",
@@ -238,7 +238,7 @@
         "store_jai_pacific": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-11-05_at_6.13.24_PM.jpg",
+            "image": "shopify://shop_images/PMC.jpg",
             "image_position": "center",
             "name": "Pacific Mall",
             "city": "Jaipur",
@@ -256,7 +256,7 @@
         "store_viz_inorbit": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/vizag.png",
+            "image": "shopify://shop_images/Vizag.jpg",
             "image_position": "center",
             "name": "Inorbit Vizag",
             "city": "Visakhapatnam",
