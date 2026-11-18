@@ -194,6 +194,9 @@
   {% endcapture %}
 {%- endif -%}
 
+{%- assign custom_collection_title = collection.metafields.custom.custom_title.value | default: collection.metafields.custom.custom_title -%}
+{%- assign collection_display_title = custom_collection_title | default: collection.title -%}
+
 {% if header_image_enabled %}
   {%- liquid
     assign show_header = false
@@ -213,7 +216,7 @@
         <div class="text-overlay__inner">
           <div class="text-overlay__text">
             {%- if section.settings.show_title -%}
-              <h1 class="text-overlay__title super-large-text">{{ collection.title | escape }}</h1>
+              <h1 class="text-overlay__title super-large-text">{{ collection_display_title | escape }}</h1>
             {%- endif -%}
 
             {%- if related_collections_count > 0 and section.settings.related_collections_style == 'buttons' -%}
@@ -237,7 +240,7 @@
       <div class="container">
         
         {%- if section.settings.show_title -%}
-          <h1 class="pagetitle h3">{{ collection.title | escape }}</h1>
+          <h1 class="pagetitle h3">{{ collection_display_title | escape }}</h1>
         {%- endif -%}
       </div>
     </div>
@@ -252,11 +255,11 @@
     {% assign col_desc_lower = collection.description | downcase %}
     {% if col_desc_lower contains '<h1' %}
       <div class="col-title">
-        {{ collection.title }}
+        {{ collection_display_title }}
       </div>
     {% else %}
       <h1 class="col-title">
-        {{ collection.title }}
+        {{ collection_display_title }}
       </h1>
     {% endif %}
 
