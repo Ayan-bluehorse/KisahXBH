@@ -113,7 +113,7 @@
         "store_blr_phoenix": {
           "type": "store",
           "settings": {
-            "image": "shopify://shop_images/phoenix_store.png",
+            "image": "shopify://shop_images/PMC.jpg",
             "image_position": "center",
             "name": "Phoenix Marketcity",
             "city": "Bengaluru",
