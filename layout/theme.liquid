@@ -67,27 +67,6 @@
 <html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
 <head>
   <script>
-    // Instant Bot Kill-Switch for Singapore Traffic (KSW-0022)
-    // Executes in <2ms before GA4, GTM, or marketing pixels can initialize
-    (function() {
-      try {
-        var tz = (window.Intl && Intl.DateTimeFormat) ? Intl.DateTimeFormat().resolvedOptions().timeZone : '';
-        if (tz && (tz === 'Asia/Singapore' || tz.indexOf('Singapore') !== -1)) {
-          // 1. Immediately hard-disable Google Analytics & Google Ads collection
-          window['ga-disable-G-31X587J1SK'] = true;
-          window['ga-disable-AW-16459568302'] = true;
-          window.dataLayer = { push: function() {} };
-          
-          // 2. Halt all further network asset requests
-          if (window.stop) window.stop();
-          
-          // 3. Render clean access restricted screen immediately
-          document.documentElement.innerHTML = '<head><title>Access Restricted - Kisah</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f172a;font-family:system-ui,-apple-system,sans-serif;color:#f8fafc;padding:20px;}.card{background:#1e293b;border:1px solid rgba(255,255,255,0.08);padding:48px 36px;border-radius:16px;max-width:440px;text-align:center;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);}.icon{width:56px;height:56px;background:rgba(239,68,68,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#ef4444;font-size:26px;font-weight:bold;}h1{font-size:20px;font-weight:600;margin:0 0 10px;color:#f8fafc;}p{font-size:14px;color:#94a3b8;line-height:1.6;margin:0;}</style></head><body><div class=\"card\"><div class=\"icon\">✕</div><h1>Access Restricted</h1><p>Kisah is not currently available in your region. We apologize for the inconvenience.</p></div></body>';
-        }
-      } catch(e) {}
-    })();
-  </script>
-  <script>
     // Critical Global Polyfills & Safety Nets (Prevents top console errors)
     window.firsttilesinit = window.firsttilesinit || function() {};
     window._autofillcallbackhandler = window._autofillcallbackhandler || function() {};
