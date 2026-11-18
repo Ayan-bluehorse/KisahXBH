@@ -1124,7 +1124,7 @@
           "settings": {
             "city": "Kolkata",
             "title": "Kisah Gariahat",
-            "image": "shopify://shop_images/Gariahat.png",
+            "image": "shopify://shop_images/Gariahat_jpg.jpg",
             "directions_url": "https://maps.app.goo.gl/NTkx42Dq8ZXZbUGK7",
             "page_url": "/pages/kolkata"
           }
@@ -1134,7 +1134,7 @@
           "settings": {
             "city": "Kolkata",
             "title": "Kisah Lake Mall",
-            "image": "shopify://shop_images/lake_mall_image.jpg",
+            "image": "shopify://shop_images/Lakemall.jpg",
             "directions_url": "https://maps.app.goo.gl/anMwcyXTtjJAsNnH8",
             "page_url": "/pages/kolkata"
           }
@@ -1144,7 +1144,7 @@
           "settings": {
             "city": "Kolkata",
             "title": "Kisah Lindsay Street",
-            "image": "shopify://shop_images/lindsay_street.jpg",
+            "image": "shopify://shop_images/Lindsay_st.jpg",
             "directions_url": "https://maps.google.com/?q=Kisah+Lindsay+Street+Kolkata",
             "page_url": "/pages/kolkata"
           }
@@ -1154,7 +1154,7 @@
           "settings": {
             "city": "Kolkata",
             "title": "Kisah Allenby Road",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-10-09_at_6.08.13_PM.jpg",
+            "image": "shopify://shop_images/Allenby_d256b3bc-ddbe-4035-b836-304549dcfbb7.png",
             "directions_url": "https://maps.app.goo.gl/NiNfpm3MPAmsYqSc9",
             "page_url": "/pages/kolkata"
           }
@@ -1164,7 +1164,7 @@
           "settings": {
             "city": "Bengaluru",
             "title": "Kisah Indiranagar",
-            "image": "shopify://shop_images/blr_store_image.jpg",
+            "image": "shopify://shop_images/Indiranagar.jpg",
             "directions_url": "https://maps.app.goo.gl/3176yZb2i4cH3En66",
             "page_url": "/pages/bengaluru"
           }
@@ -1174,7 +1174,7 @@
           "settings": {
             "city": "Bengaluru",
             "title": "Kisah Phoenix Marketcity",
-            "image": "shopify://shop_images/phoenix_store.png",
+            "image": "shopify://shop_images/PMC.jpg",
             "directions_url": "https://www.google.com/maps/place/Phoenix+Market+City,+Devasandra+Industrial+Estate,+Mahadevapura,+Bengaluru,+Karnataka+560048/@12.9969953,77.6941613,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae110b020b972b:0x6a82edb8daff233d!8m2!3d12.9969953!4d77.6967362!16s%2Fg%2F12hks66tc?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
             "page_url": "/pages/bengaluru"
           }
@@ -1184,7 +1184,7 @@
           "settings": {
             "city": "Bengaluru",
             "title": "Kisah Jayanagar",
-            "image": "shopify://shop_images/Jaya_Nagar_Bangalore.jpg",
+            "image": "shopify://shop_images/jayanagar.jpg",
             "directions_url": "https://maps.app.goo.gl/ULGqz2WTTAbQYKnN9",
             "page_url": "/pages/bengaluru"
           }
@@ -1194,7 +1194,7 @@
           "settings": {
             "city": "Bengaluru",
             "title": "Kisah Commercial Street",
-            "image": "shopify://shop_images/commercial_street.png",
+            "image": "shopify://shop_images/Commercial_st.jpg",
             "directions_url": "https://maps.app.goo.gl/jnovB3Wf9CMCZLep6",
             "page_url": "/pages/bengaluru"
           }
@@ -1204,7 +1204,7 @@
           "settings": {
             "city": "Hyderabad",
             "title": "Kisah Sarath City Mall",
-            "image": "shopify://shop_images/sarath_city_image_ca7e6031-96a2-4a70-9558-221dad742796.jpg",
+            "image": "shopify://shop_images/Sarath_city.jpg",
             "directions_url": "https://maps.google.com/?q=Kisah+Sarath+City+Capital+Mall+Hyderabad",
             "page_url": "/pages/hyderabad"
           }
@@ -1214,7 +1214,7 @@
           "settings": {
             "city": "Hyderabad",
             "title": "Kisah Himayat Nagar",
-            "image": "shopify://shop_images/Himayat_Nagar_Hyderabad.jpg",
+            "image": "shopify://shop_images/Himayatnagar_Hyderabad.jpg",
             "directions_url": "https://maps.google.com/?q=Kisah+Himayat+Nagar+Hyderabad",
             "page_url": "/pages/hyderabad"
           }
@@ -1224,7 +1224,7 @@
           "settings": {
             "city": "Mumbai",
             "title": "Kisah Infiniti Mall, Malad",
-            "image": "shopify://shop_images/malad_store.png",
+            "image": "shopify://shop_images/Malad.jpg",
             "directions_url": "https://www.google.com/maps/place/Infiniti+Mall+-+Malad+West/@19.184753,72.8341927,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b6ee06ebad2b:0x9c288235c433657d!8m2!3d19.184753!4d72.8341927!16s%2Fg%2F11dfjxxdbn?entry=ttu&g_ep=EgoyMDI2MDgxNi4wIKXMDSoASAFQAw%3D%3D",
             "page_url": "/pages/mumbai"
           }
