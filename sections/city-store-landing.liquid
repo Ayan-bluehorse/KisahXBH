@@ -2169,30 +2169,23 @@ a.ksl-btn--ghost:hover,
       store: store
     };
 
-    // The three store CTAs (Get directions, Call, WhatsApp) each send their own GA4 event, and
-    // store_action is their sum: it fires once for every one of those three taps and for nothing
-    // else. So store_action = store_get_directions + store_call + store_whatsapp.
-    // The other two buttons send their own separate events and are NOT part of store_action.
-    const ctaEvents = {
+    // The three original events are kept alongside store_action. store_action is the sum: it fires
+    // for every CTA, so it = store_get_directions + store_call + store_whatsapp + find_nearest +
+    // call_picker (the last two have no original event).
+    const legacyEvents = {
       get_directions: 'store_get_directions',
       call: 'store_call',
       whatsapp: 'store_whatsapp'
     };
-    const otherEvents = {
-      find_nearest: 'store_find_nearest',
-      call_picker: 'store_call_picker'
-    };
 
     // GA4 - sent directly with gtag. GTM-5WFNGGK8 has NO tag for these events, so this call is
     // the only path into GA4; a dataLayer push alone never reaches GA4 (that is what broke store
-    // tracking on 2026-11-03). Do not add a GTM GA4 tag for any of these events, or every tap
-    // will be counted twice.
+    // tracking on 2026-11-03). If a GTM GA4 tag for store_action is ever added, remove this call
+    // at the same time, or every tap will be counted twice.
     if (typeof window.gtag === 'function') {
-      if (ctaEvents[action]) {
-        window.gtag('event', ctaEvents[action], eventParams);
-        window.gtag('event', eventName, eventParams);
-      } else if (otherEvents[action]) {
-        window.gtag('event', otherEvents[action], eventParams);
+      window.gtag('event', eventName, eventParams);
+      if (legacyEvents[action]) {
+        window.gtag('event', legacyEvents[action], eventParams);
       }
     }
 
