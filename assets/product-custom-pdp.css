@@ -1777,3 +1777,11 @@
   #wishlisthero-product-page-button-container {
   display: none !important;
 }
+
+@media screen and (max-width: 768px) {
+  .section-main-product media-gallery,
+  .section-main-product .detail.product-column-right {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}

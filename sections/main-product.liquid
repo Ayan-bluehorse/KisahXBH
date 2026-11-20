@@ -101,8 +101,6 @@
 <product-form class="js-product product-info quickbuy-content spaced-row container">
   <media-gallery
     class="media-gallery media-gallery--layout-{{ section.settings.gallery_layout }} media-gallery-size-{{ section.settings.gallery_size }} product-column-left {% if product.media.size > 1 %}has-thumbnails{% endif %}"
-    data-cc-animate
-    data-cc-animate-delay="0.2s"
     {%- if enable_media_grouping %}
       data-media-grouping-enabled
     {%- endif %}
@@ -1048,7 +1046,7 @@
     {%- endif -%}
   </media-gallery>
 
-  <div class="detail product-column-right" data-cc-animate data-cc-animate-delay="0.2s">
+  <div class="detail product-column-right">
     <div
       class="product-form{% if section.settings.enable_sticky_columns %} sticky-content-container{% endif %}"
       data-ajax-add-to-cart="true"

@@ -3,6 +3,7 @@
 .env
 
 # Scratch and test files
+node_modules/
 scratch/
 backup_code/
 

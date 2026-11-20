@@ -420,21 +420,24 @@
 
   <script>
     window.kisahWhenJQueryReady(function($){
-  //Scroll event
-  $(window).scroll(function(){
-    var scrolled = $(window).scrollTop();
-    if (scrolled > 800) $('#bottom-top').fadeIn('slow');
-    if (scrolled < 800) $('#bottom-top').fadeOut('slow');
-   
-  });
-  
-  //Click event
-  $('#bottom-top').click(function () {
-    $("html, body").animate({ scrollTop: "0" },  500);
-  });
+      var $bottomTop = $('#bottom-top');
+      var isBottomTopVisible = false;
+      $(window).scroll(function(){
+        var scrolled = $(window).scrollTop();
+        if (scrolled > 800 && !isBottomTopVisible) {
+          $bottomTop.stop(true, true).fadeIn(200);
+          isBottomTopVisible = true;
+        } else if (scrolled <= 800 && isBottomTopVisible) {
+          $bottomTop.stop(true, true).fadeOut(200);
+          isBottomTopVisible = false;
+        }
+      });
 
-});
-
+      // Click event - use native smooth scrolling without conflicting animation queues
+      $('#bottom-top').click(function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
   </script>
 
   
