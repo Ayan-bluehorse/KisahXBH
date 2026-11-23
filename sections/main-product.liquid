@@ -3138,31 +3138,31 @@
        if (mobShareBtn) mobShareBtn.addEventListener('click', mobShare);
 
   });
-   const sizedrawer = document.querySelector('.size-chart-drawer')
-    const modal = document.querySelector('.pop-up-modal');
-    const trigger = document.querySelector('.trigger-pop-up');
-    const closeButton = document.querySelector('.close-button');
-    const drawerclosebtn = document.querySelector('.size_drawer__close-btn');
-    const overlay = document.querySelector('.size-cart-drawer-overlay'); 
-    const body = document.querySelector('body');
-  
-    function toggleModal() {
-      // modal.classList.toggle('show-pop-up');
-      if (sizedrawer) sizedrawer.classList.toggle('open');
-      if (overlay) overlay.classList.toggle('is-visible');
-      if (body) body.classList.toggle('scroll');
+    function openSizeChart() {
+      const sizedrawer = document.querySelector('.size-chart-drawer');
+      const overlay = document.querySelector('.size-cart-drawer-overlay');
+      if (sizedrawer) sizedrawer.classList.add('open');
+      if (overlay) overlay.classList.add('is-visible');
+      document.body.classList.add('scroll');
     }
 
-    function windowOnClick(event) {
-      if (event.target === overlay) {
-        toggleModal();
+    function closeSizeChart() {
+      const sizedrawer = document.querySelector('.size-chart-drawer');
+      const overlay = document.querySelector('.size-cart-drawer-overlay');
+      if (sizedrawer) sizedrawer.classList.remove('open');
+      if (overlay) overlay.classList.remove('is-visible');
+      document.body.classList.remove('scroll');
+    }
+
+    document.addEventListener('click', function(event) {
+      if (event.target.closest('.trigger-pop-up')) {
+        event.preventDefault();
+        openSizeChart();
+      } else if (event.target.closest('.size_drawer__close-btn, .close-button') || event.target.matches('.size-cart-drawer-overlay')) {
+        event.preventDefault();
+        closeSizeChart();
       }
-    }
-
-    if (trigger) trigger.addEventListener('click', toggleModal);
-    if (drawerclosebtn) drawerclosebtn.addEventListener('click', toggleModal);
-    if (closeButton) closeButton.addEventListener('click', toggleModal);
-    if (overlay) window.addEventListener('click', windowOnClick);
+    });
 
 
 

@@ -628,12 +628,28 @@
 
 
 <script>
-  window.kisahWhenJQueryReady(function($) {
-      $('.tab-a').click(function(){
-        $(".tab").removeClass('tab-active');
-        $(".tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
-        $(".tab-a").removeClass('active-a');
-        $(this).parent().find(".tab-a").addClass('active-a');
-       });
+  document.addEventListener('click', function(e) {
+    var tabBtn = e.target.closest('.tab-a');
+    if (!tabBtn) return;
+    e.preventDefault();
+    var drawer = tabBtn.closest('.size-chart-drawer') || document;
+    var targetId = tabBtn.getAttribute('data-id');
+    if (!targetId) return;
+
+    drawer.querySelectorAll('.tab').forEach(function(t) {
+      if (t.getAttribute('data-id') === targetId) {
+        t.classList.add('tab-active');
+      } else {
+        t.classList.remove('tab-active');
+      }
+    });
+
+    drawer.querySelectorAll('.tab-a').forEach(function(a) {
+      if (a === tabBtn) {
+        a.classList.add('active-a');
+      } else {
+        a.classList.remove('active-a');
+      }
+    });
   });
 </script>

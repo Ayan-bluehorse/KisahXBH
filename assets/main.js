@@ -2953,11 +2953,14 @@ const ProductForm = class extends HTMLElement {
           items: [
             { id: parseInt(mainVariantId, 10), quantity: mainQuantity },
             { id: parseInt(childProductId, 10), quantity: mainQuantity }
-          ]
+          ],
+          sections: 'cart-drawer'
         })
       };
     } else {
-      // Single product add - omit 'sections' and 'sections_url' to eliminate server-side 1,090-line drawer render
+      if (formData instanceof FormData && !formData.has('sections')) {
+        formData.append('sections', 'cart-drawer');
+      }
       fetchRequestOpts = {
         method: 'POST',
         headers: {
@@ -3020,8 +3023,13 @@ const ProductForm = class extends HTMLElement {
             }
           } else if (theme.settings.afterAddToCart === 'drawer') {
             const themeDrawer = document.querySelector('.js-cart-drawer');
-            if (themeDrawer && typeof themeDrawer.open === 'function') {
-              themeDrawer.open();
+            if (themeDrawer) {
+              if (data.sections && data.sections['cart-drawer'] && typeof themeDrawer.updateFromCartChange === 'function') {
+                themeDrawer.updateFromCartChange(data.sections['cart-drawer']);
+              }
+              if (typeof themeDrawer.open === 'function') {
+                themeDrawer.open();
+              }
             }
           }
         }

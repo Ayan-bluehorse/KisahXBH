@@ -90,6 +90,22 @@
     }
   });
 
+  // Re-enable checkout button whenever cart drawer opens, refreshes, or merges
+  function enableCartDrawerCheckoutButtons() {
+    document.querySelectorAll('.gokwik-checkout button').forEach(button => {
+      button.disabled = false;
+      button.classList.remove('disabled');
+      const loader = button.querySelector('#btn-loader');
+      if (loader) loader.style.display = 'none';
+    });
+  }
+  document.addEventListener('dispatch:cart-drawer:refresh', enableCartDrawerCheckoutButtons);
+  document.addEventListener('dispatch:cart-drawer:open', enableCartDrawerCheckoutButtons);
+  document.addEventListener('cart:updated', enableCartDrawerCheckoutButtons);
+  document.addEventListener('on:cart:after-merge', enableCartDrawerCheckoutButtons);
+  document.addEventListener('on:cart-drawer:after-open', enableCartDrawerCheckoutButtons);
+  document.addEventListener('on:cart-drawer:before-open', enableCartDrawerCheckoutButtons);
+
   // Delegated click handler for GoKwik tracking (replaces 700ms listener pile-up)
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("#gokwik-buy-now, .gokwik-checkout button");

@@ -783,31 +783,64 @@
 
 
 <script>
-  window.kisahWhenJQueryReady(function($) {
-      $('.tab-a').click(function(){
-        $(".tab").removeClass('tab-active');
-        $(".tab[data-id='"+$(this).attr('data-id')+"']").addClass("tab-active");
-        $(".tab-a").removeClass('active-a');
-        $(this).parent().find(".tab-a").addClass('active-a');
-        return false;
-       });
+  (function() {
+    // Vanilla JS tab delegation for Size Guide vs How to Measure
+    document.addEventListener('click', function(e) {
+      var tabBtn = e.target.closest('.tab-a');
+      if (!tabBtn) return;
+      e.preventDefault();
+      var drawer = tabBtn.closest('.size-chart-drawer') || document;
+      var targetId = tabBtn.getAttribute('data-id');
+      if (!targetId) return;
 
-      // in/cm toggle: cells carry inches in data-in
-      function kisahApplyUnit(unit) {
-        $('.sc-unit').removeClass('is-active');
-        $('.sc-unit[data-sc-unit="' + unit + '"]').addClass('is-active');
-        $('.sc-table td[data-in]').each(function () {
-          var inches = parseFloat($(this).attr('data-in'));
-          if (isNaN(inches)) return;
-          $(this).text(unit === 'cm' ? Math.round(inches * 2.54 * 10) / 10 : inches);
-        });
-      }
-
-      $(document).on('click', '.sc-unit', function () {
-        kisahApplyUnit($(this).data('sc-unit'));
+      drawer.querySelectorAll('.tab').forEach(function(t) {
+        if (t.getAttribute('data-id') === targetId) {
+          t.classList.add('tab-active');
+        } else {
+          t.classList.remove('tab-active');
+        }
       });
 
-      // cm is the default, so convert the inch values on load
-      kisahApplyUnit($('.sc-unit.is-active').data('sc-unit') || 'in');
-  });
+      drawer.querySelectorAll('.tab-a').forEach(function(a) {
+        if (a === tabBtn) {
+          a.classList.add('active-a');
+        } else {
+          a.classList.remove('active-a');
+        }
+      });
+    });
+
+    // in/cm toggle: cells carry inches in data-in
+    function kisahApplyUnit(unit) {
+      document.querySelectorAll('.sc-unit').forEach(function(el) {
+        if (el.getAttribute('data-sc-unit') === unit) {
+          el.classList.add('is-active');
+        } else {
+          el.classList.remove('is-active');
+        }
+      });
+      document.querySelectorAll('.sc-table td[data-in]').forEach(function(td) {
+        var inches = parseFloat(td.getAttribute('data-in'));
+        if (isNaN(inches)) return;
+        td.textContent = (unit === 'cm') ? (Math.round(inches * 2.54 * 10) / 10) : inches;
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      var unitBtn = e.target.closest('.sc-unit');
+      if (unitBtn) {
+        kisahApplyUnit(unitBtn.getAttribute('data-sc-unit') || 'cm');
+      }
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        var activeUnit = document.querySelector('.sc-unit.is-active');
+        kisahApplyUnit(activeUnit ? activeUnit.getAttribute('data-sc-unit') : 'in');
+      });
+    } else {
+      var activeUnit = document.querySelector('.sc-unit.is-active');
+      kisahApplyUnit(activeUnit ? activeUnit.getAttribute('data-sc-unit') : 'in');
+    }
+  })();
 </script>

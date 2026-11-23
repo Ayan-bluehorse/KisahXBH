@@ -171,11 +171,36 @@
   /* ==========================================================================
      INIT — per-container
      ========================================================================== */
-  var containers = document.querySelectorAll('[data-fys-container]');
-
-  for (var ci = 0; ci < containers.length; ci++) {
-    initWidget(containers[ci]);
+  function initAllContainers() {
+    var containers = document.querySelectorAll('[data-fys-container]');
+    for (var ci = 0; ci < containers.length; ci++) {
+      initWidget(containers[ci]);
+    }
   }
+
+  initAllContainers();
+  document.addEventListener('DOMContentLoaded', initAllContainers);
+  window.addEventListener('load', initAllContainers);
+  document.addEventListener('cart:updated', initAllContainers);
+  document.addEventListener('dispatch:cart-drawer:refresh', initAllContainers);
+  document.addEventListener('dispatch:cart-drawer:open', initAllContainers);
+  document.addEventListener('on:cart-drawer:after-open', initAllContainers);
+
+  // Delegated click handler on document so any .fys-trigger clicked will initialize and open even if rendered dynamically
+  document.addEventListener('click', function(e) {
+    var trigger = e.target.closest('.fys-trigger');
+    if (!trigger) return;
+    var container = trigger.closest('[data-fys-container]');
+    if (!container) return;
+    if (container.getAttribute('data-fys-ready') !== 'true') {
+      initWidget(container);
+      var fys = container.querySelector('.fys');
+      if (fys) {
+        var open = fys.classList.toggle('is-open');
+        trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+    }
+  });
 
   // Expose for dynamic use (e.g. navratri quick view popup)
   window.__fysInitWidget = initWidget;
