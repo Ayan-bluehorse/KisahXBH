@@ -18,7 +18,7 @@
 -%}
 
 <section 
-  id="shopify-section-{{ sid }}" 
+  id="v5-section-{{ sid }}" 
   class="v5-revamp-hero" 
   aria-label="Campaign Banner"
 >
@@ -289,17 +289,18 @@
     z-index: 10;
     top: 14px;
     left: 16px;
-    right: 16px;
+    right: auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
     pointer-events: auto;
   }
   .v5-hero-dots {
     display: flex;
-    gap: 8px;
-    flex: 1;
-    max-width: 220px;
+    gap: 6px;
+    flex: 0 0 auto;
+    width: 120px;
+    max-width: 120px;
   }
   .v5-hdot {
     flex: 1;

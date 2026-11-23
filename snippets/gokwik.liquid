@@ -21,30 +21,41 @@
 
   <script src="https://{{ env }}.gokwik.co/merchant-integration/build/merchant.integration.js?v4" defer></script>
 
+  <style>
+    {%- if localization.country.iso_code == 'IN' -%}
+      .shopifycheckoutbtn { display: none !important; }
+    {%- else -%}
+      .gokwik-checkout, #gokwik-buy-now { display: none !important; }
+    {%- endif -%}
+  </style>
+
   <script>
-  let userCountry = "India"; // Default to India for instant protection
+  let userCountry = "{{ localization.country.name | default: 'India' }}";
   window.userCountry = userCountry;
 
   const getCountryData = async () => {
     try {
+      {%- if localization.country.iso_code == 'IN' -%}
+        userCountry = "India";
+        window.userCountry = userCountry;
+        return;
+      {%- endif -%}
       const res = await fetch("/browsing_context_suggestions.json");
+      if (!res.ok) return;
       const json = await res.json();
-      userCountry = json?.detected_values?.country_name || "India";
-      window.userCountry = userCountry;
-
-      const styleElement = document.createElement("style");
-      let css = "";
-      if (userCountry === "India") {
-        css = ".shopifycheckoutbtn { display: none !important; }";
-      } else {
-        css = ".gokwik-checkout { display: none !important; } #gokwik-buy-now { display: none !important; }";
+      if (json && json.detected_values && json.detected_values.country_name) {
+        userCountry = json.detected_values.country_name;
+        window.userCountry = userCountry;
+        if (userCountry === "India") {
+          document.querySelectorAll(".shopifycheckoutbtn").forEach(el => el.style.setProperty("display", "none", "important"));
+          document.querySelectorAll(".gokwik-checkout, #gokwik-buy-now").forEach(el => el.style.removeProperty("display"));
+        } else {
+          document.querySelectorAll(".gokwik-checkout, #gokwik-buy-now").forEach(el => el.style.setProperty("display", "none", "important"));
+          document.querySelectorAll(".shopifycheckoutbtn").forEach(el => el.style.removeProperty("display"));
+        }
       }
-      styleElement.textContent = css;
-      document.head.appendChild(styleElement);
     } catch (err) {
-      console.error("Country fetch failed", err);
-      userCountry = "India";
-      window.userCountry = userCountry;
+      console.warn("Country fetch failed", err);
     }
   };
 
@@ -113,7 +124,7 @@
   }
   document.addEventListener('change', syncBuyNowState);
   document.addEventListener('click', (e) => {
-    if (e.target.closest('.product-form, variant-radios, variant-selects')) {
+    if (e.target.closest('.product-form, variant-radios, variant-selects, variant-picker, [data-variant-picker]')) {
       setTimeout(syncBuyNowState, 50);
     }
   });

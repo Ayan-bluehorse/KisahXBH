@@ -164,6 +164,12 @@
     background: #201747;
     border-radius: 0;
 }
+.shopify-section .product-price--block .price__default {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+}
 .shopify-section .product-block__detail .price__current {
     font-family: var(--base-font-family);
     font-style: normal;
@@ -172,6 +178,7 @@
     line-height: 18px;
     color: #000000;
     opacity: 0.8;
+    margin-right: 6px;
 }
 .shopify-section .product-block__detail .price__was {
     font-family: var(--base-font-family);
@@ -183,6 +190,7 @@
     opacity: 0.8;
     text-decoration: line-through;
     text-decoration-color: rgba(255, 0, 0, 1);
+    margin-left: 2px;
 }
 .shopify-section .price .price-label--sold-out {
     font-family: var(--base-font-family);
@@ -343,7 +351,7 @@
         display: block;
     }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767.98px) {
     .shopify-section .utility-bar__centre {
         order: 2;
     }
@@ -694,7 +702,7 @@
     display: none !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767.98px) {
     .shopify-section .low-stock-product-grid {
         margin-top: 28px;
     }

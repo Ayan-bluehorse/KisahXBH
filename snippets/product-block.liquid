@@ -190,10 +190,21 @@ Parameters:
             
               <div class="collection-tag-label">
                 {% for tag in product.tags %}
-                 {% if tag contains 'tag' %}
-                   {% assign text = tag | remove:'tag' %}
-                   <span>{{ text }}</span> 
-                   {% endif %}
+                  {%- assign prefix_6 = tag | slice: 0, 6 -%}
+                  {%- assign prefix_4 = tag | slice: 0, 4 -%}
+                  {%- if prefix_6 == 'badge:' -%}
+                    {% assign text = tag | remove_first: 'badge:' | strip %}
+                    <span>{{ text }}</span> 
+                  {%- elsif prefix_4 == 'tag:' -%}
+                    {% assign text = tag | remove_first: 'tag:' | strip %}
+                    <span>{{ text }}</span> 
+                  {%- elsif prefix_4 == 'tag_' -%}
+                    {% assign text = tag | remove_first: 'tag_' | strip %}
+                    <span>{{ text }}</span> 
+                  {%- elsif prefix_4 == 'tag ' -%}
+                    {% assign text = tag | remove_first: 'tag ' | strip %}
+                    <span>{{ text }}</span> 
+                  {%- endif -%}
                 {% endfor %}
               </div>
              

@@ -124,6 +124,7 @@
         },
         "preorderoffer_box_Rht83D": {
           "type": "preorderoffer_box",
+          "disabled": true,
           "settings": {
             "title": "",
             "text": "\"Pre-book now and enjoy an exclusive flat <b>5% off</b> with code <b>DENIM5!</b>\nSecure your favourites today!\nProducts will be delivered by <b>12th June 2025</b>\n*terms and conditions apply\""

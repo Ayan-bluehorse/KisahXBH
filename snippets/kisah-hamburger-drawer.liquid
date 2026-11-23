@@ -59,7 +59,7 @@
   }
 
   /* Drawer Backdrop Scrim */
-  .kisah-scrim {
+  .kisah-menu-scrim {
     position: fixed;
     inset: 0;
     background: rgba(15, 10, 20, 0.52);
@@ -71,7 +71,7 @@
     transition: opacity 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.28s;
     z-index: 99990;
   }
-  .kisah-scrim.is-open {
+  .kisah-menu-scrim.is-open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -103,7 +103,7 @@
     transform: translateX(0);
   }
   @media (prefers-reduced-motion: reduce) {
-    .kisah-drawer-wrap, .kisah-scrim { transition: none !important; }
+    .kisah-drawer-wrap, .kisah-menu-scrim { transition: none !important; }
   }
 
   /* Drawer Top Bar with Real Logo */
@@ -542,7 +542,7 @@
 </style>
 
 <!-- Backdrop Scrim -->
-<div class="kisah-scrim" id="kisahMenuScrim" aria-hidden="true"></div>
+<div class="kisah-menu-scrim" id="kisahMenuScrim" aria-hidden="true"></div>
 
 <!-- Mobile Drawer Container -->
 <nav class="kisah-drawer-wrap" id="kisahMenuDrawer" aria-label="Main menu" aria-hidden="true">

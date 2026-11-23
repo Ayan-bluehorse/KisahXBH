@@ -2085,7 +2085,7 @@
               <div class="offer-box" id="{{ block.id }}">
                 <div class="offer-icon">
                   {% if block.settings.icon != blank %}
-                    <img src="{{ block.settings.icon | image_url }}" width="30px" height="30px">
+                    <img src="{{ block.settings.icon | image_url: width: 60 }}" alt="" width="30" height="30">
                   {% endif %}
                 </div>
                 <div class="offer-discount">
@@ -2099,8 +2099,8 @@
             {% if product.tags contains 'preorder_2' %}
               <div class="offer-box" id="{{ block.id }}">
                 <div class="offer-icon">
-                  {% if block.settings.icon != blank %}
-                    <img src="{{ block.settings.icon-1 | image_url }}" width="30px" height="30px">
+                  {% if block.settings.icon-1 != blank %}
+                    <img src="{{ block.settings.icon-1 | image_url: width: 60 }}" alt="" width="30" height="30">
                   {% endif %}
                 </div>
                 <div class="offer-discount">
@@ -2114,8 +2114,8 @@
             {% if product.tags contains 'preorder_3' %}
               <div class="offer-box" id="{{ block.id }}">
                 <div class="offer-icon">
-                  {% if block.settings.icon != blank %}
-                    <img src="{{ block.settings.icon-2 | image_url }}" width="30px" height="30px">
+                  {% if block.settings.icon-2 != blank %}
+                    <img src="{{ block.settings.icon-2 | image_url: width: 60 }}" alt="" width="30" height="30">
                   {% endif %}
                 </div>
                 <div class="offer-discount">
@@ -2129,8 +2129,8 @@
             {% if product.tags contains 'preorder_4' %}
               <div class="offer-box" id="{{ block.id }}">
                 <div class="offer-icon">
-                  {% if block.settings.icon != blank %}
-                    <img src="{{ block.settings.icon-3 | image_url }}" width="30px" height="30px">
+                  {% if block.settings.icon-3 != blank %}
+                    <img src="{{ block.settings.icon-3 | image_url: width: 60 }}" alt="" width="30" height="30">
                   {% endif %}
                 </div>
                 <div class="offer-discount">

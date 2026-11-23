@@ -26,7 +26,16 @@
   }, true);
 
   function formatMoney(amount) {
-    return '₹' + Math.round(amount).toLocaleString('en-IN');
+    var activeCurrency = (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'INR';
+    try {
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: activeCurrency,
+        maximumFractionDigits: 0
+      }).format(amount);
+    } catch (e) {
+      return (activeCurrency === 'INR' ? '₹' : activeCurrency + ' ') + Math.round(amount).toLocaleString();
+    }
   }
 
   function findDrawerInsertionPoint(drawerRoot) {
@@ -154,8 +163,11 @@
       return;
     }
 
-    // Shopify /cart.js and /cart/add.js return prices in paise (e.g. 599700 = ₹5,997).
-    var subtotal = rawSubtotal >= 100 ? (rawSubtotal / 100) : rawSubtotal;
+    // Shopify /cart.js and /cart/add.js return prices in subunits (paise / cents).
+    var activeCurrency = (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'INR';
+    var zeroDecimalCurrencies = ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'];
+    var isZeroDecimal = zeroDecimalCurrencies.indexOf(activeCurrency) !== -1;
+    var subtotal = isZeroDecimal ? rawSubtotal : (rawSubtotal / 100);
 
     var isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
     var shipping = isFreeShipping ? 0 : SHIPPING_FEE;
@@ -195,7 +207,7 @@
             <span>${formatMoney(onlineTotal)}</span>
           </div>
           <div style="display:flex; justify-content:space-between; font-size:11px; color:#6b7280; margin-top:2px;">
-            <span>COD Total (incl. ₹${COD_FEE} COD fee)</span>
+            <span>COD Total (incl. ${formatMoney(COD_FEE)} COD fee)</span>
             <span>${formatMoney(codTotal)}</span>
           </div>
         </div>

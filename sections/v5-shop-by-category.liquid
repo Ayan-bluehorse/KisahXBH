@@ -13,7 +13,7 @@
 -%}
 
 <section 
-  id="shopify-section-{{ sid }}" 
+  id="v5-section-{{ sid }}" 
   class="v5-revamp-cats"
   style="
     background-color: {{ section.settings.bg_color | default: '#ffffff' }};
@@ -55,6 +55,12 @@
               aria-label="{{ item_title | escape }}"
             >
               <div class="v5-cat-media">
+                {%- liquid
+                  assign img_loading = 'lazy'
+                  if section.index == 1 and forloop.index <= 6
+                    assign img_loading = 'eager'
+                  endif
+                -%}
                 {%- if block.settings.image != blank -%}
                   <img
                     src="{{ block.settings.image | image_url: width: 360 }}"
@@ -63,7 +69,7 @@
                             {{ block.settings.image | image_url: width: 360 }} 360w"
                     sizes="(max-width: 768px) 76px, {{ desk_card_size }}px"
                     alt="{{ item_title | escape }}"
-                    loading="lazy"
+                    loading="{{ img_loading }}"
                     decoding="async"
                     width="{{ desk_card_size }}"
                     height="{{ desk_card_size }}"
@@ -181,6 +187,9 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
     text-align: center;
     width: 100%;
   }
@@ -243,7 +252,7 @@
     }
     .v5-revamp-cats .v5-cats-track {
       gap: 20px;
-      justify-content: center;
+      justify-content: safe center;
       padding-bottom: 8px;
     }
     .v5-revamp-cats .v5-cat-item {
