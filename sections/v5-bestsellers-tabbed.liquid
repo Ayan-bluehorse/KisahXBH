@@ -659,6 +659,49 @@
           window.theme.cart.getCart();
         }
 
+        if (document.querySelector('.template-cart')) {
+          // Cart page
+          const cartForm = document.querySelector('cart-form');
+          if (cartForm && cartForm.enableAjaxUpdate) {
+            cartForm.refresh();
+          }
+        } else if (theme.settings.afterAddToCart === 'page') {
+          // Allow the tick animation to complete
+          setTimeout(() => {
+            window.location.href = theme.routes.cart;
+          }, 300);
+        } else {
+          // Skip duplicate theme notification toast when Helium drawer is present
+          const hasHeliumDrawer = document.getElementById('helium-cart-drawer-root') || window._h_pubsub;
+          if (!hasHeliumDrawer) {
+            if (theme.settings.afterAddToCart === 'notification') {
+              const notifTemplate = document.getElementById('AddedNotification');
+              if (notifTemplate && notifTemplate.content) {
+                const notification = notifTemplate.content.firstElementChild.cloneNode(true);
+                notification.dataset.productTitle = data.product_title || '';
+                let notificationContainer = document.querySelector('.pageheader--sticky') || document.querySelector('body');
+                notificationContainer.appendChild(notification);
+              }
+            } else if (theme.settings.afterAddToCart === 'drawer') {
+              const themeDrawer = document.querySelector('.js-cart-drawer');
+              if (themeDrawer && typeof themeDrawer.open === 'function') {
+                
+                const cartForm = themeDrawer.querySelector('cart-form');
+                if (cartForm && !cartForm.classList.contains('cart-form--refreshing')) {
+                  cartForm.refresh();
+                }
+                themeDrawer.open();
+              }
+            }
+          }
+        }
+        this.dispatchEvent(new CustomEvent('on:cart:add', {
+          bubbles: true,
+          detail: {
+            variantId: data.variant_id || (data.items && data.items[0] && data.items[0].variant_id)
+          }
+        }));
+
         setTimeout(function() {
           btn.textContent = origText;
           btn.classList.remove('is-added');

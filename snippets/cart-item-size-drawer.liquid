@@ -1,0 +1,1180 @@
+<style>
+    body.scroll{
+      overflow:hidden !important;
+    }
+    body.scroll #sy-whatshelp a.sywh-open-services{
+      display: none;
+    }
+    .template-product .size-chart-drawer .tab{
+    	display none;
+        width:100%;
+        padding:0 20px;
+    }
+    .template-product .size-chart-table{
+      width:100%;
+      overflow:auto;
+    }
+    .template-product .size-chart-drawer .tab-active{
+    	display: block;
+    }
+    .template-product .size-chart-drawer{
+        background: #fff;
+        z-index: 9;
+        display:flex;
+        position:fixed;
+        top: 0;
+        right: 0;
+        padding: var(--gutter-content);
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        transition: opacity .5s;
+        visibility: hidden;
+        z-index: 8001;
+        width:500px;
+        max-width:100%;
+        transition: transform .34s ease, visibility .34s ease;
+        transform: translate3d(100%, 0, 0);
+        outline: 0;
+        overflow-y: scroll;
+        /* height:1000px; */
+    }
+    .template-product .size-chart-heading{
+       display:flex;
+           flex-direction: column;
+       justify-content:space-between;
+       align-items:center;
+       width:100%;
+       padding:0 30px;
+    }
+    .template-product .size-chart-heading svg{
+       width:18px;
+       height:18px;
+    }
+    .template-product .size-chart-heading h2{
+        font-size:26px;
+        line-height:30px;
+        margin:30px 0;
+        width:100%;
+        text-align:center;
+    }
+    .template-product .size-chart-drawer.open{
+        visibility: visible;
+        transition: visibility 0s 0s, transform .34s ease;
+         transform: translateZ(0);
+    }
+
+    .template-product .size-chart-drawer .size_drawer__close-btn {
+      width: 13px;
+      height: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: unset !important;
+      background: transparent !important;
+  }
+    .template-product .size-chart-drawer .overall-content-wraping{
+        width:100%;
+        padding:0 30px;
+    }
+    .template-product .size-chart-drawer .size-chart-accordion {
+        width: 100%;
+    }
+
+    .template-product .size-chart-drawer .disclosure{
+      border:none;
+      margin-bottom:0;
+    }
+    .template-product .size-chart-drawer .disclosure__title{
+      padding:15px 0;
+      cursor:none;
+    }
+    .template-product .size-chart-drawer .disclosure__title span{
+       justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
+    .template-product .size-chart-drawer .disclosure[open] .disclosure__title span svg.pro-dropdown.open {
+        transform: rotate(180deg);
+    }
+    .template-product .size-cart-drawer-overlay{
+        visibility: hidden;
+        z-index: 8000;
+        transition: visibility .3s, z-index 0s .3s, opacity .3s;
+        opacity: 0;
+        background-color: rgba(var(--modal-overlay-color) / var(--modal-overlay-opacity));
+        pointer-events: none;
+        position:fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .template-product .size-cart-drawer-overlay.is-visible{
+        visibility: visible;
+        transition: visibility .3s, z-index 0s, opacity .3s;
+        opacity: 1;
+        pointer-events: initial;
+    }
+    .template-product .size-chart-drawer li{
+      list-style:none !important;
+      display:flex;
+      align-items:center;
+      margin-bottom: 20px;
+      gap:15px;
+    }
+    .template-product .size-chart-drawer li span{
+       border: 1px solid;
+        border-radius: 50px;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+    }
+    .template-product .size-chart-drawer li div h3, .size-chart-drawer li div p{
+       margin:0 !important;
+    }
+    .template-product .size-chart-accordion .disclosure__title p{
+        font-size:18px;
+        line-height:20px;
+        margin:0;
+        font-weight:600;
+        /* pointer-events:none; */
+      }
+    /* .template-product .size-chart-accordion .disclosure__title p:hover{
+       color:#201747;
+       font-weight:600;
+      } */
+    .template-product .size-chart-drawer ul.tabs-btn-container {
+        display: flex;
+        width: 100%;
+        padding: 0 50px;
+        justify-content:center;
+        gap:20px;
+        margin: 20px 0;
+    }
+    .template-product .size-chart-drawer ul.tabs-btn-container .tab-a{
+        border: 1px solid #000;
+        width: fit-content;
+        padding: 10px;
+        color: #000;
+        transition: 0.3s;
+    }
+    .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a:hover{
+        background: #201747;
+        color: #fff !important;
+        border: 1px solid #fff !important;
+    }
+    .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a {
+        background: #201747;
+        color: #fff !important;
+        border: 1px solid #fff !important;
+    }
+    .template-product .size-chart-drawer .size-chart-table table{
+        /* border: 1px solid #ddd;
+         border-top-left-radius: 5px;
+        border-top-right-radius: 5px; */
+        width:100%;
+    }
+    .template-product .size-chart-drawer table th{
+         font-size: 14px;
+        line-height: 16px;
+        font-family: 'Generis Sans W01 Bold';
+    }
+    .template-product .size-chart-drawer table td {
+        font-size: 15px;
+        line-height: 17px;
+        font-weight: 600;
+        color: #000;
+        font-family: Generis Sans W01 Regular;
+        text-align:center;
+        text-transform:uppercase;
+    }
+    .template-product .size-chart-drawer table th.top-heading {
+        text-align: center;
+        background: #201747;
+        color: #fff;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .template-product .size-chart-drawer .imge-details img{
+        width:100%;
+        /* max-width:350px; */
+    }
+    .template-product .size-chart-drawer .disclosure__content ul{
+      margin:0;
+    }
+
+    #camweara-find-my-size {
+      text-align: center !important;
+      background: #201747 !important;
+      color: #fff !important;
+      border-top-left-radius: 5px !important;
+      border-top-right-radius: 5px !important;
+      padding: 0.7em !important;
+  }
+
+
+    @media only screen and (max-width: 768px) {
+    .template-product .size-chart-drawer {
+        z-index: 8001;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top:unset;
+        height: 80%;
+        /* max-height: 450px; /* Adjust this based on your need */ */
+        transition: opacity .5s, transform .34s ease, visibility .34s ease;
+        visibility: hidden;
+        width: 100%;
+        transform: translate3d(0, 100%, 0); /* Move off-screen (bottom) */
+    }
+
+    .template-product .size-chart-drawer.open {
+        visibility: visible;
+        transition: visibility 0s 0s, transform .34s ease;
+        transform: translate3d(0, 0, 0); /* Slide up into view */
+    }
+    .template-product .size-chart-drawer .size-chart-heading h2{
+        font-size: 22px;
+        line-height: 26px;
+    }
+    .template-product .size-chart-drawer .overall-content-wraping{
+        padding: 0 20px;
+    }
+     .template-product .size-chart-drawer ul.tabs-btn-container{
+       margin:5px 0;
+     }
+    }
+</style>
+
+<style>
+  /* ---- Size chart: Size Guide / How to Measure ---- */
+
+  /* Mobile only — desktop keeps the drawer's existing typography. */
+  @media only screen and (max-width: 768px) {
+    /* Typography: the whole drawer runs on Nunito Sans, same as the PDP.
+     Two things fight this and both need !important to beat:
+       - main.css:27  p { font-family: Generis Sans W01 Regular !important }  (site-wide)
+       - the drawer's own table th/td rules above, which ask for Generis Sans
+     Icon fonts are excluded so their glyphs still resolve. */
+    .size-chart-drawer,
+    .size-chart-drawer p,
+    .size-chart-drawer h1,
+    .size-chart-drawer h2,
+    .size-chart-drawer h3,
+    .size-chart-drawer h4,
+    .size-chart-drawer h5,
+    .size-chart-drawer h6,
+    .size-chart-drawer ul,
+    .size-chart-drawer li,
+    .size-chart-drawer div,
+    .size-chart-drawer span:not([class*='icon']):not([class*='wlh-']),
+    .size-chart-drawer a,
+    .size-chart-drawer button,
+    .size-chart-drawer summary,
+    .size-chart-drawer table,
+    .size-chart-drawer th,
+    .size-chart-drawer td {
+      font-family: 'Nunito Sans', sans-serif !important;
+    }
+
+    /* "How to Measure" list — the one panel that never got the PDP type scale,
+     so it inherited the site defaults (Generis for <p>, theme heading for <h3>). */
+    .size-chart-drawer .disclosure__content h3 {
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      line-height: 20px !important;
+      color: #111 !important;
+    }
+    .size-chart-drawer .disclosure__content p {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      line-height: 20px !important;
+      color: #222 !important;
+    }
+    .size-chart-drawer .disclosure__title p {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      line-height: 22px !important;
+      color: #000 !important;
+    }
+  } /* end mobile-only typography */
+
+  /* .sc-fys only renders on the custom-product template. The widget carries
+     its own 20px top margin (find-your-size.css); drop it here so the
+     drawer's top padding is the only gap above the button. */
+  .size-chart-drawer .sc-fys {
+    margin: 0 0 28px;
+  }
+  .size-chart-drawer .sc-fys .fys {
+    margin-top: 0;
+  }
+  /* the snippet renders nothing for kids / gift / size-less products */
+  .size-chart-drawer .sc-fys:empty {
+    display: none;
+  }
+  .size-chart-drawer .sc-help {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+  }
+  /* custom-product template: the row sits under the tabs instead of above */
+  .size-chart-drawer .sc-help.sc-help--bottom {
+    margin: 20px 0 0;
+  }
+  .size-chart-drawer .sc-help__link {
+    white-space: nowrap;
+  }
+  .size-chart-drawer .sc-help__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fbf1dc;
+  }
+  .size-chart-drawer .sc-help__icon {
+    width: 21px;
+    height: 21px;
+  }
+  .size-chart-drawer .sc-help__icon--img {
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  /* 16px is the spec, but at 375px the two strings alone need 297 of 307px.
+     clamp holds 16px wherever it fits and shrinks only to keep one line. */
+  .size-chart-drawer .sc-help__text {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: clamp(12px, 3.8vw, 16px) !important;
+    font-weight: 700 !important;
+    line-height: 22px;
+    color: #000;
+    white-space: nowrap;
+  }
+  .size-chart-drawer .sc-help__link {
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: clamp(12px, 3.8vw, 16px) !important;
+    font-weight: 700 !important;
+    line-height: 22px;
+    color: #b78a2e !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  /* folder tabs — the theme styles these with .template-product ... a.tab-a.active-a
+     and colour !important, so these need matching weight to win. */
+  .size-chart-drawer ul.tabs-btn-container {
+    display: flex !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
+    list-style: none;
+  }
+  .size-chart-drawer ul.tabs-btn-container li {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+  }
+  .size-chart-drawer ul.tabs-btn-container li + li {
+    margin-left: 0;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a {
+    position: relative;
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 12px 8px !important;
+    text-align: center;
+    border: 1px solid #e9c98f !important;
+    border-radius: 10px 10px 0 0;
+    background: #fdefd5 !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 20px !important;
+    color: #111 !important;
+    text-decoration: none;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a:hover,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.tab-a:hover {
+    background: #fdefd5 !important;
+    color: #111 !important;
+    border: 1px solid #e9c98f !important;
+    border-bottom-color: transparent !important;
+  }
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a,
+  .template-product .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a,
+  .size-chart-drawer ul.tabs-btn-container a.tab-a.active-a.active-a {
+    background: #fff !important;
+    color: #111 !important;
+    border: 1px solid #e9c98f !important;
+    border-bottom-color: transparent !important;
+  }
+
+  /* uniform inner padding for the whole drawer content */
+  .template-product .size-chart-drawer,
+  .size-chart-drawer {
+    padding: 42px 24px 32px !important;
+    box-sizing: border-box !important;
+  }
+  /* the theme pads .tab as well; drop it so the inset is not doubled */
+  .size-chart-drawer .tab {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* only the active panel shows (the theme rule above has a typo: "display none") */
+  .size-chart-drawer .tab {
+    display: none;
+  }
+  .size-chart-drawer .tab.tab-active {
+    display: block;
+  }
+  /* theme sets .tab width:100% AND padding:0 20px on content-box, overflowing by 40px */
+  .size-chart-drawer .tab,
+  .size-chart-drawer .sc-help,
+  .size-chart-drawer .sc-note-row,
+  .size-chart-drawer .sc-table-wrap,
+  .size-chart-drawer ul.tabs-btn-container {
+    box-sizing: border-box !important;
+  }
+  .size-chart-drawer .sc-note-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .size-chart-drawer .sc-note {
+    margin: 0;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 17px !important;
+    color: #222;
+  }
+  .size-chart-drawer .sc-units {
+    display: flex;
+    flex: none;
+    border: 1px solid #e9c98f;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .size-chart-drawer .sc-unit {
+    padding: 7px 16px;
+    border: 0;
+    background: #fdf6e8;
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8a8a8a;
+  }
+  .size-chart-drawer .sc-unit + .sc-unit {
+    border-left: 1px solid #e9c98f;
+  }
+  .size-chart-drawer .sc-unit.is-active {
+    background: #fff;
+    color: #111;
+  }
+
+  .size-chart-drawer .sc-table-wrap {
+    overflow-x: auto;
+    margin-top: 16px;
+  }
+  /* main.css sets border-top/bottom on every th,td and 3px under th */
+  .size-chart-drawer .sc-table th,
+  .size-chart-drawer .sc-table td {
+    border: 0 !important;
+  }
+
+  .size-chart-drawer .sc-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+  }
+  .size-chart-drawer .sc-table th:first-child,
+  .size-chart-drawer .sc-table td:first-child {
+    width: 24%;
+  }
+  /* the header text is wider than an even share, so widen the column too -
+     otherwise it overflows its box and the padding has no visual effect */
+  .size-chart-drawer .sc-table th:last-child,
+  .size-chart-drawer .sc-table td:last-child {
+    width: 22%;
+    padding-right: 16px !important;
+  }
+  .size-chart-drawer .sc-table thead th {
+    padding: 12px 4px !important;
+    background: #000 !important;
+    color: #fff !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 27px !important;
+    text-align: center !important;
+    white-space: nowrap;
+  }
+  .size-chart-drawer .sc-table thead th:first-child {
+    text-align: left;
+    padding-left: 16px;
+  }
+  .size-chart-drawer .sc-table tbody th {
+    padding: 11px 4px 11px 12px !important;
+    text-align: left !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 27px !important;
+    color: #111 !important;
+    white-space: nowrap;
+    text-transform: none !important;
+    background: transparent !important;
+  }
+  .size-chart-drawer .sc-table tbody td {
+    padding: 11px 4px !important;
+    text-align: center !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 27px !important;
+    color: #111 !important;
+    text-transform: none !important;
+    background: transparent !important;
+    font-variant-numeric: tabular-nums;
+  }
+  /* stripe the row and its cells, so no cell can paint a different colour */
+  .size-chart-drawer .sc-table tbody tr:nth-child(even),
+  .size-chart-drawer .sc-table tbody tr:nth-child(even) > * {
+    background: #f2f2f4 !important;
+  }
+  .size-chart-drawer .sc-table tbody tr:nth-child(odd),
+  .size-chart-drawer .sc-table tbody tr:nth-child(odd) > * {
+    background: #fff !important;
+  }
+  .size-chart-drawer .sc-std {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #777;
+  }
+
+  /* title removed by design; the close button stays in this header */
+  .size-chart-drawer .size-chart-heading h2 {
+    display: none !important;
+  }
+  .size-chart-drawer .size_drawer__close-btn {
+    display: none !important;
+  }
+
+  /* Cart drawer context (the guide is rendered outside the product template). */
+  .template-product .size-chart-drawer.cart-item-size-guide,
+  .size-chart-drawer.cart-item-size-guide {
+    z-index: 8002 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0px !important;
+    right: 0px !important;
+    width: min(100%, 540px) !important;
+    height: min(80dvh, 850px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    max-height: none !important;
+    visibility: hidden;
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 15px 20px !important;
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    margin: auto;
+    bottom: 0 !important;
+    background: #fff;
+  }
+  .cart-item-size-guide .size-chart-heading {
+    position: relative;
+    display: flex !important;
+    width: 100%;
+    padding: 0 !important;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  .cart-item-size-guide .size-chart-heading h2 {
+    display: block !important;
+    margin: 0 !important;
+    text-align: left;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 20px !important;
+    color: #111 !important;
+    width: 100%;
+  }
+  .template-product .size-chart-drawer.cart-item-size-guide .size_drawer__close-btn,
+  .size-chart-drawer.cart-item-size-guide .size_drawer__close-btn {
+    position: unset !important;
+    display: flex !important;
+    width: 13px !important;
+    height: 13px !important;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent !important;
+    color: #111;
+  }
+  .cart-item-size-guide #camweara-find-my-size {
+    height: 54px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Nunito Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+  }
+  .cart-item-size-guide ul.tabs-btn-container {
+    gap: 4px !important;
+    margin-bottom: 18px !important;
+  }
+  .cart-item-size-guide ul.tabs-btn-container a.tab-a.tab-a {
+    padding: 13px 5px !important;
+    border-radius: 7px 7px 0 0 !important;
+  }
+  .template-product .size-chart-drawer.cart-item-size-guide.open,
+  .size-chart-drawer.cart-item-size-guide.open {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+  .cart-item-size-guide .sc-note-row {
+    margin-bottom: 14px !important;
+  }
+  .cart-item-size-guide .sc-note {
+    font-size: 13px !important;
+  }
+  .cart-item-size-guide .sc-units {
+    border-radius: 7px;
+  }
+  .cart-item-size-guide .sc-unit {
+    padding: 7px 13px !important;
+  }
+  .cart-item-size-guide .sc-table-wrap {
+    overflow-x: hidden;
+    margin-top: 0 !important;
+  }
+  .cart-item-size-guide .sc-table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  .cart-item-size-guide .sc-table th,
+  .cart-item-size-guide .sc-table td {
+    font-size: 13px !important;
+  }
+  .cart-item-size-guide .sc-table tbody th,
+  .cart-item-size-guide .sc-table tbody td {
+    height: 43px !important;
+  }
+  .cart-item-size-guide + .size-cart-drawer-overlay {
+    z-index: 8001;
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.75);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .cart-item-size-guide.open + .size-cart-drawer-overlay,
+  .size-cart-drawer-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  @media only screen and (max-width: 430px) {
+    .size-chart-drawer .sc-help {
+      gap: 7px;
+      padding: 4px 0;
+    }
+    /* largest that still keeps the line unbroken at 375px */
+    .size-chart-drawer .sc-help__badge {
+      width: 30px;
+      height: 30px;
+    }
+    .size-chart-drawer .sc-help__icon {
+      width: 18px;
+      height: 18px;
+    }
+    /* size is fixed by spec at 16px; only the badge scales down */
+    /* .sc-note size is fixed by spec at 14px */
+    .size-chart-drawer .sc-unit {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    .template-product .size-chart-drawer,
+    .size-chart-drawer {
+      padding: 34px 18px 26px !important;
+    }
+    .size-chart-drawer .sc-table {
+      font-size: 12px;
+    }
+    .size-chart-drawer .sc-table th:first-child,
+    .size-chart-drawer .sc-table td:first-child {
+      width: 19%;
+    }
+    /* last resort: let a long header wrap rather than overflow */
+    .size-chart-drawer .sc-table thead th {
+      padding: 12px 1px !important;
+    }
+    .size-chart-drawer .sc-table tbody td {
+      padding: 11px 1px !important;
+    }
+    .size-chart-drawer .sc-table tbody th {
+      padding-left: 6px !important;
+      padding-right: 1px !important;
+    }
+    /* thead size is fixed by spec at 14px */
+    /* body cell size is fixed by spec at 14px */
+  }
+</style>
+
+<div id="{{ cart_size_guide_id }}" class="size-chart-drawer cart-item-size-guide" aria-hidden="true">
+  <div class="size-chart-heading">
+    <h2>Kisah Size Chart</h2>
+
+    <button type="button" class="size_drawer__close-btn js-close-drawer">
+      <span class="visually-hidden">Close</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M12 1L1 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+        <path d="M1 1L12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
+      </svg>
+    </button>
+    <div
+      id="camweara-find-my-size"
+      class="camweara-find-my-size-btn"
+      data-product-title="Black Jacket Kurta Trouser Set"
+      data-button-text="Find My Size"
+      data-button-icon="magic"
+      style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); display: flex;"
+      data-entity-type="section"
+      data-entity-id="camweara-find-my-size"
+      data-entity-name="camweara-find-my-size"
+      data-h-event-data="{}"
+      data-marked-section="true"
+      data-entity-position="4"
+      data-h-id="temp-1770996996231-d094d21e401ae"
+      data-h-component-type="section"
+      data-h-feature-provider="helium"
+      data-h-view-listener-added="true"
+      data-h-view-triggered="true"
+    >
+      <div class="camweara-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21.75L10.3256 16.9242C10.666 15.6853 11.6425 14.7088 12.8814 14.3685L17.7071 13.0429L12.8814 11.7174C11.6425 11.377 10.666 10.4005 10.3256 9.16164L9 4.33594L7.67439 9.16164C7.33403 10.4005 6.35753 11.377 5.11863 11.7174L0.292893 13.0429L5.11863 14.3685C6.35753 14.7088 7.33403 15.6853 7.67439 16.9242L9 21.75Z"></path>
+          <path d="M19.5 10.5L20.0895 8.35526C20.2408 7.80461 20.6749 7.37055 21.2255 7.21921L23.3703 6.62969L21.2255 6.04016C20.6749 5.88883 20.2408 5.45476 20.0895 4.90412L19.5 2.75938L18.9105 4.90412C18.7592 5.45476 18.3251 5.88883 17.7745 6.04016L15.6297 6.62969L17.7745 7.21921C18.3251 7.37055 18.7592 7.80461 18.9105 8.35526L19.5 10.5Z"></path>
+        </svg>
+      </div>
+      <div class="camweara-text">Find My Size</div>
+    </div>
+  </div>
+
+  {% assign has_kid = false %}
+
+  {% for tag in product.tags %}
+    {% if tag contains 'Kid' %}
+      {% assign has_kid = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {%- comment -%} Size chart: Size Guide + How to Measure tabs {%- endcomment -%}
+  {%- assign sc_wa = section.settings.sizechart_help_whatsapp
+    | default: '918100993480'
+    | remove: ' '
+    | remove: '+'
+    | remove: '-'
+  -%}
+  {%- if sc_wa == '918100993481' or sc_wa == '8100993481' or sc_wa == blank -%}
+    {%- assign sc_wa = '918100993480' -%}
+  {%- endif -%}
+  {%- capture sc_help_html -%}
+<div class="sc-help">
+  <span class="sc-help__badge" aria-hidden="true">
+    {%- if section.settings.sizechart_help_icon != blank -%}
+      <img class="sc-help__icon sc-help__icon--img" width="21" height="21" loading="lazy"
+           src="{{ section.settings.sizechart_help_icon | image_url: width: 84 }}" alt="">
+    {%- else -%}
+    <svg class="sc-help__icon" viewBox="0 0 32 32" fill="none">
+    <path d="M16.02 4.5a11.4 11.4 0 0 0-9.77 17.3L4.8 27.2l5.55-1.42A11.4 11.4 0 1 0 16.02 4.5Z" fill="#C8912F"/>
+    <path d="M21.3 18.6c-.29-.15-1.72-.85-1.99-.94-.26-.1-.46-.15-.65.14-.19.29-.74.94-.91 1.13-.17.19-.34.22-.62.07-.29-.14-1.23-.45-2.34-1.44-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.59.13-.13.29-.34.43-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.65-1.57-.89-2.15-.23-.56-.47-.49-.65-.5h-.55c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38 0 1.4 1.02 2.76 1.17 2.95.14.19 2.01 3.07 4.88 4.31.68.29 1.21.47 1.63.6.68.22 1.31.19 1.8.11.55-.08 1.72-.7 1.96-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.19-.55-.34Z" fill="#fff"/>
+    </svg>
+    {%- endif -%}
+  </span>
+  <span class="sc-help__text">Want help with sizing?</span>
+  {%- if sc_wa != blank -%}
+    <a class="sc-help__link" href="https://wa.me/{{ sc_wa }}?text={{ 'Hi, I need help choosing my size.' | url_encode }}" target="_blank" rel="noopener">Talk to an Expert</a>
+  {%- else -%}
+    <a class="sc-help__link" href="{{ routes.root_url }}pages/contact">Talk to an Expert</a>
+  {%- endif -%}
+</div>
+{%- endcapture -%}
+
+  <div class="sc-fys">
+    {%- render 'find-your-size', product: product, kpdp: true, id_suffix: '-sc' -%}
+  </div>
+
+  <ul class="tabs-btn-container">
+    <li><a href="#" class="tab-a active-a" data-id="tab1">Size Guide</a></li>
+    <li><a href="#" class="tab-a" data-id="tab2">How to Measure</a></li>
+  </ul>
+
+  <div class="tab active-a tab-active" data-id="tab1">
+    <div class="sc-note-row">
+      <p class="sc-note">Kisah size is same as standard size</p>
+      <div class="sc-units" role="group" aria-label="Units">
+        <button type="button" class="sc-unit is-active" data-sc-unit="in">in</button>
+        <button type="button" class="sc-unit" data-sc-unit="cm">cm</button>
+      </div>
+    </div>
+
+    <div class="size-chart-table sc-table-wrap">
+      {%- if has_kid -%}
+        <table class="sc-table">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest</th>
+              <th>Waist</th>
+              <th>Hip</th>
+              <th>Shoulder</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">4<span class="sc-std">3-4 YEARS</span></th>
+              <td data-in="22">22</td>
+              <td data-in="21">21</td>
+              <td data-in="24">24</td>
+              <td data-in="10.5">10.5</td>
+            </tr>
+            <tr>
+              <th scope="row">6<span class="sc-std">5-6 YEARS</span></th>
+              <td data-in="25">25</td>
+              <td data-in="23">23</td>
+              <td data-in="26">26</td>
+              <td data-in="11">11</td>
+            </tr>
+            <tr>
+              <th scope="row">8<span class="sc-std">7-8 YEARS</span></th>
+              <td data-in="27">27</td>
+              <td data-in="26">26</td>
+              <td data-in="29">29</td>
+              <td data-in="11.5">11.5</td>
+            </tr>
+            <tr>
+              <th scope="row">10<span class="sc-std">9-10 YEARS</span></th>
+              <td data-in="30">30</td>
+              <td data-in="28">28</td>
+              <td data-in="31">31</td>
+              <td data-in="12">12</td>
+            </tr>
+            <tr>
+              <th scope="row">12<span class="sc-std">11-12 YEARS</span></th>
+              <td data-in="32">32</td>
+              <td data-in="31">31</td>
+              <td data-in="34">34</td>
+              <td data-in="12.5">12.5</td>
+            </tr>
+          </tbody>
+        </table>
+      {%- else -%}
+        <table class="sc-table">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Chest</th>
+              <th>Waist</th>
+              <th>Hip</th>
+              <th>Shoulder</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">XS-36</th>
+              <td data-in="36">36</td>
+              <td data-in="34">34</td>
+              <td data-in="38">38</td>
+              <td data-in="16.5">16.5</td>
+            </tr>
+            <tr>
+              <th scope="row">S-38</th>
+              <td data-in="38">38</td>
+              <td data-in="36">36</td>
+              <td data-in="40">40</td>
+              <td data-in="17">17</td>
+            </tr>
+            <tr>
+              <th scope="row">M-40</th>
+              <td data-in="40">40</td>
+              <td data-in="38">38</td>
+              <td data-in="42">42</td>
+              <td data-in="17.5">17.5</td>
+            </tr>
+            <tr>
+              <th scope="row">L-42</th>
+              <td data-in="42">42</td>
+              <td data-in="40">40</td>
+              <td data-in="44">44</td>
+              <td data-in="18">18</td>
+            </tr>
+            <tr>
+              <th scope="row">XL-44</th>
+              <td data-in="44">44</td>
+              <td data-in="42">42</td>
+              <td data-in="46">46</td>
+              <td data-in="18.5">18.5</td>
+            </tr>
+            <tr>
+              <th scope="row">XXL-46</th>
+              <td data-in="46">46</td>
+              <td data-in="44">44</td>
+              <td data-in="48">48</td>
+              <td data-in="19">19</td>
+            </tr>
+            <tr>
+              <th scope="row">3XL-48</th>
+              <td data-in="48">48</td>
+              <td data-in="46">46</td>
+              <td data-in="50">50</td>
+              <td data-in="19.5">19.5</td>
+            </tr>
+            <tr>
+              <th scope="row">4XL-50</th>
+              <td data-in="50">50</td>
+              <td data-in="48">48</td>
+              <td data-in="52">52</td>
+              <td data-in="20">20</td>
+            </tr>
+            <tr>
+              <th scope="row">5XL-52</th>
+              <td data-in="52">52</td>
+              <td data-in="50">50</td>
+              <td data-in="54">54</td>
+              <td data-in="20.5">20.5</td>
+            </tr>
+            <tr>
+              <th scope="row">6XL-54</th>
+              <td data-in="54">54</td>
+              <td data-in="52">52</td>
+              <td data-in="56">56</td>
+              <td data-in="21">21</td>
+            </tr>
+            <tr>
+              <th scope="row">7XL-56</th>
+              <td data-in="56">56</td>
+              <td data-in="54">54</td>
+              <td data-in="56">56</td>
+              <td data-in="21.5">21.5</td>
+            </tr>
+          </tbody>
+        </table>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="tab" data-id="tab2">
+    {%- if has_kid -%}
+      <div class="overall-content-wraping">
+        <div class="size-chart-accordion">
+          <details-disclosure>
+            <details class="disclosure last-diclosuer" open>
+              <summary class="disclosure__title">
+                <span>
+                  <p>How to measure</p>
+                  {% comment %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 14 8" fill="none" class="pro-dropdown open">
+                    <path d="M13.7108 0.295798C13.6178 0.202069 13.5072 0.127675 13.3854 0.0769065C13.2635 0.026138 13.1328 0 13.0008 0C12.8688 0 12.7381 0.026138 12.6162 0.0769065C12.4944 0.127675 12.3838 0.202069 12.2908 0.295798L7.71079 4.87579C7.61783 4.96952 7.50723 5.04391 7.38537 5.09468C7.26351 5.14545 7.13281 5.17159 7.00079 5.17159C6.86878 5.17159 6.73808 5.14545 6.61622 5.09468C6.49436 5.04391 6.38376 4.96952 6.29079 4.87579L1.71079 0.295798C1.61783 0.202069 1.50723 0.127675 1.38537 0.0769065C1.26351 0.026138 1.1328 0 1.00079 0C0.868781 0 0.738075 0.026138 0.616216 0.0769065C0.494357 0.127675 0.383756 0.202069 0.290792 0.295798C0.104542 0.48316 0 0.736611 0 1.0008C0 1.26498 0.104542 1.51843 0.290792 1.70579L4.88079 6.29579C5.44329 6.85759 6.20579 7.17314 7.00079 7.17314C7.7958 7.17314 8.55829 6.85759 9.12079 6.29579L13.7108 1.70579C13.897 1.51843 14.0016 1.26498 14.0016 1.0008C14.0016 0.736611 13.897 0.48316 13.7108 0.295798Z" fill="black" fill-opacity="0.9"></path>
+                     </svg>
+                  {% endcomment %}
+                </span>
+              </summary>
+              <div class="disclosure__panel has-motion">
+                <div class="disclosure__content rte cf">
+                  {% if section.settings['kid-size-image'] != blank %}
+                    <div class="imge-details">
+                      {%- render 'image' with section.settings['kid-size-image'],
+                        loading: 'eager',
+                        fetchpriority: 'high'
+                      -%}
+                    </div>
+                  {% endif %}
+                  <ul>
+                    <li>
+                      <span>1</span>
+                      <div>
+                        <h3>Height</h3>
+                        <p>Measure the total height of the child.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>2</span>
+                      <div>
+                        <h3>Shoulder</h3>
+                        <p>Measure the Shoulder over the fullest part.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>3</span>
+                      <div>
+                        <h3>Chest</h3>
+                        <p>Measure the chest over the fullest part.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>4</span>
+                      <div>
+                        <h3>Waist</h3>
+                        <p>Measure waist at the narrowest point.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>5</span>
+                      <div>
+                        <h3>Hip</h3>
+                        <p>Measure low hip around the fullest part of the hip.</p>
+                      </div>
+                    </li>
+                    {% comment %}
+                      <li>
+                        <span>5</span>
+                        <div>
+                          <h3>Inside leg</h3>
+                          <p>Inside leg is measured from the crotch to the floor.</p>
+                        </div>
+                      </li>
+                    {% endcomment %}
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </details-disclosure>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="overall-content-wraping">
+        <div class="size-chart-accordion">
+          <details-disclosure>
+            <details class="disclosure last-diclosuer" open>
+              <summary class="disclosure__title">
+                <span>
+                  <p>How to measure</p>
+                  {% comment %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 14 8" fill="none" class="pro-dropdown open">
+                    <path d="M13.7108 0.295798C13.6178 0.202069 13.5072 0.127675 13.3854 0.0769065C13.2635 0.026138 13.1328 0 13.0008 0C12.8688 0 12.7381 0.026138 12.6162 0.0769065C12.4944 0.127675 12.3838 0.202069 12.2908 0.295798L7.71079 4.87579C7.61783 4.96952 7.50723 5.04391 7.38537 5.09468C7.26351 5.14545 7.13281 5.17159 7.00079 5.17159C6.86878 5.17159 6.73808 5.14545 6.61622 5.09468C6.49436 5.04391 6.38376 4.96952 6.29079 4.87579L1.71079 0.295798C1.61783 0.202069 1.50723 0.127675 1.38537 0.0769065C1.26351 0.026138 1.1328 0 1.00079 0C0.868781 0 0.738075 0.026138 0.616216 0.0769065C0.494357 0.127675 0.383756 0.202069 0.290792 0.295798C0.104542 0.48316 0 0.736611 0 1.0008C0 1.26498 0.104542 1.51843 0.290792 1.70579L4.88079 6.29579C5.44329 6.85759 6.20579 7.17314 7.00079 7.17314C7.7958 7.17314 8.55829 6.85759 9.12079 6.29579L13.7108 1.70579C13.897 1.51843 14.0016 1.26498 14.0016 1.0008C14.0016 0.736611 13.897 0.48316 13.7108 0.295798Z" fill="black" fill-opacity="0.9"></path>
+                     </svg>
+                  {% endcomment %}
+                </span>
+              </summary>
+              <div class="disclosure__panel has-motion">
+                <div class="disclosure__content rte cf">
+                  {% if section.settings['size-image'] != blank %}
+                    <div class="imge-details">
+                      {%- render 'image' with section.settings['size-image'],
+                        loading: 'eager',
+                        fetchpriority: 'high'
+                      -%}
+                    </div>
+                  {% endif %}
+                  <ul>
+                    <li>
+                      <span>1</span>
+                      <div>
+                        <h3>Shoulder</h3>
+                        <p>Measure the Shoulder over the fullest part.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>2</span>
+                      <div>
+                        <h3>Chest</h3>
+                        <p>Measure the chest over the fullest part.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>3</span>
+                      <div>
+                        <h3>Waist</h3>
+                        <p>Measure waist at the narrowest point.</p>
+                      </div>
+                    </li>
+                    <li>
+                      <span>4</span>
+                      <div>
+                        <h3>Hip</h3>
+                        <p>Measure low hip around the fullest part of the hip.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </details-disclosure>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+  <!-- end of tab two -->
+
+  {%- comment -%}
+    Custom-product template: help line at the bottom, under whichever tab is open.
+    Other templates keep it at the top (see above the tabs).
+  {%- endcomment -%}
+</div>
+<div class="size-cart-drawer-overlay" data-size-guide-overlay="{{ cart_size_guide_id }}"></div>
+
+<script>
+  window.kisahWhenJQueryReady(function ($) {
+    if (window.kisahCartSizeGuideEventsBound) return;
+    window.kisahCartSizeGuideEventsBound = true;
+
+    $(document).on('click', '.cart-item-size-guide .tab-a', function (event) {
+      event.preventDefault();
+      const drawer = $(this).closest('.cart-item-size-guide');
+      const tabId = $(this).attr('data-id');
+      drawer.find('.tab-a').removeClass('active-a');
+      $(this).addClass('active-a');
+      drawer.find('.tab').removeClass('tab-active');
+      drawer.find('.tab[data-id="' + tabId + '"]').addClass('tab-active');
+    });
+
+    $(document).on('click', '.cart-item-size-guide .sc-unit', function () {
+      const drawer = $(this).closest('.cart-item-size-guide');
+      const unit = $(this).attr('data-sc-unit');
+      drawer.find('.sc-unit').removeClass('is-active');
+      $(this).addClass('is-active');
+      drawer.find('.sc-table td[data-in]').each(function () {
+        const inches = parseFloat($(this).attr('data-in'));
+        if (!isNaN(inches)) {
+          $(this).text(unit === 'cm' ? Math.round(inches * 2.54 * 10) / 10 : inches);
+        }
+      });
+    });
+  });
+</script>

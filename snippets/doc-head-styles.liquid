@@ -6,6 +6,7 @@
   assign heading_font = settings.type_heading_font
   assign logo_font = settings.type_logo_font
   assign nav_font = settings.type_nav_font
+  assign cart_font = settings.type_cart_font
 -%}
 
 :root {
@@ -33,6 +34,9 @@
   --nav-font-family:               {{ nav_font.family }}, {{ nav_font.fallback_families }};
   --nav-font-weight:               {{ nav_font.weight }};
   --nav-font-style:                {{ nav_font.style }};
+  --cart-font-family:              {{ cart_font.family }}, {{ cart_font.fallback_families }};
+  --cart-font-weight:              400;
+  --cart-font-style:               {{ cart_font.style }};
 
   --base-text-size:                {{- settings.font_size_base_int }}px;
   --base-line-height:              1.6;
@@ -381,3 +385,10 @@ body {
   --input-border-color-active:         {{ settings.color_scheme_2_text_col | color_to_rgb }};
 }
 {%- endif -%}
+cart-drawer,
+cart-drawer *,
+.cart-item-size-guide,
+.cart-item-size-guide * {
+  font-family: var(--cart-font-family) !important;
+}
+

@@ -1,0 +1,280 @@
+{%- comment -%}
+  Parameters:
+  - item {LineItem} - Cart line item.
+  - forloop {forloop} - Cart line item for-loop iterator object.
+  - drawer {boolean} [optional] - Is this line item in a drawer? (Default is false)
+  - animate {boolean} [optional] - Apply page load animation to this item. (Default is false)
+
+  Example usage:
+  {% render 'cart-item', item: line_item, forloop: forloop, drawer: true, animate: true %}
+{%- endcomment -%}
+
+{%- liquid
+  if drawer
+    assign image_loading = 'manual'
+  else
+    assign image_loading = 'lazy'
+  endif
+-%}
+<div
+  class="cart-item product-{{ item.product.handle }}"
+  {% if animate %}
+    data-cc-animate
+  {% endif %}
+>
+  <div class="cart-item__column cart-item__image">
+    <a href="{{ item.url }}">
+      {%- render 'image', image: item.image, sizes: '150px', widths: '100, 200', loading: image_loading -%}
+    </a>
+  </div>
+
+  <div class="cart-item__not-image">
+    <a
+      class="cart-item__remove small-text underline"
+      href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0"
+      title="{{ 'cart.items.remove' | t | escape }}"
+    >
+      <span class="visually-hidden">{{ 'cart.items.remove' | t | escape }}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+        <path d="M9.81824 0.818359L0.818237 9.81836" stroke-width="1.63636" stroke-linecap="round" stroke-linejoin="round" stroke="#7D7D7D"/>
+        <path d="M0.818237 0.818359L9.81824 9.81836" stroke-width="1.63636" stroke-linecap="round" stroke-linejoin="round" stroke="#7D7D7D"/>
+      </svg>
+    </a>
+    <div class="cart-item__column cart-item__description">
+      <div class="lightly-spaced-row">
+        <div class="cart-item__title">
+          <a class="text-current" href="{{ item.url }}">{{ item.product.title | escape_once }}</a>
+        </div>
+        <div class="small-text">
+          {%- for property in item.properties -%}
+            {%- assign property_first_char = property.first | slice: 0 -%}
+            {% if property.last != blank and property_first_char != '_' %}
+              <div class="line-item-property">
+                <span class="line-item-property__label">{{ property.first | escape_once }}:</span>
+                <span class="line-item-property__value">
+                  {%- if property.last contains '/uploads/' -%}
+                    <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                  {%- else -%}
+                    {{- property.last | escape_once -}}
+                  {%- endif -%}
+                </span>
+              </div>
+            {% endif %}
+          {%- endfor -%}
+
+          {% if item.selling_plan_allocation %}
+            <div class="subscription-description">
+              {{ item.selling_plan_allocation.selling_plan.name | escape_once }}
+            </div>
+          {% endif %}
+
+          {% if section.settings.show_backorder_text == true %}
+            {% render 'backorder', product: item.product, variant: item.variant %}
+          {% endif %}
+
+          {% if settings.prod_pre_order_label_show and item.product.template_suffix contains 'preorder' %}
+            <div class="price-label price-label--preorder">{{ 'products.product.preorder' | t }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-item__column cart-item__price">
+      <span class="theme-money cart-item__selling-price">{{ item.final_price | money }}</span>
+      {% if item.variant.compare_at_price > item.variant.price %}
+        <span class="struck-out-price small-text"
+          ><span class="theme-money">{{ item.variant.compare_at_price | money }}</span></span
+        >
+      {% elsif item.original_line_price > item.final_line_price %}
+        <span class="struck-out-price small-text"
+          ><span class="theme-money">{{ item.original_price | money }}</span></span
+        >
+      {% endif %}
+
+      {% render 'unit-price', variant: item %}
+
+      {%- unless drawer -%}
+        {{- line_item_discounts -}}
+      {%- endunless -%}
+    </div>
+
+    {% liquid
+      if item.variant.inventory_management != blank and item.variant.inventory_policy == 'deny'
+        assign quantity = item.quantity | at_most: item.variant.inventory_quantity | at_least: 1
+      else
+        assign quantity = item.quantity | at_least: 1
+      endif
+
+      if item.variant.inventory_management != blank and item.variant.inventory_policy == 'deny' and item.variant.inventory_quantity <= quantity
+        assign can_increase = false
+      else
+        assign can_increase = true
+      endif
+    %}
+    <div class="cart-item__delivery">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
+        <path d="M5.88777 10.4101C6.51955 10.4101 7.09337 10.6671 7.50876 11.0825L7.51069 11.0844C7.77345 11.3482 7.97342 11.6756 8.08451 12.0418H15.3992V1.39613C15.3992 1.27828 15.3538 1.17009 15.2814 1.0899L15.2659 1.07541C15.1838 0.993297 15.0698 0.942099 14.9452 0.942099H1.39572C1.27787 0.942099 1.16967 0.987501 1.08949 1.06092L1.07596 1.07541C0.993851 1.15752 0.942652 1.27151 0.942652 1.39614V1.95643C0.942652 2.16122 0.776494 2.32738 0.571698 2.32738C0.366902 2.32738 0.200744 2.16122 0.200744 1.95643V1.39614C0.200744 1.06673 0.335022 0.767247 0.551419 0.550857L0.57557 0.528638C0.790028 0.325773 1.07888 0.200195 1.39572 0.200195H14.9452C15.2746 0.200195 15.5741 0.334474 15.7905 0.550871L15.8127 0.575021C16.0156 0.790444 16.1411 1.0793 16.1411 1.39518V4.05665H20.4719C20.6448 4.05665 20.7907 4.17547 20.8313 4.33679L21.7258 6.99629L21.8166 7.06004L21.8321 7.0697L23.0406 7.90917C23.1439 7.98066 23.199 8.09658 23.199 8.21348L23.2 12.9684C23.2 13.1732 23.0338 13.3393 22.829 13.3393H21.2592C21.15 13.7161 20.9472 14.0542 20.6767 14.3247L20.6747 14.3266C20.2593 14.741 19.6865 14.998 19.0547 14.998C18.4229 14.998 17.8491 14.741 17.4337 14.3256L17.4318 14.3237C17.1623 14.0532 16.9594 13.7161 16.8502 13.3393H15.7712C15.5664 13.3393 15.4002 13.1731 15.4002 12.9683V12.7829H8.18194C8.16166 13.3837 7.90855 13.9266 7.51153 14.3246L7.5096 14.3266C7.0942 14.741 6.52039 14.998 5.88957 14.998C5.25778 14.998 4.68397 14.741 4.26857 14.3256L4.26664 14.3237C3.86959 13.9257 3.61747 13.3827 3.59719 12.7828H2.28436C2.09502 12.7828 1.9395 12.6418 1.9163 12.4583L1.5038 10.3137H1.3985C1.07006 10.3137 0.770575 10.1794 0.554185 9.963C0.338762 9.74757 0.20351 9.44715 0.20351 9.11868V5.08468C0.20351 4.87988 0.369668 4.71373 0.574464 4.71373C0.77926 4.71373 0.945418 4.87988 0.945418 5.08468V9.11868C0.945418 9.2433 0.996617 9.35632 1.07873 9.43844C1.16084 9.52056 1.27483 9.57175 1.39849 9.57175H14.0777C14.2825 9.57175 14.4487 9.73791 14.4487 9.94271C14.4487 10.1475 14.2825 10.3137 14.0777 10.3137H2.25737L2.5897 12.0409H3.69289C3.80399 11.6748 4.00395 11.3473 4.26767 11.0826L4.26961 11.0807C4.685 10.6663 5.25785 10.4093 5.88964 10.4093L5.88777 10.4101ZM19.0537 11.9712C19.2565 11.9712 19.4401 12.0534 19.5724 12.1867C19.7048 12.319 19.7869 12.5035 19.7869 12.7054C19.7869 12.9073 19.7038 13.0899 19.5724 13.2222C19.4382 13.3556 19.2556 13.4386 19.0537 13.4386C18.8527 13.4386 18.6692 13.3565 18.5369 13.2242C18.4035 13.0899 18.3205 12.9073 18.3205 12.7054C18.3205 12.5035 18.4026 12.319 18.5349 12.1866C18.6673 12.0543 18.8508 11.9712 19.0537 11.9712ZM5.88777 11.9712C6.09063 11.9712 6.27418 12.0534 6.40653 12.1867C6.53888 12.319 6.62099 12.5035 6.62099 12.7054C6.62099 12.9073 6.53791 13.0899 6.40653 13.2222C6.27225 13.3556 6.0887 13.4386 5.88777 13.4386C5.68587 13.4386 5.50136 13.3565 5.369 13.2242C5.23665 13.0918 5.15358 12.9083 5.15358 12.7054C5.15358 12.5025 5.23569 12.319 5.369 12.1866L5.39798 12.1606C5.52839 12.0427 5.70036 11.9712 5.88777 11.9712ZM8.07098 5.80796C7.86618 5.80796 7.70003 5.64181 7.70003 5.43701C7.70003 5.23221 7.86618 5.06605 8.07098 5.06605H13.6788C13.8836 5.06605 14.0498 5.23221 14.0498 5.43701C14.0498 5.64181 13.8836 5.80796 13.6788 5.80796H8.07098ZM5.88777 5.80796C5.68297 5.80796 5.51681 5.64181 5.51681 5.43701C5.51681 5.23221 5.68297 5.06605 5.88777 5.06605H6.98421C7.189 5.06605 7.35516 5.23221 7.35516 5.43701C7.35516 5.64181 7.189 5.80796 6.98421 5.80796H5.88777ZM9.36262 4.57916C9.15782 4.57916 8.99166 4.41301 8.99166 4.20821C8.99166 4.00341 9.15782 3.83726 9.36262 3.83726H11.851C12.0558 3.83726 12.2219 4.00341 12.2219 4.20821C12.2219 4.41301 12.0558 4.57916 11.851 4.57916H9.36262ZM2.8729 4.58013C2.6681 4.58013 2.50194 4.41398 2.50194 4.20918C2.50194 4.00438 2.6681 3.83822 2.8729 3.83822H8.19658C8.40138 3.83822 8.56754 4.00438 8.56754 4.20918C8.56754 4.41398 8.40138 4.58013 8.19658 4.58013H2.8729ZM5.86576 3.10017C5.66096 3.10017 5.4948 2.93401 5.4948 2.72922C5.4948 2.52442 5.66096 2.35826 5.86576 2.35826H13.0791C13.2839 2.35826 13.45 2.52442 13.45 2.72922C13.45 2.93401 13.2839 3.10017 13.0791 3.10017H5.86576ZM4.41671 3.10017C4.21191 3.10017 4.04576 2.93401 4.04576 2.72922C4.04576 2.52442 4.21191 2.35826 4.41671 2.35826H4.7635C4.9683 2.35826 5.13446 2.52442 5.13446 2.72922C5.13446 2.93401 4.9683 3.10017 4.7635 3.10017H4.41671ZM0.941859 3.54455C0.941859 3.74935 0.775702 3.9155 0.570905 3.9155C0.366109 3.9155 0.199951 3.74935 0.199951 3.54455V3.50011C0.199951 3.29532 0.366109 3.12916 0.570905 3.12916C0.775702 3.12916 0.941859 3.29532 0.941859 3.50011V3.54455ZM21.494 7.74103H17.1303C16.9255 7.74103 16.7593 7.57487 16.7593 7.37008V4.80134H16.1401V12.6H16.7613C16.7883 12.0108 17.0395 11.4775 17.4307 11.0853L17.4327 11.0834C17.848 10.6689 18.4219 10.412 19.0527 10.412C19.6845 10.412 20.2583 10.669 20.6737 11.0844L20.6756 11.0863C21.0668 11.4785 21.3171 12.0108 21.3441 12.6001H22.456V8.4105L21.4929 7.74106L21.494 7.74103ZM17.5012 4.80134V6.99905H20.9442L20.2052 4.80134H17.5002H17.5012ZM20.1511 11.6071C19.871 11.327 19.4826 11.1531 19.0527 11.1531C18.6238 11.1531 18.2345 11.327 17.9553 11.6061C17.6742 11.8873 17.5003 12.2756 17.5003 12.7055C17.5003 13.1354 17.6742 13.5237 17.9534 13.8029C18.2345 14.084 18.6228 14.2579 19.0527 14.2579C19.4826 14.2579 19.871 14.084 20.1501 13.8048C20.4312 13.5237 20.6051 13.1354 20.6051 12.7055C20.6051 12.2766 20.4312 11.8873 20.1511 11.6071ZM6.9852 11.6071C6.70505 11.327 6.31671 11.1531 5.88683 11.1531C5.45694 11.1531 5.0686 11.327 4.78942 11.6061C4.50831 11.8873 4.33443 12.2756 4.33443 12.7055C4.33443 13.1354 4.50832 13.5237 4.78749 13.8029C5.0686 14.084 5.45694 14.2579 5.88683 14.2579C6.31575 14.2579 6.70505 14.084 6.98423 13.8048C7.26534 13.5237 7.43922 13.1354 7.43922 12.7055C7.43922 12.2766 7.26534 11.8873 6.9852 11.6071Z" fill="#0A9528" stroke-width="0.4" stroke="#0A9528"/>
+      </svg>
+      Free delivery applied
+    </div>
+    <div class="cart-item__column cart-item__quantity">
+      <label class="cart-item__variant cart-item__variant--field">
+        <span class="visually-hidden">Variant</span>
+        <span class="cart-item__variant-select-wrap">
+          <select class="cart-item__variant-select" aria-label="Select product variant">
+            {%- for variant in item.product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                {% if variant.id == item.variant.id %}
+                  selected
+                {% endif -%}
+                {% unless variant.available %}
+                  disabled
+                {% endunless %}
+              >
+                {{ variant.title | escape_once }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </span>
+      </label>
+
+      <div class="quantity buttoned-input">
+        <a
+          id="updates_dec_{{ forloop.index }}"
+          class="quantity-down"
+          href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ quantity | minus: 1 }}"
+          aria-label="{{ 'cart.items.decrease_quantity' | t | escape }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="4" viewBox="0 0 21 2" fill="none">
+            <path d="M1 1H20" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <input
+          class="cart-item__quantity-input"
+          type="number"
+          size="2"
+          id="updates_{{ forloop.index }}"
+          name="updates[]"
+          data-initial-value="{{ quantity }}"
+          data-key="{{ item.key }}"
+          min="0"
+          {% if item.variant.inventory_management != blank
+            and item.variant.inventory_policy == 'deny'
+            and item.variant.inventory_quantity > 0
+          %}
+            max="{{ item.variant.inventory_quantity }}"
+            value="{{ quantity }}"
+          {% else %}
+            value="{{ quantity }}"
+          {% endif %}
+          aria-label="{{ 'cart.items.quantity' | t | escape }}"
+        />
+        <a
+          id="updates_inc_{{ forloop.index }}"
+          class="quantity-up {% unless can_increase %}unusable{% endunless %}"
+          href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ quantity | plus: 1 }}"
+          aria-label="{{ 'cart.items.increase_quantity' | t | escape }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 18 18" fill="none">
+            <path d="M9 1V17" stroke="currentColor" stroke-linecap="round"></path>
+            <path d="M17 9L1 9" stroke="currentColor" stroke-linecap="round"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+        {%- if item.variant.inventory_management != blank
+          and item.variant.inventory_quantity > 0
+          and section.settings.show_inventory_notice != 'never'
+        -%}
+          {%- if section.settings.show_inventory_notice == 'always'
+            or item.variant.inventory_quantity <= section.settings.inventory_threshold
+          -%}
+            {%- liquid
+              assign show_inventory_count = false
+              if section.settings.show_inventory_count == 'always'
+                assign show_inventory_count = true
+              endif
+              if section.settings.show_inventory_count == 'low' and item.variant.inventory_quantity <= section.settings.inventory_threshold
+                assign show_inventory_count = true
+              endif
+
+              if show_inventory_count
+                assign notice = item.variant.inventory_quantity | append : ' left'
+              else
+                if item.variant.inventory_quantity <= section.settings.inventory_threshold
+                  assign notice = item.variant.inventory_quantity | append : ' left'
+                else
+                  assign notice = item.variant.inventory_quantity | append : ' left'
+                endif
+              endif
+            -%}
+            <div class="product-info-block custom-item-product-inventory product-inventory product-inventory--small product-inventory--{% if item.variant.inventory_quantity <= section.settings.inventory_threshold %}low{% else %}ok{% endif %}">
+                {{- notice -}}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+    {%- liquid
+      assign has_size_option = false
+      for option in item.product.options_with_values
+        assign opt_name = option.name | downcase
+        if opt_name == 'size'
+          assign has_size_option = true
+          break
+        endif
+      endfor
+
+      assign is_gift_product = false
+      assign type_down = item.product.type | downcase
+      if type_down contains 'gift' or item.product.handle contains 'gift-box' or item.product.handle == 'rakhi-gift-box-rakhigb-26'
+        assign is_gift_product = true
+      endif
+    -%}
+
+    {% if has_size_option and is_gift_product == false %}
+      <button
+        type="button"
+        class="cart-item__size-guide trigger-pop-up option-selector"
+        data-size-guide-target="cart-size-guide-{{ forloop.index }}"
+        style="cursor: pointer;"
+      >
+        {%- comment -%}
+          The icon + underlined label are sized by
+          product-custom-pdp.css; the default template keeps the plain
+          link the theme styles in main.css.
+        {%- endcomment -%}
+        View Size Guide
+      </button>
+      {%- assign cart_size_guide_id = 'cart-size-guide-' | append: forloop.index -%}
+      {% render 'cart-item-size-drawer', product: item.product, cart_size_guide_id: cart_size_guide_id %}
+    {% endif %}
+    {% assign product_includes = item.product.metafields.custom.set_includes %}
+    {% if product_includes %}
+      {%- capture dot_divider -%}
+            <svg xmlns="http://www.w3.org/2000/svg" width="3" height="3" viewBox="0 0 3 3" fill="none">
+                <circle cx="1.5" cy="1.5" r="1.5" fill="black"/>
+            </svg>
+        {%- endcapture -%}
+      <div class="cart-item__includes"><strong>Includes:</strong><span> {{ product_includes | replace:' : ', dot_divider }}</span></div>
+    {% endif %}
+
+    {% if item.line_level_discount_allocations.size > 0 %}
+      <div class="cart-item__item-discounts">
+        <ul class="cart-discount-list">
+          {% for discount_allocation in item.line_level_discount_allocations %}
+            <li class="cart-discount cart-discount--inline">
+              <span class="cart-discount__label">
+                <span class="cart-discount__icon">{% render 'icon-label' %}</span>
+                <span class="cart-discount__title">
+                  {{- discount_allocation.discount_application.title | escape_once -}}
+                </span>
+              </span>
+              <span class="cart-discount__amount theme-money">{{ discount_allocation.amount | money }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</div>

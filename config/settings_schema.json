@@ -611,6 +611,12 @@
         "default": "cardo_n4"
       },
       {
+        "type": "font_picker",
+        "id": "type_cart_font",
+        "label": "Cart drawer",
+        "default": "nunito_sans_n4"
+      },
+      {
         "type": "header",
         "content": "Sizes"
       },
