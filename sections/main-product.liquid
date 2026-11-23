@@ -1567,8 +1567,9 @@
                           or product.metafields.custom.ready_to_dispatch_dispatch_in_30_days != blank
                         -%}
                           data-add-to-cart-text="Preorder"
+                        {%- else -%}
+                          data-add-to-cart-text="{{ add_to_cart_text | escape}}"
                         {%- endif -%}
-                        data-add-to-cart-text="{{ add_to_cart_text | escape}}"
                         {% if product.available == false %}
                           disabled
                         {% endif %}
@@ -1656,11 +1657,7 @@
 
                     {% if enable_dynamic_payment_button %}
                       <script class="dynamic-payment-button-template" type="text/template">
-                        {
-                          {
-                            form | payment_button;
-                          }
-                        }
+                        {{ form | payment_button }}
                       </script>
                     {% endif %}
 

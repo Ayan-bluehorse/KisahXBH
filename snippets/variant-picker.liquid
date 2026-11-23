@@ -72,7 +72,7 @@
             <modal-opener class="no-js-hidden" data-modal="size-chart-{{ product.id }}-{{ section.id }}">
               <button type="button" class="link block text-sm size-chart-link" aria-haspopup="dialog">
                 <span class="size-chart-link__icon">{%- render 'icon', icon: 'ruler', size: 'small' -%}</span>
-                <span class="size-chart-link__text underline">{%- comment -%}{{- 'products.product.size_chart' | t -}}{%- endcomment -%} Size chart</span>
+                <span class="size-chart-link__text underline">{{ 'products.product.size_chart' | t }}</span>
               </button>
             </modal-opener>
             <noscript>
@@ -180,12 +180,12 @@
       {%- endfor -%}
 
       <script type="application/json">
-        {% assign mrpTxt = 'MRP' | append:'&nbsp&nbsp' %}
+        {% assign mrpTxt = 'MRP&nbsp;&nbsp;' %}
         {"variants": {{- product.variants | json -}},"formatted": {
           {%- for variant in product.variants -%}
-            "{{ variant.id }}":{"price":{% if settings.show_currency_code %}{{ variant.price | money_without_trailing_zeros | json }}{% else %}{{ variant.price | money_without_trailing_zeros | json }}{% endif %}
+            "{{ variant.id }}":{"price":{% if settings.show_currency_code %}{{ variant.price | money_with_currency_without_trailing_zeros | json }}{% else %}{{ variant.price | money_without_trailing_zeros | json }}{% endif %}
               {%- if variant.compare_at_price > variant.price -%}
-                ,"compareAtPrice": {{ variant.compare_at_price | money_without_trailing_zeros | prepend: mrpTxt | json -}}
+                ,"compareAtPrice": {% if settings.show_currency_code %}{{ variant.compare_at_price | money_with_currency_without_trailing_zeros | prepend: mrpTxt | json }}{% else %}{{ variant.compare_at_price | money_without_trailing_zeros | prepend: mrpTxt | json }}{% endif %}
               {%- endif -%}
               {%- if variant.unit_price_measurement -%}
                 ,"unitPrice":{{ variant.unit_price | money | json -}}

@@ -1291,8 +1291,9 @@
                         name="add"
                         {%- if product.tags contains 'preorder' or product.metafields.custom.ready_to_dispatch_dispatch_in_30_days != blank -%}
                           data-add-to-cart-text="Preorder"
+                        {%- else -%}
+                          data-add-to-cart-text="{{ add_to_cart_text | escape}}"
                         {%- endif -%}
-                        data-add-to-cart-text="{{ add_to_cart_text | escape}}"
                         {% if product.available == false %}
                           disabled
                         {% endif %}

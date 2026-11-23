@@ -258,7 +258,7 @@ Parameters:
                 </div>
                 
                 {% if product.metafields.custom.stock_alert_message and collection.handle == 'website-exclusive' and section.settings.alert-text != blank %}
-                  <div id="few-alert-msg" {{ collection.handle }}>
+                  <div id="few-alert-msg-{{ product.id }}" class="few-alert-msg" data-collection="{{ collection.handle | escape }}">
                     <span>{{ section.settings.alert-text }}</span>
                   </div>
                 {%- endif -%}
