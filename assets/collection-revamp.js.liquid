@@ -1658,10 +1658,15 @@ eleReady(".filterHead", function (filHead) {
   }
 
   function onReady(cb) {
+    var attempts = 0;
+    var maxAttempts = 50;
     var t = setInterval(function () {
+      attempts++;
       if (document.querySelector('form#CollectionFilterForm')) {
         clearInterval(t);
         cb();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(t);
       }
     }, 80);
   }

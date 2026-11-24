@@ -689,8 +689,12 @@ input[type=button] {
   appearance: none;
 }
 
-/* Do not use focus outline unless tabbing, or no-js */
-.js body:not(.tab-used) *:focus {
+/* Accessible keyboard focus ring (WCAG 2.4.7 / TCA-029) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
   outline: none;
 }
 

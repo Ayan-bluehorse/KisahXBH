@@ -64,6 +64,7 @@
       "share_on_facebook": "Auf Facebook teilen",
       "share_on_twitter": "Auf Twitter twittern",
       "share_on_pinterest": "Auf Pinterest pinnen",
+      "share_on_whatsapp": "Auf WhatsApp teilen",
       "follow_shop": "{{ shop_name }} auf {{ social_platform }}"
     },
     "meta": {

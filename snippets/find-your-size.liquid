@@ -89,14 +89,10 @@
 {%- if customer -%}
 <script>
   window.__fys_customer_id = {{ customer.id | json }};
-  window.__fys_customer_name = {{ customer.name | json }};
-  window.__fys_customer_email = {{ customer.email | json }};
 </script>
 {%- else -%}
 <script>
   window.__fys_customer_id = '';
-  window.__fys_customer_name = '';
-  window.__fys_customer_email = '';
 </script>
 {%- endif -%}
 
@@ -115,7 +111,7 @@
   {%- assign fys_uid = product.id | append: id_suffix -%}
   <div class="fys{% if kpdp %} fys--kpdp{% endif %}{% if plain %} fys--plain{% endif %}" id="fys-{{ fys_uid }}">
 
-    <button class="fys-trigger" id="fysTrigger-{{ fys_uid }}" aria-expanded="false" aria-controls="fysPanel-{{ fys_uid }}">
+    <button type="button" class="fys-trigger" id="fysTrigger-{{ fys_uid }}" aria-expanded="false" aria-controls="fysPanel-{{ fys_uid }}">
       <svg class="fys-cube" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
         <path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>
@@ -136,11 +132,11 @@
           <!-- stepper -->
           <div class="fys-stepper" data-fys-stepper>
             <div class="fys-track" data-fys-track></div>
-            <button class="fys-step-btn" data-step="0" tabindex="-1"><span class="dot"></span><span class="lbl">Height</span></button>
-            <button class="fys-step-btn" data-step="1" tabindex="-1"><span class="dot"></span><span class="lbl">Weight</span></button>
-            <button class="fys-step-btn" data-step="2" tabindex="-1"><span class="dot"></span><span class="lbl">Build</span></button>
-            <button class="fys-step-btn" data-step="3" tabindex="-1"><span class="dot"></span><span class="lbl">Usual</span></button>
-            <button class="fys-step-btn" data-step="4" tabindex="-1"><span class="dot"></span><span class="lbl">Your Size</span></button>
+            <button type="button" class="fys-step-btn" data-step="0" tabindex="-1"><span class="dot"></span><span class="lbl">Height</span></button>
+            <button type="button" class="fys-step-btn" data-step="1" tabindex="-1"><span class="dot"></span><span class="lbl">Weight</span></button>
+            <button type="button" class="fys-step-btn" data-step="2" tabindex="-1"><span class="dot"></span><span class="lbl">Build</span></button>
+            <button type="button" class="fys-step-btn" data-step="3" tabindex="-1"><span class="dot"></span><span class="lbl">Usual</span></button>
+            <button type="button" class="fys-step-btn" data-step="4" tabindex="-1"><span class="dot"></span><span class="lbl">Your Size</span></button>
           </div>
 
           <div class="fys-screens">
@@ -168,7 +164,7 @@
                 </div>
               </div>
               <div class="fys-actions">
-                <button class="fys-continue" data-next>Continue</button>
+                <button type="button" class="fys-continue" data-next>Continue</button>
               </div>
             </section>
 
@@ -187,8 +183,8 @@
                 </div>
               </div>
               <div class="fys-actions">
-                <button class="fys-back" data-back>← Back</button>
-                <button class="fys-continue" data-next>Continue</button>
+                <button type="button" class="fys-back" data-back>← Back</button>
+                <button type="button" class="fys-continue" data-next>Continue</button>
               </div>
             </section>
 
@@ -197,24 +193,24 @@
               <h3 class="fys-h">How would you describe your build?</h3>
               <p class="fys-sub">Pick whichever feels closest — this settles it.</p>
               <div class="fys-builds" role="radiogroup" aria-label="Build">
-                <button class="fys-build" data-build="slim" role="radio" aria-checked="false">
+                <button type="button" class="fys-build" data-build="slim" role="radio" aria-checked="false">
                   <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M8 22 V10 Q8 4 17 4 Q26 4 26 10 V22" stroke-linecap="round"/></svg>
                   <div class="b-name">Slim</div>
                   <div class="b-desc">Fitted through chest &amp; shoulders</div>
                 </button>
-                <button class="fys-build" data-build="regular" role="radio" aria-checked="false">
+                <button type="button" class="fys-build" data-build="regular" role="radio" aria-checked="false">
                   <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M5 22 V9 Q5 3 17 3 Q29 3 29 9 V22" stroke-linecap="round"/></svg>
                   <div class="b-name">Regular</div>
                   <div class="b-desc">Average build</div>
                 </button>
-                <button class="fys-build" data-build="broad" role="radio" aria-checked="false">
+                <button type="button" class="fys-build" data-build="broad" role="radio" aria-checked="false">
                   <svg width="32" height="24" viewBox="0 0 34 26" fill="none" stroke-width="1.8"><path d="M3 22 V8 Q3 2 17 2 Q31 2 31 8 V22" stroke-linecap="round"/></svg>
                   <div class="b-name">Broad</div>
                   <div class="b-desc">Broader shoulders / heavier-set</div>
                 </button>
               </div>
               <div class="fys-actions">
-                <button class="fys-back" data-back>← Back</button>
+                <button type="button" class="fys-back" data-back>← Back</button>
               </div>
             </section>
 
@@ -297,8 +293,8 @@
                 </div>
 
                 <div class="fys-result-actions">
-                  <button class="fys-continue" data-fys-use-size>Select Size <span data-fys-btn-size>38</span></button>
-                  <button class="fys-startover" data-fys-start-over>Select Different Size</button>
+                  <button type="button" class="fys-continue" data-fys-use-size>Select Size <span data-fys-btn-size>38</span></button>
+                  <button type="button" class="fys-startover" data-fys-start-over>Select Different Size</button>
                 </div>
 
                 <p class="fys-exchange">Free size exchange within 7 days if it's not right.</p>

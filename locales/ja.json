@@ -64,6 +64,7 @@
       "share_on_facebook": "Facebookで共有",
       "share_on_twitter": "Xでツイート",
       "share_on_pinterest": "Pinterestでピン付け",
+      "share_on_whatsapp": "WhatsAppで共有",
       "follow_shop": "{{ social_platform }}で{{ shop_name }}"
     },
     "meta": {

@@ -423,25 +423,45 @@
    
 
   <script>
-    window.kisahWhenJQueryReady(function($){
-      var $bottomTop = $('#bottom-top');
-      var isBottomTopVisible = false;
-      $(window).scroll(function(){
-        var scrolled = $(window).scrollTop();
-        if (scrolled > 800 && !isBottomTopVisible) {
-          $bottomTop.stop(true, true).fadeIn(200);
-          isBottomTopVisible = true;
-        } else if (scrolled <= 800 && isBottomTopVisible) {
-          $bottomTop.stop(true, true).fadeOut(200);
-          isBottomTopVisible = false;
+    (function () {
+      var ticking = false;
+      var isVisible = false;
+      function checkScroll() {
+        var el = document.getElementById('bottom-top');
+        if (!el) { ticking = false; return; }
+        var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrolled > 800 && !isVisible) {
+          el.style.display = 'block';
+          el.style.opacity = '1';
+          isVisible = true;
+        } else if (scrolled <= 800 && isVisible) {
+          el.style.opacity = '0';
+          setTimeout(function () { if (!isVisible) el.style.display = 'none'; }, 200);
+          isVisible = false;
+        }
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(checkScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      document.addEventListener('click', function (e) {
+        if (e.target && e.target.closest('#bottom-top')) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });
 
-      // Click event - use native smooth scrolling without conflicting animation queues
-      $('#bottom-top').click(function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.addEventListener('keydown', function (e) {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.closest('#bottom-top')) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
-    });
+    })();
   </script>
 
   
@@ -690,7 +710,7 @@
     </template>
   {%- endif -%}
 
-  <div id="bottom-top">
+  <div id="bottom-top" role="button" tabindex="0" aria-label="Back to top">
     {% render 'back-top-svg' %}
   </div>
   

@@ -64,6 +64,7 @@
       "share_on_facebook": "Partilhar no Facebook",
       "share_on_twitter": "Tweetar no X",
       "share_on_pinterest": "Afixar no Pinterest",
+      "share_on_whatsapp": "Partilhar no WhatsApp",
       "follow_shop": "{{ shop_name }} no {{ social_platform }}"
     },
     "meta": {

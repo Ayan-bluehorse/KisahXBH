@@ -353,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="logo-area container container--no-max">
       <div class="logo-area__left">
         <div class="logo-area__left__inner">
-          <button class="mobile-nav-toggle" aria-label="{{ 'general.navigation.menu' | t }}" aria-controls="main-nav">
+          <button type="button" class="mobile-nav-toggle" aria-label="{{ 'general.navigation.menu' | t }}" aria-controls="main-nav">
             {%- render 'icon-menu' -%}
           </button>
           {% if section.settings.enable_search %}

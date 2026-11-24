@@ -129,11 +129,11 @@
   }
 
   function getCustomerName() {
-    return window.__fys_customer_name ? String(window.__fys_customer_name) : '';
+    return '';
   }
 
   function getCustomerEmail() {
-    return window.__fys_customer_email ? String(window.__fys_customer_email) : '';
+    return '';
   }
 
   /* Fire to dataLayer (GTM / Elevar) + gtag (GA4 G-31X587J1SK) */
