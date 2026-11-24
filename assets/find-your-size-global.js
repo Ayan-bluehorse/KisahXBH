@@ -354,17 +354,13 @@
 
     if (!isCollection && !isSearch) return;
 
-    // Control Group: In Variant A, do not auto-filter or show chip bar
-    if (abVariant === 'variant_a') return;
-
     var search = window.location.search;
     var params = new URLSearchParams(search);
     var activeSizeInUrl = params.get('filter.v.option.size');
-    var isAvailabilityFiltered = params.get('filter.v.availability') === '1';
     var savedSize = FYS.getSavedSize();
     var isDismissed = FYS.isFilterDismissed();
 
-    // 1. Auto-filtering: If user has a saved size, not dismissed, and URL lacks size filter:
+    // 1. Auto-filtering: If user has a saved size from Find Your Fit, not dismissed, and URL lacks size filter:
     if (savedSize && !isDismissed && !activeSizeInUrl) {
       params.set('filter.v.option.size', getFilterParamValue(savedSize));
       params.set('filter.v.availability', '1');
@@ -380,7 +376,8 @@
       return;
     }
 
-    if (activeSizeInUrl) {
+    // 2. Render chip bar ONLY for genuine size names (never for raw Shopify GraphQL GID strings)
+    if (activeSizeInUrl && activeSizeInUrl.indexOf('gid:') === -1) {
       var normSize = normalizeSize(activeSizeInUrl);
       if (normSize && SIZE_NAMES[normSize]) {
         renderChipBar(normSize);
