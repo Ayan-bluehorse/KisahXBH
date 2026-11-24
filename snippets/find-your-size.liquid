@@ -77,6 +77,8 @@
 
 {%- comment -%} Critical anti-FOUC hiding style for FYS accordion panel {%- endcomment -%}
 <style>
+  .fys { width: 100%; box-sizing: border-box; }
+  .fys .fys-trigger { width: 100%; box-sizing: border-box; }
   .fys:not(.is-open) .fys-panel { display: none !important; max-height: 0 !important; overflow: hidden !important; }
 </style>
 

@@ -306,10 +306,13 @@
      its own 20px top margin (find-your-size.css); drop it here so the
      drawer's top padding is the only gap above the button. */
   .size-chart-drawer .sc-fys {
+    width: 100% !important;
+    align-self: stretch !important;
     margin: 0 0 28px;
   }
-  .size-chart-drawer .sc-fys .fys {
-    margin-top: 0;
+  .size-chart-drawer .sc-fys .fys,
+  .size-chart-drawer .sc-fys .fys-trigger {
+    width: 100% !important;
   }
   /* the snippet renders nothing for kids / gift / size-less products */
   .size-chart-drawer .sc-fys:empty {
