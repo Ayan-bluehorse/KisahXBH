@@ -2,7 +2,7 @@
 {%- if best_fits != blank -%}
   {%- assign product_count = 0 -%}
   {%- for p in best_fits -%}{%- assign product_count = product_count | plus: 1 -%}{%- endfor -%}
-  <div class="more-ways-to-style {% if product_count < 3 %}more-ways-to-style--compact{% endif %}">
+  <div class="more-ways-to-style {% if product_count <= 2 %}more-ways-to-style--compact{% endif %}" data-product-count="{{ product_count }}">
     {% for block in section.blocks %}
       {% if block.settings.recommendation_title != blank %}
         <h3 class="recommendation_title">{{ block.settings.recommendation_title }}</h3>
@@ -10,41 +10,42 @@
     {% endfor %}
     
     <div class="recommendation-style-slider-wrapper">
-
-      <!-- Slider -->
+      <!-- Slider / Grid -->
       <div class="recommendation-style-carousel">
         {%- for related_product in product.metafields.custom.best_fits.value -%}
           {%- assign p = related_product -%}
           <div class="recommendation-style-item">
-            <a href="{{ p.url }}">
+            <a href="{{ p.url }}" class="recommendation-style-img-link">
               <img 
-                width="{{ p.featured_image.width }}" height="{{ p.featured_image.height }}" loading="lazy" src="{{ p.featured_image | image_url: width: 400 }}" 
-                alt="{{ p.title }}" 
-                loading="lazy"
+                width="{{ p.featured_image.width | default: 400 }}" height="{{ p.featured_image.height | default: 533 }}" loading="lazy" src="{{ p.featured_image | image_url: width: 400 }}" 
+                alt="{{ p.title | escape }}"
               >
             </a>
             <div class="style-info">
-              <p class="style-title">{{ p.title }}</p>
+              <a href="{{ p.url }}" class="style-title-link">
+                <p class="style-title">{{ p.title }}</p>
+              </a>
               
               <p class="style-price">
-                {{ p.price | money }}
+                <span class="price-current">{{ p.price | money }}</span>
                 {%- if p.compare_at_price > p.price -%}
                   <span class="compare">{{ p.compare_at_price | money }}</span>
                 {%- endif -%}
               </p>
 
               <form method="post" action="{{ routes.cart_add_url }}" class="style-cart-form">
-                <select name="id">
+                <select name="id" class="style-variant-select" aria-label="Select size for {{ p.title | escape }}">
                   {%- for variant in p.variants -%}
                     {%- if variant.available -%}
                       <option value="{{ variant.id }}">{{ variant.title }}</option>
                     {%- endif -%}
                   {%- endfor -%}
                 </select>
-                <button type="submit" class="add-to-cart-btn add-to-cart">Add to Bag
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M6.31138 8.31615C6.01954 5.87743 6.31138 1 9.81353 1C11.435 0.999989 14.1285 2.09742 13.4281 8.31615" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-                    <path d="M2.56774 6.22583C1.31355 6.22583 1 7.27099 1 7.79358V16.1549C1 17.8272 2.56774 18.7678 3.6129 18.7678H15.1097C17.2 18.7678 18.2452 18.2452 18.7677 17.2001C19.2903 16.1549 18.7677 9.04777 18.7677 7.79358C18.7677 6.53938 17.5484 6.22583 17.2 6.22583H2.56774Z" stroke="white" stroke-width="1.2"/>
+                <button type="submit" class="add-to-cart-btn add-to-cart">
+                  <span>Add to Bag</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="none">
+                    <path d="M6.31138 8.31615C6.01954 5.87743 6.31138 1 9.81353 1C11.435 0.999989 14.1285 2.09742 13.4281 8.31615" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                    <path d="M2.56774 6.22583C1.31355 6.22583 1 7.27099 1 7.79358V16.1549C1 17.8272 2.56774 18.7678 3.6129 18.7678H15.1097C17.2 18.7678 18.2452 18.2452 18.7677 17.2001C19.2903 16.1549 18.7677 9.04777 18.7677 7.79358C18.7677 6.53938 17.5484 6.22583 17.2 6.22583H2.56774Z" stroke="currentColor" stroke-width="1.3"/>
                   </svg>
                 </button>
               </form>
@@ -53,192 +54,266 @@
         {%- endfor -%}
       </div>
 
-      <!-- Slick Arrows Inside Wrapper -->
-      <button class="style-arrow left" aria-label="Previous">&#10094;</button>
-      <button class="style-arrow right" aria-label="Next">&#10095;</button>
+      {%- if product_count > 2 -%}
+        <!-- Slick Arrows Inside Wrapper -->
+        <button class="style-arrow left" aria-label="Previous" type="button">&#10094;</button>
+        <button class="style-arrow right" aria-label="Next" type="button">&#10095;</button>
+      {%- endif -%}
     </div>
   </div>
 {%- endif -%}
 
-
 <style>
-
-  .recommendation_title {
-    font-size: 22px;
-    font-family: var(--base-font-family) !important;
-    line-height: normal;
-    letter-spacing: normal;
-    margin: 0;
-    padding: 0 5px;
-    margin-bottom: 20px;
+.recommendation_title {
+  font-size: 18px;
+  font-family: var(--base-font-family) !important;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  margin: 0 0 14px;
+  padding: 0;
+  color: #1a1a1a;
+  text-transform: uppercase;
 }
 
 .more-ways-to-style {
-margin: 0px 0 20px;
-    position: relative;
+  margin: 20px 0 24px;
+  position: relative;
+  width: 100%;
 }
 
 .recommendation-style-slider-wrapper {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
 }
 
+/* Default flex container */
 .recommendation-style-carousel {
-	display: flex;
-	transition: transform 0.5s ease-in-out;
-  gap: 3px;
-  direction: rtl;
+  display: flex;
+  gap: 10px;
+  direction: ltr;
+  width: 100%;
+}
+
+/* Static 2-column grid when 1 or 2 products */
+.more-ways-to-style--compact .recommendation-style-carousel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
 .recommendation-style-item {
-    {% comment %} flex: 0 0 calc(40% - -6px);
-    margin: 0 2px; {% endcomment %}
-    flex: 0 0 calc(100% / 2.5 - 1.5px);
-    margin: 0 2px;
-    border: 1px solid #0000001a;
-    border-radius: 0;
-    padding: 0;
-    background: #F3F3F3;
+  background: #ffffff;
+  border: 1px solid #e7e3dc;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex: 0 0 calc(50% - 5px);
+  min-width: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-{% comment %} .recommendation-style-item:first-child {
-    margin-left: 26px;
-} {% endcomment %}
+.more-ways-to-style--compact .recommendation-style-item {
+  width: 100%;
+  flex: none;
+}
 
-.recommendation-style-item > a > img {
-	vertical-align: bottom;
+.recommendation-style-item:hover {
+  box-shadow: 0 4px 12px rgba(32, 23, 71, 0.08);
+}
+
+.recommendation-style-img-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: #f7f5f2;
+}
+
+.recommendation-style-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.recommendation-style-item:hover img {
+  transform: scale(1.03);
 }
 
 .recommendation-style-item .style-info {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 8px;
-    padding-top: 10px;
-    direction: ltr;
+  padding: 10px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.style-title-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .recommendation-style-item .style-title {
-    font-size: 16px;
-    line-height: 20px;
-    font-weight:600;
-    font-family: var(--base-font-family) !important;
-    letter-spacing: 0;
-    color: #000000;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 40px;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 500;
+  font-family: var(--base-font-family) !important;
+  letter-spacing: 0;
+  color: #1a1a1a;
+  margin: 0 0 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 34px;
 }
-
-
 
 .recommendation-style-item .style-price {
-font-size: 14px;
-    line-height: 25.6px;
-    font-family: var(--base-font-family) !important;
-    color: #000000;
-    margin-bottom: 0;
-    display: flex;
-}
-
-.style-price .compare {
-	text-decoration: line-through;
-	margin-left: 5px;
-	color: #777;
-  font-size: 15.75px;
-  line-height: 25.6px;
+  font-size: 13px;
+  line-height: 1.3;
   font-family: var(--base-font-family) !important;
+  color: #201747;
+  font-weight: 600;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
 }
 
-.recommendation-style-item form select {
-    width: 100%;
-    border: 1px solid #E5E5E5;
-    background-color: #ccc;
-    border-radius: 50px;
-    font-size: 16px;
-    line-height: 24px;
-    -webkit-appearance: none;
-    background-image: linear-gradient(45deg, transparent 50%, #919191 50%), linear-gradient(135deg, #919191 50%, transparent 50%), linear-gradient(to right, #919191, #919191);
-    background-position: calc(100% - 20px) calc(1em + 0px), calc(100% - 15px) calc(1em + 0px), calc(100% - 2.5em) 0.4em;
-    background-repeat: no-repeat;
-    background-size: 5px 5px, 5px 5px, 1px 1.5em;
-    padding: 5px 50px 5px 10px;
-    color: #000;
+.recommendation-style-item .style-price .compare {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.recommendation-style-item form .add-to-cart-btn {
+.style-cart-form {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.style-variant-select {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #dcd7cf;
+  background-color: #faf8f5;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 2px 20px 2px 8px;
+  color: #1a1a1a;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath fill='%23666' d='M0 0l4 5 4-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 8px 5px;
+}
+
+.recommendation-style-item .add-to-cart-btn {
   background: #201747;
-  color: #fff;
+  color: #ffffff;
   border: none;
-  padding: 6.6px 12px;
-  margin-top: 10px;
-  border-radius: 50px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 4px;
   cursor: pointer;
   width: 100%;
-  font-size: 13px;
-  line-height: normal;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: background 0.2s ease;
+  box-sizing: border-box;
 }
 
-.recommendation-style-item form .add-to-cart-btn svg {
-    vertical-align: bottom;
-    margin-left: 4px;
+.recommendation-style-item .add-to-cart-btn:hover {
+  background: #34286d;
 }
 
+.recommendation-style-item .add-to-cart-btn svg {
+  flex-shrink: 0;
+}
+
+/* Slick arrows */
 .style-arrow {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	background: #fff;
-	border: 1px solid #ddd;
-	border-radius: 50%;
-	width: 34px;
-	height: 34px;
-	font-size: 18px;
-	cursor: pointer;
-	z-index: 2;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s ease;
 }
 
-.more-ways-to-style--compact .slick-list,
-.more-ways-to-style--compact .slick-track {
-    width: 100% !important;
+.style-arrow:hover {
+  background: #ffffff;
+}
+
+.style-arrow.left { left: 4px; }
+.style-arrow.right { right: 4px; }
+
+/* Slick initialized rules */
+.recommendation-style-carousel.slick-initialized {
+  display: block;
 }
 
 .recommendation-style-carousel.slick-initialized .recommendation-style-item {
-    display: block !important;
-    margin: 0 5px !important;
-    aspect-ratio: 2 / 3;
+  display: flex !important;
+  margin: 0 5px;
 }
 
-.style-arrow.left {
-	left: 0;
+@media (max-width: 480px) {
+  .recommendation-style-item .style-title {
+    font-size: 12px;
+    line-height: 15px;
+    min-height: 30px;
+  }
+  .recommendation-style-item .style-price {
+    font-size: 12px;
+  }
+  .recommendation-style-item .add-to-cart-btn {
+    font-size: 11px;
+    height: 32px;
+  }
 }
-
-.style-arrow.right {
-	right: 0;
-}
-
-
-  {% comment %} .more-ways-to-style {
-    opacity: 0;
-    visibility: hidden;
-    height: 0;
-}
- {% endcomment %}
-
-
-
-
 </style>
-
 
 <script>
 window.kisahWhenJQueryReady(function($) {
-  const slider = $(".recommendation-style-carousel");
+  var $container = $(".more-ways-to-style");
+  var productCount = parseInt($container.attr('data-product-count') || '0', 10);
+  
+  // If 1 or 2 products, static 2-column grid is cleaner, faster, and won't glitch
+  if (productCount <= 2) return;
 
-  slider.slick({
-    slidesToShow: 3,
+  var $slider = $(".recommendation-style-carousel");
+  if (!$slider.length || $slider.hasClass('slick-initialized')) return;
+
+  $slider.slick({
+    slidesToShow: 2,
     slidesToScroll: 1,
     infinite: false,
     arrows: false,
@@ -250,98 +325,33 @@ window.kisahWhenJQueryReady(function($) {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2
+          slidesToShow: 2,
+          slidesToScroll: 1
         }
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 2
+          slidesToShow: 2,
+          slidesToScroll: 1
         }
       }
     ]
   });
 
   // External arrows
-  document.querySelector(".style-arrow.left")?.addEventListener("click", function () {
-    slider.slick('slickPrev');
+  $container.find(".style-arrow.left").on("click", function () {
+    $slider.slick('slickPrev');
   });
 
-  document.querySelector(".style-arrow.right")?.addEventListener("click", function () {
-    slider.slick('slickNext');
+  $container.find(".style-arrow.right").on("click", function () {
+    $slider.slick('slickNext');
   });
-  window.addEventListener('load', function() {
-    slider.slick('setPosition');
+
+  $(window).on('load resize orientationchange', function() {
+    if ($slider.hasClass('slick-initialized')) {
+      $slider.slick('setPosition');
+    }
   });
 });
 </script>
-
-
-
-
-{% comment %} <script>
-document.addEventListener("DOMContentLoaded", function(){
-  const slider = document.querySelector(".recommendation-style-carousel");
-  const leftBtn = document.querySelector(".style-arrow.left");
-  const rightBtn = document.querySelector(".style-arrow.right");
-  const items = slider.querySelectorAll(".recommendation-style-item");
-  const itemWidth = items[0].offsetWidth + 10; // card + margin
-  let currentIndex = 2; // because we’ll clone slides
-
-  // Clone first 2 and last 2 slides for infinite effect
-  const firstClone = items[0].cloneNode(true);
-  const secondClone = items[1].cloneNode(true);
-  const lastClone = items[items.length - 1].cloneNode(true);
-  const secondLastClone = items[items.length - 2].cloneNode(true);
-
-  slider.appendChild(firstClone);
-  slider.appendChild(secondClone);
-  slider.insertBefore(lastClone, items[0]);
-  slider.insertBefore(secondLastClone, items[0]);
-
-  // Update items after cloning
-  const allItems = slider.querySelectorAll(".recommendation-style-item");
-
-  slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
-
-  const moveToIndex = (index) => {
-    slider.style.transition = "transform 0.5s ease-in-out";
-    slider.style.transform = `translateX(-${itemWidth * index}px)`;
-  };
-
-  rightBtn.addEventListener("click", () => {
-    if (currentIndex >= allItems.length - 2) return;
-    currentIndex++;
-    moveToIndex(currentIndex);
-  });
-
-  leftBtn.addEventListener("click", () => {
-    if (currentIndex <= 0) return;
-    currentIndex--;
-    moveToIndex(currentIndex);
-  });
-
-  slider.addEventListener("transitionend", () => {
-    if (allItems[currentIndex].isEqualNode(firstClone)) {
-      slider.style.transition = "none";
-      currentIndex = 2;
-      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
-    }
-    if (allItems[currentIndex].isEqualNode(secondClone)) {
-      slider.style.transition = "none";
-      currentIndex = 3;
-      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
-    }
-    if (allItems[currentIndex].isEqualNode(lastClone)) {
-      slider.style.transition = "none";
-      currentIndex = allItems.length - 3;
-      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
-    }
-    if (allItems[currentIndex].isEqualNode(secondLastClone)) {
-      slider.style.transition = "none";
-      currentIndex = allItems.length - 4;
-      slider.style.transform = `translateX(-${itemWidth * currentIndex}px)`;
-    }
-  });
-});
-</script> {% endcomment %}

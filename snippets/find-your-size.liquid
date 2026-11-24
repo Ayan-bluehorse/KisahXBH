@@ -75,8 +75,10 @@
   assign sizes_array = available_sizes | split: '|||' | uniq
 -%}
 
-{%- comment -%} TCA-017: find-your-size.css moved to theme.liquid <head> {%- endcomment -%}
-<noscript><link rel="stylesheet" href="{{ 'find-your-size.css' | asset_url }}"></noscript>
+{%- comment -%} Critical anti-FOUC hiding style for FYS accordion panel {%- endcomment -%}
+<style>
+  .fys:not(.is-open) .fys-panel { display: none !important; max-height: 0 !important; overflow: hidden !important; }
+</style>
 
 {%- comment -%}
   Paste your Google Apps Script Web App URL below after deploying
