@@ -464,6 +464,10 @@ Parameters:
             {%- endif -%}
           </div>
         </div>
+
+      <div class="desktop-whishlist mobile_wishlist">
+       {% render 'wishlisthero-collection-product' with product, product: product %}
+      </div>
       </div>
       <div class="desktop-whishlist desktop_wishlist">
        {% render 'wishlisthero-collection-product' with product, product: product %}

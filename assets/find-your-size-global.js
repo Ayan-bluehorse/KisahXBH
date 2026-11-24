@@ -381,12 +381,20 @@
     }
 
     if (activeSizeInUrl) {
-      renderChipBar(normalizeSize(activeSizeInUrl));
+      var normSize = normalizeSize(activeSizeInUrl);
+      if (normSize && SIZE_NAMES[normSize]) {
+        renderChipBar(normSize);
+      }
     }
   }
 
   /* ---------------- Render Chip Bar ---------------- */
   function renderChipBar(size) {
+    var sizeLabel = SIZE_NAMES[size];
+    if (!sizeLabel) {
+      return;
+    }
+
     renderSizeModal();
 
     var existing = document.getElementById('fysSizeChipBar');
@@ -396,12 +404,10 @@
     chipBar.id = 'fysSizeChipBar';
     chipBar.className = 'fys-size-chip-bar';
 
-    var sizeLabel = SIZE_NAMES[size] || ('Size ' + size);
-
     chipBar.innerHTML = [
       '<div class="fys-size-chip-inner">',
       '  <span class="fys-size-chip-label">',
-      '    <svg class="fys-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',
+      '    <svg class="fys-chip-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px;max-width:16px;min-width:16px;flex-shrink:0;">',
       '      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>',
       '      <circle cx="7" cy="7" r="1.5" fill="currentColor"/>',
       '    </svg>',
