@@ -6,7 +6,8 @@
   - current_sort {SortOption} - The sort option the current product grid is sorted by.
 {%- endcomment -%}
 
-<link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}">
+{%- comment -%} TCA-017: collection-filter-sheet.css moved to theme.liquid <head> {%- endcomment -%}
+<noscript><link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}"></noscript>
 <script src="{{ 'collection-filter-sheet.js' | asset_url }}" defer></script>
 
 {%- liquid

@@ -191,9 +191,17 @@
   </style>
   {{ 'main.css' | asset_url | stylesheet_tag: preload: true }}
   {% comment %} {{ 'collections.css' | asset_url | stylesheet_tag }} {% endcomment %}
-   {% if request.page_type == 'collection' %}
-  {{ 'collections.css' | asset_url | stylesheet_tag }}
-{% endif %}
+   {% if request.page_type == 'collection' or request.page_type == 'search' %}
+    {{ 'collections.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}"></noscript>
+  {% endif %}
+  <link rel="stylesheet" href="{{ 'find-your-size-smart.css' | asset_url }}" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ 'find-your-size-smart.css' | asset_url }}"></noscript>
+  {% if request.page_type == 'product' %}
+    <link rel="stylesheet" href="{{ 'find-your-size.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="{{ 'find-your-size.css' | asset_url }}"></noscript>
+  {% endif %}
   {%- if template.suffix contains 'navratri' or request.path contains 'navratri' or template.suffix contains 'diwali' or request.path contains 'diwali' or template.suffix contains 'wedding' or request.path contains 'wedding' or template.suffix contains 'groom-squad' or request.path contains 'groom-squad' or template.suffix contains 'after-party' or request.path contains 'after-party' -%}
     {{ 'navratri.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
@@ -214,7 +222,6 @@
       <link rel="preload" as="font" href="{{ heading_font_bold | font_url }}" type="font/woff2" crossorigin>
     {%- endif -%}
   {%- endunless -%}
-  <link rel="preload" as="font" href="https://kisah.in/cdn/fonts/newsreader/newsreader_n6.e6648a2ece97a1b03d7262a0f4551ab429abd3d9.woff2" type="font/woff2" crossorigin>
 
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');

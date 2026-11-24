@@ -3,7 +3,8 @@
   Loads global CSS, customer state, and the FYS Smart Sizing engine across all pages.
 {% endcomment %}
 
-{{ 'find-your-size-smart.css' | asset_url | stylesheet_tag }}
+{%- comment -%} TCA-017: find-your-size-smart.css moved to theme.liquid <head> {%- endcomment -%}
+<noscript><link rel="stylesheet" href="{{ 'find-your-size-smart.css' | asset_url }}"></noscript>
 
 <script>
   window.__fys_customer_saved_size = {% if customer and customer.metafields.custom.fys_recommended_size != blank %}{{ customer.metafields.custom.fys_recommended_size | json }}{% else %}null{% endif %};

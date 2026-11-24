@@ -75,7 +75,8 @@
   assign sizes_array = available_sizes | split: '|||' | uniq
 -%}
 
-{{ 'find-your-size.css' | asset_url | stylesheet_tag }}
+{%- comment -%} TCA-017: find-your-size.css moved to theme.liquid <head> {%- endcomment -%}
+<noscript><link rel="stylesheet" href="{{ 'find-your-size.css' | asset_url }}"></noscript>
 
 {%- comment -%}
   Paste your Google Apps Script Web App URL below after deploying

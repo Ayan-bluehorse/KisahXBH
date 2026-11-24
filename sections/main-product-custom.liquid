@@ -60,7 +60,8 @@
 {%- if product.media.size > 1 -%}
   <script src="{{ 'slideshow.js' | asset_url }}" defer></script>
 {%- endif -%}
-<link rel="stylesheet" href="{{ 'modal.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'modal.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ 'modal.css' | asset_url }}"></noscript>
 
 {% if section.settings.show_breadcrumbs %}
   <div
