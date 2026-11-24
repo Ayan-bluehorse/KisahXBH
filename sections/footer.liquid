@@ -168,7 +168,7 @@
               </div>
                 {% endif %}
                 {% if block.settings.payement-img != blank %}
-                <img src="{{ block.settings.payement-img | image_url }}" width="auto" height="auto">
+                <img src="{{ block.settings.payement-img | image_url: width: 360 }}" width="{{ block.settings.payement-img.width | default: 240 }}" height="{{ block.settings.payement-img.height | default: 40 }}" alt="{{ block.settings.payement-title | default: 'Payment Methods' | escape }}" loading="lazy">
                 {% endif %}
               </div>       
                    

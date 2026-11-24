@@ -114,13 +114,13 @@
   <span class="cart-close" title="Close">
     <span>&times;</span>
   </span>
-  <img width="400" height="400" loading="lazy" src="" alt="Cart item" id="cart-product-img">
+  <img width="60" height="60" loading="lazy" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="Cart item" id="cart-product-img">
   <div class="cart-text">
     <div class="cart-title">View Cart</div>
     <div class="cart-items" id="cart-items-count">0 Items</div>
   </div>
   <div class="cart-arrow">
-    {{ 'Chevron_right.png' | file_url | img_tag }}
+    <img src="{{ 'Chevron_right.png' | file_url }}" alt="" width="16" height="16" loading="lazy">
   </div>
 </div>
 

@@ -1636,7 +1636,7 @@
                     </div>
                     {% if block.settings['payement-image'] != blank %}
                       <div class="payment-img">
-                        <img src="{{ block.settings.payement-image | image_url }}" width="150px" height="auto">
+                        <img src="{{ block.settings.payement-image | image_url: width: 300 }}" width="150" height="{{ 150 | divided_by: block.settings.payement-image.aspect_ratio | round | default: 40 }}" alt="Payment options" loading="lazy">
                       </div>
                     {% endif %}
                     <div class="product-share-icons">
@@ -1720,7 +1720,7 @@
 
                   <div class="payment-img">
                     {% if block.settings['payement-image'] != blank %}
-                      <img src="{{ block.settings.payement-image | image_url }}" width="150px" height="auto">
+                      <img src="{{ block.settings.payement-image | image_url: width: 300 }}" width="150" height="{{ 150 | divided_by: block.settings.payement-image.aspect_ratio | round | default: 40 }}" alt="Payment options" loading="lazy">
                     {% endif %}
                   </div>
                   {% comment %}
@@ -2405,7 +2405,7 @@
               <div class="offer-box">
                 <div class="offer-icon">
                   {% if product.metafields.custom.offer_icon != blank %}
-                    <img src="{{ product.metafields.custom.offer_icon | image_url }}" width="30px" height="30px">
+                    <img src="{{ product.metafields.custom.offer_icon | image_url: width: 60 }}" width="30" height="30" alt="Offer" loading="lazy">
                   {% endif %}
                 </div>
                 <div class="offer-discount">
@@ -2512,7 +2512,7 @@
             {% if product.metafields.custom.delivery_content != blank %}
               <div class="meta-content-image-container" style="background:{{ block.settings.meta-bg}}">
                 {% if block.settings['meta-img'] != blank %}
-                  <img src="{{ block.settings.meta-img | image_url }}" width="20px" height="auto">
+                  <img src="{{ block.settings.meta-img | image_url: width: 40 }}" width="20" height="20" alt="" loading="lazy">
                 {% endif %}
                 <p style="color:{{ block.settings.meta-text }}">{{ product.metafields.custom.delivery_content }}</p>
               </div>

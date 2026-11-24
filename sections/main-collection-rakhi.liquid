@@ -45,10 +45,10 @@
     {% assign mobile_banner = section.settings.rakhi_mobile_banner_image | default: desktop_banner %}
     
     {% if desktop_banner != blank %}
-      <img src="{{ desktop_banner | image_url }}" alt="Rakhi Gift Box" class="rakhi-banner-desktop" />
+      <img src="{{ desktop_banner | image_url: width: 1400 }}" width="{{ desktop_banner.width | default: 1400 }}" height="{{ desktop_banner.height | default: 450 }}" alt="Rakhi Gift Box" class="rakhi-banner-desktop" loading="lazy" />
     {% endif %}
     {% if mobile_banner != blank %}
-      <img src="{{ mobile_banner | image_url }}" alt="Rakhi Gift Box" class="rakhi-banner-mobile" />
+      <img src="{{ mobile_banner | image_url: width: 750 }}" width="{{ mobile_banner.width | default: 750 }}" height="{{ mobile_banner.height | default: 500 }}" alt="Rakhi Gift Box" class="rakhi-banner-mobile" loading="lazy" />
     {% endif %}
     {% if desktop_banner == blank and mobile_banner == blank %}
       <div class="rakhi-box"></div>
