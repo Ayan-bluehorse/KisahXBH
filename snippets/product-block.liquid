@@ -74,28 +74,29 @@ Parameters:
   assign pb_size_m_available = false
   assign pb_size_l_available = false
   assign pb_size_xl_available = false
+  assign size_opt_index = -1
+  assign size_opt_obj = nil
 
   for option in product.options_with_values
     assign option_name = option.name | downcase | strip
-    if option_name == 'size'
+    if option_name == 'size' or option_name == 'sizes' or option_name contains 'size'
+      assign size_opt_index = forloop.index0
+      assign size_opt_obj = option
       for value in option.values
         assign size_clean = value | downcase | strip | replace: ' ', '' | replace: '/', '-'
         if size_clean == 's' or size_clean == 'small' or size_clean == '38' or size_clean == 's-38' or size_clean == 's38'
           if value.available
             assign pb_size_s_available = true
           endif
-        endif
-        if size_clean == 'm' or size_clean == 'medium' or size_clean == '40' or size_clean == 'm-40' or size_clean == 'm40'
+        elsif size_clean == 'm' or size_clean == 'medium' or size_clean == '40' or size_clean == 'm-40' or size_clean == 'm40'
           if value.available
             assign pb_size_m_available = true
           endif
-        endif
-        if size_clean == 'l' or size_clean == 'large' or size_clean == '42' or size_clean == 'l-42' or size_clean == 'l42'
+        elsif size_clean == 'l' or size_clean == 'large' or size_clean == '42' or size_clean == 'l-42' or size_clean == 'l42'
           if value.available
             assign pb_size_l_available = true
           endif
-        endif
-        if size_clean == 'xl' or size_clean == 'extralarge' or size_clean == 'extra-large' or size_clean == '44' or size_clean == 'xl-44' or size_clean == 'xl44'
+        elsif size_clean == 'xl' or size_clean == 'extralarge' or size_clean == 'extra-large' or size_clean == '44' or size_clean == 'xl-44' or size_clean == 'xl44'
           if value.available
             assign pb_size_xl_available = true
           endif
@@ -279,18 +280,6 @@ Parameters:
             </a>
 
             {%- comment -%} Size Availability Chips (Issue #36) - Dynamic Directly From Admin Variants {%- endcomment -%}
-            {%- liquid
-              assign size_opt_index = -1
-              assign size_opt_obj = nil
-              for option in product.options_with_values
-                assign opt_name_lower = option.name | downcase | strip
-                if opt_name_lower == 'size' or opt_name_lower == 'sizes' or opt_name_lower contains 'size'
-                  assign size_opt_index = forloop.index0
-                  assign size_opt_obj = option
-                  break
-                endif
-              endfor
-            -%}
             {%- if size_opt_index != -1 and size_opt_obj != blank and size_opt_obj.values.size > 0 -%}
               <div class="product-block__size-chips" aria-label="Available sizes for {{ product.title | escape }}">
                 {%- for size_val in size_opt_obj.values -%}
@@ -475,13 +464,6 @@ Parameters:
             {%- endif -%}
           </div>
         </div>
-
-      <div class="desktop-whishlist mobile_wishlist">
-       {% render 'wishlisthero-collection-product' with product, product: product %}
-      </div>
-   
-         
-        
       </div>
       <div class="desktop-whishlist desktop_wishlist">
        {% render 'wishlisthero-collection-product' with product, product: product %}

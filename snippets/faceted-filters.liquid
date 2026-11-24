@@ -60,17 +60,6 @@
     <form id="CollectionFilterForm" method="get" action="{{ filter_context.url | default: collection.url | default: routes.search_url }}">
       {%- liquid
         assign in_stock_avail = in_stock_total | default: 0
-        if in_stock_avail == 0 and filter_context.filters
-          for f in filter_context.filters
-            if f.param_name == 'filter.v.availability'
-              for v in f.values
-                if v.value == '1'
-                  assign in_stock_avail = v.count
-                endif
-              endfor
-            endif
-          endfor
-        endif
       -%}
       {%- if in_stock_avail > 0 -%}
         <input type="hidden" name="filter.v.availability" value="1">
