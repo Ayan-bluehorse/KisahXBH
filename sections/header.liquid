@@ -383,10 +383,12 @@ document.addEventListener("DOMContentLoaded", function () {
                       else
                         assign link_title_sanitised = link.title | downcase | strip
                         for block in section.blocks
-                          assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip
-                          if dropdown_link_title_sanitised == link_title_sanitised
-                            assign use_columns = true
-                            assign has_dropdown = true
+                          if block.type == 'menu-promotion-small' or block.type == 'menu-promotion-large'
+                            assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip
+                            if dropdown_link_title_sanitised == link_title_sanitised
+                              assign use_columns = true
+                              assign has_dropdown = true
+                            endif
                           endif
                         endfor
                       endif

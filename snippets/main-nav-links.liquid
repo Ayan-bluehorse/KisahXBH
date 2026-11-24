@@ -1,3 +1,15 @@
+{%- comment -%}
+  TCA-011: Pre-index menu_image blocks once to eliminate O(N^4) loop nesting
+{%- endcomment -%}
+{%- assign menu_image_map = '' -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'menu_image' and block.settings.menu_title != blank and block.settings.menu_image != blank -%}
+    {%- assign m_title = block.settings.menu_title | strip | downcase -%}
+    {%- assign menu_image_map = menu_image_map | append: '###' | append: m_title | append: ':::' | append: forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign menu_image_map = menu_image_map | append: '###' -%}
+
 <ul class="navigation__tier-1">
   {% for link in linklists[link_list].links %}
     {%- liquid
@@ -12,20 +24,20 @@
 
       if link.levels >= 2
         assign use_columns = true
-      else
-        for block in section.blocks
-          assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip
-          if dropdown_link_title_sanitised == link_title_sanitised
-            assign use_columns = true
-            assign has_dropdown = true
-          endif
-        endfor
       endif
 
       for block in section.blocks
-        assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip
-        if dropdown_link_title_sanitised == link_title_sanitised and block.type == 'menu-promotion-small'
-          assign small_promo_count = small_promo_count | plus: 1
+        if block.type == 'menu-promotion-small' or block.type == 'menu-promotion-large'
+          assign dropdown_link_title_sanitised = block.settings.dropdown_link_title | downcase | strip
+          if dropdown_link_title_sanitised == link_title_sanitised
+            if link.levels < 2
+              assign use_columns = true
+              assign has_dropdown = true
+            endif
+            if block.type == 'menu-promotion-small'
+              assign small_promo_count = small_promo_count | plus: 1
+            endif
+          endif
         endif
       endfor
 
@@ -153,28 +165,26 @@
                         <div class="navigation__tier-3-container navigation__child-tier">
                           <ul class="navigation__tier-3">
                             {% for child_child_link in child_link.links %}
-                              {%- assign matched_image = '' -%}
-{%- assign child_title_down = child_child_link.title | default: '' | strip | downcase -%}
-
-{%- for block in section.blocks -%}
-  {%- if block.type == 'menu_image' -%}
-    {%- assign menu_title_down = block.settings.menu_title | default: '' | strip | downcase -%}
-    {%- if menu_title_down == child_title_down -%}
-      {%- assign matched_image = block.settings.menu_image -%}
-      {%- break -%}
-    {%- endif -%}
-  {%- endif -%}
-{%- endfor -%}
+                              {%- assign matched_image = blank -%}
+                              {%- assign child_title_down = child_child_link.title | default: '' | strip | downcase -%}
+                              {%- assign search_key = '###' | append: child_title_down | append: ':::' -%}
+                              {%- if menu_image_map contains search_key -%}
+                                {%- assign block_idx_part = menu_image_map | split: search_key | last | split: '###' | first -%}
+                                {%- assign block_idx = block_idx_part | plus: 0 -%}
+                                {%- assign matched_image = section.blocks[block_idx].settings.menu_image -%}
+                              {%- endif -%}
                             <li class="navigation__item{% if featured_links contains child_child_link.title %} featured-link{% endif %}">
                               <a class="navigation__link" href="{{ child_child_link.url }}">
                                 {%- if matched_image != blank -%}
-  <img
-    width="{{ matched_image.width }}" height="{{ matched_image.height }}" loading="lazy" src="{{ matched_image | image_url: width: 300 }}"
-    alt="{{ child_child_link.title | default: '' | escape }}"
-    class="submenu-icon"
-    loading="lazy"
-  >
-{%- endif -%}
+                                  <img
+                                    width="{{ matched_image.width }}"
+                                    height="{{ matched_image.height }}"
+                                    src="{{ matched_image | image_url: width: 300 }}"
+                                    alt="{{ child_child_link.title | default: '' | escape }}"
+                                    class="submenu-icon"
+                                    loading="lazy"
+                                  >
+                                {%- endif -%}
                                 <span>{{ child_child_link.title | escape }}</span>
                               </a>
                             </li>
