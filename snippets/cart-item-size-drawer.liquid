@@ -1157,6 +1157,24 @@
     if (window.kisahCartSizeGuideEventsBound) return;
     window.kisahCartSizeGuideEventsBound = true;
 
+    function sendCartSizeGuideEvent(eventName, extraParams) {
+      try {
+        var payload = Object.assign({
+          event: eventName,
+          event_category: 'size_chart',
+          source: 'cart_drawer'
+        }, extraParams || {});
+
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, payload);
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+      } catch (err) {
+        console.warn('[GA4 Cart Size Guide Event Error]', err);
+      }
+    }
+
     $(document).on('click', '.cart-item-size-guide .tab-a', function (event) {
       event.preventDefault();
       const drawer = $(this).closest('.cart-item-size-guide');
@@ -1165,6 +1183,11 @@
       $(this).addClass('active-a');
       drawer.find('.tab').removeClass('tab-active');
       drawer.find('.tab[data-id="' + tabId + '"]').addClass('tab-active');
+
+      sendCartSizeGuideEvent('size_chart_tab_click', {
+        tab_id: tabId,
+        tab_name: $(this).text().trim()
+      });
     });
 
     $(document).on('click', '.cart-item-size-guide .sc-unit', function () {
@@ -1177,6 +1200,10 @@
         if (!isNaN(inches)) {
           $(this).text(unit === 'cm' ? Math.round(inches * 2.54 * 10) / 10 : inches);
         }
+      });
+
+      sendCartSizeGuideEvent('size_chart_unit_toggle', {
+        unit: unit
       });
     });
   });

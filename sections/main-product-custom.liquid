@@ -2794,6 +2794,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (sizedrawer) sizedrawer.classList.add('open');
       if (overlay) overlay.classList.add('is-visible');
       document.body.classList.add('scroll');
+      document.dispatchEvent(new CustomEvent('sizechart:opened'));
     }
 
     function closeSizeChart() {
@@ -2802,6 +2803,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (sizedrawer) sizedrawer.classList.remove('open');
       if (overlay) overlay.classList.remove('is-visible');
       document.body.classList.remove('scroll');
+      document.dispatchEvent(new CustomEvent('sizechart:closed'));
     }
 
     document.addEventListener('click', function(event) {

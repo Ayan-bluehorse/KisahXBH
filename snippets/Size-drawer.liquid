@@ -791,12 +791,88 @@
 
 <script>
   (function() {
-    // Vanilla JS tab delegation for Size Guide vs How to Measure
+    var sizeChartOpenTimestamp = null;
+    var productMeta = {
+      product_id: {{ product.id | json }},
+      product_title: {{ product.title | json }},
+      product_handle: {{ product.handle | json }},
+      product_type: {{ product.type | json }}
+    };
+
+    function sendSizeChartEvent(eventName, extraParams) {
+      try {
+        var payload = Object.assign({
+          event: eventName,
+          event_category: 'size_chart'
+        }, productMeta, extraParams || {});
+
+        // Direct GA4
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, payload);
+        }
+
+        // Google Tag Manager & Elevar DataLayer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+      } catch (err) {
+        console.warn('[GA4 Size Chart Event Error]', err);
+      }
+    }
+
+    // 1. Track Size Chart Open
+    function onSizeChartOpen(source) {
+      sizeChartOpenTimestamp = Date.now();
+      var currentSize = '';
+      var activeEl = document.querySelector('.swatch-element.is-active, .variant-input input:checked, [data-option-index] input:checked');
+      if (activeEl) {
+        currentSize = (activeEl.value || activeEl.textContent || '').trim();
+      }
+      sendSizeChartEvent('size_chart_open', {
+        source: source || 'pdp_size_chart_link',
+        selected_size: currentSize
+      });
+    }
+
+    // 2. Track Size Chart Close
+    function onSizeChartClose(closedBy) {
+      var timeSpent = sizeChartOpenTimestamp ? Math.round((Date.now() - sizeChartOpenTimestamp) / 1000) : null;
+      sendSizeChartEvent('size_chart_close', {
+        time_spent_seconds: timeSpent,
+        closed_by: closedBy || 'button'
+      });
+      sizeChartOpenTimestamp = null;
+    }
+
+    // Listen to custom DOM events dispatched by openSizeChart/closeSizeChart
+    document.addEventListener('sizechart:opened', function() {
+      onSizeChartOpen('open_function');
+    });
+    document.addEventListener('sizechart:closed', function() {
+      onSizeChartClose('close_function');
+    });
+
+    // Delegated click listener for Size Chart opening from PDP
+    document.addEventListener('click', function(e) {
+      var trigger = e.target.closest('.trigger-pop-up');
+      if (trigger) {
+        var src = trigger.classList.contains('cart-item__size-guide') ? 'cart_drawer' : 'pdp_size_chart_link';
+        onSizeChartOpen(src);
+      } else if (e.target.closest('.size_drawer__close-btn, .close-button, .js-close-drawer')) {
+        var openDrawer = document.querySelector('.size-chart-drawer.open');
+        if (openDrawer) onSizeChartClose('close_button');
+      } else if (e.target.matches && e.target.matches('.size-cart-drawer-overlay')) {
+        var openDrawer = document.querySelector('.size-chart-drawer.open');
+        if (openDrawer) onSizeChartClose('overlay_click');
+      }
+    }, true);
+
+    // Vanilla JS tab delegation for Size Guide vs How to Measure + GA4 tracking
     document.addEventListener('click', function(e) {
       var tabBtn = e.target.closest('.tab-a');
       if (!tabBtn) return;
+      var drawer = tabBtn.closest('.size-chart-drawer');
+      if (!drawer) return;
       e.preventDefault();
-      var drawer = tabBtn.closest('.size-chart-drawer') || document;
       var targetId = tabBtn.getAttribute('data-id');
       if (!targetId) return;
 
@@ -815,9 +891,14 @@
           a.classList.remove('active-a');
         }
       });
+
+      sendSizeChartEvent('size_chart_tab_click', {
+        tab_id: targetId,
+        tab_name: (tabBtn.textContent || '').trim()
+      });
     });
 
-    // in/cm toggle: cells carry inches in data-in
+    // in/cm toggle: cells carry inches in data-in + GA4 tracking
     function kisahApplyUnit(unit) {
       document.querySelectorAll('.sc-unit').forEach(function(el) {
         if (el.getAttribute('data-sc-unit') === unit) {
@@ -835,8 +916,46 @@
 
     document.addEventListener('click', function(e) {
       var unitBtn = e.target.closest('.sc-unit');
-      if (unitBtn) {
-        kisahApplyUnit(unitBtn.getAttribute('data-sc-unit') || 'cm');
+      if (unitBtn && unitBtn.closest('.size-chart-drawer')) {
+        var unit = unitBtn.getAttribute('data-sc-unit') || 'cm';
+        kisahApplyUnit(unit);
+        sendSizeChartEvent('size_chart_unit_toggle', {
+          unit: unit
+        });
+      }
+    });
+
+    // Talk to an Expert / WhatsApp click inside Size Chart
+    document.addEventListener('click', function(e) {
+      var helpLink = e.target.closest('.sc-help__link');
+      if (helpLink && helpLink.closest('.size-chart-drawer')) {
+        sendSizeChartEvent('size_chart_expert_click', {
+          destination_url: helpLink.getAttribute('href') || '',
+          link_text: (helpLink.textContent || '').trim()
+        });
+      }
+    });
+
+    // Size table row click tracking
+    document.addEventListener('click', function(e) {
+      var tableRow = e.target.closest('.sc-table tbody tr');
+      if (tableRow && tableRow.closest('.size-chart-drawer')) {
+        var sizeTh = tableRow.querySelector('th');
+        var sizeText = sizeTh ? (sizeTh.textContent || '').trim() : '';
+        sendSizeChartEvent('size_chart_size_click', {
+          size_label: sizeText
+        });
+      }
+    });
+
+    // Find Your Fit accordion toggle inside Size Chart
+    document.addEventListener('click', function(e) {
+      var fysBtn = e.target.closest('.sc-fys .fys-trigger');
+      if (fysBtn && fysBtn.closest('.size-chart-drawer')) {
+        var isExpanded = fysBtn.getAttribute('aria-expanded') === 'true';
+        sendSizeChartEvent('size_chart_fys_toggle', {
+          action: isExpanded ? 'expand' : 'collapse'
+        });
       }
     });
 
