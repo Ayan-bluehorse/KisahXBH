@@ -193,8 +193,7 @@
   {% comment %} {{ 'collections.css' | asset_url | stylesheet_tag }} {% endcomment %}
    {% if request.page_type == 'collection' or request.page_type == 'search' %}
     {{ 'collections.css' | asset_url | stylesheet_tag }}
-    <link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}"></noscript>
+    {{ 'collection-filter-sheet.css' | asset_url | stylesheet_tag }}
   {% endif %}
   <link rel="stylesheet" href="{{ 'find-your-size-smart.css' | asset_url }}" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="{{ 'find-your-size-smart.css' | asset_url }}"></noscript>

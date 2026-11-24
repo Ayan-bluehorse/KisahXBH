@@ -6,8 +6,16 @@
   - current_sort {SortOption} - The sort option the current product grid is sorted by.
 {%- endcomment -%}
 
-{%- comment -%} TCA-017: collection-filter-sheet.css moved to theme.liquid <head> {%- endcomment -%}
-<noscript><link rel="stylesheet" href="{{ 'collection-filter-sheet.css' | asset_url }}"></noscript>
+{%- comment -%} Critical anti-FOUC drawer hiding style before external CSS loads {%- endcomment -%}
+<style>
+  .kisah-sheet { position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 100%); z-index: 9999; }
+  .kisah-sort-modal { position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 100%); z-index: 9999; }
+  @media (min-width: 769px) {
+    .kisah-sheet { left: auto; right: 0; top: 0; bottom: 0; transform: translateX(100%); }
+    .kisah-sort-modal { left: auto; right: 0; top: 0; bottom: 0; transform: translateX(100%); }
+  }
+  .kisah-filter-scrim, .kisah-sort-scrim { display: none; }
+</style>
 <script src="{{ 'collection-filter-sheet.js' | asset_url }}" defer></script>
 
 {%- liquid
