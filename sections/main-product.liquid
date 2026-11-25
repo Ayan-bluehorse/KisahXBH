@@ -3164,6 +3164,54 @@
       } else if (event.target.closest('.size_drawer__close-btn, .close-button') || event.target.matches('.size-cart-drawer-overlay')) {
         event.preventDefault();
         closeSizeChart();
+      } else {
+        const whBtn = event.target.closest('.wishlist-hero-custom-button, [data-wishlisthero-button-icon], .wishlist-button');
+        if (whBtn) {
+          try {
+            const whPayload = {
+              event: 'add_to_wishlist',
+              event_category: 'engagement',
+              product_id: {{ product.id | json }},
+              product_title: {{ product.title | json }}
+            };
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'add_to_wishlist', whPayload);
+            }
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(whPayload);
+          } catch(e) {}
+        }
+      }
+    });
+
+    // GA4 Telemetry: Track Size and Color Swatch clicks on PDP
+    document.addEventListener('change', function(event) {
+      const input = event.target;
+      if (input && input.matches('.opt-btn.js-option, input[name*="-option"]')) {
+        const fieldset = input.closest('fieldset.option-selector');
+        const legend = fieldset ? fieldset.querySelector('legend.label') : null;
+        const optName = legend ? legend.textContent.trim().toLowerCase() : 'option';
+        const val = input.value;
+        const isSize = optName.includes('size');
+        const isColor = optName.includes('color') || optName.includes('colour');
+        const eventName = isSize ? 'select_size_swatch' : (isColor ? 'select_color_swatch' : 'select_variant_option');
+
+        try {
+          const swatchPayload = {
+            event: eventName,
+            event_category: 'pdp_engagement',
+            option_name: optName,
+            option_value: val,
+            product_id: {{ product.id | json }},
+            product_title: {{ product.title | json }},
+            product_handle: {{ product.handle | json }}
+          };
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, swatchPayload);
+          }
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(swatchPayload);
+        } catch(e) {}
       }
     });
 
@@ -3176,6 +3224,19 @@
         });
       });
     function nativeShare() {
+      try {
+        const sharePayload = {
+          event: 'share',
+          method: navigator.share ? 'native_share' : 'clipboard_copy',
+          content_type: 'product',
+          item_id: {{ product.id | json }}
+        };
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'share', sharePayload);
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(sharePayload);
+      } catch(e) {}
     if (navigator.share) {
       navigator.share({
         title: document.title,

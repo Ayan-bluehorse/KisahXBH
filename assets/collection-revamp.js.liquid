@@ -883,6 +883,24 @@ product-form.js-product.product-info.quickbuy-content {
       const productUrl = block?.querySelector("a")?.getAttribute("href");
       if (!productUrl) return;
 
+      const isQuickView = selector.includes('quick-view');
+      const eventName = isQuickView ? 'quick_view_open' : 'quick_buy_open';
+      const blockTitle = block?.querySelector(".product-block__title, .title, a")?.textContent.trim() || '';
+
+      try {
+        const qbPayload = {
+          event: eventName,
+          event_category: 'collection_engagement',
+          product_url: productUrl,
+          product_title: blockTitle
+        };
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', eventName, qbPayload);
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(qbPayload);
+      } catch (err) {}
+
       // If theme.quickbuy not ready, just go to PDP
       if (!window.theme || !theme.quickbuy) {
         location.href = productUrl;

@@ -439,6 +439,25 @@
 
 
   window.kisahWhenJQueryReady(function($) {
+  function trackPincodeEvent(pincode, isValid, slaDays) {
+    try {
+      var payload = {
+        event: 'check_delivery_pincode',
+        event_category: 'pdp_engagement',
+        pincode: String(pincode || ''),
+        is_valid: isValid,
+        sla_days: typeof slaDays !== 'undefined' ? slaDays : null
+      };
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'check_delivery_pincode', payload);
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+    } catch (err) {
+      console.warn('[GA4 Pincode Event Error]', err);
+    }
+  }
+
   function checkBtn() {
     $(document).on('click', '.check_btn', function(e) {
       e.preventDefault();
@@ -466,14 +485,17 @@
           .then(dataArray => {
             if (dataArray.some(obj => !obj.meta.success)) {
               updateUIForInvalidPincode();
+              trackPincodeEvent(dropPincode, false, null);
               return;
             }
 
             const smallestSlaMaxObject = getSmallestPredictedSlaMax(dataArray);
-            const expectedDate = addDaysToDate(smallestSlaMaxObject.result[0].predicted_sla_max);
+            const slaDays = smallestSlaMaxObject && smallestSlaMaxObject.result && smallestSlaMaxObject.result[0] ? smallestSlaMaxObject.result[0].predicted_sla_max : null;
+            const expectedDate = addDaysToDate(slaDays);
         
             if (smallestSlaMaxObject.meta.success) {
               updateUIForValidPincode(expectedDate);
+              trackPincodeEvent(dropPincode, true, slaDays);
               toggleButton();
             }
           })
@@ -483,6 +505,7 @@
           });
       } else {
         updateUIForInvalidPincode();
+        trackPincodeEvent(dropPincode, false, null);
       }
     });
   }

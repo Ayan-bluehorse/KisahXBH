@@ -106,10 +106,53 @@
     });
   }
 
+  function trackWhatsAppEvent(link) {
+    try {
+      var source = 'floating';
+      if (link.closest('.kpdp-help-chat__link')) {
+        source = 'pdp_help';
+      } else if (link.closest('.whats-app-only, .whats-img-para a')) {
+        source = 'footer';
+      }
+
+      var isProductPage = window.location.pathname.indexOf('/products/') !== -1 ||
+                          !!document.querySelector('meta[property="og:type"][content="product"]');
+      var isCollectionPage = window.location.pathname.indexOf('/collections/') !== -1;
+
+      var pageType = isProductPage ? 'pdp' : (isCollectionPage ? 'collection' : 'other');
+      var titleEl = document.querySelector('.product-title, h1.product-title, .product__title, h1');
+      var title = titleEl ? titleEl.textContent.trim() : document.title.split('|')[0].trim();
+      var selectedSize = getSelectedSize();
+      var inquiryId = getInquiryId();
+
+      var payload = {
+        event: 'whatsapp_click',
+        event_category: 'contact_support',
+        source: source,
+        page_type: pageType,
+        page_url: window.location.href,
+        product_title: isProductPage ? title : '',
+        selected_size: selectedSize || '',
+        inquiry_id: inquiryId
+      };
+
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'whatsapp_click', payload);
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+    } catch (err) {
+      console.warn('[GA4 WhatsApp Click Error]', err);
+    }
+  }
+
   function handleInteraction(e) {
     var link = e.target && e.target.closest && e.target.closest('#sy-whatshelp a, a.sywh-open-services, .whats-app-only, .whats-img-para a, .kpdp-help-chat__link');
     if (link) {
       link.href = buildWhatsAppUrl();
+      if (e.type === 'click') {
+        trackWhatsAppEvent(link);
+      }
     }
   }
 

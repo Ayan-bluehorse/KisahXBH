@@ -87,6 +87,22 @@ class CartDrawer extends SideDrawer {
     }
   }
 
+  trackCartEvent(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: eventName,
+        event_category: 'cart_engagement'
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, payload);
+      }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(payload);
+    } catch (e) {
+      console.warn('[GA4 Cart Event Error]', e);
+    }
+  }
+
   handleQuantityClick(evt) {
     const control = evt.target.closest('.quantity-down, .quantity-up, .cart-item__remove');
     if (!control) return;
@@ -97,11 +113,32 @@ class CartDrawer extends SideDrawer {
 
     evt.preventDefault();
     evt.stopPropagation();
+
+    const itemTitle = item.querySelector('.cart-item__title')?.textContent.trim() || '';
+    const qtyInput = item.querySelector('.cart-item__quantity-input');
+    const currentQty = qtyInput ? parseInt(qtyInput.value, 10) : 1;
+
     if (control.classList.contains('quantity-down')) {
+      this.trackCartEvent('cart_quantity_change', {
+        action: 'decrease',
+        item_title: itemTitle,
+        previous_quantity: currentQty,
+        new_quantity: Math.max(0, currentQty - 1)
+      });
       cartForm.adjustItemQuantity(item, { decrease: true });
     } else if (control.classList.contains('quantity-up')) {
+      this.trackCartEvent('cart_quantity_change', {
+        action: 'increase',
+        item_title: itemTitle,
+        previous_quantity: currentQty,
+        new_quantity: currentQty + 1
+      });
       cartForm.adjustItemQuantity(item, { increase: true });
     } else {
+      this.trackCartEvent('remove_from_cart', {
+        item_title: itemTitle,
+        quantity: currentQty
+      });
       cartForm.adjustItemQuantity(item, { to: 0 });
     }
   }

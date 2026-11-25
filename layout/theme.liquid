@@ -451,6 +451,13 @@
       document.addEventListener('click', function (e) {
         if (e.target && e.target.closest('#bottom-top')) {
           e.preventDefault();
+          try {
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'back_to_top_click', { event_category: 'navigation' });
+            }
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'back_to_top_click', event_category: 'navigation' });
+          } catch(err) {}
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       });

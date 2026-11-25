@@ -522,6 +522,27 @@
         e.preventDefault();
         if (applyBtn.disabled) return;
 
+        // GA4 Telemetry: Track Filter Application
+        try {
+          const appliedFacets = [];
+          sheet.querySelectorAll('input[type="checkbox"]:checked').forEach((cb) => {
+            if (cb.value) appliedFacets.push(cb.value);
+          });
+          const filterPayload = {
+            event: 'filter_applied',
+            event_category: 'collection_filter',
+            filter_count: appliedFacets.length,
+            applied_facets: appliedFacets.slice(0, 10).join(', ')
+          };
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'filter_applied', filterPayload);
+          }
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(filterPayload);
+        } catch (err) {
+          console.warn('[GA4 Filter Apply Error]', err);
+        }
+
         window.closeKisahSheet();
 
         const minInput = sheet.querySelector('#kisahRngLo');
@@ -546,6 +567,19 @@
     // --- Clear All Button ---
     if (clearAllBtn) {
       clearAllBtn.addEventListener('click', (e) => {
+        try {
+          const clearPayload = {
+            event: 'filter_cleared',
+            event_category: 'collection_filter',
+            action: 'clear_all'
+          };
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'filter_cleared', clearPayload);
+          }
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(clearPayload);
+        } catch (err) {}
+
         const clearUrl = clearAllBtn.dataset.clearUrl;
         if (clearUrl && window.location.search.length > 1) {
           window.location.href = clearUrl;
@@ -568,6 +602,28 @@
         }
         updateSectionSummaries();
         restoreInitialCounts();
+      });
+    }
+
+    // --- Sort Modal Selection Tracking ---
+    if (sortModal) {
+      sortModal.querySelectorAll('.kisah-row').forEach((row) => {
+        row.addEventListener('click', () => {
+          const sortName = row.querySelector('.kisah-row__l')?.textContent.trim() || '';
+          try {
+            const sortPayload = {
+              event: 'sort_by_change',
+              event_category: 'collection_filter',
+              sort_option: sortName,
+              destination_url: row.getAttribute('href') || ''
+            };
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'sort_by_change', sortPayload);
+            }
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(sortPayload);
+          } catch (err) {}
+        });
       });
     }
 
