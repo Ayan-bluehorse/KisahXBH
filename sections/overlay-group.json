@@ -56,7 +56,7 @@
         "enable_cross_sells": false,
         "cross_sell_title": "You may like",
         "cross_sell_products": [],
-        "enable_automatic_cross_sells": true,
+        "enable_automatic_cross_sells": false,
         "croll_sell_color_scheme": "1"
       }
     },
