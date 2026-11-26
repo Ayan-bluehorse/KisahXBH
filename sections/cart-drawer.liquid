@@ -927,6 +927,7 @@
               data-merge="cross-sells"
               data-merge-cache="{% if cart.items == blank %}blank{% else %}{{ cart.items.first.product.id }}{% endif %}"
             >
+              {%- comment -%} Cross-sell recommendations disabled per user request
               {%- liquid
                 if section.settings.enable_cross_sells
                   if cart.items == empty
@@ -1012,6 +1013,7 @@
                   </cc-cart-cross-sell>
                 </div>
               {%- endif -%}
+              {%- endcomment -%}
             </div>
 
             {% if cart.items != empty %}
