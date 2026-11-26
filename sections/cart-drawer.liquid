@@ -1016,45 +1016,47 @@
               {%- endcomment -%}
             </div>
 
-            {% if cart.items != empty %}
-              <div class="cart-drawer__benefits">
-                <div class="cart-drawer__benefit">
-                  {%- if section.settings.benefit_1_icon != blank -%}
-                    <div class="cart-drawer__benefit-icon">
-                      {{ section.settings.benefit_1_icon }}
+            <div data-merge="benefits">
+              {% if cart.items != empty %}
+                <div class="cart-drawer__benefits">
+                  <div class="cart-drawer__benefit">
+                    {%- if section.settings.benefit_1_icon != blank -%}
+                      <div class="cart-drawer__benefit-icon">
+                        {{ section.settings.benefit_1_icon }}
+                      </div>
+                    {%- endif -%}
+                    <div class="benefit-heading">{{ section.settings.benefit_1_heading | default: 'Fast Shipping' }}</div>
+                    <div class="benefit-description">
+                      {{ section.settings.benefit_1_description | default: 'Dispatched in under 24 hours' }}
                     </div>
-                  {%- endif -%}
-                  <div class="benefit-heading">{{ section.settings.benefit_1_heading | default: 'Fast Shipping' }}</div>
-                  <div class="benefit-description">
-                    {{ section.settings.benefit_1_description | default: 'Dispatched in under 24 hours' }}
+                  </div>
+                  <div class="cart-drawer__benefit">
+                    {%- if section.settings.benefit_2_icon != blank -%}
+                      <div class="cart-drawer__benefit-icon">
+                        {{ section.settings.benefit_2_icon }}
+                      </div>
+                    {%- endif -%}
+                    <div class="benefit-heading">{{ section.settings.benefit_2_heading | default: 'Easy Returns' }}</div>
+                    <div class="benefit-description">
+                      {{ section.settings.benefit_2_description | default: '7 days to exchange/return' }}
+                    </div>
+                  </div>
+                  <div class="cart-drawer__benefit">
+                    {%- if section.settings.benefit_3_icon != blank -%}
+                      <div class="cart-drawer__benefit-icon">
+                        {{ section.settings.benefit_3_icon }}
+                      </div>
+                    {%- endif -%}
+                    <div class="benefit-heading">
+                      {{ section.settings.benefit_3_heading | default: 'Pay Confidently' }}
+                    </div>
+                    <div class="benefit-description">
+                      {{ section.settings.benefit_3_description | default: '100% money-back guarantee' }}
+                    </div>
                   </div>
                 </div>
-                <div class="cart-drawer__benefit">
-                  {%- if section.settings.benefit_2_icon != blank -%}
-                    <div class="cart-drawer__benefit-icon">
-                      {{ section.settings.benefit_2_icon }}
-                    </div>
-                  {%- endif -%}
-                  <div class="benefit-heading">{{ section.settings.benefit_2_heading | default: 'Easy Returns' }}</div>
-                  <div class="benefit-description">
-                    {{ section.settings.benefit_2_description | default: '7 days to exchange/return' }}
-                  </div>
-                </div>
-                <div class="cart-drawer__benefit">
-                  {%- if section.settings.benefit_3_icon != blank -%}
-                    <div class="cart-drawer__benefit-icon">
-                      {{ section.settings.benefit_3_icon }}
-                    </div>
-                  {%- endif -%}
-                  <div class="benefit-heading">
-                    {{ section.settings.benefit_3_heading | default: 'Pay Confidently' }}
-                  </div>
-                  <div class="benefit-description">
-                    {{ section.settings.benefit_3_description | default: '100% money-back guarantee' }}
-                  </div>
-                </div>
-              </div>
-            {% endif %}
+              {% endif %}
+            </div>
           </div>
 
           {%- if section.settings.announcement_position == 'below-items' -%}
