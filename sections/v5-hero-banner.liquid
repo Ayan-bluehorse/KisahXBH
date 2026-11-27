@@ -78,8 +78,8 @@
                 sizes="(max-width: 768px) 100vw, 100vw"
                 alt="{{ heading | default: block.settings.desk_img.alt | default: 'Kisah Campaign' | escape }}" 
                 class="v5-hero-img"
-                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
+                loading="eager"
+                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
                 decoding="{% if forloop.first %}sync{% else %}async{% endif %}"
                 width="2000"
                 height="989"
@@ -129,7 +129,7 @@
       <div class="v5-hero-slide" data-slide-index="1" inert aria-hidden="true">
         <picture class="v5-hero-pic">
           <source media="(max-width: 768px)" srcset="//kisah.in/cdn/shop/files/image_8.webp?width=800">
-          <img src="//kisah.in/cdn/shop/files/image_7.webp?width=2000" alt="Haldi Edit" class="v5-hero-img" loading="lazy">
+          <img src="//kisah.in/cdn/shop/files/image_7.webp?width=2000" alt="Haldi Edit" class="v5-hero-img" loading="eager" fetchpriority="auto">
         </picture>
         <div class="v5-hero-copy">
           <div class="v5-hero-eyebrow">FOR THE WEDDING GUEST</div>
@@ -143,7 +143,7 @@
       <div class="v5-hero-slide" data-slide-index="2" inert aria-hidden="true">
         <picture class="v5-hero-pic">
           <source media="(max-width: 768px)" srcset="//kisah.in/cdn/shop/files/WhatsApp_Image_2026-10-23_at_4.29.56_PM.webp?width=800">
-          <img src="//kisah.in/cdn/shop/files/WhatsApp_Image_2026-10-23_at_4.17.15_PM.webp?width=2000" alt="Groom Squad" class="v5-hero-img" loading="lazy">
+          <img src="//kisah.in/cdn/shop/files/WhatsApp_Image_2026-10-23_at_4.17.15_PM.webp?width=2000" alt="Groom Squad" class="v5-hero-img" loading="eager" fetchpriority="auto">
         </picture>
         <div class="v5-hero-copy">
           <div class="v5-hero-eyebrow">FOR THE GROOM’S SQUAD · DULHE KI TOLI</div>
