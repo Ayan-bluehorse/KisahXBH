@@ -360,7 +360,16 @@
       function triggerAppDelay() {
         if (loaded) return;
         loaded = true;
-        window.dispatchEvent(new Event('kisah:delayed-apps-trigger'));
+        // Yield execution to allow user's initial interaction (tap/scroll) to paint smoothly without input delay
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(function() {
+            window.dispatchEvent(new Event('kisah:delayed-apps-trigger'));
+          }, { timeout: 1200 });
+        } else {
+          setTimeout(function() {
+            window.dispatchEvent(new Event('kisah:delayed-apps-trigger'));
+          }, 150);
+        }
       }
       ['touchstart', 'mouseover', 'scroll', 'keydown'].forEach(function(evt) {
         window.addEventListener(evt, triggerAppDelay, { passive: true, once: true });
@@ -888,14 +897,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if(!grid) return;
 
   function processProducts() {
-
     const cards = Array.from(grid.querySelectorAll('.product-block'));
-
     let normalProducts = [];
     let lowStockProducts = [];
 
     cards.forEach(card => {
-
       // 👉 skip if already processed (performance boost)
       if(card.dataset.processed === "true") return;
 
@@ -919,23 +925,33 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         normalProducts.push(card);
       }
-
     });
 
-    // reorder only if new items found
+    // reorder in a single batch using DocumentFragment to avoid multiple DOM layout reflows
     if(lowStockProducts.length){
+      const fragment = document.createDocumentFragment();
       lowStockProducts.forEach(card => {
-        grid.appendChild(card);
+        fragment.appendChild(card);
       });
+      grid.appendChild(fragment);
     }
-
   }
 
-  processProducts();
+  // Schedule during browser idle time so initial clicks & paints are never blocked
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(processProducts, { timeout: 1500 });
+  } else {
+    setTimeout(processProducts, 100);
+  }
   
   // Re-run if Shopify section load events trigger (e.g. pagination or filtering)
-  document.addEventListener("shopify:section:load", processProducts);
-
+  document.addEventListener("shopify:section:load", function() {
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(processProducts, { timeout: 1500 });
+    } else {
+      setTimeout(processProducts, 50);
+    }
+  });
 });
 </script>
 

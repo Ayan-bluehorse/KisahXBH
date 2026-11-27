@@ -364,11 +364,15 @@
           existingHandles[handle] = true;
         }
 
-        fragment.appendChild(item);
+        if (isNewItem) {
+          fragment.appendChild(item);
+        }
         appendedItems.push(item);
       }
 
-      grid.appendChild(fragment);
+      if (fragment.hasChildNodes()) {
+        grid.appendChild(fragment);
+      }
       {% comment %} sortGridBySizeRank(); {% endcomment %}
       return appendedItems;
     }
