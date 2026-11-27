@@ -467,7 +467,7 @@
           endfor
 
           assign prioritised_loading = false
-          if in_stock_count < section.settings.grid
+          if in_stock_count < 2
             assign prioritised_loading = true
           endif
           assign in_stock_count = in_stock_count | plus: 1
